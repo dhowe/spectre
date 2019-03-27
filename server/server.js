@@ -4,4 +4,4 @@ const port = 3000;
 
 app.get('/', (req, res) => res.send('Hello from SPECTRE!'));
 
-app.listen(port, () => console.log(`SPECTRE listening on port ${port}!`));
+app.listen(process.env.PORT || 3000, () => console.log(`SPECTRE listening on port ${port}!`));
