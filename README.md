@@ -1,2 +1,2 @@
 # SPECTRE
-The Data-Driven Influencer
+A Data-Driven Influencer
