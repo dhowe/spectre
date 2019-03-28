@@ -1,0 +1,6 @@
+@import "../../../styles/_variables";
+
+.avatarTypography .avatarTypography_label {
+  font-weight: bold;
+  min-width: $core_grid-unit * 10;
+}
