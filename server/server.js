@@ -1,9 +1,9 @@
 const express = require('express');
 const bodyParser = require("body-parser");
-const mongodb = require("mongodb");
+const mongo = require("mongodb");
 
-const localDb = "mongodb://localhost:27017/test";
-const OId = mongodb.ObjectID;
+const localDb = "mongodb://localhost:27017/spectre";
+const OId = mongo.ObjectID;
 const collection = 'users';
 
 let db, port = 3000;
@@ -11,13 +11,13 @@ let db, port = 3000;
 const app = express();
 app.use(bodyParser.json());
 
-mongodb.MongoClient.connect(process.env.MONGODB_URI || localDb, { useNewUrlParser: true }, function (err, client) {
+mongo.MongoClient.connect(process.env.MONGODB_URI || localDb, { useNewUrlParser: true }, function (err, client) {
   if (err) {
     console.log(err);
     process.exit(1);
   }
 
-  db = client.db(); // global for connection pooling
+  db = client.db('spectre'); // global for connection pooling
 
   let server = app.listen(process.env.port || port, function () {
     console.log('Spectre-server running on port ' + server.address().port);
