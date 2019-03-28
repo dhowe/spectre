@@ -9,7 +9,7 @@ function ndistance(a, b) {
 }
 
 module.exports = {
-  dist: function (req, res) {
+  distance: function (req, res) {
     if (!(req.body.oceanA && req.body.oceanB)) {
       res.send('An error occurred: oceanA and oceanB are required parameters,' +
         ' {a:' + (typeof oceanA) + ',b:' + (typeof oceanB) + '}');
