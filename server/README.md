@@ -1,1 +1,1 @@
-Insert info about running server processes here
+Insert info about starting, stopping, and testing server components here
