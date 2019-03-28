@@ -5,6 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "mocha ./tests --recursive",
+    "test:watch": "mocha --watch ./tests --recursive",
     "start": "node server.js"
   },
   "author": "",
