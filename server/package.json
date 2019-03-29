@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha ./tests --recursive",
     "test:watch": "mocha --watch ./tests --recursive",
-    "start": "node server.js"
+    "start": "node spectre-server.js"
   },
   "author": "",
   "dependencies": {
