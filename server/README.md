@@ -1,13 +1,13 @@
-### SPECTRE REST API
+## SPECTRE REST API
 
-#### /api/users
+### /api/users
 
 GET: finds all users
 
 POST: creates a new user
 
 
-#### /api/users/:id
+### /api/users/:id
 
 GET: find user by id
 
