@@ -1,16 +1,20 @@
 const express = require('express');
 const bodyParser = require("body-parser");
 const mongo = require("mongodb");
+const dbUrl = require("./dburl");
+
+console.log("DBURL: "+dbUrl);
 
 const collName = 'users';
-const dbName = 'heroku_n1rrs8xc';
-const localDb = 'localhost:27017';
-const mlabDb = 'spectre-client:9OcDekAshelfendyaj!@ds127646.mlab.com:27646';
+// const dbName = 'heroku_n1rrs8xc';
+// const localDb = 'localhost:27017';
+// const mlabDb = 'spectre-client:9OcDekAshelfendyaj!@ds127646.mlab.com:27646';
 const OId = mongo.ObjectID;
 
 let db, dbcoll;
 let port = process.env.port || 8083;
-let dbUrl = 'mongodb://' + mlabDb + '/' + dbName;
+
+console.log(dbUrl);
 
 const app = express();
 app.use(bodyParser.json());
@@ -21,7 +25,7 @@ mongo.MongoClient.connect(dbUrl, { useNewUrlParser: true }, function (err, clien
     process.exit(1);
   }
 
-  db = client.db(dbName); // global for connection pooling
+  db = client.db(); // global for connection pooling
   dbcoll = db.collection(collName);
 
   let server = app.listen(port, function () {
