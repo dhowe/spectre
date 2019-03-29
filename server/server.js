@@ -1,13 +1,19 @@
 const express = require('express');
 const bodyParser = require("body-parser");
 const mongo = require("mongodb");
-
-const localDb = "mongodb://localhost:27017/";
 const OId = mongo.ObjectID;
+
+const collName = 'users';
+const dbName = 'heroku_n1rrs8xc';
+const localDb = 'localhost:27017';
+const mlabDb = 'spectre-client:9OcDekAshelfendyaj!@ds127646.mlab.com:27646';
 
 let db, dbcoll;
 let port = process.env.port || 3000;
 let dbUrl = process.env.MONGODB_URI || localDb;
+
+dbUrl = 'mongodb://' + mlabDb + '/' + dbName;
+console.log('dbUrl: ' + dbUrl);
 
 const app = express();
 app.use(bodyParser.json());
@@ -18,12 +24,12 @@ mongo.MongoClient.connect(dbUrl, { useNewUrlParser: true }, function (err, clien
     process.exit(1);
   }
 
-  db = client.db('spectre'); // global for connection pooling
-  dbcoll = db.collection('users');
+  db = client.db(dbName); // global for connection pooling
+  dbcoll = db.collection(collName);
   //console.log("using database : "+ );//+" with ", dbcoll.countDocuments({}),' records');
 
   let server = app.listen(port, function () {
-    console.log('Spectre server (port:' + server.address().port + ') connected to ' + dbUrl + "::" + db.databaseName);
+    console.log('Spectre server (port:' + server.address().port + ') connected to ' + dbUrl);// + "::" + db.databaseName);
   });
 });
 
@@ -37,7 +43,7 @@ app.get('/', (req, res) => res.send('Welcome to the SPECTRE server...'));
 app.get("/api/users", function (req, res) {
   dbcoll.find({}).toArray(function (err, docs) {
     if (err) {
-      handleError(res, err.message, "Failed to get contacts");
+      handleError(res, err.message, "Failed to get users");
     } else {
       res.status(200).json(docs);
     }
