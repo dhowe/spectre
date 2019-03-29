@@ -13,4 +13,4 @@ GET: find user by id
 
 PUT: update user by id
 
-DELETE: deletes user by id
+DELETE: delete user by id
