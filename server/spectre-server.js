@@ -21,7 +21,7 @@ mongo.MongoClient.connect(dbUrl, { useNewUrlParser: true }, function (err, clien
   dbcoll = db.collection(collName);
 
   let server = app.listen(port, function () {
-    console.log('spectre-server -> ' + dbUrl);
+    console.log('spectre-server running on port '+server.address().port);
   });
 });
 
