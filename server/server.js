@@ -18,9 +18,10 @@ mongo.MongoClient.connect(process.env.MONGODB_URI || localDb, { useNewUrlParser:
   }
 
   db = client.db('spectre'); // global for connection pooling
+  //console.log("using database : "+ );//+" with ", db.collection(collection).countDocuments({}),' records');
 
   let server = app.listen(process.env.port || port, function () {
-    console.log('Spectre-server running on port ' + server.address().port);
+    console.log('Spectre-server connected to ' + db.databaseName + ':' + server.address().port);
   });
 });
 
@@ -104,9 +105,8 @@ app.delete("/api/users/:id", function (req, res) {
   });
 });
 
-
 // Generic error handler used by all endpoints.
 function handleError(res, reason, message, code) {
   console.log("ERROR: " + reason);
-  res.status(code || 500).json({"error": message});
+  res.status(code || 500).json({ "error": message });
 }
