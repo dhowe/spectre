@@ -8,8 +8,6 @@ const collName = 'users';
 let db, dbcoll;
 let port = process.env.port || 8083;
 
-console.log(dbUrl);
-
 const app = express();
 app.use(bodyParser.json());
 
