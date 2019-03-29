@@ -10,9 +10,8 @@ const mlabDb = 'spectre-client:9OcDekAshelfendyaj!@ds127646.mlab.com:27646';
 
 let db, dbcoll;
 let port = process.env.port || 3000;
-let dbUrl = process.env.MONGODB_URI || localDb;
-
-dbUrl = 'mongodb://' + mlabDb + '/' + dbName;
+let dbUrl =  process.env.MONGODB_URI || 'mongodb://' + mlabDb + '/' + dbName;//process.env.MONGODB_URI || localDb;dbUrl = process.env.MONGODB_URI || 'mongodb://' + mlabDb + '/' + dbName;
+console.log('process.env.MONGODB_URI: ' + process.env.MONGODB_URI);
 console.log('dbUrl: ' + dbUrl);
 
 const app = express();
