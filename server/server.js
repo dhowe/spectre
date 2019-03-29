@@ -25,6 +25,8 @@ mongo.MongoClient.connect(process.env.MONGODB_URI || localDb, { useNewUrlParser:
   });
 });
 
+app.get('/', (req, res) => res.send('Welcome to the SPECTRE server...'));
+
 /*  "/api/users"
  *    GET: finds all users
  *    POST: creates a new user
