@@ -1,18 +1,16 @@
 const express = require('express');
 const bodyParser = require("body-parser");
 const mongo = require("mongodb");
-const OId = mongo.ObjectID;
 
 const collName = 'users';
 const dbName = 'heroku_n1rrs8xc';
 const localDb = 'localhost:27017';
 const mlabDb = 'spectre-client:9OcDekAshelfendyaj!@ds127646.mlab.com:27646';
+const OId = mongo.ObjectID;
 
 let db, dbcoll;
 let port = process.env.port || 3000;
-let dbUrl =  process.env.SPECTREDB_URI || 'mongodb://' + mlabDb + '/' + dbName;//process.env.MONGODB_URI || localDb;dbUrl = process.env.MONGODB_URI || 'mongodb://' + mlabDb + '/' + dbName;
-console.log('process.env.SPECTREDB_URI: ' + process.env.SPECTREDB_URI);
-console.log('dbUrl: ' + dbUrl);
+let dbUrl = 'mongodb://' + mlabDb + '/' + dbName;
 
 const app = express();
 app.use(bodyParser.json());
@@ -39,7 +37,7 @@ app.get('/', (req, res) => res.send('Welcome to the SPECTRE server...'));
  *    POST: creates a new user
  */
 
-app.get("/api/users", function (req, res) {
+app.get("/spectre/api/users", function (req, res) {
   dbcoll.find({}).toArray(function (err, docs) {
     if (err) {
       handleError(res, err.message, "Failed to get users");
@@ -49,7 +47,7 @@ app.get("/api/users", function (req, res) {
   });
 });
 
-app.post("/api/users", function (req, res) {
+app.post("/spectre/api/users", function (req, res) {
 
   let newUser = req.body;
   newUser.createDate = new Date();
@@ -78,7 +76,7 @@ app.post("/api/users", function (req, res) {
  *    DELETE: deletes user by id
  */
 
-app.get("/api/users/:id", function (req, res) {
+app.get("/spectre/api/users/:id", function (req, res) {
   dbcoll.findOne({ _id: new OId(req.params.id) }, function (err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to get user");
@@ -88,7 +86,7 @@ app.get("/api/users/:id", function (req, res) {
   });
 });
 
-app.put("/api/users/:id", function (req, res) {
+app.put("/spectre/api/users/:id", function (req, res) {
   let updateUser = req.body;
   delete updateUser._id;
 
@@ -104,7 +102,7 @@ app.put("/api/users/:id", function (req, res) {
 
 ////////////////////////////////////////////////////////////////////////
 
-app.delete("/api/users/:id", function (req, res) {
+app.delete("/spectre/api/users/:id", function (req, res) {
   dbcoll.deleteOne({ _id: new OId(req.params.id) }, function (err, result) {
     if (err) {
       handleError(res, err.message, "Failed to delete user");
