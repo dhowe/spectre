@@ -9,7 +9,7 @@ const mlabDb = 'spectre-client:9OcDekAshelfendyaj!@ds127646.mlab.com:27646';
 const OId = mongo.ObjectID;
 
 let db, dbcoll;
-let port = process.env.port || 3000;
+let port = process.env.port || 8083;
 let dbUrl = 'mongodb://' + mlabDb + '/' + dbName;
 
 const app = express();
