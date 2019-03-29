@@ -29,7 +29,7 @@ mongo.MongoClient.connect(dbUrl, { useNewUrlParser: true }, function (err, clien
   });
 });
 
-app.get('/', (req, res) => res.send('SPECTRE says nooo...'));
+app.get('/', (req, res) => res.send('SPECTRE says nooo..'));
 
 /*  "/api/users"
  *    GET: finds all users
