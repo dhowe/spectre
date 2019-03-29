@@ -4,14 +4,13 @@ const mongo = require("mongodb");
 
 const localDb = "mongodb://localhost:27017/spectre";
 const OId = mongo.ObjectID;
-const collection = 'users';
 
-let db, port = 3000;
+let db, dbcoll;
+let port = process.env.port || 3000;
+let dbUrl = process.env.MONGODB_URI || localDb;
 
 const app = express();
 app.use(bodyParser.json());
-
-let dbUrl = process.env.MONGODB_URI || localDb;
 
 mongo.MongoClient.connect(dbUrl, { useNewUrlParser: true }, function (err, client) {
   if (err) {
@@ -20,9 +19,10 @@ mongo.MongoClient.connect(dbUrl, { useNewUrlParser: true }, function (err, clien
   }
 
   db = client.db('spectre'); // global for connection pooling
-  //console.log("using database : "+ );//+" with ", db.collection(collection).countDocuments({}),' records');
+  dbcoll = db.collection('users');
+  //console.log("using database : "+ );//+" with ", dbcoll.countDocuments({}),' records');
 
-  let server = app.listen(process.env.port || port, function () {
+  let server = app.listen(port, function () {
     console.log('Spectre server connected to ' + dbUrl + "@" + db.databaseName + ':' + server.address().port);
   });
 });
@@ -35,7 +35,7 @@ app.get('/', (req, res) => res.send('Welcome to the SPECTRE server...'));
  */
 
 app.get("/api/users", function (req, res) {
-  db.collection(collection).find({}).toArray(function (err, docs) {
+  dbcoll.find({}).toArray(function (err, docs) {
     if (err) {
       handleError(res, err.message, "Failed to get contacts");
     } else {
@@ -56,7 +56,7 @@ app.post("/api/users", function (req, res) {
   } else if (!req.body.login) {
     handleError(res, "Invalid user", "Must provide an login", 400);
   } else {
-    db.collection(collection).insertOne(newUser, function (err, doc) {
+    dbcoll.insertOne(newUser, function (err, doc) {
       if (err) {
         handleError(res, err.message, "Failed to create new contact.");
       } else {
@@ -74,7 +74,7 @@ app.post("/api/users", function (req, res) {
  */
 
 app.get("/api/users/:id", function (req, res) {
-  db.collection(collection).findOne({ _id: new OId(req.params.id) }, function (err, doc) {
+  dbcoll.findOne({ _id: new OId(req.params.id) }, function (err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to get user");
     } else {
@@ -87,7 +87,7 @@ app.put("/api/users/:id", function (req, res) {
   let updateUser = req.body;
   delete updateUser._id;
 
-  db.collection(collection).updateOne({ _id: new OId(req.params.id) }, updateUser, function (err, doc) {
+  dbcoll.updateOne({ _id: new OId(req.params.id) }, updateUser, function (err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to update user");
     } else {
@@ -100,7 +100,7 @@ app.put("/api/users/:id", function (req, res) {
 ////////////////////////////////////////////////////////////////////////
 
 app.delete("/api/users/:id", function (req, res) {
-  db.collection(collection).deleteOne({ _id: new OId(req.params.id) }, function (err, result) {
+  dbcoll.deleteOne({ _id: new OId(req.params.id) }, function (err, result) {
     if (err) {
       handleError(res, err.message, "Failed to delete user");
     } else {
