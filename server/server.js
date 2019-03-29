@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require("body-parser");
 const mongo = require("mongodb");
 
-const localDb = "mongodb://localhost:27017/spectre";
+const localDb = "mongodb://localhost:27017/";
 const OId = mongo.ObjectID;
 
 let db, dbcoll;
@@ -23,7 +23,7 @@ mongo.MongoClient.connect(dbUrl, { useNewUrlParser: true }, function (err, clien
   //console.log("using database : "+ );//+" with ", dbcoll.countDocuments({}),' records');
 
   let server = app.listen(port, function () {
-    console.log('Spectre server connected to ' + dbUrl + "@" + db.databaseName + ':' + server.address().port);
+    console.log('Spectre server (port:' + server.address().port + ') connected to ' + dbUrl + "::" + db.databaseName);
   });
 });
 
