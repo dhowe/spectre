@@ -10,8 +10,8 @@ POST: creates a new user
 
 ### /api/users/:id
 
-GET: find user by id
+GET: finds user by id
 
-PUT: update user by id
+PUT: updates user by id
 
-DELETE: delete user by id
+DELETE: deletes user by id
