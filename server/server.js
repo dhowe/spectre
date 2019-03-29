@@ -11,7 +11,9 @@ let db, port = 3000;
 const app = express();
 app.use(bodyParser.json());
 
-mongo.MongoClient.connect(process.env.MONGODB_URI || localDb, { useNewUrlParser: true }, function (err, client) {
+let dbUrl = process.env.MONGODB_URI || localDb;
+
+mongo.MongoClient.connect(dbUrl, { useNewUrlParser: true }, function (err, client) {
   if (err) {
     console.log(err);
     process.exit(1);
@@ -21,7 +23,7 @@ mongo.MongoClient.connect(process.env.MONGODB_URI || localDb, { useNewUrlParser:
   //console.log("using database : "+ );//+" with ", db.collection(collection).countDocuments({}),' records');
 
   let server = app.listen(process.env.port || port, function () {
-    console.log('Spectre-server connected to ' + db.databaseName + ':' + server.address().port);
+    console.log('Spectre-server connected to ' + dbUrl + "@" + db.databaseName + ':' + server.address().port);
   });
 });
 
