@@ -6,6 +6,7 @@ GET: finds all users
 
 POST: creates a new user
 
+<br>
 
 ### /api/users/:id
 
