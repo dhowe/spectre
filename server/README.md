@@ -1,6 +1,6 @@
-SPECTRE REST API
+## SPECTRE REST API
 
-/*  "/api/users"
- *    GET: finds all users
- *    POST: creates a new user
- */
+### /api/users
+
+GET: finds all users
+POST: creates a new user
