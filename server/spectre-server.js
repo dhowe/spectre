@@ -23,10 +23,9 @@ mongo.MongoClient.connect(dbUrl, { useNewUrlParser: true }, function (err, clien
 
   db = client.db(dbName); // global for connection pooling
   dbcoll = db.collection(collName);
-  //console.log("using database : "+ );//+" with ", dbcoll.countDocuments({}),' records');
 
   let server = app.listen(port, function () {
-    console.log('Spectre server connected to ' + dbUrl);// + "::" + db.databaseName);
+    console.log('Spectre-server: ' + dbUrl);
   });
 });
 
