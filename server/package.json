@@ -1,12 +1,12 @@
 {
-  "name": "specserver",
+  "name": "spectre-server",
   "version": "1.0.0",
   "description": "Server component for the SPECTRE system",
   "main": "app.js",
   "scripts": {
     "test": "mocha ./tests --recursive",
     "test:watch": "mocha --watch ./tests --recursive",
-    "start": "node spectre-server.js"
+    "start": "node spectre-server"
   },
   "author": "",
   "dependencies": {
