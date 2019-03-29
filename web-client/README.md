@@ -1,4 +1,13 @@
-# React-template
+# React-starter
+Demo at https://joseph-allen-react-starter.netlify.com/
+
+A good React App has:
+* Linting [x]
+* Automated Testing [x]
+* Material UI [x]
+* Theming solution [x]
+* Deploys to Netlify [x]
+* Routing []
 
 ## Installation
 
@@ -6,9 +15,9 @@ We use node, npm and yarn.
 
 ### Dependencies and Versions
 
-Node version: v9.11.1
-npm version: v5.6.0
-yarn version: v1.6
+Node version: v10.15.3
+npm version: v6.4.1
+yarn version: v1.15.2
 
 Test versions with:
 
