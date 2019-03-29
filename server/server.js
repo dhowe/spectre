@@ -29,7 +29,7 @@ mongo.MongoClient.connect(dbUrl, { useNewUrlParser: true }, function (err, clien
   //console.log("using database : "+ );//+" with ", dbcoll.countDocuments({}),' records');
 
   let server = app.listen(port, function () {
-    console.log('Spectre server (port:' + server.address().port + ') connected to ' + dbUrl);// + "::" + db.databaseName);
+    console.log('Spectre server connected to ' + dbUrl);// + "::" + db.databaseName);
   });
 });
 
