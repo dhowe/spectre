@@ -23,7 +23,6 @@ exports.similar = function (req, res) {
   });
 };
 
-// Handle create user actions
 exports.create = function (req, res) {
 
   if (!req.body.loginType) {
@@ -40,7 +39,6 @@ exports.create = function (req, res) {
   user.gender = req.body.gender;
   user.loginType = req.body.loginType;
 
-  // save the user and check for errors
   user.save(function (err) {
     if (err) return error(res, err);
     res.json({
@@ -50,8 +48,8 @@ exports.create = function (req, res) {
   });
 };
 
-// Handle view user info
 exports.view = function (req, res) {
+
   User.findById(req.params.user_id, function (err, user) {
     if (err) return error(res, 'Unable to find user #' + req.params.user_id);
     res.json({
@@ -61,7 +59,6 @@ exports.view = function (req, res) {
   });
 };
 
-// Handle update user info
 exports.update = function (req, res) {
 
   User.findById(req.params.user_id, function (err, user) {
@@ -72,7 +69,6 @@ exports.update = function (req, res) {
     user.email = req.body.email;
     user.phone = req.body.phone;
 
-    // save the user and check for errors
     user.save(function (err) {
       if (err) return error(res, err);
       res.json({
@@ -83,7 +79,6 @@ exports.update = function (req, res) {
   });
 };
 
-// Handle delete user
 exports.delete = function (req, res) {
 
   User.remove({ _id: req.params.user_id }, function (err, user) {
@@ -96,6 +91,7 @@ exports.delete = function (req, res) {
 };
 
 function error(res, err, code) {
+
   code = (typeof code != 'undefined') ? code : 400
   res.json({ status: code, message: err });
   return code;
