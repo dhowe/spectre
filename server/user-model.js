@@ -27,16 +27,11 @@ let userSchema = mongoose.Schema({
   }
 });
 
-userSchema.methods.findByOcean = function (cb) {
-  return this.model('Animal').find({ type: this.type }, cb);
+userSchema.methods.findByOcean = function (num) {
+  return 11;
 };
 
 User = module.exports = mongoose.model('user', userSchema);
-
-User.findByOcean = function (user, num) {
-  return 11;
-  // WORKING HERE
-};
 
 function oceanDist(a, b) {
   let total = 0,

@@ -14,11 +14,11 @@ exports.list = function (req, res) {
 exports.similar = function (req, res) {
 
   User.findById(req.params.user_id, function (err, user) {
-    if (err) return error(res, 'Unable to find user #'+req.params.user_id);
-    let users = User.findByOcean(user, 5);
+    if (err) return error(res, 'Unable to find user #' + req.params.user_id);
+    let similars = user.findByOcean(5);
     res.json({
       status: 1,
-      data: users
+      data: similars
     });
   });
 };
@@ -26,14 +26,22 @@ exports.similar = function (req, res) {
 // Handle create user actions
 exports.create = function (req, res) {
 
+  if (!req.body.loginType) {
+    return error(res, "Invalid user: must provide a loginType");
+  } else if (!req.body.name) {
+    return error(res, "Invalid user: must provide a name");
+  } else if (!req.body.login) {
+    return error(res, "Invalid user: must provide a login");
+  }
+
   let user = new User();
   user.name = req.body.name;
   user.login = req.body.login;
+  user.gender = req.body.gender;
   user.loginType = req.body.loginType;
-  user.gender = req.body.gender || '';
 
   // save the user and check for errors
-  User.save(function (err) {
+  user.save(function (err) {
     if (err) return error(res, err);
     res.json({
       status: 1,
@@ -45,7 +53,7 @@ exports.create = function (req, res) {
 // Handle view user info
 exports.view = function (req, res) {
   User.findById(req.params.user_id, function (err, user) {
-    if (err) return error(res, 'Unable to find user #'+req.params.user_id);
+    if (err) return error(res, 'Unable to find user #' + req.params.user_id);
     res.json({
       status: 1,
       data: user
@@ -57,7 +65,7 @@ exports.view = function (req, res) {
 exports.update = function (req, res) {
 
   User.findById(req.params.user_id, function (err, user) {
-    if (err) return error(res, 'Unable to update user #'+req.params.user_id);
+    if (err) return error(res, 'Unable to update user #' + req.params.user_id);
 
     user.name = req.body.name ? req.body.name : user.name;
     user.gender = req.body.gender;
@@ -79,7 +87,7 @@ exports.update = function (req, res) {
 exports.delete = function (req, res) {
 
   User.remove({ _id: req.params.user_id }, function (err, user) {
-    if (err) return error(res, 'Unable to delete user #'+req.params.user_id);
+    if (err) return error(res, 'Unable to delete user #' + req.params.user_id);
     res.json({
       status: 1,
       data: 'User deleted'
@@ -87,10 +95,8 @@ exports.delete = function (req, res) {
   });
 };
 
-function error(res, err) {
-  res.json({
-    status: 0,
-    message: err,
-  });
-  return 0;
+function error(res, err, code) {
+  code = (typeof code != 'undefined') ? code : 400
+  res.json({ status: code, message: err });
+  return code;
 }
