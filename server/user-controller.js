@@ -5,7 +5,7 @@ exports.list = function (req, res) {
   User.get(function (err, users) {
     if (err) return error(res, err);
     res.json({
-      status: 1,
+      status: 200,
       data: users
     });
   });
@@ -15,9 +15,9 @@ exports.similar = function (req, res) {
 
   User.findById(req.params.user_id, function (err, user) {
     if (err) return error(res, 'Unable to find user #' + req.params.user_id);
-    let similars = user.findByOcean(5);
+    let similars = user.findByOcean(res, 5);
     res.json({
-      status: 1,
+      status: 200,
       data: similars
     });
   });
@@ -53,7 +53,7 @@ exports.view = function (req, res) {
   User.findById(req.params.user_id, function (err, user) {
     if (err) return error(res, 'Unable to find user #' + req.params.user_id);
     res.json({
-      status: 1,
+      status: 200,
       data: user
     });
   });
@@ -72,7 +72,7 @@ exports.update = function (req, res) {
     user.save(function (err) {
       if (err) return error(res, err);
       res.json({
-        status: 1,
+        status: 200,
         data: user
       });
     });
@@ -84,7 +84,7 @@ exports.delete = function (req, res) {
   User.remove({ _id: req.params.user_id }, function (err, user) {
     if (err) return error(res, 'Unable to delete user #' + req.params.user_id);
     res.json({
-      status: 1,
+      status: 200,
       data: 'User deleted'
     });
   });

@@ -1,13 +1,18 @@
 let mongoose = require('mongoose');
 
-let userSchema = mongoose.Schema({
+let UserSchema = mongoose.Schema({
   name: {
     type: String,
     required: true
   },
-  ocean: {
-    type: [Number],
-    default: undefined
+  traits: {
+    "Agreeableness": Number,
+    "Conscientiousness": Number,
+    "Extraversion": Number,
+    "Openness": Number,
+    "Neuroticism": Number,
+    "Female": Number,
+    "Age": Number
   },
   login: {
     type: String,
@@ -19,7 +24,6 @@ let userSchema = mongoose.Schema({
   },
   gender: {
     type: String,
-    default: undefined
   },
   createdAt: {
     type: Date,
@@ -27,11 +31,51 @@ let userSchema = mongoose.Schema({
   }
 });
 
-userSchema.methods.findByOcean = function (num) {
+// let user = new UserSchema({
+//   name: {
+//     type: String,
+//     required: true
+//   },
+//   traits: {
+//     "Agreeableness": Number,
+//     "Conscientiousness": Number,
+//     "Extraversion": Number,
+//     "Openness": Number,
+//     "Neuroticism": Number "Female": Number,
+//     "Age": Number
+//   },
+//   login: {
+//     type: String,
+//     required: true
+//   },
+//   loginType: {
+//     type: String,
+//     required: true
+//   },
+//   gender: {
+//     type: String,
+//   }
+// });
+
+UserSchema.methods.findByOcean = function (res, num) {
+  let user = this;
+  User.find({})
+    .limit(num)
+    .exec(function (err, instances) {
+      sorted = oceanSort(user, instances); // Sorting here
+      console.log(sorted);
+    })
   return 11;
 };
 
-User = module.exports = mongoose.model('user', userSchema);
+User = module.exports = mongoose.model('user', UserSchema);
+
+function oceanSort(user, others) {
+  others.sort(function (a, b) {
+    return oceanDist(a, b);
+  });
+  return others;
+}
 
 function oceanDist(a, b) {
   let total = 0,
