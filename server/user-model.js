@@ -1,4 +1,5 @@
 let mongoose = require('mongoose');
+let { oceanSort } = require('./predictions');
 
 let UserSchema = mongoose.Schema({
   name: {
@@ -6,14 +7,13 @@ let UserSchema = mongoose.Schema({
     required: true
   },
   traits: {
-    "Agreeableness": Number,
-    "Conscientiousness": Number,
-    "Extraversion": Number,
-    "Openness": Number,
-    "Neuroticism": Number,
-    "Female": Number,
-    "Age": Number
+    agreeableness: Number,
+    conscientiousness: Number,
+    extraversion: Number,
+    openness: Number,
+    neuroticism: Number,
   },
+  predictions: Object,
   login: {
     type: String,
     required: true
@@ -31,61 +31,42 @@ let UserSchema = mongoose.Schema({
   }
 });
 
-// let user = new UserSchema({
-//   name: {
-//     type: String,
-//     required: true
-//   },
-//   traits: {
-//     "Agreeableness": Number,
-//     "Conscientiousness": Number,
-//     "Extraversion": Number,
-//     "Openness": Number,
-//     "Neuroticism": Number "Female": Number,
-//     "Age": Number
-//   },
-//   login: {
-//     type: String,
-//     required: true
-//   },
-//   loginType: {
-//     type: String,
-//     required: true
-//   },
-//   gender: {
-//     type: String,
-//   }
-// });
+UserSchema.methods.randomizeTraits = function () {
+  this.traitNames().forEach((t) => this.traits[t] = Math.random());
+  //this.traits.age = Math.round(20 + Math.random() * 50);
+  return this;
+}
 
-UserSchema.methods.findByOcean = function (res, num) {
+UserSchema.methods.traitNames = function () {
+  return Object.keys(this.traits);
+}
+
+UserSchema.methods.findByOcean = function (res, num, cb) {
   let user = this;
   User.find({})
-    .limit(num)
+    .limit(num + 1)
     .exec(function (err, instances) {
       sorted = oceanSort(user, instances); // Sorting here
-      console.log(sorted);
-    })
-  return 11;
+      //sorted.forEach((u) => console.log(u.name));
+      sorted.shift();
+      cb(sorted);
+    });
+  return this;
 };
 
+function randName() {
+  return Math.random().toString(36).replace(/[^a-z]+/g, '').substring(0, 5);
+}
+
+UserSchema.statics.Create = function (tmpl) {
+  let user = new User();
+  user.name = tmpl && tmpl.name ? tmpl.name : randName();
+  user.login = tmpl && tmpl.login ? tmpl.login : user.name + '@' + randName() + '.com';
+  user.loginType = tmpl && tmpl.loginType ? tmpl.loginType : 'facebook';
+  return user.randomizeTraits();
+}
+
 User = module.exports = mongoose.model('user', UserSchema);
-
-function oceanSort(user, others) {
-  others.sort(function (a, b) {
-    return oceanDist(a, b);
-  });
-  return others;
-}
-
-function oceanDist(a, b) {
-  let total = 0,
-    diff;
-  for (let i = 0; i < a.length; i++) {
-    diff = b[i] - a[i];
-    total += diff * diff;
-  }
-  return Math.sqrt(total);
-}
 
 module.exports.get = function (callback, limit) {
   User.find(callback).limit(limit);

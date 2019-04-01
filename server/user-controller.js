@@ -14,12 +14,11 @@ exports.list = function (req, res) {
 exports.similar = function (req, res) {
 
   User.findById(req.params.user_id, function (err, user) {
-    if (err) return error(res, 'Unable to find user #' + req.params.user_id);
-    let similars = user.findByOcean(res, 5);
-    res.json({
-      status: 200,
-      data: similars
-    });
+      if (err) return error(res, 'Unable to find user #' + req.params.user_id);
+      let similars = user.findByOcean(res, 1, (users) => res.json({
+        status: 200,
+        data: users
+      }));
   });
 };
 
@@ -42,7 +41,7 @@ exports.create = function (req, res) {
   user.save(function (err) {
     if (err) return error(res, err);
     res.json({
-      status: 1,
+      status: 200,
       data: user
     });
   });
