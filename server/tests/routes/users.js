@@ -6,7 +6,7 @@ const User = require('../../user-model');
 chai.use(require('chai-http'));
 const expect = chai.expect;
 
-describe('Users Route', () => {
+describe('User Routes', () => {
 
   beforeEach((done) => { // empty the database before each
     User.deleteMany({}, (err) => { done() });

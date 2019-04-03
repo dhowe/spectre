@@ -15,6 +15,10 @@ app.get(['/', '/spectre', '/spectre/api'], (req, res) => {
   });
 });
 
+if (!require('fs').existsSync('.env')) {
+  throw Error('Expected DB info in .env file');
+}
+
 mongoose.connect(dburl, { useNewUrlParser: true });
 
 module.exports = app.listen(8083, function () {
