@@ -8,12 +8,6 @@ const User = require('../user-model');
 
 describe('User Schema', function () {
 
-  describe('User.traitNames()', function () {
-    it('Should return big5 trait names', function () {
-      expect(User.Create().traitNames().length).to.equal(5);
-    });
-  });
-
   describe('User.Create()', function () {
 
     it('Should correctly complete a test user', function () {
@@ -31,6 +25,10 @@ describe('User Schema', function () {
       expect(user.loginType).eq("twitter");
       expect(Object.keys(user.traits).length).to.equal(5);
     });
+
+    it('Should return Big5 trait names', function () {
+      expect(User.Create().traitNames().length).to.equal(5);
+    });
   })
 });
 
@@ -45,9 +43,11 @@ describe('Ocean Sort', function () {
       assert.throws(() => oceanSort(User.Create(), []));
     });
     it('Should sort candidates by distance', function () {
+
       let userA = User.Create();
       let userB = User.Create();
       let userC = User.Create();
+
       userA.traits = {
         agreeableness: 0,
         conscientiousness: 0,
@@ -69,7 +69,13 @@ describe('Ocean Sort', function () {
         openness: 1,
         neuroticism: 1
       };
-      let sorted = oceanSort(userA, [userA, userB, userC])
+
+      let sorted = oceanSort(userA, [userA, userB, userC]);
+      expect(sorted.length).eq(2);
+      expect(sorted[0]._id).eq(userB._id);
+      expect(sorted[1]._id).eq(userC._id);
+
+      sorted = oceanSort(userA, [userB, userC]);
       expect(sorted.length).eq(2);
       expect(sorted[0]._id).eq(userB._id);
       expect(sorted[1]._id).eq(userC._id);

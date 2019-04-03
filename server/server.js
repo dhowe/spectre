@@ -1,7 +1,7 @@
 let express = require('express');
 let mongoose = require('mongoose');
 let bodyparser = require('body-parser');
-let { dburl } = require('./config');
+let dburl = require('./config').dburl;
 let app = express();
 
 app.use(bodyparser.json());
@@ -10,13 +10,13 @@ app.use('/spectre/api', require("./routes"));
 
 app.get(['/', '/spectre', '/spectre/api'], (req, res) => {
   res.json({
-    status: 'API available',
-    message: 'See /spectre/api',
+    status: 200,
+    data: 'See /spectre/api',
   });
 });
 
 mongoose.connect(dburl, { useNewUrlParser: true });
 
-app.listen(8083, function () {
+module.exports = app.listen(8083, function () {
   console.log("SPECTRE running on port 8083");
 });

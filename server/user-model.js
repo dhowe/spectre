@@ -7,10 +7,10 @@ let UserSchema = mongoose.Schema({
     required: true
   },
   traits: {
-    agreeableness: Number,
-    conscientiousness: Number,
-    extraversion: Number,
     openness: Number,
+    conscientiousness: Number,
+    agreeableness: Number,
+    extraversion: Number,
     neuroticism: Number,
   },
   predictions: Object,
