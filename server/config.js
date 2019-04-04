@@ -2,7 +2,8 @@ require('dotenv').config();
 
 let env = process.env;
 
-module.exports = {
-  dburl: 'mongodb://' + env.DB_USER + ':' + env.DB_PASS +
-    '@' + env.DB_HOST + ':' + env.DB_PORT + '/' + env.DB_NAME
-};
+let auth = '';
+let host = env.DB_HOST + ':' + env.DB_PORT + '/' + env.DB_NAME;
+if (env.DB_USER && env.DB_USER.length) env.DB_USER += ':' + env.DB_PASS + '@';
+
+module.exports = { dburl: 'mongodb://' + auth + host };

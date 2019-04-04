@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const chai = require('chai');
 const server = require('../../server');
 const User = require('../../user-model');
@@ -89,7 +89,7 @@ describe('User Routes', () => {
         });
     });
 
-    it('it should INSERT a complete user', (done) => {
+    it('it should insert a complete user record', (done) => {
       let user = {
         name: "test",
         login: "daniel2@aol.com",
@@ -118,7 +118,7 @@ describe('User Routes', () => {
   });
 
   describe('GET /spectre/api/users', () => {
-    it('it should return all users', (done) => {
+    it('it should return a list of all users', (done) => {
       chai.request(server)
         .get('/spectre/api/users')
         .end((err, res) => {

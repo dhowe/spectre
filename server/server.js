@@ -9,10 +9,7 @@ app.use(bodyparser.urlencoded({ extended: true }));
 app.use('/spectre/api', require("./routes"));
 
 app.get(['/', '/spectre', '/spectre/api'], (req, res) => {
-  res.json({
-    status: 200,
-    data: 'See /spectre/api',
-  });
+  res.status(200).send('See /spectre/api');
 });
 
 if (!require('fs').existsSync('.env')) {
