@@ -5,6 +5,8 @@ import './App.css';
 import { Route, BrowserRouter as Router } from 'react-router-dom';
 import TouchToBegin from './Components/TouchToBegin/TouchToBegin';
 import Placeholder from './Page/Placeholder/Placeholder';
+import Login from './Page/Login/Login';
+
 
 const theme = createMuiTheme({
   palette: {
@@ -25,6 +27,7 @@ function App() {
           <Router>
             <Route exact path="/" component={Placeholder} />
             <Route exact path="/touch-to-begin" component={TouchToBegin} />
+            <Route exact path="/login" component={Login} />
           </Router>
         </header>
       </div>

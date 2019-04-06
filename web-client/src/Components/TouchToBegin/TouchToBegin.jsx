@@ -5,6 +5,8 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
+import Login from '../../Page/Login/Login';
+
 
 const styles = {
     root: {
@@ -41,7 +43,7 @@ function TouchToBegin(props) {
                     </Typography>
                 </Toolbar>
             </AppBar>
-            <Link className={classes.TouchToBegin_images} component={Link} to="/touch-to-begin">
+            <Link className={classes.TouchToBegin_images} component={Login} to="/login">
                 <img alt="Touch to Continue" className={classes.TouchToBegin_image} src="https://www.atlantisbahamas.com/media/Things%20To%20Do/Water%20Park/Beaches/Hero/Experiences_Beach.jpg"></img>
                 <img alt="Touch to Continue" className={classes.TouchToBegin_logo} src="https://i.gyazo.com/dedc1236cc349c728e64b134504bf774.png"></img>
             </Link>
