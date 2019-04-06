@@ -1,4 +1,5 @@
 let mongoose = require('mongoose');
+let oceanText = require('./ocean-text');
 let { oceanSort } = require('./predictions');
 
 let UserSchema = mongoose.Schema({
@@ -31,6 +32,27 @@ let UserSchema = mongoose.Schema({
     default: Date.now
   }
 });
+
+UserSchema.methods.generateDescription = function() {
+
+  if (typeof this.traits === 'undefined' ||
+    typeof this.traits.openness === 'undefined') {
+    throw Error('User with traits required');
+  }
+
+  let sent = '',
+    traitNames = this.traitNames();
+
+  //console.log(user);
+  for (var i = 0; i < traitNames.length; i++) {
+    let val = this.traits[traitNames[i]];
+    let idx = Math.min(traitNames.length-1, Math.floor(val * traitNames.length));
+    //console.log(traits[i], val,'->',idx);
+    sent += oceanText[traitNames[i]].text[idx] + ' ';
+  }
+
+  return sent.trim();
+}
 
 UserSchema.methods.randomizeTraits = function () {
   this.traitNames().forEach((t) => this.traits[t] = Math.random());

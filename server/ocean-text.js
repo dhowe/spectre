@@ -58,34 +58,10 @@ let neuroticism = {
   ]
 }
 
-let oceanText = {
+module.exports = {
   openness: openness,
   conscientiousness: conscientiousness,
   extraversion: extraversion,
   agreeableness: agreeableness,
   neuroticism: neuroticism,
 }
-
-function generateDesc(user) {
-
-  if (typeof user === 'undefined' ||
-    typeof user.traits === 'undefined' ||
-    typeof user.traits.openness === 'undefined') {
-    throw Error('User with traits required');
-  }
-
-  let sent = '',
-    traits = user.traitNames();
-
-  //console.log(user);
-  for (var i = 0; i < traits.length; i++) {
-    let val = user.traits[traits[i]];
-    let idx = Math.min(traits.length-1, Math.floor(val * traits.length));
-    //console.log(traits[i], val,'->',idx);
-    sent += oceanText[traits[i]].text[idx] + ' ';
-  }
-
-  return sent.trim();
-}
-
-module.exports = { generateDesc: generateDesc };

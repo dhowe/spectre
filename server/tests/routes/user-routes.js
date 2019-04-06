@@ -18,7 +18,7 @@ describe('User Routes', () => {
       chai.request(server)
         .post('/spectre/api/users')
         .send({
-          name: "Daniel2",
+          name: "Foobar",
           loginType: "facebook",
         })
         .end((err, res) => {
@@ -33,8 +33,8 @@ describe('User Routes', () => {
       chai.request(server)
         .post('/spectre/api/users')
         .send({
-          login: "dan@cnn.com",
-          name: "bill",
+          login: "foo@cnn.com",
+          name: "foo",
         })
         .end((err, res) => {
           expect(res).to.have.status(400);
@@ -44,13 +44,13 @@ describe('User Routes', () => {
         });
     });
 
-    it('it should not insert user with bad login-type', (done) => {
+    it('it should not insert user with bad login type', (done) => {
       chai.request(server)
         .post('/spectre/api/users')
         .send({
-          login: "dan@cnn.com",
+          login: "foo@cnn.com",
           loginType: "foobar",
-          name: "dan",
+          name: "foo",
         })
         .end((err, res) => {
           expect(res).to.have.status(400);
@@ -64,7 +64,7 @@ describe('User Routes', () => {
       chai.request(server)
         .post('/spectre/api/users')
         .send({
-          login: "dan@cnn.com",
+          login: "foo@cnn.com",
           loginType: "foobar",
           gender: "foobar",
         })
@@ -108,7 +108,7 @@ describe('User Routes', () => {
 
     it('it should insert a complete user record', (done) => {
       let user = {
-        name: "test",
+        name: "daniel2",
         login: "daniel2@aol.com",
         loginType: "facebook",
         traits: {
