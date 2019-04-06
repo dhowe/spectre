@@ -3,8 +3,7 @@ let { oceanSort } = require('./predictions');
 
 let UserSchema = mongoose.Schema({
   name: {
-    type: String,
-    required: true
+    type: String
   },
   traits: {
     openness: Number,
@@ -20,10 +19,12 @@ let UserSchema = mongoose.Schema({
   },
   loginType: {
     type: String,
+    enum: ['twitter', 'google', 'facebook', 'email'],
     required: true
   },
   gender: {
     type: String,
+    enum: ['male', 'female', 'other']
   },
   createdAt: {
     type: Date,

@@ -29,12 +29,12 @@ describe('User Routes', () => {
         });
     });
 
-    it('it should not insert user without name', (done) => {
+    it('it should not insert user without login type', (done) => {
       chai.request(server)
         .post('/spectre/api/users')
         .send({
           login: "dan@cnn.com",
-          loginType: "facebook",
+          name: "bill",
         })
         .end((err, res) => {
           expect(res).to.have.status(400);
@@ -44,12 +44,29 @@ describe('User Routes', () => {
         });
     });
 
-    it('it should not insert user without login type', (done) => {
+    it('it should not insert user with bad login-type', (done) => {
       chai.request(server)
         .post('/spectre/api/users')
         .send({
           login: "dan@cnn.com",
-          name: "bill",
+          loginType: "foobar",
+          name: "dan",
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          expect(res.body).is.a('object');
+          expect(res.body).has.property('error');
+          done();
+        });
+    });
+
+    it('it should not insert user with bad gender', (done) => {
+      chai.request(server)
+        .post('/spectre/api/users')
+        .send({
+          login: "dan@cnn.com",
+          loginType: "foobar",
+          gender: "foobar",
         })
         .end((err, res) => {
           expect(res).to.have.status(400);

@@ -1,8 +1,7 @@
 const assert = require('chai').assert;
 const expect = require('chai').expect;
 
-const { oceanDist } = require('../predictions');
-const { oceanSort } = require('../predictions');
+const { oceanDist, oceanSort } = require('../predictions');
 
 const User = require('../user-model');
 
@@ -32,15 +31,15 @@ describe('User Schema', function () {
   })
 });
 
-describe('Ocean Sort', function () {
+describe('OCEAN Predictions', function () {
 
   describe('Predictions.oceanSort()', function () {
     it('Should error if a user is not provided', function () {
-      assert.throws(() => oceanSort(undefined, []));
+      expect(() => oceanSort(undefined, [])).to.throw();
     });
     it('Should error if candidates are not provided', function () {
-      assert.throws(() => oceanSort(User.Create(), undefined));
-      assert.throws(() => oceanSort(User.Create(), []));
+      expect(() => oceanSort(User.Create(), undefined)).to.throw();
+      expect(() => oceanSort(User.Create(), [])).to.throw();
     });
     it('Should sort candidates by distance to target', function () {
 
@@ -81,12 +80,10 @@ describe('Ocean Sort', function () {
       expect(sorted[1]._id).eq(userC._id);
     });
   })
-});
 
-describe('Ocean Distance', function () {
   describe('Predictions.oceanDist()', function () {
     it('Should error if two users are not provided', function () {
-      assert.throws(() => oceanDist(undefined, new User()));
+      expect(() => oceanDist(undefined, new User())).to.throw();
     });
     it('Should return 0 if user traits are the same', function () {
       let user = User.Create();
@@ -116,15 +113,5 @@ describe('Ocean Distance', function () {
       };
       expect(oceanDist(userA, userB)).eq(1);
     });
-    // it('Should return dist (fixed)', function () {
-    //   oceanDist(a, b);
-    //   expect(res.sendCalledWith).to.equal(.5);
-    // });
-    // it('Should return dist (random)', function () {
-    //   req.body.oceanA = Array.from({length: 5}, () => Math.random());
-    //   req.body.oceanB = Array.from({length: 5}, () => Math.random());
-    //   oceanDist(a, b);
-    //   expect(res.sendCalledWith).to.be.at.least(0);
-    // });
   })
 });

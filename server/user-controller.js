@@ -21,14 +21,11 @@ exports.similar = function (req, res) {
 
 exports.create = function (req, res) {
 
-  //console.log('exports.create **********', Object.keys(req), req.body);
-  if (!req.body.loginType) {
-    return error(res, "Invalid User: no loginType");
-  } else if (!req.body.name) {
-    return error(res, "Invalid User: no name");
-  } else if (!req.body.login) {
-    return error(res, "Invalid User: no login");
-  }
+  if (!req.body.loginType) return error
+    (res, "Bad User: no loginType");
+
+  if (!req.body.login) return error
+    (res, "Bad User: no login");
 
   let user = new User();
   Object.assign(user, req.body);
@@ -42,7 +39,8 @@ exports.create = function (req, res) {
 exports.view = function (req, res) {
 
   User.findById(req.params.uid, function (err, user) {
-    if (err) return error(res, 'Unable to find user #' + req.params.uid);
+    if (err) return error
+      (res, 'Unable to find user #' + req.params.uid);
     res.status(200).send(user);
   });
 };
@@ -50,23 +48,13 @@ exports.view = function (req, res) {
 exports.update = function (req, res) {
 
   User.findById(req.params.uid, function (err, user) {
-    if (err) return error(res, 'Unable to update user #' + req.params.uid);
+    if (err) return error
+      (res, 'Unable to update user #' + req.params.uid);
     Object.assign(user, req.params).save((err, user) => {
-      if (err) return error(res, 'Unable to save user #' + req.params.uid);
+      if (err) return error
+        (res, 'Unable to save user #' + req.params.uid);
       res.status(200).send(user);
     });
-    // user.name = req.params.name ? req.params.name : user.name;
-    // user.gender = req.params.gender;
-    // user.email = req.params.email;
-    // user.phone = req.params.phone;
-    //
-    // user.save(function (err) {
-    //   if (err) return error(res, err);
-    //   res.json({
-    //     status: 200,
-    //     data: user
-    //   });
-    // });
   });
 };
 
