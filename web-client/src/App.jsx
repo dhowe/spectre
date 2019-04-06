@@ -1,15 +1,14 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import purple from '@material-ui/core/colors/purple';
-import green from '@material-ui/core/colors/green';
-import logo from './logo.svg';
+import blue from '@material-ui/core/colors/blue';
 import './App.css';
+import { Route, BrowserRouter as Router } from 'react-router-dom';
+import TouchToBegin from './Components/TouchToBegin/TouchToBegin';
+import Placeholder from './Page/Placeholder/Placeholder';
 
 const theme = createMuiTheme({
   palette: {
-    primary: purple,
-    secondary: green,
+    primary: blue,
   },
   status: {
     danger: 'orange',
@@ -23,10 +22,10 @@ function App() {
         <header className="App-header">
           <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" />
           <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-          <img src={logo} className="App-logo" alt="logo" />
-          <Button variant="contained" color="secondary">
-      Hello World
-          </Button>
+          <Router>
+            <Route exact path="/" component={Placeholder} />
+            <Route exact path="/touch-to-begin" component={TouchToBegin} />
+          </Router>
         </header>
       </div>
     </MuiThemeProvider>
