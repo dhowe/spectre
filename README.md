@@ -1,2 +1,2 @@
 # SPECTRE
-A Data-Driven Influencer
+Worship at the Altar of Dataism
