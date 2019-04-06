@@ -1,17 +1,9 @@
 # React-starter
-Demo at https://joseph-allen-react-starter.netlify.com/
-
-A good React App has:
-* Linting [x]
-* Automated Testing [x]
-* Material UI [x]
-* Theming solution [x]
-* Deploys to Netlify [x]
-* Routing []
+Demo at https://spectre-dev.netlify.com/
 
 ## Installation
 
-We use node, npm and yarn.
+We use node, npm or yarn.
 
 ### Dependencies and Versions
 
@@ -51,15 +43,6 @@ yarn build
 Watch CSS:
 ```
 yarn watch-css
-```
-
-## Storybook
-
-Storybook is a component library that we use alongside the project.
-
-Running the following builds scss and runs storybook:
-```
-yarn run storybook
 ```
 
 ## Testing
