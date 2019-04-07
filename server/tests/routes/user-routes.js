@@ -8,7 +8,7 @@ const expect = chai.expect;
 
 describe('User Routes', () => {
 
-  beforeEach((done) => { // empty the database before each
+  beforeEach((done) => { // empty db before each
     User.deleteMany({}, (err) => { done() });
   });
 

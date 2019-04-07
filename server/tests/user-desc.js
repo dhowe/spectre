@@ -1,8 +1,22 @@
 const assert = require('chai').assert;
 const expect = require('chai').expect;
 const User = require('../user-model');
+const Parser = require('../parser');
 
 describe('Text Generation', function () {
+
+  describe('Parse Choices', function () {
+    it('Should parse groups from an expression', function () {
+      let parser = new Parser();
+      expect(parser.parseChoices("x (a | a | a) x")).eq('x a x');
+      expect(parser.parseChoices("x (a | a | a)")).eq('x a');
+      expect(parser.parseChoices("x (a | a | a)x")).eq('x ax');
+      expect(parser.parseChoices("x(a | a | a) x")).eq('xa x');
+      expect(parser.parseChoices("x(a | a | a)x")).eq('xax');
+      expect(parser.parseChoices("x (a | a | a) (b | b | b) x")).eq('x a b x');
+      expect(parser.parseChoices("x (a | a | a)(b | b | b) x")).eq('x ab x');
+    });
+  });
 
   describe('User.Describe()', function () {
 
@@ -12,16 +26,19 @@ describe('Text Generation', function () {
 
     it('Should describe a user based on OCEAN traits', function () {
       let user = User.Create();
-      user.traits = {
-        agreeableness: 0,
-        conscientiousness: .2,
-        extraversion: .4,
-        openness: .6,
-        neuroticism: .8
-      };
+      user.name = "Jane";
+      user.gender = "female";
+
       let result = user.generateDescription();
-      expect(result).is.a('string');
-      expect(result.length).is.gt(0);
+
+      //console.log(result);
+      // expect(result).is.a('string');
+      // expect(result.length).is.gt(0);
+      // let parts = result.split(/%/);
+      // for (var i = 0; i < 1; i++) {
+      //   console.log(i + ') '+ result[i]+'\n');
+      // }
+
     });
 
   });

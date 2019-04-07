@@ -35,12 +35,32 @@ let UserSchema = mongoose.Schema({
 
 UserSchema.methods.generateDescription = function() {
 
+  function possess(user) {
+    switch(user.gender) {
+      case 'male': return 'his';
+      case 'female': return 'her';
+      case 'other': return 'their';
+    }
+  }
+
+  function pronoun(user) {
+    switch(user.gender) {
+      case 'male': return 'he';
+      case 'female': return 'she';
+      case 'other': return 'they';
+    }
+  }
+
+  function tobe(user) {
+    return (user.gender === 'other') ? 'are' : 'is';
+  }
+
   if (typeof this.traits === 'undefined' ||
     typeof this.traits.openness === 'undefined') {
     throw Error('User with traits required');
   }
 
-  let sent = '',
+  let lines = [],
     traitNames = this.traitNames();
 
   //console.log(user);
@@ -48,10 +68,19 @@ UserSchema.methods.generateDescription = function() {
     let val = this.traits[traitNames[i]];
     let idx = Math.min(traitNames.length-1, Math.floor(val * traitNames.length));
     //console.log(traits[i], val,'->',idx);
-    sent += oceanText[traitNames[i]].text[idx] + ' ';
+    lines.push(oceanText[traitNames[i]].text[idx]);
   }
 
-  return sent.trim();
+  lines[0] = lines[0].replace('[He\/She\/They]', this.name);
+  if (lines[0].startsWith(this.name +' [is\/are]'))
+    lines[0] = lines[0].replace('[is\/are]', this.name);
+
+  lines[0] = lines[0].replace(/\[he\/she\/they\]/g, pronoun(this));
+  lines[0] = lines[0].replace(/\[his\/her\/their\]/g, possess(this));
+  lines[0] = lines[0].replace(/\[is\/are\]/g, tobe(this));
+//  lines[0] = lines[0].replace(/\[is\/are\]/, 'is');
+
+  return lines;
 }
 
 UserSchema.methods.randomizeTraits = function () {
