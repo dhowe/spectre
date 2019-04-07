@@ -101,8 +101,9 @@ describe('User Routes', () => {
               expect(res).to.have.status(400);
               expect(res.body).is.a('object');
               expect(res.body).has.property('error');
+              done();
             });
-          done();
+
         });
     });
 
@@ -135,6 +136,9 @@ describe('User Routes', () => {
   });
 
   describe('GET /spectre/api/users', () => {
+    beforeEach((done) => { // empty the database before each
+      User.deleteMany({}, (err) => { done() });
+    });
     it('it should return a list of all users', (done) => {
       chai.request(server)
         .get('/spectre/api/users')
@@ -148,6 +152,9 @@ describe('User Routes', () => {
   });
 
   describe('GET /spectre/api/users/:uid', () => {
+    beforeEach((done) => { // empty the database before each
+      User.deleteMany({}, (err) => { done() });
+    });
     it('it should fail on bad id', (done) => {
       let uid = '456';
       chai.request(server)
@@ -158,6 +165,7 @@ describe('User Routes', () => {
           done();
         });
     });
+
     it('it should get a user after insertion', (done) => {
       let uid = -1;
       chai.request(server)
@@ -180,8 +188,8 @@ describe('User Routes', () => {
               expect(res.body).is.a('object');
               expect(res.body).has.property('_id');
               expect(res.body._id).eq(uid);
+              done();
             });
-          done();
         });
     });
   });

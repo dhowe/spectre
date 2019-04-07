@@ -6,7 +6,6 @@ const { oceanDist, oceanSort } = require('../predictions');
 const User = require('../user-model');
 
 describe('User Schema', function () {
-
   describe('User.Create()', function () {
 
     it('Should correctly complete a test user', function () {

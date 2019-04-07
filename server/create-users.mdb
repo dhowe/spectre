@@ -1,3 +1,4 @@
+db = db.getSiblingDB('spectre');
 db.users.deleteMany({});
 db.users.createIndex({ login: 1, loginType: 1}, { unique: true });
 
