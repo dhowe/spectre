@@ -71,13 +71,14 @@ UserSchema.methods.generateDescription = function() {
     lines.push(oceanText[traitNames[i]].text[idx]);
   }
 
-  lines[0] = lines[0].replace('[He\/She\/They]', this.name);
-  if (lines[0].startsWith(this.name +' [is\/are]'))
-    lines[0] = lines[0].replace('[is\/are]', this.name);
 
-  lines[0] = lines[0].replace(/\[he\/she\/they\]/g, pronoun(this));
-  lines[0] = lines[0].replace(/\[his\/her\/their\]/g, possess(this));
-  lines[0] = lines[0].replace(/\[is\/are\]/g, tobe(this));
+  // lines[0] = lines[0].replace('[He\/She\/They]', this.name);
+  // if (lines[0].startsWith(this.name +' [is\/are]'))
+  //   lines[0] = lines[0].replace('[is\/are]', this.name);
+  //
+  // lines[0] = lines[0].replace(/\[he\/she\/they\]/g, pronoun(this));
+  // lines[0] = lines[0].replace(/\[his\/her\/their\]/g, possess(this));
+  // lines[0] = lines[0].replace(/\[is\/are\]/g, tobe(this));
 //  lines[0] = lines[0].replace(/\[is\/are\]/, 'is');
 
   return lines;
