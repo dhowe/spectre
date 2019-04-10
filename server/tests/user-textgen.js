@@ -22,7 +22,6 @@ describe('Text Generation', function () {
       expect(result.length).is.gt(0);
     });
   });
-  return;
 
   describe('Parse Expressions', function () {
     it('Should parse symbols/choices from an expression', function () {
