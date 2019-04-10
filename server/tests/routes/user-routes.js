@@ -12,14 +12,14 @@ describe('User Routes', () => {
     User.deleteMany({}, (err) => { done() });
   });
 
-  describe('GET /spectre/api/users', () => {
+  describe('GET /spectre/users', () => {
     beforeEach((done) => { // empty the database before each
       User.deleteMany({}, (err) => { done() });
     });
     it('it should return a list of all users', (done) => {
       chai.request(server)
-        .get('/spectre/api/users')
-        //.auth('user', 'pass')
+        .get('/spectre/users')
+        .auth('user', 'pass')
         .end((err, res) => {
           expect(res).to.have.status(200);
           expect(res.body).is.a('array');
@@ -29,11 +29,11 @@ describe('User Routes', () => {
     });
   });
 
-  describe('POST /spectre/api/users', () => {
+  describe('POST /spectre/users', () => {
 
     it('it should not insert user without login', (done) => {
       chai.request(server)
-        .post('/spectre/api/users')
+        .post('/spectre/users')
         .send({
           name: "Foobar",
           loginType: "facebook",
@@ -48,7 +48,7 @@ describe('User Routes', () => {
 
     it('it should not insert user without login type', (done) => {
       chai.request(server)
-        .post('/spectre/api/users')
+        .post('/spectre/users')
         .send({
           login: "foo@cnn.com",
           name: "foo",
@@ -63,7 +63,7 @@ describe('User Routes', () => {
 
     it('it should not insert user with bad login type', (done) => {
       chai.request(server)
-        .post('/spectre/api/users')
+        .post('/spectre/users')
         .send({
           login: "foo@cnn.com",
           loginType: "foobar",
@@ -78,7 +78,7 @@ describe('User Routes', () => {
     });
     it('it should not insert user with bad gender', (done) => {
       chai.request(server)
-        .post('/spectre/api/users')
+        .post('/spectre/users')
         .send({
           login: "foo@cnn.com",
           loginType: "foobar",
@@ -94,7 +94,7 @@ describe('User Routes', () => {
 
     it('should not violate unique login/type constraint', (done) => {
       chai.request(server)
-        .post('/spectre/api/users')
+        .post('/spectre/users')
         .send({
           name: "Dave",
           login: "da@aol.com",
@@ -106,7 +106,7 @@ describe('User Routes', () => {
           expect(res.body).is.a('object');
           expect(res.body).has.property('_id');
           chai.request(server)
-            .post('/spectre/api/users')
+            .post('/spectre/users')
             .send({
               name: "Dave",
               login: "da@aol.com",
@@ -137,7 +137,7 @@ describe('User Routes', () => {
         }
       };
       chai.request(server)
-        .post('/spectre/api/users')
+        .post('/spectre/users')
         .send(user)
         .end((err, res) => {
           if (err) throw err;
@@ -151,14 +151,14 @@ describe('User Routes', () => {
     });
   });
 
-  describe('GET /spectre/api/users/:uid', () => {
+  describe('GET /spectre/users/:uid', () => {
     beforeEach((done) => { // empty the database before each
       User.deleteMany({}, (err) => { done() });
     });
     it('it should fail on bad id', (done) => {
       let uid = '456';
       chai.request(server)
-        .get('/spectre/api/users/' + uid)
+        .get('/spectre/users/' + uid)
         .end((err, res) => {
           expect(res).to.have.status(400);
           expect(res.body).has.property('error');
@@ -169,7 +169,7 @@ describe('User Routes', () => {
     it('it should get a user after insertion', (done) => {
       let uid = -1;
       chai.request(server)
-        .post('/spectre/api/users')
+        .post('/spectre/users')
         .send({
           name: "Daniel2",
           login: "daniel2@aol.com",
@@ -182,7 +182,7 @@ describe('User Routes', () => {
           expect(res.body).has.property('_id');
           uid = res.body._id;
           chai.request(server)
-            .get('/spectre/api/users/' + uid)
+            .get('/spectre/users/' + uid)
             .end((err, res) => {
               expect(res).to.have.status(200);
               expect(res.body).is.a('object');
