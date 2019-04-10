@@ -1,14 +1,13 @@
 let choices = /\(([^)]*\|[^)]*)\)/;
 let symbols = /\$user((?:\.[_A-Za-z][_A-Za-z0-9]*(?:\(\))?)+)/;
 
-String.prototype.uc = function() {
+String.prototype.uc = function () {
   return this.toUpperCase();
 }
 
-String.prototype.ucf = function() {
+String.prototype.ucf = function () {
   return this[0].toUpperCase() + this.substring(1);
 }
-
 
 class Parser {
 
@@ -28,7 +27,7 @@ class Parser {
       parts.shift();
       for (var i = 0; i < parts.length; i++) {
         if (parts[i].endsWith('()')) {
-          parts[i] = parts[i].substring(0, parts[i].length-2);
+          parts[i] = parts[i].substring(0, parts[i].length - 2);
         }
       }
       return parts;
@@ -38,24 +37,30 @@ class Parser {
     dbug && console.log("parseSymbols: " + s);
     let ms = symbols.exec(s);
     while (ms) {
-      dbug && console.log('match: '+ms);
+      dbug && console.log('match: ' + ms);
       let parts = extractParts(ms[1])
       let resolved = this.user[parts[0]];
-      dbug && console.log("P0:",parts[0]);
-      dbug && console.log("RES:",resolved);
-      dbug && console.log("TYPE:",typeof resolved);
+      dbug && console.log("P0:", parts[0]);
+      dbug && console.log("RES:", resolved);
+      dbug && console.log("TYPE:", typeof resolved);
 
       if (typeof resolved === 'function') {
         resolved = resolved.apply(this.user);
       }
 
-      dbug && console.log('resolved[0] = '+resolved);
+      dbug && console.log('resolved[0] = ' + resolved);
 
-      if (typeof resolved !== 'string') throw Error('expected str', typeof resolved)
+      if (typeof resolved !== 'string') {
+        throw Error('Expected string, got ', typeof resolved, resolved);
+      }
 
       for (var i = 1; i < parts.length; i++) {
+        let func = resolved[parts[i]];
+        if (typeof func !== 'function') {
+          throw Error('Error parsing function \'' + parts[i] + '()\' in\n' + s);
+        }
         resolved = resolved[parts[i]]();
-        dbug && console.log('resolved['+i+'] = '+resolved);
+        dbug && console.log('resolved[' + i + '] = ' + resolved);
       }
 
       let pre = s.substring(0, ms.index);
@@ -77,16 +82,16 @@ class Parser {
       //dbug && console.log(index,len,ms);
       let parts = ms[1].split('|');
       let idx = Math.floor(Math.random() * parts.length);
-      let pre = s.substring(0,index);
-      let pos = s.substring(index+len);
+      let pre = s.substring(0, index);
+      let pos = s.substring(index + len);
       let part = parts[idx].trim();
-      dbug && console.log("  parts: ",parts);
-      dbug && console.log("  pre: '"+pre+"'");
-      dbug && console.log("  pos: '"+pos+"'");
-      dbug && console.log("  rep: '"+part+"'");
+      dbug && console.log("  parts: ", parts);
+      dbug && console.log("  pre: '" + pre + "'");
+      dbug && console.log("  pos: '" + pos + "'");
+      dbug && console.log("  rep: '" + part + "'");
       s = pre + part + pos;
-      s = s.replace(/ +/g,' ');
-      dbug && console.log("  res:  '"+s+"'");//groups.exec(s));
+      s = s.replace(/ +/g, ' ');
+      dbug && console.log("  res:  '" + s + "'"); //groups.exec(s));
       ms = choices.exec(s);
     }
     return s;
