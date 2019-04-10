@@ -13,10 +13,11 @@ jobs:
       # documented at https://circleci.com/docs/2.0/circleci-images/
       # - image: circleci/mongo:3.4.4
 
-    working_directory: ~/web-client
+    working_directory: ~/spectre/web-client
 
     steps:
-      - checkout
+      - checkout:
+          path: ~/spectre
       - run: yarn install
       - run: yarn build-css
 
