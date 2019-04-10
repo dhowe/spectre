@@ -1,5 +1,6 @@
 let mongoose = require('mongoose');
 let oceanText = require('./ocean-text');
+let Parser = require('./parser');
 let { oceanSort } = require('./predictions');
 
 let UserSchema = mongoose.Schema({
@@ -35,26 +36,6 @@ let UserSchema = mongoose.Schema({
 
 UserSchema.methods.generateDescription = function() {
 
-  function possess(user) {
-    switch(user.gender) {
-      case 'male': return 'his';
-      case 'female': return 'her';
-      case 'other': return 'their';
-    }
-  }
-
-  function pronoun(user) {
-    switch(user.gender) {
-      case 'male': return 'he';
-      case 'female': return 'she';
-      case 'other': return 'they';
-    }
-  }
-
-  function tobe(user) {
-    return (user.gender === 'other') ? 'are' : 'is';
-  }
-
   if (typeof this.traits === 'undefined' ||
     typeof this.traits.openness === 'undefined') {
     throw Error('User with traits required');
@@ -71,23 +52,38 @@ UserSchema.methods.generateDescription = function() {
     lines.push(oceanText[traitNames[i]].text[idx]);
   }
 
+  let parser = new Parser(this);
+  for (var i = 0; i < lines.length; i++) {
+    lines[i] = parser.parse(lines[i]);
+  }
 
-  // lines[0] = lines[0].replace('[He\/She\/They]', this.name);
-  // if (lines[0].startsWith(this.name +' [is\/are]'))
-  //   lines[0] = lines[0].replace('[is\/are]', this.name);
-  //
-  // lines[0] = lines[0].replace(/\[he\/she\/they\]/g, pronoun(this));
-  // lines[0] = lines[0].replace(/\[his\/her\/their\]/g, possess(this));
-  // lines[0] = lines[0].replace(/\[is\/are\]/g, tobe(this));
-//  lines[0] = lines[0].replace(/\[is\/are\]/, 'is');
-
-  return lines;
+  return lines.join(' ').trim();
 }
 
 UserSchema.methods.randomizeTraits = function () {
   this.traitNames().forEach((t) => this.traits[t] = Math.random());
   //this.traits.age = Math.round(20 + Math.random() * 50);
   return this;
+}
+
+UserSchema.methods.poss = function() {
+  switch(this.gender) {
+    case 'male': return 'his';
+    case 'female': return 'her';
+    case 'other': return 'their';
+  }
+}
+
+UserSchema.methods.pronoun = function() {
+  switch(this.gender) {
+    case 'male': return 'he';
+    case 'female': return 'she';
+    case 'other': return 'they';
+  }
+}
+
+UserSchema.methods.toBe = function() {
+  return (this.gender === 'other') ? 'are' : 'is';
 }
 
 UserSchema.methods.traitNames = function () {

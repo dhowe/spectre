@@ -44,13 +44,14 @@ class Parser {
       dbug && console.log("P0:",parts[0]);
       dbug && console.log("RES:",resolved);
       dbug && console.log("TYPE:",typeof resolved);
+
       if (typeof resolved === 'function') {
         resolved = resolved.apply(this.user);
       }
 
       dbug && console.log('resolved[0] = '+resolved);
 
-      if (typeof resolved !== 'string') throw Error('expected str')
+      if (typeof resolved !== 'string') throw Error('expected str', typeof resolved)
 
       for (var i = 1; i < parts.length; i++) {
         resolved = resolved[parts[i]]();

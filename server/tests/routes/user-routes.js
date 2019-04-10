@@ -12,6 +12,23 @@ describe('User Routes', () => {
     User.deleteMany({}, (err) => { done() });
   });
 
+  describe('GET /spectre/api/users', () => {
+    beforeEach((done) => { // empty the database before each
+      User.deleteMany({}, (err) => { done() });
+    });
+    it('it should return a list of all users', (done) => {
+      chai.request(server)
+        .get('/spectre/api/users')
+        //.auth('user', 'pass')
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res.body).is.a('array');
+          expect(res.body.length).to.eq(0);
+          done();
+        });
+    });
+  });
+
   describe('POST /spectre/api/users', () => {
 
     it('it should not insert user without login', (done) => {
@@ -59,7 +76,6 @@ describe('User Routes', () => {
           done();
         });
     });
-
     it('it should not insert user with bad gender', (done) => {
       chai.request(server)
         .post('/spectre/api/users')
@@ -130,22 +146,6 @@ describe('User Routes', () => {
           expect(res.body).is.a('object');
           expect(res.body.name).eq(user.name);
           expect(res.body.traits.openness).eq(user.traits.openness);
-          done();
-        });
-    });
-  });
-
-  describe('GET /spectre/api/users', () => {
-    beforeEach((done) => { // empty the database before each
-      User.deleteMany({}, (err) => { done() });
-    });
-    it('it should return a list of all users', (done) => {
-      chai.request(server)
-        .get('/spectre/api/users')
-        .end((err, res) => {
-          expect(res).to.have.status(200);
-          expect(res.body).is.a('array');
-          expect(res.body.length).to.eq(0);
           done();
         });
     });
