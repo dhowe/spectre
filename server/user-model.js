@@ -1,5 +1,6 @@
 let mongoose = require('mongoose');
 let oceanText = require('./ocean-text');
+let Parser = require('./parser');
 let { oceanSort } = require('./predictions');
 
 let UserSchema = mongoose.Schema({
@@ -40,7 +41,7 @@ UserSchema.methods.generateDescription = function() {
     throw Error('User with traits required');
   }
 
-  let sent = '',
+  let lines = [],
     traitNames = this.traitNames();
 
   //console.log(user);
@@ -48,16 +49,41 @@ UserSchema.methods.generateDescription = function() {
     let val = this.traits[traitNames[i]];
     let idx = Math.min(traitNames.length-1, Math.floor(val * traitNames.length));
     //console.log(traits[i], val,'->',idx);
-    sent += oceanText[traitNames[i]].text[idx] + ' ';
+    lines.push(oceanText[traitNames[i]].text[idx]);
   }
 
-  return sent.trim();
+  let parser = new Parser(this);
+  for (var i = 0; i < lines.length; i++) {
+    lines[i] = parser.parse(lines[i]);
+  }
+
+  return lines.join(' ').trim();
 }
 
 UserSchema.methods.randomizeTraits = function () {
   this.traitNames().forEach((t) => this.traits[t] = Math.random());
   //this.traits.age = Math.round(20 + Math.random() * 50);
   return this;
+}
+
+UserSchema.methods.poss = function() {
+  switch(this.gender) {
+    case 'male': return 'his';
+    case 'female': return 'her';
+    case 'other': return 'their';
+  }
+}
+
+UserSchema.methods.pronoun = function() {
+  switch(this.gender) {
+    case 'male': return 'he';
+    case 'female': return 'she';
+    case 'other': return 'they';
+  }
+}
+
+UserSchema.methods.toBe = function() {
+  return (this.gender === 'other') ? 'are' : 'is';
 }
 
 UserSchema.methods.traitNames = function () {

@@ -6,10 +6,10 @@ let app = express();
 
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: true }));
-app.use('/spectre/api', require("./routes"));
+app.use('/spectre/', require("./routes"));
 
-app.get(['/', '/spectre', '/spectre/api'], (req, res) => {
-  res.status(200).send('See /spectre/api');
+app.get(['/', '/spectre', ], (req, res) => {
+  res.status(200).send('See /spectre/');
 });
 
 if (!require('fs').existsSync('.env')) {
