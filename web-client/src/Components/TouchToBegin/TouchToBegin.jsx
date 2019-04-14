@@ -8,6 +8,7 @@ import Footer from "../Footer/Footer"
 import { Link } from 'react-router-dom';
 import Login from '../../Page/Login/Login';
 import Logo from "../Logo/Logo"
+import TextInput from "../TextInput/TextInput"
 
 const styles = {
     root: {
@@ -47,7 +48,8 @@ function TouchToBegin(props) {
                 <img alt="Touch to Continue" className={classes.TouchToBegin_logo} src="https://i.gyazo.com/dedc1236cc349c728e64b134504bf774.png"></img>
             </Link>
             <Footer>       
-                <Logo></Logo>             
+                <Logo></Logo>  
+                <TextInput>Input Name:</TextInput>           
                 <Typography variant="h6" color="inherit" className={classes.grow}>
                     Footer
                 </Typography>
