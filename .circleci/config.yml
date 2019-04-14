@@ -19,7 +19,7 @@ jobs:
       - checkout:
           path: ~/spectre
       - run: yarn install
-      - run: yarn build-css
+      # - run: yarn build-css
 
       # Download and cache dependencies
       - restore_cache:
@@ -34,5 +34,5 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
 
       # run linting!
-      - run: yarn lint
+      # - run: yarn lint
       - run: yarn test

@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import Header from "../Header/Header"
 import { Link } from 'react-router-dom';
 import Login from '../../Page/Login/Login';
 
@@ -36,12 +36,12 @@ function TouchToBegin(props) {
     const { classes } = props;
     return (
         <div className={classes.root}>
+            <Header>                    
+                <Typography variant="h6" color="inherit" className={classes.grow}>
+                    Header
+                </Typography>
+            </Header>
             <AppBar position="static" >
-                <Toolbar>
-                    <Typography variant="h6" color="inherit" className={classes.grow}>
-                        Spectre
-                    </Typography>
-                </Toolbar>
             </AppBar>
             <Link className={classes.TouchToBegin_images} component={Login} to="/login">
                 <img alt="Touch to Continue" className={classes.TouchToBegin_image} src="https://www.atlantisbahamas.com/media/Things%20To%20Do/Water%20Park/Beaches/Hero/Experiences_Beach.jpg"></img>
