@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Typography from '@material-ui/core/Typography';
 import Header from "../Header/Header"
+import Footer from "../Footer/Footer"
 import { Link } from 'react-router-dom';
 import Login from '../../Page/Login/Login';
 
@@ -12,7 +13,6 @@ const styles = {
     root: {
         flexGrow: 1,
         width: "100%",
-        position: 'relative',
         top: 0,
         left: 0,
     },
@@ -20,7 +20,6 @@ const styles = {
         flexGrow: 1,
     },
     TouchToBegin_image: {
-        position: 'relative',
         top: 0,
         left: 0,
         minWidth: "100%",
@@ -47,7 +46,11 @@ function TouchToBegin(props) {
                 <img alt="Touch to Continue" className={classes.TouchToBegin_image} src="https://www.atlantisbahamas.com/media/Things%20To%20Do/Water%20Park/Beaches/Hero/Experiences_Beach.jpg"></img>
                 <img alt="Touch to Continue" className={classes.TouchToBegin_logo} src="https://i.gyazo.com/dedc1236cc349c728e64b134504bf774.png"></img>
             </Link>
-
+            <Footer>                    
+                <Typography variant="h6" color="inherit" className={classes.grow}>
+                    Footer
+                </Typography>
+            </Footer>
         </div>
     );
 }

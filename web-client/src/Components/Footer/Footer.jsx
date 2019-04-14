@@ -7,17 +7,17 @@ import Typography from '@material-ui/core/Typography';
 
 
 const styles = {
-    Header: {
-        position: 'fixed',
-        top: 0,
-        minWidth: "100%",
+    Footer: {
+        bottom: 0,
+        width:"100%",
+        position:"fixed",
     }
 }
 
-function Header(props) {
+function Footer(props) {
     const { classes } = props;
     return (
-        <div className={classes.Header}>
+        <div className={classes.Footer}>
             <AppBar position="static" >
                 <Toolbar>
                     <Typography variant="h6" color="inherit" className={classes.grow}>
@@ -29,8 +29,8 @@ function Header(props) {
     );
 }
 
-Header.propTypes = {
+Footer.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Header);
+export default withStyles(styles)(Footer);
