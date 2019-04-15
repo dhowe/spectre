@@ -10,6 +10,7 @@ import Login from '../../Page/Login/Login';
 import Logo from "../Logo/Logo"
 import TextInput from "../TextInput/TextInput"
 import RadioInput from "../RadioInput/RadioInput"
+import Video from "../Video/Video"
 
 const styles = {
     root: {
@@ -37,7 +38,7 @@ function TouchToBegin(props) {
     const { classes } = props;
     return (
         <div className={classes.root}>
-            <Header>                    
+            <Header>
                 <Typography variant="h6" color="inherit" className={classes.grow}>
                     Header
                 </Typography>
@@ -48,10 +49,11 @@ function TouchToBegin(props) {
                 <img alt="Touch to Continue" className={classes.TouchToBegin_image} src="https://www.atlantisbahamas.com/media/Things%20To%20Do/Water%20Park/Beaches/Hero/Experiences_Beach.jpg"></img>
                 <img alt="Touch to Continue" className={classes.TouchToBegin_logo} src="https://i.gyazo.com/dedc1236cc349c728e64b134504bf774.png"></img>
             </Link>
-            <Footer>       
-                <Logo></Logo>  
-                <TextInput>Input Name:</TextInput>  
-                <RadioInput options={['Man','Woman','Non-Binary']}>Input Name:</RadioInput>         
+            <Footer>
+                <Logo></Logo>
+                <TextInput>Input Name:</TextInput>
+                <Video />
+                <RadioInput options={['Man', 'Woman', 'Non-Binary']}>Input Name:</RadioInput>
                 <Typography variant="h6" color="inherit" className={classes.grow}>
                     Footer
                 </Typography>
