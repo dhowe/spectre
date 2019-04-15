@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import Login from '../../Page/Login/Login';
 import Logo from "../Logo/Logo"
 import TextInput from "../TextInput/TextInput"
+import RadioInput from "../RadioInput/RadioInput"
 
 const styles = {
     root: {
@@ -49,7 +50,8 @@ function TouchToBegin(props) {
             </Link>
             <Footer>       
                 <Logo></Logo>  
-                <TextInput>Input Name:</TextInput>           
+                <TextInput>Input Name:</TextInput>  
+                <RadioInput options={['Man','Woman','Non-Binary']}>Input Name:</RadioInput>         
                 <Typography variant="h6" color="inherit" className={classes.grow}>
                     Footer
                 </Typography>
