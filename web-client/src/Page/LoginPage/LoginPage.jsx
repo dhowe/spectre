@@ -4,16 +4,17 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Header from "../../Components/Header/Header";
 import Footer from "../../Components/Footer/Footer";
-import { Link } from 'react-router-dom';
-import LoginPage from '../LoginPage/LoginPage';
 import Logo from "../../Components/Logo/Logo";
+import Login from "../../Components/Login/Login";
+import { Link } from 'react-router-dom';
+import IntroVideo from '../IntroVideo/IntroVideo'
 
 const styles = {
     root: {
         flexGrow: 1,
         width: "100%",
         backgroundSize: 'cover',
-        background: 'url(https://www.atlantisbahamas.com/media/Things%20To%20Do/Water%20Park/Beaches/Hero/Experiences_Beach.jpg)',
+        backgroundColor: '#2196f3',
     },
     content: {
         margin: "64px 0",
@@ -23,23 +24,25 @@ const styles = {
     }
 };
 
-function TouchToBegin(props) {
+function LoginPage(props) {
     const { classes } = props;
     return (
         <div className={classes.root}>
             <Header>
-                <Typography variant="h6" color="inherit" className={classes.grow}>
+                <Typography variant="h6" color="inherit" >
                     Header
-                </Typography>
+                    </Typography>
             </Header>
             <div className={classes.content}>
-                <Link component={LoginPage} to="/login">
-                    <div className={classes.clickToContinue}>
-                        <Logo ></Logo>
-                        <Typography>Touch to Begin</Typography>
-                    </div>
+                <Logo></Logo>
+                <Typography component="h1" variant="h1">Hello!</Typography>
+                <Typography component="h2" variant="h2">Let's Play!</Typography>
+                <Login></Login>
+                <Link component={IntroVideo} to="/intro-video">
+                    <Typography>Skip</Typography>
                 </Link>
             </div >
+
             <Footer>
                 <Typography variant="h6" color="inherit" className={classes.grow}>
                     Footer
@@ -49,8 +52,8 @@ function TouchToBegin(props) {
     );
 }
 
-TouchToBegin.propTypes = {
+LoginPage.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(TouchToBegin);
+export default withStyles(styles)(LoginPage);

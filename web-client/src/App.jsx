@@ -4,7 +4,8 @@ import blue from '@material-ui/core/colors/blue';
 import './App.css';
 import { Route, BrowserRouter as Router } from 'react-router-dom';
 import TouchToBegin from './Page/TouchToBegin/TouchToBegin';
-import Login from './Page/Login/Login';
+import LoginPage from './Page/LoginPage/LoginPage';
+import IntroVideo from './Page/IntroVideo/IntroVideo';
 
 const theme = createMuiTheme({
   palette: {
@@ -24,7 +25,8 @@ function App() {
           <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
           <Router>
             <Route exact path="/" component={TouchToBegin} />
-            <Route exact path="/login" component={Login} />
+            <Route exact path="/login" component={LoginPage} />
+            <Route exact path="/intro-video" component={IntroVideo} />
           </Router>
         </header>
       </div>
