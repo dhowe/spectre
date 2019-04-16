@@ -17,15 +17,15 @@ class Brand {
     noStroke();
     fill(255);
     ellipse(this.x, this.y, Brand.radius);
-  
+
     stroke(255)
     strokeWeight(3);
     line(this.x, this.y, this.x, height / 2);
 
     noStroke();
     fill('#C45422');
-    text(this.name, this.x, this.y);
     textSize(24);
+    text(this.name, this.x, this.y);
   }
   contains(mx, my) {
     return dist(mx, my, this.x, this.y) <= Brand.radius;
