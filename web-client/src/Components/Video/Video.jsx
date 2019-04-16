@@ -5,16 +5,15 @@ import { withStyles } from '@material-ui/core/styles';
 import movie from "./movie.mp4"
 
 const styles = {
-    Logo: {
-        width: "100px",
-        height: "100px",
-    }
+
 }
 
-function Logo(props) {
+function Video(props) {
+
+
     return (
         <div >
-            <video width="320" height="240" controls>
+            <video width={window.innerWidth} height={window.innerHeight} autoplay controls>
                 <source src={movie} type="video/mp4" />
                 Your browser does not support the video tag.
             </video>
@@ -22,8 +21,8 @@ function Logo(props) {
     );
 }
 
-Logo.propTypes = {
+Video.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Logo);
+export default withStyles(styles)(Video);

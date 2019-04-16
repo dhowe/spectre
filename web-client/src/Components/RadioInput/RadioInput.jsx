@@ -8,15 +8,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 
 const styles = theme => ({
-  root: {
-    display: 'flex',
-  },
-  formControl: {
-    margin: theme.spacing.unit * 3,
-  },
-  group: {
-    margin: `${theme.spacing.unit}px 0`,
-  },
+
 });
 
 class RadioButtonsGroup extends React.Component {
@@ -42,8 +34,8 @@ class RadioButtonsGroup extends React.Component {
             value={this.state.value}
             onChange={this.handleChange}
           >
-            {this.props.options.map(function(option,index){
-              return <FormControlLabel key={index} value={option} control={<Radio />} label={option} />
+            {this.props.options.map(function (option, index) {
+              return <FormControlLabel key={index} value={option} control={<Radio color="primary" />} label={option} />
             })}
           </RadioGroup>
         </FormControl>
