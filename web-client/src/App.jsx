@@ -11,6 +11,7 @@ import Pledge from './Page/Pledge/Pledge';
 import SearchingFor from './Page/SearchingFor/SearchingFor';
 import DataIs from './Page/DataIs/DataIs'
 import BelieveInDataism from './Page/BelieveInDataism/BelieveInDataism'
+import Steps from './Page/Steps/Steps'
 
 const theme = createMuiTheme({
   palette: {
@@ -37,7 +38,7 @@ function App() {
             <Route exact path="/searching-for" component={SearchingFor} />
             <Route exact path="/data-is" component={DataIs} />
             <Route exact path="/believe-in-dataism" component={BelieveInDataism} />
-
+            <Route exact path="/steps" component={Steps} />
           </Router>
         </header>
       </div>
