@@ -6,6 +6,7 @@ import Header from "../../Components/Header/Header";
 import Footer from "../../Components/Footer/Footer";
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
+import SearchingFor from '../SearchingFor/SearchingFor'
 
 const styles = {
     root: {
@@ -36,12 +37,12 @@ function Pledge(props) {
                 <Typography component="h6" variant="h6">We can tell you things about yourself that you don't know.</Typography>
                 <Typography component="h6" variant="h6">In order for you to know more, you must offer up something precious to you.</Typography>
                 <Typography component="h6" variant="h5">Continue?</Typography>
-                <Link component={Pledge} to="/pledge">
+                <Link component={SearchingFor} to="/searching-for">
                     <Button variant="contained" color="primary" className={classes.button}>
                         Yes
                 </Button>
                 </Link>
-                <Link component={Pledge} to="/pledge">
+                <Link component={SearchingFor} to="/searching-for">
                     <Button variant="contained" color="primary" className={classes.button}>
                         No
                 </Button>
