@@ -6,6 +6,7 @@ import { Route, BrowserRouter as Router } from 'react-router-dom';
 import TouchToBegin from './Page/TouchToBegin/TouchToBegin';
 import LoginPage from './Page/LoginPage/LoginPage';
 import IntroVideo from './Page/IntroVideo/IntroVideo';
+import Username from './Page/Username/Username';
 
 const theme = createMuiTheme({
   palette: {
@@ -27,6 +28,7 @@ function App() {
             <Route exact path="/" component={TouchToBegin} />
             <Route exact path="/login" component={LoginPage} />
             <Route exact path="/intro-video" component={IntroVideo} />
+            <Route exact path="/username" component={Username} />
           </Router>
         </header>
       </div>

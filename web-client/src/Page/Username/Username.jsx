@@ -4,10 +4,10 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Header from "../../Components/Header/Header";
 import Footer from "../../Components/Footer/Footer";
-import Logo from "../../Components/Logo/Logo";
-import Login from "../../Components/Login/Login";
+import TextInput from "../../Components/TextInput/TextInput";
+import RadioInput from "../../Components/RadioInput/RadioInput";
+import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
-import IntroVideo from '../IntroVideo/IntroVideo'
 
 const styles = {
     root: {
@@ -19,12 +19,12 @@ const styles = {
     content: {
         margin: "64px 0",
     },
-    clickToContinue: {
-        margin: "20% 0",
+    textInput: {
+        marginBottom: "100px",
     }
 };
 
-function LoginPage(props) {
+function Username(props) {
     const { classes } = props;
     return (
         <div className={classes.root}>
@@ -34,13 +34,14 @@ function LoginPage(props) {
                     </Typography>
             </Header>
             <div className={classes.content}>
-                <Logo></Logo>
-                <Typography component="h1" variant="h1">Hello!</Typography>
-                <Typography component="h2" variant="h2">Let's Play!</Typography>
-                <Login></Login>
-                <Link component={IntroVideo} to="/intro-video">
-                    <Typography>Skip</Typography>
+                <TextInput >YOUR FIRST NAME?</TextInput>
+                <RadioInput options={['MAN', 'WOMAN', 'NON_BINARY']}>YOUR GENDER?</RadioInput>
+                <Link component={Username} to="/username">
+                    <Button variant="contained" color="primary" className={classes.button}>
+                        Begin
+                    </Button>
                 </Link>
+
             </div >
 
             <Footer>
@@ -52,8 +53,8 @@ function LoginPage(props) {
     );
 }
 
-LoginPage.propTypes = {
+Username.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(LoginPage);
+export default withStyles(styles)(Username);
