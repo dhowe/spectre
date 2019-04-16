@@ -9,6 +9,7 @@ import IntroVideo from './Page/IntroVideo/IntroVideo';
 import Username from './Page/Username/Username';
 import Pledge from './Page/Pledge/Pledge';
 import SearchingFor from './Page/SearchingFor/SearchingFor';
+import DataIs from './Page/DataIs/DataIs'
 
 const theme = createMuiTheme({
   palette: {
@@ -33,6 +34,7 @@ function App() {
             <Route exact path="/username" component={Username} />
             <Route exact path="/pledge" component={Pledge} />
             <Route exact path="/searching-for" component={SearchingFor} />
+            <Route exact path="/data-is" component={DataIs} />
           </Router>
         </header>
       </div>
