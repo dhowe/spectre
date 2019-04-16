@@ -6,6 +6,7 @@ import Header from "../../Components/Header/Header";
 import Footer from "../../Components/Footer/Footer";
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
+import DataIs from '../DataIs/DataIs'
 
 const styles = {
     root: {
@@ -34,32 +35,32 @@ function SearchingFor(props) {
             <div className={classes.content}>
                 <Typography component="h6" variant="h5">Welcome [USERNAME]?</Typography>
                 <Typography component="h6" variant="h5">What do you do out into the wilderness to behold?</Typography>
-                <Link component={SearchingFor} to="/SearchingFor">
+                <Link component={DataIs} to="/data-is">
                     <Button variant="contained" color="primary" className={classes.button}>
                         Power
                 </Button>
                 </Link>
-                <Link component={SearchingFor} to="/SearchingFor">
+                <Link component={DataIs} to="/data-is">
                     <Button variant="contained" color="primary" className={classes.button}>
                         Truth
                 </Button>
                 </Link>
-                <Link component={SearchingFor} to="/SearchingFor">
+                <Link component={DataIs} to="/data-is">
                     <Button variant="contained" color="primary" className={classes.button}>
                         Wealth
                 </Button>
                 </Link>
-                <Link component={SearchingFor} to="/SearchingFor">
+                <Link component={DataIs} to="/data-is">
                     <Button variant="contained" color="primary" className={classes.button}>
                         Knowledge
                 </Button>
                 </Link>
-                <Link component={SearchingFor} to="/SearchingFor">
+                <Link component={DataIs} to="/data-is">
                     <Button variant="contained" color="primary" className={classes.button}>
                         Faith
                 </Button>
                 </Link>
-                <Link component={SearchingFor} to="/SearchingFor">
+                <Link component={DataIs} to="/data-is">
                     <Button variant="contained" color="primary" className={classes.button}>
                         Connection
                 </Button>
