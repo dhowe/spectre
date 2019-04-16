@@ -1,66 +1,59 @@
 import React from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import LoginRegister from 'react-mui-login-register';
+import Header from "../../Components/Header/Header";
+import Footer from "../../Components/Footer/Footer";
+import Logo from "../../Components/Logo/Logo";
+import Login from "../../Components/Login/Login";
+import { Link } from 'react-router-dom';
+import Placeholder from '../Placeholder/Placeholder'
 
-const classes = {
+const styles = {
     root: {
         flexGrow: 1,
         width: "100%",
-        textAlign: "center",
+        backgroundSize: 'cover',
+        background: 'url(https://www.atlantisbahamas.com/media/Things%20To%20Do/Water%20Park/Beaches/Hero/Experiences_Beach.jpg)',
     },
-    Login_image: {
-        position: 'relative',
+    content: {
+        margin: "64px 0",
     },
+    clickToContinue: {
+        margin: "20% 0",
+    }
 };
 
-class Login extends React.Component {
-    // const { classes } = props;
-    handleLogin = content => {
-        alert(`Logging in with content '${JSON.stringify(content)}'`);
-    };
-
-    handleLoginWithProvider = providerId => {
-        alert(`Logging in with provider '${providerId}'`);
-    };
-
-    handleRegister = content => {
-        alert(`Registering with content '${JSON.stringify(content)}'`);
-    };
-
-    handleRegisterWithProvider = providerId => {
-        alert(`Registering with provider '${providerId}'`);
-    };
-
-    render() {
-        const header = (
-            <div className='header'>
-                <AppBar position="static" >
-                    <Toolbar>
-                        <Typography variant="h6" color="inherit" className={classes.grow}>
-                            Spectre
-            </Typography>
-                    </Toolbar>
-                </AppBar>
-                <img alt="Touch to Continue" className={classes.TouchToBegin_logo} src="https://i.gyazo.com/dedc1236cc349c728e64b134504bf774.png"></img>
+function TouchToBegin(props) {
+    const { classes } = props;
+    return (
+        <div className={classes.root}>
+            <Header>
+                <Typography variant="h6" color="inherit" >
+                    Header
+                    </Typography>
+            </Header>
+            <div className={classes.content}>
+                <Logo></Logo>
                 <Typography component="h1" variant="h1">Hello!</Typography>
                 <Typography component="h2" variant="h2">Let's Play!</Typography>
-            </div>
-        );
-
-        const footer = (
-            <Typography>Terms</Typography>
-        );
-        return (
-            <div className={classes.root}>
-
-                <LoginRegister header={header} footer={footer}
-                    onLogin={this.handleLogin}
-                    onLoginWithProvider={this.handleLoginWithProvider}
-                />
+                <Login></Login>
+                <Link component={Placeholder} to="/placeholder">
+                    <Typography>Skip</Typography>
+                </Link>
             </div >
-        )
-    }
+
+            <Footer>
+                <Typography variant="h6" color="inherit" className={classes.grow}>
+                    Footer
+                </Typography>
+            </Footer>
+        </div >
+    );
 }
-export default (Login);
+
+TouchToBegin.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(TouchToBegin);
