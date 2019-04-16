@@ -6,7 +6,6 @@ import Header from "../../Components/Header/Header";
 import Footer from "../../Components/Footer/Footer";
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
-import BelieveInDataism from '../BelieveInDataism/BelieveInDataism'
 
 const styles = {
     root: {
@@ -23,7 +22,7 @@ const styles = {
     }
 };
 
-function DataIs(props) {
+function BelieveInDataism(props) {
     const { classes } = props;
     return (
         <div className={classes.root}>
@@ -33,10 +32,11 @@ function DataIs(props) {
                     </Typography>
             </Header>
             <div className={classes.content}>
-                <Typography component="h4" variant="h4">DATA IS [POWER]</Typography>
+                <Typography component="h4" variant="h4">To become more [powerful] you need more data.</Typography>
+                <Typography component="h4" variant="h4">We can help you believe in the [power] of dataism</Typography>
                 <Link component={BelieveInDataism} to="/believe-in-dataism">
                     <Button variant="contained" color="primary" className={classes.button}>
-                        Next1
+                        Next
                 </Button>
                 </Link>
 
@@ -51,8 +51,8 @@ function DataIs(props) {
     );
 }
 
-DataIs.propTypes = {
+BelieveInDataism.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(DataIs);
+export default withStyles(styles)(BelieveInDataism);
