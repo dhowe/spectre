@@ -6,7 +6,6 @@ import Header from "../../Components/Header/Header";
 import Footer from "../../Components/Footer/Footer";
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
-import Steps from '../Steps/Steps'
 
 const styles = {
     root: {
@@ -23,7 +22,7 @@ const styles = {
     }
 };
 
-function BelieveInDataism(props) {
+function Steps(props) {
     const { classes } = props;
     return (
         <div className={classes.root}>
@@ -33,11 +32,21 @@ function BelieveInDataism(props) {
                     </Typography>
             </Header>
             <div className={classes.content}>
-                <Typography component="h4" variant="h4">To become more [powerful] you need more data.</Typography>
-                <Typography component="h4" variant="h4">We can help you believe in the [power] of dataism</Typography>
-                <Link component={Steps} to="/steps">
+                <Typography component="h5" variant="h5">Follow our 3 simple steps to become more [powerful]</Typography>
+                <Typography component="h6" variant="h6"><strong>Step 1</strong> - influence a follower</Typography>
+                <Typography component="h6" variant="h6"><strong>Step 2</strong> - influence a nation</Typography>
+                <Typography component="h6" variant="h6"><strong>Step 3</strong> - influence a politician of celebrity</Typography>
+                <Typography component="h6" variant="h6"><strong>Step 4</strong> - influence evolution</Typography>
+                <Typography component="h5" variant="h5">Get the data. Get the [power].</Typography>
+                <Typography component="h4" variant="h4">Ready?</Typography>
+                <Link component={Steps} to="/believe-in-dataism">
                     <Button variant="contained" color="primary" className={classes.button}>
-                        Next
+                        Maybe
+                </Button>
+                </Link>
+                <Link component={Steps} to="/believe-in-dataism">
+                    <Button variant="contained" color="primary" className={classes.button}>
+                        Yes
                 </Button>
                 </Link>
 
@@ -52,8 +61,8 @@ function BelieveInDataism(props) {
     );
 }
 
-BelieveInDataism.propTypes = {
+Steps.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(BelieveInDataism);
+export default withStyles(styles)(Steps);
