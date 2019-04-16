@@ -4,28 +4,25 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Header from "../../Components/Header/Header";
 import Footer from "../../Components/Footer/Footer";
-import TextInput from "../../Components/TextInput/TextInput";
-import RadioInput from "../../Components/RadioInput/RadioInput";
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
-import Pledge from "../Pledge/Pledge"
 
 const styles = {
     root: {
         flexGrow: 1,
         width: "100%",
-        backgroundSize: 'cover',
         backgroundColor: '#F5FAFA',
+        color: 'black'
     },
     content: {
         margin: "64px 0",
     },
-    textInput: {
-        marginBottom: "100px",
+    clickToContinue: {
+        margin: "20% 0",
     }
 };
 
-function Username(props) {
+function Pledge(props) {
     const { classes } = props;
     return (
         <div className={classes.root}>
@@ -35,12 +32,19 @@ function Username(props) {
                     </Typography>
             </Header>
             <div className={classes.content}>
-                <TextInput >YOUR FIRST NAME?</TextInput>
-                <RadioInput options={['MAN', 'WOMAN', 'NON_BINARY']}>YOUR GENDER?</RadioInput>
+                <Typography component="h6" variant="h6">Spectre can help you in ways you don't expect. Spectre can see patterns you can't see.</Typography>
+                <Typography component="h6" variant="h6">We can tell you things about yourself that you don't know.</Typography>
+                <Typography component="h6" variant="h6">In order for you to know more, you must offer up something precious to you.</Typography>
+                <Typography component="h6" variant="h5">Continue?</Typography>
                 <Link component={Pledge} to="/pledge">
                     <Button variant="contained" color="primary" className={classes.button}>
-                        Begin
-                    </Button>
+                        Yes
+                </Button>
+                </Link>
+                <Link component={Pledge} to="/pledge">
+                    <Button variant="contained" color="primary" className={classes.button}>
+                        No
+                </Button>
                 </Link>
 
             </div >
@@ -54,8 +58,8 @@ function Username(props) {
     );
 }
 
-Username.propTypes = {
+Pledge.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Username);
+export default withStyles(styles)(Pledge);
