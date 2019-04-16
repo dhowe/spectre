@@ -3,10 +3,8 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import blue from '@material-ui/core/colors/blue';
 import './App.css';
 import { Route, BrowserRouter as Router } from 'react-router-dom';
-import TouchToBegin from './Components/TouchToBegin/TouchToBegin';
-import Placeholder from './Page/Placeholder/Placeholder';
+import TouchToBegin from './Page/TouchToBegin/TouchToBegin';
 import Login from './Page/Login/Login';
-
 
 const theme = createMuiTheme({
   palette: {
@@ -25,8 +23,7 @@ function App() {
           <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" />
           <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
           <Router>
-            <Route exact path="/" component={Placeholder} />
-            <Route exact path="/touch-to-begin" component={TouchToBegin} />
+            <Route exact path="/" component={TouchToBegin} />
             <Route exact path="/login" component={Login} />
           </Router>
         </header>
