@@ -14,7 +14,7 @@ const styles = {
         flexGrow: 1,
         width: "100%",
         backgroundSize: 'cover',
-        background: 'url(https://www.atlantisbahamas.com/media/Things%20To%20Do/Water%20Park/Beaches/Hero/Experiences_Beach.jpg)',
+        backgroundColor: '#2196f3',
     },
     content: {
         margin: "64px 0",
