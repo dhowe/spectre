@@ -4,8 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Header from "../../Components/Header/Header";
 import Footer from "../../Components/Footer/Footer";
-import Logo from "../../Components/Logo/Logo";
-import Login from "../../Components/Login/Login";
+import Video from "../../Components/Video/Video";
 import { Link } from 'react-router-dom';
 import Placeholder from '../Placeholder/Placeholder'
 
@@ -14,7 +13,7 @@ const styles = {
         flexGrow: 1,
         width: "100%",
         backgroundSize: 'cover',
-        backgroundColor: '#2196f3',
+        backgroundColor: '#F5FAFA',
     },
     content: {
         margin: "64px 0",
@@ -24,7 +23,7 @@ const styles = {
     }
 };
 
-function TouchToBegin(props) {
+function IntroVideo(props) {
     const { classes } = props;
     return (
         <div className={classes.root}>
@@ -34,17 +33,14 @@ function TouchToBegin(props) {
                     </Typography>
             </Header>
             <div className={classes.content}>
-                <Logo></Logo>
-                <Typography component="h1" variant="h1">Hello!</Typography>
-                <Typography component="h2" variant="h2">Let's Play!</Typography>
-                <Login></Login>
+                <Video></Video>
                 <Link component={Placeholder} to="/placeholder">
                     <Typography>Skip</Typography>
                 </Link>
             </div >
 
             <Footer>
-                <Typography variant="h6" color="inherit" className={classes.grow}>
+                <Typography variant="h6" color="inherit">
                     Footer
                 </Typography>
             </Footer>
@@ -52,8 +48,8 @@ function TouchToBegin(props) {
     );
 }
 
-TouchToBegin.propTypes = {
+IntroVideo.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(TouchToBegin);
+export default withStyles(styles)(IntroVideo);
