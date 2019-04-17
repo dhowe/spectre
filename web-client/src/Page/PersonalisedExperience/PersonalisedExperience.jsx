@@ -6,7 +6,7 @@ import Header from "../../Components/Header/Header";
 import Footer from "../../Components/Footer/Footer";
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
-import PersonalisedExperience from '../PersonalisedExperience/PersonalisedExperience';
+import Steps from '../Steps/Steps'
 
 const styles = {
     root: {
@@ -20,10 +20,13 @@ const styles = {
     },
     clickToContinue: {
         margin: "20% 0",
+    },
+    glow: {
+        color: '#ffd700'
     }
 };
 
-function Steps(props) {
+function PersonalisedExperience(props) {
     const { classes } = props;
     return (
         <div className={classes.root}>
@@ -33,21 +36,13 @@ function Steps(props) {
                     </Typography>
             </Header>
             <div className={classes.content}>
-                <Typography component="h5" variant="h5">Follow our 3 simple steps to become more [powerful]</Typography>
-                <Typography component="h6" variant="h6"><strong>Step 1</strong> - influence a follower</Typography>
-                <Typography component="h6" variant="h6"><strong>Step 2</strong> - influence a nation</Typography>
-                <Typography component="h6" variant="h6"><strong>Step 3</strong> - influence a politician of celebrity</Typography>
-                <Typography component="h6" variant="h6"><strong>Step 4</strong> - influence evolution</Typography>
-                <Typography component="h5" variant="h5">Get the data. Get the [power].</Typography>
-                <Typography component="h4" variant="h4">Ready?</Typography>
-                <Link component={PersonalisedExperience} to="/personalised-experience">
+                <Typography component="h3" variant="h3">Excellent</Typography>
+                <Typography component="h3" variant="h3">In order to create your</Typography>
+                <Typography component="h3" variant="h3" className={classes.glow}><strong>personalised experience</strong></Typography>
+                <Typography component="h4" variant="h4" >Tell us what you love, tell us what you hate...</Typography>
+                <Link component={Steps} to="/steps">
                     <Button variant="contained" color="primary" className={classes.button}>
-                        Maybe
-                </Button>
-                </Link>
-                <Link component={PersonalisedExperience} to="/personalised-experience">
-                    <Button variant="contained" color="primary" className={classes.button}>
-                        Yes
+                        Next
                 </Button>
                 </Link>
 
@@ -62,8 +57,8 @@ function Steps(props) {
     );
 }
 
-Steps.propTypes = {
+PersonalisedExperience.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Steps);
+export default withStyles(styles)(PersonalisedExperience);
