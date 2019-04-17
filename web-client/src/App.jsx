@@ -12,6 +12,7 @@ import SearchingFor from './Page/SearchingFor/SearchingFor';
 import DataIs from './Page/DataIs/DataIs'
 import BelieveInDataism from './Page/BelieveInDataism/BelieveInDataism'
 import Steps from './Page/Steps/Steps'
+import PersonalisedExperience from './Page/PersonalisedExperience/PersonalisedExperience'
 
 const theme = createMuiTheme({
   palette: {
@@ -39,6 +40,7 @@ function App() {
             <Route exact path="/data-is" component={DataIs} />
             <Route exact path="/believe-in-dataism" component={BelieveInDataism} />
             <Route exact path="/steps" component={Steps} />
+            <Route exact path="/personalised-experience" component={PersonalisedExperience} />
           </Router>
         </header>
       </div>
