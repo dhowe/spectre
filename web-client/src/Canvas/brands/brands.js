@@ -1,8 +1,8 @@
 class Brand {
-  constructor(x, y, name) {
+  constructor(x, y, item) {
     this.x = x;
     this.y = y;
-    this.name = name;
+    this.item = item;
     this.rating = 0;
     Brand.instances.push(this);
   }
@@ -25,7 +25,7 @@ class Brand {
     noStroke();
     fill('#C45422');
     textSize(24);
-    text(this.name, this.x, this.y);
+    text(this.item, this.x, this.y);
   }
   contains(mx, my) {
     return dist(mx, my, this.x, this.y) <= Brand.radius;
@@ -35,11 +35,18 @@ class Brand {
   }
 }
 
+// { "item": "zara", "rating": .4 },
+// { "item": "cocacola", "rating": .8 },
+// { "item": "next", "rating": -.2 },
+// { "item": "rayban", "rating": 0 },
+// { "item": "sony", "rating": .3 },
+// { "item": "gap", "rating": -.6 },
+
 Brand.speed = 1;
 Brand.radius = 100;
 Brand.instances = [];
 Brand.active = false;
-Brand.names = ['H & M', 'Zara', 'Puma', 'Nike', 'Armani', 'Adidas'];
+Brand.names = ['gap', 'zara', 'cocacola', 'next', 'rayban', 'sony'];
 Brand.drawAll = function () { Brand.instances.forEach(b => b.draw()) };
 
 function shuffle(array) {

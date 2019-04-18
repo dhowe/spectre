@@ -1,0 +1,18 @@
+{
+  "trait": "ppq",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/example.js",
+  "scripts": {
+    "start": "node ./src/example.js",
+    "test": "mocha"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "Proprietary",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^6.1.3"
+  },
+  "dependencies": {}
+}
