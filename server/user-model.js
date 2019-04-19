@@ -1,40 +1,75 @@
-let mongoose = require('mongoose');
-let oceanText = require('./ocean-text');
-let Parser = require('./parser');
-let { oceanSort } = require('./predictions');
+const mongoose = require('mongoose');
+const oceanText = require('./ocean-text');
+const { oceanSort } = require('./predictions');
+const Parser = require('./parser');
+const _ = require('lodash');
 
-let UserSchema = mongoose.Schema({
-  name: {
-    type: String
-  },
-  traits: {
-    openness: Number,
-    conscientiousness: Number,
-    agreeableness: Number,
-    extraversion: Number,
-    neuroticism: Number,
-  },
-  predictions: Object,
-  login: {
-    type: String,
-    required: true
-  },
-  loginType: {
-    type: String,
-    enum: ['twitter', 'google', 'facebook', 'email'],
-    required: true
-  },
-  gender: {
-    type: String,
-    enum: ['male', 'female', 'other']
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now
-  }
-});
+const json = require('../shared/models/user.js').User;
+const mongooseSchema = toMongoose(json);
+const UserSchema = mongoose.Schema(mongooseSchema);
 
-UserSchema.methods.generateDescription = function() {
+function toMongoose(json) {
+
+  let result = {};
+  _.map(Object.keys(json), (key) => {
+    let type, property = _.cloneDeep(json[key]);
+
+    switch (property.type) {
+    case 'id':
+      type = Schema.ObjectId;
+      break;
+    case 'number':
+      type = Number;
+      break;
+    case 'string':
+      type = String;
+      break;
+    case 'date':
+      type = Date;
+      break;
+    case 'boolean':
+      type = Boolean;
+      break;
+    }
+    // if we haven't gotten a type, recurse
+    result[key] = type ? _.assign({}, property, { type }) :
+      result[key] = toMongoose(property);
+  });
+
+  return result;
+};
+//   {
+//   name: {
+//     type: String
+//   },
+//   traits: {
+//     openness: Number,
+//     conscientiousness: Number,
+//     agreeableness: Number,
+//     extraversion: Number,
+//     neuroticism: Number,
+//   },
+//   predictions: Object,
+//   login: {
+//     type: String,
+//     required: true
+//   },
+//   loginType: {
+//     type: String,
+//     enum: ['twitter', 'google', 'facebook', 'email'],
+//     required: true
+//   },
+//   gender: {
+//     type: String,
+//     enum: ['male', 'female', 'other']
+//   },
+//   createdAt: {
+//     type: Date,
+//     default: Date.now
+//   }
+// });
+
+UserSchema.methods.generateDescription = function () {
 
   if (typeof this.traits === 'undefined' ||
     typeof this.traits.openness === 'undefined') {
@@ -47,7 +82,7 @@ UserSchema.methods.generateDescription = function() {
   //console.log(user);
   for (var i = 0; i < traitNames.length; i++) {
     let val = this.traits[traitNames[i]];
-    let idx = Math.min(traitNames.length-1, Math.floor(val * traitNames.length));
+    let idx = Math.min(traitNames.length - 1, Math.floor(val * traitNames.length));
     //console.log(traits[i], val,'->',idx);
     lines.push(oceanText[traitNames[i]].text[idx]);
   }
@@ -66,23 +101,29 @@ UserSchema.methods.randomizeTraits = function () {
   return this;
 }
 
-UserSchema.methods.poss = function() {
-  switch(this.gender) {
-    case 'male': return 'his';
-    case 'female': return 'her';
-    case 'other': return 'their';
+UserSchema.methods.poss = function () {
+  switch (this.gender) {
+  case 'male':
+    return 'his';
+  case 'female':
+    return 'her';
+  case 'other':
+    return 'their';
   }
 }
 
-UserSchema.methods.pronoun = function() {
-  switch(this.gender) {
-    case 'male': return 'he';
-    case 'female': return 'she';
-    case 'other': return 'they';
+UserSchema.methods.pronoun = function () {
+  switch (this.gender) {
+  case 'male':
+    return 'he';
+  case 'female':
+    return 'she';
+  case 'other':
+    return 'they';
   }
 }
 
-UserSchema.methods.toBe = function() {
+UserSchema.methods.toBe = function () {
   return (this.gender === 'other') ? 'are' : 'is';
 }
 
@@ -95,9 +136,8 @@ UserSchema.methods.findByOcean = function (res, num, cb) {
   User.find({})
     .limit(num + 1)
     .exec(function (err, instances) {
-      sorted = oceanSort(user, instances); // Sorting here
-      //sorted.forEach((u) => console.log(u.name));
-      sorted.shift();
+      sorted = oceanSort(user, instances);
+      sorted.shift(); // remove 'this' user
       cb(sorted);
     });
   return this;
