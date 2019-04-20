@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const chai = require('chai');
 const server = require('../server');
-const User = require('../user-model');
+const { UserModel } = require('../user-model');
 
 require('dotenv').config();
 let env = process.env;
@@ -9,10 +9,10 @@ let env = process.env;
 chai.use(require('chai-http'));
 const expect = chai.expect;
 
-describe('User Routes', () => {
+describe('UserModel Routes', () => {
 
   beforeEach((done) => { // empty db before each
-    User.deleteMany({}, (err) => { done() });
+    UserModel.deleteMany({}, (err) => { done() });
   });
 
   describe('GET /spectre/users', () => {
@@ -161,7 +161,7 @@ describe('User Routes', () => {
 
   describe('GET /spectre/users/:uid', () => {
     beforeEach((done) => { // empty the database before each
-      User.deleteMany({}, (err) => { done() });
+      UserModel.deleteMany({}, (err) => { done() });
     });
     it('it should fail on bad id', (done) => {
       let uid = '456';

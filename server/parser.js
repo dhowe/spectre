@@ -98,4 +98,5 @@ class Parser {
   }
 }
 
-module.exports = Parser;
+if (typeof module !== 'undefined') module.exports = Parser;
+if (typeof window !== 'undefined') window.Parser = Parser;

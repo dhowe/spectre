@@ -1,18 +1,18 @@
 const assert = require('chai').assert;
 const expect = require('chai').expect;
-const User = require('../user-model');
+const { UserModel } = require('../user-model');
 const Parser = require('../parser');
 
 describe('Text Generation', function () {
 
-  describe('User.Describe()', function () {
+  describe('UserModel.Describe()', function () {
 
     it('Should fail for a user without traits', function () {
-      expect(() => new User().generateDescription()).to.throw();
+      expect(() => new UserModel().generateDescription()).to.throw();
     });
 
     it('Should describe a user based on OCEAN traits', function () {
-      let user = User.Create();
+      let user = UserModel.Create();
       user.name = "Jane";
       user.gender = "female";
 
@@ -26,7 +26,7 @@ describe('Text Generation', function () {
   describe('Parse Expressions', function () {
     it('Should parse symbols/choices from an expression', function () {
 
-      let user = new User();
+      let user = new UserModel();
       user.name = "jen";
       let parser = new Parser(user);
       expect(parser.parse("Was $user.name.ucf() (ok | ok)?")).eq('Was Jen ok?');
@@ -36,7 +36,7 @@ describe('Text Generation', function () {
   describe('Parse Symbols', function () {
     it('Should parse symbols from an expression', function () {
 
-      let user = new User();
+      let user = new UserModel();
       user.name = "jen";
       let parser = new Parser(user);
       expect(parser.parseSymbols("$user.name was ok")).eq('jen was ok');
