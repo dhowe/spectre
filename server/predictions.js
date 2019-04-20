@@ -9,14 +9,14 @@ let oceanDist = function (a, b) {
     throw Error('traits required');
   }
 
-  let ta = a.traits,
-    tb = b.traits;
-  let traits = a.traitNames(),
-    diff = 0,
-    total = 0;
 
-  for (let i = 0; i < traits.length; i++) {
-    diff = ta[traits[i]] - tb[traits[i]];
+  let diff = 0;
+  let total = 0;
+  let ta = a.traits;
+  let tb = b.traits;
+  let traitNames = Object.keys(a.traits);
+  for (let i = 0; i < traitNames.length; i++) {
+    diff = ta[traitNames[i]] - tb[traitNames[i]];
     total += diff * diff;
   }
 
@@ -29,7 +29,7 @@ let oceanSort = function (user, candidates) {
   if (typeof candidates === 'undefined') throw Error('null candidates');
   if (candidates.length < 1) throw Error('no candidates');
   candidates = candidates.filter(function(o) {
-    return o._id !== user._id;
+    return !(o.login === user.login && o.loginType === user.loginType);
   });
   let distances = function (b, i) {
     return { index: i, value: oceanDist(user, b) };

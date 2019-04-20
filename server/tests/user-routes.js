@@ -9,7 +9,7 @@ let env = process.env;
 chai.use(require('chai-http'));
 const expect = chai.expect;
 
-describe('UserModel Routes', () => {
+describe('User Routes', () => {
 
   beforeEach((done) => { // empty db before each
     UserModel.deleteMany({}, (err) => { done() });

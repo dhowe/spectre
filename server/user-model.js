@@ -136,7 +136,7 @@ function toMongoose(obj) {
 // }
 
 UserSchema.methods.randomizeTraits = function () {
-  this.traitNames().forEach((t) => this.traits[t] = Math.random());
+  this.traitNames().forEach(t => this.traits[t] = Math.random());
   //this.traits.age = Math.round(20 + Math.random() * 50);
   return this;
 }
