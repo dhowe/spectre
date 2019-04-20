@@ -29,6 +29,24 @@ describe('Server User', function () {
   })
 });
 
+describe('UserModel.generateDescription', function () {
+
+  it('Should fail for a user without traits', function () {
+    expect(() => new UserModel().generateDescription()).to.throw();
+  });
+
+  it('Should describe a user based on OCEAN traits', function () {
+    let user = UserModel.Create();
+    user.name = "Jane";
+    user.gender = "female";
+
+    let result = user.generateDescription();
+    expect(result).is.a('string');
+    expect(result.length).is.gt(0);
+    expect(result.startsWith('Jane')).eq(true);
+  });
+});
+
 describe('OCEAN Predictions', function () {
 
   describe('Predictions.oceanSort()', function () {

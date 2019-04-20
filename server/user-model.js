@@ -5,8 +5,8 @@ const ClientUser = require('../shared/models/user.js');
 const { schema, functions } = toMongoose(new ClientUser());
 const UserSchema = mongoose.Schema(schema);
 
-// append object functions to our schema
-Object.keys(functions).forEach(fn => UserSchema.methods[fn] = functions[fn]);
+// share user functions between schema and model
+Object.keys(functions).forEach(f => UserSchema.methods[f] = functions[f]);
 
 function toMongoose(obj) {
 
@@ -52,88 +52,6 @@ function toMongoose(obj) {
 
   return { schema: result, functions: funcs };
 };
-//   {
-//   name: {
-//     type: String
-//   },
-//   traits: {
-//     openness: Number,
-//     conscientiousness: Number,
-//     agreeableness: Number,
-//     extraversion: Number,
-//     neuroticism: Number,
-//   },
-//   predictions: Object,
-//   login: {
-//     type: String,
-//     required: true
-//   },
-//   loginType: {
-//     type: String,
-//     enum: ['twitter', 'google', 'facebook', 'email'],
-//     required: true
-//   },
-//   gender: {
-//     type: String,
-//     enum: ['male', 'female', 'other']
-//   },
-//   createdAt: {
-//     type: Date,
-//     default: Date.now
-//   }
-// });
-
-// UserSchema.methods.generateDescription = function () {
-//
-//   if (typeof this.traits === 'undefined' ||
-//     typeof this.traits.openness === 'undefined') {
-//     throw Error('User with traits required');
-//   }
-//
-//   let lines = [],
-//     traitNames = this.traitNames();
-//
-//   //console.log(user);
-//   for (var i = 0; i < traitNames.length; i++) {
-//     let val = this.traits[traitNames[i]];
-//     let idx = Math.min(traitNames.length - 1, Math.floor(val * traitNames.length));
-//     //console.log(traits[i], val,'->',idx);
-//     lines.push(oceanText[traitNames[i]].text[idx]);
-//   }
-//
-//   let parser = new Parser(this);
-//   for (var i = 0; i < lines.length; i++) {
-//     lines[i] = parser.parse(lines[i]);
-//   }
-//
-//   return lines.join(' ').trim();
-// }
-//
-// UserSchema.methods.poss = function () {
-//   switch (this.gender) {
-//   case 'male':
-//     return 'his';
-//   case 'female':
-//     return 'her';
-//   case 'other':
-//     return 'their';
-//   }
-// }
-//
-// UserSchema.methods.pronoun = function () {
-//   switch (this.gender) {
-//   case 'male':
-//     return 'he';
-//   case 'female':
-//     return 'she';
-//   case 'other':
-//     return 'they';
-//   }
-// }
-//
-// UserSchema.methods.toBe = function () {
-//   return (this.gender === 'other') ? 'are' : 'is';
-// }
 
 UserSchema.methods.randomizeTraits = function () {
   this.traitNames().forEach(t => this.traits[t] = Math.random());

@@ -7,49 +7,50 @@ if (typeof module !== 'undefined' && typeof Parser === 'undefined') {
 class User {
   constructor() {
     this.name = {
-        type: 'string'
-      },
-      this.traits = {
-        openness: { type: 'number' },
-        conscientiousness: { type: 'number' },
-        agreeableness: { type: 'number' },
-        extraversion: { type: 'number' },
-        neuroticism: { type: 'number' }
-        // relationship: 'number',
-        // gender: 'number',
-        // age: 'number',
-      },
-      this.login = {
-        type: 'string',
-        required: true
-      },
-      this.loginType = {
-        type: 'string',
-        enum: ['twitter', 'google', 'facebook', 'email'],
-        required: true
-      },
-      this.gender = {
-        type: 'string',
-        enum: ['male', 'female', 'other']
-      },
-      this.createdAt = {
-        type: 'date',
-        default: Date.now
-      }
+      type: 'string'
+    };
+    this.traits = {
+      openness: { type: 'number' },
+      conscientiousness: { type: 'number' },
+      agreeableness: { type: 'number' },
+      extraversion: { type: 'number' },
+      neuroticism: { type: 'number' }
+      // relationship: { type: 'number' },
+      // gender: { type: 'number' },
+      // age: { type: 'number' },
+    };
+    this.login = {
+      type: 'string',
+      required: true
+    };
+    this.loginType = {
+      type: 'string',
+      enum: ['twitter', 'google', 'facebook', 'email'],
+      required: true
+    };
+    this.gender = {
+      type: 'string',
+      enum: ['male', 'female', 'other']
+    };
+    this.createdAt = {
+      type: 'date',
+      default: Date.now
+    };
   }
 
   generateDescription(parser) {
 
     if (typeof this.traits === 'undefined' ||
-      typeof this.traits.openness === 'undefined') {
+      typeof this.traits.openness !== 'number') {
       throw Error('User with traits required');
     }
 
-    let lines = [],
-      traitNames = this.traitNames();
+    let lines = [];
+    let traitNames = Object.keys(this.traits);
 
     for (var i = 0; i < traitNames.length; i++) {
       let val = this.traits[traitNames[i]];
+      if (val < 0 || val > 1) throw Error('Bad "'+traitNames[i] + '" trait -> '+val);
       let idx = Math.min(traitNames.length - 1, Math.floor(val * traitNames.length));
       lines.push(User.descriptionTemplate[traitNames[i]].text[idx]);
     }
@@ -93,7 +94,6 @@ class User {
 };
 
 User.Create = function (template) {
-
   let user = new User();
   Object.keys(user).forEach(k => k != 'traits' && (user[k] = ''));
   Object.keys(user.traits).forEach(k => user.traits[k] = -1);
@@ -161,94 +161,10 @@ User.descriptionTemplate = {
       '$user.name.ucf() $user.toBe() calm and emotionally stable. $user.pronoun().ucf() comes across as someone who $user.toBe() rarely bothered by things, and when they do get $user.pronoun() down, the feeling does not persist for very long.',
       '$user.name.ucf() $user.toBe() generally calm. $user.pronoun().ucf() comes across as someone who can feel emotional or stressed out by some experiences, however $user.poss() feelings tend to be warranted by the situation.',
       '$user.name.ucf() tends to be more self-conscious than many. $user.pronoun().ucf() comes across as someone who can find it hard to not get caught up by anxious or stressful situations. $user.pronoun().ucf() $user.toBe() in touch with $user.poss() own feelings.',
-      '$user.name.ucf() reacts poorly to stressful situations, and consequently worries more than most about them. However, $user.pronoun() $user.toBe() someone that has an emotional depth that others lack.'
+      '$user.name.ucf() reacts poorly to stressful situations, and consequently worries about them more than most. However $user.pronoun() $user.toBe() someone that has an emotional depth that others may lack.'
     ]
   }
 };
-
-// let User = {
-//   name: {
-//     type: 'string'
-//   },
-//   traits: {
-//     openness: { type: 'number' },
-//     conscientiousness: { type: 'number' },
-//     agreeableness: { type: 'number' },
-//     extraversion: { type: 'number' },
-//     neuroticism: { type: 'number' }
-//     // relationship: 'number',
-//     // gender: 'number',
-//     // age: 'number',
-//   },
-//   login: {
-//     type: 'string',
-//     required: true
-//   },
-//   loginType: {
-//     type: 'string',
-//     enum: ['twitter', 'google', 'facebook', 'email'],
-//     required: true
-//   },
-//   gender: {
-//     type: 'string',
-//     enum: ['male', 'female', 'other']
-//   },
-//   createdAt: {
-//     type: 'date',
-//     default: Date.now
-//   },
-//
-//   generateDescription: function (Parser, oceanText) {
-//
-//     if (typeof this.traits === 'undefined' ||
-//       typeof this.traits.openness === 'undefined') {
-//       throw Error('User with traits required');
-//     }
-//
-//     let lines = [],
-//       traitNames = this.traitNames();
-//
-//     for (var i = 0; i < traitNames.length; i++) {
-//       let val = this.traits[traitNames[i]];
-//       let idx = Math.min(traitNames.length - 1, Math.floor(val * traitNames.length));
-//       lines.push(oceanText[traitNames[i]].text[idx]);
-//     }
-//
-//     let parser = new Parser(this);
-//     for (var i = 0; i < lines.length; i++) {
-//       lines[i] = parser.parse(lines[i]);
-//     }
-//
-//     return lines.join(' ').trim();
-//   },
-//
-//   poss: function () {
-//     switch (this.gender) {
-//     case 'male':
-//       return 'his';
-//     case 'female':
-//       return 'her';
-//     case 'other':
-//       return 'their';
-//     }
-//   },
-//
-//   pronoun: function () {
-//     switch (this.gender) {
-//     case 'male':
-//       return 'he';
-//     case 'female':
-//       return 'she';
-//     case 'other':
-//       return 'they';
-//     }
-//   },
-//
-//   toBe: function () {
-//     return (this.gender === 'other') ? 'are' : 'is';
-//   }
-//
-// };
 
 if (typeof module !== 'undefined') module.exports = User;
 if (typeof window !== 'undefined') window.User = User;

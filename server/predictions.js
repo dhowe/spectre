@@ -1,5 +1,5 @@
 
-let oceanDist = function (a, b) {
+module.exports.oceanDist = function (a, b) {
 
   if (!a || !b) throw Error('2 args required');
 
@@ -8,7 +8,6 @@ let oceanDist = function (a, b) {
   {
     throw Error('traits required');
   }
-
 
   let diff = 0;
   let total = 0;
@@ -23,7 +22,7 @@ let oceanDist = function (a, b) {
   return Math.sqrt(total);
 }
 
-let oceanSort = function (user, candidates) {
+module.exports.oceanSort = function (user, candidates) {
 
   if (typeof user === 'undefined') throw Error('null user');
   if (typeof candidates === 'undefined') throw Error('null candidates');
@@ -32,12 +31,9 @@ let oceanSort = function (user, candidates) {
     return !(o.login === user.login && o.loginType === user.loginType);
   });
   let distances = function (b, i) {
-    return { index: i, value: oceanDist(user, b) };
+    return { index: i, value: module.exports.oceanDist(user, b) };
   };
   let compare = function (a, b) { return a.value - b.value; };
   let reorder = function (e) { return candidates[e.index]; };
   return candidates.map(distances).sort(compare).map(reorder);
 }
-
-module.exports.oceanSort = oceanSort;
-module.exports.oceanDist= oceanDist;

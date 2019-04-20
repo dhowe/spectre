@@ -3,25 +3,7 @@ const expect = require('chai').expect;
 const { UserModel } = require('../user-model');
 const Parser = require('../parser');
 
-describe('Text Generation', function () {
-
-  describe('UserModel.Describe()', function () {
-
-    it('Should fail for a user without traits', function () {
-      expect(() => new UserModel().generateDescription()).to.throw();
-    });
-
-    it('Should describe a user based on OCEAN traits', function () {
-      let user = UserModel.Create();
-      user.name = "Jane";
-      user.gender = "female";
-
-      let result = user.generateDescription();
-      //console.log('\n' + result);
-      expect(result).is.a('string');
-      expect(result.length).is.gt(0);
-    });
-  });
+describe('Text Parser', function () {
 
   describe('Parse Expressions', function () {
     it('Should parse symbols/choices from an expression', function () {
