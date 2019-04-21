@@ -1,6 +1,8 @@
 let choices = /\(([^)]*\|[^)]*)\)/;
 let symbols = /\$user((?:\.[_A-Za-z][_A-Za-z0-9]*(?:\(\))?)+)/;
 
+// TODO: move to User ?
+
 String.prototype.uc = function () {
   return this.toUpperCase();
 }

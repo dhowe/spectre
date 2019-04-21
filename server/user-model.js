@@ -53,15 +53,7 @@ function toMongoose(obj) {
   return { schema: result, functions: funcs };
 };
 
-UserSchema.methods.randomizeTraits = function () {
-  this.traitNames().forEach(t => this.traits[t] = Math.random());
-  //this.traits.age = Math.round(20 + Math.random() * 50);
-  return this;
-}
-
-UserSchema.methods.traitNames = function () {
-  return Object.keys(this.traits);
-}
+////////////////////// UserSchema.methods ////////////////////
 
 UserSchema.methods.findByOcean = function (res, num, cb) {
   let user = this;
@@ -74,6 +66,12 @@ UserSchema.methods.findByOcean = function (res, num, cb) {
     });
   return this;
 };
+
+////////////////////// UserSchema.statics ////////////////////
+
+UserSchema.statics.getAll = function (callback, limit) {
+  UserModel.find(callback).limit(limit);
+}
 
 UserSchema.statics.Create = function (tmpl) {
 
@@ -89,10 +87,6 @@ UserSchema.statics.Create = function (tmpl) {
   return user.randomizeTraits();
 }
 
-let UserModel = mongoose.model('user', UserSchema);
+/////////////////////////////////////////////////////////////
 
-UserModel.getAll = function (callback, limit) {
-  UserModel.find(callback).limit(limit);
-}
-
-module.exports.UserModel = UserModel;
+let UserModel = module.exports.UserModel = mongoose.model('user', UserSchema);

@@ -1,5 +1,3 @@
-let Parser;
-
 if (typeof module !== 'undefined' && typeof Parser === 'undefined') {
   Parser = require('../../server/parser');
 }
@@ -46,18 +44,21 @@ class User {
     }
 
     let lines = [];
-    let traitNames = Object.keys(this.traits);
+    let traitNames = this.traitNames();
 
     for (var i = 0; i < traitNames.length; i++) {
-      let val = this.traits[traitNames[i]];
-      if (val < 0 || val > 1) throw Error('Bad "'+traitNames[i] + '" trait -> '+val);
-      let idx = Math.min(traitNames.length - 1, Math.floor(val * traitNames.length));
-      lines.push(User.descriptionTemplate[traitNames[i]].text[idx]);
+      if (typeof User.descriptionTemplate[traitNames[i]] !== 'undefined') {
+        let val = this.traits[traitNames[i]];
+        if (val < 0 || val > 1) throw Error('Bad "' + traitNames[i] + '" trait -> ' + val);
+        let idx = Math.min(traitNames.length - 1, Math.floor(val * traitNames.length));
+        lines.push(User.descriptionTemplate[traitNames[i]].text[idx]);
+      }
     }
+
     if (!parser && typeof Parser !== 'undefined')
       parser = new Parser(this);
 
-    if (!parser) throw Error('no Parser object found');
+    if (!parser) throw Error('No Parser found');
 
     for (var i = 0; i < lines.length; i++) {
       lines[i] = parser.parse(lines[i]);
@@ -90,6 +91,15 @@ class User {
 
   toBe() {
     return (this.gender === 'other') ? 'are' : 'is';
+  }
+
+  traitNames() {
+    return Object.keys(this.traits);
+  }
+
+  randomizeTraits() {
+    this.traitNames().forEach(t => this.traits[t] = Math.random());
+    return this;
   }
 };
 
@@ -161,7 +171,7 @@ User.descriptionTemplate = {
       '$user.name.ucf() $user.toBe() calm and emotionally stable. $user.pronoun().ucf() comes across as someone who $user.toBe() rarely bothered by things, and when they do get $user.pronoun() down, the feeling does not persist for very long.',
       '$user.name.ucf() $user.toBe() generally calm. $user.pronoun().ucf() comes across as someone who can feel emotional or stressed out by some experiences, however $user.poss() feelings tend to be warranted by the situation.',
       '$user.name.ucf() tends to be more self-conscious than many. $user.pronoun().ucf() comes across as someone who can find it hard to not get caught up by anxious or stressful situations. $user.pronoun().ucf() $user.toBe() in touch with $user.poss() own feelings.',
-      '$user.name.ucf() reacts poorly to stressful situations, and consequently worries about them more than most. However $user.pronoun() $user.toBe() someone that has an emotional depth that others may lack.'
+      '$user.name.ucf() reacts poorly to stressful situations, and consequently worries about them more than most. However $user.pronoun() has an emotional depth that others may lack.'
     ]
   }
 };
