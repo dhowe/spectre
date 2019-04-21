@@ -1,24 +1,15 @@
-let allItems;
-
-if (typeof exports !== 'undefined') {
-  allItems = Array.from(require('../data/items'));
-  exports.predict = predict;
-}
-if (typeof window !== 'undefined') {
-  allItems = getAllItems();
-  window.predict = predict;
-}
-
 const predictions = [
-  { trait: 'ope', boost: true, correction: true },
-  { trait: 'con', boost: true, correction: true },
-  { trait: 'ext', boost: true, correction: true },
-  { trait: 'agr', boost: true, correction: true },
-  { trait: 'neu', boost: true, correction: true },
-  { trait: 'age', boost: false, correction: false },
-  { trait: 'relation', boost: false, correction: false },
-  { trait: 'gender', boost: false, correction: false }
+  { trait: 'openness', abbrev: 'ope', boost: true, correction: true },
+  { trait: 'conscientiousness', abbrev: 'con', boost: true, correction: true },
+  { trait: 'extraversion', abbrev: 'ext', boost: true, correction: true },
+  { trait: 'agreeableness', abbrev: 'agr', boost: true, correction: true },
+  { trait: 'neuroticism', abbrev: 'neu', boost: true, correction: true },
+  { trait: 'age', abbrev: 'age', boost: false, correction: false },
+  { trait: 'relation', abbrev: 'relation', boost: false, correction: false },
+  { trait: 'gender', abbrev: 'gender', boost: false, correction: false }
 ];
+
+const allItems = getAllItems();
 
 /**
  * Performs scoring for a completed brand personality test
@@ -32,7 +23,8 @@ function predict(responses) {
     const itemRatings = getItemRatings(responses);
     const sumRatings = getSumRatings(itemRatings);
     if (sumRatings > 0) {
-      return getPredictions(itemRatings, sumRatings);
+      return getPredictions(itemRatings, sumRatings)
+        .map(p => ({ trait: p.trait, score: p.score / 100 }));
     }
   }
   throw Error('Unexpected input', responses);
@@ -45,7 +37,7 @@ function getPredictions(itemRatings, sumRatings) {
       score: getScoreForTrait(
         itemRatings,
         sumRatings,
-        prediction.trait + '_perc',
+        prediction.abbrev + '_perc',
         prediction.boost,
         prediction.correction)
     }));
@@ -797,3 +789,6 @@ function getAllItems() {
     }
 ];
 }
+
+if (typeof exports !== 'undefined') exports.predict = predict;
+if (typeof window !== 'undefined') window.predict = predict;

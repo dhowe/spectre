@@ -7,7 +7,6 @@ class Brand {
     Brand.instances.push(this);
   }
   draw() {
-    this.update();
     if (this.x > -Brand.radius) this.render();
   }
   update() {
@@ -35,19 +34,14 @@ class Brand {
   }
 }
 
-// { "item": "zara", "rating": .4 },
-// { "item": "cocacola", "rating": .8 },
-// { "item": "next", "rating": -.2 },
-// { "item": "rayban", "rating": 0 },
-// { "item": "sony", "rating": .3 },
-// { "item": "gap", "rating": -.6 },
-
 Brand.speed = 1;
 Brand.radius = 100;
 Brand.instances = [];
 Brand.active = false;
+
 Brand.names = ['gap', 'zara', 'cocacola', 'next', 'rayban', 'sony'];
 Brand.drawAll = function () { Brand.instances.forEach(b => b.draw()) };
+Brand.updateAll = function () { Brand.instances.forEach(b => b.update()) };
 
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {

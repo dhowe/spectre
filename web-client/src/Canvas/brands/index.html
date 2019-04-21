@@ -3,17 +3,25 @@
 
 <head>
   <script src="p5.min.js"></script>
-  <style>
-    body {
-      padding: 0;
-      margin: 0;
-    }
-  </style>
   <link rel="stylesheet" type="text/css" href="style.css">
   <meta charset="utf-8">
 </head>
 
 <body>
+
+  <div id="content">
+    <table>
+      <tr>
+        <th>Trait</th>
+        <th>Score</th>
+        <th>Description</th>
+      </tr>
+      <tbody id="tdata"></tbody>
+    </table>
+  </div>
+
+  <script src="../../../../server/parser.js"></script>
+  <script src="../../../../shared/models/user.js"></script>
   <script src="ppq/src/ppq.js"></script>
   <script src="brands.js"></script>
   <script src="sketch.js"></script>

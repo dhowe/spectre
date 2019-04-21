@@ -2,6 +2,32 @@ html, body {
   margin: 0;
   padding: 0;
 }
+
 canvas {
+  position: fixed;
+  z-index: 1;
   display: block;
+}
+
+table {
+  background: #C45422;
+  opacity: .9;
+  color: white;
+}
+
+table, thead, tbody, tfoot, tr, td, th {
+  text-align: center;
+  margin: auto;
+  border: 1px solid #dedede;
+  padding: .1rem;
+}
+
+#content {
+  position: fixed;
+  z-index: 2;
+  top: 10%;
+  left: 25%;
+  display: none;
+  width: 50%;
+  max-height: 300px;
 }

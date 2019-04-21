@@ -1,15 +1,18 @@
-let spacing, numLines = 9;
-let complete = false;
-let seconds = 30;
+let done, user, spacing, numLines = 9;
+let seconds = 20;
 
 function setup() {
+
   createCanvas(windowWidth, windowHeight);
-  textAlign(CENTER, CENTER);
   spacing = height / (numLines + 1);
+  textAlign(CENTER, CENTER);
   shuffle(Brand.names);
+
   for (var i = 0; i < Brand.names.length; i++) {
-    new Brand(-i * (width / 6) + width/2, height / 2, Brand.names[i]);
+    new Brand(-i * (width / 6) + width / 2, height / 2, Brand.names[i]);
   }
+
+  user = User.Create({ name: "Jane", gender: "female" });
 }
 
 function draw() {
@@ -22,26 +25,60 @@ function draw() {
     line(0, spacing * (i + 1), width, spacing * (i + 1));
   }
 
+  !done && Brand.updateAll();
   Brand.drawAll();
+
+  let timer = seconds - floor(millis() / 1000);
+  if (timer < 0 && !done) {
+    finished();
+  }
 
   textSize(48);
   fill(255);
-  text(max(0, seconds - floor(millis() / 1000)), width - 60, spacing / 2);
+  text(max(0, timer), width - 60, spacing / 2);
 }
 
 function finished() {
-  complete = true;
-  let data = [];
-  Brand.instances.forEach(b => {
-    data.push({item: b.item, rating: b.rating});
-  });
-  let predicts = predict(data);
-  //user.assignTraits(predicts);
-  console.log(predicts);
+  done = true;
+  checkData();
+  let data = Brand.instances.map(b => ({ item: b.item, rating: b.rating }));
+  predict(data).forEach(p => user.traits[p.trait] = p.score);
+  displayAsHtml(user);
+}
+
+function displayAsHtml(user) {
+  let otr = '<tr><td>';
+  let ctd = '</td><td>';
+  let ctr = '</td></tr>'
+
+  let rows = user.traitNames().length;
+  let desc = '</td><td rowspan=' + rows +
+    ' width=50%>' + user.generateDescription();
+  let html = user.traitNames().reduce((acc, t, i) => {
+    return acc + otr + t + ctd + user.traits[t] + (i ? '' : desc) + ctr;
+  }, '');
+
+  document.getElementById("content").style.display = 'inline-block';
+  document.getElementById("tdata").innerHTML = html;
 }
 
 function keyReleased() {
   if (key == ' ') finished();
+}
+
+function randomizeData() {
+  Brand.instances.forEach(b => {
+    var idx = floor(random(0, numLines));
+    b.rating = map(idx, 0, numLines - 1, -8, 8) / 10;
+  });
+}
+
+function checkData() {
+  let nodata = true;
+  Brand.instances.forEach(b => {
+    if (b.rating !== 0) nodata = false;
+  });
+  if (nodata) randomizeData();
 }
 
 function mouseReleased() {
