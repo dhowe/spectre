@@ -1,0 +1,10 @@
+{
+  "name": "brand-game",
+  "version": "1.0.0",
+  "description": "",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "p5": "^0.8.0"
+  }
+}

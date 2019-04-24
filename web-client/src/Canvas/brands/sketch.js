@@ -59,7 +59,7 @@ function displayAsHtml(user) {
 
   let rows = user.traitNames().length;
   let desc = '</td><td rowspan=' + rows +
-    ' width=50%>' + user.generateDescription();
+    ' id="desc">' + user.generateDescription();
   let html = user.traitNames().reduce((acc, t, i) => {
     return acc + otr + t + ctd + user.traits[t] + (i ? '' : desc) + ctr;
   }, '');

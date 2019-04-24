@@ -10,16 +10,28 @@ canvas {
 }
 
 table {
-  background: #C45422;
+  background: #0A84FF;
   opacity: .9;
   color: white;
 }
 
-table, thead, tbody, tfoot, tr, td, th {
+th {
   text-align: center;
   margin: auto;
-  border: 1px solid #dedede;
-  padding: .1rem;
+  border: .5px solid white;
+  padding: .7rem;
+}
+
+table, thead, tbody, tfoot, tr, td  {
+  text-align: center;
+  margin: auto;
+  border: .5px solid white;
+  padding: .5rem;
+}
+
+td#desc {
+  text-align: justify;
+  padding: 1rem;
 }
 
 #content {
