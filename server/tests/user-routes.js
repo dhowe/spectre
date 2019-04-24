@@ -1,13 +1,17 @@
-const mongoose = require('mongoose');
-const chai = require('chai');
-const server = require('../server');
-const { UserModel } = require('../user-model');
+import mongoose from 'mongoose';
+import chai from 'chai';
+import chai_http from 'chai-http';
+import server from '../server';
+import dotEnv from 'dotenv';
 
-require('dotenv').config();
-let env = process.env;
+import UserModel from '../user-model';
 
-chai.use(require('chai-http'));
+dotEnv.config();
+
+const env = process.env;
 const expect = chai.expect;
+
+chai.use(chai_http);
 
 describe('User Routes', () => {
 

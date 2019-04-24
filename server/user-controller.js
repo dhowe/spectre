@@ -1,6 +1,6 @@
-let { UserModel } = require('./user-model');
+import UserModel from './user-model';
 
-exports.list = function (req, res) {
+const list = function (req, res) {
 
   UserModel.getAll(function (err, users) {
     if (err) return error(res, err);
@@ -8,24 +8,23 @@ exports.list = function (req, res) {
   });
 };
 
-exports.similar = function (req, res) {
+const similar = function (req, res) {
 
   if (!req.params.hasOwnProperty('uid')) {
     return error(res, 'UserId required');
   }
+
   UserModel.findById(req.params.uid, function (err, user) {
     if (err) return error(res, 'Unable to find user #' + req.params.uid);
     user.findByOcean(res, 1, (users) => res.status(200).send(users));
   });
 };
 
-exports.create = function (req, res) {
+const create = function (req, res) {
 
-  if (!req.body.loginType) return error
-    (res, "Bad UserModel: no loginType");
+  if (!req.body.loginType) return error(res, "Bad UserModel: no loginType");
 
-  if (!req.body.login) return error
-    (res, "Bad UserModel: no login");
+  if (!req.body.login) return error(res, "Bad UserModel: no login");
 
   let user = new UserModel();
   Object.assign(user, req.body);
@@ -36,29 +35,26 @@ exports.create = function (req, res) {
   });
 };
 
-exports.view = function (req, res) {
+const view = function (req, res) {
 
   UserModel.findById(req.params.uid, function (err, user) {
-    if (err) return error
-      (res, 'Unable to find user #' + req.params.uid);
+    if (err) return error(res, 'Unable to find user #' + req.params.uid);
     res.status(200).send(user);
   });
 };
 
-exports.update = function (req, res) {
+const update = function (req, res) {
 
   UserModel.findById(req.params.uid, function (err, user) {
-    if (err) return error
-      (res, 'Unable to update user #' + req.params.uid);
+    if (err) return error(res, 'Unable to update user #' + req.params.uid);
     Object.assign(user, req.params).save((err, user) => {
-      if (err) return error
-        (res, 'Unable to save user #' + req.params.uid);
+      if (err) return error(res, 'Unable to save user #' + req.params.uid);
       res.status(200).send(user);
     });
   });
 };
 
-exports.delete = function (req, res) {
+const remove = function (req, res) {
 
   UserModel.remove({ _id: req.params.uid }, function (err, user) {
     if (err) return error(res, 'Unable to delete user #' + req.params.uid);
@@ -67,6 +63,9 @@ exports.delete = function (req, res) {
 };
 
 function error(res, err, code) {
+
   code = (typeof code !== 'undefined') ? code : 400;
   res.status(code).send({ error: err });
 }
+
+export default { list, similar, create, view, update, remove }

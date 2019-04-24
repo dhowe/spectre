@@ -20,9 +20,11 @@
     </table>
   </div>
 
-  <script src="../../../../server/parser.js"></script>
-  <script src="../../../../shared/models/user.js"></script>
-  <script src="ppq/src/ppq.js"></script>
+  <script type="module">
+    import User from '../../../../shared/user.js';
+    window.user = User.Create({ name: "Jane", gender: "female" });
+  </script>
+
   <script src="brands.js"></script>
   <script src="sketch.js"></script>
 </body>

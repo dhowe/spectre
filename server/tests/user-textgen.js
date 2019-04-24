@@ -1,7 +1,6 @@
-const assert = require('chai').assert;
-const expect = require('chai').expect;
-const { UserModel } = require('../user-model');
-const Parser = require('../parser');
+import { expect } from 'chai';
+import Parser from '../../shared/parser';
+import UserModel from '../user-model';
 
 describe('Text Parser', function () {
 
@@ -10,6 +9,7 @@ describe('Text Parser', function () {
 
       let user = new UserModel();
       user.name = "jen";
+
       let parser = new Parser(user);
       expect(parser.parse("Was $user.name.ucf() (ok | ok)?")).eq('Was Jen ok?');
     });
@@ -20,6 +20,7 @@ describe('Text Parser', function () {
 
       let user = new UserModel();
       user.name = "jen";
+
       let parser = new Parser(user);
       expect(parser.parseSymbols("$user.name was ok")).eq('jen was ok');
       expect(parser.parseSymbols("That was $user.name")).eq('That was jen');
@@ -39,8 +40,8 @@ describe('Text Parser', function () {
   describe('Parse Choices', function () {
 
     it('Should parse groups from an expression', function () {
-      let parser = new Parser();
 
+      let parser = new Parser();
       expect(parser.parseChoices("x (a | a | a) x")).eq('x a x');
       expect(parser.parseChoices("x (a | a | a)")).eq('x a');
       expect(parser.parseChoices("x (a | a | a)x")).eq('x ax');

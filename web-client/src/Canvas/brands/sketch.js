@@ -1,4 +1,11 @@
-let done, user, spacing, numLines = 9;
+/*
+A quick/dirty mockup of what the 'Personality Test' might look like, primarily
+for testing the scoring algorithms. This will need to be recoded in React/DOM
+and then styled appropriately.
+ */
+
+let done, user, spacing;
+let numLines = 9;
 let seconds = 20;
 
 function setup() {
@@ -8,11 +15,10 @@ function setup() {
   textAlign(CENTER, CENTER);
   shuffle(Brand.names);
 
-  for (var i = 0; i < Brand.names.length; i++) {
+  for (let i = 0; i < Brand.names.length; i++) {
     new Brand(-i * (width / 6) + width / 2, height / 2, Brand.names[i]);
   }
-
-  user = User.Create({ name: "Jane", gender: "female" });
+  user = window.user;
 }
 
 function draw() {
@@ -42,7 +48,7 @@ function finished() {
   done = true;
   checkData();
   let data = Brand.instances.map(b => ({ item: b.item, rating: b.rating }));
-  predict(data).forEach(p => user.traits[p.trait] = p.score);
+  user.predictFromBrands(data).forEach(p => user.traits[p.trait] = p.score);
   displayAsHtml(user);
 }
 
@@ -68,8 +74,9 @@ function keyReleased() {
 
 function randomizeData() {
   Brand.instances.forEach(b => {
-    var idx = floor(random(0, numLines));
+    let idx = floor(random(0, numLines));
     b.rating = map(idx, 0, numLines - 1, -8, 8) / 10;
+    b.y = (idx + 1) / (numLines + 1) * height;
   });
 }
 

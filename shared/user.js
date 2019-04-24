@@ -1,8 +1,8 @@
-if (typeof module !== 'undefined' && typeof Parser === 'undefined') {
-  Parser = require('../../server/parser');
-}
+import Parser from './parser.js'
+import predict from './ppq.js'
 
-class User {
+export default class User {
+
   constructor() {
     this.name = {
       type: 'string'
@@ -13,9 +13,9 @@ class User {
       agreeableness: { type: 'number' },
       extraversion: { type: 'number' },
       neuroticism: { type: 'number' }
-      // relationship: { type: 'number' },
-      // gender: { type: 'number' },
-      // age: { type: 'number' },
+      /*relationship: { type: 'number' },
+        gender: { type: 'number' },
+        age: { type: 'number' },*/
     };
     this.login = {
       type: 'string',
@@ -34,6 +34,11 @@ class User {
       type: 'date',
       default: Date.now
     };
+  }
+
+  predictFromBrands(data) {
+
+    return predict(data);
   }
 
   generateDescription(parser) {
@@ -55,10 +60,11 @@ class User {
       }
     }
 
-    if (!parser && typeof Parser !== 'undefined')
+    // verify we have a parser
+    if (!parser) {
+      if (typeof Parser === 'undefined') throw Error('No Parser found');
       parser = new Parser(this);
-
-    if (!parser) throw Error('No Parser found');
+    }
 
     for (var i = 0; i < lines.length; i++) {
       lines[i] = parser.parse(lines[i]);
@@ -175,6 +181,3 @@ User.descriptionTemplate = {
     ]
   }
 };
-
-if (typeof module !== 'undefined') module.exports = User;
-if (typeof window !== 'undefined') window.User = User;

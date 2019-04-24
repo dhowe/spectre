@@ -4,15 +4,16 @@
   "description": "Server component for the SPECTRE system",
   "main": "app.js",
   "scripts": {
-    "test": "mocha  ./tests --recursive --exit",
-    "test:watch": "mocha --watch ./tests --recursive",
-    "start": "node server.js"
+    "test": "mocha  ./tests --recursive --exit -r esm",
+    "test:watch": "mocha --watch ./tests --recursive --r esm",
+    "start": "node -r esm server.js"
   },
   "author": "",
   "dependencies": {
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "dotenv": "^7.0.0",
+    "esm": "^3.2.22",
     "express": "^4.16.4",
     "express-basic-auth": "^1.1.6",
     "lodash": "^4.17.11",

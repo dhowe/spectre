@@ -1,5 +1,5 @@
 
-module.exports.oceanDist = function (a, b) {
+const oceanDist = function (a, b) {
 
   if (!a || !b) throw Error('2 args required');
 
@@ -22,7 +22,7 @@ module.exports.oceanDist = function (a, b) {
   return Math.sqrt(total);
 }
 
-module.exports.oceanSort = function (user, candidates) {
+const oceanSort = function (user, candidates) {
 
   if (typeof user === 'undefined') throw Error('null user');
   if (typeof candidates === 'undefined') throw Error('null candidates');
@@ -37,3 +37,5 @@ module.exports.oceanSort = function (user, candidates) {
   let reorder = function (e) { return candidates[e.index]; };
   return candidates.map(distances).sort(compare).map(reorder);
 }
+
+export { oceanSort, oceanDist };

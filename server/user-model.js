@@ -1,12 +1,49 @@
-const lodash = require('lodash');
-const mongoose = require('mongoose');
-const { oceanSort } = require('./predictions');
-const ClientUser = require('../shared/models/user.js');
+import lodash from 'lodash';
+import mongoose from 'mongoose';
+import { oceanSort } from './metrics';
+import ClientUser from '../shared/user';
+
 const { schema, functions } = toMongoose(new ClientUser());
 const UserSchema = mongoose.Schema(schema);
 
 // share user functions between schema and model
 Object.keys(functions).forEach(f => UserSchema.methods[f] = functions[f]);
+
+////////////////////// UserSchema.methods ////////////////////
+
+UserSchema.methods.findByOcean = function (res, num, cb) {
+  let user = this;
+  UserModel.find({})
+    .limit(num + 1)
+    .exec(function (err, instances) {
+      sorted = oceanSort(user, instances);
+      sorted.shift(); // remove 'this' user
+      cb(sorted);
+    });
+  return this;
+};
+
+////////////////////// UserSchema.statics ////////////////////
+
+UserSchema.statics.getAll = function (callback, limit) {
+  UserModel.find(callback).limit(limit);
+}
+
+UserSchema.statics.Create = function (tmpl) {
+
+  function randName() {
+    return Math.random().toString(36).replace(/[^a-z]+/g, '').substring(0, 5);
+  }
+
+  let user = new UserModel();
+  user.name = tmpl && tmpl.name ? tmpl.name : randName();
+  user.login = tmpl && tmpl.login ? tmpl.login : user.name + '@' + randName() + '.com';
+  user.loginType = tmpl && tmpl.loginType ? tmpl.loginType : 'facebook';
+
+  return user.randomizeTraits();
+}
+
+///////////////////////// Helpers ///////////////////////////
 
 function toMongoose(obj) {
 
@@ -53,40 +90,6 @@ function toMongoose(obj) {
   return { schema: result, functions: funcs };
 };
 
-////////////////////// UserSchema.methods ////////////////////
+const UserModel = mongoose.model('user', UserSchema);
 
-UserSchema.methods.findByOcean = function (res, num, cb) {
-  let user = this;
-  UserModel.find({})
-    .limit(num + 1)
-    .exec(function (err, instances) {
-      sorted = oceanSort(user, instances);
-      sorted.shift(); // remove 'this' user
-      cb(sorted);
-    });
-  return this;
-};
-
-////////////////////// UserSchema.statics ////////////////////
-
-UserSchema.statics.getAll = function (callback, limit) {
-  UserModel.find(callback).limit(limit);
-}
-
-UserSchema.statics.Create = function (tmpl) {
-
-  function randName() {
-    return Math.random().toString(36).replace(/[^a-z]+/g, '').substring(0, 5);
-  }
-
-  let user = new UserModel();
-  user.name = tmpl && tmpl.name ? tmpl.name : randName();
-  user.login = tmpl && tmpl.login ? tmpl.login : user.name + '@' + randName() + '.com';
-  user.loginType = tmpl && tmpl.loginType ? tmpl.loginType : 'facebook';
-
-  return user.randomizeTraits();
-}
-
-/////////////////////////////////////////////////////////////
-
-let UserModel = module.exports.UserModel = mongoose.model('user', UserSchema);
+export default UserModel;

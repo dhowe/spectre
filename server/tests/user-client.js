@@ -1,6 +1,5 @@
-const expect = require('chai').expect;
-const { oceanDist, oceanSort } = require('../predictions');
-let User = require('../../shared/models/user.js');
+import { expect } from 'chai';
+import User from '../../shared/user';
 
 describe('Client User', function () {
 
@@ -39,7 +38,7 @@ describe('Client User', function () {
     });
   });
 
-  describe('User.generateDescription', function () {
+  describe('User.generateDescription()', function () {
 
     it('Should fail for a user without traits', function () {
       expect(() => new User().generateDescription()).to.throw();
@@ -64,5 +63,4 @@ describe('Client User', function () {
       expect(result.startsWith('Jane')).eq(true);
     });
   });
-
 });
