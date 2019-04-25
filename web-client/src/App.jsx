@@ -13,6 +13,7 @@ import DataIs from './Page/DataIs/DataIs'
 import BelieveInDataism from './Page/BelieveInDataism/BelieveInDataism'
 import Steps from './Page/Steps/Steps'
 import PersonalisedExperience from './Page/PersonalisedExperience/PersonalisedExperience'
+import VideoTest from './Page/VideoTest/VideoTest'
 
 const theme = createMuiTheme({
   palette: {
@@ -30,8 +31,10 @@ function App() {
         <header className="App-header">
           <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" />
           <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+
           <Router>
-            <Route exact path="/" component={TouchToBegin} />
+            <Route exact path="/" component={VideoTest} />
+            <Route exact path="/touch-to-begin" component={TouchToBegin} />
             <Route exact path="/login" component={LoginPage} />
             <Route exact path="/intro-video" component={IntroVideo} />
             <Route exact path="/username" component={Username} />
