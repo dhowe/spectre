@@ -30,8 +30,8 @@ function LoginPage(props) {
         <div className={classes.root}>
             <Header>
                 <Typography variant="h6" color="inherit" >
-                    Header
-                    </Typography>
+                    {props.prop}
+                </Typography>
             </Header>
             <div className={classes.content}>
                 <Logo></Logo>

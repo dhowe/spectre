@@ -29,8 +29,9 @@ function TouchToBegin(props) {
         <div className={classes.root}>
             <Header>
                 <Typography variant="h6" color="inherit" className={classes.grow}>
-                    Header
+                    {props.prop}
                 </Typography>
+                <button onClick={props.test_state}>test</button>
             </Header>
             <div className={classes.content}>
                 <Link component={LoginPage} to="/login">
