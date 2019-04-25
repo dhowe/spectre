@@ -6,7 +6,7 @@ import Header from "../../Components/Header/Header";
 import Footer from "../../Components/Footer/Footer";
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
-import Game from '../Game/Game'
+import Steps from '../Steps/Steps'
 
 const styles = {
     root: {
@@ -26,21 +26,18 @@ const styles = {
     }
 };
 
-function PersonalisedExperience(props) {
+function Game(props) {
     const { classes } = props;
     return (
         <div className={classes.root}>
             <Header>
                 <Typography variant="h6" color="inherit" >
                     Header
-                    </Typography>
+                </Typography>
             </Header>
             <div className={classes.content}>
-                <Typography component="h3" variant="h3">Excellent</Typography>
-                <Typography component="h3" variant="h3">In order to create your</Typography>
-                <Typography component="h3" variant="h3" className={classes.glow}><strong>personalised experience</strong></Typography>
-                <Typography component="h4" variant="h4" >Tell us what you love, tell us what you hate...</Typography>
-                <Link component={Game} to="/game">
+                <Typography component="h3" variant="h3">Game will go here</Typography>
+                <Link component={Steps} to="/steps">
                     <Button variant="contained" color="primary" className={classes.button}>
                         Next
                 </Button>
@@ -57,8 +54,8 @@ function PersonalisedExperience(props) {
     );
 }
 
-PersonalisedExperience.propTypes = {
+Game.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(PersonalisedExperience);
+export default withStyles(styles)(Game);
