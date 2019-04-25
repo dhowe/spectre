@@ -15,6 +15,7 @@ import Steps from './Page/Steps/Steps'
 import PersonalisedExperience from './Page/PersonalisedExperience/PersonalisedExperience'
 import VideoTest from './Page/VideoTest/VideoTest'
 import Game from './Page/Game/Game'
+import ThankYou from './Page/ThankYou/ThankYou'
 
 const theme = createMuiTheme({
   palette: {
@@ -59,6 +60,7 @@ class App extends React.Component {
               <Route exact path="/steps" component={Steps} />
               <Route exact path="/personalised-experience" component={PersonalisedExperience} />
               <Route exact path="/game" component={Game} />
+              <Route exact path="/thank-you" component={ThankYou} />
             </Router>
           </header>
         </div>
