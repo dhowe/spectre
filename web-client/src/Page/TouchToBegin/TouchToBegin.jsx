@@ -7,6 +7,7 @@ import Footer from "../../Components/Footer/Footer";
 import { Link } from 'react-router-dom';
 import LoginPage from '../LoginPage/LoginPage';
 import Logo from "../../Components/Logo/Logo";
+import AvatarComponent from "../../Components/AvatarComponent/AvatarComponent";
 
 const styles = {
     root: {
@@ -40,6 +41,7 @@ function TouchToBegin(props) {
                         <Typography>Touch to Begin</Typography>
                     </div>
                 </Link>
+                <AvatarComponent></AvatarComponent>
             </div >
             <Footer>
                 <Typography variant="h6" color="inherit" className={classes.grow}>
