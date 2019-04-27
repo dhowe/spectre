@@ -4,7 +4,7 @@
  *         (e.g., 'adidas') and 'rating' (-.8 to .8) properties
  * @returns  {Array} An array containing personality predictions
  */
-export default function predict(responses) {
+export function predict(responses) {
 
   if (Array.isArray(responses) && responses.length > 0) {
     const itemRatings = getItemRatings(responses);
@@ -44,7 +44,7 @@ function getPredictions(itemRatings, sumRatings) {
 function getItemRatings(responses) {
   return responses
     .map(response => ({
-      item: allItems.find(item => item['object_name'] === response.item),
+      item: items.find(item => item['object_name'] === response.item),
       rating: response.rating
     }))
     .filter(itemResponse => itemResponse.item !== undefined)
@@ -103,7 +103,7 @@ function trimToRange(score, min = 1, max = 99) {
   return Math.min(max, Math.max(min, score));
 }
 
-const allItems = [
+export const items = [
   {
     "id": "42",
     "object_id": "40796308305",

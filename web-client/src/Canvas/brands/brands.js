@@ -1,4 +1,4 @@
-class Brand {
+export default class Brand {
   constructor(x, y, item) {
     this.x = x;
     this.y = y;
@@ -39,13 +39,6 @@ Brand.radius = 100;
 Brand.instances = [];
 Brand.active = false;
 
-Brand.names = ['gap', 'zara', 'cocacola', 'next', 'rayban', 'sony'];
+Brand.names = ['cocacola', 'disney', 'converse', 'playstation', 'xbox', 'red bull', 'hello kitty', 'pepsi', 'h&m', 'ben & jerrys', 'old spice', 'burberry', 'adidas', 'marvel', 'nike', 'zara', 'vans', 'starbucks', 'topshop', 'lacoste', 'gap', 'sony', 'new look', 'calvin klein', 'rayban', 'next', 'swarovski', 'tommy hilfiger', 'asos', 'marks and spencer', 'vivienne westwood', 'chanel', 'nintendo64', 'lego'];
 Brand.drawAll = function () { Brand.instances.forEach(b => b.draw()) };
 Brand.updateAll = function () { Brand.instances.forEach(b => b.update()) };
-
-function shuffle(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-}

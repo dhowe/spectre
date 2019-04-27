@@ -6,14 +6,15 @@ and then styled appropriately.
 
 let done, user, spacing;
 let numLines = 9;
-let seconds = 20;
+let seconds = 25;
 
 function setup() {
 
   createCanvas(windowWidth, windowHeight);
+  shuffle(Brand.names);
+
   spacing = height / (numLines + 1);
   textAlign(CENTER, CENTER);
-  shuffle(Brand.names);
 
   for (let i = 0; i < Brand.names.length; i++) {
     new Brand(-i * (width / 6) + width / 2, height / 2, Brand.names[i]);
@@ -42,6 +43,8 @@ function draw() {
   textSize(48);
   fill(255);
   text(max(0, timer), width - 60, spacing / 2);
+  textSize(18);
+  text('drag items then hit spacebar to compute scores', width/2, height-40);
 }
 
 function finished() {
@@ -113,5 +116,12 @@ function mousePressed() {
 function mouseDragged() {
   if (Brand.active) {
     Brand.active.y += mouseY - pmouseY;
+  }
+}
+
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
   }
 }

@@ -1,5 +1,5 @@
 import Parser from './parser.js'
-import predict from './ppq.js'
+import { predict } from './ppq.js'
 
 export default class User {
 
