@@ -21,6 +21,7 @@
   </div>
 
   <script type="module">
+    // hack to import ES6 modules into browser
     import User from '../../../../shared/user.js';
     window.user = User.Create({ name: "Jane", gender: "female" });
     import Brand from './brands.js';
