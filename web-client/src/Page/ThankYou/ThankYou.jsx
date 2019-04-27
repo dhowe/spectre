@@ -4,45 +4,49 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Header from "../../Components/Header/Header";
 import Footer from "../../Components/Footer/Footer";
+import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
-import LoginPage from '../LoginPage/LoginPage';
-import Logo from "../../Components/Logo/Logo";
-import AvatarComponent from "../../Components/AvatarComponent/AvatarComponent";
+import Steps from '../Steps/Steps'
 
 const styles = {
     root: {
         flexGrow: 1,
         width: "100%",
-        backgroundSize: 'cover',
-        background: 'url(https://www.atlantisbahamas.com/media/Things%20To%20Do/Water%20Park/Beaches/Hero/Experiences_Beach.jpg)',
+        backgroundColor: '#F5FAFA',
+        color: 'black'
     },
     content: {
         margin: "64px 0",
     },
     clickToContinue: {
         margin: "20% 0",
+    },
+    glow: {
+        color: '#ffd700'
     }
 };
 
-function TouchToBegin(props) {
+function ThankYou(props) {
     const { classes } = props;
     return (
         <div className={classes.root}>
             <Header>
-                <Typography variant="h6" color="inherit" className={classes.grow}>
-                    {props.prop}
+                <Typography variant="h6" color="inherit" >
+                    Header
                 </Typography>
-                <button onClick={props.test_state}>test</button>
             </Header>
             <div className={classes.content}>
-                <Link component={LoginPage} to="/login">
-                    <div className={classes.clickToContinue}>
-                        <Logo ></Logo>
-                        <Typography>Touch to Begin</Typography>
-                    </div>
+                <Typography component="h3" variant="h3">Thank you [username]!</Typography>
+                <img src='https://cdn.pixabay.com/photo/2013/07/13/12/15/hand-159474__340.png' alt='thumbs up'></img>
+                <Typography component="h4" variant="h4" >Your experience has been personalised.</Typography>
+                <Link component={Steps} to="/steps">
+                    <Button variant="contained" color="primary" className={classes.button}>
+                        Next
+                </Button>
                 </Link>
-                <AvatarComponent></AvatarComponent>
+
             </div >
+
             <Footer>
                 <Typography variant="h6" color="inherit" className={classes.grow}>
                     Footer
@@ -52,8 +56,8 @@ function TouchToBegin(props) {
     );
 }
 
-TouchToBegin.propTypes = {
+ThankYou.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(TouchToBegin);
+export default withStyles(styles)(ThankYou);
