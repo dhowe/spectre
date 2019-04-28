@@ -5,7 +5,6 @@
   "main": "app.js",
   "scripts": {
     "test": "mocha  ./tests --recursive --exit -r esm",
-    "test:watch": "mocha --watch ./tests --recursive --r esm",
     "start": "node -r esm server.js"
   },
   "author": "",
