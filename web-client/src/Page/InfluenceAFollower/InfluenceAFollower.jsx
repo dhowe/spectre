@@ -6,7 +6,9 @@ import Header from "../../Components/Header/Header";
 import Footer from "../../Components/Footer/Footer";
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
-import InfluenceAFollower from '../InfluenceAFollower/InfluenceAFollower';
+import Steps from '../Steps/Steps'
+import AvatarComponent from '../../Components/AvatarComponent/AvatarComponent'
+import Grid from '@material-ui/core/Grid';
 
 const styles = {
     root: {
@@ -26,7 +28,7 @@ const styles = {
     }
 };
 
-function ThankYou(props) {
+function InfluenceAFollower(props) {
     const { classes } = props;
     return (
         <div className={classes.root}>
@@ -36,10 +38,20 @@ function ThankYou(props) {
                 </Typography>
             </Header>
             <div className={classes.content}>
-                <Typography component="h3" variant="h3">Thank you [username]!</Typography>
-                <img src='https://cdn.pixabay.com/photo/2013/07/13/12/15/hand-159474__340.png' alt='thumbs up'></img>
-                <Typography component="h4" variant="h4" >Your experience has been personalised.</Typography>
-                <Link component={InfluenceAFollower} to="/influence-a-follower">
+                <Typography component="h3" variant="h3">Influence a follower!</Typography>
+                <Typography component="h4" variant="h4" >Spectre has a community of devout followers willing to help you.</Typography>
+                <Typography component="h5" variant="h5" >Choose one to influence</Typography>
+                <Grid container justify="center" alignItems="center">
+                    <AvatarComponent class='active'></AvatarComponent>
+                    <AvatarComponent></AvatarComponent>
+                    <AvatarComponent></AvatarComponent>
+                    <AvatarComponent class='active'></AvatarComponent>
+                    <AvatarComponent></AvatarComponent>
+                    <AvatarComponent></AvatarComponent>
+                    <AvatarComponent class='active'></AvatarComponent>
+                    <AvatarComponent class='active'></AvatarComponent>
+                </Grid>
+                <Link component={Steps} to="/steps">
                     <Button variant="contained" color="primary" className={classes.button}>
                         Next
                 </Button>
@@ -56,8 +68,8 @@ function ThankYou(props) {
     );
 }
 
-ThankYou.propTypes = {
+InfluenceAFollower.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(ThankYou);
+export default withStyles(styles)(InfluenceAFollower);
