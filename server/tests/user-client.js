@@ -50,11 +50,11 @@ describe('Client User', function () {
       user.name = "Jane";
       user.gender = "female";
       user.traits = {
-        agreeableness: .1,
-        conscientiousness: .7,
-        extraversion: .1,
-        openness: .1,
-        neuroticism: .9
+        agreeableness: 0.3,
+        conscientiousness: Math.random(),
+        extraversion: Math.random(),
+        openness: Math.random(),
+        neuroticism: Math.random()
       }
       let result = user.generateDescription();
       //console.log(result);
