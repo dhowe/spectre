@@ -1,11 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-
-
 
 class AvatarComponent extends React.Component {
     styles = {
@@ -33,16 +29,16 @@ class AvatarComponent extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { class: 'targeted' };
+        this.state = { class: this.props.class };
     };
 
     render() {
         return (
             <div >
                 <Grid container justify="center" alignItems="center">
-                    <Avatar alt="Remy Sharp" src="https://material-ui.com/static/images/avatar/1.jpg" style={this.styles.targeted} />
+                    <Avatar alt="Remy Sharp" src="https://material-ui.com/static/images/avatar/1.jpg" style={this.state.class === 'active'? this.styles.active : this.styles.bigAvatar} />
                 </Grid>
-                <Typography style={this.state.class ? this.styles.targeted_text : null}>Remy Sharp</Typography>
+                <Typography style={this.state.class === 'targeted' ? this.styles.targeted_text : null}>Remy Sharp</Typography>
             </div>
         );
     }
