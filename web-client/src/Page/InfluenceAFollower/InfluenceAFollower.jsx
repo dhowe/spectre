@@ -6,7 +6,7 @@ import Header from "../../Components/Header/Header";
 import Footer from "../../Components/Footer/Footer";
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
-import Steps from '../Steps/Steps'
+import SelectedAvatar from '../SelectedAvatar/SelectedAvatar'
 import AvatarComponent from '../../Components/AvatarComponent/AvatarComponent'
 import Grid from '@material-ui/core/Grid';
 
@@ -51,7 +51,7 @@ function InfluenceAFollower(props) {
                     <AvatarComponent class='active'></AvatarComponent>
                     <AvatarComponent class='active'></AvatarComponent>
                 </Grid>
-                <Link component={Steps} to="/steps">
+                <Link component={SelectedAvatar} to="/selected-avatar">
                     <Button variant="contained" color="primary" className={classes.button}>
                         Next
                 </Button>
