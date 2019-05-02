@@ -18,9 +18,16 @@ DELETE: deletes user by id
 
 <br>
 
+### /spectre/users/test/:id
+
+GET: checks the value of each property for use
+
+<br>
+
 ### /spectre/users/similar/:id?limit=K
 
 GET: returns the K closest users (by OCEAN score) to the user with id
+
 
 <br>
 
