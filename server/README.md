@@ -20,7 +20,7 @@ DELETE: deletes user by id
 
 ### /spectre/users/test/:id
 
-GET: checks the value of each property for use
+GET: checks the value of each sent property for user with id
 
 <br>
 
