@@ -22,14 +22,17 @@ DELETE: deletes user by id
 
 GET: returns the K closest users to user with id
 
+<br>
 
 ## INSTALLATION
 
-### clone this repository
+#### $ git clone https://github.com/dhowe/spectre.git
 
-### $ npm install
+#### $ cd spectre/server 
 
-### $ npm test (to run tests)
+#### $ npm install
 
-### $ npm start (to start the server)
+#### $ npm test (to run tests)
+
+#### $ npm start (to start the server)
 
