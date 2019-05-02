@@ -14,16 +14,23 @@ const similar = function (req, res) {
     return error(res, 'UserId required');
   }
 
-  UserModel.findById(req.params.uid, function (err, user) {
-    if (err) return error(res, 'Unable to find user #' + req.params.uid);
-    user.findByOcean(res, 1, (users) => res.status(200).send(users));
+  let limit = Number.MAX_SAFE_INTEGER;
+  if (req.query.hasOwnProperty('limit')) {
+    limit = parseInt(req.query.limit);
+  }
+
+  let uid = req.params.uid;
+  UserModel.findById(uid, function (err, user) {
+    if (err) return error(res, 'Unable to find user #' + uid);
+    user.findByOcean(res, limit, (users) => {
+      res.status(200).send(users);
+    });
   });
 };
 
 const create = function (req, res) {
 
   if (!req.body.loginType) return error(res, "Bad UserModel: no loginType");
-
   if (!req.body.login) return error(res, "Bad UserModel: no login");
 
   let user = new UserModel();

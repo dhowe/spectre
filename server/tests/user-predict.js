@@ -52,6 +52,52 @@ describe('OCEAN Metrics', function () {
     });
   })
 
+  describe('Server.oceanSort(limit)', function () {
+    it('Should error if 3rd arg is not a number', function () {
+      expect(() => oceanSort(UserModel.Create(), [], "ok")).to.throw();
+    });
+    it('Should error if 3rd arg is less than zero a number', function () {
+      expect(() => oceanSort(UserModel.Create(), [], -1)).to.throw();
+    });
+    it('Should return <limit> candidates, sorted by distance', function () {
+
+      let limit = 1;
+      let userA = UserModel.Create();
+      let userB = UserModel.Create();
+      let userC = UserModel.Create();
+
+      userA.traits = {
+        agreeableness: 0,
+        conscientiousness: 0,
+        extraversion: 0,
+        openness: 0,
+        neuroticism: 0
+      };
+      userB.traits = {
+        agreeableness: 0,
+        conscientiousness: 0,
+        extraversion: 0,
+        openness: 0,
+        neuroticism: 1
+      };
+      userC.traits = {
+        agreeableness: 0,
+        conscientiousness: 0,
+        extraversion: 0,
+        openness: 1,
+        neuroticism: 1
+      };
+
+      let sorted = oceanSort(userA, [userA, userB, userC], limit);
+      expect(sorted.length).eq(1);
+      expect(sorted[0]._id).eq(userB._id);
+
+      sorted = oceanSort(userA, [userB, userC], limit);
+      expect(sorted.length).eq(1);
+      expect(sorted[0]._id).eq(userB._id);
+    });
+  })
+
   describe('Server.oceanDist()', function () {
     it('Should error if two users are not provided', function () {
       expect(() => oceanDist(undefined, new UserModel())).to.throw();

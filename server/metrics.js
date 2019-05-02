@@ -22,10 +22,14 @@ const oceanDist = function (a, b) {
   return Math.sqrt(total);
 }
 
-const oceanSort = function (user, candidates) {
+const oceanSort = function (user, candidates, limit) {
 
   if (typeof user === 'undefined') throw Error('null user');
   if (typeof candidates === 'undefined') throw Error('null candidates');
+  if (typeof limit === 'undefined') limit = Number.MAX_SAFE_INTEGER;
+
+  if (!Number.isInteger(limit) || limit < 1) throw Error('bad limit: '+limit);
+
   if (candidates.length < 1) throw Error('no candidates');
   candidates = candidates.filter(function(o) {
     return !(o.login === user.login && o.loginType === user.loginType);
@@ -35,7 +39,7 @@ const oceanSort = function (user, candidates) {
   };
   let compare = function (a, b) { return a.value - b.value; };
   let reorder = function (e) { return candidates[e.index]; };
-  return candidates.map(distances).sort(compare).map(reorder);
+  return candidates.map(distances).sort(compare).map(reorder).slice(0, limit);
 }
 
 export { oceanSort, oceanDist };

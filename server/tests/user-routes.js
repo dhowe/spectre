@@ -19,16 +19,163 @@ describe('User Routes', () => {
     UserModel.deleteMany({}, (err) => { done() });
   });
 
-  describe('GET /spectre/users', () => {
+  describe('GET /spectre/users/similar/:uid', () => {
 
-    it('it should return a list of all users', (done) => {
+    beforeEach((done) => { // empty the database before each
+      UserModel.deleteMany({}, (err) => { done() });
+    });
+
+    it('it should fail on bad id', (done) => {
+      let uid = '456';
+      chai.request(server)
+        .get('/spectre/users/similar/' + uid)
+        .auth(env.API_USER, env.API_PASS)
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          expect(res.body).has.property('error');
+          done();
+        });
+    });
+
+    it('it should return [] after one insert', (done) => {
+      let uid = -1;
+      chai.request(server)
+        .post('/spectre/users')
+        .auth(env.API_USER, env.API_PASS)
+        .send({
+          name: "Daniel2",
+          login: "daniel2@aol.com",
+          loginType: "facebook",
+        })
+        .end((err, res) => {
+          if (err) throw err;
+          expect(res).to.have.status(200);
+          expect(res.body).is.a('object');
+          expect(res.body).has.property('_id');
+          uid = res.body._id;
+          chai.request(server)
+            .get('/spectre/users/similar/' + uid)
+            .auth(env.API_USER, env.API_PASS)
+            .end((err, res) => {
+              expect(res).to.have.status(200);
+              expect(res.body).is.a('array');
+              expect(res.body.length).eq(0);
+              done();
+            });
+        });
+    });
+
+    it('it should return k-1 similar users after k inserts', (done) => {
+      for (var i = 0; i < 10; i++) {
+        let data = { name: "dave" + i, login: "dave" + i + "@abc.com", loginType: "twitter" };
+        (UserModel.Create()).save();
+      }
       chai.request(server)
         .get('/spectre/users')
         .auth(env.API_USER, env.API_PASS)
         .end((err, res) => {
           expect(res).to.have.status(200);
           expect(res.body).is.a('array');
+          expect(res.body.length).to.eq(10);
+          let uid = res.body[0]._id;
+          chai.request(server)
+            .get('/spectre/users/similar/' + uid)
+            .auth(env.API_USER, env.API_PASS)
+            .end((err, res) => {
+              expect(res).to.have.status(200);
+              expect(res.body).is.a('array');
+              expect(res.body.length).to.eq(9);
+              done();
+            });
+        });
+    });
+
+    it('it should return 5 similar users after 10 inserts (limit 5)', (done) => {
+      for (var i = 0; i < 10; i++) {
+        let data = { name: "dave" + i, login: "dave" + i + "@abc.com", loginType: "twitter" };
+        (UserModel.Create()).save();
+      }
+      chai.request(server)
+        .get('/spectre/users')
+        .auth(env.API_USER, env.API_PASS)
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res.body).is.a('array');
+          expect(res.body.length).to.eq(10);
+          let uid = res.body[0]._id;
+          chai.request(server)
+            .get('/spectre/users/similar/' + uid + '?limit=5')
+            .auth(env.API_USER, env.API_PASS)
+            .end((err, res) => {
+              expect(res).to.have.status(200);
+              expect(res.body).is.a('array');
+              expect(res.body.length).to.eq(5);
+              done();
+            });
+        });
+    });
+
+  });
+
+  describe('GET /spectre/users', () => {
+
+    beforeEach((done) => { // empty the database before each
+      UserModel.deleteMany({}, (err) => { done() });
+    });
+
+    it('it should return a list of all users', (done) => {
+      chai.request(server)
+        .get('/spectre/users')
+        .auth(env.API_USER, env.API_PASS)
+        .end((err, res) => {
+          //console.log(res.body.length+' records');
+          expect(res).to.have.status(200);
+          expect(res.body).is.a('array');
           expect(res.body.length).to.eq(0);
+          done();
+        });
+    });
+
+    it('it should return [user] after insert', (done) => {
+      let uid = -1;
+      chai.request(server)
+        .post('/spectre/users')
+        .auth(env.API_USER, env.API_PASS)
+        .send({
+          name: "Daniel2",
+          login: "daniel2@aol.com",
+          loginType: "facebook",
+        })
+        .end((err, res) => {
+          if (err) throw err;
+          expect(res).to.have.status(200);
+          expect(res.body).is.a('object');
+          expect(res.body).has.property('_id');
+          uid = res.body._id;
+          chai.request(server)
+            .get('/spectre/users/')
+            .auth(env.API_USER, env.API_PASS)
+            .end((err, res) => {
+              expect(res).to.have.status(200);
+              expect(res.body).is.a('array');
+              expect(res.body.length).eq(1);
+              expect(res.body[0]._id).eq(uid);
+              done();
+            });
+        });
+    });
+    it('it should return 10 users after 10 inserts', (done) => {
+      for (var i = 0; i < 10; i++) {
+        let data = { name: "dave" + i, login: "dave" + i + "@abc.com", loginType: "twitter" };
+        (UserModel.Create()).save();
+      }
+      chai.request(server)
+        .get('/spectre/users')
+        .auth(env.API_USER, env.API_PASS)
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res.body).is.a('array');
+          expect(res.body.length).to.eq(10);
           done();
         });
     });
@@ -164,9 +311,11 @@ describe('User Routes', () => {
   });
 
   describe('GET /spectre/users/:uid', () => {
+
     beforeEach((done) => { // empty the database before each
       UserModel.deleteMany({}, (err) => { done() });
     });
+
     it('it should fail on bad id', (done) => {
       let uid = '456';
       chai.request(server)

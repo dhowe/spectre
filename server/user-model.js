@@ -11,14 +11,12 @@ Object.keys(functions).forEach(f => UserSchema.methods[f] = functions[f]);
 
 ////////////////////// UserSchema.methods ////////////////////
 
-UserSchema.methods.findByOcean = function (res, num, cb) {
+UserSchema.methods.findByOcean = function (res, limit, cb) {
   let user = this;
   UserModel.find({})
-    .limit(num + 1)
     .exec(function (err, instances) {
-      sorted = oceanSort(user, instances);
-      sorted.shift(); // remove 'this' user
-      cb(sorted);
+      let sorted = oceanSort(user, instances);
+      cb(sorted.slice(0, limit));
     });
   return this;
 };
