@@ -18,21 +18,21 @@ DELETE: deletes user by id
 
 <br>
 
-### /spectre/users/:id?limit=K
+### /spectre/users/similar/:id?limit=K
 
-GET: returns the K closest users to user with id
+GET: returns the K closest users (by OCEAN score) to the user with id
 
 <br>
 
 ## INSTALLATION
 
-#### $ git clone https://github.com/dhowe/spectre.git
+##### $ git clone https://github.com/dhowe/spectre.git
 
-#### $ cd spectre/server 
+##### $ cd spectre/server 
 
-#### $ npm install
+##### $ npm install
 
-#### $ npm test (to run tests)
+##### $ npm test (to run tests)
 
-#### $ npm start (to start the server)
+##### $ npm start (to start the server)
 
