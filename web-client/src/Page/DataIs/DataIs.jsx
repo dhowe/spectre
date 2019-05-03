@@ -33,7 +33,7 @@ function DataIs(props) {
                     </Typography>
             </Header>
             <div className={classes.content}>
-                <Typography component="h4" variant="h4">DATA IS [POWER]</Typography>
+                <Typography component="h4" variant="h4">DATA IS [{props.virtue}]</Typography>
                 <Link component={BelieveInDataism} to="/believe-in-dataism">
                     <Button variant="contained" color="primary" className={classes.button}>
                         Next1

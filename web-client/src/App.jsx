@@ -41,7 +41,7 @@ const theme = createMuiTheme({
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { date: 'test' };
+    this.state = { date: 'test', virtue: 'faith' };
     this.test_state = this.test_state.bind(this)
   };
 
@@ -67,7 +67,7 @@ class App extends React.Component {
               <Route exact path="/username" component={Username} />
               <Route exact path="/pledge" component={Pledge} />
               <Route exact path="/searching-for" component={SearchingFor} />
-              <Route exact path="/data-is" component={DataIs} />
+              <Route exact path="/data-is" render={() => <DataIs virtue={this.state.virtue} />} />
               <Route exact path="/believe-in-dataism" component={BelieveInDataism} />
               <Route exact path="/steps" component={Steps} />
               <Route exact path="/personalised-experience" component={PersonalisedExperience} />
