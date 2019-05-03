@@ -9,6 +9,8 @@ import LoginPage from '../LoginPage/LoginPage';
 import Logo from "../../Components/Logo/Logo";
 import AvatarComponent from "../../Components/AvatarComponent/AvatarComponent";
 
+import './TouchToBegin.scss';
+
 const styles = {
     root: {
         flexGrow: 1,
@@ -27,7 +29,7 @@ const styles = {
 function TouchToBegin(props) {
     const { classes } = props;
     return (
-        <div className={classes.root}>
+        <div className={classes.root + ' touchToBegin'}>
             <Header>
                 <Typography variant="h6" color="inherit" className={classes.grow}>
                     {props.prop}
@@ -35,13 +37,12 @@ function TouchToBegin(props) {
                 <button onClick={props.test_state}>test</button>
             </Header>
             <div className={classes.content}>
-                <Link component={LoginPage} to="/login">
+                <Link className="touchToBegin-beginButton" component={LoginPage} to="/login">
                     <div className={classes.clickToContinue}>
-                        <Logo ></Logo>
-                        <Typography>Touch to Begin</Typography>
+                        <Logo></Logo>
+                        <Typography>Touch to Begin!</Typography>
                     </div>
                 </Link>
-                <AvatarComponent></AvatarComponent>
             </div >
             <Footer>
                 <Typography variant="h6" color="inherit" className={classes.grow}>
