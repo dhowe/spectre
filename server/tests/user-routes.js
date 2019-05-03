@@ -66,55 +66,104 @@ describe('User Routes', () => {
     });
 
     it('it should return k-1 similar users after k inserts', (done) => {
+      let users = [];
       for (var i = 0; i < 10; i++) {
         let data = { name: "dave" + i, login: "dave" + i + "@abc.com", loginType: "twitter" };
-        (UserModel.Create()).save();
+        let user = UserModel.Create(data);
+        let keys = user.traitNames();
+        keys.forEach(k => user.traits[k] = i / 10);
+        users.push(user);
       }
-      chai.request(server)
-        .get('/spectre/users')
-        .auth(env.API_USER, env.API_PASS)
-        .end((err, res) => {
-          expect(res).to.have.status(200);
-          expect(res.body).is.a('array');
-          expect(res.body.length).to.eq(10);
-          let uid = res.body[0]._id;
-          chai.request(server)
-            .get('/spectre/users/similar/' + uid)
-            .auth(env.API_USER, env.API_PASS)
-            .end((err, res) => {
-              expect(res).to.have.status(200);
-              expect(res.body).is.a('array');
-              expect(res.body.length).to.eq(9);
-              done();
-            });
-        });
+      saveUsers(users, u => {
+        chai.request(server)
+          .get('/spectre/users')
+          .auth(env.API_USER, env.API_PASS)
+          .end((err, res) => {
+            expect(res).to.have.status(200);
+            expect(res.body).is.a('array');
+            expect(res.body.length).to.eq(10);
+            let uid = res.body[0]._id;
+            chai.request(server)
+              .get('/spectre/users/similar/' + uid)
+              .auth(env.API_USER, env.API_PASS)
+              .end((err, res) => {
+                expect(res).to.have.status(200);
+                expect(res.body).is.a('array');
+                expect(res.body.length).to.eq(9);
+                expect(res.body[0].name).to.eq('dave1');
+                expect(res.body[8].name).to.eq('dave9');
+                done();
+              });
+          });
+      });
+    });
+
+    it('it should return 10 similar users after 15 inserts (no limit)', (done) => {
+
+      let users = [];
+      for (var i = 0; i < 15; i++) {
+        let data = {
+          name: "dave" + i,
+          login: "dave" + i + "@abc.com",
+          loginType: "twitter"
+        };
+        users.push(UserModel.Create(data))
+      }
+
+      saveUsers(users, function () {
+
+        chai.request(server)
+          .get('/spectre/users')
+          .auth(env.API_USER, env.API_PASS)
+          .end((err, res) => {
+            expect(res).to.have.status(200);
+            expect(res.body).is.a('array');
+            expect(res.body.length).to.eq(15); // sometimes fails ??
+            let uid = res.body[0]._id;
+            chai.request(server)
+              .get('/spectre/users/similar/' + uid)
+              .auth(env.API_USER, env.API_PASS)
+              .end((err, res) => {
+                expect(res).to.have.status(200);
+                expect(res.body).is.a('array');
+                expect(res.body.length).to.eq(10);
+                done();
+              });
+          });
+      });
     });
 
     it('it should return 5 similar users after 10 inserts (limit 5)', (done) => {
+      let users = [];
       for (var i = 0; i < 10; i++) {
-        let data = { name: "dave" + i, login: "dave" + i + "@abc.com", loginType: "twitter" };
-        (UserModel.Create()).save();
+        let data = {
+          name: "dave" + i,
+          login: "dave" + i + "@abc.com",
+          loginType: "twitter"
+        };
+        users.push(UserModel.Create(data))
       }
-      chai.request(server)
-        .get('/spectre/users')
-        .auth(env.API_USER, env.API_PASS)
-        .end((err, res) => {
-          expect(res).to.have.status(200);
-          expect(res.body).is.a('array');
-          expect(res.body.length).to.eq(10);
-          let uid = res.body[0]._id;
-          chai.request(server)
-            .get('/spectre/users/similar/' + uid + '?limit=5')
-            .auth(env.API_USER, env.API_PASS)
-            .end((err, res) => {
-              expect(res).to.have.status(200);
-              expect(res.body).is.a('array');
-              expect(res.body.length).to.eq(5);
-              done();
-            });
-        });
+      saveUsers(users, function () {
+        chai.request(server)
+          .get('/spectre/users')
+          .auth(env.API_USER, env.API_PASS)
+          .end((err, res) => {
+            expect(res).to.have.status(200);
+            expect(res.body).is.a('array');
+            expect(res.body.length).to.eq(10);
+            let uid = res.body[0]._id;
+            chai.request(server)
+              .get('/spectre/users/similar/' + uid + '?limit=5')
+              .auth(env.API_USER, env.API_PASS)
+              .end((err, res) => {
+                expect(res).to.have.status(200);
+                expect(res.body).is.a('array');
+                expect(res.body.length).to.eq(5);
+                done();
+              });
+          });
+      });
     });
-
   });
 
   describe('GET /spectre/users', () => {
@@ -164,20 +213,25 @@ describe('User Routes', () => {
             });
         });
     });
+
     it('it should return 10 users after 10 inserts', (done) => {
+      let users = [];
       for (var i = 0; i < 10; i++) {
         let data = { name: "dave" + i, login: "dave" + i + "@abc.com", loginType: "twitter" };
-        (UserModel.Create()).save();
+        let user = UserModel.Create();
+        users.push(user);
       }
-      chai.request(server)
-        .get('/spectre/users')
-        .auth(env.API_USER, env.API_PASS)
-        .end((err, res) => {
-          expect(res).to.have.status(200);
-          expect(res.body).is.a('array');
-          expect(res.body.length).to.eq(10);
-          done();
-        });
+      saveUsers(users, u => {
+        chai.request(server)
+          .get('/spectre/users')
+          .auth(env.API_USER, env.API_PASS)
+          .end((err, res) => {
+            expect(res).to.have.status(200);
+            expect(res.body).is.a('array');
+            expect(res.body.length).to.eq(10);
+            done();
+          });
+      });
     });
   });
 
@@ -357,4 +411,13 @@ describe('User Routes', () => {
         });
     });
   });
+  function saveUsers(users, cb) {
+    let count = users.length;
+    users.forEach(function (user) {
+      user.save(function (err, result) {
+        if (err) throw Error();
+        if (--count === 0) return cb(result);
+      });
+    });
+  }
 });
