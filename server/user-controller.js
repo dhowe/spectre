@@ -14,7 +14,7 @@ const similar = function (req, res) {
     return error(res, 'UserId required');
   }
 
-  let limit = Number.MAX_SAFE_INTEGER;
+  let limit = 10; // default limit
   if (req.query.hasOwnProperty('limit')) {
     limit = parseInt(req.query.limit);
   }
