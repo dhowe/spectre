@@ -1,33 +1,35 @@
 import mongoose from 'mongoose';
-import chai from 'chai';
 import chai_http from 'chai-http';
 import server from '../server';
 import dotEnv from 'dotenv';
+import chai from 'chai';
 
 import UserModel from '../user-model';
 
-dotEnv.config();
-
+const port = 8083;
+const host = server;
 const env = process.env;
 const expect = chai.expect;
 
+dotEnv.config();
 chai.use(chai_http);
+
+if (typeof env.API_HOST != 'undefined')
+  host = env.API_HOST + ':' + port;
 
 describe('User Routes', () => {
 
-  beforeEach((done) => { // empty db before each
+  console.log('\nHost: ' + (env.API_HOST || 'localhost'));
+
+  beforeEach((done) => { // empty db before each test
     UserModel.deleteMany({}, (err) => { done() });
   });
 
   describe('GET /spectre/users/similar/:uid', () => {
 
-    beforeEach((done) => { // empty the database before each
-      UserModel.deleteMany({}, (err) => { done() });
-    });
-
     it('it should fail on bad id', (done) => {
       let uid = '456';
-      chai.request(server)
+      chai.request(host)
         .get('/spectre/users/similar/' + uid)
         .auth(env.API_USER, env.API_PASS)
         .end((err, res) => {
@@ -38,8 +40,7 @@ describe('User Routes', () => {
     });
 
     it('it should return [] after one insert', (done) => {
-      let uid = -1;
-      chai.request(server)
+      chai.request(host)
         .post('/spectre/users')
         .auth(env.API_USER, env.API_PASS)
         .send({
@@ -52,8 +53,8 @@ describe('User Routes', () => {
           expect(res).to.have.status(200);
           expect(res.body).is.a('object');
           expect(res.body).has.property('_id');
-          uid = res.body._id;
-          chai.request(server)
+          let uid = res.body._id;
+          chai.request(host)
             .get('/spectre/users/similar/' + uid)
             .auth(env.API_USER, env.API_PASS)
             .end((err, res) => {
@@ -75,7 +76,7 @@ describe('User Routes', () => {
         users.push(user);
       }
       saveUsers(users, u => {
-        chai.request(server)
+        chai.request(host)
           .get('/spectre/users')
           .auth(env.API_USER, env.API_PASS)
           .end((err, res) => {
@@ -83,7 +84,7 @@ describe('User Routes', () => {
             expect(res.body).is.a('array');
             expect(res.body.length).to.eq(10);
             let uid = res.body[0]._id;
-            chai.request(server)
+            chai.request(host)
               .get('/spectre/users/similar/' + uid)
               .auth(env.API_USER, env.API_PASS)
               .end((err, res) => {
@@ -112,7 +113,7 @@ describe('User Routes', () => {
 
       saveUsers(users, function () {
 
-        chai.request(server)
+        chai.request(host)
           .get('/spectre/users')
           .auth(env.API_USER, env.API_PASS)
           .end((err, res) => {
@@ -120,7 +121,7 @@ describe('User Routes', () => {
             expect(res.body).is.a('array');
             expect(res.body.length).to.eq(15); // sometimes fails ??
             let uid = res.body[0]._id;
-            chai.request(server)
+            chai.request(host)
               .get('/spectre/users/similar/' + uid)
               .auth(env.API_USER, env.API_PASS)
               .end((err, res) => {
@@ -144,7 +145,7 @@ describe('User Routes', () => {
         users.push(UserModel.Create(data))
       }
       saveUsers(users, function () {
-        chai.request(server)
+        chai.request(host)
           .get('/spectre/users')
           .auth(env.API_USER, env.API_PASS)
           .end((err, res) => {
@@ -152,7 +153,7 @@ describe('User Routes', () => {
             expect(res.body).is.a('array');
             expect(res.body.length).to.eq(10);
             let uid = res.body[0]._id;
-            chai.request(server)
+            chai.request(host)
               .get('/spectre/users/similar/' + uid + '?limit=5')
               .auth(env.API_USER, env.API_PASS)
               .end((err, res) => {
@@ -168,12 +169,8 @@ describe('User Routes', () => {
 
   describe('GET /spectre/users', () => {
 
-    beforeEach((done) => { // empty the database before each
-      UserModel.deleteMany({}, (err) => { done() });
-    });
-
     it('it should return a list of all users', (done) => {
-      chai.request(server)
+      chai.request(host)
         .get('/spectre/users')
         .auth(env.API_USER, env.API_PASS)
         .end((err, res) => {
@@ -187,7 +184,7 @@ describe('User Routes', () => {
 
     it('it should return [user] after insert', (done) => {
       let uid = -1;
-      chai.request(server)
+      chai.request(host)
         .post('/spectre/users')
         .auth(env.API_USER, env.API_PASS)
         .send({
@@ -201,7 +198,7 @@ describe('User Routes', () => {
           expect(res.body).is.a('object');
           expect(res.body).has.property('_id');
           uid = res.body._id;
-          chai.request(server)
+          chai.request(host)
             .get('/spectre/users/')
             .auth(env.API_USER, env.API_PASS)
             .end((err, res) => {
@@ -222,7 +219,7 @@ describe('User Routes', () => {
         users.push(user);
       }
       saveUsers(users, u => {
-        chai.request(server)
+        chai.request(host)
           .get('/spectre/users')
           .auth(env.API_USER, env.API_PASS)
           .end((err, res) => {
@@ -238,7 +235,7 @@ describe('User Routes', () => {
   describe('POST /spectre/users', () => {
 
     it('it should not insert user without login', (done) => {
-      chai.request(server)
+      chai.request(host)
         .post('/spectre/users')
         .auth(env.API_USER, env.API_PASS)
         .send({
@@ -254,7 +251,7 @@ describe('User Routes', () => {
     });
 
     it('it should not insert user without login type', (done) => {
-      chai.request(server)
+      chai.request(host)
         .post('/spectre/users')
         .auth(env.API_USER, env.API_PASS)
         .send({
@@ -270,7 +267,7 @@ describe('User Routes', () => {
     });
 
     it('it should not insert user with bad login type', (done) => {
-      chai.request(server)
+      chai.request(host)
         .post('/spectre/users')
         .auth(env.API_USER, env.API_PASS)
         .send({
@@ -286,7 +283,7 @@ describe('User Routes', () => {
         });
     });
     it('it should not insert user with bad gender', (done) => {
-      chai.request(server)
+      chai.request(host)
         .post('/spectre/users')
         .auth(env.API_USER, env.API_PASS)
         .send({
@@ -303,7 +300,7 @@ describe('User Routes', () => {
     });
 
     it('should not violate unique login/type constraint', (done) => {
-      chai.request(server)
+      chai.request(host)
         .post('/spectre/users')
         .auth(env.API_USER, env.API_PASS)
         .send({
@@ -316,7 +313,7 @@ describe('User Routes', () => {
           expect(res).to.have.status(200);
           expect(res.body).is.a('object');
           expect(res.body).has.property('_id');
-          chai.request(server)
+          chai.request(host)
             .post('/spectre/users')
             .auth(env.API_USER, env.API_PASS)
             .send({
@@ -331,7 +328,6 @@ describe('User Routes', () => {
               expect(res.body).has.property('error');
               done();
             });
-
         });
     });
 
@@ -348,7 +344,7 @@ describe('User Routes', () => {
           neuroticism: 0.465
         }
       };
-      chai.request(server)
+      chai.request(host)
         .post('/spectre/users')
         .auth(env.API_USER, env.API_PASS)
         .send(user)
@@ -366,13 +362,9 @@ describe('User Routes', () => {
 
   describe('GET /spectre/users/:uid', () => {
 
-    beforeEach((done) => { // empty the database before each
-      UserModel.deleteMany({}, (err) => { done() });
-    });
-
     it('it should fail on bad id', (done) => {
       let uid = '456';
-      chai.request(server)
+      chai.request(host)
         .get('/spectre/users/' + uid)
         .auth(env.API_USER, env.API_PASS)
         .end((err, res) => {
@@ -384,7 +376,7 @@ describe('User Routes', () => {
 
     it('it should get a user after insertion', (done) => {
       let uid = -1;
-      chai.request(server)
+      chai.request(host)
         .post('/spectre/users')
         .auth(env.API_USER, env.API_PASS)
         .send({
@@ -398,7 +390,7 @@ describe('User Routes', () => {
           expect(res.body).is.a('object');
           expect(res.body).has.property('_id');
           uid = res.body._id;
-          chai.request(server)
+          chai.request(host)
             .get('/spectre/users/' + uid)
             .auth(env.API_USER, env.API_PASS)
             .end((err, res) => {
@@ -411,6 +403,7 @@ describe('User Routes', () => {
         });
     });
   });
+
   function saveUsers(users, cb) {
     let count = users.length;
     users.forEach(function (user) {
