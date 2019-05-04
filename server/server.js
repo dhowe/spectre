@@ -12,7 +12,7 @@ app.use(bodyparser.urlencoded({ extended: true }));
 app.use(basicAuth({
   users: apiUser,
   challenge: true,
-  realm: 'SPECTRE'
+  realm: 'Spectre'
   //unauthorizedResponse: getUnauthorizedResponse
 }));
 
