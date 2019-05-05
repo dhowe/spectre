@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import Parser from '../../shared/parser';
+import Parser from '../shared/parser';
 import UserModel from '../user-model';
 
 describe('Text Parser', function () {

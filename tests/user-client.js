@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import User from '../../shared/user';
+import User from '../shared/user';
 
 describe('Client User', function () {
 

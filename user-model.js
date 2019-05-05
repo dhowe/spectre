@@ -1,7 +1,7 @@
 import lodash from 'lodash';
 import mongoose from 'mongoose';
 import { oceanSort } from './metrics';
-import ClientUser from '../shared/user';
+import ClientUser from './shared/user';
 
 const { schema, functions } = toMongoose(new ClientUser());
 const UserSchema = mongoose.Schema(schema);
