@@ -10,6 +10,6 @@ if (env.DB_USER && env.DB_USER.length) auth = env.DB_USER + ':' + env.DB_PASS + 
 let apiUser = {};
 apiUser[env.API_USER] = env.API_PASS;
 
-let dbUrl = 'mongodb://' + auth + host;
+let dbUrl = process.env.MONGODB_URI || 'mongodb://' + auth + host;
 
 export { dbUrl, apiUser };

@@ -5,11 +5,14 @@
   "main": "app.js",
   "scripts": {
     "test": "mocha  ./tests --recursive --exit -r esm",
-    "start": "node -r esm server.js"
+    "start": "node -r esm server.js",
+    "build": "cd web-client && npm run build",
+    "launch": "npm start",
+    "prelaunch": "cd web-client && npm run start",
+    "heroku-postbuild": "cd web-client && npm run build"
   },
-  "author": "",
+  "author": "daniel howe",
   "dependencies": {
-    "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "dotenv": "^7.0.0",
     "esm": "^3.2.22",
