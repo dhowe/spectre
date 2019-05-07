@@ -14,7 +14,6 @@ const auth = basicAuth({
   challenge: true,
   realm: 'Spectre'
 });
-console.log('AUTH:',apiUser);
 
 ///////////////////////////// Express ///////////////////////////////
 

@@ -36,17 +36,30 @@ export default class User {
     };
   }
 
-  predictFromBrands(data) {
+  influencedBy(num) {
+    num = num || 3;
+    this._verifyTraits();
 
+    // WORKING HERE
+
+    return ['a', 'b', 'c'];
+  }
+
+  predictFromBrands(data) {
     return predict(data);
+  }
+
+  _verifyTraits() {
+    if (typeof this.traits === 'undefined' ||
+      typeof this.traits.openness !== 'number' ||
+      this.traits.openness < 0 || this.traits.openness > 1) {
+      throw Error('User with traits required');
+    }
   }
 
   generateDescription(parser) {
 
-    if (typeof this.traits === 'undefined' ||
-      typeof this.traits.openness !== 'number') {
-      throw Error('User with traits required');
-    }
+    this._verifyTraits();
 
     let lines = [];
     let traitNames = this.traitNames();

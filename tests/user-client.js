@@ -63,4 +63,33 @@ describe('Client User', function () {
       expect(result.startsWith('Jane')).eq(true);
     });
   });
+
+  describe('User.influencedBy()', function () {
+
+    it('Should fail for a user without traits', function () {
+      expect(() => new User().influencedBy()).to.throw();
+      expect(() => User.Create().influencedBy()).to.throw();
+    });
+
+    it('Should return influenced-by statements based on OCEAN traits', function () {
+      let user = User.Create();
+      user.name = "Jane";
+      user.gender = "female";
+      user.traits = {
+        agreeableness: 0.3,
+        conscientiousness: Math.random(),
+        extraversion: Math.random(),
+        openness: Math.random(),
+        neuroticism: Math.random()
+      }
+      let result = user.influencedBy();
+      //console.log(result);
+      expect(result).is.a('array');
+      expect(result.length).is.eq(3);
+
+      // WORKING HERE
+       
+      //expect(result.startsWith('Jane')).eq(true);
+    });
+  });
 });
