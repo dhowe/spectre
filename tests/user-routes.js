@@ -31,7 +31,7 @@ describe('User Routes', () => {
       let uid = '456';
       chai.request(host)
         .get('/api/users/similar/' + uid)
-        .auth(env.API_USER, env.API_PASS)
+        .auth(env.API_USER, env.API_SECRET)
         .end((err, res) => {
           expect(res).to.have.status(400);
           expect(res.body).has.property('error');
@@ -42,7 +42,7 @@ describe('User Routes', () => {
     it('it should return [] after one insert', (done) => {
       chai.request(host)
         .post('/api/users')
-        .auth(env.API_USER, env.API_PASS)
+        .auth(env.API_USER, env.API_SECRET)
         .send({
           name: "Daniel2",
           login: "daniel2@aol.com",
@@ -56,7 +56,7 @@ describe('User Routes', () => {
           let uid = res.body._id;
           chai.request(host)
             .get('/api/users/similar/' + uid)
-            .auth(env.API_USER, env.API_PASS)
+            .auth(env.API_USER, env.API_SECRET)
             .end((err, res) => {
               expect(res).to.have.status(200);
               expect(res.body).is.a('array');
@@ -78,7 +78,7 @@ describe('User Routes', () => {
       saveUsers(users, u => {
         chai.request(host)
           .get('/api/users')
-          .auth(env.API_USER, env.API_PASS)
+          .auth(env.API_USER, env.API_SECRET)
           .end((err, res) => {
             expect(res).to.have.status(200);
             expect(res.body).is.a('array');
@@ -86,7 +86,7 @@ describe('User Routes', () => {
             let uid = res.body[0]._id;
             chai.request(host)
               .get('/api/users/similar/' + uid)
-              .auth(env.API_USER, env.API_PASS)
+              .auth(env.API_USER, env.API_SECRET)
               .end((err, res) => {
                 expect(res).to.have.status(200);
                 expect(res.body).is.a('array');
@@ -115,7 +115,7 @@ describe('User Routes', () => {
 
         chai.request(host)
           .get('/api/users')
-          .auth(env.API_USER, env.API_PASS)
+          .auth(env.API_USER, env.API_SECRET)
           .end((err, res) => {
             expect(res).to.have.status(200);
             expect(res.body).is.a('array');
@@ -123,7 +123,7 @@ describe('User Routes', () => {
             let uid = res.body[0]._id;
             chai.request(host)
               .get('/api/users/similar/' + uid)
-              .auth(env.API_USER, env.API_PASS)
+              .auth(env.API_USER, env.API_SECRET)
               .end((err, res) => {
                 expect(res).to.have.status(200);
                 expect(res.body).is.a('array');
@@ -147,7 +147,7 @@ describe('User Routes', () => {
       saveUsers(users, function () {
         chai.request(host)
           .get('/api/users')
-          .auth(env.API_USER, env.API_PASS)
+          .auth(env.API_USER, env.API_SECRET)
           .end((err, res) => {
             expect(res).to.have.status(200);
             expect(res.body).is.a('array');
@@ -155,7 +155,7 @@ describe('User Routes', () => {
             let uid = res.body[0]._id;
             chai.request(host)
               .get('/api/users/similar/' + uid + '?limit=5')
-              .auth(env.API_USER, env.API_PASS)
+              .auth(env.API_USER, env.API_SECRET)
               .end((err, res) => {
                 expect(res).to.have.status(200);
                 expect(res.body).is.a('array');
@@ -172,7 +172,7 @@ describe('User Routes', () => {
     it('it should return a list of all users', (done) => {
       chai.request(host)
         .get('/api/users')
-        .auth(env.API_USER, env.API_PASS)
+        .auth(env.API_USER, env.API_SECRET)
         .end((err, res) => {
           //console.log(res.body.length+' records');
           expect(res).to.have.status(200);
@@ -186,7 +186,7 @@ describe('User Routes', () => {
       let uid = -1;
       chai.request(host)
         .post('/api/users')
-        .auth(env.API_USER, env.API_PASS)
+        .auth(env.API_USER, env.API_SECRET)
         .send({
           name: "Daniel2",
           login: "daniel2@aol.com",
@@ -200,7 +200,7 @@ describe('User Routes', () => {
           uid = res.body._id;
           chai.request(host)
             .get('/api/users/')
-            .auth(env.API_USER, env.API_PASS)
+            .auth(env.API_USER, env.API_SECRET)
             .end((err, res) => {
               expect(res).to.have.status(200);
               expect(res.body).is.a('array');
@@ -221,7 +221,7 @@ describe('User Routes', () => {
       saveUsers(users, u => {
         chai.request(host)
           .get('/api/users')
-          .auth(env.API_USER, env.API_PASS)
+          .auth(env.API_USER, env.API_SECRET)
           .end((err, res) => {
             expect(res).to.have.status(200);
             expect(res.body).is.a('array');
@@ -237,7 +237,7 @@ describe('User Routes', () => {
     it('it should not insert user without login', (done) => {
       chai.request(host)
         .post('/api/users')
-        .auth(env.API_USER, env.API_PASS)
+        .auth(env.API_USER, env.API_SECRET)
         .send({
           name: "Foobar",
           loginType: "facebook",
@@ -253,7 +253,7 @@ describe('User Routes', () => {
     it('it should not insert user without login type', (done) => {
       chai.request(host)
         .post('/api/users')
-        .auth(env.API_USER, env.API_PASS)
+        .auth(env.API_USER, env.API_SECRET)
         .send({
           login: "foo@cnn.com",
           name: "foo",
@@ -269,7 +269,7 @@ describe('User Routes', () => {
     it('it should not insert user with bad login type', (done) => {
       chai.request(host)
         .post('/api/users')
-        .auth(env.API_USER, env.API_PASS)
+        .auth(env.API_USER, env.API_SECRET)
         .send({
           login: "foo@cnn.com",
           loginType: "foobar",
@@ -285,7 +285,7 @@ describe('User Routes', () => {
     it('it should not insert user with bad gender', (done) => {
       chai.request(host)
         .post('/api/users')
-        .auth(env.API_USER, env.API_PASS)
+        .auth(env.API_USER, env.API_SECRET)
         .send({
           login: "foo@cnn.com",
           loginType: "foobar",
@@ -302,7 +302,7 @@ describe('User Routes', () => {
     it('should not violate unique login/type constraint', (done) => {
       chai.request(host)
         .post('/api/users')
-        .auth(env.API_USER, env.API_PASS)
+        .auth(env.API_USER, env.API_SECRET)
         .send({
           name: "Dave",
           login: "da@aol.com",
@@ -315,7 +315,7 @@ describe('User Routes', () => {
           expect(res.body).has.property('_id');
           chai.request(host)
             .post('/api/users')
-            .auth(env.API_USER, env.API_PASS)
+            .auth(env.API_USER, env.API_SECRET)
             .send({
               name: "Dave",
               login: "da@aol.com",
@@ -346,7 +346,7 @@ describe('User Routes', () => {
       };
       chai.request(host)
         .post('/api/users')
-        .auth(env.API_USER, env.API_PASS)
+        .auth(env.API_USER, env.API_SECRET)
         .send(user)
         .end((err, res) => {
           if (err) throw err;
@@ -366,7 +366,7 @@ describe('User Routes', () => {
       let uid = '456';
       chai.request(host)
         .get('/api/users/' + uid)
-        .auth(env.API_USER, env.API_PASS)
+        .auth(env.API_USER, env.API_SECRET)
         .end((err, res) => {
           expect(res).to.have.status(400);
           expect(res.body).has.property('error');
@@ -378,7 +378,7 @@ describe('User Routes', () => {
       let uid = -1;
       chai.request(host)
         .post('/api/users')
-        .auth(env.API_USER, env.API_PASS)
+        .auth(env.API_USER, env.API_SECRET)
         .send({
           name: "Daniel2",
           login: "daniel2@aol.com",
@@ -392,7 +392,7 @@ describe('User Routes', () => {
           uid = res.body._id;
           chai.request(host)
             .get('/api/users/' + uid)
-            .auth(env.API_USER, env.API_PASS)
+            .auth(env.API_USER, env.API_SECRET)
             .end((err, res) => {
               expect(res).to.have.status(200);
               expect(res.body).is.a('object');

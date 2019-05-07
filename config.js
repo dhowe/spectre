@@ -10,7 +10,7 @@ let dbauth = '';
 let dbhost = host + ':' + port + '/' + env.DB_NAME;
 
 let apiUser = {};
-apiUser[env.API_USER] = env.API_PASS;
+apiUser[env.API_USER] = env.API_SECRET;
 
 if (env.DB_USER && env.DB_USER.length) {
   dbauth = env.DB_USER + ':' + env.DB_PASS + '@';
