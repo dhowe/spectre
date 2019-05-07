@@ -2,82 +2,73 @@ import React, { Component } from "react";
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Bootstrap from "react-bootstrap";
+import './Login.css';
 
 export default class Login extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      email: "",
+      login: "",
+      loginType: "twitter",
       password: ""
     };
   }
 
   validateForm() {
-    return this.state.email.length > 0 && this.state.password.length > 0;
+    return this.state.login.length > 0 && this.state.password.length > 0;
   }
 
   handleChange = event => {
     this.setState({
-      [event.target.id]: event.target.value
+      [ event.target.id ]: event.target.value
     });
   }
 
   handleSubmit = event => {
-    console.log('handleSubmit', this.state);
     event.preventDefault();
-    this.callBackendAPI()
-      .then(res => this.setState({ data: JSON.stringify(res) }))
-      .catch(err => console.log(err));
-  }
-
-  callBackendAPI = async () => {
-    console.log('callBackendAPI', JSON.stringify(this.state));
-    //const response = await fetch('/api');
-    const response = await fetch('/api', {
-      method: 'get'
-      //body: JSON.stringify(this.state)
-    });
-    const body = await response.json();
-    if (response.status !== 200) {
-      throw Error(body.message)
+    let login = this;
+    function handleResponse(response) {
+      return response.json()
+        .then((json) => {
+          if (!response.ok) {
+            const error = Object.assign({}, json, {
+              status: response.status,
+              statusText: response.statusText,
+            });
+            return Promise.reject(error);
+          }
+          return json;
+        });
     }
-    console.log('callBackendAPI ->', body);
 
-    return body;
-  };
+    fetch('/api/users', {
+        method: "post",
+        cache: "no-store",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(this.state)
+      })
+      .then(handleResponse)
+      .then(js => login.setState({ data: JSON.stringify(js, null, 2) }))
+      .catch(e => this.setState({ data: JSON.stringify(e.error, null, 2) }));
+  }
 
   render() {
     return (
-      <div className="Login">
-        <Form onSubmit={this.handleSubmit}>
-          <Form.Group controlId="email" bsSize="large">
-            <Form.Control
-              autoFocus
-              type="email"
-              value={this.state.email}
-              onChange={this.handleChange}
-            />
+      <div className = "Login">
+        <Form onSubmit = { this.handleSubmit }>
+          <Form.Group controlId="login" bsSize="large">
+            <Form.Control autoFocus type = "email" value={ this.state.login } onChange = { this.handleChange }/>
           </Form.Group>
-          <Form.Group controlId="password" bsSize="large">
-            <Form.Control
-              value={this.state.password}
-              onChange={this.handleChange}
-              type="password"
-            />
+          <Form.Group controlId="password" bsSize = "large">
+            <Form.Control value={ this.state.password } onChange={ this.handleChange } type="password"/>
           </Form.Group>
-          <Button
-            block
-            bsSize="large"
-            disabled={!this.validateForm()}
-            type="submit"
-          >
-            Login
+          <Button block bsSize="large" disabled={!this.validateForm() } type="submit">
+          Login
           </Button>
-        </Form>
-        <p className="Results">{this.state.data}</p>
+        </Form >
+        <p className="Results"><pre>{ this.state.data }</pre></p>
       </div>
-
     );
   }
 }

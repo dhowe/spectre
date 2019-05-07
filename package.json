@@ -6,10 +6,9 @@
   "scripts": {
     "test": "mocha  ./tests --recursive --exit -r esm",
     "start": "node -r esm server.js",
-    "build": "cd web-client && npm run build",
-    "launch": "npm start",
-    "prelaunch": "cd web-client && npm run start",
-    "heroku-postbuild": "cd web-client && npm run build"
+    "with-react": "npm start",
+    "prewith-react": "cd api-test && npm run build",
+    "heroku-postbuild": "cd api-test && npm run build"
   },
   "author": "daniel howe",
   "dependencies": {
@@ -21,6 +20,7 @@
     "lodash": "^4.17.11",
     "mongodb": "^3.2.2",
     "mongoose": "^5.4.20",
+    "react-bootstrap": "^1.0.0-beta.8",
     "sync-request": "^6.1.0"
   },
   "devDependencies": {

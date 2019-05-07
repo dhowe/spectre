@@ -11,33 +11,33 @@ if (!fs.existsSync('.env')) {
   throw Error('Expected DB info in .env file');
 }
 
-const port = process.env.PORT || 8083;
 const app = express();
-
-app.use(bodyparser.json());
-app.use(bodyparser.urlencoded({ extended: true }));
-app.use(basicAuth({
+const port = process.env.PORT || 8083;
+const auth = basicAuth({
   users: apiUser,
   challenge: true,
   realm: 'Spectre'
   //unauthorizedResponse: onUnauthorized
-}));
+});
 
-// for static files
-app.use(express.static(path.join(__dirname, 'web-client/build')));
+app.use(bodyparser.json());
+app.use(bodyparser.urlencoded({ extended: true }));
+
+// static react files
+app.use(express.static(path.join(__dirname, 'api-test/build')));
 
 // for api routes
-app.use('/spectre/', routes);
+app.use('/api/', auth, routes);
 
 // for react pages
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname + '/web-client/build/index.html'));
-})
+  res.sendFile(path.join(__dirname + '/api-test/build/index.html'));
+});
 
 function onUnauthorized(req) {
   return req.auth ?
-    ('Credentials ' + req.auth.user + ':' + req.auth.password + ' rejected') :
-    'No credentials provided'
+    ('Credentials ' + req.auth.user + ':' +
+      req.auth.password + ' rejected') : 'No credentials provided'
 }
 
 mongoose.connect(dbUrl, { useNewUrlParser: true });

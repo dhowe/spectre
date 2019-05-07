@@ -3,7 +3,7 @@ import controller from './user-controller';
 
 const router = express.Router();
 
-// base route: /spectre/api
+// base route: /api
 
 router.route('/users')
   .get(controller.list)

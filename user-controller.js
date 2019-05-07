@@ -38,6 +38,7 @@ const create = function (req, res) {
 
   user.save(function (err) {
     if (err) return error(res, err);
+    //console.log('User.created #'+user._id + ': ' + user.login + "/" + user.loginType);
     res.status(200).send(user);
   });
 };
@@ -70,9 +71,8 @@ const remove = function (req, res) {
 };
 
 function error(res, err, code) {
-
-  code = (typeof code !== 'undefined') ? code : 400;
-  res.status(code).send({ error: err });
+  //console.log("ERR:\n", JSON.stringify(err, null, 2));
+  res.status(code || 400).send({ error: err});
 }
 
 export default { list, similar, create, view, update, remove }
