@@ -16,6 +16,6 @@ if (env.DB_USER && env.DB_USER.length) {
   dbauth = env.DB_USER + ':' + env.DB_PASS + '@';
 }
 
-let dbUrl = process.env.MONGODB_URI || 'mongodb://' + dbauth + dbhost;
+let dbUrl = env.SPECTRE_DBURI || 'mongodb://' + dbauth + dbhost;
 
 export { dbUrl, apiUser };

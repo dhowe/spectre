@@ -34,9 +34,9 @@ app.get('*', (req, res) => {
 
 //////////////////////////// Startup ////////////////////////////////
 
-if (!fs.existsSync('.env')) {
-  throw Error('Expected DB/API info in .env');
-}
+// if (!fs.existsSync('.env')) {
+//   throw Error('Expected DB/API info in .env');
+// }
 
 mongoose.connect(dbUrl, { useNewUrlParser: true });
 
