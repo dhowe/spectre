@@ -6,14 +6,14 @@ import chai from 'chai';
 
 import UserModel from '../user-model';
 
-const port = 8083;
 const env = process.env;
 const expect = chai.expect;
+const port = env.PORT || 8083;
 
 dotEnv.config();
 chai.use(chai_http);
-let host = server;
 
+let host = server;
 if (typeof env.API_HOST != 'undefined')
   host = env.API_HOST + ':' + port;
 

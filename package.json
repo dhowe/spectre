@@ -6,8 +6,8 @@
   "scripts": {
     "test": "mocha  ./tests --recursive --exit -r esm",
     "start": "node -r esm server.js",
-    "with-react": "npm start",
-    "prewith-react": "cd api-test && npm run build",
+    "react-example": "npm start",
+    "prereact-example": "cd api-test && npm run build",
     "heroku-postbuild": "cd api-test && npm run build"
   },
   "author": "daniel howe",

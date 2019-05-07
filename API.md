@@ -6,7 +6,7 @@ GET: finds all users
 
 POST: creates a new user
 
-<br>
+<br/>
 
 ### /spectre/users/:id
 
@@ -16,26 +16,26 @@ PUT: updates user by id
 
 DELETE: deletes user by id
 
-<br>
+<br/>
 
 ### /spectre/users/test/:id
 
 GET: checks the value of each sent property for user with id
 
-<br>
+<br/>
 
 ### /spectre/users/similar/:id?limit=K
 
 GET: returns the K closest users (by OCEAN score) to the user with id
 
 
-<br>
+<br/>
 
 ## INSTALLATION
 
 ##### $ git clone https://github.com/dhowe/spectre.git
 
-##### $ cd spectre/server 
+##### $ cd spectre
 
 ##### $ npm install
 
@@ -43,3 +43,6 @@ GET: returns the K closest users (by OCEAN score) to the user with id
 
 ##### $ npm start (to start the server)
 
+##### $ npm run react-example (to load login example)
+
+<br/>

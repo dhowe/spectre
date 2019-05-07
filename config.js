@@ -2,14 +2,20 @@ import dotEnv from 'dotenv';
 
 dotEnv.config();
 
-let auth = '';
 let env = process.env;
-let host = env.DB_HOST + ':' + env.DB_PORT + '/' + env.DB_NAME;
-if (env.DB_USER && env.DB_USER.length) auth = env.DB_USER + ':' + env.DB_PASS + '@';
+let port = env.DB_PORT || 27017;
+let host = env.DB_HOST || 'localhost';
+
+let dbauth = '';
+let dbhost = host + ':' + port + '/' + env.DB_NAME;
 
 let apiUser = {};
 apiUser[env.API_USER] = env.API_PASS;
 
-let dbUrl = process.env.MONGODB_URI || 'mongodb://' + auth + host;
+if (env.DB_USER && env.DB_USER.length) {
+  dbauth = env.DB_USER + ':' + env.DB_PASS + '@';
+}
+
+let dbUrl = process.env.MONGODB_URI || 'mongodb://' + dbauth + dbhost;
 
 export { dbUrl, apiUser };
