@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 import IntroVideo from '../IntroVideo/IntroVideo'
 import SocialLogin from '../../Components/SocialLogin/SocialLogin';
 import IconButton from '../../Components/IconButton/IconButton';
-import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader'
+import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 
 import './LoginPage.scss';
 
