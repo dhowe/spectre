@@ -19,7 +19,7 @@ const styles = {
         background: 'url(https://www.atlantisbahamas.com/media/Things%20To%20Do/Water%20Park/Beaches/Hero/Experiences_Beach.jpg)',
     },
     content: {
-        margin: "64px 0",
+        paddingTop: "100px",
     },
     clickToContinue: {
         margin: "20% 0",
@@ -36,7 +36,7 @@ function TouchToBegin(props) {
                 </Typography>
                 <button onClick={props.test_state}>test</button>
             </Header>
-            <div className={classes.content}>
+            <div className={classes.content + " content"}>
                 <Link className="touchToBegin-beginButton" component={LoginPage} to="/login">
                     <div className={classes.clickToContinue}>
                         <Logo></Logo>

@@ -14,11 +14,11 @@ const styles = {
     root: {
         flexGrow: 1,
         width: "100%",
-        backgroundColor: '#F5FAFA',
+        
         color: 'black'
     },
     content: {
-        margin: "64px 0",
+        paddingTop: "100px",
     },
     clickToContinue: {
         margin: "20% 0",
@@ -37,7 +37,7 @@ function InfluenceAFollower(props) {
                     Header
                 </Typography>
             </Header>
-            <div className={classes.content}>
+            <div className={classes.content + " content"}>
                 <Typography component="h3" variant="h3">Influence a follower!</Typography>
                 <Typography component="h4" variant="h4" >Spectre has a community of devout followers willing to help you.</Typography>
                 <Typography component="h5" variant="h5" >Choose one to influence</Typography>

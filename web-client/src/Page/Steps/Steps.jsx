@@ -12,11 +12,11 @@ const styles = {
     root: {
         flexGrow: 1,
         width: "100%",
-        backgroundColor: '#F5FAFA',
+        
         color: 'black'
     },
     content: {
-        margin: "64px 0",
+        paddingTop: "100px",
     },
     clickToContinue: {
         margin: "20% 0",
@@ -32,7 +32,7 @@ function Steps(props) {
                     Header
                     </Typography>
             </Header>
-            <div className={classes.content}>
+            <div className={classes.content + " content"}>
                 <Typography component="h5" variant="h5">Follow our 3 simple steps to become more [powerful]</Typography>
                 <Typography component="h6" variant="h6"><strong>Step 1</strong> - influence a follower</Typography>
                 <Typography component="h6" variant="h6"><strong>Step 2</strong> - influence a nation</Typography>

@@ -12,7 +12,7 @@ const styles = {
     root: {
         flexGrow: 1,
         width: "100%",
-        backgroundColor: '#F5FAFA',
+        
         color: 'black'
     },
 };
@@ -26,7 +26,7 @@ function InsightSkin(props) {
                     Header
                 </Typography>
             </Header>
-            <div className={classes.content}>
+            <div className={classes.content + " content"}>
                 <Typography component="h3" variant="h3">InsightSkin</Typography>
                 <Link component={InsightAccuracy} to="/insight-accuracy">
                     <Button variant="contained" color="primary" className={classes.button}>

@@ -12,7 +12,7 @@ const styles = {
     root: {
         flexGrow: 1,
         width: "100%",
-        backgroundColor: '#F5FAFA',
+        
         color: 'black'
     },
 };
@@ -26,7 +26,7 @@ function SelectedAvatar(props) {
                     Header
                 </Typography>
             </Header>
-            <div className={classes.content}>
+            <div className={classes.content + " content"}>
                 <Typography component="h3" variant="h3">SelectedAvatar</Typography>
                 <Link component={InsightHairColor} to="/insight-hair">
                     <Button variant="contained" color="primary" className={classes.button}>

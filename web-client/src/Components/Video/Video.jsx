@@ -13,7 +13,7 @@ function Video(props) {
 
     return (
         <div >
-            <video width={window.innerWidth} height={window.innerHeight} autoplay controls>
+            <video width={window.innerWidth} autoplay controls>
                 <source src={movie} type="video/mp4" />
                 Your browser does not support the video tag.
             </video>

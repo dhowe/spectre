@@ -12,11 +12,11 @@ const styles = {
     root: {
         flexGrow: 1,
         width: "100%",
-        backgroundColor: '#F5FAFA',
+        
         color: 'black'
     },
     content: {
-        margin: "64px 0",
+        paddingTop: "100px",
     },
     clickToContinue: {
         margin: "20% 0",
@@ -35,7 +35,7 @@ function PersonalisedExperience(props) {
                     Header
                     </Typography>
             </Header>
-            <div className={classes.content}>
+            <div className={classes.content + " content"}>
                 <Typography component="h3" variant="h3">Excellent</Typography>
                 <Typography component="h3" variant="h3">In order to create your</Typography>
                 <Typography component="h3" variant="h3" className={classes.glow}><strong>personalised experience</strong></Typography>

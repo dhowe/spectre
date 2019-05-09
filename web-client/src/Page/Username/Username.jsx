@@ -2,23 +2,27 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import Header from "../../Components/Header/Header";
 import Footer from "../../Components/Footer/Footer";
 import TextInput from "../../Components/TextInput/TextInput";
 import RadioInput from "../../Components/RadioInput/RadioInput";
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
-import Pledge from "../Pledge/Pledge"
+import Pledge from "../Pledge/Pledge";
+import IconButton from '../../Components/IconButton/IconButton';
+import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
+import FooterLogo from '../../Components/FooterLogo/FooterLogo';
+
+import './Username.scss';
 
 const styles = {
     root: {
         flexGrow: 1,
         width: "100%",
         backgroundSize: 'cover',
-        backgroundColor: '#F5FAFA',
+        
     },
     content: {
-        margin: "64px 0",
+        paddingTop: "100px",
     },
     textInput: {
         marginBottom: "100px",
@@ -28,28 +32,17 @@ const styles = {
 function Username(props) {
     const { classes } = props;
     return (
-        <div className={classes.root}>
-            <Header>
-                <Typography variant="h6" color="inherit" >
-                    Header
-                    </Typography>
-            </Header>
-            <div className={classes.content}>
+        <div className={classes.root + " Username"}>
+            <SpectreHeader colour="white" />
+            <div className={classes.content + " Username-content content"}>
                 <TextInput >YOUR FIRST NAME?</TextInput>
                 <RadioInput options={['MAN', 'WOMAN', 'NON_BINARY']}>YOUR GENDER?</RadioInput>
                 <Link component={Pledge} to="/pledge">
-                    <Button variant="contained" color="primary" className={classes.button}>
-                        Begin
-                    </Button>
+                    <IconButton icon="next" text="Begin" />
                 </Link>
-
+                
             </div >
-
-            <Footer>
-                <Typography variant="h6" color="inherit" className={classes.grow}>
-                    Footer
-                </Typography>
-            </Footer>
+            <FooterLogo />
         </div >
     );
 }

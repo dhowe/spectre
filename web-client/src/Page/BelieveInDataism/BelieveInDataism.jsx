@@ -12,11 +12,11 @@ const styles = {
     root: {
         flexGrow: 1,
         width: "100%",
-        backgroundColor: '#F5FAFA',
+        
         color: 'black'
     },
     content: {
-        margin: "64px 0",
+        paddingTop: "100px",
     },
     clickToContinue: {
         margin: "20% 0",
@@ -32,7 +32,7 @@ function BelieveInDataism(props) {
                     Header
                     </Typography>
             </Header>
-            <div className={classes.content}>
+            <div className={classes.content + " content"}>
                 <Typography component="h4" variant="h4">To become more [powerful] you need more data.</Typography>
                 <Typography component="h4" variant="h4">We can help you believe in the [power] of dataism</Typography>
                 <Link component={Steps} to="/steps">
