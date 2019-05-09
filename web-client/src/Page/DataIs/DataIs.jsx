@@ -32,7 +32,7 @@ function DataIs(props) {
                     Header
                     </Typography>
             </Header>
-            <div className={classes.content}>
+            <div className={classes.content + " content"}>
                 <Typography component="h4" variant="h4">DATA IS [{props.virtue.toUpperCase()}]</Typography>
                 <Link component={BelieveInDataism} to="/believe-in-dataism">
                     <Button variant="contained" color="primary" className={classes.button}>

@@ -26,7 +26,7 @@ function InsightHairColor(props) {
                     Header
                 </Typography>
             </Header>
-            <div className={classes.content}>
+            <div className={classes.content + " content"}>
                 <Typography component="h3" variant="h3">InsightHairColor</Typography>
                 <Link component={InsightWeight} to="/insight-weight">
                     <Button variant="contained" color="primary" className={classes.button}>

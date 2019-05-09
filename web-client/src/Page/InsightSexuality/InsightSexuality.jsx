@@ -26,7 +26,7 @@ function InsightSexuality(props) {
                     Header
                 </Typography>
             </Header>
-            <div className={classes.content}>
+            <div className={classes.content + " content"}>
                 <Typography component="h3" variant="h3">InsightSexuality</Typography>
                 <Link component={InsightPolitical} to="/insight-political">
                     <Button variant="contained" color="primary" className={classes.button}>

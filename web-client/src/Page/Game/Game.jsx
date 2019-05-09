@@ -53,7 +53,7 @@ function Game(props) {
                     Header
                 </Typography>
             </Header>
-            <div className={classes.content}>
+            <div className={classes.content + " content"}>
                 <Typography component="h3" variant="h3">Game will go here</Typography>
                 <P5Wrapper sketch={sketch} />
                 <Link component={ThankYou} to="/thank-you">

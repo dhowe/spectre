@@ -32,7 +32,7 @@ function BelieveInDataism(props) {
                     Header
                     </Typography>
             </Header>
-            <div className={classes.content}>
+            <div className={classes.content + " content"}>
                 <Typography component="h4" variant="h4">To become more [powerful] you need more data.</Typography>
                 <Typography component="h4" variant="h4">We can help you believe in the [power] of dataism</Typography>
                 <Link component={Steps} to="/steps">

@@ -37,7 +37,7 @@ function InfluenceAFollower(props) {
                     Header
                 </Typography>
             </Header>
-            <div className={classes.content}>
+            <div className={classes.content + " content"}>
                 <Typography component="h3" variant="h3">Influence a follower!</Typography>
                 <Typography component="h4" variant="h4" >Spectre has a community of devout followers willing to help you.</Typography>
                 <Typography component="h5" variant="h5" >Choose one to influence</Typography>

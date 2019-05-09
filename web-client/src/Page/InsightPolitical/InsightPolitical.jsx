@@ -26,7 +26,7 @@ function InsightPolitical(props) {
                     Header
                 </Typography>
             </Header>
-            <div className={classes.content}>
+            <div className={classes.content + " content"}>
                 <Typography component="h3" variant="h3">InsightPolitical</Typography>
                 <Link component={InsightComplete} to="/insight-complete">
                     <Button variant="contained" color="primary" className={classes.button}>
