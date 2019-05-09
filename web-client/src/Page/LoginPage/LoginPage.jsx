@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 import IntroVideo from '../IntroVideo/IntroVideo'
 import SocialLogin from '../../Components/SocialLogin/SocialLogin';
 import IconButton from '../../Components/IconButton/IconButton';
+import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader'
 
 import './LoginPage.scss';
 
@@ -20,7 +21,7 @@ const styles = {
         backgroundSize: 'cover',
     },
     content: {
-        padding: "64px 0",
+        paddingTop: "100px",
     },
     clickToContinue: {
         margin: "20% 0",
@@ -31,6 +32,7 @@ function LoginPage(props) {
     const { classes } = props;
     return (
         <div className={classes.root + " LoginPage"}>
+            <SpectreHeader />
             <div className={classes.content + " LoginPage-content"}>
                 <Logo></Logo>
                 <Typography component="h1" variant="h1">Hello!</Typography>
@@ -40,7 +42,7 @@ function LoginPage(props) {
                     <IconButton icon="next" text="Next" />
                 </Link>
             </div>
-        </div >
+        </div>
     );
 }
 
