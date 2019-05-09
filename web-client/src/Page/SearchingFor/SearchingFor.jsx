@@ -2,11 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import Header from "../../Components/Header/Header";
-import Footer from "../../Components/Footer/Footer";
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import DataIs from '../DataIs/DataIs'
+import IconButton from '../../Components/IconButton/IconButton';
+import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
+import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 
 const styles = {
     root: {
@@ -27,11 +28,7 @@ function SearchingFor(props) {
     const { classes } = props;
     return (
         <div className={classes.root}>
-            <Header>
-                <Typography variant="h6" color="inherit" >
-                    Header
-                    </Typography>
-            </Header>
+            <SpectreHeader colour="white" />
             <div className={classes.content + " content"}>
                 <Typography component="h6" variant="h5">Welcome [USERNAME]?</Typography>
                 <Typography component="h6" variant="h5">What do you do out into the wilderness to behold?</Typography>
@@ -60,15 +57,9 @@ function SearchingFor(props) {
                         Influence
                     </Button>
                 </Link>
-
-            </div >
-
-            <Footer>
-                <Typography variant="h6" color="inherit" className={classes.grow}>
-                    Footer
-                </Typography>
-            </Footer>
-        </div >
+            </div>
+            <FooterLogo />
+        </div>
     );
 }
 
