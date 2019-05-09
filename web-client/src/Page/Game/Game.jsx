@@ -7,6 +7,7 @@ import Footer from "../../Components/Footer/Footer";
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import ThankYou from '../ThankYou/ThankYou'
+import P5Wrapper from 'react-p5-wrapper';
 
 const styles = {
     root: {
@@ -20,6 +21,29 @@ const styles = {
     }
 };
 
+function sketch(p) {
+    let rotation = 0;
+
+    p.setup = function () {
+        p.createCanvas(600, 400, p.WEBGL);
+    };
+
+    p.myCustomRedrawAccordingToNewPropsHandler = function (props) {
+        if (props.rotation) {
+            rotation = props.rotation * Math.PI / 180;
+        }
+    };
+
+    p.draw = function () {
+        p.background(100);
+        p.noStroke();
+        p.push();
+        p.rotateY(rotation);
+        p.box(100);
+        p.pop();
+    };
+};
+
 function Game(props) {
     const { classes } = props;
     return (
@@ -31,6 +55,7 @@ function Game(props) {
             </Header>
             <div className={classes.content}>
                 <Typography component="h3" variant="h3">Game will go here</Typography>
+                <P5Wrapper sketch={sketch} />
                 <Link component={ThankYou} to="/thank-you">
                     <Button variant="contained" color="primary" className={classes.button}>
                         Next
