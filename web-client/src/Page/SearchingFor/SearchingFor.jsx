@@ -12,11 +12,11 @@ const styles = {
     root: {
         flexGrow: 1,
         width: "100%",
-        backgroundColor: '#F5FAFA',
+        
         color: 'black'
     },
     content: {
-        margin: "64px 0",
+        paddingTop: "100px",
     },
     clickToContinue: {
         margin: "20% 0",

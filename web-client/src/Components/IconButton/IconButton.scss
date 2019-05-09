@@ -1,5 +1,11 @@
 .iconButtonText {
-    color: #ffffff;
+    color: #21c0fc;
     text-decoration: none;
     margin-top: -15px;
+}
+
+.iconButton-white {
+    .iconButtonText {
+        color: #ffffff;
+    }
 }
