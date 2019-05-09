@@ -5,6 +5,9 @@ import Typography from '@material-ui/core/Typography';
 import Video from "../../Components/Video/Video";
 import { Link } from 'react-router-dom';
 import Username from '../Username/Username'
+import IconButton from '../../Components/IconButton/IconButton';
+import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
+import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 
 const styles = {
 
@@ -14,11 +17,16 @@ function IntroVideo(props) {
     const { classes } = props;
     return (
         <div className={classes.root}>
-            <Video></Video>
-            <Link component={Username} to="/username">
-                <Typography>Skip</Typography>
-            </Link>
-        </div >
+            <SpectreHeader colour="white" />
+            <div className="IntroVideo-content content">
+                <Video></Video>
+                <Link component={Username} to="/username">
+                    <IconButton icon="next" text="Skip" />
+                </Link>
+                
+            </div>
+            <FooterLogo />  
+        </div>
     );
 }
 

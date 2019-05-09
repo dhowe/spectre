@@ -39,7 +39,7 @@ function LoginPage(props) {
                 <Typography component="h2" variant="h2">Let's Play!</Typography>
                 <SocialLogin />
                 <Link component={IntroVideo} to="/intro-video">
-                    <IconButton icon="next" text="Next" />
+                    <IconButton colour="white" icon="next" text="Next" />
                 </Link>
             </div>
         </div>
