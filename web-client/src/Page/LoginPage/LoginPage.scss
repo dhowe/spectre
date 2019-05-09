@@ -1,0 +1,18 @@
+.LoginPage {
+    background-color: #21c0fb;
+    color: #ffffff;
+}
+
+.LoginPage-content {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    h1 {
+        color: #ffffff;
+    }
+
+    h2 {
+        color: #ffffff;
+    }
+}
