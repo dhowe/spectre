@@ -26,7 +26,7 @@ function InsightWeight(props) {
                     Header
                 </Typography>
             </Header>
-            <div className={classes.content}>
+            <div className={classes.content + " content"}>
                 <Typography component="h3" variant="h3">InsightWeight</Typography>
                 <Link component={InsightSkin} to="/insight-skin">
                     <Button variant="contained" color="primary" className={classes.button}>

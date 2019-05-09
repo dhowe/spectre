@@ -26,7 +26,7 @@ function InsightComplete(props) {
                     Header
                 </Typography>
             </Header>
-            <div className={classes.content}>
+            <div className={classes.content + " content"}>
                 <Typography component="h3" variant="h3">InsightComplete</Typography>
                 <Link component={Steps} to="/steps">
                     <Button variant="contained" color="primary" className={classes.button}>

@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import Header from "../../Components/Header/Header";
-import Footer from "../../Components/Footer/Footer";
 import Logo from "../../Components/Logo/Logo";
 import Login from "../../Components/Login/Login";
 import { Link } from 'react-router-dom';

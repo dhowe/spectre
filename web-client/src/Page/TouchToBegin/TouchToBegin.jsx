@@ -36,7 +36,7 @@ function TouchToBegin(props) {
                 </Typography>
                 <button onClick={props.test_state}>test</button>
             </Header>
-            <div className={classes.content}>
+            <div className={classes.content + " content"}>
                 <Link className="touchToBegin-beginButton" component={LoginPage} to="/login">
                     <div className={classes.clickToContinue}>
                         <Logo></Logo>

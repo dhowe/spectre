@@ -35,7 +35,7 @@ function ThankYou(props) {
                     Header
                 </Typography>
             </Header>
-            <div className={classes.content}>
+            <div className={classes.content + " content"}>
                 <Typography component="h3" variant="h3">Thank you [username]!</Typography>
                 <img src='https://cdn.pixabay.com/photo/2013/07/13/12/15/hand-159474__340.png' alt='thumbs up'></img>
                 <Typography component="h4" variant="h4" >Your experience has been personalised.</Typography>

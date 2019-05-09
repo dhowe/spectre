@@ -32,7 +32,7 @@ function SearchingFor(props) {
                     Header
                     </Typography>
             </Header>
-            <div className={classes.content}>
+            <div className={classes.content + " content"}>
                 <Typography component="h6" variant="h5">Welcome [USERNAME]?</Typography>
                 <Typography component="h6" variant="h5">What do you do out into the wilderness to behold?</Typography>
                 <Link component={DataIs} to="/data-is">

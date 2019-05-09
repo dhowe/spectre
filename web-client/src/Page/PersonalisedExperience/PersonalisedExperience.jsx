@@ -35,7 +35,7 @@ function PersonalisedExperience(props) {
                     Header
                     </Typography>
             </Header>
-            <div className={classes.content}>
+            <div className={classes.content + " content"}>
                 <Typography component="h3" variant="h3">Excellent</Typography>
                 <Typography component="h3" variant="h3">In order to create your</Typography>
                 <Typography component="h3" variant="h3" className={classes.glow}><strong>personalised experience</strong></Typography>

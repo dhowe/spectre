@@ -26,7 +26,7 @@ function SelectedAvatar(props) {
                     Header
                 </Typography>
             </Header>
-            <div className={classes.content}>
+            <div className={classes.content + " content"}>
                 <Typography component="h3" variant="h3">SelectedAvatar</Typography>
                 <Link component={InsightHairColor} to="/insight-hair">
                     <Button variant="contained" color="primary" className={classes.button}>
