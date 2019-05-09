@@ -12,7 +12,7 @@ const port = process.env.PORT || 8083;
 const auth = basicAuth({
   users: apiUser,
   challenge: true,
-  realm: 'Spectre'
+  realm: 'API User/Secret required'
 });
 
 ///////////////////////////// Express ///////////////////////////////

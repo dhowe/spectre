@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Bootstrap from "react-bootstrap";
+import dotEnv from 'dotenv';
 import './Login.css';
 
 export default class Login extends Component {
@@ -21,13 +22,19 @@ export default class Login extends Component {
 
   handleChange = event => {
     this.setState({
-      [ event.target.id ]: event.target.value
-    });
+      [event.target.id]: event.target.value });
   }
 
   handleSubmit = event => {
+
     event.preventDefault();
-    let login = this;
+
+    dotEnv.config();
+
+    const login = this;
+    const env = process.env;
+    const auth = env.REACT_APP_API_USER + ':' + env.REACT_APP_API_SECRET;
+
     function handleResponse(response) {
       return response.json()
         .then((json) => {
@@ -42,10 +49,15 @@ export default class Login extends Component {
         });
     }
 
+
     fetch('/api/users', {
         method: "post",
-        cache: "no-store",
-        headers: { "Content-Type": "application/json" },
+        cache: "no-store", // ?
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": 'Basic ' + btoa(auth)
+        },
         body: JSON.stringify(this.state)
       })
       .then(handleResponse)
