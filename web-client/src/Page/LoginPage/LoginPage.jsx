@@ -8,16 +8,19 @@ import Logo from "../../Components/Logo/Logo";
 import Login from "../../Components/Login/Login";
 import { Link } from 'react-router-dom';
 import IntroVideo from '../IntroVideo/IntroVideo'
+import SocialLogin from '../../Components/SocialLogin/SocialLogin';
+import IconButton from '../../Components/IconButton/IconButton';
+
+import './LoginPage.scss';
 
 const styles = {
     root: {
         flexGrow: 1,
         width: "100%",
         backgroundSize: 'cover',
-        backgroundColor: '#F5FAFA',
     },
     content: {
-        margin: "64px 0",
+        padding: "64px 0",
     },
     clickToContinue: {
         margin: "20% 0",
@@ -27,27 +30,16 @@ const styles = {
 function LoginPage(props) {
     const { classes } = props;
     return (
-        <div className={classes.root}>
-            <Header>
-                <Typography variant="h6" color="inherit" >
-                    {props.prop}
-                </Typography>
-            </Header>
-            <div className={classes.content}>
+        <div className={classes.root + " LoginPage"}>
+            <div className={classes.content + " LoginPage-content"}>
                 <Logo></Logo>
                 <Typography component="h1" variant="h1">Hello!</Typography>
                 <Typography component="h2" variant="h2">Let's Play!</Typography>
-                <Login></Login>
+                <SocialLogin />
                 <Link component={IntroVideo} to="/intro-video">
-                    <Typography>Skip</Typography>
+                    <IconButton icon="next" text="Next" />
                 </Link>
-            </div >
-
-            <Footer>
-                <Typography variant="h6" color="inherit" className={classes.grow}>
-                    Footer
-                </Typography>
-            </Footer>
+            </div>
         </div >
     );
 }
