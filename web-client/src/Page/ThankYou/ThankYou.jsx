@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import Header from "../../Components/Header/Header";
-import Footer from "../../Components/Footer/Footer";
-import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import InfluenceAFollower from '../InfluenceAFollower/InfluenceAFollower';
+import IconButton from '../../Components/IconButton/IconButton';
+import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
+import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 
 const styles = {
     root: {
@@ -30,29 +30,17 @@ function ThankYou(props) {
     const { classes } = props;
     return (
         <div className={classes.root}>
-            <Header>
-                <Typography variant="h6" color="inherit" >
-                    Header
-                </Typography>
-            </Header>
+            <SpectreHeader colour="white" />
             <div className={classes.content + " content"}>
                 <Typography component="h3" variant="h3">Thank you [username]!</Typography>
-                <img src='https://cdn.pixabay.com/photo/2013/07/13/12/15/hand-159474__340.png' alt='thumbs up'></img>
+                {/* <img src='https://cdn.pixabay.com/photo/2013/07/13/12/15/hand-159474__340.png' alt='thumbs up'></img> */}
                 <Typography component="h4" variant="h4" >Your experience has been personalised.</Typography>
                 <Link component={InfluenceAFollower} to="/influence-a-follower">
-                    <Button variant="contained" color="primary" className={classes.button}>
-                        Next
-                </Button>
+                    <IconButton icon="next" text="Next" />
                 </Link>
-
-            </div >
-
-            <Footer>
-                <Typography variant="h6" color="inherit" className={classes.grow}>
-                    Footer
-                </Typography>
-            </Footer>
-        </div >
+            </div>
+            <FooterLogo />
+        </div>
     );
 }
 
