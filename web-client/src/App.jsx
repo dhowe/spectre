@@ -28,6 +28,8 @@ import InsightThankYou from './Page/InsightThankYou/InsightThankYou';
 import InsightSexuality from './Page/InsightSexuality/InsightSexuality';
 import InsightPolitical from './Page/InsightPolitical/InsightPolitical';
 import InsightComplete from './Page/InsightComplete/InsightComplete';
+import IntroOceanVideo from './Page/IntroOceanVideo/IntroOceanVideo';
+import YourPower from './Page/YourPower/YourPower';
 
 const theme = createMuiTheme({
   palette: {
@@ -99,6 +101,8 @@ class App extends React.Component {
               <Route exact path="/insight-sexuality" component={InsightSexuality} />
               <Route exact path="/insight-political" component={InsightPolitical} />
               <Route exact path="/insight-complete" component={InsightComplete} />
+              <Route exact path="/intro-ocean-video" component={IntroOceanVideo} />
+              <Route exact path="/your-power" component={YourPower} />
             </Router>
           </header>
         </div>

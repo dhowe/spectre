@@ -29,7 +29,7 @@ function InsightComplete(props) {
                 <Typography component="h4" variant="h4">Our new behavioural products can create [powerful] insights</Typography>
                 <Typography component="h4" variant="h4">As a reward for your belief in the [power] of data, we can share:</Typography>                
                 <Typography component="h4" variant="h4">Sophie T’s OCEAN profile</Typography>
-                <Link component={Steps} to="/steps">
+                <Link component={Steps} to="/intro-ocean-video">
                     <IconButton icon="next" text="WTF is OCEAN?" />
                 </Link>
             </div>
