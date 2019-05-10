@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import Header from "../../Components/Header/Header";
-import Footer from "../../Components/Footer/Footer";
-import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import PersonalisedExperience from '../PersonalisedExperience/PersonalisedExperience';
+import IconButton from '../../Components/IconButton/IconButton';
+import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
+import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 
 const styles = {
     root: {
@@ -27,11 +27,7 @@ function Steps(props) {
     const { classes } = props;
     return (
         <div className={classes.root}>
-            <Header>
-                <Typography variant="h6" color="inherit" >
-                    Header
-                    </Typography>
-            </Header>
+            <SpectreHeader colour="white" />
             <div className={classes.content + " content"}>
                 <Typography component="h5" variant="h5">Follow our 3 simple steps to become more [powerful]</Typography>
                 <Typography component="h6" variant="h6"><strong>Step 1</strong> - influence a follower</Typography>
@@ -41,24 +37,11 @@ function Steps(props) {
                 <Typography component="h5" variant="h5">Get the data. Get the [power].</Typography>
                 <Typography component="h4" variant="h4">Ready?</Typography>
                 <Link component={PersonalisedExperience} to="/personalised-experience">
-                    <Button variant="contained" color="primary" className={classes.button}>
-                        Maybe
-                </Button>
+                    <IconButton icon="next" text="Yes" />
                 </Link>
-                <Link component={PersonalisedExperience} to="/personalised-experience">
-                    <Button variant="contained" color="primary" className={classes.button}>
-                        Yes
-                </Button>
-                </Link>
-
-            </div >
-
-            <Footer>
-                <Typography variant="h6" color="inherit" className={classes.grow}>
-                    Footer
-                </Typography>
-            </Footer>
-        </div >
+            </div>
+            <FooterLogo />
+        </div>
     );
 }
 

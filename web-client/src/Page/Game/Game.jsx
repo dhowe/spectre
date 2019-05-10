@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import Header from "../../Components/Header/Header";
-import Footer from "../../Components/Footer/Footer";
-import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
-import ThankYou from '../ThankYou/ThankYou'
+import ThankYou from '../ThankYou/ThankYou';
 import P5Wrapper from 'react-p5-wrapper';
+import IconButton from '../../Components/IconButton/IconButton';
+import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
+import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 
 // NOTE: requires sym-link from ../../shared/user.js
 import User from './user.js';
@@ -238,11 +238,7 @@ function Game(props) {
   const { classes } = props;
   return (
     <div className={classes.root}>
-            <Header>
-                <Typography variant="h6" color="inherit" >
-                    Header
-                </Typography>
-            </Header>
+            <SpectreHeader colour="white" />
             <div className={classes.content + " content"}>
                 <P5Wrapper sketch={sketch} />
                 {/* temporary div for testing */}
@@ -259,16 +255,10 @@ function Game(props) {
                   </table>
                 </div>
                 <Link component={ThankYou} to="/thank-you">
-                    <Button variant="contained" color="primary" className={classes.button}>
-                        Next
-                    </Button>
+                    <IconButton icon="next" text="Next" />
                 </Link>
             </div >
-            <Footer>
-                <Typography variant="h6" color="inherit" className={classes.grow}>
-                    Footer
-                </Typography>
-            </Footer>
+            <FooterLogo />
         </div >
   );
 }

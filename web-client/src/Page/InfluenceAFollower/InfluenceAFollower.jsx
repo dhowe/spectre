@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import Header from "../../Components/Header/Header";
-import Footer from "../../Components/Footer/Footer";
-import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import SelectedAvatar from '../SelectedAvatar/SelectedAvatar'
-import AvatarComponent from '../../Components/AvatarComponent/AvatarComponent'
+import AvatarComponent from '../../Components/AvatarComponent/AvatarComponent';
 import Grid from '@material-ui/core/Grid';
+import IconButton from '../../Components/IconButton/IconButton';
+import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
+import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 
 const styles = {
     root: {
@@ -32,11 +32,7 @@ function InfluenceAFollower(props) {
     const { classes } = props;
     return (
         <div className={classes.root}>
-            <Header>
-                <Typography variant="h6" color="inherit" >
-                    Header
-                </Typography>
-            </Header>
+            <SpectreHeader colour="white" />
             <div className={classes.content + " content"}>
                 <Typography component="h3" variant="h3">Influence a follower!</Typography>
                 <Typography component="h4" variant="h4" >Spectre has a community of devout followers willing to help you.</Typography>
@@ -52,19 +48,11 @@ function InfluenceAFollower(props) {
                     <AvatarComponent class='active'></AvatarComponent>
                 </Grid>
                 <Link component={SelectedAvatar} to="/selected-avatar">
-                    <Button variant="contained" color="primary" className={classes.button}>
-                        Next
-                </Button>
+                    <IconButton icon="next" text="Next" />
                 </Link>
-
-            </div >
-
-            <Footer>
-                <Typography variant="h6" color="inherit" className={classes.grow}>
-                    Footer
-                </Typography>
-            </Footer>
-        </div >
+            </div>
+            <FooterLogo />
+        </div>
     );
 }
 

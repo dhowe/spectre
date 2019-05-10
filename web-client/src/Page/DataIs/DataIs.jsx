@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import Header from "../../Components/Header/Header";
-import Footer from "../../Components/Footer/Footer";
-import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
-import BelieveInDataism from '../BelieveInDataism/BelieveInDataism'
+import BelieveInDataism from '../BelieveInDataism/BelieveInDataism';
+import IconButton from '../../Components/IconButton/IconButton';
+import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
+import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 
 const styles = {
     root: {
@@ -27,27 +27,15 @@ function DataIs(props) {
     const { classes } = props;
     return (
         <div className={classes.root}>
-            <Header>
-                <Typography variant="h6" color="inherit" >
-                    Header
-                    </Typography>
-            </Header>
+            <SpectreHeader colour="white" />
             <div className={classes.content + " content"}>
-                <Typography component="h4" variant="h4">DATA IS [{props.virtue.toUpperCase()}]</Typography>
+                <Typography component="h4" variant="h4">DATA IS {props.virtue.toUpperCase()}</Typography>
                 <Link component={BelieveInDataism} to="/believe-in-dataism">
-                    <Button variant="contained" color="primary" className={classes.button}>
-                        Next1
-                </Button>
+                    <IconButton icon="next" text="Next" />
                 </Link>
-
-            </div >
-
-            <Footer>
-                <Typography variant="h6" color="inherit" className={classes.grow}>
-                    Footer
-                </Typography>
-            </Footer>
-        </div >
+            </div>
+            <FooterLogo />
+        </div>
     );
 }
 
