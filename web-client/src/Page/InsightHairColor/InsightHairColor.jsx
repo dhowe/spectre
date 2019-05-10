@@ -24,7 +24,7 @@ function InsightHairColor(props) {
         <div className={classes.root}>
             <SpectreHeader colour="white" />
             <div className={classes.content + " content"}>
-                <Typography component="h3" variant="h3">InsightHairColor</Typography>
+                <Typography component="h4" variant="h4">What’s [username]’s likely gender?</Typography>
                 <Link component={InsightWeight} to="/insight-weight">
                     <IconButton icon="next" text="Next" />
                 </Link>

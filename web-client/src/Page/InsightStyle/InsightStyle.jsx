@@ -23,7 +23,7 @@ function InsightStyle(props) {
         <div className={classes.root}>
             <SpectreHeader colour="white" />
             <div className={classes.content + " content"}>
-                <Typography component="h3" variant="h3">InsightStyle</Typography>
+                <Typography component="h4" variant="h4">What’s Sophie T‘s likely style category?</Typography>
                 <Link component={InsightThankYou} to="/insight-thank-you">
                     <IconButton icon="next" text="Next" />
                 </Link>

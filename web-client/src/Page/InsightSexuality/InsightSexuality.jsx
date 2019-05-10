@@ -23,7 +23,7 @@ function InsightSexuality(props) {
         <div className={classes.root}>
             <SpectreHeader colour="white" />
             <div className={classes.content + " content"}>
-                <Typography component="h3" variant="h3">InsightSexuality</Typography>
+                <Typography component="h4" variant="h4">What is Sophie T’s likely sexual orientation?</Typography>
                 <Link component={InsightPolitical} to="/insight-political">
                     <IconButton icon="next" text="Next" />
                 </Link>

@@ -23,9 +23,10 @@ function InsightAccuracy(props) {
         <div className={classes.root}>
             <SpectreHeader colour="white" />
             <div className={classes.content + " content"}>
-                <Typography component="h3" variant="h3">InsightAccuracy</Typography>
+                <Typography component="h3" variant="h3">Excellent! </Typography>
+                <Typography component="h4" variant="h4">Your accuracy level is high. You are starting to see [username] as we see her.</Typography>
                 <Link component={InsightFinancial} to="/insight-financial">
-                    <IconButton icon="next" text="Next" />
+                    <IconButton icon="next" text="Let's go deeper" />
                 </Link>
             </div>
             <FooterLogo />

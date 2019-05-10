@@ -23,7 +23,7 @@ function InsightWeight(props) {
         <div className={classes.root}>
             <SpectreHeader colour="white" />
             <div className={classes.content + " content"}>
-                <Typography component="h3" variant="h3">InsightWeight</Typography>
+                <Typography component="h4" variant="h4">What’s [username]’s likely weight?</Typography>
                 <Link component={InsightSkin} to="/insight-skin">
                     <IconButton icon="next" text="Next" />
                 </Link>

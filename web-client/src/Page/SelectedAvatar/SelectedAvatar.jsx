@@ -23,7 +23,8 @@ function SelectedAvatar(props) {
         <div className={classes.root}>
             <SpectreHeader colour="white" />
             <div className={classes.content + " content"}>
-                <Typography component="h3" variant="h3">SelectedAvatar</Typography>
+                <Typography component="h3" variant="h3">You selected [username].</Typography>
+                <Typography component="h4" variant="h4">Lets start by verifying some of the basics to unlock [powerful] / [truthful]   / [valuable] / [faithful] / [influential] insights into [username]. Don’t worry only you will see the results. </Typography>
                 <Link component={InsightHairColor} to="/insight-hair">
                 <IconButton icon="next" text="DIVE IN" />
                 </Link>

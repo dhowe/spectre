@@ -23,9 +23,14 @@ function InsightComplete(props) {
         <div className={classes.root}>
             <SpectreHeader colour="white" />
             <div className={classes.content + " content"}>
-                <Typography component="h3" variant="h3">InsightComplete</Typography>
+                <Typography component="h3" variant="h3">Congratulations [username] </Typography>
+                <Typography component="h3" variant="h3">Verification complete. </Typography>
+                <IconButton icon="next" />
+                <Typography component="h4" variant="h4">Our new behavioural products can create [powerful] insights</Typography>
+                <Typography component="h4" variant="h4">As a reward for your belief in the [power] of data, we can share:</Typography>                
+                <Typography component="h4" variant="h4">Sophie T’s OCEAN profile</Typography>
                 <Link component={Steps} to="/steps">
-                    <IconButton icon="next" text="Next" />
+                    <IconButton icon="next" text="WTF is OCEAN?" />
                 </Link>
             </div>
             <FooterLogo />

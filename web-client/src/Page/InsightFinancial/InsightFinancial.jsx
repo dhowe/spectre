@@ -24,7 +24,7 @@ function InsightFinancial(props) {
         <div className={classes.root}>
             <SpectreHeader colour="white" />
             <div className={classes.content + " content"}>
-                <Typography component="h3" variant="h3">InsightFinancial</Typography>
+                <Typography component="h4" variant="h4">What’s Sophie T’s likely financial status?</Typography>
                 <Link component={InsightStyle} to="/insight-style">
                     <IconButton icon="next" text="Next" />
                 </Link>
