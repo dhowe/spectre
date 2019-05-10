@@ -30,6 +30,19 @@ import InsightPolitical from './Page/InsightPolitical/InsightPolitical';
 import InsightComplete from './Page/InsightComplete/InsightComplete';
 import IntroOceanVideo from './Page/IntroOceanVideo/IntroOceanVideo';
 import YourPower from './Page/YourPower/YourPower';
+import PickASide from './Page/PickASide/PickASide';
+import Campaign from './Page/Campaign/Campaign';
+import InfluencedBy from './Page/InfluencedBy/InfluencedBy';
+import DarkAd from './Page/DarkAd/DarkAd';
+import TargetAd from './Page/TargetAd/TargetAd';
+import SuccessAd from './Page/SuccessAd/SuccessAd';
+import InfluenceANation from './Page/InfluenceANation/InfluenceANation';
+import ConsumerData from './Page/ConsumerData/ConsumerData';
+import PoliticalData from './Page/PoliticalData/PoliticalData';
+import HomeData from './Page/HomeData/HomeData';
+import FindCitizens from './Page/FindCitizens/FindCitizens';
+import TargetsFound from './Page/TargetsFound/TargetsFound';
+import SocialMedia from './Page/SocialMedia/SocialMedia';
 
 const theme = createMuiTheme({
   palette: {
@@ -103,6 +116,19 @@ class App extends React.Component {
               <Route exact path="/insight-complete" component={InsightComplete} />
               <Route exact path="/intro-ocean-video" component={IntroOceanVideo} />
               <Route exact path="/your-power" component={YourPower} />
+              <Route exact path="/pick-a-side" component={PickASide} />
+              <Route exact path="/campaign" component={Campaign} />
+              <Route exact path="/influenced-by" component={InfluencedBy} />
+              <Route exact path="/dark-ad" component={DarkAd} />
+              <Route exact path="/target-ad" component={TargetAd} />
+              <Route exact path="/success-ad" component={SuccessAd} />
+              <Route exact path="/influence-a-nation" component={InfluenceANation} />
+              <Route exact path="/consumer-data" component={ConsumerData} />
+              <Route exact path="/political-data" component={PoliticalData} />
+              <Route exact path="/home-data" component={HomeData} />
+              <Route exact path="/find-citizens" component={FindCitizens} />
+              <Route exact path="/targets-found" component={TargetsFound} />
+              <Route exact path="/social-media" component={SocialMedia} />
             </Router>
           </header>
         </div>

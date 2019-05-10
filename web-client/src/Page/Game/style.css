@@ -1,0 +1,46 @@
+    
+html, body {
+    margin: 0;
+    padding: 0;
+  }
+  
+  canvas {
+    position: fixed;
+    z-index: 1;
+    display: block;
+  }
+  
+  table {
+    background: #0A84FF;
+    opacity: .9;
+    color: white;
+  }
+  
+  th {
+    text-align: center;
+    margin: auto;
+    border: .5px solid white;
+    padding: .7rem;
+  }
+  
+  table, thead, tbody, tfoot, tr, td  {
+    text-align: center;
+    margin: auto;
+    border: .5px solid white;
+    padding: .5rem;
+  }
+  
+  td#desc {
+    text-align: justify;
+    padding: 1rem;
+  }
+  
+  #content {
+    position: fixed;
+    z-index: 2;
+    top: 10%;
+    left: 25%;
+    display: none;
+    width: 50%;
+    max-height: 300px;
+  }
