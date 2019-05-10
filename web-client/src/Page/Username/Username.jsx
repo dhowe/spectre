@@ -21,9 +21,6 @@ const styles = {
         backgroundSize: 'cover',
         
     },
-    content: {
-        paddingTop: "100px",
-    },
     textInput: {
         marginBottom: "100px",
     }

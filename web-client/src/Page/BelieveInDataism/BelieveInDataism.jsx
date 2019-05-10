@@ -15,9 +15,6 @@ const styles = {
         
         color: 'black'
     },
-    content: {
-        paddingTop: "100px",
-    },
     clickToContinue: {
         margin: "20% 0",
     }

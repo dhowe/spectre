@@ -18,9 +18,6 @@ const styles = {
         width: "100%",
         backgroundSize: 'cover',
     },
-    content: {
-        paddingTop: "100px",
-    },
     clickToContinue: {
         margin: "20% 0",
     }
