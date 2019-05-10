@@ -23,7 +23,10 @@ function TargetsFound(props) {
         <div className={classes.root}>
             <SpectreHeader colour="white" />
             <div className={classes.content + " content"}>
-                <Typography component="h4" variant="h4">What is [username]'s likely skin colour?</Typography>
+                <Typography component="h4" variant="h4">Analysing data sets and looking for patterns...</Typography>
+                <Typography component="h4" variant="h4">Consumer..... Political........ Home........</Typography>
+                [Image of map]
+                <Typography component="h3" variant="h3">Targets found: [1,095,405 ]</Typography>
                 <Link component={SocialMedia} to="/social-media">
                     <IconButton icon="next" text="Next" />
                 </Link>

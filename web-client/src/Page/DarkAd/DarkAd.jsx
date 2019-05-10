@@ -23,9 +23,9 @@ function darkAd(props) {
         <div className={classes.root}>
             <SpectreHeader colour="white" />
             <div className={classes.content + " content"}>
-                <Typography component="h4" variant="h4">What is [username]'s likely skin colour?</Typography>
+                <Typography component="h4" variant="h4">[Ad generator here]</Typography>
                 <Link component={TargetAd} to="/target-ad">
-                          <IconButton icon="next" text="Next" />
+                    <IconButton icon="next" text="Next" />
                 </Link>
             </div>
             <FooterLogo />

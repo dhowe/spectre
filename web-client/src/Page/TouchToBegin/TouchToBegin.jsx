@@ -30,12 +30,6 @@ function TouchToBegin(props) {
     const { classes } = props;
     return (
         <div className={classes.root + ' touchToBegin'}>
-            <Header>
-                <Typography variant="h6" color="inherit" className={classes.grow}>
-                    {props.prop}
-                </Typography>
-                <button onClick={props.test_state}>test</button>
-            </Header>
             <div className={classes.content + " content"}>
                 <Link className="touchToBegin-beginButton" component={LoginPage} to="/login">
                     <div className={classes.clickToContinue}>
@@ -44,11 +38,6 @@ function TouchToBegin(props) {
                     </div>
                 </Link>
             </div >
-            <Footer>
-                <Typography variant="h6" color="inherit" className={classes.grow}>
-                    Footer
-                </Typography>
-            </Footer>
         </div >
     );
 }

@@ -23,7 +23,9 @@ function PoliticalData(props) {
         <div className={classes.root}>
             <SpectreHeader colour="white" />
             <div className={classes.content + " content"}>
-                <Typography component="h4" variant="h4">What is [username]'s likely skin colour?</Typography>
+                <Typography component="h3" variant="h3">Choose 5 more!</Typography>
+                <Typography component="h3" variant="h3">POLITICAL DATA:</Typography>
+                [List of options here]
                 <Link component={HomeData} to="/home-data">
                     <IconButton icon="next" text="Next" />
                 </Link>

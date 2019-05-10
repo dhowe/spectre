@@ -31,8 +31,8 @@ function YourPower(props) {
             <SpectreHeader colour="white" />
             <div className={classes.content + " content"}>
             
-                <Typography component="h6" variant="h6">[username], your [power] is growing.</Typography>
-                <Typography component="h6" variant="h6">Lets put it into practice.</Typography>
+                <Typography component="h4" variant="h4">[username], your [power] is growing.</Typography>
+                <Typography component="h4" variant="h4">Let's put it into practice.</Typography>
                 <Link component={SearchingFor} to="/pick-a-side">
                     <IconButton icon="next" text="Next" />
                 </Link>

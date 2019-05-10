@@ -23,7 +23,9 @@ function HomeData(props) {
         <div className={classes.root}>
             <SpectreHeader colour="white" />
             <div className={classes.content + " content"}>
-                <Typography component="h4" variant="h4">What is [username]'s likely skin colour?</Typography>
+                <Typography component="h3" variant="h3">Last but not least</Typography>
+                <Typography component="h3" variant="h3">HOME DATA:</Typography>
+                [List of options here]
                 <Link component={FindCitizens} to="/find-citizens">
                     <IconButton icon="next" text="Next" />
                 </Link>
