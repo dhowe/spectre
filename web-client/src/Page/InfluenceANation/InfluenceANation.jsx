@@ -17,7 +17,7 @@ const styles = {
     },
 };
 
-function influenceANation(props) {
+function InfluenceANation(props) {
     const { classes } = props;
     return (
         <div className={classes.root}>
@@ -33,8 +33,8 @@ function influenceANation(props) {
     );
 }
 
-influenceANation.propTypes = {
+InfluenceANation.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(influenceANation);
+export default withStyles(styles)(InfluenceANation);
