@@ -24,6 +24,8 @@ const styles = {
   content: {
     paddingTop: "100px",
   },
+
+  // TODO: grab css from sass
   sketchBg: '#FFF',
   sketchText: '#929392',
   sketchStroke: '#929392',
@@ -73,13 +75,17 @@ function sketch(p) {
     if (!done) Brand.updateAll();
     Brand.drawAll();
 
-    let timer = seconds - Math.floor(p.millis() / 1000);
-    if (timer < 0 && !done) finished();
+    if (false) { // no timer for now
 
-    p.textSize(40);
-    p.fill(styles.sketchText);
-    p.text(Math.max(0, timer), p.width - 60, Brand.radius / 2);
+      let timer = seconds - Math.floor(p.millis() / 1000);
+      if (timer < 0 && !done) finished();
+      p.fill(styles.sketchText);
+      p.textSize(40);
+      p.text(Math.max(0, timer), p.width - 60, Brand.radius / 2);
+    }
+
     p.textSize(18);
+    p.fill(styles.sketchText);
     p.text('drag items then hit spacebar to compute scores', p.width / 2, p.height - 20);
   };
 
