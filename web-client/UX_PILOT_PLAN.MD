@@ -3,7 +3,6 @@
 
 | Name | Template | Content | Notes | |
 |------|----------|-------|-------|---|
-| Name | Template | _________________________________ | Notes | |
 | Standby | 248_BRA_Spectre_Style_Sheets_Pres_v3_13 | Standby graphic | | |
 | Login | 248_BRA_Spectre_Style_Sheets_Pres_v3_14 | Hello! Let’s play! Enter email address | | |
 | Video Intro | 248_BRA_Spectre_Style_Sheets_Pres_v3_21 | 20 sec video intro to Spectre & products | ALL VIDEOS IN MP4 / SQUARE RATIO | |
