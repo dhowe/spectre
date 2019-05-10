@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
-import ConsumerData from '../ConsumerData/ConsumerData'
+import Campaign from '../Campaign/Campaign';
 import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
@@ -12,31 +13,36 @@ const styles = {
     root: {
         flexGrow: 1,
         width: "100%",
-
-        color: 'black'
+        color: 'black',
     },
+    content: {
+        paddingTop: "100px",
+    },
+    clickToContinue: {
+        margin: "20% 0",
+    }
 };
 
-function InfluenceANation(props) {
+function PickASide(props) {
     const { classes } = props;
     return (
         <div className={classes.root}>
             <SpectreHeader colour="white" />
             <div className={classes.content + " content"}>
-                <Typography component="h3" variant="h3">Influence A Nation</Typography>
-                <Typography component="h4" variant="h4">Lets increase the [power] of your campaign to influence lots of people to vote [Leave] in the referendum.</Typography>
-                <Typography component="h4" variant="h4">We can show you how, but first, you must:</Typography>
-                <Link component={ConsumerData} to="/consumer-data">
-                    <IconButton icon="next" text="Get more data" />
+
+                <Typography component="h4" variant="h4">What’s your preference?</Typography>
+                <Link component={Campaign} to="/campaign">
+                    <IconButton icon="next" text="Next" />
                 </Link>
-            </div>
+
+            </div >
             <FooterLogo />
-        </div>
+        </div >
     );
 }
 
-InfluenceANation.propTypes = {
+PickASide.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(InfluenceANation);
+export default withStyles(styles)(PickASide);
