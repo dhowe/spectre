@@ -21,9 +21,6 @@ const styles = {
     width: "100%",
     color: 'black'
   },
-  content: {
-    paddingTop: "100px",
-  },
 
   // TODO: grab css from sass
   sketchBg: '#FFF',

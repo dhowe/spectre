@@ -14,11 +14,11 @@ function SpectreHeader(props) {
     const { classes } = props;
     return props.colour == "white" ? (
         <div className="SpectreHeader SpectreHeader-white">
-          <img src={HeaderLogoColour} />
+          <img width="400" src={HeaderLogoColour} />
         </div>
       ) : (
         <div className="SpectreHeader">
-          <img src={HeaderLogo} />
+          <img width="400" src={HeaderLogo} />
         </div>
       );      
 }

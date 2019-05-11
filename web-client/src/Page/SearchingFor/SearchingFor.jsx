@@ -32,31 +32,33 @@ function SearchingFor(props) {
             <div className={classes.content + " content"}>
                 <Typography component="h6" variant="h5">Welcome [USERNAME]?</Typography>
                 <Typography component="h6" variant="h5">What do you do out into the wilderness to behold?</Typography>
-                <Link component={DataIs} to="/data-is">
-                    <Button variant="contained" color="primary" className={classes.button} onClick={() => { props.set_key('virtue', 'power') }}>
-                        Power
-                    </Button>
-                </Link>
-                <Link component={DataIs} to="/data-is">
-                    <Button variant="contained" color="primary" className={classes.button} onClick={() => { props.set_key('virtue', 'truth') }}>
-                        Truth
-                    </Button>
-                </Link>
-                <Link component={DataIs} to="/data-is">
-                    <Button variant="contained" color="primary" className={classes.button} onClick={() => { props.set_key('virtue', 'wealth') }}>
-                        Wealth
-                    </Button>
-                </Link>
-                <Link component={DataIs} to="/data-is">
-                    <Button variant="contained" color="primary" className={classes.button} onClick={() => { props.set_key('virtue', 'faith') }}>
-                        Faith
-                    </Button>
-                </Link>
-                <Link component={DataIs} to="/data-is">
-                    <Button variant="contained" color="primary" className={classes.button} onClick={() => { props.set_key('virtue', 'influence') }}>
-                        Influence
-                    </Button>
-                </Link>
+                <div>
+                    <Link component={DataIs} to="/data-is">
+                        <Button variant="contained" color="primary" className={classes.button} onClick={() => { props.set_key('virtue', 'power') }}>
+                            Power
+                        </Button>
+                    </Link>
+                    <Link component={DataIs} to="/data-is">
+                        <Button variant="contained" color="primary" className={classes.button} onClick={() => { props.set_key('virtue', 'truth') }}>
+                            Truth
+                        </Button>
+                    </Link>
+                    <Link component={DataIs} to="/data-is">
+                        <Button variant="contained" color="primary" className={classes.button} onClick={() => { props.set_key('virtue', 'wealth') }}>
+                            Wealth
+                        </Button>
+                    </Link>
+                    <Link component={DataIs} to="/data-is">
+                        <Button variant="contained" color="primary" className={classes.button} onClick={() => { props.set_key('virtue', 'faith') }}>
+                            Faith
+                        </Button>
+                    </Link>
+                    <Link component={DataIs} to="/data-is">
+                        <Button variant="contained" color="primary" className={classes.button} onClick={() => { props.set_key('virtue', 'influence') }}>
+                            Influence
+                        </Button>
+                    </Link>
+                </div>
             </div>
             <FooterLogo />
         </div>

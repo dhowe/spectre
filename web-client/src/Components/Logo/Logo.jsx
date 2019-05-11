@@ -5,8 +5,8 @@ import image from './logo.svg';
 
 const styles = {
     Logo: {
-        width: "100px",
-        height: "100px",
+        width: "200px",
+        height: "200px",
     }
 }
 
