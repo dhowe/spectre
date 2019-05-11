@@ -46,7 +46,7 @@ function sketch(p) {
 
   let done, user;
   let numLines = 9;
-  let seconds = 25;
+  let seconds = 0;
 
   p.setup = function () {
     p.createCanvas(p.windowWidth, p.windowHeight * .7);
@@ -54,9 +54,11 @@ function sketch(p) {
     p.imageMode(p.CENTER);
 
     shuffle(Brand.names);
-    Brand.radius = p.height / (numLines + 1);
+    Brand.diameter = p.height / (numLines + 1);
+    Brand.instances = [];
     for (let i = 0; i < Brand.names.length; i++) {
-      new Brand(p, -i * (p.width / 6) + p.width / 2, p.height / 2, Brand.names[i]);
+      let bx = -i * (p.width / 6) + p.width / 2;
+      Brand.instances.push(new Brand(p, bx, p.height / 2, Brand.names[i]));
     }
 
     user = User.Create({ name: "Jane", gender: "female" });
@@ -69,24 +71,20 @@ function sketch(p) {
 
     for (let i = 0; i < numLines; i++) {
       p.strokeWeight(i % 2 === 0 ? styles.sketchStrokeWeight : 0);
-      p.line(0, Brand.radius * (i + 1), p.width, Brand.radius * (i + 1));
+      p.line(0, Brand.diameter * (i + 1), p.width, Brand.diameter * (i + 1));
     }
 
     if (!done) Brand.updateAll();
     Brand.drawAll();
 
-    if (false) { // no timer for now
+    if (seconds) { // no timer for now
 
       let timer = seconds - Math.floor(p.millis() / 1000);
       if (timer < 0 && !done) finished();
       p.fill(styles.sketchText);
       p.textSize(40);
-      p.text(Math.max(0, timer), p.width - 60, Brand.radius / 2);
+      p.text(Math.max(0, timer), p.width - 60, Brand.diameter / 2);
     }
-
-    p.textSize(18);
-    p.fill(styles.sketchText);
-    p.text('drag items then hit spacebar to compute scores', p.width / 2, p.height - 20);
   };
 
   p.keyReleased = function () {
@@ -178,10 +176,9 @@ class Brand {
     this.rating = 0;
     this.strokeWeight = styles.sketchStrokeMinWeight;
     this.logo = this.p.loadImage(imgName || 'apple.png');
-    Brand.instances.push(this);
   }
   draw() {
-    if (this.x > -Brand.radius) this.render();
+    if (this.x > -Brand.diameter) this.render();
   }
   update() {
     this.x += Brand.speed;
@@ -200,23 +197,27 @@ class Brand {
     this.t = 0;
   }
   render() {
-    this.p.fill(styles.sketchBg);
-    this.p.stroke(styles.sketchStroke);
-    this.p.strokeWeight(this === Brand.active ? styles.sketchStrokeWeight : styles.sketchStrokeMinWeight);
-    this.p.ellipse(this.x, this.y, Brand.radius);
+    let p = this.p;
+    p.fill(styles.sketchBg);
+    p.stroke(styles.sketchStroke);
+    p.strokeWeight(this === Brand.active ? styles.sketchStrokeWeight : styles.sketchStrokeMinWeight);
+    p.ellipse(this.x, this.y, Brand.diameter);
 
-    this.p.image(this.logo, this.x, this.y, Brand.radius * .7, Brand.radius * .7);
+    p.image(this.logo, this.x, this.y, Brand.diameter * .7, Brand.diameter * .7);
 
-    this.p.noStroke();
-    this.p.fill(styles.sketchText);
-    this.p.textSize(18);
-    this.p.text(this.item, this.x, this.y + Brand.radius - this.textHeight());
+    p.noStroke();
+    p.fill(styles.sketchText);
+    p.textSize(18);
+    p.textAlign(p.CENTER, p.TOP);
+    p.text(this.item, this.x, this.y + Brand.diameter/2 + 2);
+
+    p.textAlign(p.CENTER, p.CENTER);
   }
   textHeight(str) {
     return this.p.textAscent() + this.p.textDescent();
   }
   contains(mx, my) {
-    return this.p.dist(mx, my, this.x, this.y) <= Brand.radius;
+    return this.p.dist(mx, my, this.x, this.y) <= Brand.diameter;
   }
   bounceOut(_x) { // from penner
     if (_x < 4 / 11.0) {
@@ -232,41 +233,47 @@ class Brand {
 }
 
 Brand.speed = 1;
-Brand.radius = 100;
-Brand.instances = [];
 Brand.active = false;
+Brand.diameter = 100;
 Brand.names = ['cocacola', 'disney', 'converse', 'playstation', 'xbox', 'red bull', 'hello kitty', 'pepsi', 'h&m', 'ben & jerrys', 'old spice', 'burberry', 'adidas', 'marvel', 'nike', 'zara', 'vans', 'starbucks', 'topshop', 'lacoste', 'gap', 'sony', 'new look', 'calvin klein', 'rayban', 'next', 'swarovski', 'tommy hilfiger', 'asos', 'marks and spencer', 'vivienne westwood', 'chanel', 'nintendo64', 'lego'];
 Brand.drawAll = function () { Brand.instances.forEach(b => b.draw()) };
 Brand.updateAll = function () { Brand.instances.forEach(b => b.update()) };
+
 ///////////////////// End p5.js sketch ////////////////////////////
 
-function Game(props) {
-  const { classes } = props;
-  return (
-    <div className={classes.root}>
-            <SpectreHeader colour="white" />
-            <div className={classes.content + " content"}>
-                <P5Wrapper sketch={sketch} />
-                {/* temporary div for testing */}
-                <div id="content">
-                  <table>
-                    <tbody>
-                    <tr>
-                      <th>Trait</th>
-                      <th>Score</th>
-                      <th>Description</th>
-                    </tr>
-                    </tbody>
-                    <tbody id="tdata"></tbody>
-                  </table>
-                </div>
-                <Link component={ThankYou} to="/thank-you">
-                    <IconButton icon="next" text="Next" />
-                </Link>
-            </div >
-            <FooterLogo />
-        </div >
-  );
+class Game extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  componentDidMount() {
+  }
+  render() {
+    return (
+      <div className={this.props.classes.root}>
+          <SpectreHeader colour="white" />
+          <div className={this.props.classes.content + " content"}>
+              <P5Wrapper sketch={sketch}/>
+              {/* temporary div for testing */}
+              <div id="content">
+                <table>
+                  <tbody>
+                  <tr>
+                    <th>Trait</th>
+                    <th>Score</th>
+                    <th>Description</th>
+                  </tr>
+                  </tbody>
+                  <tbody id="tdata"></tbody>
+                </table>
+              </div>
+              <Link component={ThankYou} to="/thank-you">
+                  <IconButton icon="next" text="Next" />
+              </Link>
+          </div >
+          <FooterLogo />
+      </div >
+    );
+  }
 }
 
 Game.propTypes = {
