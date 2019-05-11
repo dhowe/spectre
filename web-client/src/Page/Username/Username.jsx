@@ -19,7 +19,7 @@ const styles = {
         flexGrow: 1,
         width: "100%",
         backgroundSize: 'cover',
-        
+
     },
     textInput: {
         marginBottom: "100px",
@@ -33,11 +33,10 @@ function Username(props) {
             <SpectreHeader colour="white" />
             <div className={classes.content + " Username-content content"}>
                 <TextInput >YOUR FIRST NAME?</TextInput>
-                <RadioInput options={['MAN', 'WOMAN', 'NON_BINARY']}>YOUR GENDER?</RadioInput>
+                <RadioInput options={['WOMAN', 'MAN', 'OTHER']}>YOUR GENDER?</RadioInput>
                 <Link component={Pledge} to="/pledge">
                     <IconButton icon="next" text="Begin" />
                 </Link>
-                
             </div >
             <FooterLogo />
         </div >
