@@ -5,7 +5,7 @@ import Bootstrap from "react-bootstrap";
 import dotEnv from 'dotenv';
 import './Login.css';
 
-export default class Login extends Component {
+class Login extends Component {
   constructor(props) {
     super(props);
 
@@ -84,3 +84,5 @@ export default class Login extends Component {
     );
   }
 }
+
+export default withStyles(styles)(Login);

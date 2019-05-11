@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 import ThankYou from '../ThankYou/ThankYou';
 import P5Wrapper from 'react-p5-wrapper';
@@ -239,11 +238,11 @@ Brand.updateAll = function () { Brand.instances.forEach(b => b.update()) };
 ///////////////////// End p5.js sketch ////////////////////////////
 
 class Game extends React.Component {
-  constructor(props) {
+  /*constructor(props) {
     super(props);
   }
   componentDidMount() {
-  }
+  }*/
   render() {
     return (
       <div className={this.props.classes.root}>
