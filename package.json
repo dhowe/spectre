@@ -8,7 +8,7 @@
     "start": "node -r esm server.js",
     "react-example": "yarn start",
     "prereact-example": "cd api-test && yarn run build",
-    "heroku-postbuild": "cd api-test && npm install yarn && yarn run build"
+    "heroku-postbuild": "cd api-test && npm run build"
   },
   "author": "daniel howe",
   "dependencies": {
