@@ -39,8 +39,11 @@ const create = function (req, res) {
   Object.assign(user, req.body);
 
   user.save(function (err) {
-    if (err) return error(res, err);
-    //console.log('User.created #'+user._id + ': ' + user.login + "/" + user.loginType);
+    if (err) {
+      console.log(err);
+      return error(res, err);
+    }
+    console.log('User.created #'+user._id + ': ' + user.login + "/" + user.loginType);
     res.status(200).send(user);
   });
 };
