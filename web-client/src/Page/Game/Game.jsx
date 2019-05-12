@@ -9,7 +9,7 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 
 // NOTE: requires sym-link from ../../shared/user.js
-import User from './user.js';
+import User from '../../Components/User/user';
 
 // NOTE: temporary
 import './Game.css';
@@ -57,7 +57,7 @@ function sketch(p) {
       Brand.instances.push(new Brand(p, bx, p.height / 2, Brand.names[i]));
     }
 
-    user = User.Create({ name: "Jane", gender: "female" });
+    user = new User({ name: "Jane", gender: "female" });
   };
 
   p.draw = function () {
@@ -238,11 +238,6 @@ Brand.updateAll = function () { Brand.instances.forEach(b => b.update()) };
 ///////////////////// End p5.js sketch ////////////////////////////
 
 class Game extends React.Component {
-  /*constructor(props) {
-    super(props);
-  }
-  componentDidMount() {
-  }*/
   render() {
     return (
       <div className={this.props.classes.root}>

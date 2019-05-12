@@ -44,6 +44,9 @@ import FindCitizens from './Page/FindCitizens/FindCitizens';
 import TargetsFound from './Page/TargetsFound/TargetsFound';
 import SocialMedia from './Page/SocialMedia/SocialMedia';
 
+// NOTE: requires sym-link from ../../shared/user.js
+import User from './Components/User/user';
+
 const theme = createMuiTheme({
   palette: {
     primary: blue,
@@ -56,7 +59,7 @@ const theme = createMuiTheme({
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { date: 'test', virtue: 'default' };
+    this.state = { date: 'test', virtue: 'default', user: new User() };
     this.test_state = this.test_state.bind(this);
     this.set_key = this.set_key.bind(this);
     this.set_virtue = this.set_virtue.bind(this);

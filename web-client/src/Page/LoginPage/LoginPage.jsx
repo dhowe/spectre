@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -9,6 +9,9 @@ import IntroVideo from '../IntroVideo/IntroVideo'
 import SocialLogin from '../../Components/SocialLogin/SocialLogin';
 import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
+
+import UserSession from '../../Components/UserSession/UserSession';
+import { Redirect } from 'react-router-dom';
 
 import './LoginPage.scss';
 import dotEnv from 'dotenv';
@@ -24,25 +27,41 @@ const styles = {
   }
 };
 
-class LoginPage extends Component {
+class LoginPage extends React.Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.state = { toUsername: false };
   }
+  handleSubmit(e) {
 
-  handleSubmit = event => {
+    e.preventDefault();
 
-    console.log('handleSubmit');
+    // get user from current context
+    let currentUser = this.context;
 
-    event.preventDefault();
+    // assign the form properties
+    currentUser.loginType = 'email';
+    currentUser.name = e.target.name.value;
+    currentUser.login = e.target.email.value;
 
+    /////////////////////////// TODO: make component /////////////////////////
+
+    // get auth from .env or heroku configs
     dotEnv.config();
-
-    const login = this;
     const env = process.env;
-    console.log("ENV", env);
     const auth = env.REACT_APP_API_USER + ':' + env.REACT_APP_API_SECRET;
-    console.log('AUTH', auth);
+    if (!auth || !auth.length) console.error("Auth required!");
+
+    // define response handlers
+    function handleSuccess(json) {
+      Object.assign(currentUser, json);
+      this.setState(() => ({ toUsername: true }));
+    }
+
+    function handleFailure(err) {
+      this.setState({ data: JSON.stringify(err.error, null, 2) });
+    }
 
     function handleResponse(response) {
       return response.json()
@@ -58,25 +77,27 @@ class LoginPage extends Component {
         });
     }
 
-    let apiUrl = 'https://spectreserver.herokuapp.com/api/users/';
-    if (false) apiUrl = '/api/users';
-
-    fetch(apiUrl, {
+    // Do POST to API: '/api/users'; TODO: remove/specify in .env
+    let url = 'https://spectreserver.herokuapp.com/api/users/';
+    fetch(url, {
         method: "post",
-        cache: "no-store", // ?
-        credentials: "include",
         headers: {
           "Content-Type": "application/json",
           "Authorization": 'Basic ' + btoa(auth)
         },
-        body: JSON.stringify(this.state)
+        body: JSON.stringify(currentUser)
       })
       .then(handleResponse)
-      .then(js => login.setState({ data: JSON.stringify(js, null, 2) }))
-      .catch(e => this.setState({ data: JSON.stringify(e.error, null, 2) }));
+      .then(handleSuccess)
+      .catch(handleFailure);
+
+      /////////////////////////////// End ///////////////////////////////////
   }
 
   render() {
+    if (this.state.toUsername === true) {
+      return <Redirect to='/username' />
+    }
     return (
       <div className={this.props.classes.root + " LoginPage"}>
           <SpectreHeader />
@@ -97,5 +118,7 @@ class LoginPage extends Component {
 LoginPage.propTypes = {
   classes: PropTypes.object.isRequired,
 };
+
+LoginPage.contextType = UserSession;
 
 export default withStyles(styles)(LoginPage);

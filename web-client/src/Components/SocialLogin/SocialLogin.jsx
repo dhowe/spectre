@@ -39,11 +39,62 @@ const styles = {
   cssOutlinedInput: {
     '&$cssFocused $notchedOutline': {
       borderColor: grey[50],
-    },
-  },
-
+    }
+  }
 };
 
+class SocialLogin extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { email: '' };
+  }
+
+  validateForm(e) {
+    // Do email validation here...
+    return true;
+  }
+
+  render() {
+    return (
+      <div className={this.props.classes.root + " socialLogin"}>
+          <div className={this.props.classes.content + " socialLogin-content"}>
+            <form onSubmit = { this.props.handleSubmit }>
+              <FormControl className={this.props.classes.margin}>
+                  <InputLabel
+                  classes={{
+                      root: this.props.classes.cssLabel,
+                      focused: this.props.classes.cssFocused
+                  }}
+                  >
+                  </InputLabel>
+                  Name:<Input
+                  name='name'
+                  id="custom-css-standard-input"
+                  classes={{
+                      root: this.props.classes.textField,
+                      underline: this.props.classes.cssUnderline
+                  }}
+                  />
+                  <br/>Email:<Input
+                  name='email'
+                  id="custom-css-standard-input"
+                  classes={{
+                      root: this.props.classes.textField,
+                      underline: this.props.classes.cssUnderline
+                  }}
+                  />
+                  <br/>
+                  <Button disabled={!this.validateForm() } type="submit">
+                  Go
+                  </Button>
+              </FormControl>
+            </form>
+          </div >
+      </div>
+    );
+  }
+}
+/*
 function SocialLogin(props) { // requires props.handleSubmit
   //const { handleSubmit, classes } = props;
   //console.log("PROPS",props);
@@ -66,6 +117,7 @@ function SocialLogin(props) { // requires props.handleSubmit
                     root: props.classes.textField,
                     underline: props.classes.cssUnderline
                 }}
+                value={state.email} onChange={onEmailChange}
                 />
                 <Button disabled={!validateForm() } type="submit">
                 Go
@@ -75,12 +127,7 @@ function SocialLogin(props) { // requires props.handleSubmit
         </div >
     </div>
   );
-}
-
-function validateForm(e) {
-  console.log('validateForm');
-  return true;
-}
+}*/
 
 SocialLogin.propTypes = {
   classes: PropTypes.object.isRequired,

@@ -12,26 +12,35 @@ import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 
+import UserSession from '../../Components/UserSession/UserSession';
+
 import './Username.scss';
 
 const styles = {
-    root: {
-        flexGrow: 1,
-        width: "100%",
-        backgroundSize: 'cover',
+  root: {
+    flexGrow: 1,
+    width: "100%",
+    backgroundSize: 'cover',
 
-    },
-    textInput: {
-        marginBottom: "100px",
-    }
+  },
+  textInput: {
+    marginBottom: "100px",
+  }
 };
 
-function Username(props) {
-    const { classes } = props;
+class Username extends React.Component {
+
+  componentDidMount() {
+    let currentUser = this.context;
+    console.log('Username',currentUser);
+  }
+
+  render() {
+
     return (
-        <div className={classes.root + " Username"}>
+      <div className={this.props.classes.root + " Username"}>
             <SpectreHeader colour="white" />
-            <div className={classes.content + " Username-content content"}>
+            <div className={this.props.classes.content + " Username-content content"}>
                 <TextInput >YOUR FIRST NAME?</TextInput>
                 <RadioInput options={['WOMAN', 'MAN', 'OTHER']}>YOUR GENDER?</RadioInput>
                 <Link component={Pledge} to="/pledge">
@@ -41,10 +50,13 @@ function Username(props) {
             <FooterLogo />
         </div >
     );
+  }
 }
 
 Username.propTypes = {
-    classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired,
 };
+
+Username.contextType = UserSession;
 
 export default withStyles(styles)(Username);

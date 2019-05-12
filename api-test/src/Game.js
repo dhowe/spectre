@@ -33,7 +33,7 @@ function sketch(p) {
     for (let i = 0; i < Brand.names.length; i++) {
       new Brand(-i * (p.width / 6) + p.width / 2, p.height / 2, Brand.names[i]);
     }
-    user = User.Create({ name: "Jane", gender: "female" });
+    user = new User({ name: "Jane", gender: "female" });
   };
 
   p.draw = function () {

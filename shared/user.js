@@ -2,6 +2,7 @@ import Parser from './parser.js'
 import { predict } from './ppq.js'
 
 export default class User {
+
   constructor(tmpl) {
     Object.keys(User._schema()).forEach(k => this[k] = undefined);
     Object.assign(this, tmpl);
@@ -10,9 +11,7 @@ export default class User {
   influencedBy(num) {
     num = num || 3;
     this._verifyTraits();
-
     // WORKING HERE
-
     return ['a', 'b', 'c'];
   }
 
