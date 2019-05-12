@@ -34,11 +34,11 @@ export default class User {
       type: 'date',
       default: Date.now
     };
-
-    if (tmpl) {
-      this.name = tmpl.name ? tmpl.name : '';
-      this.login = tmpl.login ? tmpl.login : '';
-      this.loginType = tmpl.loginType ? tmpl.loginType : '';
+    if (tmpl) { // hack for object templates
+      this.createdAt = new Date();
+      this.name = this.login = this.loginType = this.gender = '';
+      Object.keys(this.traits).forEach(k => this.traits[k] = -1);
+      Object.assign(this, tmpl);
     }
   }
 
