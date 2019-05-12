@@ -12,18 +12,18 @@ const styles = {
     root: {
         flexGrow: 1,
         width: "100%",
-        
+
         color: 'black'
     },
 };
 
-function InsightHairColor(props) {
+function InsightGender(props) {
     const { classes } = props;
     return (
         <div className={classes.root}>
             <SpectreHeader colour="white" />
             <div className={classes.content + " content"}>
-                <Typography component="h4" variant="h4">What’s [username]’s likely gender?</Typography>
+                <Typography component="h4" variant="h4">What’s {props.selectedFollower.name}’s likely gender?</Typography>
                 <Link component={InsightWeight} to="/insight-weight">
                     <IconButton icon="next" text="Next" />
                 </Link>
@@ -33,8 +33,8 @@ function InsightHairColor(props) {
     );
 }
 
-InsightHairColor.propTypes = {
+InsightGender.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(InsightHairColor);
+export default withStyles(styles)(InsightGender);

@@ -18,7 +18,7 @@ import Game from './Page/Game/Game'
 import ThankYou from './Page/ThankYou/ThankYou'
 import InfluenceAFollower from './Page/InfluenceAFollower/InfluenceAFollower';
 import SelectedAvatar from './Page/SelectedAvatar/SelectedAvatar';
-import InsightHairColor from './Page/InsightHairColor/InsightHairColor';
+import InsightGender from './Page/InsightGender/InsightGender';
 import InsightWeight from './Page/InsightWeight/InsightWeight';
 import InsightSkin from './Page/InsightSkin/InsightSkin';
 import InsightAccuracy from './Page/InsightAccuracy/InsightAccuracy';
@@ -110,15 +110,15 @@ class App extends React.Component {
               <Route exact path="/thank-you" render={() => <ThankYou name={this.state.name} />} />
               <Route exact path="/influence-a-follower" component={InfluenceAFollower} />
               <Route exact path="/selected-avatar" render={() => <SelectedAvatar virtue={this.state.virtue} selectedFollower={this.state.selectedFollower} />} />
-              <Route exact path="/insight-hair" component={InsightHairColor} />
-              <Route exact path="/insight-weight" component={InsightWeight} />
-              <Route exact path="/insight-skin" component={InsightSkin} />
+              <Route exact path="/insight-hair" render={() => <InsightGender selectedFollower={this.state.selectedFollower} />} />
+              <Route exact path="/insight-weight" render={() => <InsightWeight selectedFollower={this.state.selectedFollower} />} />
+              <Route exact path="/insight-skin" render={() => <InsightSkin selectedFollower={this.state.selectedFollower} />} />
               <Route exact path="/insight-accuracy" component={InsightAccuracy} />
-              <Route exact path="/insight-financial" component={InsightFinancial} />
-              <Route exact path="/insight-style" component={InsightStyle} />
+              <Route exact path="/insight-financial" render={() => <InsightFinancial selectedFollower={this.state.selectedFollower} />} />
+              <Route exact path="/insight-style" render={() => <InsightStyle selectedFollower={this.state.selectedFollower} />} />
               <Route exact path="/insight-thank-you" component={InsightThankYou} />
-              <Route exact path="/insight-sexuality" component={InsightSexuality} />
-              <Route exact path="/insight-political" component={InsightPolitical} />
+              <Route exact path="/insight-sexuality" render={() => <InsightSexuality selectedFollower={this.state.selectedFollower} />} />
+              <Route exact path="/insight-political" render={() => <InsightPolitical selectedFollower={this.state.selectedFollower} />} />
               <Route exact path="/insight-complete" component={InsightComplete} />
               <Route exact path="/intro-ocean-video" component={IntroOceanVideo} />
               <Route exact path="/your-power" component={YourPower} />
