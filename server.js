@@ -33,24 +33,10 @@ const auth = basicAuth({
 //   }
 // };
 //
-var whitelist = ['http://example1.com', 'http://example2.com']
-var corsOptions = {
-  origin: function (origin, callback) {
-    console.log('ORIGIN', origin);
-    callback(null, true);
-    // if (whitelist.indexOf(origin) !== -1 || whitelist.indexOf('http://localhost') == 0 || !origin) {
-    //   callback(null, true)
-    // } else {
-    //   callback(new Error('Not allowed by CORS'))
-    // }
-  }
-}
 ///////////////////////////// Express ///////////////////////////////
 
 const app = express();
-app.use(cors(corsOptions));
-//app.use(cors());
-//app.use(allowCrossDomain);
+app.use('*', cors());
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: true }));
 
