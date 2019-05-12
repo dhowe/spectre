@@ -24,7 +24,7 @@ function InfluenceANation(props) {
             <SpectreHeader colour="white" />
             <div className={classes.content + " content"}>
                 <Typography component="h3" variant="h3">Influence A Nation</Typography>
-                <Typography component="h4" variant="h4">Lets increase the [power] of your campaign to influence lots of people to vote [Leave] in the referendum.</Typography>
+                <Typography component="h4" variant="h4">Lets increase the {props.virtue} of your campaign to influence lots of people to vote [Leave] in the referendum.</Typography>
                 <Typography component="h4" variant="h4">We can show you how, but first, you must:</Typography>
                 <Link component={ConsumerData} to="/consumer-data">
                     <IconButton icon="next" text="Get more data" />

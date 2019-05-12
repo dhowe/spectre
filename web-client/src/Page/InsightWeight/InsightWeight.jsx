@@ -12,7 +12,7 @@ const styles = {
     root: {
         flexGrow: 1,
         width: "100%",
-        
+
         color: 'black'
     },
 };
@@ -23,7 +23,7 @@ function InsightWeight(props) {
         <div className={classes.root}>
             <SpectreHeader colour="white" />
             <div className={classes.content + " content"}>
-                <Typography component="h4" variant="h4">What’s [username]’s likely weight?</Typography>
+                <Typography component="h4" variant="h4">What’s {props.selectedFollower.name}’s likely weight?</Typography>
                 <Link component={InsightSkin} to="/insight-skin">
                     <IconButton icon="next" text="Next" />
                 </Link>

@@ -12,7 +12,7 @@ const styles = {
     root: {
         flexGrow: 1,
         width: "100%",
-        
+
         color: 'black'
     },
     clickToContinue: {
@@ -20,14 +20,25 @@ const styles = {
     }
 };
 
+function getContent(virtue) {
+    const content = {
+        influence: 'To become more influencial',
+        faith: 'To become more faithful',
+        wealth: 'To become more wealthy',
+        truth: 'To find more truth',
+        power: 'To become more powerful',
+    }
+    return content[virtue]
+}
+
 function BelieveInDataism(props) {
     const { classes } = props;
     return (
         <div className={classes.root}>
             <SpectreHeader colour="white" />
             <div className={classes.content + " content"}>
-                <Typography component="h4" variant="h4">To become more [powerful] you need more data.</Typography>
-                <Typography component="h4" variant="h4">We can help you believe in the [power] of dataism</Typography>
+                <Typography component="h4" variant="h4">{getContent(props.virtue)} you need more data.</Typography>
+                <Typography component="h4" variant="h4">We can help you believe in the {props.virtue} of dataism</Typography>
                 <Link component={Steps} to="/steps">
                     <IconButton icon="next" text="Next" />
                 </Link>

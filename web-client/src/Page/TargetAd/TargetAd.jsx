@@ -24,7 +24,7 @@ function targetAd(props) {
       <SpectreHeader colour="white" />
       <div className={classes.content + " content"}>
         <Typography component="h4" variant="h4">
-            Share your targetted ad with [sophie T]?
+          Share your targetted ad with {props.selectedFollower.name}?
         </Typography>
         <Link component={SuccessAd} to="/success-ad">
           <IconButton icon="next" text="Next" />
