@@ -59,21 +59,20 @@ const theme = createMuiTheme({
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { date: 'test', virtue: 'default', user: new User() };
+    this.state = {
+      date: 'test',
+      virtue: 'default',
+      gender: 'default',
+      name: 'default',
+      user: new User()
+    };
     this.test_state = this.test_state.bind(this);
     this.set_key = this.set_key.bind(this);
-    this.set_virtue = this.set_virtue.bind(this);
   };
 
   test_state() {
     this.setState({
       date: 'test2'
-    });
-  }
-
-  set_virtue(virtue) {
-    this.setState({
-      virtue: virtue
     });
   }
 
@@ -96,7 +95,7 @@ class App extends React.Component {
               <Route exact path="/touch-to-begin" render={() => <TouchToBegin prop={this.state.date} test_state={this.test_state} />} />
               <Route exact path="/login" render={() => <LoginPage prop={this.state.date} />} />
               <Route exact path="/intro-video" component={IntroVideo} />
-              <Route exact path="/username" component={Username} />
+              <Route exact path="/username" render={() => <Username set_key={this.set_key} />} />
               <Route exact path="/pledge" component={Pledge} />
               <Route exact path="/searching-for" render={() => <SearchingFor set_key={this.set_key} />} />
               <Route exact path="/data-is" render={() => <DataIs virtue={this.state.virtue} />} />
