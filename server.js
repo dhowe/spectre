@@ -37,7 +37,7 @@ var whitelist = ['http://example1.com', 'http://example2.com']
 var corsOptions = {
   origin: function (origin, callback) {
     console.log('ORIGIN', origin);
-    if (whitelist.indexOf(origin) !== -1 || whitelist.startsWith('http://localhost') || !origin) {
+    if (whitelist.indexOf(origin) !== -1 || whitelist.indexOf('http://localhost') == 0 || !origin) {
       callback(null, true)
     } else {
       callback(new Error('Not allowed by CORS'))
