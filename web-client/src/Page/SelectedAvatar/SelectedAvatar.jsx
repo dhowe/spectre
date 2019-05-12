@@ -12,10 +12,21 @@ const styles = {
     root: {
         flexGrow: 1,
         width: "100%",
-        
+
         color: 'black'
     },
 };
+
+function getAdverb(virtue) {
+    const adverbs = {
+        power: 'powerful',
+        truth: 'truthful',
+        wealth: 'valuable',
+        faith: 'faithful',
+        influence: 'influential',
+    }
+    return adverbs[virtue]
+}
 
 function SelectedAvatar(props) {
     const { classes } = props;
@@ -23,10 +34,10 @@ function SelectedAvatar(props) {
         <div className={classes.root}>
             <SpectreHeader colour="white" />
             <div className={classes.content + " content"}>
-                <Typography component="h3" variant="h3">You selected [username].</Typography>
-                <Typography component="h4" variant="h4">Lets start by verifying some of the basics to unlock [powerful] / [truthful]   / [valuable] / [faithful] / [influential] insights into [username]. Don’t worry only you will see the results. </Typography>
+                <Typography component="h3" variant="h3">You selected {props.selectedFollower.name}</Typography>
+                <Typography component="h4" variant="h4">Lets start by verifying some of the basics to unlock {getAdverb(props.virtue)} insights into {props.selectedFollower.name}. Don’t worry only you will see the results. </Typography>
                 <Link component={InsightHairColor} to="/insight-hair">
-                <IconButton icon="next" text="DIVE IN" />
+                    <IconButton icon="next" text="DIVE IN" />
                 </Link>
             </div>
             <FooterLogo />

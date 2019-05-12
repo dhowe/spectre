@@ -64,6 +64,10 @@ class App extends React.Component {
       virtue: 'default',
       gender: 'default',
       name: 'default',
+      selectedFollower: {
+        name: 'Remy Sharp',
+        image: 'https://material-ui.com/static/images/avatar/1.jpg'
+      },
       user: new User()
     };
     this.test_state = this.test_state.bind(this);
@@ -105,7 +109,7 @@ class App extends React.Component {
               <Route exact path="/game" component={Game} />
               <Route exact path="/thank-you" render={() => <ThankYou name={this.state.name} />} />
               <Route exact path="/influence-a-follower" component={InfluenceAFollower} />
-              <Route exact path="/selected-avatar" component={SelectedAvatar} />
+              <Route exact path="/selected-avatar" render={() => <SelectedAvatar virtue={this.state.virtue} selectedFollower={this.state.selectedFollower} />} />
               <Route exact path="/insight-hair" component={InsightHairColor} />
               <Route exact path="/insight-weight" component={InsightWeight} />
               <Route exact path="/insight-skin" component={InsightSkin} />
