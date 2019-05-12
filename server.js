@@ -36,7 +36,8 @@ const auth = basicAuth({
 var whitelist = ['http://example1.com', 'http://example2.com']
 var corsOptions = {
   origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1 || !origin) {
+    console.log('ORIGIN', origin);
+    if (whitelist.indexOf(origin) !== -1 || whitelist.startsWith('http://localhost') || !origin) {
       callback(null, true)
     } else {
       callback(new Error('Not allowed by CORS'))
