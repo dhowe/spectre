@@ -36,7 +36,8 @@ const auth = basicAuth({
 ///////////////////////////// Express ///////////////////////////////
 
 const app = express();
-app.use(cors());
+app.options('*', cors());
+//app.use(cors());
 //app.use(allowCrossDomain);
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: true }));
