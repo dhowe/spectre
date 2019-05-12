@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import cors from 'cors';
 import express from 'express';
 import routes from './routes';
 import mongoose from 'mongoose';
@@ -15,27 +16,28 @@ const auth = basicAuth({
   realm: 'API User/Secret required'
 });
 
-const allowCrossDomain = function (req, res, next) {
-  console.log('allowCrossDomain: '+req.headers.origin);
-  res.header("Access-Control-Allow-Credentials", true);
-  //res.header("Access-Control-Allow-Origin", req.headers.origin);
-  res.header("Access-Control-Allow-Origin", '*');
-  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept, Authorization"
-  );
-  if ('OPTIONS' == req.method) {
-    res.sendStatus(200);
-  } else {
-    next();
-  }
-};
+// const allowCrossDomain = function (req, res, next) {
+//   console.log('CORS: '+req.method);
+//   res.header("Access-Control-Allow-Credentials", true);
+//   //res.header("Access-Control-Allow-Origin", req.headers.origin);
+//   res.header("Access-Control-Allow-Origin", '*');
+//   res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
+//   res.header(
+//     "Access-Control-Allow-Headers",
+//     "X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept, Authorization"
+//   );
+//   if ('OPTIONS' == req.method) {
+//     res.sendStatus(200);
+//   } else {
+//     next();
+//   }
+// };
 
 ///////////////////////////// Express ///////////////////////////////
 
 const app = express();
-app.use(allowCrossDomain);
+app.use(cors());
+//app.use(allowCrossDomain);
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: true }));
 
