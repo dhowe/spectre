@@ -101,7 +101,7 @@ class LoginPage extends React.Component {
     return (
       <div className={this.props.classes.root + " LoginPage"}>
           <SpectreHeader />
-          <div className={this.props.classes.content + " LoginPage-content"}>
+          <div className={this.props.classes.content + " LoginPage-content content"}>
               <Logo></Logo>
               <Typography component="h1" variant="h1">Hello</Typography>
               <Typography component="h2" variant="h2">Let's Play!</Typography>
