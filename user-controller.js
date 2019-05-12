@@ -30,6 +30,8 @@ const similar = function (req, res) {
 
 const create = function (req, res) {
 
+  console.log('create', req.body);
+
   if (!req.body.loginType) return error(res, "Bad UserModel: no loginType");
   if (!req.body.login) return error(res, "Bad UserModel: no login");
 

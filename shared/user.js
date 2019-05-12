@@ -3,7 +3,7 @@ import { predict } from './ppq.js'
 
 export default class User {
 
-  constructor() {
+  constructor(tmpl) {
     this.name = {
       type: 'string'
     };
@@ -34,6 +34,12 @@ export default class User {
       type: 'date',
       default: Date.now
     };
+
+    if (tmpl) {
+      this.name = tmpl.name ? tmpl.name : '';
+      this.login = tmpl.login ? tmpl.login : '';
+      this.loginType = tmpl.loginType ? tmpl.loginType : '';
+    }
   }
 
   influencedBy(num) {
