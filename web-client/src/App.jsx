@@ -103,7 +103,7 @@ class App extends React.Component {
               <Route exact path="/steps" render={() => <Steps virtue={this.state.virtue} />} />
               <Route exact path="/personalised-experience" component={PersonalisedExperience} />
               <Route exact path="/game" component={Game} />
-              <Route exact path="/thank-you" component={ThankYou} />
+              <Route exact path="/thank-you" render={() => <ThankYou name={this.state.name} />} />
               <Route exact path="/influence-a-follower" component={InfluenceAFollower} />
               <Route exact path="/selected-avatar" component={SelectedAvatar} />
               <Route exact path="/insight-hair" component={InsightHairColor} />
