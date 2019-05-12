@@ -99,8 +99,8 @@ class App extends React.Component {
               <Route exact path="/pledge" component={Pledge} />
               <Route exact path="/searching-for" render={() => <SearchingFor set_key={this.set_key} />} />
               <Route exact path="/data-is" render={() => <DataIs virtue={this.state.virtue} />} />
-              <Route exact path="/believe-in-dataism" component={BelieveInDataism} />
-              <Route exact path="/steps" component={Steps} />
+              <Route exact path="/believe-in-dataism" render={() => <BelieveInDataism virtue={this.state.virtue} />} />
+              <Route exact path="/steps" render={() => <Steps virtue={this.state.virtue} />} />
               <Route exact path="/personalised-experience" component={PersonalisedExperience} />
               <Route exact path="/game" component={Game} />
               <Route exact path="/thank-you" component={ThankYou} />

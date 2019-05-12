@@ -7,24 +7,23 @@ import HeaderLogoColour from '../../Icons/headerlogo-colour.svg';
 import './SpectreHeader.scss';
 
 const styles = {
-    
+
 };
 
 function SpectreHeader(props) {
-    const { classes } = props;
-    return props.colour == "white" ? (
-        <div className="SpectreHeader SpectreHeader-white">
-          <img height="150" src={HeaderLogoColour} />
-        </div>
-      ) : (
-        <div className="SpectreHeader">
-          <img height="150" src={HeaderLogo} />
-        </div>
-      );      
+  return props.colour === "white" ? (
+    <div className="SpectreHeader SpectreHeader-white">
+      <img height="150" alt='header' src={HeaderLogoColour} />
+    </div>
+  ) : (
+      <div className="SpectreHeader">
+        <img height="150" alt='logo' src={HeaderLogo} />
+      </div>
+    );
 }
 
 SpectreHeader.propTypes = {
-    classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(SpectreHeader);

@@ -2,12 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import Header from "../../Components/Header/Header";
-import Footer from "../../Components/Footer/Footer";
 import { Link } from 'react-router-dom';
 import LoginPage from '../LoginPage/LoginPage';
 import Logo from "../../Components/Logo/Logo";
-import AvatarComponent from "../../Components/AvatarComponent/AvatarComponent";
 
 import './TouchToBegin.scss';
 
