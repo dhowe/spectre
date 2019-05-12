@@ -12,7 +12,7 @@ const styles = {
     root: {
         flexGrow: 1,
         width: "100%",
-        
+
         color: 'black'
     },
 };
@@ -23,7 +23,7 @@ function InsightStyle(props) {
         <div className={classes.root}>
             <SpectreHeader colour="white" />
             <div className={classes.content + " content"}>
-                <Typography component="h4" variant="h4">What’s Sophie T‘s likely style category?</Typography>
+                <Typography component="h4" variant="h4">What’s {props.selectedFollower.name}‘s likely style category?</Typography>
                 <Link component={InsightThankYou} to="/insight-thank-you">
                     <IconButton icon="next" text="Next" />
                 </Link>

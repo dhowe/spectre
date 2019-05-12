@@ -12,7 +12,7 @@ const styles = {
     root: {
         flexGrow: 1,
         width: "100%",
-        
+
         color: 'black'
     },
 };
@@ -23,7 +23,7 @@ function InsightPolitical(props) {
         <div className={classes.root}>
             <SpectreHeader colour="white" />
             <div className={classes.content + " content"}>
-                <Typography component="h4" variant="h4">What is Sophie T’s likely political preference?</Typography>
+                <Typography component="h4" variant="h4">What is {props.selectedFollower.name}’s likely political preference?</Typography>
                 <Link component={InsightComplete} to="/insight-complete">
                     <IconButton icon="next" text="Next" />
                 </Link>

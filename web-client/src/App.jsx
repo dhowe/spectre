@@ -66,6 +66,7 @@ class App extends React.Component {
       name: 'default',
       selectedFollower: {
         name: 'Remy Sharp',
+        gender: 'man',
         image: 'https://material-ui.com/static/images/avatar/1.jpg'
       },
       user: new User()
@@ -113,13 +114,13 @@ class App extends React.Component {
               <Route exact path="/insight-hair" render={() => <InsightGender selectedFollower={this.state.selectedFollower} />} />
               <Route exact path="/insight-weight" render={() => <InsightWeight selectedFollower={this.state.selectedFollower} />} />
               <Route exact path="/insight-skin" render={() => <InsightSkin selectedFollower={this.state.selectedFollower} />} />
-              <Route exact path="/insight-accuracy" component={InsightAccuracy} />
+              <Route exact path="/insight-accuracy" render={() => <InsightAccuracy selectedFollower={this.state.selectedFollower} />} />
               <Route exact path="/insight-financial" render={() => <InsightFinancial selectedFollower={this.state.selectedFollower} />} />
               <Route exact path="/insight-style" render={() => <InsightStyle selectedFollower={this.state.selectedFollower} />} />
               <Route exact path="/insight-thank-you" component={InsightThankYou} />
               <Route exact path="/insight-sexuality" render={() => <InsightSexuality selectedFollower={this.state.selectedFollower} />} />
               <Route exact path="/insight-political" render={() => <InsightPolitical selectedFollower={this.state.selectedFollower} />} />
-              <Route exact path="/insight-complete" component={InsightComplete} />
+              <Route exact path="/insight-complete" render={() => <InsightComplete name={this.state.name} virtue={this.state.virtue} selectedFollower={this.state.selectedFollower} />} />
               <Route exact path="/intro-ocean-video" component={IntroOceanVideo} />
               <Route exact path="/your-power" component={YourPower} />
               <Route exact path="/pick-a-side" component={PickASide} />

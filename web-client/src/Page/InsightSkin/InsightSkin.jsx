@@ -12,7 +12,7 @@ const styles = {
     root: {
         flexGrow: 1,
         width: "100%",
-        
+
         color: 'black'
     },
 };
@@ -23,7 +23,7 @@ function InsightSkin(props) {
         <div className={classes.root}>
             <SpectreHeader colour="white" />
             <div className={classes.content + " content"}>
-                <Typography component="h4" variant="h4">What is [username]'s likely skin colour?</Typography>
+                <Typography component="h4" variant="h4">What is {props.selectedFollower.name}'s likely skin colour?</Typography>
                 <Link component={InsightAccuracy} to="/insight-accuracy">
                     <IconButton icon="next" text="Next" />
                 </Link>
