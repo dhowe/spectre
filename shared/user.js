@@ -2,43 +2,9 @@ import Parser from './parser.js'
 import { predict } from './ppq.js'
 
 export default class User {
-
   constructor(tmpl) {
-    this.name = {
-      type: 'string'
-    };
-    this.traits = {
-      openness: { type: 'number' },
-      conscientiousness: { type: 'number' },
-      agreeableness: { type: 'number' },
-      extraversion: { type: 'number' },
-      neuroticism: { type: 'number' }
-      /*relationship: { type: 'number' },
-        gender: { type: 'number' },
-        age: { type: 'number' },*/
-    };
-    this.login = {
-      type: 'string',
-      required: true
-    };
-    this.loginType = {
-      type: 'string',
-      enum: ['twitter', 'google', 'facebook', 'email'],
-      required: true
-    };
-    this.gender = {
-      type: 'string',
-      enum: ['male', 'female', 'other']
-    };
-    this.createdAt = {
-      type: 'date',
-      default: Date.now
-    };
-    
-    if (tmpl) { // hack for object templates
-      Object.keys(this).forEach(k => this[k] = undefined);
-      Object.assign(this, tmpl);
-    }
+    Object.keys(User._schema()).forEach(k => this[k] = undefined);
+    Object.assign(this, tmpl);
   }
 
   influencedBy(num) {
@@ -127,21 +93,49 @@ export default class User {
   }
 };
 
-User.Create = function (template) {
-  let user = new User();
-  Object.keys(user).forEach(k => k != 'traits' && (user[k] = ''));
-  Object.keys(user.traits).forEach(k => user.traits[k] = -1);
-  if (template) Object.keys(template).forEach(k => {
-    if (user.hasOwnProperty(k)) user[k] = template[k];
-  });
-  delete user.createdAt;
-  return user;
+// User.Create = function (tmpl) {
+//   return new User(tmpl);
+// }
+
+User._schema = function() {
+  return {
+    name: {
+      type: 'string'
+    },
+    traits: {
+      openness: { type: 'number' },
+      conscientiousness: { type: 'number' },
+      agreeableness: { type: 'number' },
+      extraversion: { type: 'number' },
+      neuroticism: { type: 'number' }
+      /*relationship: { type: 'number' },
+        gender: { type: 'number' },
+        age: { type: 'number' },*/
+    },
+    login: {
+      type: 'string',
+      required: true
+    },
+    loginType: {
+      type: 'string',
+      enum: ['twitter', 'google', 'facebook', 'email'],
+      required: true
+    },
+    gender: {
+      type: 'string',
+      enum: ['male', 'female', 'other']
+    },
+    createdAt: {
+      type: 'date',
+      default: Date.now
+    }
+  }
 }
 
 User.descriptionTemplate = {
   openness: {
     desc: 'Openness to experience relates to our imagination and the degree to which we are comfortable with unfamiliarity',
-    poles: ['Conservative and Traditional','Liberal and Artistic'],
+    poles: ['Conservative and Traditional', 'Liberal and Artistic'],
     meta: 'People scoring high on this trait can be described as intellectually curious, sensitive to beauty, and unconventional, while people scoring low on this trait can be characterized as traditional and are more likely to prefer the familiar over the unusual.',
     text: [
       '$user.name.ucf() $user.toBe() down-to-earth and prefers things to be simple and straightforward. $user.pronoun().ucf() finds life easier if things don’t change unnecessarily. The arts are of little practical use to $user.poss() as tradition $user.toBe() generally more important.',
@@ -154,7 +148,7 @@ User.descriptionTemplate = {
 
   conscientiousness: {
     desc: 'Conscientiousness concerns the way in which we control, regulate, and direct our impulses.',
-    poles: ['Impulsive and Spontaneous','Organized and Hard-working'],
+    poles: ['Impulsive and Spontaneous', 'Organized and Hard-working'],
     meta: 'People scoring high on this trait can be described as organized, reliable, and efficient, while people scoring low on this trait are generally characterized as spontaneous and impulsive.',
     text: [
       '$user.name.ucf() $user.toBe() impulsive and whimsical, and fine with it! $user.pronoun().ucf() would say that sometimes decisions need to be made quickly, and that $user.pronoun() makes them quicker than most. $user.pronoun().ucf() would say $user.pronoun() $user.toBe() zany, colourful, and just generally great fun to be with... as long as someone isn’t relying on $user.pronoun() to get some work done.',
@@ -167,7 +161,7 @@ User.descriptionTemplate = {
 
   extraversion: {
     desc: 'Extraversion refers to the extent to which people get their energy from the company of others, and whether they actively seek excitement and stimulation',
-    poles: ['Contemplative','Engaged with Outside World'],
+    poles: ['Contemplative', 'Engaged with Outside World'],
     meta: 'People scoring high on this trait can be described as energetic, talkative and sociable, while people scoring low on this trait tend to be more shy, reserved and comfortable in their own company.',
     text: [
       '$user.name.ucf() $user.toBe() quiet and somewhat withdrawn. $user.pronoun().ucf() is someone who doesn’t need lots of other people around to have fun, and sometimes finds people tiring.',
@@ -180,7 +174,7 @@ User.descriptionTemplate = {
 
   agreeableness: {
     desc: 'Agreeableness reflects individual differences concerning cooperation and social harmony.',
-    poles: ['Competitive','Team-working and Trusting'],
+    poles: ['Competitive', 'Team-working and Trusting'],
     meta: 'People scoring high on this trait are generally considered soft-hearted, generous, and sympathetic, while people scoring low on this trait tend to be more driven, self-confident and competitive.',
     text: [
       '$user.name.ucf() $user.toBe() willing to make (tough|difficult) decisions when necessary, and will point out when something $user.toBe() wrong no matter what other people might feel. (One|You) might say that $user.pronoun() is tough and uncompromising.',
@@ -193,7 +187,7 @@ User.descriptionTemplate = {
 
   neuroticism: {
     desc: 'Neuroticism refers to the tendency to experience negative emotions.',
-    poles: ['Laid-back and Relaxed','Easily Stressed and Emotional'],
+    poles: ['Laid-back and Relaxed', 'Easily Stressed and Emotional'],
     meta: 'People scoring high on this trait generally worry more than most, and react poorly to stressful situations. However, they often show an emotional depth that others lack.',
     text: [
       '$user.name.ucf() $user.toBe() extremely (hard|difficult) to upset or stress out, since $user.pronoun() rarely, if ever, react with negative emotions, and even when $user.pronoun() $user.toBe() anxious about something the feeling quickly passes. $user.pronoun().ucf() comes across as very calm and resilient.',

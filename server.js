@@ -16,23 +16,6 @@ const auth = basicAuth({
   realm: 'API User/Secret required'
 });
 
-// const allowCrossDomain = function (req, res, next) {
-//   console.log('CORS: '+req.method);
-//   res.header("Access-Control-Allow-Credentials", true);
-//   //res.header("Access-Control-Allow-Origin", req.headers.origin);
-//   res.header("Access-Control-Allow-Origin", '*');
-//   res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
-//   res.header(
-//     "Access-Control-Allow-Headers",
-//     "X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept, Authorization"
-//   );
-//   if ('OPTIONS' == req.method) {
-//     res.sendStatus(200);
-//   } else {
-//     next();
-//   }
-// };
-//
 ///////////////////////////// Express ///////////////////////////////
 
 const app = express();
@@ -52,10 +35,6 @@ app.get('*', (req, res) => {
 });
 
 //////////////////////////// Startup ////////////////////////////////
-
-// if (!fs.existsSync('.env')) {
-//   throw Error('Expected DB/API info in .env');
-// }
 
 mongoose.connect(dbUrl, { useNewUrlParser: true });
 

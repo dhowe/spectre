@@ -3,13 +3,11 @@ import mongoose from 'mongoose';
 import { oceanSort } from './metrics';
 import ClientUser from './shared/user';
 
-const { schema, functions } = toMongoose(new ClientUser());
-const UserSchema = mongoose.Schema(schema);
-
 // share user functions between schema and model
+const userSchema = new ClientUser(ClientUser._schema());
+const { schema, functions } = toMongoose(userSchema);
+const UserSchema = mongoose.Schema(schema); // hack here
 Object.keys(functions).forEach(f => UserSchema.methods[f] = functions[f]);
-
-////////////////////// UserSchema.methods ////////////////////
 
 UserSchema.methods.findByOcean = function (res, limit, cb) {
   let user = this;
@@ -20,8 +18,6 @@ UserSchema.methods.findByOcean = function (res, limit, cb) {
     });
   return this;
 };
-
-////////////////////// UserSchema.statics ////////////////////
 
 UserSchema.statics.getAll = function (callback, limit) {
   UserModel.find(callback).limit(limit);

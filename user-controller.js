@@ -30,20 +30,20 @@ const similar = function (req, res) {
 
 const create = function (req, res) {
 
-  console.log('create', req.body);
+  //console.log('create', req.body);
 
   if (!req.body.loginType) return error(res, "Bad UserModel: no loginType");
   if (!req.body.login) return error(res, "Bad UserModel: no login");
 
   let user = new UserModel();
-  Object.assign(user, req.body);
+  Object.assign(user, req.body); // dangerous
 
   user.save(function (err) {
     if (err) {
-      console.log(err);
+      //console.log(err);
       return error(res, err);
     }
-    console.log('User.created #'+user._id + ': ' + user.login + "/" + user.loginType);
+    //console.log('User.created #'+user._id + ': ' + user.login + "/" + user.loginType);
     res.status(200).send(user);
   });
 };
