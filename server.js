@@ -32,11 +32,21 @@ const auth = basicAuth({
 //     next();
 //   }
 // };
-
+//
+var whitelist = ['http://example1.com', 'http://example2.com']
+var corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1 || !origin) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+}
 ///////////////////////////// Express ///////////////////////////////
 
 const app = express();
-app.options('*', cors());
+app.use(cors(corsOptions));
 //app.use(cors());
 //app.use(allowCrossDomain);
 app.use(bodyparser.json());
