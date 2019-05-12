@@ -38,6 +38,42 @@ describe('Client User', function () {
     });
   });
 
+  describe('New User()', function () {
+
+    it('Should correctly construct an empty user', function () {
+      let user = new User({});
+      expect(user.name).eq(undefined);
+      expect(user.login).eq(undefined);
+      expect(user.loginType).eq(undefined);
+      expect(user.traits).eq(undefined);
+      expect(user.createdAt).eq(undefined);
+      expect(user.loginType).eq(undefined);
+      expect(user.gender).eq(undefined);
+    });
+
+    it('Should construct a user from a template', function () {
+
+      let user = new User({
+        name: "dave",
+        login: "dave@abc.com",
+        loginType: "twitter",
+        traits: {
+          agreeableness: .3,
+          conscientiousness: .4,
+          extraversion: .5,
+          openness: 1,
+          neuroticism: .3
+        }
+      });
+
+      expect(user.name).eq("dave");
+      expect(user.login).eq("dave@abc.com");
+      expect(user.loginType).eq("twitter");
+      expect(user.traits.openness).to.equal(1);
+    });
+  });
+
+
   describe('User.generateDescription()', function () {
 
     it('Should fail for a user without traits', function () {
@@ -88,7 +124,7 @@ describe('Client User', function () {
       expect(result.length).is.eq(3);
 
       // WORKING HERE
-       
+
       //expect(result.startsWith('Jane')).eq(true);
     });
   });

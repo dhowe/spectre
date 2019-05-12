@@ -34,10 +34,9 @@ export default class User {
       type: 'date',
       default: Date.now
     };
+    
     if (tmpl) { // hack for object templates
-      this.createdAt = new Date();
-      this.name = this.login = this.loginType = this.gender = '';
-      Object.keys(this.traits).forEach(k => this.traits[k] = -1);
+      Object.keys(this).forEach(k => this[k] = undefined);
       Object.assign(this, tmpl);
     }
   }
