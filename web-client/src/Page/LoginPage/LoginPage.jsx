@@ -87,9 +87,9 @@ class LoginPage extends React.Component {
         },
         body: JSON.stringify(currentUser)
       })
-      .then(handleResponse)
-      .then(handleSuccess)
-      .catch(handleFailure);
+      .then(handleResponse.bind(this))
+      .then(handleSuccess.bind(this))
+      .catch(handleFailure.bind(this));
 
       /////////////////////////////// End ///////////////////////////////////
   }
