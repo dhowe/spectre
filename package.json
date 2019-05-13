@@ -4,7 +4,7 @@
   "description": "Server component for the SPECTRE system",
   "main": "app.js",
   "scripts": {
-    "test": "mocha ./tests --recursive --exit -r esm",
+    "test": "NODE_ENV=test mocha ./tests --recursive --exit -r esm",
     "start": "node -r esm server.js",
     "react-example": "yarn start",
     "prereact-example": "cd api-test && yarn run build",
@@ -21,6 +21,7 @@
     "lodash": "^4.17.11",
     "mongodb": "^3.2.4",
     "mongoose": "^5.5.7",
+    "morgan": "^1.9.1",
     "sync-request": "^6.1.0"
   },
   "devDependencies": {

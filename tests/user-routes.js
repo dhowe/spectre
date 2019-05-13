@@ -362,7 +362,7 @@ describe('User Routes', () => {
 
   describe('GET /api/users/:uid', () => {
 
-    it('it should fail on bad id', (done) => {
+    it('it should fail with bad id', (done) => {
       let uid = '456';
       chai.request(host)
         .get('/api/users/' + uid)

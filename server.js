@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import cors from 'cors';
+import morgan from 'morgan';
 import express from 'express';
 import routes from './routes';
 import mongoose from 'mongoose';
@@ -24,15 +25,20 @@ app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: true }));
 
 // static react files
-app.use(express.static(path.join(__dirname, 'api-test/build')));
+app.use(express.static(path.join(__dirname, 'web-client/build')));
 
 // for api routes
 app.use(base, auth, routes);
 
 // for react pages
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname + '/api-test/build/index.html'));
+  res.sendFile(path.join(__dirname + '/web-client/build/index.html'));
 });
+
+// minimal logging
+app.all('*', morgan(':remote-addr :method :url :status', {
+  skip: () => process.env.NODE_ENV === 'test'
+}));
 
 //////////////////////////// Startup ////////////////////////////////
 
