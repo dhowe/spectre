@@ -49,8 +49,13 @@ class LoginPage extends React.Component {
 
     // get auth from .env or heroku configs
     dotEnv.config();
+
     const env = process.env;
+    const route = '/api/users/';
+    const host = env.REACT_APP_API_HOST || 'http://localhost:8083';
     const auth = env.REACT_APP_API_USER + ':' + env.REACT_APP_API_SECRET;
+    const apiUrl = host + route;
+
     if (!auth || !auth.length) console.error("Auth required!");
 
     // define response handlers
@@ -77,9 +82,9 @@ class LoginPage extends React.Component {
         });
     }
 
-    // Do POST to API: '/api/users'; TODO: remove/specify in .env
-    let url = 'https://spectreserver.herokuapp.com/api/users/';
-    fetch(url, {
+    // Do POST to API: '/api/users'; 'https://spectreserver.herokuapp.com/''
+    console.log('POST: '+apiUrl);
+    fetch(apiUrl, {
         method: "post",
         headers: {
           "Content-Type": "application/json",
