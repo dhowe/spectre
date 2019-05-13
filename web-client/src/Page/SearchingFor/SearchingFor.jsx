@@ -7,12 +7,13 @@ import { Link } from 'react-router-dom';
 import DataIs from '../DataIs/DataIs'
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
+import UserSession from '../../Components/UserSession/UserSession';
 
 const styles = {
     root: {
         flexGrow: 1,
         width: "100%",
-        
+
         color: 'black'
     },
     content: {
@@ -23,49 +24,53 @@ const styles = {
     }
 };
 
-function SearchingFor(props) {
-    const { classes } = props;
-    return (
-        <div className={classes.root}>
-            <SpectreHeader colour="white" />
-            <div className={classes.content + " content"}>
-                <Typography component="h6" variant="h5">Welcome [USERNAME]?</Typography>
-                <Typography component="h6" variant="h5">What do you do out into the wilderness to behold?</Typography>
-                <div>
-                    <Link component={DataIs} to="/data-is">
-                        <Button variant="contained" color="primary" className={classes.button} onClick={() => { props.set_key('virtue', 'power') }}>
-                            Power
+class SearchingFor extends React.Component {
+    render() {
+        return (
+            <div className={styles.root}>
+                <SpectreHeader colour="white" />
+                <div className={styles.content + " content"}>
+                    <Typography component="h6" variant="h5">Welcome [USERNAME]?</Typography>
+                    <Typography component="h6" variant="h5">What do you do out into the wilderness to behold?</Typography>
+                    <div>
+                        <Link component={DataIs} to="/data-is">
+                            <Button variant="contained" color="primary" onClick={() => { this.context.virtue = 'power' }}>
+                                Power
                         </Button>
-                    </Link>
-                    <Link component={DataIs} to="/data-is">
-                        <Button variant="contained" color="primary" className={classes.button} onClick={() => { props.set_key('virtue', 'truth') }}>
-                            Truth
+                        </Link>
+                        <Link component={DataIs} to="/data-is">
+                            <Button variant="contained" color="primary" onClick={() => { this.context.virtue = 'truth' }}>
+                                Truth
                         </Button>
-                    </Link>
-                    <Link component={DataIs} to="/data-is">
-                        <Button variant="contained" color="primary" className={classes.button} onClick={() => { props.set_key('virtue', 'wealth') }}>
-                            Wealth
+                        </Link>
+                        <Link component={DataIs} to="/data-is">
+                            <Button variant="contained" color="primary" onClick={() => { this.context.virtue = 'wealth' }}>
+                                Wealth
                         </Button>
-                    </Link>
-                    <Link component={DataIs} to="/data-is">
-                        <Button variant="contained" color="primary" className={classes.button} onClick={() => { props.set_key('virtue', 'faith') }}>
-                            Faith
+                        </Link>
+                        <Link component={DataIs} to="/data-is">
+                            <Button variant="contained" color="primary" onClick={() => { this.context.virtue = 'faith' }}>
+                                Faith
                         </Button>
-                    </Link>
-                    <Link component={DataIs} to="/data-is">
-                        <Button variant="contained" color="primary" className={classes.button} onClick={() => { props.set_key('virtue', 'influence') }}>
-                            Influence
+                        </Link>
+                        <Link component={DataIs} to="/data-is">
+                            <Button variant="contained" color="primary" onClick={() => { this.context.virtue = 'influence' }}>
+                                Influence
                         </Button>
-                    </Link>
+                        </Link>
+                    </div>
                 </div>
+                <FooterLogo />
             </div>
-            <FooterLogo />
-        </div>
-    );
+        );
+    }
 }
+
 
 SearchingFor.propTypes = {
     classes: PropTypes.object.isRequired,
 };
+
+SearchingFor.contextType = UserSession;
 
 export default withStyles(styles)(SearchingFor);
