@@ -43,10 +43,21 @@ class LoginPage extends React.Component {
       currentUser.login = e.target.email.value;
     }
 
-    this.createUser();
+    let handleSuccess = json => {
+      Object.assign(currentUser, json);
+      this.setState(() => ({ toUsername: true }));
+      console.log('User:',currentUser);
+    }
+
+    let handleError = e => {
+      console.error(e.error);
+      this.setState({ data: JSON.stringify(e.error, null, 2) });
+    }
+
+    this.createUser(currentUser, handleSuccess, handleError);
   }
-  createUser() {
-    let currentUser = this.context;
+
+  createUser(currentUser, onSuccess, onError) {
 
     // get auth from .env or heroku configs
     dotEnv.config();
@@ -57,18 +68,6 @@ class LoginPage extends React.Component {
     const auth = env.REACT_APP_API_USER + ':' + env.REACT_APP_API_SECRET;
     if (!auth || !auth.length) console.error("Auth required!");
     const apiUrl = host + route;
-
-    // define response handlers
-    function handleSuccess(json) {
-
-      Object.assign(currentUser, json);
-      this.setState(() => ({ toUsername: true }));
-      console.log('User:',currentUser);
-    }
-
-    function handleFailure(err) {
-      this.setState({ data: JSON.stringify(err.error, null, 2) });
-    }
 
     function handleResponse(response) {
       return response.json()
@@ -95,8 +94,8 @@ class LoginPage extends React.Component {
         body: JSON.stringify(currentUser)
       })
       .then(handleResponse.bind(this))
-      .then(handleSuccess.bind(this))
-      .catch(handleFailure.bind(this));
+      .then(onSuccess.bind(this))
+      .catch(onError.bind(this));
 
       /////////////////////////////// End ///////////////////////////////////
   }

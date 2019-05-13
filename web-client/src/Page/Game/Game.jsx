@@ -57,7 +57,7 @@ function sketch(p) {
       Brand.instances.push(new Brand(p, bx, p.height / 2, Brand.names[i]));
     }
 
-    user = new User({ name: "Jane", gender: "female" });
+    user = new User({ name: "Jane", gender: "female", traits: {}});
   };
 
   p.draw = function () {
