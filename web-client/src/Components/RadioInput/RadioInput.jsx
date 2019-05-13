@@ -11,6 +11,8 @@ const styles = theme => ({
 
 });
 
+// Q: shouldn't mention of gender/female be in the page, not the component ?
+// otherwise it should probably be called GenderInput
 class RadioButtonsGroup extends React.Component {
   state = {
     value: 'female',
@@ -29,7 +31,7 @@ class RadioButtonsGroup extends React.Component {
           <Typography variant="h6">{this.props.children}</Typography>
           <RadioGroup
             aria-label="Gender"
-            name="gender1"
+            name="gender"
             className={classes.group}
             value={this.state.value}
             onChange={this.handleChange}

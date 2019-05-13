@@ -66,16 +66,9 @@ class SocialLogin extends React.Component {
                       focused: this.props.classes.cssFocused
                   }}
                   >
+                  <br/>Email:
                   </InputLabel>
-                  Name:<Input
-                  name='name'
-                  id="custom-css-standard-input"
-                  classes={{
-                      root: this.props.classes.textField,
-                      underline: this.props.classes.cssUnderline
-                  }}
-                  />
-                  <br/>Email:<Input
+                  <Input
                   name='email'
                   id="custom-css-standard-input"
                   classes={{

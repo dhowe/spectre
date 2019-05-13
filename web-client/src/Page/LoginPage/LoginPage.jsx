@@ -1,4 +1,5 @@
 import React from "react";
+import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -11,7 +12,6 @@ import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 
 import UserSession from '../../Components/UserSession/UserSession';
-import { Redirect } from 'react-router-dom';
 
 import './LoginPage.scss';
 import dotEnv from 'dotenv';
@@ -42,26 +42,28 @@ class LoginPage extends React.Component {
 
     // assign the form properties
     currentUser.loginType = 'email';
-    currentUser.name = e.target.name.value;
-    currentUser.login = e.target.email.value;
+    if (e.target.hasOwnProperty('email')) {
+      currentUser.login = e.target.email.value;
+    }
 
     /////////////////////////// TODO: make component /////////////////////////
 
     // get auth from .env or heroku configs
     dotEnv.config();
-
     const env = process.env;
     const route = '/api/users/';
     const host = env.REACT_APP_API_HOST || 'http://localhost:8083';
-    const auth = env.REACT_APP_API_USER + ':' + env.REACT_APP_API_SECRET;
-    const apiUrl = host + route;
 
+    const auth = env.REACT_APP_API_USER + ':' + env.REACT_APP_API_SECRET;
     if (!auth || !auth.length) console.error("Auth required!");
+    const apiUrl = host + route;
 
     // define response handlers
     function handleSuccess(json) {
+
       Object.assign(currentUser, json);
       this.setState(() => ({ toUsername: true }));
+      console.log('User:',currentUser);
     }
 
     function handleFailure(err) {
@@ -82,7 +84,7 @@ class LoginPage extends React.Component {
         });
     }
 
-    // Do POST to API: '/api/users'; 'https://spectreserver.herokuapp.com/''
+    // Do POST to API: '/api/users';
     console.log('POST: '+apiUrl);
     fetch(apiUrl, {
         method: "post",
@@ -100,7 +102,7 @@ class LoginPage extends React.Component {
   }
 
   render() {
-    if (this.state.toUsername === true) {
+    if (this.state.toUsername === true) { // hack redirect
       return <Redirect to='/username' />
     }
     return (
