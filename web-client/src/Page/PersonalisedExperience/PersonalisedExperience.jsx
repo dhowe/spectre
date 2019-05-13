@@ -26,6 +26,10 @@ const styles = {
 
 class PersonalisedExperience extends React.Component {
   componentDidMount() {
+    this.context.name = 'Daniel';
+    this.context.gender = 'male';
+    this.context.login = 'daniel@rednoise.org';
+    this.context.loginType = 'email';
     console.log(this.context);
   }
   render() {

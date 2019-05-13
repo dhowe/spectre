@@ -7,6 +7,7 @@ import P5Wrapper from 'react-p5-wrapper';
 import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
+import UserSession from '../../Components/UserSession/UserSession';
 
 // NOTE: temporary
 import './Game.css';
@@ -37,7 +38,7 @@ const styles = {
  */
 function sketch(p) {
 
-  let done, user;
+  let done;
   let numLines = 9;
   let seconds = 0;
 
@@ -53,8 +54,6 @@ function sketch(p) {
       let bx = -i * (p.width / 6) + p.width / 2;
       Brand.instances.push(new Brand(p, bx, p.height / 2, Brand.names[i]));
     }
-
-    //user = new User({ name: "Jane", gender: "female", traits: {}});
   };
 
   p.draw = function () {
@@ -73,7 +72,9 @@ function sketch(p) {
     if (seconds) { // no timer for now
 
       let timer = seconds - Math.floor(p.millis() / 1000);
-      if (timer < 0 && !done) finished();
+      if (timer < 0 && !done) {
+        finished();
+      }
       p.fill(styles.sketchText);
       p.textSize(40);
       p.text(Math.max(0, timer), p.width - 60, Brand.diameter / 2);
@@ -113,8 +114,8 @@ function sketch(p) {
     done = true;
     checkData();
     let data = Brand.instances.map(b => ({ item: b.item, rating: b.rating }));
-    //user.predictFromBrands(data).forEach(p => user.traits[p.trait] = p.score);
-    //displayAsHtml(user);
+    user.predictFromBrands(data).forEach(p => user.traits[p.trait] = p.score);
+    displayAsHtml(user);
   }
 
   function displayAsHtml(user) {
@@ -234,14 +235,21 @@ Brand.updateAll = function () { Brand.instances.forEach(b => b.update()) };
 
 ///////////////////// End p5.js sketch ////////////////////////////
 
+let user;
+
 class Game extends React.Component {
+  componentWillMount() {
+    user = this.context;
+    console.log("User:", user);
+  }
   render() {
     return (
       <div className={this.props.classes.root}>
           <SpectreHeader colour="white" />
           <div className={this.props.classes.content + " content"}>
               <P5Wrapper sketch={sketch}/>
-              {/* temporary div for testing */}
+              
+              {/* ------- temporary div for testing ------- */}
               <div id="content">
                 <table>
                   <tbody>
@@ -254,6 +262,8 @@ class Game extends React.Component {
                   <tbody id="tdata"></tbody>
                 </table>
               </div>
+              {/* ----------- end temporary div ----------- */}
+
               <Link component={ThankYou} to="/thank-you">
                   <IconButton icon="next" text="Next" />
               </Link>
@@ -267,5 +277,8 @@ class Game extends React.Component {
 Game.propTypes = {
   classes: PropTypes.object.isRequired,
 };
+
+Game.contextType = UserSession;
+
 
 export default withStyles(styles)(Game);

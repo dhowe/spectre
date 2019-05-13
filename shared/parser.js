@@ -19,6 +19,7 @@ export default class Parser {
       let parts = match.split('.');
       parts.shift();
       for (var i = 0; i < parts.length; i++) {
+
         if (parts[i].endsWith('()')) {
           parts[i] = parts[i].substring(0, parts[i].length - 2);
         }
@@ -38,7 +39,9 @@ export default class Parser {
       }
 
       if (typeof resolved !== 'string') {
-        throw Error('Expected string, got ', typeof resolved, resolved);
+        throw Error(this.user.hasOwnProperty(parts[0]) ?
+          'user.'+parts[0] + ' is '+this.user[parts[0]] :
+          'Parser: No User.' + parts[0] + ' property');
       }
 
       for (var i = 1; i < parts.length; i++) {
