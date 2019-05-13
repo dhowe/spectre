@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 import InsightStyle from '../InsightStyle/InsightStyle';
@@ -13,7 +12,7 @@ const styles = {
     root: {
         flexGrow: 1,
         width: "100%",
-        
+
         color: 'black'
     },
 };
@@ -24,7 +23,7 @@ function InsightFinancial(props) {
         <div className={classes.root}>
             <SpectreHeader colour="white" />
             <div className={classes.content + " content"}>
-                <Typography component="h4" variant="h4">What’s Sophie T’s likely financial status?</Typography>
+                <Typography component="h4" variant="h4">What’s {props.selectedFollower.name}’s likely financial status?</Typography>
                 <Link component={InsightStyle} to="/insight-style">
                     <IconButton icon="next" text="Next" />
                 </Link>

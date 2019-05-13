@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import SearchingFor from '../SearchingFor/SearchingFor';
 import IconButton from '../../Components/IconButton/IconButton';
@@ -13,7 +12,7 @@ const styles = {
     root: {
         flexGrow: 1,
         width: "100%",
-        
+
         color: 'black'
     },
     clickToContinue: {
@@ -27,8 +26,8 @@ function YourPower(props) {
         <div className={classes.root}>
             <SpectreHeader colour="white" />
             <div className={classes.content + " content"}>
-            
-                <Typography component="h4" variant="h4">[username], your [power] is growing.</Typography>
+
+                <Typography component="h4" variant="h4">{props.name}, your {props.virtue} is growing.</Typography>
                 <Typography component="h4" variant="h4">Let's put it into practice.</Typography>
                 <Link component={SearchingFor} to="/pick-a-side">
                     <IconButton icon="next" text="Next" />

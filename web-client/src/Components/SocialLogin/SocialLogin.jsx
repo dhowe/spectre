@@ -1,13 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
-import InputBase from '@material-ui/core/InputBase';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
-import TextField from '@material-ui/core/TextField';
 import grey from '@material-ui/core/colors/grey';
 
 import './SocialLogin.scss';
@@ -64,9 +61,7 @@ class SocialLogin extends React.Component {
                   classes={{
                       root: this.props.classes.cssLabel,
                       focused: this.props.classes.cssFocused
-                  }}
-                  >
-                  <br/>Email:
+                  }}><br/>Email:
                   </InputLabel>
                   <Input
                   name='email'
@@ -74,9 +69,7 @@ class SocialLogin extends React.Component {
                   classes={{
                       root: this.props.classes.textField,
                       underline: this.props.classes.cssUnderline
-                  }}
-                  />
-                  <br/>
+                  }}/><br/>
                   <Button disabled={!this.validateForm() } type="submit">
                   Go
                   </Button>
@@ -87,40 +80,6 @@ class SocialLogin extends React.Component {
     );
   }
 }
-/*
-function SocialLogin(props) { // requires props.handleSubmit
-  //const { handleSubmit, classes } = props;
-  //console.log("PROPS",props);
-  return (
-    <div className={props.classes.root + " socialLogin"}>
-        <div className={props.classes.content + " socialLogin-content"}>
-          <form onSubmit = { props.handleSubmit }>
-            <FormControl className={props.classes.margin}>
-                <InputLabel
-                classes={{
-                    root: props.classes.cssLabel,
-                    focused: props.classes.cssFocused
-                }}
-                >
-                Login via social media or email
-                </InputLabel>
-                <Input
-                id="custom-css-standard-input"
-                classes={{
-                    root: props.classes.textField,
-                    underline: props.classes.cssUnderline
-                }}
-                value={state.email} onChange={onEmailChange}
-                />
-                <Button disabled={!validateForm() } type="submit">
-                Go
-                </Button>
-            </FormControl>
-          </form>
-        </div >
-    </div>
-  );
-}*/
 
 SocialLogin.propTypes = {
   classes: PropTypes.object.isRequired,

@@ -1,21 +1,17 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import Footer from "../../Components/Footer/Footer";
-import TextInput from "../../Components/TextInput/TextInput";
-import RadioInput from "../../Components/RadioInput/RadioInput";
-import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 import { Link } from 'react-router-dom';
 import Pledge from "../Pledge/Pledge";
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
-
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import UserSession from '../../Components/UserSession/UserSession';
 
 import './Username.scss';
@@ -33,66 +29,53 @@ const styles = {
 };
 
 class Username extends React.Component {
-
   constructor(props) {
     super(props);
-    this.state = { toPledge: false };
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+    this.state = {
+      name: '',
+      gender: 'woman',
+    };
+  };
 
-  handleSubmit(e) {
-    e.preventDefault();
+  handleChange = name => event => {
+    this.context.name = event.target.value; // user-prop
+    this.setState({ [name]: event.target.value });
+    this.props.set_key('name', event.target.value);
+  };
 
-    // get user from context
-    let currentUser = this.context;
-
-    // assign submitted values
-    if (e.target.hasOwnProperty('gender')) {
-      currentUser.gender = e.target.gender.value;
-    }
-    if (e.target.hasOwnProperty('name')) {
-      currentUser.name = e.target.name.value;
-    }
-
-    console.log('User:', currentUser);
-    this.setState(() => ({ toPledge: true }));
-  }
+  handleRadioChange = event => {
+    this.context.gender = event.target.value; // user-prop
+    this.setState({ gender: event.target.value });
+    this.props.set_key('gender', event.target.value);
+  };
 
   render() {
-    console.log('render');
-    if (this.state.toPledge === true) { // hack redirect
-      return <Redirect to='/pledge' />
-    }
     return (
       <div className={this.props.classes.root + " Username"}>
-            <SpectreHeader colour="white" />
-            <div className={this.props.classes.content + " Username-content content"}>
-              <form onSubmit = { this.handleSubmit }>
-                  <FormControl className={this.props.classes.margin}>
-                  <InputLabel classes={{
-                      root: this.props.classes.cssLabel,
-                      focused: this.props.classes.cssFocused
-                  }}><br/>YOUR NAME?:
-                  </InputLabel>
-                  <Input name="name" id="custom-css-standard-input"
-                  classes={{
-                      root: this.props.classes.textField,
-                      underline: this.props.classes.cssUnderline
-                  }}/>
-                  <br/>
-                  <RadioInput options={['male', 'female', 'other']}>YOUR GENDER?</RadioInput>
-
-                  <Button type="submit">
-                  GO<br/>
-                  </Button>
-                  <Link component={Pledge} to="/pledge">
-                      <IconButton icon="next" text="Begin"/>
-                  </Link>
-                </FormControl>
-              </form>
-            </div >
-            <FooterLogo />
+        <SpectreHeader colour="white" />
+        <div className={this.props.classes.content + " Username-content content"}>
+          <Typography variant="h6">YOUR FIRST NAME?</Typography>
+          <TextField value={this.state.name} onChange={this.handleChange('name')}></TextField>
+          {/* <RadioInput value={this.state.gender} onChange={this.handleRadioChange} options={['WOMAN', 'MAN', 'OTHER']}>YOUR GENDER?</RadioInput> */}
+          <Typography variant="h6">YOUR GENDER?</Typography>
+          <FormControl component="fieldset" >
+            <RadioGroup
+              aria-label="Gender"
+              name="gender"
+              value={this.state.value}
+              onChange={this.handleRadioChange}
+            >
+              <FormControlLabel value="female" control={<Radio />} label="Woman" />
+              <FormControlLabel value="male" control={<Radio />} label="Man" />
+              <FormControlLabel value="other" control={<Radio />} label="Other" />
+            </RadioGroup>
+          </FormControl>
+          <Link component={Pledge} to="/pledge">
+            <IconButton icon="next" text="Begin" />
+          </Link>
         </div >
+        <FooterLogo />
+      </div >
     );
   }
 }

@@ -12,7 +12,7 @@ const styles = {
     root: {
         flexGrow: 1,
         width: "100%",
-        
+
         color: 'black'
     },
     clickToContinue: {
@@ -29,7 +29,7 @@ function ThankYou(props) {
         <div className={classes.root}>
             <SpectreHeader colour="white" />
             <div className={classes.content + " content"}>
-                <Typography component="h3" variant="h3">Thank you [username]!</Typography>
+                <Typography component="h3" variant="h3">Thank you {props.name}!</Typography>
                 {/* <img src='https://cdn.pixabay.com/photo/2013/07/13/12/15/hand-159474__340.png' alt='thumbs up'></img> */}
                 <Typography component="h4" variant="h4" >Your experience has been personalised.</Typography>
                 <Link component={InfluenceAFollower} to="/influence-a-follower">

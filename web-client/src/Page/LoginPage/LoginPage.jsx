@@ -4,13 +4,11 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Logo from "../../Components/Logo/Logo";
-import Login from "../../Components/Login/Login";
 import { Link } from 'react-router-dom';
 import IntroVideo from '../IntroVideo/IntroVideo'
 import SocialLogin from '../../Components/SocialLogin/SocialLogin';
 import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
-
 import UserSession from '../../Components/UserSession/UserSession';
 
 import './LoginPage.scss';
@@ -34,7 +32,6 @@ class LoginPage extends React.Component {
     this.state = { toUsername: false };
   }
   handleSubmit(e) {
-
     e.preventDefault();
 
     // get user from current context
@@ -46,7 +43,10 @@ class LoginPage extends React.Component {
       currentUser.login = e.target.email.value;
     }
 
-    /////////////////////////// TODO: make component /////////////////////////
+    this.createUser();
+  }
+  createUser() {
+    let currentUser = this.context;
 
     // get auth from .env or heroku configs
     dotEnv.config();

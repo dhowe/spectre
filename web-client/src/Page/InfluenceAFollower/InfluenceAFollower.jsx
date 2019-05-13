@@ -14,7 +14,7 @@ const styles = {
     root: {
         flexGrow: 1,
         width: "100%",
-        
+
         color: 'black'
     },
     clickToContinue: {
@@ -38,11 +38,11 @@ function InfluenceAFollower(props) {
                     <AvatarComponent class='active'></AvatarComponent>
                     <AvatarComponent></AvatarComponent>
                     <AvatarComponent></AvatarComponent>
-                    <AvatarComponent class='active'></AvatarComponent>
                     <AvatarComponent></AvatarComponent>
                     <AvatarComponent></AvatarComponent>
-                    <AvatarComponent class='active'></AvatarComponent>
-                    <AvatarComponent class='active'></AvatarComponent>
+                    <AvatarComponent></AvatarComponent>
+                    <AvatarComponent></AvatarComponent>
+                    <AvatarComponent></AvatarComponent>
                 </Grid>
                 <Link component={SelectedAvatar} to="/selected-avatar">
                     <IconButton icon="next" text="Next" />
