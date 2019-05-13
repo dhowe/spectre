@@ -8,9 +8,6 @@ import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 
-// NOTE: requires sym-link from ../../shared/user.js
-import User from '../../Components/User/user';
-
 // NOTE: temporary
 import './Game.css';
 
@@ -57,7 +54,7 @@ function sketch(p) {
       Brand.instances.push(new Brand(p, bx, p.height / 2, Brand.names[i]));
     }
 
-    user = new User({ name: "Jane", gender: "female", traits: {}});
+    //user = new User({ name: "Jane", gender: "female", traits: {}});
   };
 
   p.draw = function () {
@@ -116,8 +113,8 @@ function sketch(p) {
     done = true;
     checkData();
     let data = Brand.instances.map(b => ({ item: b.item, rating: b.rating }));
-    user.predictFromBrands(data).forEach(p => user.traits[p.trait] = p.score);
-    displayAsHtml(user);
+    //user.predictFromBrands(data).forEach(p => user.traits[p.trait] = p.score);
+    //displayAsHtml(user);
   }
 
   function displayAsHtml(user) {

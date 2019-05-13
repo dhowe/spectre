@@ -7,26 +7,31 @@ import Game from '../Game/Game';
 import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
+import UserSession from '../../Components/UserSession/UserSession';
 
 const styles = {
-    root: {
-        flexGrow: 1,
-        width: "100%",
-        
-        color: 'black'
-    },
-    clickToContinue: {
-        margin: "20% 0",
-    },
-    glow: {
-        color: '#ffd700'
-    }
+  root: {
+    flexGrow: 1,
+    width: "100%",
+
+    color: 'black'
+  },
+  clickToContinue: {
+    margin: "20% 0",
+  },
+  glow: {
+    color: '#ffd700'
+  }
 };
 
-function PersonalisedExperience(props) {
-    const { classes } = props;
+class PersonalisedExperience extends React.Component {
+  componentDidMount() {
+    console.log(this.context);
+  }
+  render() {
+    let classes = this.props.classes;
     return (
-        <div className={classes.root}>
+      <div className={classes.root}>
             <SpectreHeader colour="white" />
             <div className={classes.content + " content"}>
                 <Typography component="h3" variant="h3">Excellent</Typography>
@@ -40,10 +45,13 @@ function PersonalisedExperience(props) {
             <FooterLogo />
         </div>
     );
+  }
 }
 
 PersonalisedExperience.propTypes = {
-    classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired,
 };
+
+PersonalisedExperience.contextType = UserSession;
 
 export default withStyles(styles)(PersonalisedExperience);
