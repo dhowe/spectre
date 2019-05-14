@@ -7,6 +7,7 @@ import InsightComplete from '../InsightComplete/InsightComplete';
 import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
+import TextSliderText from "../../Components/TextSliderText/TextSliderText";
 
 const styles = {
     root: {
@@ -24,6 +25,8 @@ function InsightPolitical(props) {
             <SpectreHeader colour="white" />
             <div className={classes.content + " content"}>
                 <Typography component="h4" variant="h4">What is {props.selectedFollower.name}’s likely political preference?</Typography>
+                <TextSliderText leftText="Left wing" rightText="Right Wing" />
+                <TextSliderText leftText="Liberal" rightText="Conservative" />
                 <Link component={InsightComplete} to="/insight-complete">
                     <IconButton icon="next" text="Next" />
                 </Link>

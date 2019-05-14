@@ -1,40 +1,54 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import { Link } from 'react-router-dom';
-import InsightWeight from '../InsightWeight/InsightWeight';
-import IconButton from '../../Components/IconButton/IconButton';
-import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
-import FooterLogo from '../../Components/FooterLogo/FooterLogo';
+import React from "react";
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import { Link } from "react-router-dom";
+import InsightWeight from "../InsightWeight/InsightWeight";
+import IconButton from "../../Components/IconButton/IconButton";
+import SpectreHeader from "../../Components/SpectreHeader/SpectreHeader";
+import FooterLogo from "../../Components/FooterLogo/FooterLogo";
+import TextSliderText from "../../Components/TextSliderText/TextSliderText";
 
 const styles = {
-    root: {
-        flexGrow: 1,
-        width: "100%",
+  root: {
+    flexGrow: 1,
+    width: "100%",
 
-        color: 'black'
-    },
+    color: "black"
+  }
 };
 
-function InsightGender(props) {
-    const { classes } = props;
+class InsightGender extends React.Component {
+  state = {
+    value: 50
+  };
+  handleChange = (event, value) => {
+    this.setState({ value });
+  };
+
+  render() {
+    const { value } = this.state;
+    const { classes } = this.props;
     return (
-        <div className={classes.root}>
-            <SpectreHeader colour="white" />
-            <div className={classes.content + " content"}>
-                <Typography component="h4" variant="h4">What’s {props.selectedFollower.name}’s likely gender?</Typography>
-                <Link component={InsightWeight} to="/insight-weight">
-                    <IconButton icon="next" text="Next" />
-                </Link>
-            </div>
-            <FooterLogo />
+      <div className={classes.root}>
+        <SpectreHeader colour="white" />
+        <div className={classes.content + " content"}>
+          <Typography component="h4" variant="h4">
+            What’s {this.props.selectedFollower.name}’s likely gender?
+          </Typography>
+          <TextSliderText leftText="Male" rightText="Female" middleText="non-binary" />
+          <Link component={InsightWeight} to="/insight-weight">
+            <IconButton icon="next" text="Next" />
+          </Link>
         </div>
+        <FooterLogo />
+      </div>
     );
+  }
 }
 
 InsightGender.propTypes = {
-    classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(InsightGender);
