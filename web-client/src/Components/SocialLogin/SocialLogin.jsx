@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
@@ -48,26 +47,26 @@ class SocialLogin extends React.Component {
   render() {
     return (
       <div className={this.props.classes.root + " socialLogin"}>
-          <div className={this.props.classes.content + " socialLogin-content"}>
-            <form onSubmit = { this.props.handleSubmit }>
-              <FormControl className={this.props.classes.margin}>
-                  <InputLabel
-                  classes={{
-                      root: this.props.classes.cssLabel,
-                      focused: this.props.classes.cssFocused
-                  }}><br/>Email:
+        <div className={this.props.classes.content + " socialLogin-content"}>
+          <form onSubmit={this.props.handleSubmit}>
+            <FormControl className={this.props.classes.margin}>
+              <InputLabel
+                classes={{
+                  root: this.props.classes.cssLabel,
+                  focused: this.props.classes.cssFocused
+                }}><br />Email:
                   </InputLabel>
-                  <Input
-                  name='email'
-                  id="custom-css-standard-input"
-                  onChange={this.handleChange('name')}
-                  classes={{
-                      root: this.props.classes.textField,
-                      underline: this.props.classes.cssUnderline
-                  }}/><br/>
-              </FormControl>
-            </form>
-          </div >
+              <Input
+                name='email'
+                id="custom-css-standard-input"
+                onChange={this.handleChange('name')}
+                classes={{
+                  root: this.props.classes.textField,
+                  underline: this.props.classes.cssUnderline
+                }} /><br />
+            </FormControl>
+          </form>
+        </div >
       </div>
     );
   }

@@ -36,15 +36,15 @@ class BelieveInDataism extends React.Component {
   render() {
     return (
       <div className={this.props.classes.root}>
-          <SpectreHeader colour="white" />
-          <div className={this.props.classes.content + " content"}>
-              <Typography component="h4" variant="h4">{ toAdjPhrase(this.context.virtue) }, you need more data.</Typography>
-              <Typography component="h4" variant="h4">We can help you believe in the { this.context.virtue } of dataism</Typography>
-              <Link component={Steps} to="/steps">
-                  <IconButton icon="next" text="Next" />
-              </Link>
-          </div>
-          <FooterLogo />
+        <SpectreHeader colour="white" />
+        <div className={this.props.classes.content + " content"}>
+          <Typography component="h4" variant="h4">{toAdjPhrase(this.context.virtue)}, you need more data.</Typography>
+          <Typography component="h4" variant="h4">We can help you believe in the {this.context.virtue} of dataism</Typography>
+          <Link component={Steps} to="/steps">
+            <IconButton icon="next" text="Next" />
+          </Link>
+        </div>
+        <FooterLogo />
       </div>
     );
   }
