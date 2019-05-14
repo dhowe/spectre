@@ -7,6 +7,7 @@ import Steps from '../Steps/Steps';
 import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
+import UserSession from '../../Components/UserSession/UserSession';
 
 const styles = {
     root: {
@@ -31,25 +32,27 @@ function getContent(virtue) {
     return content[virtue]
 }
 
-function BelieveInDataism(props) {
-    const { classes } = props;
+class BelieveInDataism extends React.Component {
+  render() {
     return (
-        <div className={classes.root}>
-            <SpectreHeader colour="white" />
-            <div className={classes.content + " content"}>
-                <Typography component="h4" variant="h4">{getContent(props.virtue)} you need more data.</Typography>
-                <Typography component="h4" variant="h4">We can help you believe in the {props.virtue} of dataism</Typography>
-                <Link component={Steps} to="/steps">
-                    <IconButton icon="next" text="Next" />
-                </Link>
-            </div>
-            <FooterLogo />
-        </div>
+      <div className={this.props.classes.root}>
+          <SpectreHeader colour="white" />
+          <div className={this.props.classes.content + " content"}>
+              <Typography component="h4" variant="h4">{getContent(this.context.virtue)}, you need more data.</Typography>
+              <Typography component="h4" variant="h4">We can help you believe in the {this.context.virtue} of dataism</Typography>
+              <Link component={Steps} to="/steps">
+                  <IconButton icon="next" text="Next" />
+              </Link>
+          </div>
+          <FooterLogo />
+      </div>
     );
+  }
 }
 
 BelieveInDataism.propTypes = {
     classes: PropTypes.object.isRequired,
 };
+BelieveInDataism.contextType = UserSession;
 
 export default withStyles(styles)(BelieveInDataism);

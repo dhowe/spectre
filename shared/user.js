@@ -98,6 +98,9 @@ User._schema = function() {
     name: {
       type: 'string'
     },
+    virtue: {
+      type: 'string'
+    },
     traits: {
       openness: { type: 'number' },
       conscientiousness: { type: 'number' },

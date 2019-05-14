@@ -24,6 +24,11 @@ app.use('*', cors());
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: true }));
 
+// minimal logging
+app.all('*', morgan('[:date[clf]] :remote-addr :method :url :status', {
+  skip: () => process.env.NODE_ENV === 'test'
+}));
+
 // static react files
 app.use(express.static(path.join(__dirname, 'web-client/build')));
 
@@ -34,11 +39,6 @@ app.use(base, auth, routes);
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname + '/web-client/build/index.html'));
 });
-
-// minimal logging
-app.all('*', morgan(':remote-addr :method :url :status'));//, {
-  //skip: () => process.env.NODE_ENV === 'test'
-//}));
 
 //////////////////////////// Startup ////////////////////////////////
 

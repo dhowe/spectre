@@ -42,8 +42,8 @@ class SearchingFor extends React.Component {
             <div className={styles.root}>
                 <SpectreHeader colour="white" />
                 <div className={styles.content + " content"}>
-                    <Typography component="h6" variant="h5">Welcome [USERNAME]?</Typography>
-                    <Typography component="h6" variant="h5">What do you do out into the wilderness to behold?</Typography>
+                    <Typography component="h6" variant="h5">Welcome {this.context.name}</Typography>
+                    <Typography component="h6" variant="h5">What are you searching for today?</Typography>
                     <div>
                         <Link component={DataIs} to="/data-is">
                             <Button variant="contained" color="primary" onClick={() => { this.context.virtue = 'power' }}>
@@ -58,11 +58,6 @@ class SearchingFor extends React.Component {
                         <Link component={DataIs} to="/data-is">
                             <Button variant="contained" color="primary" onClick={() => { this.context.virtue = 'wealth' }}>
                                 Wealth
-                        </Button>
-                        </Link>
-                        <Link component={DataIs} to="/data-is">
-                            <Button variant="contained" color="primary" onClick={() => { this.context.virtue = 'faith' }}>
-                                Faith
                         </Button>
                         </Link>
                         <Link component={DataIs} to="/data-is">
@@ -82,7 +77,6 @@ class SearchingFor extends React.Component {
 SearchingFor.propTypes = {
     classes: PropTypes.object.isRequired,
 };
-
 SearchingFor.contextType = UserSession;
 
 export default withStyles(styles)(SearchingFor);
