@@ -7,6 +7,7 @@ import InsightThankYou from '../InsightThankYou/InsightThankYou';
 import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
+import TextSliderText from "../../Components/TextSliderText/TextSliderText";
 
 const styles = {
     root: {

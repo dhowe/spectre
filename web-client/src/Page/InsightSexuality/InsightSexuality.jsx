@@ -7,6 +7,7 @@ import InsightPolitical from '../InsightPolitical/InsightPolitical';
 import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
+import TextSliderText from "../../Components/TextSliderText/TextSliderText";
 
 const styles = {
     root: {
@@ -24,6 +25,7 @@ function InsightSexuality(props) {
             <SpectreHeader colour="white" />
             <div className={classes.content + " content"}>
                 <Typography component="h4" variant="h4">What is {props.selectedFollower.name}’s likely sexual orientation?</Typography>
+                <TextSliderText leftText="Straight" rightText="Gay" middleText="Bi" />
                 <Link component={InsightPolitical} to="/insight-political">
                     <IconButton icon="next" text="Next" />
                 </Link>
