@@ -10,26 +10,26 @@ import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 
 const styles = {
-    root: {
-        flexGrow: 1,
-        width: "100%",
+  root: {
+    flexGrow: 1,
+    width: "100%",
 
-        color: 'black'
-    },
-    clickToContinue: {
-        margin: "20% 0",
-    }
+    color: 'black'
+  },
+  clickToContinue: {
+    margin: "20% 0",
+  }
 };
 
-function getContent(virtue) {
-    const content = {
-        influence: 'To become more influencial',
-        faith: 'To become more faithful',
-        wealth: 'To become more wealthy',
-        truth: 'To find more truth',
-        power: 'To become more powerful',
-    }
-    return content[virtue]
+function toAdjPhrase(virtue) {
+  const content = {
+    influence: 'To become more influencial',
+    faith: 'To become more faithful',
+    wealth: 'To become more wealthy',
+    truth: 'To find more truth',
+    power: 'To become more powerful',
+  }
+  return content[virtue]
 }
 
 class BelieveInDataism extends React.Component {
@@ -38,8 +38,8 @@ class BelieveInDataism extends React.Component {
       <div className={this.props.classes.root}>
           <SpectreHeader colour="white" />
           <div className={this.props.classes.content + " content"}>
-              <Typography component="h4" variant="h4">{getContent(this.context.virtue)}, you need more data.</Typography>
-              <Typography component="h4" variant="h4">We can help you believe in the {this.context.virtue} of dataism</Typography>
+              <Typography component="h4" variant="h4">{ toAdjPhrase(this.context.virtue) }, you need more data.</Typography>
+              <Typography component="h4" variant="h4">We can help you believe in the { this.context.virtue } of dataism</Typography>
               <Link component={Steps} to="/steps">
                   <IconButton icon="next" text="Next" />
               </Link>
@@ -51,7 +51,7 @@ class BelieveInDataism extends React.Component {
 }
 
 BelieveInDataism.propTypes = {
-    classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired,
 };
 BelieveInDataism.contextType = UserSession;
 
