@@ -36,9 +36,9 @@ app.get('*', (req, res) => {
 });
 
 // minimal logging
-app.all('*', morgan(':remote-addr :method :url :status', {
-  skip: () => process.env.NODE_ENV === 'test'
-}));
+app.all('*', morgan(':remote-addr :method :url :status'));//, {
+  //skip: () => process.env.NODE_ENV === 'test'
+//}));
 
 //////////////////////////// Startup ////////////////////////////////
 

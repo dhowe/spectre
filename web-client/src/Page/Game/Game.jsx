@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import ThankYou from '../ThankYou/ThankYou';
 import P5Wrapper from 'react-p5-wrapper';
 import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
+
 import UserSession from '../../Components/UserSession/UserSession';
 
 // NOTE: temporary
@@ -115,7 +116,9 @@ function sketch(p) {
     checkData();
     let data = Brand.instances.map(b => ({ item: b.item, rating: b.rating }));
     user.predictFromBrands(data).forEach(p => user.traits[p.trait] = p.score);
-    displayAsHtml(user);
+    console.log('game', game);
+    game.componentComplete();
+    //displayAsHtml(user);
   }
 
   function displayAsHtml(user) {
@@ -235,20 +238,31 @@ Brand.updateAll = function () { Brand.instances.forEach(b => b.update()) };
 
 ///////////////////// End p5.js sketch ////////////////////////////
 
-let user;
+let user, game;
 
 class Game extends React.Component {
+  constructor(props) {
+    super(props);
+    game = this; // handle for p5js
+    this.state = { toThankYou: false };
+  }
+  componentComplete() { // redirect called from p5
+    this.setState(() => ({ toThankYou: true }));
+  }
   componentWillMount() {
     user = this.context;
     console.log("User:", user);
   }
   render() {
+    if (this.state.toThankYou === true) { // hack redirect
+      return <Redirect to='/thank-you' />
+    }
     return (
       <div className={this.props.classes.root}>
           <SpectreHeader colour="white" />
           <div className={this.props.classes.content + " content"}>
               <P5Wrapper sketch={sketch}/>
-              
+
               {/* ------- temporary div for testing ------- */}
               <div id="content">
                 <table>
