@@ -4,7 +4,7 @@ import DotEnv from 'dotenv';
 
 let UserSession = React.createContext(new User());
 
-UserSession.createUser = function(currentUser, onSuccess, onError) {
+let doConfig = () => {
 
   // get auth from .env or heroku configs
   DotEnv.config();
@@ -14,25 +14,31 @@ UserSession.createUser = function(currentUser, onSuccess, onError) {
 
   const auth = env.REACT_APP_API_USER + ':' + env.REACT_APP_API_SECRET;
   if (!auth || !auth.length) console.error("Auth required!");
-  const apiUrl = host + route;
 
-  function handleResponse(response) {
-    return response.json()
-      .then((json) => {
-        if (!response.ok) {
-          const error = Object.assign({}, json, {
-            status: response.status,
-            statusText: response.statusText,
-          });
-          return Promise.reject(error);
-        }
-        return json;
-      });
-  }
+  return { auth: auth, route: host + route };
+}
+
+let handleResponse = (res) => {
+  return res.json()
+    .then((json) => {
+      if (!res.ok) {
+        const error = Object.assign({}, json, {
+          status: res.status,
+          statusText: res.statusText,
+        });
+        return Promise.reject(error);
+      }
+      return json;
+    });
+}
+
+UserSession.createUser = function (currentUser, onSuccess, onError) {
+
+  let { route, auth } = doConfig();
 
   // Do POST to API: '/api/users';
-  console.log('POST: '+apiUrl);
-  fetch(apiUrl, {
+  console.log('POST: ' + route);
+  fetch(route, {
       method: "post",
       headers: {
         "Content-Type": "application/json",
