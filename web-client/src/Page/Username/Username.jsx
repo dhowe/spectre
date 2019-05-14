@@ -39,12 +39,10 @@ class Username extends React.Component {
   handleChange = name => event => {
     this.context.name = event.target.value; // user-prop
     this.setState({ [name]: event.target.value });
-    this.props.set_key('name', event.target.value);
   };
   handleRadioChange = event => {
     this.context.gender = event.target.value; // user-prop
     this.setState({ gender: event.target.value });
-    this.props.set_key('gender', event.target.value);
   };
   render() {
     return (

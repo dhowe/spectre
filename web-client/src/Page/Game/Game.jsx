@@ -120,21 +120,21 @@ function sketch(p) {
     //displayAsHtml(user);
   }
 
-  function displayAsHtml(user) {
-    let otr = '<tr><td>';
-    let ctd = '</td><td>';
-    let ctr = '</td></tr>'
+  // function displayAsHtml(user) {
+  //   let otr = '<tr><td>';
+  //   let ctd = '</td><td>';
+  //   let ctr = '</td></tr>'
 
-    let rows = user.traitNames().length;
-    let desc = '</td><td rowspan=' + rows +
-      ' id="desc">' + user.generateDescription();
-    let html = user.traitNames().reduce((acc, t, i) => {
-      return acc + otr + t + ctd + user.traits[t] + (i ? '' : desc) + ctr;
-    }, '');
+  //   let rows = user.traitNames().length;
+  //   let desc = '</td><td rowspan=' + rows +
+  //     ' id="desc">' + user.generateDescription();
+  //   let html = user.traitNames().reduce((acc, t, i) => {
+  //     return acc + otr + t + ctd + user.traits[t] + (i ? '' : desc) + ctr;
+  //   }, '');
 
-    document.getElementById("content").style.display = 'inline-block';
-    document.getElementById("tdata").innerHTML = html;
-  }
+  //   document.getElementById("content").style.display = 'inline-block';
+  //   document.getElementById("tdata").innerHTML = html;
+  // }
 
   function randomizeData() {
     Brand.instances.forEach(b => {
@@ -205,7 +205,7 @@ class Brand {
     p.fill(styles.sketchText);
     p.textSize(18);
     p.textAlign(p.CENTER, p.TOP);
-    p.text(this.item, this.x, this.y + Brand.diameter/2 + 2);
+    p.text(this.item, this.x, this.y + Brand.diameter / 2 + 2);
 
     p.textAlign(p.CENTER, p.CENTER);
   }
@@ -265,30 +265,30 @@ class Game extends React.Component {
     }
     return (
       <div className={this.props.classes.root}>
-          <SpectreHeader colour="white" />
-          <div className={this.props.classes.content + " content"}>
-              <P5Wrapper sketch={sketch}/>
+        <SpectreHeader colour="white" />
+        <div className={this.props.classes.content + " content"}>
+          <P5Wrapper sketch={sketch} />
 
-              {/* ------- temporary div for testing ------- */}
-              <div id="content">
-                <table>
-                  <tbody>
-                  <tr>
-                    <th>Trait</th>
-                    <th>Score</th>
-                    <th>Description</th>
-                  </tr>
-                  </tbody>
-                  <tbody id="tdata"></tbody>
-                </table>
-              </div>
-              {/* ----------- end temporary div ----------- */}
+          {/* ------- temporary div for testing ------- */}
+          <div id="content">
+            <table>
+              <tbody>
+                <tr>
+                  <th>Trait</th>
+                  <th>Score</th>
+                  <th>Description</th>
+                </tr>
+              </tbody>
+              <tbody id="tdata"></tbody>
+            </table>
+          </div>
+          {/* ----------- end temporary div ----------- */}
 
-              <Link component={ThankYou} to="/thank-you">
-                  <IconButton icon="next" text="Next" />
-              </Link>
-          </div >
-          <FooterLogo />
+          <Link component={ThankYou} to="/thank-you">
+            <IconButton icon="next" text="Next" />
+          </Link>
+        </div >
+        <FooterLogo />
       </div >
     );
   }
