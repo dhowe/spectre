@@ -59,25 +59,37 @@ export default class User {
 
   poss() {
     switch (this.gender) {
-    case 'male':
-      return 'his';
-    case 'female':
-      return 'her';
-    case 'other':
-      return 'their';
+      case 'male':
+        return 'his';
+      case 'female':
+        return 'her';
+      case 'other':
+        return 'their';
     }
   }
 
   pronoun() {
     switch (this.gender) {
-    case 'male':
-      return 'he';
-    case 'female':
-      return 'she';
-    case 'other':
-      return 'they';
+      case 'male':
+        return 'he';
+      case 'female':
+        return 'she';
+      case 'other':
+        return 'they';
     }
   }
+
+  adverb() {
+    const adverbs = {
+      power: 'powerful',
+      truth: 'truthful',
+      wealth: 'valuable',
+      faith: 'faithful',
+      influence: 'influential',
+    }
+    return adverbs[this.virtue]
+  }
+
 
   toBe() {
     return (this.gender === 'other') ? 'are' : 'is';
@@ -93,7 +105,7 @@ export default class User {
   }
 };
 
-User._schema = function() {
+User._schema = function () {
   return {
     name: {
       type: 'string'
