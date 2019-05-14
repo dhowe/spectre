@@ -4,7 +4,7 @@ import { predict } from './ppq.js'
 export default class User {
 
   constructor(tmpl) {
-    Object.keys(User._schema()).forEach(k => this[k] = undefined);
+    Object.keys(User.schema()).forEach(k => this[k] = undefined);
     Object.assign(this, tmpl);
   }
 
@@ -33,7 +33,7 @@ export default class User {
     this._verifyTraits();
 
     let lines = [];
-    let traitNames = this.traitNames();
+    let traitNames = this.oceanTraits();
 
     for (var i = 0; i < traitNames.length; i++) {
       if (typeof User.descriptionTemplate[traitNames[i]] !== 'undefined') {
@@ -59,27 +59,27 @@ export default class User {
 
   poss() {
     switch (this.gender) {
-      case 'male':
-        return 'his';
-      case 'female':
-        return 'her';
-      case 'other':
-        return 'their';
+    case 'male':
+      return 'his';
+    case 'female':
+      return 'her';
+    case 'other':
+      return 'their';
     }
   }
 
   pronoun() {
     switch (this.gender) {
-      case 'male':
-        return 'he';
-      case 'female':
-        return 'she';
-      case 'other':
-        return 'they';
+    case 'male':
+      return 'he';
+    case 'female':
+      return 'she';
+    case 'other':
+      return 'they';
     }
   }
 
-  adverb() {
+  virtueAsAdverb() {
     const adverbs = {
       power: 'powerful',
       truth: 'truthful',
@@ -87,28 +87,34 @@ export default class User {
       faith: 'faithful',
       influence: 'influential',
     }
-    return adverbs[this.virtue]
+    return adverbs[this.virtue];
   }
-
 
   toBe() {
     return (this.gender === 'other') ? 'are' : 'is';
   }
 
-  traitNames() {
-    return Object.keys(this.traits);
+  oceanTraits() {
+    return User.oceanTraits();
   }
 
   randomizeTraits() {
-    this.traitNames().forEach(t => this.traits[t] = Math.random());
+    this.oceanTraits().forEach(t => this.traits[t] = Math.random());
     return this;
   }
 };
 
-User._schema = function () {
+User.schema = () => {
   return {
     name: {
       type: 'string'
+    },
+    similarIds: {
+      type: ['string']
+    },
+    targetId: {
+      type: 'string'
+      //type: { type: 'objectId', ref: 'User' }
     },
     virtue: {
       type: 'string'
@@ -118,10 +124,10 @@ User._schema = function () {
       conscientiousness: { type: 'number' },
       agreeableness: { type: 'number' },
       extraversion: { type: 'number' },
-      neuroticism: { type: 'number' }
-      /*relationship: { type: 'number' },
-        gender: { type: 'number' },
-        age: { type: 'number' },*/
+      neuroticism: { type: 'number' },
+      relationship: { type: 'number' },
+      gender: { type: 'number' },
+      age: { type: 'number' }
     },
     login: {
       type: 'string',
@@ -142,6 +148,14 @@ User._schema = function () {
     }
   }
 }
+
+User.oceanTraits = () => [
+    'openness',
+    'conscientiousness',
+    'agreeableness',
+    'extraversion',
+    'neuroticism'
+  ];
 
 User.descriptionTemplate = {
   openness: {

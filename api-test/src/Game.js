@@ -105,10 +105,10 @@ function sketch(p) {
     let ctd = '</td><td>';
     let ctr = '</td></tr>'
 
-    let rows = user.traitNames().length;
+    let rows = user.oceanTraits().length;
     let desc = '</td><td rowspan=' + rows +
       ' id="desc">' + user.generateDescription();
-    let html = user.traitNames().reduce((acc, t, i) => {
+    let html = user.oceanTraits().reduce((acc, t, i) => {
       return acc + otr + t + ctd + user.traits[t] + (i ? '' : desc) + ctr;
     }, '');
 

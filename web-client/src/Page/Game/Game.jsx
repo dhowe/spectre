@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Link, Redirect } from 'react-router-dom';
-import ThankYou from '../ThankYou/ThankYou';
 import P5Wrapper from 'react-p5-wrapper';
 import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
@@ -10,7 +9,7 @@ import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 
 import UserSession from '../../Components/UserSession/UserSession';
 
-// NOTE: temporary
+// TMP:
 import './Game.css';
 
 const styles = {
@@ -124,10 +123,10 @@ function sketch(p) {
     let otr = '<tr><td>';
     let ctd = '</td><td>';
     let ctr = '</td></tr>'
-    let rows = user.traitNames().length;
+    let rows = user.oceanTraits().length;
     let desc = '</td><td rowspan=' + rows +
       ' id="desc">' + user.generateDescription();
-    let html = user.traitNames().reduce((acc, t, i) => {
+    let html = user.oceanTraits().reduce((acc, t, i) => {
       return acc + otr + t + ctd + user.traits[t] + (i ? '' : desc) + ctr;
     }, '');
     document.getElementById("content").style.display = 'inline-block';

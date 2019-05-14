@@ -71,7 +71,7 @@ describe('User Routes', () => {
       for (var i = 0; i < 10; i++) {
         let data = { name: "dave" + i, login: "dave" + i + "@abc.com", loginType: "twitter" };
         let user = UserModel.Create(data);
-        let keys = user.traitNames();
+        let keys = user.oceanTraits();
         keys.forEach(k => user.traits[k] = i / 10);
         users.push(user);
       }
@@ -274,8 +274,9 @@ describe('User Routes', () => {
         });
     });
 
-    it('it should update user with new field', (done) => {
+    it('it should update user with new fields', (done) => {
       user.virtue = 'truth';
+      user.targetId = user._id + 'X';
       chai.request(host)
         .put('/api/users/'+user._id)
         .auth(env.API_USER, env.API_SECRET)
@@ -283,7 +284,8 @@ describe('User Routes', () => {
         .end((err, res) => {
           expect(res).to.have.status(200);
           expect(res.body).is.a('object');
-          expect(res.body.virtue).eq('truth');
+          expect(res.body.virtue).eq(user.virtue);
+          expect(res.body.targetId).eq(user.targetId);
           done();
         });
     });

@@ -1,3 +1,4 @@
+import User from './shared/user';
 
 const oceanDist = function (a, b) {
 
@@ -13,7 +14,7 @@ const oceanDist = function (a, b) {
   let total = 0;
   let ta = a.traits;
   let tb = b.traits;
-  let traitNames = Object.keys(a.traits);
+  let traitNames = User.oceanTraits();
   for (let i = 0; i < traitNames.length; i++) {
     diff = ta[traitNames[i]] - tb[traitNames[i]];
     total += diff * diff;

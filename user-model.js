@@ -4,7 +4,7 @@ import { oceanSort } from './metrics';
 import ClientUser from './shared/user';
 
 // share user functions between schema and model
-const userSchema = new ClientUser(ClientUser._schema());
+const userSchema = new ClientUser(ClientUser.schema());
 const { schema, functions } = toMongoose(userSchema);
 const UserSchema = mongoose.Schema(schema); // hack here
 Object.keys(functions).forEach(f => UserSchema.methods[f] = functions[f]);
@@ -41,26 +41,13 @@ UserSchema.statics.Create = function (tmpl) {
 
 function toMongoose(obj) {
 
-  let funcs = {};
-  let result = {};
-
-  // for ES6 classes
-  Object.getOwnPropertyNames(Object.getPrototypeOf(obj))
-    .filter(n => n !== 'constructor').forEach(fn => funcs[fn] = obj[fn]);
-
-  Object.keys(obj).forEach(key => {
-
-    // for object literals
-    if (typeof obj[key] === 'function') {
-      //console.log("F:",f);
-      functions[key] = obj[key];
-      return;
-    }
-
-    let type, property = lodash.cloneDeep(obj[key]);
-    switch (property.type) {
-
-    case 'id':
+  function toMongooseType(t) {
+    let type;
+    switch (t) {
+      case 'array':
+        type = Array;
+        break;
+    case 'objectId':
       type = Schema.ObjectId;
       break;
     case 'number':
@@ -76,6 +63,30 @@ function toMongoose(obj) {
       type = Boolean;
       break;
     }
+    return type;
+  }
+  let funcs = {};
+  let result = {};
+
+  // for ES6 classes
+  Object.getOwnPropertyNames(Object.getPrototypeOf(obj))
+    .filter(n => n !== 'constructor').forEach(fn => funcs[fn] = obj[fn]);
+
+  Object.keys(obj).forEach(key => {
+
+    // for object literals
+    if (typeof obj[key] === 'function') {
+      functions[key] = obj[key];
+      return;
+    }
+
+    let type, property = lodash.cloneDeep(obj[key]), ptype = property.type;
+
+    // arrays and primitives
+    type = (Array.isArray(ptype)) ?
+      [ toMongooseType(ptype[0]) ]
+      : toMongooseType(ptype);
+
     // if we haven't gotten a type, recurse
     result[key] = type ? lodash.assign({}, property, { type }) :
       result[key] = toMongoose(property).schema;

@@ -11,7 +11,7 @@ describe('Server User', function () {
       expect(user.name.length).gt(0);
       expect(user.login.length).gt(0);
       expect(user.loginType.length).gt(0);
-      expect(Object.keys(user.traits).length).to.equal(5);
+      expect(Object.keys(user.traits).length).to.be.gte(5);
     });
 
     it('Should correctly complete a templated user', function () {
@@ -19,11 +19,11 @@ describe('Server User', function () {
       expect(user.name).eq("dave");
       expect(user.login).eq("dave@abc.com");
       expect(user.loginType).eq("twitter");
-      expect(Object.keys(user.traits).length).to.equal(5);
+      expect(Object.keys(user.traits).length).to.be.gte(5);
     });
 
     it('Should return Big5 trait names', function () {
-      expect(UserModel.Create().traitNames().length).to.equal(5);
+      expect(UserModel.Create().oceanTraits().length).to.equal(5);
     });
   })
 
@@ -38,7 +38,6 @@ describe('Server User', function () {
       let user = UserModel.Create();
       user.name = "Jane";
       user.gender = "female";
-
       let result = user.generateDescription();
       expect(result).is.a('string');
       expect(result.length).is.gt(0);

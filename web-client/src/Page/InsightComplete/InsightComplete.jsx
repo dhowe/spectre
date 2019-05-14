@@ -26,7 +26,7 @@ class InsightComplete extends React.Component {
                     <Typography component="h3" variant="h3">Congratulations {this.context.name} </Typography>
                     <Typography component="h3" variant="h3">Verification complete. </Typography>
                     <IconButton icon="next" />
-                    <Typography component="h4" variant="h4">Our new behavioural products can create {this.context.adverb()} insights</Typography>
+                    <Typography component="h4" variant="h4">Our new behavioural products can create {this.context.virtueAsAdverb()} insights</Typography>
                     <Typography component="h4" variant="h4">As a reward for your belief in the {this.context.virtue} of data, we can share:</Typography>
                     <Typography component="h4" variant="h4">{this.props.selectedFollower.name}’s OCEAN profile</Typography>
                     <Link component={IntroOceanVideo} to="/intro-ocean-video">

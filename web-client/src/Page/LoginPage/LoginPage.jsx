@@ -11,7 +11,7 @@ import UserSession from '../../Components/UserSession/UserSession';
 
 import './LoginPage.scss';
 
-window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true; // TMP
+window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true; // TMP: #138
 
 const styles = {
   root: {

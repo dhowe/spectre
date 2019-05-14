@@ -10,34 +10,33 @@ import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 
 const styles = {
-    root: {
-        flexGrow: 1,
-        width: "100%",
-
-        color: 'black'
-    },
+  root: {
+    flexGrow: 1,
+    width: "100%",
+    color: 'black'
+  },
 };
 
 class SelectedAvatar extends React.Component {
-    render() {
-        return (
-            <div className={styles.root}>
-                <SpectreHeader colour="white" />
-                <div className={styles.content + " content"}>
-                    <Typography component="h3" variant="h3">You selected {this.props.selectedFollower.name}</Typography>
-                    <Typography component="h4" variant="h4">Lets start by verifying some of the basics to unlock {this.context.adverb()} insights into {this.props.selectedFollower.name}. Don’t worry only you will see the results. </Typography>
-                    <Link component={InsightGender} to="/insight-hair">
-                        <IconButton icon="next" text="DIVE IN" />
-                    </Link>
-                </div>
-                <FooterLogo />
-            </div>
-        );
-    }
+  render() {
+    return (
+      <div className={styles.root}>
+          <SpectreHeader colour="white" />
+          <div className={styles.content + " content"}>
+              <Typography component="h3" variant="h3">You selected {this.props.selectedFollower.name}</Typography>
+              <Typography component="h4" variant="h4">Lets start by verifying some of the basics to unlock {this.context.virtueAsAdverb()} insights into {this.props.selectedFollower.name}. Don’t worry only you will see the results. </Typography>
+              <Link component={InsightGender} to="/insight-hair">
+                  <IconButton icon="next" text="DIVE IN" />
+              </Link>
+          </div>
+          <FooterLogo />
+      </div>
+    );
+  }
 }
 
 SelectedAvatar.propTypes = {
-    classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired,
 };
 SelectedAvatar.contextType = UserSession;
 

@@ -3,49 +3,7 @@ import User from '../shared/user';
 
 describe('Client User', function () {
 
-  // describe('User.Create()', function () {
-  //
-  //   it('Should correctly construct an empty user', function () {
-  //     let user = User.Create();
-  //     // expect(user.name.length).eq(0);
-  //     // expect(user.login.length).eq(0);
-  //     // expect(user.loginType.length).eq(0);
-  //     // expect(typeof user.traits).eq('object');
-  //     // expect(typeof user.traits.openness).eq('number');
-  //     // expect(Object.keys(user.traits).length).is.gte(5);
-  //     // expect(user.createdAt).eq(undefined);
-  //     expect(user.name).eq(undefined);
-  //     expect(user.login).eq(undefined);
-  //     expect(user.loginType).eq(undefined);
-  //     expect(user.traits).eq(undefined);
-  //     expect(user.createdAt).eq(undefined);
-  //     expect(user.loginType).eq(undefined);
-  //     expect(user.gender).eq(undefined);
-  //   });
-  //
-  //   it('Should construct a user from a template', function () {
-  //
-  //     let user = User.Create({
-  //       name: "dave",
-  //       login: "dave@abc.com",
-  //       loginType: "twitter",
-  //       traits: {
-  //         agreeableness: .3,
-  //         conscientiousness: .4,
-  //         extraversion: .5,
-  //         openness: 1,
-  //         neuroticism: .3
-  //       }
-  //     });
-  //
-  //     expect(user.name).eq("dave");
-  //     expect(user.login).eq("dave@abc.com");
-  //     expect(user.loginType).eq("twitter");
-  //     expect(user.traits.openness).to.equal(1);
-  //   });
-  // });
-
-  describe('new User()', function () {
+  describe('Create User()', function () {
 
     it('Should correctly construct an empty user', function () {
       let user = new User();
@@ -58,7 +16,7 @@ describe('Client User', function () {
       expect(user.gender).eq(undefined);
     });
 
-    it('Should construct a user from a template', function () {
+    it('Should create a user from a template', function () {
 
       let user = new User({
         name: "dave",
