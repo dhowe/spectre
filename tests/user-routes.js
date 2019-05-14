@@ -232,6 +232,63 @@ describe('User Routes', () => {
     });
   });
 
+  describe('PUT /api/users/', () => {
+
+    let user;
+
+    beforeEach((done) => { // insert user before updating
+      user = {
+        name: "daniel2",
+        login: "daniel2@aol.com",
+        loginType: "facebook",
+        traits: {
+          agreeableness: 0.2038,
+          conscientiousness: 0.2324,
+          extraversion: 0.2229,
+          openness: 0.246,
+          neuroticism: 0.465
+        }
+      };
+      chai.request(host)
+        .post('/api/users')
+        .auth(env.API_USER, env.API_SECRET)
+        .send(user)
+        .end((err, res) => {
+          user = res.body
+          done();
+        });
+    });
+
+    it('it should fail for user with no id', (done) => {
+      user.virtue = 'truth';
+      user._id = undefined;
+      chai.request(host)
+        .put('/api/users/'+user._id)
+        .auth(env.API_USER, env.API_SECRET)
+        .send(user)
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          expect(res.body).is.a('object');
+          expect(res.body).has.property('error');
+          done();
+        });
+    });
+
+    it('it should update user with new field', (done) => {
+      user.virtue = 'truth';
+      chai.request(host)
+        .put('/api/users/'+user._id)
+        .auth(env.API_USER, env.API_SECRET)
+        .send(user)
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res.body).is.a('object');
+          expect(res.body.virtue).eq('truth');
+          done();
+        });
+    });
+  });
+
   describe('POST /api/users', () => {
 
     it('it should not insert user without login', (done) => {
@@ -282,6 +339,7 @@ describe('User Routes', () => {
           done();
         });
     });
+
     it('it should not insert user with bad gender', (done) => {
       chai.request(host)
         .post('/api/users')

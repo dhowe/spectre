@@ -60,7 +60,7 @@ const update = function (req, res) {
 
   UserModel.findById(req.params.uid, function (err, user) {
     if (err) return error(res, 'Unable to update user #' + req.params.uid);
-    Object.assign(user, req.params).save((err, user) => {
+    Object.assign(user, req.body).save((err, user) => {
       if (err) return error(res, 'Unable to save user #' + req.params.uid);
       res.status(200).send(user);
     });

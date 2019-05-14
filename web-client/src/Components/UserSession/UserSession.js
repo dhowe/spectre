@@ -11,7 +11,6 @@ let doConfig = () => {
   const env = process.env;
   const route = '/api/users/';
   const host = env.REACT_APP_API_HOST || 'http://localhost:8083';
-
   const auth = env.REACT_APP_API_USER + ':' + env.REACT_APP_API_SECRET;
   if (!auth || !auth.length) console.error("Auth required!");
 
@@ -32,7 +31,7 @@ let handleResponse = (res) => {
     });
 }
 
-UserSession.createUser = function (currentUser, onSuccess, onError) {
+UserSession.createUser = function (user, onSuccess, onError) {
 
   let { route, auth } = doConfig();
 
@@ -44,7 +43,26 @@ UserSession.createUser = function (currentUser, onSuccess, onError) {
         "Content-Type": "application/json",
         "Authorization": 'Basic ' + btoa(auth)
       },
-      body: JSON.stringify(currentUser)
+      body: JSON.stringify(user)
+    })
+    .then(handleResponse.bind(this))
+    .then(onSuccess.bind(this))
+    .catch(onError.bind(this));
+}
+
+UserSession.updateUser = function (user, onSuccess, onError) {
+
+  let { route, auth } = doConfig();
+
+  // Do POST to API: '/api/users';
+  console.log('PUT: ' + route);
+  fetch(route, {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": 'Basic ' + btoa(auth)
+      },
+      body: JSON.stringify(user)
     })
     .then(handleResponse.bind(this))
     .then(onSuccess.bind(this))
