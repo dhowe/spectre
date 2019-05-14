@@ -21,6 +21,18 @@ const styles = {
     },
     clickToContinue: {
         margin: "20% 0",
+    },
+    button: {
+
+        borderRadius: '28px',
+        border: 'solid 3px #929391',
+        backgroundColor: '#ffffff',
+        boxShadow: 'none',
+        color: '#929391',
+    },
+    link: {
+        display: 'block',
+        marginBottom: '30px',
     }
 };
 
@@ -54,8 +66,8 @@ class SearchingFor extends React.Component {
                         </Button>
                         </Link>
                         <Link component={DataIs} to="/data-is">
-                            <Button variant="contained" color="primary" onClick={() => { this.context.virtue = 'influence' }}>
-                                Influence
+                        <Button variant="contained" color="primary" onClick={() => { this.context.virtue = 'influence' }}>
+                            Influence
                         </Button>
                         </Link>
                     </div>

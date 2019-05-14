@@ -1,3 +1,5 @@
+@import 'colors.scss';
+
 html, body {
   font-size: 2em;
 }
@@ -49,4 +51,9 @@ a {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  color: $grey;
+  h1, h2, h3, h4, h5, h6 {
+    color: $grey;
+  }
 }
+

@@ -16,6 +16,7 @@ export default class User {
   }
 
   predictFromBrands(data) {
+    if (!this.traits) this.traits = {};
     return predict(data);
   }
 
@@ -91,10 +92,6 @@ export default class User {
     return this;
   }
 };
-
-// User.Create = function (tmpl) {
-//   return new User(tmpl);
-// }
 
 User._schema = function() {
   return {
