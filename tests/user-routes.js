@@ -274,6 +274,22 @@ describe('User Routes', () => {
         });
     });
 
+    it('it should not allow fields not present in schema', (done) => {
+      user.virtue = 'truth';
+      user.notInSchema ='notInSchema';
+      chai.request(host)
+        .put('/api/users/'+user._id)
+        .auth(env.API_USER, env.API_SECRET)
+        .send(user)
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res.body).is.a('object');
+          expect(res.body.virtue).eq(user.virtue);
+          expect(res.body.notInSchema).eq(undefined);
+          done();
+        });
+    });
+
     it('it should update user with new fields', (done) => {
       user.virtue = 'truth';
       user.targetId = user._id + 'X';
@@ -286,6 +302,24 @@ describe('User Routes', () => {
           expect(res.body).is.a('object');
           expect(res.body.virtue).eq(user.virtue);
           expect(res.body.targetId).eq(user.targetId);
+          done();
+        });
+    });
+
+    it('it should update user with new array values', (done) => {
+      user.virtue = 'truth';
+      user.similarIds = [user._id + 'X'];
+      chai.request(host)
+        .put('/api/users/'+user._id)
+        .auth(env.API_USER, env.API_SECRET)
+        .send(user)
+        .end((err, res) => {
+          console.log(res.body);
+          expect(res).to.have.status(200);
+          expect(res.body).is.a('object');
+          expect(res.body.virtue).eq(user.virtue);
+          expect(res.body.similarIds).is.a('array');
+          expect(res.body.similarIds[0]).eq(user.similarIds[0]);
           done();
         });
     });
@@ -415,6 +449,34 @@ describe('User Routes', () => {
           expect(res.body).is.a('object');
           expect(res.body.name).eq(user.name);
           expect(res.body.traits.openness).eq(user.traits.openness);
+          done();
+        });
+    });
+    it('it should not insert fields not present in schema', (done) => {
+      let user = {
+        name: "daniel2",
+        login: "daniel2@aol.com",
+        loginType: "facebook",
+        traits: {
+          agreeableness: 0.2038,
+          conscientiousness: 0.2324,
+          extraversion: 0.2229,
+          openness: 0.246,
+          neuroticism: 0.465
+        },
+        notInSchema: 'notInSchema'
+      };
+      chai.request(host)
+        .post('/api/users')
+        .auth(env.API_USER, env.API_SECRET)
+        .send(user)
+        .end((err, res) => {
+          if (err) throw err;
+          //console.log('err', res.body);
+          expect(res).to.have.status(200);
+          expect(res.body).is.a('object');
+          expect(res.body.name).eq(user.name);
+          expect(res.body.notInSchema).eq(undefined);
           done();
         });
     });
