@@ -34,9 +34,11 @@ let handleResponse = (res) => {
 UserSession.createUser = function (user, onSuccess, onError) {
 
   let { route, auth } = doConfig();
+  if (!onSuccess) onSuccess = () => {};
+  if (!onError) onError = () => {};
 
-  // Do POST to API: '/api/users';
-  console.log('POST: ' + route);
+  console.log('POST(Db.CreateUser): ' + route);
+
   fetch(route, {
       method: "post",
       headers: {
@@ -49,15 +51,22 @@ UserSession.createUser = function (user, onSuccess, onError) {
     .then(onSuccess.bind(this))
     .catch(onError.bind(this));
 }
-
+ 
 UserSession.updateUser = function (user, onSuccess, onError) {
+
+  if (!user._id || !user._id.length) {
+    throw Error('User._id required');
+  }
 
   let { route, auth } = doConfig();
 
-  // Do POST to API: '/api/users';
-  console.log('PUT: ' + route);
-  fetch(route, {
-      method: "post",
+  if (!onSuccess) onSuccess = () => {};
+  if (!onError) onError = () => {};
+
+  console.log('PUT(Db.UpdateUser): ' + route);
+
+  fetch(route + user._id, {
+      method: "put",
       headers: {
         "Content-Type": "application/json",
         "Authorization": 'Basic ' + btoa(auth)

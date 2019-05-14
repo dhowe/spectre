@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Logo from "../../Components/Logo/Logo";
-import { Link, Redirect} from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import IntroVideo from '../IntroVideo/IntroVideo'
 import SocialLogin from '../../Components/SocialLogin/SocialLogin';
 import IconButton from '../../Components/IconButton/IconButton';
@@ -27,46 +27,56 @@ class LoginPage extends React.Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.state = { toUsername: false };
+    this.state = { toNext: false };
   }
+
   handleSubmit(e) {
     e.preventDefault();
 
     // get user from current context
-    let currentUser = this.context;
+    let user = this.context;
+    user.loginType = 'email'; // TMP:
 
-    // assign the form properties
-    currentUser.loginType = 'email';
-    if (e.target.hasOwnProperty('email')) {
-      currentUser.login = e.target.email.value;
+    console.log(user);
+
+    if (user.login) {
+
+      let handleSuccess = json => {
+        Object.assign(user, json);
+        this.setState(() => ({ toNext: true }));
+        console.log('User:', user);
+      }
+
+      let handleError = e => {
+        console.error(e.error);
+        this.setState({ data: JSON.stringify(e.error, null, 2) });
+      }
+
+      UserSession.createUser(user, handleSuccess, handleError);
+
+    } else {
+
+      // TMP: should reject without successful User creation
+      this.context.login = 'test'+(+new Date())+'@test.com';
+      this.setState(() => ({ toNext: true }));
     }
-
-    let handleSuccess = json => {
-      Object.assign(currentUser, json);
-      this.setState(() => ({ toUsername: true }));
-      console.log('User:',currentUser);
-    }
-
-    let handleError = e => {
-      console.error(e.error);
-      this.setState({ data: JSON.stringify(e.error, null, 2) });
-    }
-
-    UserSession.createUser(currentUser, handleSuccess, handleError);
   }
-  render() {
-    if (this.state.toUsername === true) { // hack redirect
+  renderRedirect() {
+    if (this.state.toNext) {
       return <Redirect to='/username' />
     }
+  }
+  render() {
     return (
       <div className={this.props.classes.root + " LoginPage"}>
+          {this.renderRedirect()}
           <SpectreHeader />
           <div className={this.props.classes.content + " LoginPage-content content"}>
               <Logo></Logo>
               <Typography component="h1" variant="h1">Hello</Typography>
               <Typography component="h2" variant="h2">Let's Play!</Typography>
-              <SocialLogin handleSubmit={ this.handleSubmit }/>
-              <Link component={IntroVideo} to="/intro-video">
+              <SocialLogin/>
+              <Link component={IntroVideo} to='' onClick={ this.handleSubmit }>
                   <IconButton colour="white" icon="next" text="Next" />
               </Link>
           </div>

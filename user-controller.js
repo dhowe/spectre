@@ -57,7 +57,11 @@ const view = function (req, res) {
 };
 
 const update = function (req, res) {
-
+  /*
+   * TODO:
+   *   If the user HAS all 5 traits, but NOT similar users,
+   *   then add them here
+   */
   UserModel.findById(req.params.uid, function (err, user) {
     if (err) return error(res, 'Unable to update user #' + req.params.uid);
     Object.assign(user, req.body).save((err, user) => {

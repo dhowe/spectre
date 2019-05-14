@@ -116,7 +116,6 @@ function sketch(p) {
     checkData();
     let data = Brand.instances.map(b => ({ item: b.item, rating: b.rating }));
     user.predictFromBrands(data).forEach(p => user.traits[p.trait] = p.score);
-    console.log('game', game);
     game.componentComplete();
     //displayAsHtml(user);
   }
@@ -247,6 +246,13 @@ class Game extends React.Component {
     this.state = { toThankYou: false };
   }
   componentComplete() { // redirect called from p5
+    if (this.context._id) { // TMP: remove
+      UserSession.updateUser(this.context, null,
+        e => { console.error("Error", e); throw Error(e); });
+    }
+    else { // TMP: remove
+      console.warn('WARN: not updating Db with User info!');
+    }
     this.setState(() => ({ toThankYou: true }));
   }
   componentWillMount() {

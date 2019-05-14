@@ -5,8 +5,9 @@ import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
-import grey from '@material-ui/core/colors/grey';
+import UserSession from '../../Components/UserSession/UserSession';
 
+import grey from '@material-ui/core/colors/grey';
 import './SocialLogin.scss';
 
 const styles = {
@@ -41,16 +42,10 @@ const styles = {
 };
 
 class SocialLogin extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { email: '' };
+  handleChange = login => event => {
+    this.context.login = event.target.value; // user-prop
+    console.log("LOGIN: "+this.context.login);
   }
-
-  validateForm(e) {
-    // Do email validation here...
-    return true;
-  }
-
   render() {
     return (
       <div className={this.props.classes.root + " socialLogin"}>
@@ -66,13 +61,11 @@ class SocialLogin extends React.Component {
                   <Input
                   name='email'
                   id="custom-css-standard-input"
+                  onChange={this.handleChange('name')}
                   classes={{
                       root: this.props.classes.textField,
                       underline: this.props.classes.cssUnderline
                   }}/><br/>
-                  <Button disabled={!this.validateForm() } type="submit">
-                  Go
-                  </Button>
               </FormControl>
             </form>
           </div >
@@ -84,5 +77,6 @@ class SocialLogin extends React.Component {
 SocialLogin.propTypes = {
   classes: PropTypes.object.isRequired,
 };
+SocialLogin.contextType = UserSession;
 
 export default withStyles(styles)(SocialLogin);

@@ -22,6 +22,7 @@ const styles = {
 
 class Pledge extends React.Component {
   componentDidMount() {
+    if (!this.context.name) this.context.name = 'Barney'; // TMP: remove
     console.log('User:',this.context);
   }
   render() {
@@ -46,7 +47,6 @@ class Pledge extends React.Component {
 Pledge.propTypes = {
     classes: PropTypes.object.isRequired,
 };
-
 Pledge.contextType = UserSession;
 
 export default withStyles(styles)(Pledge);
