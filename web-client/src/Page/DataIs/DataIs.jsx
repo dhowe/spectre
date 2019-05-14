@@ -7,12 +7,13 @@ import BelieveInDataism from '../BelieveInDataism/BelieveInDataism';
 import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
+import UserSession from '../../Components/UserSession/UserSession';
 
 const styles = {
     root: {
         flexGrow: 1,
         width: "100%",
-        
+
         color: 'black'
     },
     clickToContinue: {
@@ -20,24 +21,27 @@ const styles = {
     }
 };
 
-function DataIs(props) {
-    const { classes } = props;
-    return (
-        <div className={classes.root}>
-            <SpectreHeader colour="white" />
-            <div className={classes.content + " content"}>
-                <Typography component="h4" variant="h4">DATA IS {props.virtue.toUpperCase()}</Typography>
-                <Link component={BelieveInDataism} to="/believe-in-dataism">
-                    <IconButton icon="next" text="Next" />
-                </Link>
+class DataIs extends React.Component {
+    render() {
+        return (
+            <div className={styles.root}>
+                <SpectreHeader colour="white" />
+                <div className={styles.content + " content"}>
+                    <Typography component="h4" variant="h4">DATA IS {this.context.virtue.toUpperCase()}</Typography>
+                    <Link component={BelieveInDataism} to="/believe-in-dataism">
+                        <IconButton icon="next" text="Next" />
+                    </Link>
+                </div>
+                <FooterLogo />
             </div>
-            <FooterLogo />
-        </div>
-    );
+        );
+    }
 }
 
 DataIs.propTypes = {
     classes: PropTypes.object.isRequired,
 };
+
+DataIs.contextType = UserSession;
 
 export default withStyles(styles)(DataIs);
