@@ -44,7 +44,6 @@ const styles = {
 class SocialLogin extends React.Component {
   handleChange = login => event => {
     this.context.login = event.target.value; // user-prop
-    console.log("LOGIN: "+this.context.login);
   }
   render() {
     return (

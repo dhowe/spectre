@@ -29,7 +29,6 @@ class LoginPage extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = { toNext: false };
   }
-
   handleSubmit(e) {
     e.preventDefault();
 
@@ -63,7 +62,7 @@ class LoginPage extends React.Component {
   }
   renderRedirect() {
     if (this.state.toNext) {
-      return <Redirect to='/username' />
+      return <Redirect to='/intro-video' />
     }
   }
   render() {
