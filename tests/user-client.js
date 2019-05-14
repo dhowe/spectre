@@ -14,6 +14,8 @@ describe('Client User', function () {
       expect(user.createdAt).eq(undefined);
       expect(user.loginType).eq(undefined);
       expect(user.gender).eq(undefined);
+      expect(user.hasOceanTraits()).eq(false);
+
     });
 
     it('Should create a user from a template', function () {
@@ -35,6 +37,7 @@ describe('Client User', function () {
       expect(user.login).eq("dave@abc.com");
       expect(user.loginType).eq("twitter");
       expect(user.traits.openness).to.equal(1);
+      expect(user.hasOceanTraits()).eq(true);
     });
   });
 
@@ -62,6 +65,7 @@ describe('Client User', function () {
       expect(result).is.a('string');
       expect(result.length).is.gt(0);
       expect(result.startsWith('Jane')).eq(true);
+      expect(user.hasOceanTraits()).eq(true);
     });
   });
 

@@ -34,7 +34,7 @@ UserSchema.statics.Create = function (tmpl) {
   user.login = tmpl && tmpl.login ? tmpl.login : user.name + '@' + randName() + '.com';
   user.loginType = tmpl && tmpl.loginType ? tmpl.loginType : 'facebook';
 
-  return user.randomizeTraits();
+  return user;//._randomizeTraits();
 }
 
 ///////////////////////// Helpers ///////////////////////////

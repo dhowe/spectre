@@ -66,6 +66,10 @@ const update = function (req, res) {
     if (err) return error(res, 'Unable to update user #' + req.params.uid);
     Object.assign(user, req.body).save((err, user) => {
       if (err) return error(res, 'Unable to save user #' + req.params.uid);
+
+      if (user.hasOceanTraits() && user.similarIds.length < 1) {
+
+      }
       res.status(200).send(user);
     });
   });

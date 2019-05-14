@@ -104,11 +104,12 @@ describe('OCEAN Metrics', function () {
     });
     it('Should return 0 if user traits are the same', function () {
       let user = UserModel.Create();
+      user._randomizeTraits();
       expect(oceanDist(user, user)).to.eq(0);
     });
     it('Should return a positive distance for random users', function () {
-      let userA = UserModel.Create();
-      let userB = UserModel.Create();
+      let userA = UserModel.Create()._randomizeTraits();
+      let userB = UserModel.Create()._randomizeTraits();
       expect(oceanDist(userA, userB)).gt(0);
     });
     it('Should return the correct distance for two users', function () {

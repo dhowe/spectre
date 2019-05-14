@@ -20,12 +20,26 @@ export default class User {
     return predict(data);
   }
 
+  hasOceanTraits() {
+    if (typeof this.traits === 'undefined') return false;
+    let result = true;
+    this.oceanTraits().forEach(tname => {
+      if (!this.traits.hasOwnProperty(tname)) {
+        result = false;
+        return;
+      }
+      let t = this.traits[tname];
+      if (typeof t === 'undefined' || t < 0 || t > 1) {
+        result = false;
+        return;
+      }
+    });
+
+    return result;
+  }
+
   _verifyTraits() {
-    if (typeof this.traits === 'undefined' ||
-      typeof this.traits.openness !== 'number' ||
-      this.traits.openness < 0 || this.traits.openness > 1) {
-      throw Error('User with traits required');
-    }
+    if (!this.hasOceanTraits()) throw Error('User with traits required');
   }
 
   generateDescription(parser) {
@@ -98,7 +112,7 @@ export default class User {
     return User.oceanTraits();
   }
 
-  randomizeTraits() {
+  _randomizeTraits() {
     this.oceanTraits().forEach(t => this.traits[t] = Math.random());
     return this;
   }

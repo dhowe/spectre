@@ -38,6 +38,7 @@ describe('Server User', function () {
       let user = UserModel.Create();
       user.name = "Jane";
       user.gender = "female";
+      user._randomizeTraits();
       let result = user.generateDescription();
       expect(result).is.a('string');
       expect(result.length).is.gt(0);

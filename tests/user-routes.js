@@ -108,7 +108,7 @@ describe('User Routes', () => {
           login: "dave" + i + "@abc.com",
           loginType: "twitter"
         };
-        users.push(UserModel.Create(data))
+        users.push(UserModel.Create(data)._randomizeTraits())
       }
 
       saveUsers(users, function () {
@@ -142,7 +142,7 @@ describe('User Routes', () => {
           login: "dave" + i + "@abc.com",
           loginType: "twitter"
         };
-        users.push(UserModel.Create(data))
+        users.push(UserModel.Create(data)._randomizeTraits());
       }
       saveUsers(users, function () {
         chai.request(host)
@@ -314,7 +314,6 @@ describe('User Routes', () => {
         .auth(env.API_USER, env.API_SECRET)
         .send(user)
         .end((err, res) => {
-          console.log(res.body);
           expect(res).to.have.status(200);
           expect(res.body).is.a('object');
           expect(res.body.virtue).eq(user.virtue);
