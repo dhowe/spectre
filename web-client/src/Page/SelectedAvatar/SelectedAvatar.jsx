@@ -7,6 +7,7 @@ import InsightGender from '../InsightGender/InsightGender';
 import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
+import UserSession from '../../Components/UserSession/UserSession';
 
 const styles = {
     root: {
@@ -17,36 +18,27 @@ const styles = {
     },
 };
 
-function getAdverb(virtue) {
-    const adverbs = {
-        power: 'powerful',
-        truth: 'truthful',
-        wealth: 'valuable',
-        faith: 'faithful',
-        influence: 'influential',
-    }
-    return adverbs[virtue]
-}
-
-function SelectedAvatar(props) {
-    const { classes } = props;
-    return (
-        <div className={classes.root}>
-            <SpectreHeader colour="white" />
-            <div className={classes.content + " content"}>
-                <Typography component="h3" variant="h3">You selected {props.selectedFollower.name}</Typography>
-                <Typography component="h4" variant="h4">Lets start by verifying some of the basics to unlock {getAdverb(props.virtue)} insights into {props.selectedFollower.name}. Don’t worry only you will see the results. </Typography>
-                <Link component={InsightGender} to="/insight-hair">
-                    <IconButton icon="next" text="DIVE IN" />
-                </Link>
+class SelectedAvatar extends React.Component {
+    render() {
+        return (
+            <div className={styles.root}>
+                <SpectreHeader colour="white" />
+                <div className={styles.content + " content"}>
+                    <Typography component="h3" variant="h3">You selected {this.props.selectedFollower.name}</Typography>
+                    <Typography component="h4" variant="h4">Lets start by verifying some of the basics to unlock {this.context.adverb()} insights into {this.props.selectedFollower.name}. Don’t worry only you will see the results. </Typography>
+                    <Link component={InsightGender} to="/insight-hair">
+                        <IconButton icon="next" text="DIVE IN" />
+                    </Link>
+                </div>
+                <FooterLogo />
             </div>
-            <FooterLogo />
-        </div>
-    );
+        );
+    }
 }
 
 SelectedAvatar.propTypes = {
     classes: PropTypes.object.isRequired,
 };
+SelectedAvatar.contextType = UserSession;
 
 export default withStyles(styles)(SelectedAvatar);

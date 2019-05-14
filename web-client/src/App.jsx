@@ -94,23 +94,22 @@ class App extends React.Component {
           <header className="App-header">
             <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" />
             <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-
             <Router>
               <Route exact path="/" component={VideoTest} />
-              <Route exact path="/touch-to-begin" render={() => <TouchToBegin prop={this.state.date} test_state={this.test_state} />} />
-              <Route exact path="/login" render={() => <LoginPage prop={this.state.date} />} />
+              <Route exact path="/touch-to-begin" component={TouchToBegin} />
+              <Route exact path="/login" component={LoginPage} />
               <Route exact path="/intro-video" component={IntroVideo} />
-              <Route exact path="/username" render={() => <Username set_key={this.set_key} />} />
+              <Route exact path="/username" component={Username} />
               <Route exact path="/pledge" component={Pledge} />
-              <Route exact path="/searching-for" render={() => <SearchingFor set_key={this.set_key} />} />
-              <Route exact path="/data-is" render={() => <DataIs virtue={this.state.virtue} />} />
-              <Route exact path="/believe-in-dataism" render={() => <BelieveInDataism virtue={this.state.virtue} />} />
-              <Route exact path="/steps" render={() => <Steps virtue={this.state.virtue} />} />
+              <Route exact path="/searching-for" component={SearchingFor} />
+              <Route exact path="/data-is" component={DataIs} />
+              <Route exact path="/believe-in-dataism" component={BelieveInDataism} />
+              <Route exact path="/steps" component={Steps} />
               <Route exact path="/personalised-experience" component={PersonalisedExperience} />
               <Route exact path="/game" component={Game} />
-              <Route exact path="/thank-you" render={() => <ThankYou name={this.state.name} />} />
+              <Route exact path="/thank-you" component={ThankYou} />
               <Route exact path="/influence-a-follower" component={InfluenceAFollower} />
-              <Route exact path="/selected-avatar" render={() => <SelectedAvatar virtue={this.state.virtue} selectedFollower={this.state.selectedFollower} />} />
+              <Route exact path="/selected-avatar" render={() => <SelectedAvatar selectedFollower={this.state.selectedFollower} />} />
               <Route exact path="/insight-hair" render={() => <InsightGender selectedFollower={this.state.selectedFollower} />} />
               <Route exact path="/insight-weight" render={() => <InsightWeight selectedFollower={this.state.selectedFollower} />} />
               <Route exact path="/insight-skin" render={() => <InsightSkin selectedFollower={this.state.selectedFollower} />} />
@@ -122,14 +121,14 @@ class App extends React.Component {
               <Route exact path="/insight-political" render={() => <InsightPolitical selectedFollower={this.state.selectedFollower} />} />
               <Route exact path="/insight-complete" render={() => <InsightComplete name={this.state.name} virtue={this.state.virtue} selectedFollower={this.state.selectedFollower} />} />
               <Route exact path="/intro-ocean-video" component={IntroOceanVideo} />
-              <Route exact path="/your-power" render={() => <YourPower name={this.state.name} virtue={this.state.virtue} />} />
+              <Route exact path="/your-power" component={YourPower} />
               <Route exact path="/pick-a-side" component={PickASide} />
               <Route exact path="/campaign" render={() => <Campaign selectedFollower={this.state.selectedFollower} />} />
               <Route exact path="/influenced-by" render={() => <InfluencedBy selectedFollower={this.state.selectedFollower} />} />
               <Route exact path="/dark-ad" component={DarkAd} />
               <Route exact path="/target-ad" render={() => <TargetAd selectedFollower={this.state.selectedFollower} />} />
               <Route exact path="/success-ad" component={SuccessAd} />
-              <Route exact path="/influence-a-nation" render={() => <InfluenceANation virtue={this.state.virtue} />} />
+              <Route exact path="/influence-a-nation" component={InfluenceANation} />
               <Route exact path="/consumer-data" component={ConsumerData} />
               <Route exact path="/political-data" component={PoliticalData} />
               <Route exact path="/home-data" component={HomeData} />
