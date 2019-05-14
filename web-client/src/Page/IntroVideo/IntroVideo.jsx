@@ -17,7 +17,8 @@ function IntroVideo(props) {
         <div className={classes.root}>
             <SpectreHeader colour="white" />
             <div className="IntroVideo-content content">
-                <video width={window.innerWidth} autoplay controls>
+                {/*<video width={window.innerWidth} autoplay controls>*/}
+                <video width={window.innerWidth} controls>
                     <source src={movie} type="video/mp4" />
                     Your browser does not support the video tag.
                 </video>

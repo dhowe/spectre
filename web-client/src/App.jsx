@@ -44,10 +44,8 @@ import FindCitizens from './Page/FindCitizens/FindCitizens';
 import TargetsFound from './Page/TargetsFound/TargetsFound';
 import SocialMedia from './Page/SocialMedia/SocialMedia';
 
-// NOTE: requires sym-link from ../../shared/user.js
-import User from './Components/User/user';
-
 const theme = createMuiTheme({
+  useNextVariants: true, // silence deprecation warnings
   palette: {
     primary: blue,
   },
@@ -69,7 +67,6 @@ class App extends React.Component {
         gender: 'man',
         image: 'https://material-ui.com/static/images/avatar/1.jpg'
       },
-      user: new User()
     };
     this.test_state = this.test_state.bind(this);
     this.set_key = this.set_key.bind(this);

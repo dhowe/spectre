@@ -120,21 +120,19 @@ function sketch(p) {
     //displayAsHtml(user);
   }
 
-  // function displayAsHtml(user) {
-  //   let otr = '<tr><td>';
-  //   let ctd = '</td><td>';
-  //   let ctr = '</td></tr>'
-
-  //   let rows = user.traitNames().length;
-  //   let desc = '</td><td rowspan=' + rows +
-  //     ' id="desc">' + user.generateDescription();
-  //   let html = user.traitNames().reduce((acc, t, i) => {
-  //     return acc + otr + t + ctd + user.traits[t] + (i ? '' : desc) + ctr;
-  //   }, '');
-
-  //   document.getElementById("content").style.display = 'inline-block';
-  //   document.getElementById("tdata").innerHTML = html;
-  // }
+  function displayAsHtml(user) {
+    let otr = '<tr><td>';
+    let ctd = '</td><td>';
+    let ctr = '</td></tr>'
+    let rows = user.traitNames().length;
+    let desc = '</td><td rowspan=' + rows +
+      ' id="desc">' + user.generateDescription();
+    let html = user.traitNames().reduce((acc, t, i) => {
+      return acc + otr + t + ctd + user.traits[t] + (i ? '' : desc) + ctr;
+    }, '');
+    document.getElementById("content").style.display = 'inline-block';
+    document.getElementById("tdata").innerHTML = html;
+  }
 
   function randomizeData() {
     Brand.instances.forEach(b => {
@@ -284,7 +282,7 @@ class Game extends React.Component {
           </div>
           {/* ----------- end temporary div ----------- */}
 
-          <Link component={ThankYou} to="/thank-you">
+          <Link to="/thank-you">
             <IconButton icon="next" text="Next" />
           </Link>
         </div >

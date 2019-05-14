@@ -4,13 +4,14 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Logo from "../../Components/Logo/Logo";
 import { Link, Redirect } from 'react-router-dom';
-import IntroVideo from '../IntroVideo/IntroVideo'
 import SocialLogin from '../../Components/SocialLogin/SocialLogin';
 import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import UserSession from '../../Components/UserSession/UserSession';
 
 import './LoginPage.scss';
+
+window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true; // TMP
 
 const styles = {
   root: {
@@ -75,7 +76,7 @@ class LoginPage extends React.Component {
               <Typography component="h1" variant="h1">Hello</Typography>
               <Typography component="h2" variant="h2">Let's Play!</Typography>
               <SocialLogin/>
-              <Link component={IntroVideo} to='' onClick={ this.handleSubmit }>
+              <Link to='' onClick={ this.handleSubmit }>
                   <IconButton colour="white" icon="next" text="Next" />
               </Link>
           </div>

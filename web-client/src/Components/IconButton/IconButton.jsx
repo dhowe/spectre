@@ -24,8 +24,8 @@ function IconButton(props) {
           <path
             d="M2.5 4C3.3301 4 4 3.32524 4 2.5C4 1.6699 3.32524 1 2.5 1C1.6699 1 1 1.67476 1 2.5C1 3.3301 1.67476 4 2.5 4Z"
             stroke={props.colour === "white" ? "#ffffff" : "#21c0fc"}
-            stroke-width="0.1"
-            stroke-linecap="round"
+            strokeWidth="0.1"
+            strokeLinecap="round"
           />
         </svg>
       )}

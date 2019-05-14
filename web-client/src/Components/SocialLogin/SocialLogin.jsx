@@ -34,9 +34,10 @@ const styles = {
     },
   },
   cssOutlinedInput: {
-    '&$cssFocused $notchedOutline': {
-      borderColor: grey[50],
-    }
+    // TMP: removed to silence warning in console
+    // '&$cssFocused $notchedOutline': {
+    //   borderColor: grey[50],
+    // }
   }
 };
 
