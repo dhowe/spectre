@@ -6,7 +6,7 @@ import Username from '../Username/Username'
 import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
-import movie from "./Intro_to_Spectre_V1 .mp4"
+import movie from "./OCEAN Intro V1.mp4"
 const styles = {
 
 };
