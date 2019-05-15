@@ -6,8 +6,8 @@
   "scripts": {
     "test": "NODE_ENV=test mocha ./tests --recursive --exit -r esm",
     "start": "node -r esm server.js",
-    "react-example": "yarn start",
-    "prereact-example": "cd api-test && yarn run build",
+    "with-server": "yarn start",
+    "prewith-server": "cd web-client && yarn run build",
     "Xheroku-postbuild": "cd api-test && npm install && npm run build"
   },
   "author": "daniel howe",

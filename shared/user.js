@@ -39,7 +39,10 @@ export default class User {
   }
 
   _verifyTraits() {
-    if (!this.hasOceanTraits()) throw Error('User with traits required');
+
+    if (!this.hasOceanTraits()) {
+      throw Error('User with traits required');
+    }
   }
 
   generateDescription(parser) {

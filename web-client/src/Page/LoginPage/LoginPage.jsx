@@ -37,8 +37,6 @@ class LoginPage extends React.Component {
     let user = this.context;
     user.loginType = 'email'; // TMP:
 
-    console.log(user);
-
     if (user.login) {
 
       let handleSuccess = json => {
