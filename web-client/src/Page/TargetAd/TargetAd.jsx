@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
 import { Link } from "react-router-dom";
 import SuccessAd from "../SuccessAd/SuccessAd";
 import IconButton from "../../Components/IconButton/IconButton";
@@ -27,7 +28,14 @@ function targetAd(props) {
           Share your targetted ad with {props.selectedFollower.name}?
         </Typography>
         <Link component={SuccessAd} to="/success-ad">
-          <IconButton icon="next" text="Next" />
+          <Grid container justify="center">
+          <Grid item>
+          <IconButton icon="tick" text="Yes" />
+          </Grid>
+          <Grid item>
+          <IconButton icon="next" text="No" />
+          </Grid>
+          </Grid>
         </Link>
       </div>
       <FooterLogo />

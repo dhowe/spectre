@@ -25,10 +25,10 @@ function InfluencedBy(props) {
             <div className={classes.content + " content"}>
                 <Typography component="h4" variant="h4">Sophie T ‘s OCEAN profile shows she is most likely influenced by:</Typography>
                 <Typography component="h4" variant="h4">[List of influences]</Typography>
-                <Typography component="h4" variant="h4">Use our design tool to create a targetted facebook ad to influence {props.selectedFollower.name}’s vote</Typography>
+                <Typography component="h4" variant="h4">Use our design tool to create a targeted Facebook ad to influence {props.selectedFollower.name}’s vote.</Typography>
 
                 <Link component={DarkAd} to="/dark-ad">
-                    <IconButton icon="next" text="Next" />
+                    <IconButton icon="next" text="Let's go" />
                 </Link>
             </div>
             <FooterLogo />

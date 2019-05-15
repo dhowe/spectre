@@ -36,8 +36,8 @@ class InfluenceAFollower extends React.Component {
           <SpectreHeader colour="white" />
           <div className={this.props.classes.content + " content"}>
               <Typography component="h3" variant="h3">Influence a follower!</Typography>
-              <Typography component="h4" variant="h4" >Spectre has a community of devout followers willing to help you.</Typography>
-              <Typography component="h5" variant="h5" >Choose one to influence</Typography>
+              <Typography component="h4" variant="h4" >Spectre has a global community of followers.</Typography>
+              <Typography component="h5" variant="h5" >Choose a participant.</Typography>
               <Grid container justify="center" alignItems="center">
                   {this.names.map((n, i) => <AvatarComponent
                       target={{name: n, image: '/targets/target'+i+'.png'}}/>)}
