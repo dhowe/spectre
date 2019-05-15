@@ -25,9 +25,9 @@ function Campaign(props) {
             <div className={classes.content + " content"}>
                 <Typography component="h4" variant="h4">The [Leave] campaign is in jeopardy.</Typography>
                 <Typography component="h4" variant="h4">Longer delays to Brexit increase the risk of it not happening.</Typography>
-                <Typography component="h4" variant="h4">We’re going to run a ‘grassroots’ campaign to influence {props.selectedFollower.name} to vote Leave.</Typography>
+                <Typography component="h4" variant="h4">We’re going to run a ‘grassroots’ campaign to influence {props.selectedFollower.name} to vote Leave in the next referendum.</Typography>
                 <Link component={InfluencedBy} to="/influenced-by">
-                    <IconButton icon="next" text="Next" />
+                    <IconButton icon="next" text="Ready" />
                 </Link>
             </div>
             <FooterLogo />

@@ -9,6 +9,8 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 
+import "./PersonalisedExperience.scss"; 
+
 const styles = {
   root: {
     flexGrow: 1,
@@ -28,13 +30,12 @@ class PersonalisedExperience extends React.Component {
   render() {
     let classes = this.props.classes;
     return (
-      <div className={classes.root}>
+      <div className={classes.root + ' PersonalisedExperience'}>
             <SpectreHeader colour="white" />
             <div className={classes.content + " content"}>
                 <Typography component="h3" variant="h3">Excellent</Typography>
-                <Typography component="h3" variant="h3">In order to create your</Typography>
-                <Typography component="h3" variant="h3" className={classes.glow}><strong>personalised experience</strong></Typography>
-                <Typography component="h4" variant="h4" >Tell us what you love, tell us what you hate...</Typography>
+                <Typography component="h3" variant="h3">In order to create a <strong>personalised experience</strong></Typography>
+                <Typography component="h4" variant="h4" >tell us what you love, tell us what you hate...</Typography>
                 <Link component={Game} to="/game">
                     <IconButton icon="next" text="Next" />
                 </Link>

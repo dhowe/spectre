@@ -30,10 +30,9 @@ class Pledge extends React.Component {
         <div className={this.props.classes.root}>
             <SpectreHeader colour="white" />
             <div className={this.props.classes.content + " content"}>
-                <Typography component="h6" variant="h6">Spectre can help you in ways you don't expect. Spectre can see patterns you can't see.</Typography>
-                <Typography component="h6" variant="h6">We can tell you things about yourself that you don't know.</Typography>
-                <Typography component="h6" variant="h6">In order for you to know more, you must offer up something precious to you.</Typography>
-                <Typography component="h6" variant="h5">Continue?</Typography>
+                <Typography component="h6" variant="h5">Welcome to the altar of dataism.</Typography>
+                <Typography component="h6" variant="h6">Our technologies can tell you things about yourself that you don’t know.</Typography>
+                <Typography component="h6" variant="h6">In order for us to do this, first we need to get to know you a little bit.</Typography>
                 <Link component={SearchingFor} to="/searching-for">
                     <IconButton icon="next" text="Next" />
                 </Link>

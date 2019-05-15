@@ -33,7 +33,7 @@ class Steps extends React.Component {
                     <Typography component="h5" variant="h5">Get the data. Get the {this.context.virtue}.</Typography>
                     <Typography component="h4" variant="h4">Ready?</Typography>
                     <Link component={PersonalisedExperience} to="/personalised-experience">
-                        <IconButton icon="next" text="Yes" />
+                        <IconButton icon="tick" text="Yes" />
                     </Link>
                 </div>
                 <FooterLogo />

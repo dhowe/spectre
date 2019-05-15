@@ -24,6 +24,7 @@ function InsightAccuracy(props) {
             <SpectreHeader colour="white" />
             <div className={classes.content + " content"}>
                 <Typography component="h3" variant="h3">Excellent! </Typography>
+                <IconButton icon="trophy" />
                 <Typography component="h4" variant="h4">Your accuracy level is high. You are starting to see {props.selectedFollower.name} as we see {props.selectedFollower.gender ? 'him' : 'her'}.</Typography>
                 <Link component={InsightFinancial} to="/insight-financial">
                     <IconButton icon="next" text="Let's go deeper" />
