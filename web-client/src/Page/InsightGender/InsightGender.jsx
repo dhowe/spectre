@@ -19,15 +19,8 @@ const styles = {
 };
 
 class InsightGender extends React.Component {
-  state = {
-    value: 50
-  };
-  handleChange = (event, value) => {
-    this.setState({ value });
-  };
 
   render() {
-    const { value } = this.state;
     const { classes } = this.props;
     return (
       <div className={classes.root}>

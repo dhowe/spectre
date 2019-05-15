@@ -1,17 +1,26 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
+import FooterBackgroundBaby from '../../Images/Footer_Baby_Pointing_300px_by_1080px.jpg';
 
 import "./FooterLogo.scss";
 
-const styles = {};
+const styles = {
+  root: {
+    flexGrow: 1,
+    width: "100%",
+    backgroundImage: 'url(' + FooterBackgroundBaby + ')',
+    backgroundRepeat: 'no-repeat',
+  },
+};
 
 function FooterLogo(props) {
+  const { classes } = props;
   return (
-    <div className="FooterLogo">
+    <div className={classes.root + ' FooterLogo'}>
       <svg
-        width="50"
-        height="50"
+        width="150"
+        height="150"
         viewBox="0 0 131 142"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
