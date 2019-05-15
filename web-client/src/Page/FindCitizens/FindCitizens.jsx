@@ -28,7 +28,7 @@ function FindCitizens(props) {
                 <Typography component="h4" variant="h4">Now you can find all UK citizens with a similar OCEAN profile to {props.selectedFollower.name} that have never voted before!</Typography>
                 <Typography component="h4" variant="h4">A silent army that could well tip the balance.</Typography>
                 <Link component={TargetsFound} to="/targets-found">
-                    <IconButton icon="next" text="Next" />
+                    <IconButton icon="next" text="Find them" />
                 </Link>
             </div>
             <FooterLogo />
