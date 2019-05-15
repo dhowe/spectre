@@ -41,8 +41,10 @@ GET: returns the K closest users (by OCEAN score) to the user with id
 
 ##### $ npm test (to run tests)
 
-##### $ npm start (to start the server)
+##### $ npm start (to start the server [on port 8083])
 
-##### $ npm run react-example (to load login example)
+##### $ npm run client (to start the webapp [on port 3000])
+
+##### $ npm run client-server (to start server + webapp [on port 8083])
 
 <br/>
