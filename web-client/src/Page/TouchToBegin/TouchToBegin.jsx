@@ -5,6 +5,8 @@ import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 import LoginPage from '../LoginPage/LoginPage';
 import Logo from "../../Components/Logo/Logo";
+import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
+import BeginBackground from '../../Images/1_Standby_Screen_1080px_by_1620px.jpg';
 
 import './TouchToBegin.scss';
 
@@ -12,8 +14,9 @@ const styles = {
     root: {
         flexGrow: 1,
         width: "100%",
-        backgroundSize: 'cover',
-        background: 'url(https://www.atlantisbahamas.com/media/Things%20To%20Do/Water%20Park/Beaches/Hero/Experiences_Beach.jpg)',
+        backgroundImage: 'url(' + BeginBackground + ')',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: '0 300px',
     },
     clickToContinue: {
         margin: "20% 0",
@@ -24,6 +27,7 @@ function TouchToBegin(props) {
     const { classes } = props;
     return (
         <div className={classes.root + ' touchToBegin'}>
+            <SpectreHeader />
             <div className={classes.content + " content"}>
                 <Link className="touchToBegin-beginButton" component={LoginPage} to="/login">
                     <div className={classes.clickToContinue}>

@@ -2,8 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import Slider from "@material-ui/lab/Slider";
-import Grid from "@material-ui/core/Grid";
 import { Link } from "react-router-dom";
 import InsightAccuracy from "../InsightAccuracy/InsightAccuracy";
 import IconButton from "../../Components/IconButton/IconButton";
@@ -21,15 +19,7 @@ const styles = {
 };
 
 class InsightSkin extends React.Component {
-  state = {
-    value: 50
-  };
-  handleChange = (event, value) => {
-    this.setState({ value });
-  };
-
   render() {
-    const { value } = this.state;
     const { classes } = this.props;
     return (
       <div className={classes.root}>
