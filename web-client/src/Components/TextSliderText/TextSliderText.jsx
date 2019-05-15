@@ -3,6 +3,8 @@ import Slider from "@material-ui/lab/Slider";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 
+import "./TextSliderText.scss";
+
 class TextSliderText extends React.Component {
   state = {
     value: 50
@@ -14,7 +16,7 @@ class TextSliderText extends React.Component {
   render() {
     const { value } = this.state;
     return (
-      <Grid container alignItems="center">
+      <Grid className="textSliderText" container alignItems="center">
         <Grid item xs={2}>
           <Typography>{this.props.leftText}</Typography>
         </Grid>
