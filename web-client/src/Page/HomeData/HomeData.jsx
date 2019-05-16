@@ -4,17 +4,34 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 import FindCitizens from '../FindCitizens/FindCitizens'
-import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
+import Button from '@material-ui/core/Button';
+import UserSession from '../../Components/UserSession/UserSession';
 
 const styles = {
     root: {
         flexGrow: 1,
         width: "100%",
-
         color: 'black'
     },
+    content: {
+        paddingTop: "100px",
+    },
+    clickToContinue: {
+        margin: "20% 0",
+    },
+    button: {
+        borderRadius: '28px',
+        border: 'solid 3px #929391',
+        backgroundColor: '#ffffff',
+        boxShadow: 'none',
+        color: '#929391',
+    },
+    link: {
+        display: 'block',
+        marginBottom: '30px',
+    }
 };
 
 function HomeData(props) {
@@ -25,9 +42,65 @@ function HomeData(props) {
             <div className={classes.content + " content"}>
                 <Typography component="h3" variant="h3">Last but not least</Typography>
                 <Typography component="h3" variant="h3">HOME DATA:</Typography>
-                [List of options here]
                 <Link component={FindCitizens} to="/find-citizens">
-                    <IconButton icon="next" text="Next" />
+                    <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.context.virtue = 'power' }}>
+                        Smart TV
+                    </Button>
+                </Link>
+                <Link component={FindCitizens} to="/find-citizens">
+                    <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.context.virtue = 'power' }}>
+                        Smart fridge
+                    </Button>
+                </Link>
+                <Link component={FindCitizens} to="/find-citizens">
+                    <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.context.virtue = 'power' }}>
+                        Wifi Router
+                    </Button>
+                </Link>
+                <Link component={FindCitizens} to="/find-citizens">
+                    <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.context.virtue = 'power' }}>
+                        Smart Assistant
+                    </Button>
+                </Link>
+                <Link component={FindCitizens} to="/find-citizens">
+                    <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.context.virtue = 'power' }}>
+                        Mobile Devices
+                    </Button>
+                </Link>
+                <Link component={FindCitizens} to="/find-citizens">
+                    <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.context.virtue = 'power' }}>
+                        Computer
+                    </Button>
+                </Link>
+                <Link component={FindCitizens} to="/find-citizens">
+                    <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.context.virtue = 'power' }}>
+                        Mobile Apps
+                    </Button>
+                </Link>
+                <Link component={FindCitizens} to="/find-citizens">
+                    <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.context.virtue = 'power' }}>
+                        Thermostat
+                    </Button>
+                </Link>
+                <Link component={FindCitizens} to="/find-citizens">
+                    <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.context.virtue = 'power' }}>
+                        Smart Watch
+                    </Button>
+                </Link>
+                <Link component={FindCitizens} to="/find-citizens">
+                    <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.context.virtue = 'power' }}>
+                        Mobile Location Data
+                    </Button>
+                </Link>
+                <Link component={FindCitizens} to="/find-citizens">
+                    <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.context.virtue = 'power' }}>
+                        Smart Home Hub
+                    </Button>
+                </Link>
+                <Link component={FindCitizens} to="/find-citizens">
+                    <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.context.virtue = 'power' }}>
+                        Smart Lightbulbs
+                    </Button>
                 </Link>
             </div>
             <FooterLogo />
@@ -38,5 +111,6 @@ function HomeData(props) {
 HomeData.propTypes = {
     classes: PropTypes.object.isRequired,
 };
+HomeData.contextType = UserSession;
 
 export default withStyles(styles)(HomeData);
