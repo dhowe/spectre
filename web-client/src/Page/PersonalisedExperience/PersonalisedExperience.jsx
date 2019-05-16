@@ -9,7 +9,7 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 
-import "./PersonalisedExperience.scss"; 
+import "./PersonalisedExperience.scss";
 
 const styles = {
   root: {
@@ -28,20 +28,20 @@ const styles = {
 
 class PersonalisedExperience extends React.Component {
   render() {
-    let classes = this.props.classes;
+    const { classes } = this.props;
     return (
       <div className={classes.root + ' PersonalisedExperience'}>
-            <SpectreHeader colour="white" />
-            <div className={classes.content + " content"}>
-                <Typography component="h3" variant="h3">Excellent</Typography>
-                <Typography component="h3" variant="h3">In order to create a <strong>personalised experience</strong></Typography>
-                <Typography component="h4" variant="h4" >tell us what you love, tell us what you hate...</Typography>
-                <Link component={Game} to="/game">
-                    <IconButton icon="next" text="Next" />
-                </Link>
-            </div >
-            <FooterLogo />
-        </div>
+        <SpectreHeader colour="white" />
+        <div className={classes.content + " content"}>
+          <Typography component="h3" variant="h3">Excellent</Typography>
+          <Typography component="h3" variant="h3">In order to create a <strong>personalised experience</strong></Typography>
+          <Typography component="h4" variant="h4" >tell us what you love, tell us what you hate...</Typography>
+          <Link component={Game} to="/game">
+            <IconButton icon="next" text="Next" />
+          </Link>
+        </div >
+        <FooterLogo />
+      </div>
     );
   }
 }

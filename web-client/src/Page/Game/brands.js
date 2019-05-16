@@ -12,7 +12,8 @@ export default class Brand {
     update() {
       this.x += Brand.speed;
     }
-    render() {
+        render() {
+        const { classes } = this.props;
       noStroke();
       fill(255);
       ellipse(this.x, this.y, Brand.radius);

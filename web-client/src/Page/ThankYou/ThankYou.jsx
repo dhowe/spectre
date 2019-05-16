@@ -26,17 +26,18 @@ const styles = {
 
 class ThankYou extends React.Component {
   render() {
+    const { classes } = this.props;
     console.log("User:", this.context);
     return (
-      <div className={this.props.classes.root}>
+      <div className={classes.root}>
         <SpectreHeader colour="white" />
-        <div className={this.props.classes.content + " content"}>
-            <Typography component="h3" variant="h3">Thank you, {this.context.name}!</Typography>
-            {/* <img src='https://cdn.pixabay.com/photo/2013/07/13/12/15/hand-159474__340.png' alt='thumbs up'></img> */}
-            <Typography component="h4" variant="h4" >Your experience has been personalised.</Typography>
-            <Link component={InfluenceAFollower} to="/influence-a-follower">
-                <IconButton icon="next" text="Next" />
-            </Link>
+        <div className={classes.content + " content"}>
+          <Typography component="h3" variant="h3">Thank you, {this.context.name}!</Typography>
+          {/* <img src='https://cdn.pixabay.com/photo/2013/07/13/12/15/hand-159474__340.png' alt='thumbs up'></img> */}
+          <Typography component="h4" variant="h4" >Your experience has been personalised.</Typography>
+          <Link component={InfluenceAFollower} to="/influence-a-follower">
+            <IconButton icon="next" text="Next" />
+          </Link>
         </div>
         <FooterLogo />
       </div>

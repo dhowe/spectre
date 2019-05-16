@@ -14,7 +14,6 @@ const styles = {
   root: {
     flexGrow: 1,
     width: "100%",
-
     color: 'black'
   },
   clickToContinue: {
@@ -31,22 +30,23 @@ class InfluenceAFollower extends React.Component {
     this.names = ['Terry', 'Bailey', 'Devin', 'Tyler', 'Fran', 'Pat', 'Sam', 'Reed'];
   }
   render() {
+    const { classes } = this.props;
     return (
-      <div className={this.props.classes.root}>
-          <SpectreHeader colour="white" />
-          <div className={this.props.classes.content + " content"}>
-              <Typography component="h3" variant="h3">Influence a follower!</Typography>
-              <Typography component="h4" variant="h4" >Spectre has a global community of followers.</Typography>
-              <Typography component="h5" variant="h5" >Choose a participant.</Typography>
-              <Grid container justify="center" alignItems="center">
-                  {this.names.map((n, i) => <AvatarComponent
-                      target={{name: n, image: '/targets/target'+i+'.png'}}/>)}
-              </Grid>
-              <Link component={SelectedAvatar} to="/selected-avatar">
-                  <IconButton icon="next" text="Next" />
-              </Link>
-          </div>
-          <FooterLogo />
+      <div className={classes.root}>
+        <SpectreHeader colour="white" />
+        <div className={classes.content + " content"}>
+          <Typography component="h3" variant="h3">Influence a follower!</Typography>
+          <Typography component="h4" variant="h4" >Spectre has a global community of followers.</Typography>
+          <Typography component="h5" variant="h5" >Choose a participant.</Typography>
+          <Grid container justify="center" alignItems="center">
+            {this.names.map((n, i) => <AvatarComponent
+              target={{ name: n, image: '/targets/target' + i + '.png' }} />)}
+          </Grid>
+          <Link component={SelectedAvatar} to="/selected-avatar">
+            <IconButton icon="next" text="Next" />
+          </Link>
+        </div>
+        <FooterLogo />
       </div>
     );
   }

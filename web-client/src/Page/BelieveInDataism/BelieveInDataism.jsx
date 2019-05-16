@@ -13,7 +13,6 @@ const styles = {
   root: {
     flexGrow: 1,
     width: "100%",
-
     color: 'black'
   },
   clickToContinue: {
@@ -34,10 +33,11 @@ function toAdjPhrase(virtue) {
 
 class BelieveInDataism extends React.Component {
   render() {
+    const { classes } = this.props;
     return (
-      <div className={this.props.classes.root}>
+      <div className={classes.root}>
         <SpectreHeader colour="white" />
-        <div className={this.props.classes.content + " content"}>
+        <div className={classes.content + " content"}>
           <Typography component="h4" variant="h4">{toAdjPhrase(this.context.virtue)}, you need more data.</Typography>
           <Typography component="h4" variant="h4">We can help you believe in the {this.context.virtue} of dataism</Typography>
           <Link component={Steps} to="/steps">

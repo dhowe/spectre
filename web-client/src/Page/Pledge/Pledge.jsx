@@ -21,26 +21,27 @@ const styles = {
 };
 
 class Pledge extends React.Component {
-  componentDidMount() {
-    if (!this.context.name) this.context.name = 'Barney'; // TMP: remove
-    console.log('User:',this.context);
-  }
-  render() {
-    return (
-        <div className={this.props.classes.root}>
-            <SpectreHeader colour="white" />
-            <div className={this.props.classes.content + " content"}>
-                <Typography component="h6" variant="h5">Welcome to the altar of dataism.</Typography>
-                <Typography component="h6" variant="h6">Our technologies can tell you things about yourself that you don’t know.</Typography>
-                <Typography component="h6" variant="h6">In order for us to do this, first we need to get to know you a little bit.</Typography>
-                <Link component={SearchingFor} to="/searching-for">
-                    <IconButton icon="next" text="Next" />
-                </Link>
+    componentDidMount() {
+        if (!this.context.name) this.context.name = 'Barney'; // TMP: remove
+        console.log('User:', this.context);
+    }
+    render() {
+        const { classes } = this.props;
+        return (
+            <div className={classes.root}>
+                <SpectreHeader colour="white" />
+                <div className={classes.content + " content"}>
+                    <Typography component="h6" variant="h5">Welcome to the altar of dataism.</Typography>
+                    <Typography component="h6" variant="h6">Our technologies can tell you things about yourself that you don’t know.</Typography>
+                    <Typography component="h6" variant="h6">In order for us to do this, first we need to get to know you a little bit.</Typography>
+                    <Link component={SearchingFor} to="/searching-for">
+                        <IconButton icon="next" text="Next" />
+                    </Link>
+                </div >
+                <FooterLogo />
             </div >
-            <FooterLogo />
-        </div >
-    );
-  }
+        );
+    }
 }
 
 Pledge.propTypes = {

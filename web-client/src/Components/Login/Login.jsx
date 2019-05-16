@@ -30,7 +30,8 @@ class Login extends React.Component {
         alert(`Registering with provider '${providerId}'`);
     };
 
-    render() {
+        render() {
+        const { classes } = this.props;
         return (
             <div className={classes.root}>
                 <LoginRegister

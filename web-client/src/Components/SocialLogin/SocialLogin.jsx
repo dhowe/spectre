@@ -46,15 +46,16 @@ class SocialLogin extends React.Component {
     this.context.login = event.target.value; // user-prop
   }
   render() {
+    const { classes } = this.props;
     return (
-      <div className={this.props.classes.root + " socialLogin"}>
-        <div className={this.props.classes.content + " socialLogin-content"}>
+      <div className={classes.root + " socialLogin"}>
+        <div className={classes.content + " socialLogin-content"}>
           <form onSubmit={this.props.handleSubmit}>
-            <FormControl className={this.props.classes.margin}>
+            <FormControl className={classes.margin}>
               <InputLabel
                 classes={{
-                  root: this.props.classes.cssLabel,
-                  focused: this.props.classes.cssFocused
+                  root: classes.cssLabel,
+                  focused: classes.cssFocused
                 }}><br />Email:
                   </InputLabel>
               <Input
@@ -62,8 +63,8 @@ class SocialLogin extends React.Component {
                 id="custom-css-standard-input"
                 onChange={this.handleChange('name')}
                 classes={{
-                  root: this.props.classes.textField,
-                  underline: this.props.classes.cssUnderline
+                  root: classes.textField,
+                  underline: classes.cssUnderline
                 }} /><br />
             </FormControl>
           </form>

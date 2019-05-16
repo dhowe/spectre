@@ -55,7 +55,7 @@ class LoginPage extends React.Component {
     } else {
 
       // TMP: should reject without successful User creation
-      this.context.login = 'test'+(+new Date())+'@test.com';
+      this.context.login = 'test' + (+new Date()) + '@test.com';
       this.setState(() => ({ toNext: true }));
     }
   }
@@ -65,19 +65,20 @@ class LoginPage extends React.Component {
     }
   }
   render() {
+    const { classes } = this.props;
     return (
-      <div className={this.props.classes.root + " LoginPage"}>
-          {this.renderRedirect()}
-          <SpectreHeader />
-          <div className={this.props.classes.content + " LoginPage-content content"}>
-              <Logo></Logo>
-              <Typography component="h1" variant="h1">Hello</Typography>
-              <Typography component="h2" variant="h2">Let's Play!</Typography>
-              <SocialLogin/>
-              <Link to='' onClick={ this.handleSubmit }>
-                  <IconButton colour="white" icon="next" text="Next" />
-              </Link>
-          </div>
+      <div className={classes.root + " LoginPage"}>
+        {this.renderRedirect()}
+        <SpectreHeader />
+        <div className={classes.content + " LoginPage-content content"}>
+          <Logo></Logo>
+          <Typography component="h1" variant="h1">Hello</Typography>
+          <Typography component="h2" variant="h2">Let's Play!</Typography>
+          <SocialLogin />
+          <Link to='' onClick={this.handleSubmit}>
+            <IconButton colour="white" icon="next" text="Next" />
+          </Link>
+        </div>
       </div>
     );
   }

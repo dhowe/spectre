@@ -19,17 +19,18 @@ const styles = {
 
 class SelectedAvatar extends React.Component {
   render() {
+    const { classes } = this.props;
     return (
-      <div className={styles.root}>
-          <SpectreHeader colour="white" />
-          <div className={styles.content + " content"}>
-              <Typography component="h3" variant="h3">You selected {this.props.selectedFollower.name}</Typography>
-              <Typography component="h4" variant="h4">Lets start by verifying some of the basics to unlock {this.context.virtueAsAdverb()} insights into {this.props.selectedFollower.name}. Don’t worry only you will see the results. </Typography>
-              <Link component={InsightGender} to="/insight-hair">
-                  <IconButton icon="next" text="DIVE IN" />
-              </Link>
-          </div>
-          <FooterLogo />
+      <div className={classes.root}>
+        <SpectreHeader colour="white" />
+        <div className={classes.content + " content"}>
+          <Typography component="h3" variant="h3">You selected {this.props.selectedFollower.name}</Typography>
+          <Typography component="h4" variant="h4">Lets start by verifying some of the basics to unlock {this.context.virtueAsAdverb()} insights into {this.props.selectedFollower.name}. Don’t worry only you will see the results. </Typography>
+          <Link component={InsightGender} to="/insight-hair">
+            <IconButton icon="next" text="DIVE IN" />
+          </Link>
+        </div>
+        <FooterLogo />
       </div>
     );
   }

@@ -45,10 +45,11 @@ class Username extends React.Component {
     this.setState({ gender: event.target.value });
   };
   render() {
+    const { classes } = this.props;
     return (
-      <div className={this.props.classes.root + " Username"}>
+      <div className={classes.root + " Username"}>
         <SpectreHeader colour="white" />
-        <div className={this.props.classes.content + " Username-content content"}>
+        <div className={classes.content + " Username-content content"}>
           <Typography variant="h6">YOUR FIRST NAME?</Typography>
           <TextField value={this.state.name} onChange={this.handleChange('name')}></TextField>
           {/* <RadioInput value={this.state.gender} onChange={this.handleRadioChange} options={['WOMAN', 'MAN', 'OTHER']}>YOUR GENDER?</RadioInput> */}
