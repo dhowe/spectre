@@ -13,7 +13,6 @@ const styles = {
   root: {
     flexGrow: 1,
     width: "100%",
-
     color: 'black'
   },
   clickToContinue: {
@@ -23,17 +22,18 @@ const styles = {
 
 class DataIs extends React.Component {
   render() {
+    const { classes } = this.props;
     console.log('User:', this.context);
     return (
-      <div className={styles.root}>
-          <SpectreHeader colour="white" />
-          <div className={styles.content + " content"}>
-              <Typography component="h4" variant="h4">DATA IS {this.context.virtue.toUpperCase()}</Typography>
-              <Link component={BelieveInDataism} to="/believe-in-dataism">
-                  <IconButton icon="next" text="Next" />
-              </Link>
-          </div>
-          <FooterLogo />
+      <div className={classes.root}>
+        <SpectreHeader colour="white" />
+        <div className={classes.content + " content"}>
+          <Typography component="h4" variant="h4">DATA IS {this.context.virtue.toUpperCase()}</Typography>
+          <Link component={BelieveInDataism} to="/believe-in-dataism">
+            <IconButton icon="next" text="Next" />
+          </Link>
+        </div>
+        <FooterLogo />
       </div>
     );
   }

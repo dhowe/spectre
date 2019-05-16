@@ -35,10 +35,10 @@ class AvatarComponent extends React.Component {
   render() {
     return (
       <div >
-          <Grid container justify="center" alignItems="center">
-              <Avatar alt={this.props.target.name} src={this.props.target.image} style={this.state.class === 'active'?    this.styles.active : this.styles.bigAvatar} />
-          </Grid>
-          <Typography style={this.state.class === 'targeted' ? this.styles.targeted_text : null}>{this.props.target.name}</Typography>
+        <Grid container justify="center" alignItems="center">
+          <Avatar alt={this.props.target.name} src={this.props.target.image} style={this.state.class === 'active' ? this.styles.active : this.styles.bigAvatar} />
+        </Grid>
+        <Typography style={this.state.class === 'targeted' ? this.styles.targeted_text : null}>{this.props.target.name}</Typography>
       </div>
     );
   }

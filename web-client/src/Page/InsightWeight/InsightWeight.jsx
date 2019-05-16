@@ -7,6 +7,7 @@ import InsightSkin from '../InsightSkin/InsightSkin';
 import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
+import TextSliderText from "../../Components/TextSliderText/TextSliderText";
 
 const styles = {
     root: {
@@ -24,6 +25,7 @@ function InsightWeight(props) {
             <SpectreHeader colour="white" />
             <div className={classes.content + " content"}>
                 <Typography component="h4" variant="h4">What’s {props.selectedFollower.name}’s likely weight?</Typography>
+                <TextSliderText leftText="Underweight" rightText="Overweight" />
                 <Link component={InsightSkin} to="/insight-skin">
                     <IconButton icon="next" text="Next" />
                 </Link>

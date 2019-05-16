@@ -38,31 +38,32 @@ const styles = {
 
 class SearchingFor extends React.Component {
     render() {
+        const { classes } = this.props;
         return (
-            <div className={styles.root}>
+            <div className={classes.root}>
                 <SpectreHeader colour="white" />
-                <div className={styles.content + " content"}>
+                <div className={classes.content + " content"}>
                     <Typography component="h6" variant="h5">Welcome {this.context.name}</Typography>
                     <Typography component="h6" variant="h5">What are you searching for today?</Typography>
                     <div>
                         <Link component={DataIs} to="/data-is">
-                            <Button variant="contained" color="primary" onClick={() => { this.context.virtue = 'power' }}>
+                            <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.context.virtue = 'power' }}>
                                 Power
                         </Button>
                         </Link>
                         <Link component={DataIs} to="/data-is">
-                            <Button variant="contained" color="primary" onClick={() => { this.context.virtue = 'truth' }}>
+                            <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.context.virtue = 'truth' }}>
                                 Truth
                         </Button>
                         </Link>
                         <Link component={DataIs} to="/data-is">
-                            <Button variant="contained" color="primary" onClick={() => { this.context.virtue = 'wealth' }}>
+                            <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.context.virtue = 'wealth' }}>
                                 Wealth
                         </Button>
                         </Link>
                         <Link component={DataIs} to="/data-is">
-                        <Button variant="contained" color="primary" onClick={() => { this.context.virtue = 'influence' }}>
-                            Influence
+                            <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.context.virtue = 'influence' }}>
+                                Influence
                         </Button>
                         </Link>
                     </div>
@@ -72,7 +73,6 @@ class SearchingFor extends React.Component {
         );
     }
 }
-
 
 SearchingFor.propTypes = {
     classes: PropTypes.object.isRequired,

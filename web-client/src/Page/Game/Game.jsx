@@ -119,19 +119,19 @@ function sketch(p) {
     //displayAsHtml(user);
   }
 
-  function displayAsHtml(user) {
-    let otr = '<tr><td>';
-    let ctd = '</td><td>';
-    let ctr = '</td></tr>'
-    let rows = user.oceanTraits().length;
-    let desc = '</td><td rowspan=' + rows +
-      ' id="desc">' + user.generateDescription();
-    let html = user.oceanTraits().reduce((acc, t, i) => {
-      return acc + otr + t + ctd + user.traits[t] + (i ? '' : desc) + ctr;
-    }, '');
-    document.getElementById("content").style.display = 'inline-block';
-    document.getElementById("tdata").innerHTML = html;
-  }
+  // function displayAsHtml(user) {
+  //   let otr = '<tr><td>';
+  //   let ctd = '</td><td>';
+  //   let ctr = '</td></tr>'
+  //   let rows = user.oceanTraits().length;
+  //   let desc = '</td><td rowspan=' + rows +
+  //     ' id="desc">' + user.generateDescription();
+  //   let html = user.oceanTraits().reduce((acc, t, i) => {
+  //     return acc + otr + t + ctd + user.traits[t] + (i ? '' : desc) + ctr;
+  //   }, '');
+  //   document.getElementById("content").style.display = 'inline-block';
+  //   document.getElementById("tdata").innerHTML = html;
+  // }
 
   function randomizeData() {
     Brand.instances.forEach(b => {
@@ -257,13 +257,14 @@ class Game extends React.Component {
     console.log("User:", user);
   }
   render() {
+    const { classes } = this.props;
     if (this.state.toThankYou === true) { // hack redirect
       return <Redirect to='/thank-you' />
     }
     return (
-      <div className={this.props.classes.root}>
+      <div className={classes.root}>
         <SpectreHeader colour="white" />
-        <div className={this.props.classes.content + " content"}>
+        <div className={classes.content + " content"}>
           <P5Wrapper sketch={sketch} />
 
           {/* ------- temporary div for testing ------- */}

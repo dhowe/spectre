@@ -22,10 +22,11 @@ const styles = {
 
 class Steps extends React.Component {
     render() {
+        const { classes } = this.props;
         return (
-            <div className={this.props.classes.root}>
+            <div className={classes.root}>
                 <SpectreHeader colour="white" />
-                <div className={this.props.classes.content + " content"}>
+                <div className={classes.content + " content"}>
                     <Typography component="h5" variant="h5">Find what you are looking for by following these three steps:</Typography>
                     <Typography component="h6" variant="h6"><strong>Step 1</strong> - influence a follower</Typography>
                     <Typography component="h6" variant="h6"><strong>Step 2</strong> - influence a nation</Typography>

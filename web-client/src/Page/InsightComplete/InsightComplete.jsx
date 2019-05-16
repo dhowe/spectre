@@ -19,10 +19,11 @@ const styles = {
 
 class InsightComplete extends React.Component {
     render() {
+        const { classes } = this.props;
         return (
-            <div className={styles.root}>
+            <div className={classes.root}>
                 <SpectreHeader colour="white" />
-                <div className={styles.content + " content"}>
+                <div className={classes.content + " content"}>
                     <Typography component="h3" variant="h3">Congratulations {this.context.name} </Typography>
                     <Typography component="h3" variant="h3">Verification complete. </Typography>
                     <IconButton icon="next" />
