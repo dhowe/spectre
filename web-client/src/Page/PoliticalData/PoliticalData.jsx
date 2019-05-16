@@ -7,7 +7,6 @@ import HomeData from '../HomeData/HomeData'
 import Button from '@material-ui/core/Button';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
-import UserSession from '../../Components/UserSession/UserSession';
 
 const styles = {
     root: {
@@ -43,57 +42,57 @@ function PoliticalData(props) {
                 <Typography component="h3" variant="h3">Choose 5 more!</Typography>
                 <Typography component="h3" variant="h3">POLITICAL DATA:</Typography>
                 <Link component={HomeData} to="/home-data">
-                    <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.context.dataChoices.political = 'Voting Records' }}>
+                    <Button className={classes.button} variant="contained" color="primary" >
                         Voting Records
                     </Button>
                 </Link>
                 <Link component={HomeData} to="/home-data">
-                    <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.context.dataChoices.political = 'Finance' }}>
+                    <Button className={classes.button} variant="contained" color="primary" >
                         Finance
                     </Button>
                 </Link>
                 <Link component={HomeData} to="/home-data">
-                    <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.context.dataChoices.political = 'Data Brokers' }}>
+                    <Button className={classes.button} variant="contained" color="primary" >
                         Data Brokers
                     </Button>
                 </Link>
                 <Link component={HomeData} to="/home-data">
-                    <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.context.dataChoices.political = 'Online Maps' }}>
+                    <Button className={classes.button} variant="contained" color="primary" >
                         Online Maps
                     </Button>
                 </Link>
                 <Link component={HomeData} to="/home-data">
-                    <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.context.dataChoices.political = 'Political Party Member' }}>
+                    <Button className={classes.button} variant="contained" color="primary" >
                         Political Party Member
                     </Button>
                 </Link>
                 <Link component={HomeData} to="/home-data">
-                    <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.context.dataChoices.political = 'Polls and Surveys' }}>
+                    <Button className={classes.button} variant="contained" color="primary" >
                         Polls and Surveys
                     </Button>
                 </Link>
                 <Link component={HomeData} to="/home-data">
-                    <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.context.dataChoices.political = 'Political Consultants' }}>
+                    <Button className={classes.button} variant="contained" color="primary" >
                         Political Consultants
                     </Button>
                 </Link>
                 <Link component={HomeData} to="/home-data">
-                    <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.context.dataChoices.political = 'Satellite Imagery' }}>
+                    <Button className={classes.button} variant="contained" color="primary">
                         Satellite Imagery
                     </Button>
                 </Link>
                 <Link component={HomeData} to="/home-data">
-                    <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.context.dataChoices.political = 'Group memberships' }}>
+                    <Button className={classes.button} variant="contained" color="primary">
                         Group memberships
                     </Button>
                 </Link>
                 <Link component={HomeData} to="/home-data">
-                    <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.context.dataChoices.political = 'Internet platforms' }}>
+                    <Button className={classes.button} variant="contained" color="primary">
                         Internet platforms
                     </Button>
                 </Link>
                 <Link component={HomeData} to="/home-data">
-                    <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.context.dataChoices.political = 'Government data sets' }}>
+                    <Button className={classes.button} variant="contained" color="primary">
                         Government data sets
                     </Button>
                 </Link>
@@ -107,6 +106,5 @@ function PoliticalData(props) {
 PoliticalData.propTypes = {
     classes: PropTypes.object.isRequired,
 };
-PoliticalData.contextType = UserSession;
 
 export default withStyles(styles)(PoliticalData);

@@ -7,7 +7,6 @@ import PoliticalData from '../PoliticalData/PoliticalData'
 import Button from '@material-ui/core/Button';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
-import UserSession from '../../Components/UserSession/UserSession';
 
 const styles = {
     root: {
@@ -43,72 +42,72 @@ function ConsumerData(props) {
                 <Typography component="h3" variant="h3">Choose 5 types of data:</Typography>
                 <Typography component="h3" variant="h3">CONSUMER DATA:</Typography>
                 <Link component={PoliticalData} to="/political-data">
-                    <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.context.virtue = 'power' }}>
+                    <Button className={classes.button} variant="contained" color="primary" >
                         Health
                     </Button>
                 </Link>
                 <Link component={PoliticalData} to="/political-data">
-                    <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.context.virtue = 'power' }}>
+                    <Button className={classes.button} variant="contained" color="primary" >
                         Finance
                     </Button>
                 </Link>
                 <Link component={PoliticalData} to="/political-data">
-                    <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.context.virtue = 'power' }}>
+                    <Button className={classes.button} variant="contained" color="primary" >
                         Travel
                     </Button>
                 </Link>
                 <Link component={PoliticalData} to="/political-data">
-                    <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.context.virtue = 'power' }}>
+                    <Button className={classes.button} variant="contained" color="primary" >
                         Biometrics
                     </Button>
                 </Link>
                 <Link component={PoliticalData} to="/political-data">
-                    <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.context.virtue = 'power' }}>
+                    <Button className={classes.button} variant="contained" color="primary" >
                         Television
                     </Button>
                 </Link>
                 <Link component={PoliticalData} to="/political-data">
-                    <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.context.virtue = 'power' }}>
+                    <Button className={classes.button} variant="contained" color="primary" >
                         News and Magazines
                     </Button>
                 </Link>
                 <Link component={PoliticalData} to="/political-data">
-                    <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.context.virtue = 'power' }}>
+                    <Button className={classes.button} variant="contained" color="primary" >
                         Store/Loyalty cards
                     </Button>
                 </Link>
                 <Link component={PoliticalData} to="/political-data">
-                    <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.context.virtue = 'power' }}>
+                    <Button className={classes.button} variant="contained" color="primary" >
                         Vehicle GPS
                     </Button>
                 </Link>
                 <Link component={PoliticalData} to="/political-data">
-                    <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.context.virtue = 'power' }}>
+                    <Button className={classes.button} variant="contained" color="primary" >
                         Online Search History
                     </Button>
                 </Link>
                 <Link component={PoliticalData} to="/political-data">
-                    <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.context.virtue = 'power' }}>
+                    <Button className={classes.button} variant="contained" color="primary" >
                         Shopping and Mail Order
                     </Button>
                 </Link>
                 <Link component={PoliticalData} to="/political-data">
-                    <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.context.virtue = 'power' }}>
+                    <Button className={classes.button} variant="contained" color="primary" >
                         Location Data
                     </Button>
                 </Link>
                 <Link component={PoliticalData} to="/political-data">
-                    <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.context.virtue = 'power' }}>
+                    <Button className={classes.button} variant="contained" color="primary" >
                         Spotify/iTunes
                     </Button>
                 </Link>
                 <Link component={PoliticalData} to="/political-data">
-                    <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.context.virtue = 'power' }}>
+                    <Button className={classes.button} variant="contained" color="primary" >
                         Insurance
                     </Button>
                 </Link>
                 <Link component={PoliticalData} to="/political-data">
-                    <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.context.virtue = 'power' }}>
+                    <Button className={classes.button} variant="contained" color="primary" >
                         Social Media
                     </Button>
                 </Link>
@@ -121,6 +120,5 @@ function ConsumerData(props) {
 ConsumerData.propTypes = {
     classes: PropTypes.object.isRequired,
 };
-ConsumerData.contextType = UserSession;
 
 export default withStyles(styles)(ConsumerData);
