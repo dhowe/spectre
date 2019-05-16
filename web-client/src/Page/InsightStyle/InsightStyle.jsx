@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
+import AvatarComponent from "../../Components/AvatarComponent/AvatarComponent";
 
 const styles = {
     root: {
@@ -36,6 +37,7 @@ class InsightStyle extends React.Component {
                 <SpectreHeader colour="white" />
                 <div className={classes.content + " content"}>
                     <Typography component="h4" variant="h4">What’s {this.props.selectedFollower.name}‘s likely style category?</Typography>
+                    <AvatarComponent target={{ image: '/targets/target0.png' }}/>
                     <FormControl component="fieldset" >
                         <RadioGroup
                             aria-label="Style"

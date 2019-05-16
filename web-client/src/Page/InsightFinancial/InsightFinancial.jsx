@@ -7,6 +7,7 @@ import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import TextSliderText from "../../Components/TextSliderText/TextSliderText";
+import AvatarComponent from "../../Components/AvatarComponent/AvatarComponent";
 
 const styles = {
   root: {
@@ -23,6 +24,7 @@ function InsightFinancial(props) {
         <SpectreHeader colour="white" />
         <div className={classes.content + " content"}>
             <Typography component="h4" variant="h4">What’s {props.selectedFollower.name}’s likely financial status?</Typography>
+            <AvatarComponent target={{ image: '/targets/target0.png' }}/>
             <TextSliderText leftText="Poor" rightText="Rich" />
             <Link to="/insight-style">
                 <IconButton icon="next" text="Next" />
