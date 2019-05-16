@@ -136,6 +136,9 @@ User.schema = () => {
     virtue: {
       type: 'string'
     },
+    brexitChoice: {
+      type: 'string'
+    },
     traits: {
       openness: { type: 'number' },
       conscientiousness: { type: 'number' },
