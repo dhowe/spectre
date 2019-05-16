@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import { Link } from "react-router-dom";
-import InsightAccuracy from "../InsightAccuracy/InsightAccuracy";
 import IconButton from "../../Components/IconButton/IconButton";
 import SpectreHeader from "../../Components/SpectreHeader/SpectreHeader";
 import FooterLogo from "../../Components/FooterLogo/FooterLogo";
@@ -28,7 +27,7 @@ class InsightSkin extends React.Component {
             What is {this.props.selectedFollower.name}'s likely skin colour?
           </Typography>
           <TextSliderText leftText="Light" rightText="Dark" />
-          <Link component={InsightAccuracy} to="/insight-accuracy">
+          <Link to="/insight-accuracy">
             <IconButton icon="next" text="Next" />
           </Link>
         </div>

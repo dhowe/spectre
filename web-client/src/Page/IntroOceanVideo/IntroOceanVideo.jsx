@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
-import Username from '../Username/Username'
 import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
@@ -19,11 +18,11 @@ function IntroOceanVideo(props) {
             <SpectreHeader colour="white" />
             <div className="IntroOceanVideo-content content">
                 <Typography>Intro to OCEAN</Typography>
-                <video width={window.innerWidth} autoplay controls>
+                <video width={window.innerWidth} controls>  {/*autoplay*/}
                     <source src={movie} type="video/mp4" />
                     Your browser does not support the video tag.
                  </video>
-                <Link component={Username} to="/your-power">
+                <Link to="/your-power">
                     <IconButton icon="next" text="Skip" />
                 </Link>
             </div>

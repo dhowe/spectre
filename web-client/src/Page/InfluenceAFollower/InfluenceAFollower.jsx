@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
-import SelectedAvatar from '../SelectedAvatar/SelectedAvatar'
 import AvatarComponent from '../../Components/AvatarComponent/AvatarComponent';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '../../Components/IconButton/IconButton';
@@ -39,10 +38,10 @@ class InfluenceAFollower extends React.Component {
           <Typography component="h4" variant="h4" >Spectre has a global community of followers.</Typography>
           <Typography component="h5" variant="h5" >Choose a participant.</Typography>
           <Grid container justify="center" alignItems="center">
-            {this.names.map((n, i) => <AvatarComponent
+            {this.names.map((n, i) => <AvatarComponent key={i}
               target={{ name: n, image: '/targets/target' + i + '.png' }} />)}
           </Grid>
-          <Link component={SelectedAvatar} to="/selected-avatar">
+          <Link to="/selected-avatar">
             <IconButton icon="next" text="Next" />
           </Link>
         </div>

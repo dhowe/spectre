@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
-import DarkAd from '../DarkAd/DarkAd'
 import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
@@ -12,7 +11,6 @@ const styles = {
     root: {
         flexGrow: 1,
         width: "100%",
-
         color: 'black'
     },
 };
@@ -27,7 +25,7 @@ function InfluencedBy(props) {
                 <Typography component="h4" variant="h4">[List of influences]</Typography>
                 <Typography component="h4" variant="h4">Use our design tool to create a targeted Facebook ad to influence {props.selectedFollower.name}’s vote.</Typography>
 
-                <Link component={DarkAd} to="/dark-ad">
+                <Link to="/dark-ad">
                     <IconButton icon="next" text="Let's go" />
                 </Link>
             </div>

@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
-import Username from '../Username/Username'
 import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
@@ -22,8 +21,7 @@ function IntroVideo(props) {
                     <source src={movie} type="video/mp4" />
                     Your browser does not support the video tag.
                 </video>
-                <Link component={Username} to="/username">
-                    <IconButton icon="next" text="Skip" />
+                <Link to="/username"> <IconButton icon="next" text="Skip" />
                 </Link>
             </div>
             <FooterLogo />

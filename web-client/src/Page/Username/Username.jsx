@@ -4,7 +4,6 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import { Link } from 'react-router-dom';
-import Pledge from "../Pledge/Pledge";
 import FormControl from '@material-ui/core/FormControl';
 import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
@@ -21,7 +20,6 @@ const styles = {
     flexGrow: 1,
     width: "100%",
     backgroundSize: 'cover',
-
   },
   textInput: {
     marginBottom: "100px",
@@ -38,7 +36,8 @@ class Username extends React.Component {
   };
   handleChange = name => event => {
     this.context.name = event.target.value; // user-prop
-    this.setState({ [name]: event.target.value });
+    this.setState({
+      [name]: event.target.value });
   };
   handleRadioChange = event => {
     this.context.gender = event.target.value; // user-prop
@@ -66,7 +65,7 @@ class Username extends React.Component {
               <FormControlLabel value="other" control={<Radio />} label="Other" />
             </RadioGroup>
           </FormControl>
-          <Link component={Pledge} to="/pledge">
+          <Link to="/pledge">
             <IconButton icon="next" text="Begin" />
           </Link>
         </div >

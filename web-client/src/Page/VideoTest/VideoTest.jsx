@@ -11,22 +11,22 @@ const styles = {
 };
 
 function VideoTest(props) {
-    const { classes } = props;
-    return (
-        <div className='VideoTest'>
-            <Webcam />
-            <Link to="/touch-to-begin">
-                <div className={classes.clickToContinue}>
-                    <Typography > Touch to Begin</Typography>
-                </div>
-            </Link>
-        </div >
+  const { classes } = props;
+  return (
+    <div className='VideoTest'>
+        <Webcam />
+        <Link to="/touch-to-begin">
+            <div className={classes.clickToContinue}>
+                <Typography > Touch to Begin</Typography>
+            </div>
+        </Link>
+    </div >
 
-    );
+  );
 }
 
 VideoTest.propTypes = {
-    classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(VideoTest);
