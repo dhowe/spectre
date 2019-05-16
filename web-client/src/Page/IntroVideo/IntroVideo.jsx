@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
+import Typography from '@material-ui/core/Typography';
 import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
@@ -17,6 +18,7 @@ function IntroVideo(props) {
             <SpectreHeader colour="white" />
             <div className="IntroVideo-content content">
                 {/*<video width={window.innerWidth} autoplay controls>*/}
+                <Typography component="h5" variant="h5">Meet Spectre</Typography>
                 <video width={window.innerWidth} controls>
                     <source src={movie} type="video/mp4" />
                     Your browser does not support the video tag.

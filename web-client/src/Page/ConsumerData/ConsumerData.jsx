@@ -8,34 +8,34 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 
 const styles = {
-  root: {
-    flexGrow: 1,
-    width: "100%",
-    color: 'black'
-  },
-  content: {
-    paddingTop: "100px",
-  },
-  clickToContinue: {
-    margin: "20% 0",
-  },
-  button: {
-    borderRadius: '28px',
-    border: 'solid 3px #929391',
-    backgroundColor: '#ffffff',
-    boxShadow: 'none',
-    color: '#929391',
-  },
-  link: {
-    display: 'block',
-    marginBottom: '30px',
-  }
+    root: {
+        flexGrow: 1,
+        width: "100%",
+        color: 'black'
+    },
+    content: {
+        paddingTop: "100px",
+    },
+    clickToContinue: {
+        margin: "20% 0",
+    },
+    button: {
+        borderRadius: '28px',
+        border: 'solid 3px #929391',
+        backgroundColor: '#ffffff',
+        boxShadow: 'none',
+        color: '#929391',
+    },
+    link: {
+        display: 'block',
+        marginBottom: '30px',
+    }
 };
 
 function ConsumerData(props) {
-  const { classes } = props;
-  return (
-    <div className={classes.root}>
+    const { classes } = props;
+    return (
+        <div className={classes.root}>
             <SpectreHeader colour="white" />
             <div className={classes.content + " content"}>
                 <Typography component="h3" variant="h3">Choose 5 types of data:</Typography>
@@ -113,11 +113,11 @@ function ConsumerData(props) {
             </div>
             <FooterLogo />
         </div>
-  );
+    );
 }
 
 ConsumerData.propTypes = {
-  classes: PropTypes.object.isRequired,
+    classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(ConsumerData);
