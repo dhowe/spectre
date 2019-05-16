@@ -23,6 +23,12 @@ const styles = {
   },
   textInput: {
     marginBottom: "100px",
+  },
+  radioGroup: {
+    display: "inline-block"
+  },
+  formControl: {
+    textAlign: "center"
   }
 };
 
@@ -53,12 +59,13 @@ class Username extends React.Component {
           <TextField value={this.state.name} onChange={this.handleChange('name')}></TextField>
           {/* <RadioInput value={this.state.gender} onChange={this.handleRadioChange} options={['WOMAN', 'MAN', 'OTHER']}>YOUR GENDER?</RadioInput> */}
           <Typography variant="h6">YOUR GENDER?</Typography>
-          <FormControl component="fieldset" >
+          <FormControl component="fieldset" className={classes.formControl}>
             <RadioGroup
               aria-label="Gender"
               name="gender"
               value={this.state.value}
               onChange={this.handleRadioChange}
+              className={classes.radioGroup}
             >
               <FormControlLabel value="female" control={<Radio />} label="Woman" />
               <FormControlLabel value="male" control={<Radio />} label="Man" />
