@@ -4,7 +4,6 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
-import DataIs from '../DataIs/DataIs'
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
@@ -46,22 +45,22 @@ class SearchingFor extends React.Component {
                     <Typography component="h6" variant="h5">Welcome {this.context.name}</Typography>
                     <Typography component="h6" variant="h5">What are you searching for today?</Typography>
                     <div>
-                        <Link component={DataIs} to="/data-is">
+                        <Link to="/data-is">
                             <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.context.virtue = 'power' }}>
                                 Power
                         </Button>
                         </Link>
-                        <Link component={DataIs} to="/data-is">
+                        <Link to="/data-is">
                             <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.context.virtue = 'truth' }}>
                                 Truth
                         </Button>
                         </Link>
-                        <Link component={DataIs} to="/data-is">
+                        <Link to="/data-is">
                             <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.context.virtue = 'wealth' }}>
                                 Wealth
                         </Button>
                         </Link>
-                        <Link component={DataIs} to="/data-is">
+                        <Link to="/data-is">
                             <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.context.virtue = 'influence' }}>
                                 Influence
                         </Button>

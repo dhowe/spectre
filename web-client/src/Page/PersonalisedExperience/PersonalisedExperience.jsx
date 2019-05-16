@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
-import Game from '../Game/Game';
 import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
@@ -36,7 +35,7 @@ class PersonalisedExperience extends React.Component {
           <Typography component="h3" variant="h3">Excellent</Typography>
           <Typography component="h3" variant="h3">In order to create a <strong>personalised experience</strong></Typography>
           <Typography component="h4" variant="h4" >tell us what you love, tell us what you hate...</Typography>
-          <Link component={Game} to="/game">
+          <Link to="/game">
             <IconButton icon="next" text="Next" />
           </Link>
         </div >

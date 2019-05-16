@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import { Link } from "react-router-dom";
-import InfluenceANation from "../InfluenceANation/InfluenceANation";
 import IconButton from "../../Components/IconButton/IconButton";
 import SpectreHeader from "../../Components/SpectreHeader/SpectreHeader";
 import FooterLogo from "../../Components/FooterLogo/FooterLogo";
@@ -18,7 +17,7 @@ const styles = {
   }
 };
 
-class successAd extends React.Component {
+class SuccessAd extends React.Component {
   render() {
     const { classes } = this.props;
     return (
@@ -35,7 +34,7 @@ class successAd extends React.Component {
             Sophie T is now more likely to vote {this.context.brexitChoice} in the referendum.
         </Typography>
 
-          <Link component={InfluenceANation} to="/influence-a-nation">
+          <Link to="/influence-a-nation">
             <IconButton icon="next" text="Next" />
           </Link>
         </div>
@@ -45,8 +44,8 @@ class successAd extends React.Component {
   }
 }
 
-successAd.propTypes = {
+SuccessAd.propTypes = {
   classes: PropTypes.object.isRequired
 };
-successAd.contextType = UserSession;
-export default withStyles(styles)(successAd);
+SuccessAd.contextType = UserSession;
+export default withStyles(styles)(SuccessAd);

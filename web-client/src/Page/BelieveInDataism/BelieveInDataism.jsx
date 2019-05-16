@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
-import Steps from '../Steps/Steps';
 import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
@@ -40,7 +39,7 @@ class BelieveInDataism extends React.Component {
         <div className={classes.content + " content"}>
           <Typography component="h4" variant="h4">{toAdjPhrase(this.context.virtue)}, you need more data.</Typography>
           <Typography component="h4" variant="h4">We can help you believe in the {this.context.virtue} of dataism</Typography>
-          <Link component={Steps} to="/steps">
+          <Link to="/steps">
             <IconButton icon="next" text="Next" />
           </Link>
         </div>

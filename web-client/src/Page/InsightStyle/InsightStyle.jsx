@@ -7,16 +7,15 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { Link } from 'react-router-dom';
-import InsightThankYou from '../InsightThankYou/InsightThankYou';
 import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
+import AvatarComponent from "../../Components/AvatarComponent/AvatarComponent";
 
 const styles = {
     root: {
         flexGrow: 1,
         width: "100%",
-
         color: 'black'
     },
 };
@@ -38,6 +37,7 @@ class InsightStyle extends React.Component {
                 <SpectreHeader colour="white" />
                 <div className={classes.content + " content"}>
                     <Typography component="h4" variant="h4">What’s {this.props.selectedFollower.name}‘s likely style category?</Typography>
+                    <AvatarComponent target={{ image: '/targets/target0.png' }}/>
                     <FormControl component="fieldset" >
                         <RadioGroup
                             aria-label="Style"
@@ -52,7 +52,7 @@ class InsightStyle extends React.Component {
                             <FormControlLabel value="bold" control={<Radio />} label="Bold - eccentric, bold, theatrical" />
                         </RadioGroup>
                     </FormControl>
-                    <Link component={InsightThankYou} to="/insight-thank-you">
+                    <Link to="/insight-thank-you">
                         <IconButton icon="next" text="Next" />
                     </Link>
                 </div>

@@ -18,6 +18,7 @@ const styles = {
     },
   },
   cssLabel: {
+    transform: 'translate(0,1.5rem)',
     color: grey[50],
     '&$cssFocused': {
       color: grey[50],
@@ -56,7 +57,7 @@ class SocialLogin extends React.Component {
                 classes={{
                   root: classes.cssLabel,
                   focused: classes.cssFocused
-                }}><br />Email:
+                }}><br />Email
                   </InputLabel>
               <Input
                 name='email'

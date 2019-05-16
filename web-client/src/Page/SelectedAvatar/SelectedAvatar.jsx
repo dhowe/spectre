@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
-import InsightGender from '../InsightGender/InsightGender';
 import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
+import AvatarComponent from '../../Components/AvatarComponent/AvatarComponent';
 
 const styles = {
   root: {
@@ -25,8 +25,9 @@ class SelectedAvatar extends React.Component {
         <SpectreHeader colour="white" />
         <div className={classes.content + " content"}>
           <Typography component="h3" variant="h3">You selected {this.props.selectedFollower.name}</Typography>
+          <AvatarComponent target={{ image: '/targets/target0.png' }}/>
           <Typography component="h4" variant="h4">Lets start by verifying some of the basics to unlock {this.context.virtueAsAdverb()} insights into {this.props.selectedFollower.name}. Don’t worry only you will see the results. </Typography>
-          <Link component={InsightGender} to="/insight-hair">
+          <Link to="/insight-hair">
             <IconButton icon="next" text="DIVE IN" />
           </Link>
         </div>

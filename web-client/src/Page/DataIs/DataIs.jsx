@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
-import BelieveInDataism from '../BelieveInDataism/BelieveInDataism';
 import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
@@ -29,7 +28,7 @@ class DataIs extends React.Component {
         <SpectreHeader colour="white" />
         <div className={classes.content + " content"}>
           <Typography component="h4" variant="h4">DATA IS {this.context.virtue.toUpperCase()}</Typography>
-          <Link component={BelieveInDataism} to="/believe-in-dataism">
+          <Link to="/believe-in-dataism">
             <IconButton icon="next" text="Next" />
           </Link>
         </div>
