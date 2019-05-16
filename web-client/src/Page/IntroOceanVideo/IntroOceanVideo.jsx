@@ -22,10 +22,8 @@ class IntroOceanVideo extends React.Component {
       <div className={classes.root}>
         <SpectreHeader colour="white" />
         <div className="IntroOceanVideo-content content">
-          <Typography>Intro to OCEAN</Typography>
+          <Typography component="h5" variant="h5">Intro to OCEAN</Typography>
           <video ref="video" width={window.innerWidth} controls>
-            {" "}
-            {/*autoplay*/}
             <source src={movie} type="video/mp4" />
             Your browser does not support the video tag.
           </video>

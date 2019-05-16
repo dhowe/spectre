@@ -8,14 +8,14 @@ export default class User {
     Object.assign(this, tmpl);
   }
 
-  influencedBy(num) {
+  predictInfluencedBy(num) { // TODO: should set property
     num = num || 3;
     this._verifyTraits();
-    // WORKING HERE
-    return ['a', 'b', 'c'];
+    // TMP:/TODO: implement
+    return ['Security or crime-related issues', 'Images of large crowds', 'Immigration issues'];
   }
 
-  predictFromBrands(data) {
+  predictFromBrands(data) { // TODO:  should set property
     if (!this.traits) this.traits = {};
     return predict(data);
   }
@@ -129,6 +129,9 @@ User.schema = () => {
     similarIds: {
       type: ['string']
     },
+    influencedBy: {
+      type: ['string']
+    },
     targetId: {
       type: 'string'
       //type: { type: 'objectId', ref: 'User' }
@@ -154,9 +157,9 @@ User.schema = () => {
       required: true
     },
     dataChoices: {
-      consumer: { type: 'string' },
-      home: { type: 'string' },
-      political: { type: 'string' }
+      consumer: { type: 'string' }, // TODO: should be array
+      home: { type: 'string' }, // TODO: should be array
+      political: { type: 'string' } // TODO: should be array
     },
     loginType: {
       type: 'string',

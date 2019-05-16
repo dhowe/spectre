@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
+import Typography from "@material-ui/core/Typography";
 import IconButton from "../../Components/IconButton/IconButton";
 import SpectreHeader from "../../Components/SpectreHeader/SpectreHeader";
 import FooterLogo from "../../Components/FooterLogo/FooterLogo";
@@ -21,7 +22,7 @@ class IntroVideo extends React.Component {
       <div className={classes.root}>
         <SpectreHeader colour="white" />
         <div className="IntroVideo-content content">
-          {/*<video width={window.innerWidth} autoplay controls>*/}
+          <Typography component="h5" variant="h5">Meet Spectre</Typography>
           <video ref="video" width={window.innerWidth} controls>
             <source src={movie} type="video/mp4" />
             Your browser does not support the video tag.
@@ -35,7 +36,6 @@ class IntroVideo extends React.Component {
             Play!
           </button>
           <Link to="/username">
-            {" "}
             <IconButton icon="next" text="Skip" />
           </Link>
         </div>
