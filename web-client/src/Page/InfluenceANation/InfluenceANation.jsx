@@ -25,7 +25,7 @@ class InfluenceANation extends React.Component {
                 <SpectreHeader colour="white" />
                 <div className={classes.content + " content"}>
                     <Typography component="h3" variant="h3">Influence a nation</Typography>
-                    <Typography component="h4" variant="h4">Lets increase the {this.context.virtue} of your campaign to influence lots of people to vote [Leave] in the referendum.</Typography>
+                    <Typography component="h4" variant="h4">Lets increase the {this.context.virtue} of your campaign to influence lots of people to vote {this.context.brexitChoice} in the referendum.</Typography>
                     <Typography component="h4" variant="h4">We can show you how, but first, you must:</Typography>
                     <Link component={ConsumerData} to="/consumer-data">
                         <IconButton icon="next" text="Get more data" />
