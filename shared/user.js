@@ -11,8 +11,8 @@ export default class User {
   influencedBy(num) {
     num = num || 3;
     this._verifyTraits();
-    // WORKING HERE
-    return ['a', 'b', 'c'];
+    // TMP:/TODO: implement
+    return ['Security or crime-related issues', 'Images of large crowds', 'Immigration issues'];
   }
 
   predictFromBrands(data) {
@@ -154,9 +154,9 @@ User.schema = () => {
       required: true
     },
     dataChoices: {
-      consumer: { type: 'string' },
-      home: { type: 'string' },
-      political: { type: 'string' }
+      consumer: { type: 'string' }, // TODO: should be array
+      home: { type: 'string' }, // TODO: should be array
+      political: { type: 'string' } // TODO: should be array
     },
     loginType: {
       type: 'string',
