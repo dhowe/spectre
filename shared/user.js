@@ -76,23 +76,23 @@ export default class User {
 
   poss() {
     switch (this.gender) {
-    case 'male':
-      return 'his';
-    case 'female':
-      return 'her';
-    case 'other':
-      return 'their';
+      case 'male':
+        return 'his';
+      case 'female':
+        return 'her';
+      case 'other':
+        return 'their';
     }
   }
 
   pronoun() {
     switch (this.gender) {
-    case 'male':
-      return 'he';
-    case 'female':
-      return 'she';
-    case 'other':
-      return 'they';
+      case 'male':
+        return 'he';
+      case 'female':
+        return 'she';
+      case 'other':
+        return 'they';
     }
   }
 
@@ -150,6 +150,11 @@ User.schema = () => {
       type: 'string',
       required: true
     },
+    dataChoices: {
+      consumer: { type: 'string' },
+      home: { type: 'string' },
+      political: { type: 'string' }
+    },
     loginType: {
       type: 'string',
       enum: ['twitter', 'google', 'facebook', 'email'],
@@ -167,12 +172,12 @@ User.schema = () => {
 }
 
 User.oceanTraits = () => [
-    'openness',
-    'conscientiousness',
-    'agreeableness',
-    'extraversion',
-    'neuroticism'
-  ];
+  'openness',
+  'conscientiousness',
+  'agreeableness',
+  'extraversion',
+  'neuroticism'
+];
 
 User.descriptionTemplate = {
   openness: {
