@@ -8,7 +8,7 @@ export default class User {
     Object.assign(this, tmpl);
   }
 
-  predictInfluencedBy(num) { // TODO: should set property
+  predictInfluences(num) { // TODO: should set property
     num = num || 3;
     this._verifyTraits();
     // TMP:/TODO: implement
