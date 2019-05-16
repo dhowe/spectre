@@ -25,7 +25,7 @@ function TargetsFound(props) {
             <div className={classes.content + " content"}>
                 <Typography component="h4" variant="h4">Analysing data sets and looking for patterns...</Typography>
                 <Typography component="h4" variant="h4">Consumer..... Political........ Home........</Typography>
-                [Image of map]
+                <img className={classes.image} src="https://i.gyazo.com/2a4d9f74959da191656459877bb60d57.png" alt='targets' onClick={() => { this.context.brexitChoice = 'remain' }}></img>
                 <Typography component="h3" variant="h3">Targets found: [1,095,405 ]</Typography>
                 <Link component={SocialMedia} to="/social-media">
                     <IconButton icon="next" text="Next" />
