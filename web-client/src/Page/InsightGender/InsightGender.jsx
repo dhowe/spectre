@@ -7,6 +7,7 @@ import IconButton from "../../Components/IconButton/IconButton";
 import SpectreHeader from "../../Components/SpectreHeader/SpectreHeader";
 import FooterLogo from "../../Components/FooterLogo/FooterLogo";
 import TextSliderText from "../../Components/TextSliderText/TextSliderText";
+import AvatarComponent from "../../Components/AvatarComponent/AvatarComponent";
 
 const styles = {
   root: {
@@ -27,6 +28,7 @@ class InsightGender extends React.Component {
           <Typography component="h4" variant="h4">
             What’s {this.props.selectedFollower.name}’s likely gender?
           </Typography>
+          <AvatarComponent target={{ image: '/targets/target0.png' }}/>
           <TextSliderText leftText="Male" rightText="Female" middleText="non-binary" />
           <Link to="/insight-weight">
             <IconButton icon="next" text="Next" />

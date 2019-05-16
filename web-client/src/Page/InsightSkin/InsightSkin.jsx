@@ -7,6 +7,7 @@ import IconButton from "../../Components/IconButton/IconButton";
 import SpectreHeader from "../../Components/SpectreHeader/SpectreHeader";
 import FooterLogo from "../../Components/FooterLogo/FooterLogo";
 import TextSliderText from "../../Components/TextSliderText/TextSliderText";
+import AvatarComponent from "../../Components/AvatarComponent/AvatarComponent";
 
 const styles = {
   root: {
@@ -26,6 +27,7 @@ class InsightSkin extends React.Component {
           <Typography component="h4" variant="h4">
             What is {this.props.selectedFollower.name}'s likely skin colour?
           </Typography>
+          <AvatarComponent target={{ image: '/targets/target0.png' }}/>
           <TextSliderText leftText="Light" rightText="Dark" />
           <Link to="/insight-accuracy">
             <IconButton icon="next" text="Next" />
