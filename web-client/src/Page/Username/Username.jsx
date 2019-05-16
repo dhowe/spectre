@@ -43,7 +43,8 @@ class Username extends React.Component {
   handleChange = name => event => {
     this.context.name = event.target.value; // user-prop
     this.setState({
-      [name]: event.target.value });
+      [name]: event.target.value
+    });
   };
   handleRadioChange = event => {
     this.context.gender = event.target.value; // user-prop
@@ -67,9 +68,9 @@ class Username extends React.Component {
               onChange={this.handleRadioChange}
               className={classes.radioGroup}
             >
-              <FormControlLabel value="female" control={<Radio />} label="Woman" />
-              <FormControlLabel value="male" control={<Radio />} label="Man" />
-              <FormControlLabel value="other" control={<Radio />} label="Other" />
+              <FormControlLabel value="female" control={<Radio color='primary' />} label="Woman" />
+              <FormControlLabel value="male" control={<Radio color='primary' />} label="Man" />
+              <FormControlLabel value="other" control={<Radio color='primary' />} label="Other" />
             </RadioGroup>
           </FormControl>
           <Link to="/pledge">
