@@ -25,10 +25,7 @@ const styles = {
     marginBottom: "100px",
   },
   radioGroup: {
-    display: "inline-block"
-  },
-  formControl: {
-    textAlign: "center"
+    alignItems: 'center'
   }
 };
 

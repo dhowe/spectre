@@ -18,6 +18,9 @@ const styles = {
         width: "100%",
         color: 'black'
     },
+    radioGroup: {
+        alignItems: 'center'
+    }
 };
 
 class InsightStyle extends React.Component {
@@ -38,12 +41,13 @@ class InsightStyle extends React.Component {
                 <div className={classes.content + " content"}>
                     <Typography component="h4" variant="h4">What’s {this.props.selectedFollower.name}‘s likely style category?</Typography>
                     <AvatarComponent target={{ image: '/targets/target0.png' }} />
-                    <FormControl component="fieldset" >
+                    <FormControl className={classes.formControl} component="fieldset" >
                         <RadioGroup
                             aria-label="Style"
                             name="style"
                             value={this.state.value}
                             onChange={this.handleRadioChange}
+                            className={classes.radioGroup}
                         >
                             <FormControlLabel value="classic" control={<Radio color='primary' />} label="Classic - conservative and traditional " />
                             <FormControlLabel value="feminine" control={<Radio color='primary' />} label="Feminine - soft, romantic, delicate" />
