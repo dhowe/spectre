@@ -8,43 +8,43 @@ import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import Button from '@material-ui/core/Button';
 
 const styles = {
-    root: {
-        flexGrow: 1,
-        width: "100%",
-        color: 'black'
-    },
-    content: {
-        paddingTop: "100px",
-    },
-    clickToContinue: {
-        margin: "20% 0",
-    },
-    button: {
-        borderRadius: '28px',
-        border: 'solid 3px #929391',
-        backgroundColor: '#ffffff',
-        boxShadow: 'none',
-        color: '#929391',
-    },
-    link: {
-        display: 'block',
-        marginBottom: '30px',
-    },
-    row: {
-        flexDirection: 'row',
-        display: 'flex',
-        paddingBottom: '500px'
-    },
-    column: {
-        flexDirection: 'column',
-        display: 'flex',
-    }
+  root: {
+    flexGrow: 1,
+    width: "100%",
+    color: 'black'
+  },
+  content: {
+    paddingTop: "100px",
+  },
+  clickToContinue: {
+    margin: "20% 0",
+  },
+  button: {
+    borderRadius: '28px',
+    border: 'solid 3px #929391',
+    backgroundColor: '#ffffff',
+    boxShadow: 'none',
+    color: '#929391',
+  },
+  link: {
+    display: 'block',
+    marginBottom: '30px',
+  },
+  row: {
+    flexDirection: 'row',
+    display: 'flex',
+    padding: '0 30% 25% 25%' //tmp
+  },
+  column: {
+    flexDirection: 'column',
+    display: 'flex',
+  }
 };
 
 function HomeData(props) {
-    const { classes } = props;
-    return (
-        <div className={classes.root}>
+  const { classes } = props;
+  return (
+    <div className={classes.root}>
             <SpectreHeader colour="white" />
             <div className={classes.content + " content"}>
                 <Typography component="h3" variant="h3">Last but not least</Typography>
@@ -118,11 +118,11 @@ function HomeData(props) {
             </div >
             <FooterLogo />
         </div >
-    );
+  );
 }
 
 HomeData.propTypes = {
-    classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(HomeData);

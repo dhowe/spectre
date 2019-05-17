@@ -33,7 +33,7 @@ const styles = {
     row: {
         flexDirection: 'row',
         display: 'flex',
-        paddingBottom: '500px'
+        padding: '0 30% 25% 25%' //tmp
     },
     column: {
         flexDirection: 'column',
