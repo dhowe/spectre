@@ -63,7 +63,7 @@ class App extends React.Component {
       gender: 'default',
       name: 'default',
       selectedFollower: {
-        name: 'Remy Sharp',
+        name: 'Remy',
         gender: 'man',
         image: 'https://material-ui.com/static/images/avatar/1.jpg'
       },
