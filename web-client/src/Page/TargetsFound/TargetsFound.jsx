@@ -13,6 +13,12 @@ const styles = {
     width: "100%",
     color: 'black'
   },
+  image: {
+    height: '500px',
+    width: '440px',
+    marginLeft: 'auto',
+    marginRight: 'auto'
+  }
 };
 
 function TargetsFound(props) {
