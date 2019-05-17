@@ -23,7 +23,7 @@ class IntroVideo extends React.Component {
         <SpectreHeader colour="white" />
         <div className="IntroVideo-content content">
           <Typography component="h5" variant="h5">Meet Spectre</Typography>
-          <video ref="video" width={window.innerWidth} controls>
+          <video ref="video" width={'880px'} controls>
             <source src={movie} type="video/mp4" />
             Your browser does not support the video tag.
           </video>

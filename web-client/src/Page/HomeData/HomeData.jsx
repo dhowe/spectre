@@ -29,6 +29,14 @@ const styles = {
     link: {
         display: 'block',
         marginBottom: '30px',
+    },
+    row: {
+        flexDirection: 'row',
+        display: 'flex',
+    },
+    column: {
+        flexDirection: 'column',
+        display: 'flex',
     }
 };
 
@@ -40,69 +48,75 @@ function HomeData(props) {
             <div className={classes.content + " content"}>
                 <Typography component="h3" variant="h3">Last but not least</Typography>
                 <Typography component="h3" variant="h3">HOME DATA:</Typography>
-                <Link to="/find-citizens">
-                    <Button className={classes.button} variant="contained" color="primary" >
-                        Smart TV
+                <div className={classes.row}>
+                    <div className={classes.column}>
+                        <Link to="/find-citizens">
+                            <Button className={classes.button} variant="contained" color="primary" >
+                                Smart TV
                     </Button>
-                </Link>
-                <Link to="/find-citizens">
-                    <Button className={classes.button} variant="contained" color="primary" >
-                        Smart fridge
+                        </Link>
+                        <Link to="/find-citizens">
+                            <Button className={classes.button} variant="contained" color="primary" >
+                                Smart fridge
                     </Button>
-                </Link>
-                <Link to="/find-citizens">
-                    <Button className={classes.button} variant="contained" color="primary" >
-                        Wifi Router
+                        </Link>
+                        <Link to="/find-citizens">
+                            <Button className={classes.button} variant="contained" color="primary" >
+                                Wifi Router
                     </Button>
-                </Link>
-                <Link to="/find-citizens">
-                    <Button className={classes.button} variant="contained" color="primary" >
-                        Smart Assistant
+                        </Link>
+                        <Link to="/find-citizens">
+                            <Button className={classes.button} variant="contained" color="primary" >
+                                Smart Assistant
                     </Button>
-                </Link>
-                <Link to="/find-citizens">
-                    <Button className={classes.button} variant="contained" color="primary" >
-                        Mobile Devices
+                        </Link>
+                        <Link to="/find-citizens">
+                            <Button className={classes.button} variant="contained" color="primary" >
+                                Mobile Devices
                     </Button>
-                </Link>
-                <Link to="/find-citizens">
-                    <Button className={classes.button} variant="contained" color="primary" >
-                        Computer
+                        </Link>
+                        <Link to="/find-citizens">
+                            <Button className={classes.button} variant="contained" color="primary" >
+                                Computer
                     </Button>
-                </Link>
-                <Link to="/find-citizens">
-                    <Button className={classes.button} variant="contained" color="primary" >
-                        Mobile Apps
+                        </Link>
+                    </div>
+                    <div className={classes.column}>
+                        <Link to="/find-citizens">
+                            <Button className={classes.button} variant="contained" color="primary" >
+                                Mobile Apps
                     </Button>
-                </Link>
-                <Link to="/find-citizens">
-                    <Button className={classes.button} variant="contained" color="primary" >
-                        Thermostat
+                        </Link>
+                        <Link to="/find-citizens">
+                            <Button className={classes.button} variant="contained" color="primary" >
+                                Thermostat
                     </Button>
-                </Link>
-                <Link to="/find-citizens">
-                    <Button className={classes.button} variant="contained" color="primary" >
-                        Smart Watch
+                        </Link>
+                        <Link to="/find-citizens">
+                            <Button className={classes.button} variant="contained" color="primary" >
+                                Smart Watch
                     </Button>
-                </Link>
-                <Link to="/find-citizens">
-                    <Button className={classes.button} variant="contained" color="primary" >
-                        Mobile Location Data
+                        </Link>
+                        <Link to="/find-citizens">
+                            <Button className={classes.button} variant="contained" color="primary" >
+                                Mobile Location Data
                     </Button>
-                </Link>
-                <Link to="/find-citizens">
-                    <Button className={classes.button} variant="contained" color="primary" >
-                        Smart Home Hub
+                        </Link>
+                        <Link to="/find-citizens">
+                            <Button className={classes.button} variant="contained" color="primary" >
+                                Smart Home Hub
                     </Button>
-                </Link>
-                <Link to="/find-citizens">
-                    <Button className={classes.button} variant="contained" color="primary" >
-                        Smart Lightbulbs
+                        </Link>
+                        <Link to="/find-citizens">
+                            <Button className={classes.button} variant="contained" color="primary" >
+                                Smart Lightbulbs
                     </Button>
-                </Link>
-            </div>
+                        </Link>
+                    </div >
+                </div >
+            </div >
             <FooterLogo />
-        </div>
+        </div >
     );
 }
 

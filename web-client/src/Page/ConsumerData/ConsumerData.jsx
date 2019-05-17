@@ -29,6 +29,14 @@ const styles = {
     link: {
         display: 'block',
         marginBottom: '30px',
+    },
+    row: {
+        flexDirection: 'row',
+        display: 'flex',
+    },
+    column: {
+        flexDirection: 'column',
+        display: 'flex',
     }
 };
 
@@ -40,76 +48,82 @@ function ConsumerData(props) {
             <div className={classes.content + " content"}>
                 <Typography component="h3" variant="h3">Choose 5 types of data:</Typography>
                 <Typography component="h3" variant="h3">CONSUMER DATA:</Typography>
-                <Link to="/political-data">
-                    <Button className={classes.button} variant="contained" color="primary" >
-                        Health
+                <div className={classes.row}>
+                    <div className={classes.column}>
+                        <Link to="/political-data">
+                            <Button className={classes.button} variant="contained" color="primary" >
+                                Health
                     </Button>
-                </Link>
-                <Link to="/political-data">
-                    <Button className={classes.button} variant="contained" color="primary" >
-                        Finance
+                        </Link>
+                        <Link to="/political-data">
+                            <Button className={classes.button} variant="contained" color="primary" >
+                                Finance
                     </Button>
-                </Link>
-                <Link to="/political-data">
-                    <Button className={classes.button} variant="contained" color="primary" >
-                        Travel
+                        </Link>
+                        <Link to="/political-data">
+                            <Button className={classes.button} variant="contained" color="primary" >
+                                Travel
                     </Button>
-                </Link>
-                <Link to="/political-data">
-                    <Button className={classes.button} variant="contained" color="primary" >
-                        Biometrics
+                        </Link>
+                        <Link to="/political-data">
+                            <Button className={classes.button} variant="contained" color="primary" >
+                                Biometrics
                     </Button>
-                </Link>
-                <Link to="/political-data">
-                    <Button className={classes.button} variant="contained" color="primary" >
-                        Television
+                        </Link>
+                        <Link to="/political-data">
+                            <Button className={classes.button} variant="contained" color="primary" >
+                                Television
                     </Button>
-                </Link>
-                <Link to="/political-data">
-                    <Button className={classes.button} variant="contained" color="primary" >
-                        News and Magazines
+                        </Link>
+                        <Link to="/political-data">
+                            <Button className={classes.button} variant="contained" color="primary" >
+                                News and Magazines
                     </Button>
-                </Link>
-                <Link to="/political-data">
-                    <Button className={classes.button} variant="contained" color="primary" >
-                        Store/Loyalty cards
+                        </Link>
+                        <Link to="/political-data">
+                            <Button className={classes.button} variant="contained" color="primary" >
+                                Store/Loyalty cards
+                        </Button>
+                        </Link>
+                    </div>
+                    <div className={classes.column}>
+                        <Link to="/political-data">
+                            <Button className={classes.button} variant="contained" color="primary" >
+                                Vehicle GPS
+                            </Button>
+                        </Link>
+                        <Link to="/political-data">
+                            <Button className={classes.button} variant="contained" color="primary" >
+                                Online Search History
                     </Button>
-                </Link>
-                <Link to="/political-data">
-                    <Button className={classes.button} variant="contained" color="primary" >
-                        Vehicle GPS
+                        </Link>
+                        <Link to="/political-data">
+                            <Button className={classes.button} variant="contained" color="primary" >
+                                Shopping and Mail Order
                     </Button>
-                </Link>
-                <Link to="/political-data">
-                    <Button className={classes.button} variant="contained" color="primary" >
-                        Online Search History
+                        </Link>
+                        <Link to="/political-data">
+                            <Button className={classes.button} variant="contained" color="primary" >
+                                Location Data
                     </Button>
-                </Link>
-                <Link to="/political-data">
-                    <Button className={classes.button} variant="contained" color="primary" >
-                        Shopping and Mail Order
+                        </Link>
+                        <Link to="/political-data">
+                            <Button className={classes.button} variant="contained" color="primary" >
+                                Spotify/iTunes
                     </Button>
-                </Link>
-                <Link to="/political-data">
-                    <Button className={classes.button} variant="contained" color="primary" >
-                        Location Data
+                        </Link>
+                        <Link to="/political-data">
+                            <Button className={classes.button} variant="contained" color="primary" >
+                                Insurance
                     </Button>
-                </Link>
-                <Link to="/political-data">
-                    <Button className={classes.button} variant="contained" color="primary" >
-                        Spotify/iTunes
+                        </Link>
+                        <Link to="/political-data">
+                            <Button className={classes.button} variant="contained" color="primary" >
+                                Social Media
                     </Button>
-                </Link>
-                <Link to="/political-data">
-                    <Button className={classes.button} variant="contained" color="primary" >
-                        Insurance
-                    </Button>
-                </Link>
-                <Link to="/political-data">
-                    <Button className={classes.button} variant="contained" color="primary" >
-                        Social Media
-                    </Button>
-                </Link>
+                        </Link>
+                    </div>
+                </div>
             </div>
             <FooterLogo />
         </div>
