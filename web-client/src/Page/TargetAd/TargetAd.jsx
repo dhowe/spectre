@@ -16,33 +16,37 @@ const styles = {
   }
 };
 
-function targetAd(props) {
-  const { classes } = props;
-  return (
-    <div className={classes.root}>
+class TargetAd extends React.Component {
+  render() {
+    const { classes } = this.props;
+    return (
+      <div className={classes.root}>
       <SpectreHeader colour="white" />
       <div className={classes.content + " content"}>
+        <br/>
         <Typography component="h4" variant="h4">
-          Share your targetted ad with {props.selectedFollower.name}?
+          Share your targetted ad with {this.props.selectedFollower.name||'Remy'}?
         </Typography>
         <Link to="/success-ad">
           <Grid container justify="center">
-          <Grid item>
-          <IconButton icon="tick" text="Yes" />
-          </Grid>
-          <Grid item>
-          <IconButton icon="next" text="No" />
-          </Grid>
+            <Grid item>
+              <IconButton icon="tick" text="Yes" />
+            </Grid>
+            <Grid item>
+              <IconButton icon="next" text="No" />
+            </Grid>
           </Grid>
         </Link>
+        <br/>
       </div>
       <FooterLogo />
     </div>
-  );
+    );
+  }
 }
 
-targetAd.propTypes = {
+TargetAd.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(targetAd);
+export default withStyles(styles)(TargetAd);

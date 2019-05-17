@@ -33,6 +33,7 @@ const styles = {
     row: {
         flexDirection: 'row',
         display: 'flex',
+        paddingBottom: '500px'
     },
     column: {
         flexDirection: 'column',

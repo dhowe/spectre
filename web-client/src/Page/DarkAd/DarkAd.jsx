@@ -52,7 +52,6 @@ class darkAd extends React.Component {
     image: image2,
     text: 'STOP THE INVASION'
   };
-
   render() {
     const { classes } = this.props;
     return (
