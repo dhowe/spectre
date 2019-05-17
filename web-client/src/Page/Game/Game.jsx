@@ -38,7 +38,7 @@ const styles = {
  */
 function sketch(p) {
 
-  let done;
+  let done, brandSize;
   let numLines = 9;
   let seconds = 0;
 
@@ -46,13 +46,13 @@ function sketch(p) {
     p.createCanvas(p.windowWidth, p.windowHeight * .7);
     p.textAlign(p.CENTER, p.CENTER);
     p.imageMode(p.CENTER);
+    brandSize = p.width/15;
 
     shuffle(Brand.names);
-    Brand.diameter = p.height / (numLines + 1);
     Brand.instances = [];
     for (let i = 0; i < Brand.names.length; i++) {
       let bx = -i * (p.width / 6) + p.width / 2;
-      Brand.instances.push(new Brand(p, bx, p.height / 2, Brand.names[i]));
+      Brand.instances.push(new Brand(p, bx, p.height / 2, brandSize, Brand.names[i]));
     }
   };
 
@@ -63,7 +63,7 @@ function sketch(p) {
 
     for (let i = 0; i < numLines; i++) {
       p.strokeWeight(i % 2 === 0 ? styles.sketchStrokeWeight : 0);
-      p.line(0, Brand.diameter * (i + 1), p.width, Brand.diameter * (i + 1));
+      p.line(0, brandSize * (i + 1), p.width, brandSize * (i + 1));
     }
 
     if (!done) Brand.updateAll();
@@ -77,7 +77,7 @@ function sketch(p) {
       }
       p.fill(styles.sketchText);
       p.textSize(40);
-      p.text(Math.max(0, timer), p.width - 60, Brand.diameter / 2);
+      p.text(Math.max(0, timer), p.width - 60, brandSize / 2);
     }
   };
 
@@ -93,7 +93,7 @@ function sketch(p) {
       Brand.active.snapTo((lineIdx + 1) / (numLines + 1) * p.height);
       Brand.active = false;
     }
-  }
+  };
 
   p.mousePressed = function () {
     Brand.active = false;
@@ -102,13 +102,13 @@ function sketch(p) {
         Brand.active = b;
       }
     });
-  }
+  };
 
   p.mouseDragged = function () {
     if (Brand.active) {
       Brand.active.y += p.mouseY - p.pmouseY;
     }
-  }
+  };
 
   function finished() {
     done = true;
@@ -120,19 +120,19 @@ function sketch(p) {
     //displayAsHtml(user);
   }
 
-  // function displayAsHtml(user) {
-  //   let otr = '<tr><td>';
-  //   let ctd = '</td><td>';
-  //   let ctr = '</td></tr>'
-  //   let rows = user.oceanTraits().length;
-  //   let desc = '</td><td rowspan=' + rows +
-  //     ' id="desc">' + user.generateDescription();
-  //   let html = user.oceanTraits().reduce((acc, t, i) => {
-  //     return acc + otr + t + ctd + user.traits[t] + (i ? '' : desc) + ctr;
-  //   }, '');
-  //   document.getElementById("content").style.display = 'inline-block';
-  //   document.getElementById("tdata").innerHTML = html;
-  // }
+  function displayAsHtml(user) { // eslint-disable-line no-unused-vars
+    let otr = '<tr><td>';
+    let ctd = '</td><td>';
+    let ctr = '</td></tr>'
+    let rows = user.oceanTraits().length;
+    let desc = '</td><td rowspan=' + rows +
+      ' id="desc">' + user.generateDescription();
+    let html = user.oceanTraits().reduce((acc, t, i) => {
+      return acc + otr + t + ctd + user.traits[t] + (i ? '' : desc) + ctr;
+    }, '');
+    document.getElementById("content").style.display = 'inline-block';
+    document.getElementById("tdata").innerHTML = html;
+  }
 
   function randomizeData() {
     Brand.instances.forEach(b => {
@@ -159,20 +159,21 @@ function sketch(p) {
 };
 
 class Brand {
-  constructor(p, x, y, item, imgName) {
+  constructor(p, x, y, sz, item) {
     this.p = p;
     this.x = x;
     this.y = y;
     this.sy = y;
     this.ty = y;
     this.t = 1;
+    this.sz = sz;
     this.item = item;
     this.rating = 0;
     this.strokeWeight = styles.sketchStrokeMinWeight;
-    this.logo = this.p.loadImage(imgName || 'apple.png');
+    this.logo = this.p.loadImage('/imgs/' + this.item.replace(/ /g, '_') + '.png');
   }
   draw() {
-    if (this.x > -Brand.diameter) this.render();
+    if (this.x > -this.sz) this.render();
   }
   update() {
     this.x += Brand.speed;
@@ -195,15 +196,15 @@ class Brand {
     p.fill(styles.sketchBg);
     p.stroke(styles.sketchStroke);
     p.strokeWeight(this === Brand.active ? styles.sketchStrokeWeight : styles.sketchStrokeMinWeight);
-    p.ellipse(this.x, this.y, Brand.diameter);
+    p.ellipse(this.x, this.y, this.sz);
 
-    p.image(this.logo, this.x, this.y, Brand.diameter * .7, Brand.diameter * .7);
+    p.image(this.logo, this.x, this.y, this.sz * .8, this.sz * .8);
 
     p.noStroke();
     p.fill(styles.sketchText);
-    p.textSize(18);
+    p.textSize(this.sz/4);
     p.textAlign(p.CENTER, p.TOP);
-    p.text(this.item, this.x, this.y + Brand.diameter / 2 + 2);
+    p.text(this.item, this.x, this.y + this.sz / 2 + 2);
 
     p.textAlign(p.CENTER, p.CENTER);
   }
@@ -211,7 +212,7 @@ class Brand {
     return this.p.textAscent() + this.p.textDescent();
   }
   contains(mx, my) {
-    return this.p.dist(mx, my, this.x, this.y) <= Brand.diameter;
+    return this.p.dist(mx, my, this.x, this.y) <= this.sz;
   }
   bounceOut(_x) { // from penner
     if (_x < 4 / 11.0) {
@@ -228,7 +229,6 @@ class Brand {
 
 Brand.speed = 1;
 Brand.active = false;
-Brand.diameter = 100;
 Brand.names = ['cocacola', 'disney', 'converse', 'playstation', 'xbox', 'red bull', 'hello kitty', 'pepsi', 'h&m', 'ben & jerrys', 'old spice', 'burberry', 'adidas', 'marvel', 'nike', 'zara', 'vans', 'starbucks', 'topshop', 'lacoste', 'gap', 'sony', 'new look', 'calvin klein', 'rayban', 'next', 'swarovski', 'tommy hilfiger', 'asos', 'marks and spencer', 'vivienne westwood', 'chanel', 'nintendo64', 'lego'];
 Brand.drawAll = function () { Brand.instances.forEach(b => b.draw()) };
 Brand.updateAll = function () { Brand.instances.forEach(b => b.update()) };
@@ -247,8 +247,7 @@ class Game extends React.Component {
     if (this.context._id) { // TMP: remove
       UserSession.updateUser(this.context, null,
         e => { console.error("Error", e); throw Error(e); });
-    }
-    else { // TMP: remove
+    } else { // TMP: remove
       console.warn('WARN: not updating Db with User info!');
     }
     this.setState(() => ({ toThankYou: true }));
@@ -298,6 +297,5 @@ Game.propTypes = {
 };
 
 Game.contextType = UserSession;
-
 
 export default withStyles(styles)(Game);
