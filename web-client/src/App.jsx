@@ -124,7 +124,7 @@ class App extends React.Component {
               <Route exact path="/influenced-by" render={() => <InfluencedBy selectedFollower={this.state.selectedFollower} />} />
               <Route exact path="/dark-ad" component={DarkAd} />
               <Route exact path="/target-ad" render={() => <TargetAd selectedFollower={this.state.selectedFollower} />} />
-              <Route exact path="/success-ad" component={SuccessAd} />
+              <Route exact path="/success-ad" render={() => <SuccessAd selectedFollower={this.state.selectedFollower} />} />
               <Route exact path="/influence-a-nation" component={InfluenceANation} />
               <Route exact path="/consumer-data" component={ConsumerData} />
               <Route exact path="/political-data" component={PoliticalData} />

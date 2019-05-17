@@ -4,6 +4,8 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
+import { Link } from "react-router-dom";
+import IconButton from "../../Components/IconButton/IconButton";
 
 const styles = {
   root: {
@@ -17,14 +19,14 @@ function SocialMedia(props) {
   const { classes } = props;
   return (
     <div className={classes.root}>
-        <SpectreHeader colour="white" />
-        <div className={classes.content + " content"}>
-            <Typography component="h3" variant="h3">Social Media END FOR NOW [username] </Typography>
-            {/* <Link component={IntroOceanVideo} to="/intro-ocean-video">
-                <IconButton icon="next" text="WTF is OCEAN?" />
-            </Link> */}
-        </div>
-        <FooterLogo />
+      <SpectreHeader colour="white" />
+      <div className={classes.content + " content"}>
+        <Typography component="h3" variant="h3">This is the end of the prototype for now.</Typography>
+        <Link to="/touch-to-begin">
+          <IconButton icon="next" text="Reset" />
+        </Link>
+      </div>
+      <FooterLogo />
     </div >
   );
 }
