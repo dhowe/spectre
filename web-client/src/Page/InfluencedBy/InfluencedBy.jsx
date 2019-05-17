@@ -25,7 +25,7 @@ class InfluencedBy extends React.Component {
           <SpectreHeader colour="white" />
           <div className={classes.content + " content"}>
               <Typography component="h4" variant="h4">{this.props.selectedFollower.name}‘s OCEAN profile shows they are most likely influenced by:</Typography>
-              <Typography component="h4" variant="h4">{influences.map((influence,i) => <p>&#10003;&nbsp;{influence} key={i}</p>)}</Typography>
+              <Typography component="h4" variant="h4">{influences.map((influence,i) => <p key={i}>&#10003;&nbsp;{influence}</p>)}</Typography>
               <Typography component="h4" variant="h4">Use our design tool to create a targeted Facebook ad to influence {this.props.selectedFollower.name}’s vote.</Typography>
               <Link to="/dark-ad">
                   <IconButton icon="next" text="Let's go" />
