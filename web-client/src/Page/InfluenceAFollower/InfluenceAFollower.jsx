@@ -26,7 +26,7 @@ const styles = {
 class InfluenceAFollower extends React.Component {
   constructor(props) {
     super(props);
-    this.names = ['Terry', 'Bailey', 'Devin', 'Tyler', 'Fran', 'Pat', 'Sam', 'Reed'];
+    this.names = ['Remy', 'Bailey', 'Devin', 'Tyler', 'Fran', 'Pat', 'Sam', 'Reed'];
   }
   render() {
     const { classes } = this.props;

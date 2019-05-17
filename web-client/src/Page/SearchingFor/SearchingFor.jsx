@@ -12,7 +12,6 @@ const styles = {
     root: {
         flexGrow: 1,
         width: "100%",
-
         color: 'black'
     },
     content: {
@@ -22,8 +21,8 @@ const styles = {
         margin: "20% 0",
     },
     button: {
-
         borderRadius: '28px',
+        margin: '16px',
         border: 'solid 3px #929391',
         backgroundColor: '#ffffff',
         boxShadow: 'none',
