@@ -22,18 +22,17 @@ const styles = {
 
 class YourPower extends React.Component {
   render() {
+    console.log('User:', this.context);
     const { classes } = this.props;
     return (
       <div className={classes.root}>
           <SpectreHeader colour="white" />
           <div className={classes.content + " content"}>
-
-              <Typography component="h4" variant="h4">{this.context.name}, your {this.context.virtue} is growing.</Typography>
+              <Typography component="h4" variant="h4">{this.context.name || 'Remy'}, your {this.context.virtue || 'Power'} is growing.</Typography>
               <Typography component="h4" variant="h4">Let's put it into practice.</Typography>
               <Link to="/pick-your-side">
                   <IconButton icon="next" text="Next" />
               </Link>
-
           </div >
           <FooterLogo />
       </div >
@@ -45,4 +44,5 @@ YourPower.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 YourPower.contextType = UserSession;
+
 export default withStyles(styles)(YourPower);

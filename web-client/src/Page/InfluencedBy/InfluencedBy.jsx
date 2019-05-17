@@ -18,16 +18,15 @@ const styles = {
 
 class InfluencedBy extends React.Component {
     render() {
+        let influences = this.context.influencedBy || ['Security or crime-related issues', 'Images of large crowds', 'Immigration issues'];
         const { classes } = this.props;
         return (
             <div className={classes.root}>
                 <SpectreHeader colour="white" />
                 <div className={classes.content + " content"}>
-                    <Typography component="h4" variant="h4">Sophie T ‘s OCEAN profile shows she is most likely influenced by:</Typography>
-                    <Typography component="h4" variant="h4">{this.context.influencedBy}</Typography>
-                    {this.context.influencedBy.map(influence => <p>&#10003;{influence}</p>)}
+                    <Typography component="h4" variant="h4">{this.props.selectedFollower.name}‘s OCEAN profile shows they are most likely influenced by:</Typography>
+                    <Typography component="h4" variant="h4">{influences.map((influence,i) => <p>&#10003;&nbsp;{influence} key={i}</p>)}</Typography>
                     <Typography component="h4" variant="h4">Use our design tool to create a targeted Facebook ad to influence {this.props.selectedFollower.name}’s vote.</Typography>
-
                     <Link to="/dark-ad">
                         <IconButton icon="next" text="Let's go" />
                     </Link>

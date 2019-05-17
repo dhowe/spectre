@@ -20,8 +20,8 @@ function SocialMedia(props) {
   return (
     <div className={classes.root}>
       <SpectreHeader colour="white" />
-      <div className={classes.content + " content"}>
-        <Typography component="h3" variant="h3">This is the end of the prototype for now.</Typography>
+      <div className={classes.content + " content"}><br/>
+        <Typography component="h3" variant="h3">[End Prototype]</Typography>
         <Link to="/touch-to-begin">
           <IconButton icon="next" text="Reset" />
         </Link>

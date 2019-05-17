@@ -28,7 +28,7 @@ class SuccessAd extends React.Component {
             Your Facebook ad was successful!
         </Typography>
           <Typography component="h4" variant="h4">
-            What we see changes who we are
+            What we see changes who we are.
         </Typography>
           <Typography component="h3" variant="h3">
             {this.props.selectedFollower.name} is now more likely to vote {this.context.brexitChoice} in the referendum.
