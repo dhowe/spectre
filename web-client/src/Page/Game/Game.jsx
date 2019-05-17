@@ -43,7 +43,10 @@ function sketch(p) {
   let seconds = 0;
 
   p.setup = function () {
+    
+    //p.createCanvas(1320, 1080);
     p.createCanvas(p.windowWidth, p.windowHeight * .7);
+
     p.textAlign(p.CENTER, p.CENTER);
     p.imageMode(p.CENTER);
     brandSize = p.width/15;
