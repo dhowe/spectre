@@ -18,7 +18,7 @@ const styles = {
   }
 };
 
-class PickASide extends React.Component {
+class PickYourSide extends React.Component {
   render() {
     const { classes } = this.props;
     return (
@@ -39,9 +39,9 @@ class PickASide extends React.Component {
   }
 }
 
-PickASide.propTypes = {
+PickYourSide.propTypes = {
   classes: PropTypes.object.isRequired,
 };
-PickASide.contextType = UserSession;
+PickYourSide.contextType = UserSession;
 
-export default withStyles(styles)(PickASide);
+export default withStyles(styles)(PickYourSide);

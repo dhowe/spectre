@@ -30,7 +30,7 @@ import InsightPolitical from './Page/InsightPolitical/InsightPolitical';
 import InsightComplete from './Page/InsightComplete/InsightComplete';
 import IntroOceanVideo from './Page/IntroOceanVideo/IntroOceanVideo';
 import YourPower from './Page/YourPower/YourPower';
-import PickASide from './Page/PickASide/PickASide';
+import PickYourSide from './Page/PickYourSide/PickYourSide';
 import Campaign from './Page/Campaign/Campaign';
 import InfluencedBy from './Page/InfluencedBy/InfluencedBy';
 import DarkAd from './Page/DarkAd/DarkAd';
@@ -119,7 +119,7 @@ class App extends React.Component {
               <Route exact path="/insight-complete" render={() => <InsightComplete name={this.state.name} virtue={this.state.virtue} selectedFollower={this.state.selectedFollower} />} />
               <Route exact path="/intro-ocean-video" component={IntroOceanVideo} />
               <Route exact path="/your-power" component={YourPower} />
-              <Route exact path="/pick-a-side" component={PickASide} />
+              <Route exact path="/pick-your-side" component={PickYourSide} />
               <Route exact path="/campaign" render={() => <Campaign selectedFollower={this.state.selectedFollower} />} />
               <Route exact path="/influenced-by" render={() => <InfluencedBy selectedFollower={this.state.selectedFollower} />} />
               <Route exact path="/dark-ad" component={DarkAd} />

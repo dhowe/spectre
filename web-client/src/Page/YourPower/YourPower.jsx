@@ -30,7 +30,7 @@ class YourPower extends React.Component {
 
               <Typography component="h4" variant="h4">{this.context.name}, your {this.context.virtue} is growing.</Typography>
               <Typography component="h4" variant="h4">Let's put it into practice.</Typography>
-              <Link to="/pick-a-side">
+              <Link to="/pick-your-side">
                   <IconButton icon="next" text="Next" />
               </Link>
 
