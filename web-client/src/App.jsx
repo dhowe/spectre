@@ -43,6 +43,28 @@ import HomeData from './Page/HomeData/HomeData';
 import FindCitizens from './Page/FindCitizens/FindCitizens';
 import TargetsFound from './Page/TargetsFound/TargetsFound';
 import SocialMedia from './Page/SocialMedia/SocialMedia';
+import LaunchCampaign from './Page/LaunchCampaign/LaunchCampaign';
+import ReferendumResults from './Page/ReferendumResults/ReferendumResults';
+import Win from './Page/Win/Win';
+import AIIsTheFuture from './Page/AIIsTheFuture/AIIsTheFuture';
+import InfluenceACelebrity from './Page/InfluenceACelebrity/InfluenceACelebrity';
+import FRMask from './Page/FRMask/FRMask';
+import GeneratingVideo from './Page/GeneratingVideo/GeneratingVideo';
+import PickAStatement from './Page/PickAStatement/PickAStatement';
+import FeelsGood from './Page/FeelsGood/FeelsGood';
+import LookAtYou from './Page/LookAtYou/LookAtYou';
+import OCEANReveal from './Page/OCEANReveal/OCEANReveal';
+import ShallowFake from './Page/ShallowFake/ShallowFake';
+import OurAlgorithms from './Page/OurAlgorithms/OurAlgorithms';
+import ShareOnSocialChoice from './Page/ShareOnSocialChoice/ShareOnSocialChoice';
+import SharingOnSocialMedia from './Page/SharingOnSocialMedia/SharingOnSocialMedia';
+import WrapUp from './Page/WrapUp/WrapUp';
+import TakeBackControl from './Page/TakeBackControl/TakeBackControl';
+import WeAreSorry from './Page/WeAreSorry/WeAreSorry';
+import WeHopeYouEnjoyed from './Page/WeHopeYouEnjoyed/WeHopeYouEnjoyed';
+import CustomerSurvey from './Page/CustomerSurvey/CustomerSurvey';
+import OutroVideo from './Page/OutroVideo/OutroVideo';
+import Goodbye from './Page/Goodbye/Goodbye';
 
 const theme = createMuiTheme({
   useNextVariants: true, // silence deprecation warnings
@@ -132,6 +154,28 @@ class App extends React.Component {
               <Route exact path="/find-citizens" render={() => <FindCitizens selectedFollower={this.state.selectedFollower} />} />
               <Route exact path="/targets-found" component={TargetsFound} />
               <Route exact path="/social-media" component={SocialMedia} />
+              <Route exact path="/launch-campaign" component={LaunchCampaign} />
+              <Route exact path="/referendum-results" component={ReferendumResults} />
+              <Route exact path="/win" component={Win} />
+              <Route exact path="/AI-is-the-future" component={AIIsTheFuture} />
+              <Route exact path="/influence-a-celebrity" component={InfluenceACelebrity} />
+              <Route exact path="/FRMask" component={FRMask} />
+              <Route exact path="/generating-video" component={GeneratingVideo} />
+              <Route exact path="/pick-a-statement" component={PickAStatement} />
+              <Route exact path="/feels-good" component={FeelsGood} />
+              <Route exact path="/look-at-you" component={LookAtYou} />
+              <Route exact path="/OCEAN-reveal" component={OCEANReveal} />
+              <Route exact path="/shallow-fake" component={ShallowFake} />
+              <Route exact path="/our-algorithms" component={OurAlgorithms} />
+              <Route exact path="/share-on-social-choice" component={ShareOnSocialChoice} />
+              <Route exact path="/sharing-on-social-media" component={SharingOnSocialMedia} />
+              <Route exact path="/wrap-up" component={WrapUp} />
+              <Route exact path="/take-back-control" component={TakeBackControl} />
+              <Route exact path="/we-are-sorry" component={WeAreSorry} />
+              <Route exact path="/we-hope-you-enjoyed" component={WeHopeYouEnjoyed} />
+              <Route exact path="/customer-survey" component={CustomerSurvey} />
+              <Route exact path="/outro-video" component={OutroVideo} />
+              <Route exact path="/goodbye" component={Goodbye} />
             </Router>
           </header>
         </div>
