@@ -3,7 +3,7 @@
 
 | Name | Template | Content | Notes | |
 |------|----------|-------|-------|---|
-| Standby | 248_BRA_Spectre_Style_Sheets_Pres_v3_13 | Standby graphic | | |
+| Standby | 248_BRA_Spectre_Style_Sheets_Pres_v3_13 | Standby graphic | | ![30_Pick_A_side_mockup](https://user-images.githubusercontent.com/48989022/57895549-1a8bf580-7844-11e9-8cfe-da0bb466bd75.jpg) |
 | Login | 248_BRA_Spectre_Style_Sheets_Pres_v3_14 | Hello Let’s play! | | |
 | Video Intro | 248_BRA_Spectre_Style_Sheets_Pres_v3_21 | 20 sec video intro to Spectre & products | ALL VIDEOS IN MP4 / SQUARE RATIO | |
 | Username | 248_BRA_Spectre_Style_Sheets_Pres_v3_21 | Your first name? Your Gender? | | |
