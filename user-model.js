@@ -9,12 +9,17 @@ const { schema, functions } = toMongoose(userSchema);
 const UserSchema = mongoose.Schema(schema); // hack here
 Object.keys(functions).forEach(f => UserSchema.methods[f] = functions[f]);
 
-UserSchema.methods.findByOcean = function (res, limit, cb) {
+UserSchema.methods.findByOcean = function (limit, cb) { // cb=function(err,users)
   let user = this;
   UserModel.find({})
     .exec(function (err, instances) {
+      if (err) {
+        console.error(err);
+        throw err;
+      }
       let sorted = oceanSort(user, instances);
-      cb(sorted.slice(0, limit));
+      sorted = sorted.slice(0, limit);
+      cb(sorted);
     });
   return this;
 };

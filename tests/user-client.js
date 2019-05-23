@@ -72,7 +72,7 @@ describe('Client User', function () {
   describe('User.influencedBy()', function () {
 
     it('Should fail for a user without traits', function () {
-      expect(() => new User().influencedBy()).to.throw();
+      expect(() => new User().predictInfluences()).to.throw();
       //expect(() => User.Create().influencedBy()).to.throw();
     });
 
@@ -87,7 +87,7 @@ describe('Client User', function () {
         openness: Math.random(),
         neuroticism: Math.random()
       }
-      let result = user.influencedBy();
+      let result = user.predictInfluences();
       //console.log(result);
       expect(result).is.a('array');
       expect(result.length).is.eq(3);

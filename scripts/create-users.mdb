@@ -1,7 +1,15 @@
-db = db.getSiblingDB('spectre');
-db.users.deleteMany({});
-db.users.createIndex({ login: 1, loginType: 1}, { unique: true });
+## run with: $ mongo < create-users.mdb
 
+## find the database
+db = db.getSiblingDB('spectre');
+
+## delete any existing users
+db.users.deleteMany({});
+
+## create unique indexes
+db.users.createIndex({ 'login': 1, 'loginType': 1}, { unique: true });
+
+## insert initial users
 db.users.insert({
   name: "Daniel",
   login: "daniel@aol.com",
@@ -44,5 +52,6 @@ db.users.insert({
   }
 });
 
-let cursor = db.users.find({},{name:1,id:1});
+## print all the users name/login/logintype/id
+let cursor = db.users.find({},{login:1,loginType:1,name:1,id:1});
 while (cursor.hasNext()) { printjson(cursor.next()); }

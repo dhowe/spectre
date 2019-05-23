@@ -27,7 +27,7 @@ const oceanSort = function (user, candidates, limit) {
 
   if (typeof user === 'undefined') throw Error('null user');
   if (typeof candidates === 'undefined') throw Error('null candidates');
-  if (typeof limit === 'undefined') limit = Number.MAX_SAFE_INTEGER;
+  if (typeof limit === 'undefined') limit = candidates.length;
 
   if (!Number.isInteger(limit) || limit < 1) throw Error('bad limit: '+limit);
 
