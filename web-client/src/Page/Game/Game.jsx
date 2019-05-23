@@ -16,15 +16,19 @@ const styles = {
   root: {
     flexGrow: 1,
     width: "100%",
-    color: 'black'
+    color: 'black',
   },
 
-  // TODO: grab css from sass
+  // configurable parameters
+  allowedTimeMs: 20000,
+  sketchStrokeWeight: 6,
+  sketchStrokeMinWeight: 2,
+
+  // can grab css from sass
   sketchBg: '#FFF',
   sketchText: '#929392',
   sketchStroke: '#929392',
-  sketchStrokeWeight: 6,
-  sketchStrokeMinWeight: 2,
+  sketchStrokeSel: '#21c0fc',
 };
 
 /*
@@ -36,27 +40,29 @@ const styles = {
  *   the text-generation functions (if nothing
  *   is moved, brand ratings are randomized)
  */
+let percent, totalDist;
 function sketch(p) {
 
-  let done, brandSize;
-  let numLines = 9;
-  let seconds = 0;
+  let done, brandSize, start, numLines = 9;
 
   p.setup = function () {
-    
-    //p.createCanvas(1320, 1080);
-    p.createCanvas(p.windowWidth, p.windowHeight * .7);
+
+    p.createCanvas(1080,1320);
+    //p.createCanvas(540, 760);
 
     p.textAlign(p.CENTER, p.CENTER);
     p.imageMode(p.CENTER);
-    brandSize = p.width/15;
+    brandSize = p.height / 15;
 
     shuffle(Brand.names);
     Brand.instances = [];
     for (let i = 0; i < Brand.names.length; i++) {
-      let bx = -i * (p.width / 6) + p.width / 2;
+      let bx = -i * (p.width / 4) + p.width / 2;
       Brand.instances.push(new Brand(p, bx, p.height / 2, brandSize, Brand.names[i]));
+
     }
+    totalDist = p.width - Brand.instances[Brand.instances.length-1].x;
+    start = p.millis();
   };
 
   p.draw = function () {
@@ -64,20 +70,20 @@ function sketch(p) {
     p.background(styles.sketchBg);
     p.stroke(styles.sketchStroke);
 
+    let lineGap = p.height / numLines;
     for (let i = 0; i < numLines; i++) {
       p.strokeWeight(i % 2 === 0 ? styles.sketchStrokeWeight : 0);
-      p.line(0, brandSize * (i + 1), p.width, brandSize * (i + 1));
+      let ypos = lineGap * (i + 1) - lineGap/2;
+      p.line(0, ypos, p.width,ypos);
     }
 
     if (!done) Brand.updateAll();
     Brand.drawAll();
 
-    if (seconds) { // no timer for now
-
-      let timer = seconds - Math.floor(p.millis() / 1000);
-      if (timer < 0 && !done) {
-        finished();
-      }
+    if (styles.allowedTimeMs) {
+      percent = elapsed() / styles.allowedTimeMs;
+      let timer = Math.floor(((styles.allowedTimeMs - (styles.allowedTimeMs * percent))/1000));
+      if (timer < 0 && !done) finished();
       p.fill(styles.sketchText);
       p.textSize(40);
       p.text(Math.max(0, timer), p.width - 60, brandSize / 2);
@@ -112,6 +118,10 @@ function sketch(p) {
       Brand.active.y += p.mouseY - p.pmouseY;
     }
   };
+
+  function elapsed() {
+    return p.millis() - start;
+  }
 
   function finished() {
     done = true;
@@ -164,6 +174,7 @@ function sketch(p) {
 class Brand {
   constructor(p, x, y, sz, item) {
     this.p = p;
+    this.ix = x;
     this.x = x;
     this.y = y;
     this.sy = y;
@@ -179,7 +190,8 @@ class Brand {
     if (this.x > -this.sz) this.render();
   }
   update() {
-    this.x += Brand.speed;
+
+    this.x = this.ix + (percent * totalDist);
     if (this.sy !== this.ty) {
       let ft = this.bounceOut(this.t);
       this.y = this.p.map(ft, 0, 1, this.sy, this.ty);
@@ -197,7 +209,7 @@ class Brand {
   render() {
     let p = this.p;
     p.fill(styles.sketchBg);
-    p.stroke(styles.sketchStroke);
+    p.stroke(this === Brand.active ? styles.sketchStrokeSel : styles.sketchStroke);
     p.strokeWeight(this === Brand.active ? styles.sketchStrokeWeight : styles.sketchStrokeMinWeight);
     p.ellipse(this.x, this.y, this.sz);
 
@@ -230,8 +242,9 @@ class Brand {
   }
 }
 
-Brand.speed = 1;
+
 Brand.active = false;
+Brand.speed = styles.sketchSpeed;
 Brand.names = ['cocacola', 'disney', 'converse', 'playstation', 'xbox', 'red bull', 'hello kitty', 'pepsi', 'h&m', 'ben & jerrys', 'old spice', 'burberry', 'adidas', 'marvel', 'nike', 'zara', 'vans', 'starbucks', 'topshop', 'lacoste', 'gap', 'sony', 'new look', 'calvin klein', 'rayban', 'next', 'swarovski', 'tommy hilfiger', 'asos', 'marks and spencer', 'vivienne westwood', 'chanel', 'nintendo64', 'lego'];
 Brand.drawAll = function () { Brand.instances.forEach(b => b.draw()) };
 Brand.updateAll = function () { Brand.instances.forEach(b => b.update()) };
@@ -267,8 +280,8 @@ class Game extends React.Component {
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" />
-        <div className={classes.content + " content"}>
-          <P5Wrapper sketch={sketch} />
+        <div className={"game content"}>
+          <P5Wrapper sketch={sketch} className="wrapper" />
 
           {/* ------- temporary div for testing ------- */}
           <div id="content">
@@ -289,7 +302,7 @@ class Game extends React.Component {
             <IconButton icon="next" text="Next" />
           </Link>
         </div >
-        <FooterLogo />
+        }<FooterLogo />
       </div >
     );
   }
