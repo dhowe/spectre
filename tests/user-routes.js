@@ -19,14 +19,13 @@ if (typeof env.API_HOST != 'undefined')
 
 describe('User Routes', () => {
 
-  console.log('\nHost: ' + (env.API_HOST || 'localhost'));
+  //console.log('\nHost: ' + (env.API_HOST || 'localhost');
 
   beforeEach((done) => { // empty db before each test
     UserModel.deleteMany({}, (err) => {
       err && console.error(err);
       done()
     });
-    //UserModel.ensureIndexes(err => err && console.log(err));
   });
 
   describe('List: GET /api/users', () => {

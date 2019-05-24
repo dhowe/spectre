@@ -11,6 +11,7 @@ import { dbUrl, apiUser } from './config';
 
 const base = '/api/';
 const port = process.env.PORT || 8083;
+const dev = process.env.NODE_ENV === 'test';
 const auth = basicAuth({
   users: apiUser,
   challenge: true,
@@ -26,7 +27,7 @@ app.use(bodyparser.urlencoded({ extended: true }));
 
 // minimal logging
 app.all('*', morgan('[:date[clf]] :remote-addr :method :url :status', {
-  skip: () => process.env.NODE_ENV === 'test'
+  skip: () => dev
 }));
 
 // static react files
@@ -40,10 +41,16 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname + '/web-client/build/index.html'));
 });
 
+/////////////////////////// DbConnect ///////////////////////////////
+
+const opts = { useNewUrlParser: true };
+const dbu = dev ? dbUrl + '-dev' : dbUrl;
+const dbn = dbu.substring(dbu.lastIndexOf('/')+1);
+
+mongoose.connect(dbu, opts);
+
 //////////////////////////// Startup ////////////////////////////////
 
-mongoose.connect(dbUrl, { useNewUrlParser: true });
-
 export default app.listen(port, () => {
-  console.log('Spectre API at localhost:' + port + base);
+  console.log('Spectre API at localhost:' + port + base+ ' ['+dbn+']\n');
 });
