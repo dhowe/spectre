@@ -1,3 +1,4 @@
 **/node_modules
+web-client/public/profiles
 .env*
 misc
