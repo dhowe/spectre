@@ -18,4 +18,9 @@ router.route('/users/:uid')
 router.route('/users/similar/:uid')
   .get(controller.similar)
 
+
+router.route('/post/images/') // tmp
+  .get(controller.postImages)
+
+
 export default router;

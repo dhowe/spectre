@@ -19,8 +19,6 @@ if (typeof env.API_HOST != 'undefined')
 
 describe('User Routes', () => {
 
-  //console.log('\nHost: ' + (env.API_HOST || 'localhost');
-
   beforeEach((done) => { // empty db before each test
     UserModel.deleteMany({}, (err) => {
       err && console.error(err);

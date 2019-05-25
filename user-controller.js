@@ -1,5 +1,13 @@
 import UserModel from './user-model';
 
+const postImages = function (req, res) { // tmp
+
+  if (!(req.body.clientId && req.body.videoId)) {
+    return error(res, "Bad imageTest: no loginType");
+  }
+  res.status(200).send('OK');
+};
+
 const list = function (req, res) {
 
   UserModel.getAll(function (err, users) {
@@ -10,10 +18,9 @@ const list = function (req, res) {
 
 const create = function (req, res) {
 
-  //console.log('create', req.body.login, req.body.loginType);
-
-  if (!req.body.loginType) return error(res, "Bad UserModel: no loginType");
-  if (!req.body.login) return error(res, "Bad UserModel: no login");
+  if (!(req.body.login && req.body.loginType)) {
+    return error(res, "UserModel with no login/loginType:", req.body);
+  }
 
   let user = new UserModel();
   Object.assign(user, req.body); // dangerous?
@@ -109,4 +116,4 @@ function error(res, err, code) {
   res.status(code || 400).send({ error: err });
 }
 
-export default { list, similar, create, view, update, remove }
+export default { list, similar, create, view, update, remove, postImages }
