@@ -5,9 +5,10 @@ dotEnv.config();
 let env = process.env;
 let port = env.DB_PORT || 27017;
 let host = env.DB_HOST || 'localhost';
+let dbname = env.DB_NAME || 'spectre';
 
 let dbauth = '';
-let dbhost = host + ':' + port + '/' + env.DB_NAME;
+let dbhost = host + ':' + port + '/' + dbname;
 
 let apiUser = {};
 apiUser[env.API_USER] = env.API_SECRET;

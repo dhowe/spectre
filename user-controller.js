@@ -1,11 +1,35 @@
 import UserModel from './user-model';
+import multer from 'multer';
+import path from 'path';
 
-const postImages = function (req, res) { // tmp
+const profiles = './web-client/public/profiles/';
 
-  if (!(req.body.clientId && req.body.videoId)) {
-    return error(res, "Bad imageTest: no loginType");
+const photo = function (req, res) {
+
+  if (typeof req.params.uid === 'undefined') {
+    res.status(400).send({ error: 'no uid sent' });
   }
-  res.status(200).send('OK');
+
+  let upload = multer({
+    storage: multer.diskStorage({
+      destination: (req, file, cb) => {
+        cb(null, path.join(profiles))
+      },
+      filename: (req, file, cb) => {
+        cb(null, req.params.uid + '-' + Date.now() +
+          path.extname(file.originalname))
+      }
+    })
+  }).single('profileImage');
+
+  upload(req, res, e => {
+    if (e) return res.status(400).send({ error: e });
+    //console.log("STORAGE",server.storage.getFilename());
+    console.log(req.file);
+    res.status(200).send({url: req.file.path.replace(/.*\/profiles/,'/profiles')});
+  });
+  //res.status(200).send('OK');
+
 };
 
 const list = function (req, res) {
@@ -19,7 +43,7 @@ const list = function (req, res) {
 const create = function (req, res) {
 
   if (!(req.body.login && req.body.loginType)) {
-    return error(res, "UserModel with no login/loginType:", req.body);
+    return error(res, "UserModel with no login/loginType:" + req.body);
   }
 
   let user = new UserModel();
@@ -116,4 +140,4 @@ function error(res, err, code) {
   res.status(code || 400).send({ error: err });
 }
 
-export default { list, similar, create, view, update, remove, postImages }
+export default { list, similar, create, view, update, remove, photo /*, postImages */ }

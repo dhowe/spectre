@@ -1,8 +1,11 @@
 import mongoose from 'mongoose';
+import chai_string from 'chai-string'
 import chai_http from 'chai-http';
+import chai_fs from 'chai-fs';
 import server from '../server';
 import dotEnv from 'dotenv';
 import chai from 'chai';
+import fs from 'fs';
 
 import UserModel from '../user-model';
 
@@ -12,6 +15,8 @@ const port = env.PORT || 8083;
 
 dotEnv.config();
 chai.use(chai_http);
+chai.use(chai_fs);
+chai.use(chai_string);
 
 let host = server;
 if (typeof env.API_HOST != 'undefined')
@@ -26,7 +31,36 @@ describe('User Routes', () => {
     });
   });
 
+  describe('Image: POST /api/users/photo/:uid', () => {
+
+    it('it should upload a user photo', (done) => {
+
+      let img = './web-client/public/targets/target4.png';
+      //expect(img).to.be.a.path();
+
+      //fs.readFile(img, 'utf8', function (err, data) {
+        let uid = 'dfjalkj34';
+        chai.request(host)
+          .post('/api/users/photo/'+uid)
+          .auth(env.API_USER, env.API_SECRET)
+          .field('videoId', 2)
+          .field('clientId', env.CLIENT_ID)
+          .attach('profileImage', fs.readFileSync(img), 'target4.png')
+          .end((err, res) => {
+            console.log(res.body);
+            expect(res).to.have.status(200);
+            expect(res.body).is.a('object');
+            expect(res.body.url).to.startsWith('/profiles/'+uid);
+            expect(res.body.url).to.endsWith('.png');
+            done();
+          });
+
+      //});
+    });
+  });
+
   describe('List: GET /api/users', () => {
+
     it('it should return a list of all users', (done) => {
       chai.request(host)
         .get('/api/users')

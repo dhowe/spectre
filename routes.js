@@ -11,16 +11,21 @@ router.route('/users')
 
 router.route('/users/:uid')
   .get(controller.view)
-  .patch(controller.update)
   .put(controller.update)
+  .patch(controller.update)
   .delete(controller.remove);
 
 router.route('/users/similar/:uid')
   .get(controller.similar)
 
+router.route('/users/photo/:uid')
+  .post(controller.photo)
 
-router.route('/post/images/') // tmp
-  .get(controller.postImages)
+// router.route('/users/photo/:uid')
+//   .post(controller.photoUpload)
 
+// router.route('/post/images/') // tmp
+//   .post(controller.postImages)
+//
 
 export default router;
