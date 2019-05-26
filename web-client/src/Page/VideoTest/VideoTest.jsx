@@ -17,11 +17,10 @@ function VideoTest(props) {
         <Webcam />
         <Link to="/touch-to-begin">
             <div className={classes.clickToContinue}>
-                <Typography > Touch to Begin</Typography>
+                <Typography>Touch to Begin</Typography>
             </div>
         </Link>
     </div >
-
   );
 }
 

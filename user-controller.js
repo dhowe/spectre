@@ -36,7 +36,6 @@ const photo = function (req, res) {
 const photoset = function (req, res) {
 
   //console.log("Routes.photoSet");
-
   if (typeof req.params.uid === 'undefined') {
     res.status(400).send({ error: 'no uid sent' });
   }
@@ -71,12 +70,22 @@ const list = function (req, res) {
   });
 };
 
+const current = function (req, res) {
+
+  UserModel.find({}, (e, users) => {
+    if (e) return error(res, e);
+    res.status(200).send({_id: users[0]._id});
+  });
+};
+
 const create = function (req, res) {
 
   if (!(req.body.login && req.body.loginType)) {
 
     return error(res, "UserModel with no login/loginType:" + req.body);
   }
+
+  // TODO: set clientId or -1
 
   let user = new UserModel();
   Object.assign(user, req.body); // dangerous?
@@ -172,4 +181,4 @@ function error(res, err, code) {
   res.status(code || 400).send({ error: err });
 }
 
-export default { list, similar, create, view, update, remove, photo, photoset }
+export default { list, similar, create, view, update, remove, photo, photoset, current }

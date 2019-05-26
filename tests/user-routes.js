@@ -176,6 +176,34 @@ describe('User Routes', () => {
     });
   });
 
+  /*describe('Current: GET /api/users/current', () => {
+
+    it('should return id for clients most recent user', (done) => {
+      let users = [];
+      for (var i = 0; i < 10; i++) {
+        let data = { name: "dave" + i, login: "dave" + i + "@abc.com", loginType: "twitter" };
+        let user = UserModel.Create(data);
+        let keys = user.oceanTraits();
+        keys.forEach(k => user.traits[k] = i / 10);
+        users.push(user);
+      }
+
+      // save 10 users
+      saveUsers(users, () => {
+        // then pick the one with last updated time
+        // that matches the client-id
+        chai.request(host)
+          .get('/api/users/current')
+          .auth(env.API_USER, env.API_SECRET)
+          .end((err, res) => {
+            expect(res).to.have.status(200);
+            expect(res.body).is.a('object');
+            done();
+          });
+      });
+    });
+  });*/
+
   describe('Create: POST /api/users', () => {
 
     it('should not insert user without login', (done) => {
@@ -299,19 +327,20 @@ describe('User Routes', () => {
         .send(user)
         .end((err, res) => {
           if (err) throw err;
-          //console.log('err', res.body);
           expect(res).to.have.status(200);
           expect(res.body).is.a('object');
+          expect(res.body.clientId).eq(-1);
           expect(res.body.name).eq(user.name);
           expect(res.body.traits.openness).eq(user.traits.openness);
           done();
         });
     });
 
-    it('should insert a user record with id', (done) => {
+    it('should insert a user record with id/clientId', (done) => {
       let uid = mongoose.Types.ObjectId();
       let user = {
         _id: uid,
+        clientId: 5,
         name: "daniel2",
         login: "daniel2@aol.com",
         loginType: "facebook",
@@ -331,6 +360,7 @@ describe('User Routes', () => {
           if (err) throw err;
           expect(res).to.have.status(200);
           expect(res.body).is.a('object');
+          expect(res.body.clientId).eq(5);
           expect(res.body._id).eq(uid.toString());
           expect(res.body.name).eq(user.name);
           expect(res.body.traits.openness).eq(user.traits.openness);

@@ -1,11 +1,15 @@
 import Parser from './parser.js'
 import { predict } from './ppq.js'
+import dotEnv from 'dotenv';
+
+DotEnv.config();
 
 export default class User {
 
   constructor(tmpl) {
     Object.keys(User.schema()).forEach(k => this[k] = undefined);
     Object.assign(this, tmpl);
+    if (process.env.REACT)
   }
 
   predictInfluences(num) { // TODO: should set property
@@ -131,6 +135,10 @@ User.schema = () => {
     },
     influencedBy: {
       type: ['string']
+    },
+    clientId: {
+      type: 'number',
+      default: -1
     },
     targetId: {
       type: 'string'

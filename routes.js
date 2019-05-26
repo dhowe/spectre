@@ -15,6 +15,9 @@ router.route('/users/:uid')
   .patch(controller.update)
   .delete(controller.remove);
 
+router.route('/users/current')
+  .get(controller.current)
+
 router.route('/users/similar/:uid')
   .get(controller.similar)
 
@@ -22,11 +25,10 @@ router.route('/users/photo/:uid')
   .post(controller.photo)
 
 router.route('/users/photoset/:uid')
-  .post(controller.photoset)
+  .post(controller.photoset) // ????????
 
 // router.route('/users/photo/:uid')
 //   .post(controller.photoUpload)
-
 // router.route('/post/images/') // tmp
 //   .post(controller.postImages)
 //

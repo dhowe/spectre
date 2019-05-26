@@ -37,20 +37,39 @@ class LoginPage extends React.Component {
     let user = this.context;
     user.loginType = 'email'; // TMP:
 
-    if (user.login) {
+    if (1 || user.login) {
 
-      let handleSuccess = json => {
-        Object.assign(user, json);
-        this.setState(() => ({ toNext: true }));
-        console.log('User:', user);
+      if (0) {
+        let handleSuccess = json => {
+          Object.assign(user, json);
+          this.setState(() => ({ toNext: true }));
+          console.log('User:', user);
+        };
+
+        let handleError = e => {
+          console.error(e.error);
+          this.setState({ data: JSON.stringify(e.error, null, 2) });
+        };
+
+        UserSession.createUser(user, handleSuccess, handleError);
+
+      } else {
+
+        console.log('UPLOADING');
+
+        let handleSuccess = (json) => {
+          console.log(json);
+          this.setState(() => ({ toNext: true }));
+          console.log('UPLOAD:', json);
+        };
+
+        let handleError = (e) => {
+          console.error(e.error);
+          this.setState({ data: JSON.stringify(e.error, null, 2) });
+        };
+
+        UserSession.postImage(user, handleSuccess, handleError);
       }
-
-      let handleError = e => {
-        console.error(e.error);
-        this.setState({ data: JSON.stringify(e.error, null, 2) });
-      }
-
-      UserSession.createUser(user, handleSuccess, handleError);
 
     } else {
 
