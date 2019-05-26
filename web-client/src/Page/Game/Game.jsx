@@ -20,7 +20,7 @@ const styles = {
   },
 
   // configurable parameters
-  allowedTimeMs: 20000,
+  allowedTimeMs: 40000,
   sketchStrokeWeight: 6,
   sketchStrokeMinWeight: 2,
 
@@ -83,7 +83,9 @@ function sketch(p) {
     if (styles.allowedTimeMs) {
       percent = elapsed() / styles.allowedTimeMs;
       let timer = Math.floor(((styles.allowedTimeMs - (styles.allowedTimeMs * percent))/1000));
-      if (timer < 0 && !done) finished();
+
+      //if (timer < 0 && !done) finished();
+
       p.fill(styles.sketchText);
       p.textSize(40);
       p.text(Math.max(0, timer), p.width - 60, brandSize / 2);
