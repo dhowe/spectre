@@ -6,8 +6,10 @@ const profiles = './web-client/public/profiles/';
 
 const photo = function (req, res) {
 
-  if (typeof req.params.uid === 'undefined') {
+  if (typeof req.params.uid === 'undefined' ||
+    req.params.uid === 'undefined') {
     res.status(400).send({ error: 'no uid sent' });
+    return;
   }
 
   let upload = multer({
@@ -24,12 +26,41 @@ const photo = function (req, res) {
 
   upload(req, res, e => {
     if (e) return res.status(400).send({ error: e });
-    //console.log("STORAGE",server.storage.getFilename());
-    console.log(req.file);
-    res.status(200).send({url: req.file.path.replace(/.*\/profiles/,'/profiles')});
+    if (!req.file) return res.status(400).send({ error: 'no file' });
+    //let url = req.protocol + "://" +  req.hostname + '/' + req.file.path;
+    //req.file.url = req.file.path.replace(/.*\/profiles/,'/profiles');
+    res.status(200).send(req.file);
   });
-  //res.status(200).send('OK');
+};
 
+const photoset = function (req, res) {
+
+  //console.log("Routes.photoSet");
+
+  if (typeof req.params.uid === 'undefined') {
+    res.status(400).send({ error: 'no uid sent' });
+  }
+
+  console.log("Routes.uid: ", req.params.uid);
+
+  let upload = multer({
+    storage: multer.diskStorage({
+      destination: (req, file, cb) => {
+        cb(null, path.join(profiles))
+      },
+      filename: (req, file, cb) => {
+        cb(null, req.params.uid + '-' + Date.now() +
+          path.extname(file.originalname))
+      }
+    })
+  }).array('photoSet', 10);
+
+  upload(req, res, e => {
+    if (e) return res.status(400).send({ error: e });
+    console.log("FILES: ", req.files);
+    //let url = req.file.path.replace(/.*\/profiles/,'/profiles')});
+    res.status(200).send(req.files);
+  });
 };
 
 const list = function (req, res) {
@@ -43,6 +74,7 @@ const list = function (req, res) {
 const create = function (req, res) {
 
   if (!(req.body.login && req.body.loginType)) {
+
     return error(res, "UserModel with no login/loginType:" + req.body);
   }
 
@@ -140,4 +172,4 @@ function error(res, err, code) {
   res.status(code || 400).send({ error: err });
 }
 
-export default { list, similar, create, view, update, remove, photo /*, postImages */ }
+export default { list, similar, create, view, update, remove, photo, photoset }

@@ -21,6 +21,9 @@ router.route('/users/similar/:uid')
 router.route('/users/photo/:uid')
   .post(controller.photo)
 
+router.route('/users/photoset/:uid')
+  .post(controller.photoset)
+
 // router.route('/users/photo/:uid')
 //   .post(controller.photoUpload)
 

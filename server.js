@@ -49,7 +49,7 @@ app.all('*', morgan('[:date[clf]] :remote-addr :method :url :status', {
 // static react files
 app.use(express.static(path.join(__dirname, 'web-client/build')));
 
-// for api routes
+// for api routes`
 app.use(base, auth, routes);
 
 // for react pages

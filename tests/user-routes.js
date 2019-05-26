@@ -31,37 +31,45 @@ describe('User Routes', () => {
     });
   });
 
-  describe('Image: POST /api/users/photo/:uid', () => {
+  /*describe('Images: POST /api/users/photoset/:uid', () => {
 
-    it('it should upload a user photo', (done) => {
+    it('should upload a set of user photos', (done) => {
+      done();
+      return;
 
-      let img = './web-client/public/targets/target4.png';
-      //expect(img).to.be.a.path();
+      let imgObj = {};
+      for (var i = 0; i < 5; i++) {
+        let fname = 'target' + i + '.png';
+        imgObj[fname] = fs.readFileSync('./web-client/public/targets/' + fname);
+      }
 
-      //fs.readFile(img, 'utf8', function (err, data) {
-        let uid = 'dfjalkj34';
-        chai.request(host)
-          .post('/api/users/photo/'+uid)
-          .auth(env.API_USER, env.API_SECRET)
-          .field('videoId', 2)
-          .field('clientId', env.CLIENT_ID)
-          .attach('profileImage', fs.readFileSync(img), 'target4.png')
-          .end((err, res) => {
-            console.log(res.body);
-            expect(res).to.have.status(200);
-            expect(res.body).is.a('object');
-            expect(res.body.url).to.startsWith('/profiles/'+uid);
-            expect(res.body.url).to.endsWith('.png');
-            done();
-          });
+      let data = [];
+      for (var i = 0; i < 5; i++) {
+        let fname = 'target' + i + '.png';
+        data.push(fs.readFileSync('./web-client/public/targets/' + fname));
+      }
 
-      //});
+      let uid = 'dfjalkj342';
+      chai.request(host)
+        .post('/api/users/photoset/' + uid)
+        .auth(env.API_USER, env.API_SECRET)
+        .field('videoId', 2)
+        .field('clientId', env.CLIENT_ID)
+        .attach('photoSet', data)
+        .end((err, res) => {
+          console.log('RES', res.body);
+          expect(res).to.have.status(200);
+          expect(res.body).is.a('array');
+          //expect(res.body.url).to.startsWith('/profiles/' + uid);
+          //expect(res.body.url).to.endsWith('.png');
+          done();
+        });
     });
-  });
+  });*/
 
   describe('List: GET /api/users', () => {
 
-    it('it should return a list of all users', (done) => {
+    it('should return a list of all users', (done) => {
       chai.request(host)
         .get('/api/users')
         .auth(env.API_USER, env.API_SECRET)
@@ -74,7 +82,7 @@ describe('User Routes', () => {
         });
     });
 
-    it('it should return [user] after insert', (done) => {
+    it('should return [user] after insert', (done) => {
       let uid = -1;
       chai.request(host)
         .post('/api/users')
@@ -103,7 +111,7 @@ describe('User Routes', () => {
         });
     });
 
-    it('it should return 10 users after 10 inserts', (done) => {
+    it('should return 10 users after 10 inserts', (done) => {
       let users = [];
       for (var i = 0; i < 10; i++) {
         let data = { name: "dave" + i, login: "dave" + i + "@abc.com", loginType: "twitter" };
@@ -126,7 +134,7 @@ describe('User Routes', () => {
 
   describe('Fetch: GET /api/users/:uid', () => {
 
-    it('it should fail with bad id', (done) => {
+    it('should fail with bad id', (done) => {
       let uid = '456';
       chai.request(host)
         .get('/api/users/' + uid)
@@ -138,7 +146,7 @@ describe('User Routes', () => {
         });
     });
 
-    it('it should get a user after insertion', (done) => {
+    it('should get a user after insertion', (done) => {
       let uid = -1;
       chai.request(host)
         .post('/api/users')
@@ -170,7 +178,7 @@ describe('User Routes', () => {
 
   describe('Create: POST /api/users', () => {
 
-    it('it should not insert user without login', (done) => {
+    it('should not insert user without login', (done) => {
       chai.request(host)
         .post('/api/users')
         .auth(env.API_USER, env.API_SECRET)
@@ -186,7 +194,7 @@ describe('User Routes', () => {
         });
     });
 
-    it('it should not insert user without login type', (done) => {
+    it('should not insert user without login type', (done) => {
       chai.request(host)
         .post('/api/users')
         .auth(env.API_USER, env.API_SECRET)
@@ -202,7 +210,7 @@ describe('User Routes', () => {
         });
     });
 
-    it('it should not insert user with bad login type', (done) => {
+    it('should not insert user with bad login type', (done) => {
       chai.request(host)
         .post('/api/users')
         .auth(env.API_USER, env.API_SECRET)
@@ -219,7 +227,7 @@ describe('User Routes', () => {
         });
     });
 
-    it('it should not insert user with bad gender', (done) => {
+    it('should not insert user with bad gender', (done) => {
       chai.request(host)
         .post('/api/users')
         .auth(env.API_USER, env.API_SECRET)
@@ -236,7 +244,6 @@ describe('User Routes', () => {
         });
     });
 
-    // TODO: why is this failing?
     it('should not violate unique login/type constraint', (done) => {
       chai.request(host)
         .post('/api/users')
@@ -251,47 +258,6 @@ describe('User Routes', () => {
           expect(res).to.have.status(200);
           expect(res.body).is.a('object');
           expect(res.body).has.property('_id');
-          if (false) {
-            chai.request(host)
-              .get('/api/users')
-              .auth(env.API_USER, env.API_SECRET)
-              .end((err, res) => {
-                //console.log(res.body.length+' records');
-                expect(res).to.have.status(200);
-                expect(res.body).is.a('array');
-                expect(res.body.length).to.eq(1);
-                //res.body.forEach(u => console.log(u.login + "/" + u.loginType));
-                chai.request(host)
-                  .post('/api/users')
-                  .auth(env.API_USER, env.API_SECRET)
-                  .send({
-                    name: "Dave",
-                    login: "da@aol.com",
-                    loginType: "facebook"
-                  })
-                  .end((err, res) => {
-                    if (err) throw err;
-                    if (res.status === 200) {
-                      console.error('BROKEN: violates unique constraint');
-                    } else {
-                      expect(res).to.have.status(400);
-                      expect(res.body).is.a('object');
-                      expect(res.body).has.property('error');
-                    }
-                    chai.request(host)
-                      .get('/api/users')
-                      .auth(env.API_USER, env.API_SECRET)
-                      .end((err, res) => {
-                        //console.log(res.body.length+' records');
-                        expect(res).to.have.status(200);
-                        expect(res.body).is.a('array');
-                        expect(res.body.length).to.eq(2);
-                        res.body.forEach((u, i) => console.log('  ' + i + ':', u.login + "/" + u.loginType));
-                        done();
-                      });
-                  });
-              });
-          }
           chai.request(host)
             .post('/api/users')
             .auth(env.API_USER, env.API_SECRET)
@@ -314,7 +280,7 @@ describe('User Routes', () => {
         });
     });
 
-    it('it should insert a complete user record', (done) => {
+    it('should insert a complete user record', (done) => {
       let user = {
         name: "daniel2",
         login: "daniel2@aol.com",
@@ -341,7 +307,38 @@ describe('User Routes', () => {
           done();
         });
     });
-    it('it should not insert fields not present in schema', (done) => {
+
+    it('should insert a user record with id', (done) => {
+      let uid = mongoose.Types.ObjectId();
+      let user = {
+        _id: uid,
+        name: "daniel2",
+        login: "daniel2@aol.com",
+        loginType: "facebook",
+        traits: {
+          agreeableness: 0.2038,
+          conscientiousness: 0.2324,
+          extraversion: 0.2229,
+          openness: 0.246,
+          neuroticism: 0.465
+        }
+      };
+      chai.request(host)
+        .post('/api/users')
+        .auth(env.API_USER, env.API_SECRET)
+        .send(user)
+        .end((err, res) => {
+          if (err) throw err;
+          expect(res).to.have.status(200);
+          expect(res.body).is.a('object');
+          expect(res.body._id).eq(uid.toString());
+          expect(res.body.name).eq(user.name);
+          expect(res.body.traits.openness).eq(user.traits.openness);
+          done();
+        });
+    });
+
+    it('should not insert fields not present in schema', (done) => {
       let user = {
         name: "daniel2",
         login: "daniel2@aol.com",
@@ -399,7 +396,7 @@ describe('User Routes', () => {
         });
     });
 
-    it('it should fail for user with no id', (done) => {
+    it('should fail for user with no id', (done) => {
       user.virtue = 'truth';
       user._id = undefined;
       chai.request(host)
@@ -414,7 +411,7 @@ describe('User Routes', () => {
         });
     });
 
-    it('it should not allow fields not present in schema', (done) => {
+    it('should not allow fields not present in schema', (done) => {
       user.virtue = 'truth';
       user.notInSchema = 'notInSchema';
       chai.request(host)
@@ -431,7 +428,7 @@ describe('User Routes', () => {
         });
     });
 
-    it('it should update user with new fields', (done) => {
+    it('should update user with new fields', (done) => {
       user.virtue = 'truth';
       user.targetId = user._id + 'X';
       chai.request(host)
@@ -448,7 +445,7 @@ describe('User Routes', () => {
         });
     });
 
-    it('it should update user with new array values', (done) => {
+    it('should update user with new array values', (done) => {
       user.virtue = 'truth';
       user.similarIds = [user._id + 'X'];
       chai.request(host)
@@ -468,7 +465,7 @@ describe('User Routes', () => {
 
   describe('Similar: GET /api/users/similar/:uid', () => {
 
-    it('it should fail on bad id', (done) => {
+    it('should fail on bad id', (done) => {
       let uid = '456';
       chai.request(host)
         .get('/api/users/similar/' + uid)
@@ -480,7 +477,7 @@ describe('User Routes', () => {
         });
     });
 
-    it('it should return [] after one insert', (done) => {
+    it('should return [] after one insert', (done) => {
       chai.request(host)
         .post('/api/users')
         .auth(env.API_USER, env.API_SECRET)
@@ -507,7 +504,7 @@ describe('User Routes', () => {
         });
     });
 
-    it('it should return k-1 similar users after k inserts', (done) => {
+    it('should return k-1 similar users after k inserts', (done) => {
       let users = [];
       for (var i = 0; i < 10; i++) {
         let data = { name: "dave" + i, login: "dave" + i + "@abc.com", loginType: "twitter" };
@@ -540,7 +537,7 @@ describe('User Routes', () => {
       });
     });
 
-    it('it should return 10 similar users after 15 inserts (no limit)', (done) => {
+    it('should return 10 similar users after 15 inserts (no limit)', (done) => {
 
       let users = [];
       for (var i = 0; i < 15; i++) {
@@ -575,7 +572,7 @@ describe('User Routes', () => {
       });
     });
 
-    it('it should return 5 similar users after 10 inserts (limit 5)', (done) => {
+    it('should return 5 similar users after 10 inserts (limit 5)', (done) => {
       let users = [];
       for (var i = 0; i < 10; i++) {
         let data = {
@@ -607,7 +604,7 @@ describe('User Routes', () => {
       });
     });
 
-    it('it should populate user with similar-ids on update', (done) => {
+    it('should populate user with similar-ids on update', (done) => {
       let users = [];
       for (var i = 0; i < 10; i++) {
         let data = {
@@ -631,6 +628,63 @@ describe('User Routes', () => {
             done();
           });
       });
+    });
+  });
+
+  describe('Image: POST /api/users/photo/:uid', () => {
+
+    let noid, uid = 'dfjalkj34';
+    let name = 'target4.png';
+    let img = './web-client/public/targets/' + name;
+
+    it('should fail on null user-id', (done) => {
+      chai.request(host)
+        .post('/api/users/photo/' + noid)
+        .auth(env.API_USER, env.API_SECRET)
+        .field('videoId', 2)
+        .field('clientId', env.CLIENT_ID)
+        .attach('profileImage', fs.readFileSync(img), 'target4.png')
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          expect(res.body).has.property('error');
+          done();
+        });
+    });
+
+    it('should fail on null file', (done) => {
+      chai.request(host)
+        .post('/api/users/photo/' + uid)
+        .auth(env.API_USER, env.API_SECRET)
+        .field('videoId', 2)
+        .field('clientId', env.CLIENT_ID)
+        .attach('profileImage', null, 'target4.png')
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          expect(res.body).has.property('error');
+          done();
+        });
+    });
+
+    it('should upload a user photo', (done) => {
+
+      let uid = 'dfjalkj34';
+      let name = 'target4.png';
+      let img = './web-client/public/targets/' + name;
+
+      chai.request(host)
+        .post('/api/users/photo/' + uid)
+        .auth(env.API_USER, env.API_SECRET)
+        .field('videoId', 2)
+        .field('clientId', env.CLIENT_ID)
+        .attach('profileImage', fs.readFileSync(img), name)
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res.body).is.a('object');
+          expect(res.body.originalname).eq(name);
+          expect(res.body.path).to.contains('/profiles/' + uid);
+          expect(res.body.path).to.endsWith('.png');
+          done();
+        });
     });
   });
 
