@@ -14,13 +14,12 @@ let doConfig = () => {
   DotEnv.config();
   const env = process.env;
   const route = '/api/users/';
-  //console.log('HOST: '+env.REACT_APP_API_HOST);
-  //env.REACT_APP_API_HOST = undefined;
+  const cid = env.REACT_APP_CLIENT_ID || -1;
   const host = env.REACT_APP_API_HOST || 'http://localhost:8083';
   const auth = env.REACT_APP_API_USER + ':' + env.REACT_APP_API_SECRET;
   if (!auth || !auth.length) console.error("Auth required!");
 
-  return { auth: auth, route: host + route };
+  return { auth: auth, route: host + route, clientId: cid };
 }
 
 let handleResponse = (res) => {
@@ -70,11 +69,13 @@ UserSession.postImage = function (user, onSuccess, onError) {
 
 UserSession.createUser = function (user, onSuccess, onError) {
 
-  let { route, auth } = doConfig();
+  let { route, auth, cid } = doConfig();
   if (!onSuccess) onSuccess = () => {};
   if (!onError) onError = () => {};
 
   console.log('POST(Db.CreateUser): ' + route);
+
+  if (user.clientId < 0) user.clientId = cid;
 
   fetch(route, {
       method: "post",
@@ -95,12 +96,13 @@ UserSession.updateUser = function (user, onSuccess, onError) {
     throw Error('User._id required');
   }
 
-  let { route, auth } = doConfig();
-
+  let { route, auth, cid } = doConfig();
   if (!onSuccess) onSuccess = () => {};
   if (!onError) onError = () => {};
 
   console.log('PUT(Db.UpdateUser): ' + route);
+
+  if (user.clientId < 0) user.clientId = cid;
 
   fetch(route + user._id, {
       method: "put",

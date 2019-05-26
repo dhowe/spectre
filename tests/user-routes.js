@@ -82,12 +82,13 @@ describe('User Routes', () => {
         });
     });
 
-    it('should return [user] after insert', (done) => {
+    it('should return user after insert', (done) => {
       let uid = -1;
       chai.request(host)
         .post('/api/users')
         .auth(env.API_USER, env.API_SECRET)
         .send({
+          clientId: 1,
           name: "Daniel2",
           login: "daniel2@aol.com",
           loginType: "facebook",
@@ -114,7 +115,7 @@ describe('User Routes', () => {
     it('should return 10 users after 10 inserts', (done) => {
       let users = [];
       for (var i = 0; i < 10; i++) {
-        let data = { name: "dave" + i, login: "dave" + i + "@abc.com", loginType: "twitter" };
+        let data = { name: "dave" + i, login: "dave" + i + "@abc.com", loginType: "twitter", clientId: 1 };
         let user = UserModel.Create();
         users.push(user);
       }
@@ -155,6 +156,7 @@ describe('User Routes', () => {
           name: "Daniel2",
           login: "daniel2@aol.com",
           loginType: "facebook",
+          clientId: 1
         })
         .end((err, res) => {
           if (err) throw err;
@@ -213,6 +215,7 @@ describe('User Routes', () => {
         .send({
           name: "Foobar",
           loginType: "facebook",
+          clientId: 1
         })
         .end((err, res) => {
           expect(res).to.have.status(400);
@@ -229,6 +232,7 @@ describe('User Routes', () => {
         .send({
           login: "foo@cnn.com",
           name: "foo",
+          clientId: 1
         })
         .end((err, res) => {
           expect(res).to.have.status(400);
@@ -246,6 +250,7 @@ describe('User Routes', () => {
           login: "foo@cnn.com",
           loginType: "foobar",
           name: "foo",
+          clientId: 1
         })
         .end((err, res) => {
           expect(res).to.have.status(400);
@@ -263,6 +268,7 @@ describe('User Routes', () => {
           login: "foo@cnn.com",
           loginType: "foobar",
           gender: "foobar",
+          clientId: 1
         })
         .end((err, res) => {
           expect(res).to.have.status(400);
@@ -279,7 +285,8 @@ describe('User Routes', () => {
         .send({
           name: "Dave",
           login: "da@aol.com",
-          loginType: "facebook"
+          loginType: "facebook",
+          clientId: 1
         })
         .end((err, res) => {
           if (err) throw err;
@@ -313,6 +320,7 @@ describe('User Routes', () => {
         name: "daniel2",
         login: "daniel2@aol.com",
         loginType: "facebook",
+        clientId: 1,
         traits: {
           agreeableness: 0.2038,
           conscientiousness: 0.2324,
@@ -344,6 +352,7 @@ describe('User Routes', () => {
         name: "daniel2",
         login: "daniel2@aol.com",
         loginType: "facebook",
+        clientId: 1,
         traits: {
           agreeableness: 0.2038,
           conscientiousness: 0.2324,
@@ -373,6 +382,7 @@ describe('User Routes', () => {
         name: "daniel2",
         login: "daniel2@aol.com",
         loginType: "facebook",
+        clientId: 1,
         traits: {
           agreeableness: 0.2038,
           conscientiousness: 0.2324,
@@ -407,6 +417,7 @@ describe('User Routes', () => {
         name: "daniel2",
         login: "daniel2@aol.com",
         loginType: "facebook",
+        clientId: 1,
         traits: {
           agreeableness: 0.2038,
           conscientiousness: 0.2324,
@@ -515,6 +526,7 @@ describe('User Routes', () => {
           name: "Daniel2",
           login: "daniel2@aol.com",
           loginType: "facebook",
+          clientId: 1,
         })
         .end((err, res) => {
           if (err) throw err;
@@ -537,7 +549,7 @@ describe('User Routes', () => {
     it('should return k-1 similar users after k inserts', (done) => {
       let users = [];
       for (var i = 0; i < 10; i++) {
-        let data = { name: "dave" + i, login: "dave" + i + "@abc.com", loginType: "twitter" };
+        let data = { name: "dave" + i, login: "dave" + i + "@abc.com", loginType: "twitter", clientId: 1 };
         let user = UserModel.Create(data);
         let keys = user.oceanTraits();
         keys.forEach(k => user.traits[k] = i / 10);
@@ -561,6 +573,9 @@ describe('User Routes', () => {
                 expect(res.body.length).to.eq(9);
                 expect(res.body[0].name).to.eq('dave1');
                 expect(res.body[8].name).to.eq('dave9');
+                for (var i = 0; i < 9; i++) {
+                  expect(res.body[i].uid).to.not.eq(uid);
+                }
                 done();
               });
           });
@@ -574,7 +589,8 @@ describe('User Routes', () => {
         let data = {
           name: "dave" + i,
           login: "dave" + i + "@abc.com",
-          loginType: "twitter"
+          loginType: "twitter",
+          clientId: 1
         };
         users.push(UserModel.Create(data)._randomizeTraits())
       }
@@ -608,7 +624,8 @@ describe('User Routes', () => {
         let data = {
           name: "dave" + i,
           login: "dave" + i + "@abc.com",
-          loginType: "twitter"
+          loginType: "twitter",
+          clientId: 1,
         };
         users.push(UserModel.Create(data)._randomizeTraits());
       }
@@ -640,7 +657,8 @@ describe('User Routes', () => {
         let data = {
           name: "dave" + i,
           login: "dave" + i + "@abc.com",
-          loginType: "twitter"
+          loginType: "twitter",
+          clientId: 1
         };
         users.push(UserModel.Create(data)._randomizeTraits());
       }

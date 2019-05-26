@@ -20,7 +20,7 @@ const styles = {
   },
 
   // configurable parameters
-  allowedTimeMs: 20000,
+  allowedTimeMs: 40000,
   sketchStrokeWeight: 6,
   sketchStrokeMinWeight: 2,
 
@@ -83,7 +83,9 @@ function sketch(p) {
     if (styles.allowedTimeMs) {
       percent = elapsed() / styles.allowedTimeMs;
       let timer = Math.floor(((styles.allowedTimeMs - (styles.allowedTimeMs * percent))/1000));
+
       if (timer < 0 && !done) finished();
+
       p.fill(styles.sketchText);
       p.textSize(40);
       p.text(Math.max(0, timer), p.width - 60, brandSize / 2);
@@ -242,7 +244,6 @@ class Brand {
   }
 }
 
-
 Brand.active = false;
 Brand.speed = styles.sketchSpeed;
 Brand.names = ['cocacola', 'disney', 'converse', 'playstation', 'xbox', 'red bull', 'hello kitty', 'pepsi', 'h&m', 'ben & jerrys', 'old spice', 'burberry', 'adidas', 'marvel', 'nike', 'zara', 'vans', 'starbucks', 'topshop', 'lacoste', 'gap', 'sony', 'new look', 'calvin klein', 'rayban', 'next', 'swarovski', 'tommy hilfiger', 'asos', 'marks and spencer', 'vivienne westwood', 'chanel', 'nintendo64', 'lego'];
@@ -280,10 +281,10 @@ class Game extends React.Component {
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" />
-        <div className={"game content"}>
+        {/*<div className={"game content"}>*/}
           <P5Wrapper sketch={sketch} className="wrapper" />
 
-          {/* ------- temporary div for testing ------- */}
+          {/* ------- temporary div for testing -------
           <div id="content">
             <table>
               <tbody>
@@ -296,13 +297,13 @@ class Game extends React.Component {
               <tbody id="tdata"></tbody>
             </table>
           </div>
-          {/* ----------- end temporary div ----------- */}
+          ----------- end temporary div ----------- */}
 
           <Link to="/thank-you">
             <IconButton icon="next" text="Next" />
           </Link>
-        </div >
-        }<FooterLogo />
+        {/*</div >*/}
+        <FooterLogo />
       </div >
     );
   }
