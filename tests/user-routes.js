@@ -337,7 +337,7 @@ describe('User Routes', () => {
           if (err) throw err;
           expect(res).to.have.status(200);
           expect(res.body).is.a('object');
-          expect(res.body.clientId).eq(-1);
+          expect(res.body.clientId).eq(1);
           expect(res.body.name).eq(user.name);
           expect(res.body.traits.openness).eq(user.traits.openness);
           done();
@@ -352,7 +352,6 @@ describe('User Routes', () => {
         name: "daniel2",
         login: "daniel2@aol.com",
         loginType: "facebook",
-        clientId: 1,
         traits: {
           agreeableness: 0.2038,
           conscientiousness: 0.2324,
