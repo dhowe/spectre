@@ -41,13 +41,14 @@ const styles = {
  *   is moved, brand ratings are randomized)
  */
 let percent, totalDist;
+
 function sketch(p) {
 
   let done, brandSize, start, numLines = 9;
 
   p.setup = function () {
 
-    p.createCanvas(1080,1320);
+    p.createCanvas(1080, 1320);
     //p.createCanvas(540, 760);
 
     p.textAlign(p.CENTER, p.CENTER);
@@ -61,7 +62,7 @@ function sketch(p) {
       Brand.instances.push(new Brand(p, bx, p.height / 2, brandSize, Brand.names[i]));
 
     }
-    totalDist = p.width - Brand.instances[Brand.instances.length-1].x;
+    totalDist = p.width - Brand.instances[Brand.instances.length - 1].x;
     start = p.millis();
   };
 
@@ -73,8 +74,8 @@ function sketch(p) {
     let lineGap = p.height / numLines;
     for (let i = 0; i < numLines; i++) {
       p.strokeWeight(i % 2 === 0 ? styles.sketchStrokeWeight : 0);
-      let ypos = lineGap * (i + 1) - lineGap/2;
-      p.line(0, ypos, p.width,ypos);
+      let ypos = lineGap * (i + 1) - lineGap / 2;
+      p.line(0, ypos, p.width, ypos);
     }
 
     if (!done) Brand.updateAll();
@@ -82,7 +83,7 @@ function sketch(p) {
 
     if (styles.allowedTimeMs) {
       percent = elapsed() / styles.allowedTimeMs;
-      let timer = Math.floor(((styles.allowedTimeMs - (styles.allowedTimeMs * percent))/1000));
+      let timer = Math.floor(((styles.allowedTimeMs - (styles.allowedTimeMs * percent)) / 1000));
 
       if (timer < 0 && !done) finished();
 
@@ -219,7 +220,7 @@ class Brand {
 
     p.noStroke();
     p.fill(styles.sketchText);
-    p.textSize(this.sz/4);
+    p.textSize(this.sz / 4);
     p.textAlign(p.CENTER, p.TOP);
     p.text(this.item, this.x, this.y + this.sz / 2 + 2);
 
@@ -246,7 +247,8 @@ class Brand {
 
 Brand.active = false;
 Brand.speed = styles.sketchSpeed;
-Brand.names = ['cocacola', 'disney', 'converse', 'playstation', 'xbox', 'red bull', 'hello kitty', 'pepsi', 'h&m', 'ben & jerrys', 'old spice', 'burberry', 'adidas', 'marvel', 'nike', 'zara', 'vans', 'starbucks', 'topshop', 'lacoste', 'gap', 'sony', 'new look', 'calvin klein', 'rayban', 'next', 'swarovski', 'tommy hilfiger', 'asos', 'marks and spencer', 'vivienne westwood', 'chanel', 'nintendo64', 'lego'];
+Brand.names = ['cocacola', 'disney', 'converse', 'playstation', 'xbox', 'red bull', 'hello kitty', 'h&m', 'ben & jerrys', 'old spice', 'burberry', 'adidas', 'marvel', 'nike', 'zara', 'vans', 'starbucks', 'topshop', 'lacoste', 'sony', 'new look', 'calvin klein', 'rayban', 'swarovski', 'asos', 'marks and spencer', 'chanel'];
+
 Brand.drawAll = function () { Brand.instances.forEach(b => b.draw()) };
 Brand.updateAll = function () { Brand.instances.forEach(b => b.update()) };
 

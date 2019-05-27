@@ -119,15 +119,10 @@ const profiles = './web-client/public/profiles/';
 
 const photo = function (req, res) {
 
-  console.log("ROUTES.photo1");
-
   if (typeof req.params.uid === 'undefined' ||
     req.params.uid === 'undefined') {
-    console.log("E1.no-uid");
     return error(res,'no uid sent');
   }
-
-  console.log("ROUTES.photo2");
 
   let upload = multer({
     storage: multer.diskStorage({
@@ -142,23 +137,11 @@ const photo = function (req, res) {
   }).single('profileImage');
 
   upload(req, res, e => {
-    console.log("ROUTES.upload");
-    if (e) {
-      console.error('ERROR1',e);
-      return error(res, e);
-
-      return res.status(400).send({ error: e });
-    }
-    console.log("ROUTES.upload1");
-
-    if (!req.file) {
-      console.error('E2: Null file');
-      return error(res, 'E2: Null file');
-    }
-    console.log("ROUTES.upload2");
+    if (e) return error(res, e);
+    if (!req.file) return error(res, 'E2: Null file');
     //let url = req.protocol + "://" +  req.hostname + '/' + req.file.path;
-    //req.file.url = req.file.path.replace(/.*\/profiles/,'/profiles');
-
+    req.file.url = req.file.path.replace(/.*\/profiles/,'/profiles');
+    //console.log('Upload: '+req.file.url);
     res.status(200).send(req.file);
   });
 };
