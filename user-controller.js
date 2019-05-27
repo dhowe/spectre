@@ -130,7 +130,7 @@ const photo = function (req, res) {
         cb(null, path.join(profiles))
       },
       filename: (req, file, cb) => {
-        cb(null, req.params.uid + '-' + Date.now() +
+        cb(null, req.params.uid + //'-' + Date.now() +
           path.extname(file.originalname))
       }
     })

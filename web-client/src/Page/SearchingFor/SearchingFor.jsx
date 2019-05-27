@@ -8,7 +8,6 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import Webcam from "react-webcam";
-import './SearchingFor.scss'
 
 const styles = {
   root: {
@@ -33,6 +32,10 @@ const styles = {
   link: {
     display: 'block',
     marginBottom: '30px',
+  },
+  profileImage: {
+    width: 800,
+    height: 1000
   }
 };
 
@@ -46,7 +49,7 @@ class SearchingFor extends React.Component {
   }
   handleSuccess = (json) => {
     this.context.profileUrl = json.url;
-    console.log('Upload:',this.context.profileUrl);
+    console.log('Upload: http://localhost:3000'+this.context.profileUrl);
     this.setState(() => ({ toNext: true }));
   }
   toImageFile = (data, fname) => {
@@ -68,7 +71,7 @@ class SearchingFor extends React.Component {
     if (!data || !data.length) throw Error('no image');
 
     ///////////////////// TMP: ///////////////////////
-    user._id = user._id || Math.random() * 10000;
+    user._id = user._id || Math.random() * 100000000;
     user.name = user.name || 'Barney';
     user.loginType = user.loginType || 'email';
     user.login = user.login || 'Barney' + (+new Date()) + '@aol.com';
@@ -87,8 +90,8 @@ class SearchingFor extends React.Component {
   render() {
     const { classes } = this.props;
     const videoConstraints = {
-      width: 720,
-      height: 720,
+      width: styles.profileImage.width,
+      height: styles.profileImage.height,
       facingMode: "user"
     };
     return (
@@ -101,12 +104,12 @@ class SearchingFor extends React.Component {
               <div className='ImageCapture'>
                 <Webcam ref={this.setRef}
                   audio={false}
-                  height={300}
-                  width={300}
                   screenshotQuality={1}
                   screenshotFormat="image/jpeg"
+                  width={styles.profileImage.width}
+                  height={styles.profileImage.height}
+                  style={{left: '-5000px', position: 'relative'}}
                   videoConstraints={videoConstraints} />
-                  {/*<Link to='/touch-to-begin'>*/}
               </div>
               <div>
                   <Button className={classes.button} variant="contained" color="primary" onClick={() => this.handleClick('power')}>Power</Button>
@@ -115,7 +118,6 @@ class SearchingFor extends React.Component {
                   <Button className={classes.button} variant="contained" color="primary" onClick={() => this.handleClick('influence')}>Influence</Button>
               </div>
           </div>
-
           <FooterLogo />
       </div>
     );
