@@ -12,7 +12,9 @@ const list = function (req, res) {
 
 const current = function (req, res) {
 
-  UserModel.findOne({ clientId: req.params.uid }, {}, { sort: { 'createdAt': -1 } }, (err, user) => {
+  UserModel.findOne({ clientId: req.params.uid }, {}, {
+    sort: { 'createdAt': -1 }
+  }, (err, user) => {
     if (err) return error(res, err);
     res.status(200).send({ id: user._id });
   });
@@ -25,8 +27,6 @@ const create = function (req, res) {
 
   if (!req.body.clientId) return error(res,
     "UserModel with no clientId:" + req.body);
-
-  // TODO: set clientId or -1
 
   let user = new UserModel();
   Object.assign(user, req.body); // dangerous?
@@ -119,11 +119,15 @@ const profiles = './web-client/public/profiles/';
 
 const photo = function (req, res) {
 
+  console.log("ROUTES.photo1");
+
   if (typeof req.params.uid === 'undefined' ||
     req.params.uid === 'undefined') {
-    res.status(400).send({ error: 'no uid sent' });
-    return;
+    console.log("E1.no-uid");
+    return error(res,'no uid sent');
   }
+
+  console.log("ROUTES.photo2");
 
   let upload = multer({
     storage: multer.diskStorage({
@@ -138,10 +142,23 @@ const photo = function (req, res) {
   }).single('profileImage');
 
   upload(req, res, e => {
-    if (e) return res.status(400).send({ error: e });
-    if (!req.file) return res.status(400).send({ error: 'no file' });
+    console.log("ROUTES.upload");
+    if (e) {
+      console.error('ERROR1',e);
+      return error(res, e);
+
+      return res.status(400).send({ error: e });
+    }
+    console.log("ROUTES.upload1");
+
+    if (!req.file) {
+      console.error('E2: Null file');
+      return error(res, 'E2: Null file');
+    }
+    console.log("ROUTES.upload2");
     //let url = req.protocol + "://" +  req.hostname + '/' + req.file.path;
     //req.file.url = req.file.path.replace(/.*\/profiles/,'/profiles');
+
     res.status(200).send(req.file);
   });
 };

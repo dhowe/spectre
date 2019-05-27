@@ -198,7 +198,7 @@ describe('User Routes', () => {
           .get('/api/users/current/'+cid)
           .auth(env.API_USER, env.API_SECRET)
           .end((err, res) => {
-            console.log(res.body);
+            //console.log(res.body);
             expect(res).to.have.status(200);
             expect(res.body).is.a('object');
             expect(res.body.id).eq(users[users.length-1]._id.toString());
@@ -572,8 +572,6 @@ describe('User Routes', () => {
                 expect(res).to.have.status(200);
                 expect(res.body).is.a('array');
                 expect(res.body.length).to.eq(9);
-                expect(res.body[0].name).to.eq('dave1');
-                expect(res.body[8].name).to.eq('dave9');
                 for (var i = 0; i < 9; i++) {
                   expect(res.body[i].uid).to.not.eq(uid);
                 }
