@@ -150,7 +150,7 @@ User.schema = () => {
     virtue: {
       type: 'string'
     },
-    brexitChoice: {
+    adIssue: {
       type: 'string'
     },
     traits: {

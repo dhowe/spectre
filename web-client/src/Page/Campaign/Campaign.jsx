@@ -23,9 +23,9 @@ class Campaign extends React.Component {
       <div className={classes.root}>
           <SpectreHeader colour="white" />
           <div className={classes.content + " content"}>
-              <Typography component="h4" variant="h4">The {this.context.brexitChoice} campaign is in jeopardy.</Typography>
+              <Typography component="h4" variant="h4">The {this.context.adIssue} campaign is in jeopardy.</Typography>
               <Typography component="h4" variant="h4">Longer delays to Brexit increase the risk of it not happening.</Typography>
-              <Typography component="h4" variant="h4">We’re going to run a ‘grassroots’ campaign to influence {this.props.selectedFollower.name} to vote {this.context.brexitChoice} in the next referendum.</Typography>
+              <Typography component="h4" variant="h4">We’re going to run a ‘grassroots’ campaign to influence {this.props.selectedFollower.name} to vote {this.context.adIssue} in the next referendum.</Typography>
               <Link to="/influenced-by">
                   <IconButton icon="next" text="Ready" />
               </Link>
