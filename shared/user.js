@@ -140,6 +140,9 @@ User.schema = () => {
       type: 'number',
       default: -1
     },
+    profileUrl: {
+      type: 'string'
+    },
     targetId: {
       type: 'string'
       //type: { type: 'objectId', ref: 'User' }
