@@ -9,6 +9,7 @@ import mongoose from 'mongoose';
 import bodyparser from 'body-parser';
 import basicAuth from 'express-basic-auth';
 import { dbUrl, apiUser } from './config';
+import controller from './user-controller';
 
 const base = '/api/';
 const port = process.env.PORT || 8083;
@@ -19,20 +20,6 @@ const auth = basicAuth({
   challenge: true,
   realm: 'API User/Secret required'
 });
-
-// const storage = multer.diskStorage({
-//   destination: function (req, file, cb) {
-//     cb(null, './uploads');
-//   },
-//   filename: function (req, file, cb) {
-//     //let fname = file.fieldname + '-' + Date.now();
-//     //console.log('FILENAME: '+fname);
-//     cb(null, file.fieldname + '-' + Date.now());
-//     //cb(null, fname);
-//   }
-// });
-
-//const upload = multer({ storage : storage}).single('userPhoto');
 
 ///////////////////////////// Express ///////////////////////////////
 
@@ -46,13 +33,16 @@ app.all('*', morgan('[:date[clf]] :remote-addr :method :url :status', {
   skip: () => dev
 }));
 
-// static react files
+// static react files (no-auth)
 app.use(express.static(path.join(__dirname, 'web-client/build')));
 
-// for api routes`
+// current user route (no-auth)
+app.get(base+'users/current/:cid', controller.current);
+
+// for other api routes (w-auth)
 app.use(base, auth, routes);
 
-// for react pages
+// for all react pages (no-auth)
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname + '/web-client/build/index.html'));
 });

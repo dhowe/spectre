@@ -1,0 +1,1 @@
+* * * * * /Users/pi/git/spectre/scripts/python/bin/python3 /Users/pi/git/spectre/scripts/python/fetch-current.py >> ~/cron.log 2>&1

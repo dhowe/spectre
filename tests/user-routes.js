@@ -178,7 +178,7 @@ describe('User Routes', () => {
     });
   });
 
-  /*describe('Current: GET /api/users/current', () => {
+  describe('Current: GET /api/users/current/:cid', () => {
 
     it('should return id for clients most recent user', (done) => {
       let users = [];
@@ -188,23 +188,25 @@ describe('User Routes', () => {
         let keys = user.oceanTraits();
         keys.forEach(k => user.traits[k] = i / 10);
         users.push(user);
+        //console.log(user.name, user._id, user.createdAt);
       }
 
-      // save 10 users
+      // save 10 users, return the newest
       saveUsers(users, () => {
-        // then pick the one with last updated time
-        // that matches the client-id
+        let cid = process.env.REACT_APP_CLIENT_ID;
         chai.request(host)
-          .get('/api/users/current')
+          .get('/api/users/current/'+cid)
           .auth(env.API_USER, env.API_SECRET)
           .end((err, res) => {
+            console.log(res.body);
             expect(res).to.have.status(200);
             expect(res.body).is.a('object');
+            expect(res.body.id).eq(users[users.length-1]._id.toString());
             done();
           });
       });
     });
-  });*/
+  });
 
   describe('Create: POST /api/users', () => {
 

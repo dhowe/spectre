@@ -15,7 +15,7 @@ router.route('/users/:uid')
   .patch(controller.update)
   .delete(controller.remove);
 
-router.route('/users/current')
+router.route('/users/current/:cid')
   .get(controller.current)
 
 router.route('/users/similar/:uid')

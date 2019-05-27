@@ -12,9 +12,9 @@ const list = function (req, res) {
 
 const current = function (req, res) {
 
-  UserModel.find({}, (e, users) => {
-    if (e) return error(res, e);
-    res.status(200).send({_id: users[0]._id});
+  UserModel.findOne({ clientId: req.params.uid }, {}, { sort: { 'createdAt': -1 } }, (err, user) => {
+    if (err) return error(res, err);
+    res.status(200).send({ id: user._id });
   });
 };
 
