@@ -37,9 +37,9 @@ class LoginPage extends React.Component {
     let user = this.context;
     user.loginType = 'email'; // TMP:
 
-    if (1 || user.login) {
+    if (user.login) {
 
-      if (0) {
+      if (1) {
         let handleSuccess = json => {
           Object.assign(user, json);
           this.setState(() => ({ toNext: true }));
@@ -53,7 +53,7 @@ class LoginPage extends React.Component {
 
         UserSession.createUser(user, handleSuccess, handleError);
 
-      } else {
+      /*} else {
 
         console.log('UPLOADING');
 
@@ -68,7 +68,7 @@ class LoginPage extends React.Component {
           this.setState({ data: JSON.stringify(e.error, null, 2) });
         };
 
-        UserSession.postImage(user, handleSuccess, handleError);
+        UserSession.postImage(user, handleSuccess, handleError);*/
       }
 
     } else {
