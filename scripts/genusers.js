@@ -1,6 +1,5 @@
 let script = 'db.users.insertMany([\n';
 let names = ['Remy', 'Bailey', 'Devin', 'Tyler', 'Fran', 'Pat', 'Sam', 'Reed', 'Terry'];
-
 names.forEach((nm, i) => {
   let id = '';
   for (let j = 0; j < 24; j++) id += (i + 1);
@@ -8,6 +7,7 @@ names.forEach((nm, i) => {
     '  "name": "' + nm + '",\n' +
     '  "login": "' + nm + '@aol.com",\n' +
     '  "loginType": "email",\n' +
+    //'  "profileIcon": "/profiles/'+id+'.jpg",\n' +
     '  "gender": "' + (Math.random() < .5 ? 'male' : 'female') + '",\n' +
     '  "traits": {\n' +
     '    "agreeableness": ' + i / names.length + ',\n' +
@@ -18,5 +18,4 @@ names.forEach((nm, i) => {
     '},\n';
 });
 script += '])';
-
 console.log(script);

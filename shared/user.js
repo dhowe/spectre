@@ -140,7 +140,7 @@ User.schema = () => {
       type: 'number',
       default: -1
     },
-    profileUrl: {
+    profileIcon: {
       type: 'string'
     },
     targetId: {

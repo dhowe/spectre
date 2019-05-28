@@ -48,8 +48,8 @@ class SearchingFor extends React.Component {
     this.webcam = webcam;
   }
   handleSuccess = (json) => {
-    this.context.profileUrl = json.url;
-    console.log('Upload: http://localhost:3000'+this.context.profileUrl);
+    //this.context.profileIcon = json.url;
+    console.log('Upload: http://localhost:3000'+this.context.profileIcon);
     this.setState(() => ({ toNext: true }));
   }
   toImageFile = (data, fname) => {
