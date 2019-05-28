@@ -178,7 +178,7 @@ describe('User Routes', () => {
     });
   });
 
-  describe('Current: GET /api/users/current/:cid', () => {
+  /*describe('Current: GET /api/users/current/:cid', () => {
 
     it('should return id for clients most recent user', (done) => {
       let users = [];
@@ -195,18 +195,18 @@ describe('User Routes', () => {
       saveUsers(users, () => {
         let cid = process.env.REACT_APP_CLIENT_ID;
         chai.request(host)
-          .get('/api/users/current/'+cid)
+          .get('/api/users/current/' + cid)
           .auth(env.API_USER, env.API_SECRET)
           .end((err, res) => {
             //console.log(res.body);
             expect(res).to.have.status(200);
             expect(res.body).is.a('object');
-            expect(res.body.id).eq(users[users.length-1]._id.toString());
+            expect(res.body.id).eq(users[users.length - 1]._id.toString());
             done();
           });
       });
     });
-  });
+  });*/
 
   describe('Create: POST /api/users', () => {
 
@@ -487,9 +487,58 @@ describe('User Routes', () => {
         });
     });
 
-    it('should update user with new array values', (done) => {
-      user.virtue = 'truth';
-      user.similars = [user._id + 'X'];
+    it('should update user with traits and compute similars', (done) => {
+      let user2 = new UserModel({
+        name: "daniel3",
+        login: "daniel3@aol.com",
+        loginType: "facebook",
+        clientId: 1
+      });
+      chai.request(host)
+        .post('/api/users')
+        .auth(env.API_USER, env.API_SECRET)
+        .send(user2)
+        .end((err, res) => {
+          if (err) throw err;
+          Object.assign(user2,res.body);
+          let traits = {
+            agreeableness: 0.5,
+            conscientiousness: 0.5,
+            extraversion: 0.5,
+            openness: 0.5,
+            neuroticism: 0.5
+          }
+          user2.traits = traits;
+          chai.request(host)
+            .put('/api/users/' + user2._id)
+            .auth(env.API_USER, env.API_SECRET)
+            .send(user2)
+            .end((err, res) => {
+              expect(res).to.have.status(200);
+              expect(res.body).is.a('object');
+              expect(res.body.traits).is.a('object');
+              expect(res.body.traits.openness).eq(traits.openness);
+              expect(res.body.similars).is.a('array');
+              expect(res.body.similars.length).is.gt(0);
+              Object.assign(user2, res.body);
+              expect(user2).is.a('object');
+              expect(user2.traits).is.a('object');
+              expect(user2.traits.openness).eq(traits.openness);
+              expect(user2.similars).is.a('array');
+              expect(user2.similars.length).is.gt(0);
+              expect(user2.similars[0]).is.a('string');
+              expect(user2.getSimilars()).is.a('array');
+              expect(user2.getSimilars().length).is.gt(0);
+              expect(user2.getSimilars()[0]).is.a('object');
+              expect(user2.getSimilars()[0]).has.property('id');
+              expect(user2.getSimilars()[0]).has.property('name');
+              done();
+            });
+        });
+    });
+
+    it('should update user with new array value', (done) => {
+      user.similars = [user._id + '2||Dave'];
       chai.request(host)
         .put('/api/users/' + user._id)
         .auth(env.API_USER, env.API_SECRET)
@@ -497,9 +546,8 @@ describe('User Routes', () => {
         .end((err, res) => {
           expect(res).to.have.status(200);
           expect(res.body).is.a('object');
-          expect(res.body.virtue).eq(user.virtue);
           expect(res.body.similars).is.a('array');
-          expect(res.body.similars[0]).eq(user.similars[0]);
+          expect(res.body.similars).eql(user.similars);
           done();
         });
     });

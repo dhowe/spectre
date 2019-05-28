@@ -100,6 +100,19 @@ export default class User {
     }
   }
 
+  getSimilars() {
+    let result = [];
+    this.similars.forEach(sims => {
+      let parts = sims.split("||");
+      if (parts.length != 2) {
+        console.log("Bad similar: "+sims);
+        return;
+      }
+      result.push({id: parts[0], name: parts[1]});
+    });
+    return result;
+  }
+
   virtueAsAdverb() {
     const adverbs = {
       power: 'powerful',
@@ -192,6 +205,41 @@ User.oceanTraits = () => [
   'extraversion',
   'neuroticism'
 ];
+
+User.adSlogans = {
+  leave: {
+    high: {
+        openness: [ 'Strap Line 1', 'Strap Line 2' ],
+        conscientiousness: [ 'Strap Line 1', 'Strap Line 2' ],
+        agreeableness: [ 'Strap Line 1', 'Strap Line 2' ],
+        extraversion: [ 'Strap Line 1', 'Strap Line 2' ],
+        neuroticism: [ 'Strap Line 1', 'Strap Line 2' ]
+    },
+    low: {
+      openness: [ 'Strap Line 1', 'Strap Line 2' ],
+      conscientiousness: [ 'Strap Line 1', 'Strap Line 2' ],
+      agreeableness: [ 'Strap Line 1', 'Strap Line 2' ],
+      extraversion: [ 'Strap Line 1', 'Strap Line 2' ],
+      neuroticism:[ 'Strap Line 1', 'Strap Line 2' ]
+    }
+  },
+  remain: {
+    high: {
+        openness: [ 'Strap Line 1', 'Strap Line 2' ],
+        conscientiousness: [ 'Strap Line 1', 'Strap Line 2' ],
+        agreeableness: [ 'Strap Line 1', 'Strap Line 2' ],
+        extraversion: [ 'Strap Line 1', 'Strap Line 2' ],
+        neuroticism:[ 'Strap Line 1', 'Strap Line 2' ],
+    },
+    low: {
+      openness: [ 'Strap Line 1', 'Strap Line 2' ],
+      conscientiousness: [ 'Strap Line 1', 'Strap Line 2' ],
+      agreeableness: [ 'Strap Line 1', 'Strap Line 2' ],
+      extraversion: [ 'Strap Line 1', 'Strap Line 2' ],
+      neuroticism:[ 'Strap Line 1', 'Strap Line 2' ],
+    }
+  }
+};
 
 User.descriptionTemplate = {
   openness: {

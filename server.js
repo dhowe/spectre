@@ -60,10 +60,3 @@ mongoose.connect(dbu, opts);
 export default app.listen(port, () => {
   console.log('Spectre API at localhost:' + port + base + ' [' + dbn + ']\n');
 });
-// let server = app.listen(port, () => {
-//   console.log('Spectre API at localhost:' + port + base + ' [' + dbn + ']\n');
-// });
-//
-// server.storage = storage;
-//
-// export default server;

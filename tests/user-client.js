@@ -7,15 +7,14 @@ describe('Client User', function () {
 
     it('Should correctly construct an empty user', function () {
       let user = new User();
-      expect(user.name).eq(undefined);
-      expect(user.login).eq(undefined);
-      expect(user.loginType).eq(undefined);
-      expect(user.traits).eq(undefined);
-      expect(user.createdAt).eq(undefined);
-      expect(user.loginType).eq(undefined);
-      expect(user.gender).eq(undefined);
+      let fields = Object.keys(User.schema());
+      fields.forEach(f => {
+        if (f === 'clientId') return;
+        expect(user[f]).eq(undefined);
+        expect(user).has.property(f);
+      });
+      expect(user.clientId).eq(-1);
       expect(user.hasOceanTraits()).eq(false);
-
     });
 
     it('Should create a user from a template', function () {
@@ -24,6 +23,7 @@ describe('Client User', function () {
         name: "dave",
         login: "dave@abc.com",
         loginType: "twitter",
+        similars: ["1111||Dave", "2222||Jen"],
         traits: {
           agreeableness: .3,
           conscientiousness: .4,
@@ -38,9 +38,14 @@ describe('Client User', function () {
       expect(user.loginType).eq("twitter");
       expect(user.traits.openness).to.equal(1);
       expect(user.hasOceanTraits()).eq(true);
+      expect(user.getSimilars()).is.a('array');
+      expect(user.getSimilars().length).eq(2);
+      expect(user.getSimilars()[0].name).eq('Dave');
+      expect(user.getSimilars()[1].name).eq('Jen');
+      expect(user.getSimilars()[0].id).eq('1111');
+      expect(user.getSimilars()[1].id).eq('2222');
     });
   });
-
 
   describe('User.generateDescription()', function () {
 
@@ -50,7 +55,7 @@ describe('Client User', function () {
     });
 
     it('Should describe a user based on OCEAN traits', function () {
-      let user = new User();//User.Create();
+      let user = new User(); //User.Create();
       user.name = "Jane";
       user.gender = "female";
       user.traits = {
@@ -77,7 +82,7 @@ describe('Client User', function () {
     });
 
     it('Should return influenced-by statements based on OCEAN traits', function () {
-      let user = new User();//User.Create();
+      let user = new User(); //User.Create();
       user.name = "Jane";
       user.gender = "female";
       user.traits = {

@@ -10,8 +10,9 @@ const UserSchema = mongoose.Schema(schema); // hack here
 Object.keys(functions).forEach(f => UserSchema.methods[f] = functions[f]);
 
 UserSchema.methods.findByOcean = function (limit, cb) { // cb=function(err,users)
+
   let user = this;
-  UserModel.find({})
+  UserModel.find({'traits.openness':{ $gte: 0 }})
     .exec(function (err, instances) {
       if (err) {
         console.error(err);

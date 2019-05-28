@@ -8,6 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
+import UserSession from '../../Components/UserSession/UserSession';
 
 const styles = {
   root: {
@@ -27,6 +28,10 @@ class InfluenceAFollower extends React.Component {
   constructor(props) {
     super(props);
     this.names = ['Remy', 'Bailey', 'Devin', 'Tyler', 'Fran', 'Pat', 'Sam', 'Reed'];
+  }
+  componentWillMount() {
+    let user = this.context;
+    console.log('USER|', user);
   }
   render() {
     const { classes } = this.props;
@@ -54,5 +59,6 @@ class InfluenceAFollower extends React.Component {
 InfluenceAFollower.propTypes = {
   classes: PropTypes.object.isRequired,
 };
+InfluenceAFollower.contextType = UserSession;
 
 export default withStyles(styles)(InfluenceAFollower);
