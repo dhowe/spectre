@@ -38,20 +38,15 @@ class InfluenceAFollower extends React.Component {
       user.loginType = user.loginType || 'email';
       user.login = user.login || 'Barney' + (+new Date()) + '@aol.com';
       UserSession.createUser(user);
-      console.log('componentWillMount:', this.context);
     }
   }
   renderSimilars() {
     let result = defaults;
     let sims = this.context.getSimilars();
-    console.log("SIMS: ",sims);
-
     if (sims && sims.length) result = sims;
-    console.log("RESULT: ",result);
     return result;
   }
   render() {
-    console.log('render', this.context);
     const { classes } = this.props;
     return (
       <div className={classes.root}>
