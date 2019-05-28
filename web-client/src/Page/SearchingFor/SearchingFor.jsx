@@ -28,6 +28,9 @@ const styles = {
     backgroundColor: '#ffffff',
     boxShadow: 'none',
     color: '#929391',
+    display: 'block',
+    marginLeft: 'auto',
+    marginRight: 'auto',
   },
   link: {
     display: 'block',
