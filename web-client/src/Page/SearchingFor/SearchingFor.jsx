@@ -47,14 +47,9 @@ class SearchingFor extends React.Component {
   setRef = webcam => {
     this.webcam = webcam;
   }
-  handleSuccess = (json) => {
-    //this.context.profileIcon = json.url;
-    console.log('Upload: http://localhost:3000'+json.url);
-    this.setState(() => ({ toNext: true }));
-  }
   toImageFile = (data, fname) => {
     let arr = data.split(',');
-    if (!data || data.length <=6) throw Error('Bad image data')
+    if (!data || data.length <= 6) throw Error('Bad image data')
     let mime = arr[0].match(/:(.*?);/)[1];
     let bstr = atob(arr[1]);
     let n = bstr.length;
@@ -79,8 +74,15 @@ class SearchingFor extends React.Component {
 
     let imgfile = this.toImageFile(data, user._id + '.jpg');
     UserSession.postImage(this.context, imgfile,
-      this.handleSuccess,
-      e => console.error("Error", e));
+      json => {
+        console.log('Upload: http://localhost:3000' + json.url);
+        this.setState(() => ({ toNext: true }));
+      },
+      e => {
+        console.error("Error", e);
+        this.setState(() => ({ toNext: true }));
+      }
+    );
   }
   renderRedirect() {
     if (this.state.toNext) {
