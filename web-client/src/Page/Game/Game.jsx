@@ -263,7 +263,7 @@ class Game extends React.Component {
     this.state = { toThankYou: false };
   }
   componentComplete() { // redirect called from p5
-    if (this.context._id) { // TMP: remove
+    if (typeof this.context._id !== 'undefined') { // TMP: remove
       UserSession.updateUser(this.context, null,
         e => { console.error("Error", e); throw Error(e); });
     } else { // TMP: remove
