@@ -57,3 +57,6 @@ a {
   }
 }
 
+a.disabled {
+  pointer-events: none;
+}
