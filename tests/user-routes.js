@@ -464,7 +464,7 @@ describe('User Routes', () => {
           expect(res).to.have.status(200);
           expect(res.body).is.a('object');
           expect(res.body.virtue).eq(user.virtue);
-          expect(res.body.similarIds).is.a('array');
+          expect(res.body.similars).is.a('array');
           expect(res.body.notInSchema).eq(undefined);
           done();
         });
@@ -481,7 +481,7 @@ describe('User Routes', () => {
           expect(res).to.have.status(200);
           expect(res.body).is.a('object');
           expect(res.body.virtue).eq(user.virtue);
-          expect(res.body.similarIds).is.a('array');
+          expect(res.body.similars).is.a('array');
           expect(res.body.targetId).eq(user.targetId);
           done();
         });
@@ -489,7 +489,7 @@ describe('User Routes', () => {
 
     it('should update user with new array values', (done) => {
       user.virtue = 'truth';
-      user.similarIds = [user._id + 'X'];
+      user.similars = [user._id + 'X'];
       chai.request(host)
         .put('/api/users/' + user._id)
         .auth(env.API_USER, env.API_SECRET)
@@ -498,8 +498,8 @@ describe('User Routes', () => {
           expect(res).to.have.status(200);
           expect(res.body).is.a('object');
           expect(res.body.virtue).eq(user.virtue);
-          expect(res.body.similarIds).is.a('array');
-          expect(res.body.similarIds[0]).eq(user.similarIds[0]);
+          expect(res.body.similars).is.a('array');
+          expect(res.body.similars[0]).eq(user.similars[0]);
           done();
         });
     });
@@ -670,8 +670,8 @@ describe('User Routes', () => {
           .end((err, res) => {
             expect(res).to.have.status(200);
             expect(res.body).is.a('object');
-            expect(res.body.similarIds).is.a('array');
-            expect(res.body.similarIds.length).eq(8);
+            expect(res.body.similars).is.a('array');
+            expect(res.body.similars.length).eq(8);
             done();
           });
       });

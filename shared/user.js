@@ -130,7 +130,7 @@ User.schema = () => {
     name: {
       type: 'string'
     },
-    similarIds: {
+    similars: { //
       type: ['string']
     },
     influencedBy: {
@@ -139,9 +139,6 @@ User.schema = () => {
     clientId: {
       type: 'number',
       default: -1
-    },
-    profileIcon: {
-      type: 'string'
     },
     targetId: {
       type: 'string'
@@ -167,10 +164,10 @@ User.schema = () => {
       type: 'string',
       required: true
     },
-    dataChoices: {
-      consumer: { type: 'string' }, // TODO: should be array
-      home: { type: 'string' }, // TODO: should be array
-      political: { type: 'string' } // TODO: should be array
+    dataChoices: { // TODO: should be arrays
+      consumer: { type: 'string' }, // comma-delimited
+      home: { type: 'string' },     // comma-delimited
+      political: { type: 'string' } // comma-delimited
     },
     loginType: {
       type: 'string',

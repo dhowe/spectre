@@ -49,7 +49,7 @@ class SearchingFor extends React.Component {
   }
   handleSuccess = (json) => {
     //this.context.profileIcon = json.url;
-    console.log('Upload: http://localhost:3000'+this.context.profileIcon);
+    console.log('Upload: http://localhost:3000'+json.url);
     this.setState(() => ({ toNext: true }));
   }
   toImageFile = (data, fname) => {
