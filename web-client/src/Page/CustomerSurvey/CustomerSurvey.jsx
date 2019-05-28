@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
+import IconButton from '../../Components/IconButton/IconButton';
 
 const styles = {
     root: {
@@ -25,9 +26,11 @@ class CustomerSurvey extends React.Component {
             <div className={classes.root}>
                 <SpectreHeader colour="white" />
                 <div className={classes.content + " content"}>
-                    <Typography component="h4" variant="h4">CustomerSurvey</Typography>
+                    <Typography component="h6" variant="h6">HOW DO YOU FEEL ABOUT OUR LATEST PRODUCTS?</Typography>
+                    <Typography component="h6" variant="h6">DO YOU BELIEVE IN THE [POWER] THAT DATA CAN PROVIDE?</Typography>
+                    <Typography component="h6" variant="h6">WOULD YOU RECOMMEND US TO A FRIEND?§</Typography>                    
                     <Link to="/outro-video">
-                        <img src="https://i.gyazo.com/1890ddef64e0bde795334a2e8564d3b1.png" alt='leave' ></img>
+                        <IconButton icon="tick" text="Next" />
                     </Link>
                 </div >
                 <FooterLogo />

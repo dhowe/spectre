@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
+import IconButton from '../../Components/IconButton/IconButton';
 
 const styles = {
     root: {
@@ -25,9 +26,11 @@ class OCEANReveal extends React.Component {
             <div className={classes.root}>
                 <SpectreHeader colour="white" />
                 <div className={classes.content + " content"}>
-                    <Typography component="h4" variant="h4">OCEANReveal</Typography>
+                <Typography component="h6" variant="h6">You've told us so much about yourself.</Typography>
+                <Typography component="h6" variant="h6">We know you are the type of person that is X, Y, Z.</Typography>
+                <Typography component="h6" variant="h6">We are going to make a video that will make you look [powerful]</Typography>
                     <Link to="/shallow-fake">
-                        <img src="https://i.gyazo.com/1890ddef64e0bde795334a2e8564d3b1.png" alt='leave' ></img>
+                        <IconButton icon="next" text="Next" />
                     </Link>
                 </div >
                 <FooterLogo />

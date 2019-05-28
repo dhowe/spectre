@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
+import IconButton from '../../Components/IconButton/IconButton';
 
 const styles = {
     root: {
@@ -25,9 +26,11 @@ class InfluenceACelebrity extends React.Component {
             <div className={classes.root}>
                 <SpectreHeader colour="white" />
                 <div className={classes.content + " content"}>
-                    <Typography component="h4" variant="h4">InfluenceACelebrity</Typography>
+                    <Typography component="h6" variant="h6">Spectre has many famous followers.</Typography>
+                    <Typography component="h6" variant="h6">They wouldn’t be where they are today without a little help from us!</Typography>
+                    <Typography component="h6" variant="h6">Select a famous follower to hear their confession:</Typography>
                     <Link to="/FRMask">
-                        <img src="https://i.gyazo.com/1890ddef64e0bde795334a2e8564d3b1.png" alt='leave' ></img>
+                        <IconButton icon="next" text="Next" />
                     </Link>
                 </div >
                 <FooterLogo />

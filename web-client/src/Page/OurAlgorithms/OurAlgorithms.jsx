@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
+import IconButton from '../../Components/IconButton/IconButton';
 
 const styles = {
     root: {
@@ -25,9 +26,9 @@ class OurAlgorithms extends React.Component {
             <div className={classes.root}>
                 <SpectreHeader colour="white" />
                 <div className={classes.content + " content"}>
-                    <Typography component="h4" variant="h4">OurAlgorithms</Typography>
+                <Typography component="h6" variant="h6">Our algorithms know this type of content will make you more [powerful]</Typography>
                     <Link to="/share-on-social-choice">
-                        <img src="https://i.gyazo.com/1890ddef64e0bde795334a2e8564d3b1.png" alt='leave' ></img>
+                        <IconButton icon="next" text="Next" />
                     </Link>
                 </div >
                 <FooterLogo />

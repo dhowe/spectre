@@ -25,10 +25,7 @@ class Goodbye extends React.Component {
             <div className={classes.root}>
                 <SpectreHeader colour="white" />
                 <div className={classes.content + " content"}>
-                    <Typography component="h4" variant="h4">Goodbye</Typography>
-                    <Link to="/campaign">
-                        <img src="https://i.gyazo.com/1890ddef64e0bde795334a2e8564d3b1.png" alt='leave' ></img>
-                    </Link>
+                    [video]
                 </div >
                 <FooterLogo />
             </div >
