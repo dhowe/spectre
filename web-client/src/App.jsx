@@ -66,6 +66,8 @@ import CustomerSurvey from './Page/CustomerSurvey/CustomerSurvey';
 import OutroVideo from './Page/OutroVideo/OutroVideo';
 import Goodbye from './Page/Goodbye/Goodbye';
 
+import ImageTest from './Page/ImageTest/ImageTest'; // TMP
+
 const theme = createMuiTheme({
   useNextVariants: true, // silence deprecation warnings
   palette: {
@@ -176,6 +178,7 @@ class App extends React.Component {
               <Route exact path="/customer-survey" component={CustomerSurvey} />
               <Route exact path="/outro-video" component={OutroVideo} />
               <Route exact path="/goodbye" component={Goodbye} />
+              <Route exact path="/image-test" component={ImageTest} /> // TMP
             </Router>
           </header>
         </div>

@@ -15,35 +15,6 @@ class VideoTest extends React.Component {
     this.state = { toNext: false };
   }
 
-  // setRef = webcam => {
-  //   this.webcam = webcam;
-  // }
-  //
-  // handleSuccess = (json) => {
-  //   console.log(json.url);
-  //   this.setState(() => ({ toNext: true }));
-  // }
-  //
-  // captureImage = () => {
-  //   let user = this.context;
-  //   let data = this.webcam.getScreenshot();
-  //   let imgfile = this.toImageFile(data, user._id + '.jpg');
-  //   UserSession.postImage(this.context, imgfile, this.handleSuccess,
-  //     e => console.error("Error", e));
-  // }
-  //
-  // toImageFile = (data, fname) => {
-  //   let arr = data.split(','),
-  //     mime = arr[0].match(/:(.*?);/)[1],
-  //     bstr = atob(arr[1]),
-  //     n = bstr.length,
-  //     u8arr = new Uint8Array(n);
-  //   while (n--) {
-  //     u8arr[n] = bstr.charCodeAt(n);
-  //   }
-  //   return new File([u8arr], fname, { type: mime });
-  // }
-
   renderRedirect() {
     if (this.state.toNext) {
       return <Redirect to='/touch-to-begin' />
