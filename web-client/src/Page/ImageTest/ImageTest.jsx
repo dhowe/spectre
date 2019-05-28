@@ -12,7 +12,7 @@ class ImageTest extends React.Component {
     const { classes } = this.props;
     return (
       <div>
-        <img src="http://localhost:3000/profiles/44798135.68164672.jpg"/>
+        <img src={"/profiles/"+this.context._id+".jpg"}/>
         <Link to='/believe-in-dataism'>
             <div className={classes.clickToContinue}>
                 <Typography>Next</Typography>

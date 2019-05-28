@@ -14,13 +14,11 @@ class VideoTest extends React.Component {
     super(props);
     this.state = { toNext: false };
   }
-
   renderRedirect() {
     if (this.state.toNext) {
       return <Redirect to='/touch-to-begin' />
     }
   }
-
   render() {
     const { classes } = this.props;
     const videoConstraints = {
