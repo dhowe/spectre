@@ -15,7 +15,11 @@ describe('Server User', function () {
     });
 
     it('Should correctly complete a templated user', function () {
-      let user = UserModel.Create({ name: "dave", login: "dave@abc.com", loginType: "twitter" });
+      let user = UserModel.Create({
+        name: "dave",
+        login: "dave@abc.com",
+        loginType: "twitter"
+      });
       expect(user.name).eq("dave");
       expect(user.login).eq("dave@abc.com");
       expect(user.loginType).eq("twitter");
@@ -26,7 +30,6 @@ describe('Server User', function () {
       expect(UserModel.Create().oceanTraits().length).to.equal(5);
     });
   })
-
 
   describe('UserModel.generateDescription()', function () {
 

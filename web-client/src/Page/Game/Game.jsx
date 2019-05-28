@@ -6,7 +6,6 @@ import P5Wrapper from 'react-p5-wrapper';
 import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
-
 import UserSession from '../../Components/UserSession/UserSession';
 
 // TMP:
@@ -248,7 +247,6 @@ class Brand {
 Brand.active = false;
 Brand.speed = styles.sketchSpeed;
 Brand.names = ['cocacola', 'disney', 'converse', 'playstation', 'xbox', 'red bull', 'hello kitty', 'h&m', 'ben & jerrys', 'old spice', 'burberry', 'adidas', 'marvel', 'nike', 'zara', 'vans', 'starbucks', 'topshop', 'lacoste', 'sony', 'new look', 'calvin klein', 'rayban', 'swarovski', 'asos', 'marks and spencer', 'chanel'];
-
 Brand.drawAll = function () { Brand.instances.forEach(b => b.draw()) };
 Brand.updateAll = function () { Brand.instances.forEach(b => b.update()) };
 
@@ -257,25 +255,50 @@ Brand.updateAll = function () { Brand.instances.forEach(b => b.update()) };
 let user, game;
 
 class Game extends React.Component {
+
   constructor(props) {
+
     super(props);
     game = this; // handle for p5js
     this.state = { toThankYou: false };
   }
+
   componentComplete() { // redirect called from p5
+
     if (typeof this.context._id !== 'undefined') { // TMP: remove
-      UserSession.updateUser(this.context, null,
-        e => { console.error("Error", e); throw Error(e); });
+
+      UserSession.updateUser(this.context,
+        json => {
+          Object.assign(this.context, json);
+          this.setState(() => ({ toThankYou: true }));
+        }, err => {
+          console.error(err);
+          this.setState(() => ({ toThankYou: true }));
+        });
+
     } else { // TMP: remove
       console.warn('WARN: not updating Db with User info!');
     }
-    this.setState(() => ({ toThankYou: true }));
   }
+
   componentWillMount() {
+
     user = this.context;
-    console.log("User:", user);
+
+    ///////////////////// TMP: ///////////////////////
+    if (typeof user._id === 'undefined') {
+      user.name = user.name || 'Barney';
+      user.loginType = user.loginType || 'email';
+      user.login = user.login || 'Barney' + (+new Date()) + '@aol.com';
+      UserSession.createUser(user);
+    }
+    //////////////////////////////////////////////////
+
+    console.log("User:", this.context);
   }
+
   render() {
+
     const { classes } = this.props;
     if (this.state.toThankYou === true) { // hack redirect
       return <Redirect to='/thank-you' />
@@ -285,22 +308,6 @@ class Game extends React.Component {
         <SpectreHeader colour="white" />
         {/*<div className={"game content"}>*/}
           <P5Wrapper sketch={sketch} className="wrapper" />
-
-          {/* ------- temporary div for testing -------
-          <div id="content">
-            <table>
-              <tbody>
-                <tr>
-                  <th>Trait</th>
-                  <th>Score</th>
-                  <th>Description</th>
-                </tr>
-              </tbody>
-              <tbody id="tdata"></tbody>
-            </table>
-          </div>
-          ----------- end temporary div ----------- */}
-
           <Link to="/thank-you">
             <IconButton icon="next" text="Next" />
           </Link>
@@ -314,7 +321,6 @@ class Game extends React.Component {
 Game.propTypes = {
   classes: PropTypes.object.isRequired,
 };
-
 Game.contextType = UserSession;
 
 export default withStyles(styles)(Game);

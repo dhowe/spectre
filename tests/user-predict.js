@@ -8,15 +8,15 @@ describe('OCEAN Metrics', function () {
     it('Should error if a user is not provided', function () {
       expect(() => oceanSort(undefined, [])).to.throw();
     });
-    it('Should error if candidates are not provided', function () {
+    it('Should handle undef or empty candidate array', function () {
       expect(() => oceanSort(UserModel.Create(), undefined)).to.throw();
-      expect(() => oceanSort(UserModel.Create(), [])).to.throw();
+      expect(oceanSort(UserModel.Create(), [])).to.eql([]);
     });
     it('Should sort candidates by distance to target', function () {
-
       let userA = UserModel.Create();
       let userB = UserModel.Create();
       let userC = UserModel.Create();
+      let userD = UserModel.Create();
 
       userA.traits = {
         agreeableness: 0,
@@ -40,17 +40,17 @@ describe('OCEAN Metrics', function () {
         neuroticism: 1
       };
 
-      let sorted = oceanSort(userA, [userA, userB, userC]);
-      expect(sorted.length).eq(2);
+      let sorted = oceanSort(userA, [userA, userB, userC, userD]);
+      expect(sorted.length).eq(3);
       expect(sorted[0]._id).eq(userB._id);
       expect(sorted[1]._id).eq(userC._id);
+      expect(sorted[2]._id).eq(userD._id);
 
-      sorted = oceanSort(userA, [userB, userC]);
-      expect(sorted.length).eq(2);
-      expect(sorted[0]._id).eq(userB._id);
-      expect(sorted[1]._id).eq(userC._id);
+      let sorted2 = oceanSort(userA, [userB, userC, userD]);
+      expect(sorted2.length).eq(3);
+      expect(sorted2).eql(sorted);
     });
-  })
+  });
 
   describe('Server.oceanSort(limit)', function () {
     it('Should error if 3rd arg is not a number', function () {

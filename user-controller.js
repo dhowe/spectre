@@ -62,6 +62,8 @@ const update = function (req, res) {
 
     if (err) return error(res, 'No user #' + req.params.uid);
 
+    Object.assign(user, req.body); // assign new traits to user
+
     if (user.hasOceanTraits() && user.similars.length < 1) {
 
       let limit = 8; // default limit
@@ -69,17 +71,18 @@ const update = function (req, res) {
         limit = parseInt(req.query.limit);
       }
 
-      user.findByOcean(8, (users) => {
+      user.findByOcean(limit, (users) => {
         if (err) {
           console.error(res.statusCode, res.statusMessage,
-            'Unable to add similar Users for user #' + req.params.uid, err);
+            'Unable to add similars for user #' + req.params.uid, err);
           return;
         }
+
         users && users.map(u => user.similars.push(u._id+'||'+u.name));
       });
     }
 
-    Object.assign(user, req.body).save((err, user) => {
+    user.save((err, user) => {
 
       if (err) return error(res, 'Unable to update user #' + req.params.uid);
       res.status(200).send(user);
