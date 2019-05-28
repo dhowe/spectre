@@ -1,8 +1,12 @@
+let sims = '[';
+let gsims = '[';
 let script = 'db.users.insertMany([\n';
 let names = ['Remy', 'Bailey', 'Devin', 'Tyler', 'Fran', 'Pat', 'Sam', 'Reed', 'Terry'];
 names.forEach((nm, i) => {
   let id = '';
   for (let j = 0; j < 24; j++) id += (i + 1);
+  sims += "'"+nm+"||"+id+"', ";
+  gsims += "{ name: '"+nm+"', id: '"+id+"' }, ";
   script += '{\n  "_id": ObjectId("' + id + '"),\n' +
     '  "name": "' + nm + '",\n' +
     '  "login": "' + nm + '@aol.com",\n' +
@@ -18,4 +22,7 @@ names.forEach((nm, i) => {
     '},\n';
 });
 script += '])';
-console.log(script);
+gsims += ']';
+sims += ']';
+
+console.log(gsims);

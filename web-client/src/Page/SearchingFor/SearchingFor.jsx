@@ -76,10 +76,12 @@ class SearchingFor extends React.Component {
     UserSession.postImage(this.context, imgfile,
       json => {
         console.log('Upload: http://localhost:3000' + json.url);
+        this.context.hasImage = true;
         this.setState(() => ({ toNext: true }));
       },
       e => {
         console.error("Error", e);
+        this.context.hasImage = false;
         this.setState(() => ({ toNext: true }));
       }
     );

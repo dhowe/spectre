@@ -10,6 +10,7 @@ export default class User {
     Object.keys(User.schema()).forEach(k => this[k] = undefined);
     Object.assign(this, tmpl);
     this.clientId = process.env.REACT_APP_CLIENT_ID || -1;
+    this.hasImage = (tmpl && tmpl.hasImage) || false;
   }
 
   predictInfluences(num) { // TODO: should set property
@@ -102,6 +103,7 @@ export default class User {
 
   getSimilars() {
     let result = [];
+    if (typeof this.similars === 'undefined') return [];
     this.similars.forEach(sims => {
       let parts = sims.split("||");
       if (parts.length != 2) {
@@ -152,6 +154,10 @@ User.schema = () => {
     clientId: {
       type: 'number',
       default: -1
+    },
+    hasImage: {
+        type: 'boolean',
+        default: false
     },
     targetId: {
       type: 'string'

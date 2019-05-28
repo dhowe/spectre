@@ -9,11 +9,12 @@ describe('Client User', function () {
       let user = new User();
       let fields = Object.keys(User.schema());
       fields.forEach(f => {
-        if (f === 'clientId') return;
+        if (f === 'clientId' || f === 'hasImage') return;
         expect(user[f]).eq(undefined);
         expect(user).has.property(f);
       });
       expect(user.clientId).eq(-1);
+      expect(user.hasImage).eq(false);
       expect(user.hasOceanTraits()).eq(false);
     });
 
@@ -21,6 +22,7 @@ describe('Client User', function () {
 
       let user = new User({
         name: "dave",
+        hasImage: true,
         login: "dave@abc.com",
         loginType: "twitter",
         similars: ["1111||Dave", "2222||Jen"],
@@ -35,6 +37,7 @@ describe('Client User', function () {
 
       expect(user.name).eq("dave");
       expect(user.login).eq("dave@abc.com");
+      expect(user.hasImage).eq(true);
       expect(user.loginType).eq("twitter");
       expect(user.traits.openness).to.equal(1);
       expect(user.hasOceanTraits()).eq(true);
