@@ -28,8 +28,8 @@ class YourPower extends React.Component {
       <div className={classes.root}>
           <SpectreHeader colour="white" />
           <div className={classes.content + " content"}>
-              <Typography component="h4" variant="h4">{this.context.name || 'Remy'}, your {this.context.virtue || 'Power'} is growing.</Typography>
-              <Typography component="h4" variant="h4">Let's put it into practice.</Typography>
+              <Typography component="h6" variant="h6">{this.context.name || 'Remy'}, your {this.context.virtue || 'Power'} is growing.</Typography>
+              <Typography component="h6" variant="h6">Let's put it into practice.</Typography>
               <Link to="/pick-your-side">
                   <IconButton icon="next" text="Next" />
               </Link>

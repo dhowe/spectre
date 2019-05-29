@@ -23,7 +23,7 @@ function InsightWeight(props) {
     <div className={classes.root}>
         <SpectreHeader colour="white" />
         <div className={classes.content + " content"}>
-            <Typography component="h4" variant="h4">What’s {props.selectedFollower.name}’s likely weight?</Typography>
+            <Typography component="h6" variant="h6">What’s {props.selectedFollower.name}’s likely weight?</Typography>
             <AvatarComponent target={{ image: '/targets/target0.png' }}/>
             <TextSliderText leftText="Underweight" rightText="Overweight" />
             <Link to="/insight-skin">

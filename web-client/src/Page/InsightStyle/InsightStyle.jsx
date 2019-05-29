@@ -39,7 +39,7 @@ class InsightStyle extends React.Component {
             <div className={classes.root}>
                 <SpectreHeader colour="white" />
                 <div className={classes.content + " content"}>
-                    <Typography component="h4" variant="h4">What’s {this.props.selectedFollower.name}‘s likely style category?</Typography>
+                    <Typography component="h6" variant="h6">What’s {this.props.selectedFollower.name}‘s likely style category?</Typography>
                     <AvatarComponent target={{ image: '/targets/target0.png' }} />
                     <FormControl className={classes.formControl} component="fieldset" >
                         <RadioGroup

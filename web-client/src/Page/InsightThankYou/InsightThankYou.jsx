@@ -22,8 +22,8 @@ function InsightThankYou(props) {
         <SpectreHeader colour="white" />
         <div className={classes.content + " content"}>
             <Typography component="h3" variant="h3">Great</Typography>
-            <Typography component="h4" variant="h4">Now you are beginning to think like an algorithm.</Typography>
-            <Typography component="h4" variant="h4">Just two more to go</Typography>
+            <Typography component="h6" variant="h6">Now you are beginning to think like an algorithm.</Typography>
+            <Typography component="h6" variant="h6">Just two more to go</Typography>
             <Link to="/insight-sexuality">
                 <IconButton icon="next" text="Deeper still" />
             </Link>

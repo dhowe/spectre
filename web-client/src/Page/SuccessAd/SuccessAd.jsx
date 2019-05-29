@@ -24,10 +24,10 @@ class SuccessAd extends React.Component {
       <div className={classes.root}>
         <SpectreHeader colour="white" />
         <div className={classes.content + " content"}>
-          <Typography component="h4" variant="h4">
+          <Typography component="h6" variant="h6">
             Your Facebook ad was successful!
         </Typography>
-          <Typography component="h4" variant="h4">
+          <Typography component="h6" variant="h6">
             What we see changes who we are.
         </Typography>
           <Typography component="h3" variant="h3">

@@ -32,9 +32,9 @@ class PersonalisedExperience extends React.Component {
       <div className={classes.root + ' PersonalisedExperience'}>
         <SpectreHeader colour="white" />
         <div className={classes.content + " content"}>
-          <Typography component="h3" variant="h3">Excellent</Typography>
-          <Typography component="h3" variant="h3">In order to create a <strong>personalised experience</strong></Typography>
-          <Typography component="h4" variant="h4" >tell us what you love, tell us what you hate...</Typography>
+          <Typography component="h5" variant="h5">Excellent</Typography>
+          <Typography component="h5" variant="h5">In order to create a <strong>personalised experience</strong></Typography>
+          <Typography component="h6" variant="h6" >tell us what you love, tell us what you hate...</Typography>
           <Link to="/game">
             <IconButton icon="next" text="Next" />
           </Link>

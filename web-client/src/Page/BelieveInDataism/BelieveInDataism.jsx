@@ -37,8 +37,8 @@ class BelieveInDataism extends React.Component {
       <div className={classes.root}>
         <SpectreHeader colour="white" />
         <div className={classes.content + " content"}>
-          <Typography component="h4" variant="h4">{(toAdjPhrase(this.context.virtue)||"So")}, you need more data.</Typography>
-          <Typography component="h4" variant="h4">We can help you believe in the {this.context.virtue} of dataism</Typography>
+          <Typography component="h6" variant="h6">{(toAdjPhrase(this.context.virtue)||"So")}, you need more data.</Typography>
+          <Typography component="h6" variant="h6">We can help you believe in the {this.context.virtue} of dataism</Typography>
           <Link to="/steps">
             <IconButton icon="next" text="Next" />
           </Link>

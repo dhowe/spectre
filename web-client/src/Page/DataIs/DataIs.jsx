@@ -45,7 +45,7 @@ class DataIs extends React.Component {
         {this.renderRedirect()} {/* tmp */}
         <SpectreHeader colour="white" />
         <div className={classes.content + " content"}>
-          <Typography component="h4" variant="h4">DATA IS {(this.context.virtue || 'power').toUpperCase()}</Typography>
+          <Typography component="h6" variant="h6">DATA IS {(this.context.virtue || 'power').toUpperCase()}</Typography>
           <Link to="/believe-in-dataism">
             <IconButton icon="next" text="Next" />
           </Link>

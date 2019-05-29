@@ -33,7 +33,7 @@ class ThankYou extends React.Component {
         <div className={classes.content + " content"}>
           <Typography component="h3" variant="h3">Thank you, {this.context.name}!</Typography>
           {/* <img src='https://cdn.pixabay.com/photo/2013/07/13/12/15/hand-159474__340.png' alt='thumbs up'></img> */}
-          <Typography component="h4" variant="h4" >Your experience has been personalised.</Typography>
+          <Typography component="h6" variant="h6" >Your experience has been personalised.</Typography>
           <Link to="/influence-a-follower">
             <IconButton icon="next" text="Next" />
           </Link>

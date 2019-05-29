@@ -24,7 +24,7 @@ class InsightSkin extends React.Component {
       <div className={classes.root}>
         <SpectreHeader colour="white" />
         <div className={classes.content + " content"}>
-          <Typography component="h4" variant="h4">
+          <Typography component="h6" variant="h6">
             What is {this.props.selectedFollower.name}'s likely skin colour?
           </Typography>
           <AvatarComponent target={{ image: '/targets/target0.png' }}/>

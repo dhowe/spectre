@@ -24,7 +24,7 @@ class TargetAd extends React.Component {
       <SpectreHeader colour="white" />
       <div className={classes.content + " content"}>
         <br/>
-        <Typography component="h4" variant="h4">
+        <Typography component="h6" variant="h6">
           Share your targetted ad with {this.props.selectedFollower.name||'Remy'}?
         </Typography>
         <Link to="/success-ad">
