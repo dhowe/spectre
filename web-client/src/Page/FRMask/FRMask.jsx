@@ -26,7 +26,7 @@ class FRMask extends React.Component {
             <div className={classes.root}>
                 <SpectreHeader colour="white" />
                 <div className={classes.content + " content"}>
-                    <Typography component="h4" variant="h4">FRMask</Typography>
+                    <Typography component="h6" variant="h6">FRMask</Typography>
                     <Link to="/generating-video">
                         <IconButton icon="next" text="Next" />
                     </Link>

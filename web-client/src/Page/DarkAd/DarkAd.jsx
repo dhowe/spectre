@@ -58,7 +58,7 @@ class darkAd extends React.Component {
       <div className={classes.root}>
         <SpectreHeader colour="white" />
         <div className={classes.content + " content"}>
-          <Typography component="h4" variant="h4">Select Background Image:</Typography>
+          <Typography component="h6" variant="h6">Select Background Image:</Typography>
           <div>
             <img className={classes.image} src={image1} alt='leave' onClick={() => { this.setState({ image: image1 }) }}></img>
             <img className={classes.image} src={image2} alt='leave' onClick={() => { this.setState({ image: image2 }) }}></img>

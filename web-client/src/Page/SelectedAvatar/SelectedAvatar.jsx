@@ -26,8 +26,8 @@ class SelectedAvatar extends React.Component {
         <div className={classes.content + " content"}>
           <Typography component="h3" variant="h3">You selected {this.props.selectedFollower.name}</Typography>
           <AvatarComponent target={{ image: '/targets/target0.png' }}/>
-          <Typography component="h4" variant="h4">Lets start by verifying some of the basics to unlock {this.context.virtueAsAdverb()} insights into {this.props.selectedFollower.name}. </Typography>
-          <Typography component="h4" variant="h4">Don’t worry, only you will see the results. </Typography>
+          <Typography component="h6" variant="h6">Lets start by verifying some of the basics to unlock {this.context.virtueAsAdverb()} insights into {this.props.selectedFollower.name}. </Typography>
+          <Typography component="h6" variant="h6">Don’t worry, only you will see the results. </Typography>
           <Link to="/insight-hair">
             <IconButton icon="next" text="DIVE IN" />
           </Link>

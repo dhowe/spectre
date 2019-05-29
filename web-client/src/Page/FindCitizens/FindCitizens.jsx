@@ -22,9 +22,9 @@ function FindCitizens(props) {
     <div className={classes.root}>
         <SpectreHeader colour="white" />
         <div className={classes.content + " content"}>
-            <Typography component="h4" variant="h4">Excellent.</Typography>
-            <Typography component="h4" variant="h4">Now you can find all UK citizens with a similar OCEAN profile to {props.selectedFollower.name} that have never voted before!</Typography>
-            <Typography component="h4" variant="h4">A silent army that could well tip the balance.</Typography>
+            <Typography component="h6" variant="h6">Excellent.</Typography>
+            <Typography component="h6" variant="h6">Now you can find all UK citizens with a similar OCEAN profile to {props.selectedFollower.name} that have never voted before!</Typography>
+            <Typography component="h6" variant="h6">A silent army that could well tip the balance.</Typography>
             <Link to="/targets-found">
                 <IconButton icon="next" text="Find them" />
             </Link>

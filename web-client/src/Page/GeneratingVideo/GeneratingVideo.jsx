@@ -26,7 +26,7 @@ class GeneratingVideo extends React.Component {
             <div className={classes.root}>
                 <SpectreHeader colour="white" />
                 <div className={classes.content + " content"}>
-                    <Typography component="h4" variant="h4">GeneratingVideo</Typography>
+                    <Typography component="h6" variant="h6">GeneratingVideo</Typography>
                     <Link to="/pick-a-statement">
                         <IconButton icon="next" text="Next" />
                     </Link>

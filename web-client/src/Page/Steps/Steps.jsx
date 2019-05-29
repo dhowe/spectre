@@ -31,7 +31,7 @@ class Steps extends React.Component {
                     <Typography component="h6" variant="h6"><strong>Step 2</strong> - influence a nation</Typography>
                     <Typography component="h6" variant="h6"><strong>Step 3</strong> - influence a celebrity</Typography>
                     <Typography component="h5" variant="h5">Get the data. Get the {this.context.virtue}.</Typography>
-                    <Typography component="h4" variant="h4">Ready?</Typography>
+                    <Typography component="h6" variant="h6">Ready?</Typography>
                     <Link to="/personalised-experience">
                         <IconButton icon="tick" text="Yes" />
                     </Link>
