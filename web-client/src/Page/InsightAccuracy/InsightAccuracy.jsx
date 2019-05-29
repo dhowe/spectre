@@ -21,7 +21,7 @@ function InsightAccuracy(props) {
     <div className={classes.root}>
         <SpectreHeader colour="white" />
         <div className={classes.content + " content"}>
-            <Typography component="h3" variant="h3">Excellent! </Typography>
+            <Typography component="h5" variant="h5">Excellent! </Typography>
             <IconButton icon="trophy" />
             <Typography component="h6" variant="h6">Your accuracy level is high.
             You are starting to see {props.selectedFollower.name} as we see do.
