@@ -10,7 +10,6 @@ export default class User {
     Object.keys(User.schema()).forEach(k => this[k] = undefined);
     Object.assign(this, tmpl);
     this.clientId = process.env.REACT_APP_CLIENT_ID || -1;
-    this.hasImage = (tmpl && tmpl.hasImage) || false;
     this.isActive = (tmpl && tmpl.isActive) || false;
   }
 

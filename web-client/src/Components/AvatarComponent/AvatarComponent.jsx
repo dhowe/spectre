@@ -30,12 +30,6 @@ class AvatarComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = { class: this.props.class }; //, image:  };
-    this.handleSelected = this.handleSelected.bind(this);
-  }
-  handleSelected(e) {
-    //alert("hello2");
-    console.log("CLICKED2!",e.currentTarget,e.relatedTarget);
-    e.stopPropagation();
   }
   render() {
     return (

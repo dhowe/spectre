@@ -8,14 +8,15 @@ describe('Client User', function () {
     it('Should correctly construct an empty user', function () {
       let user = new User();
       let fields = Object.keys(User.schema());
-      let ignore = ['clientId', 'hasImage' ];
+      let ignores = ['clientId', 'isActive'];
       fields.forEach(f => {
-        if  (ignore.indexOf(f) > -1) return;
-        expect(user[f]).eq(undefined);
-        expect(user).has.property(f);
+        if (ignores.indexOf(f) < 0) {
+          expect(user[f]).eq(undefined);
+          expect(user).has.property(f);
+        }
       });
       expect(user.clientId).eq(-1);
-      expect(user.hasImage).eq(false);
+      expect(user.isActive).eq(false);
       expect(user.hasOceanTraits()).eq(false);
     });
 
