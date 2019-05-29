@@ -178,7 +178,7 @@ class App extends React.Component {
               <Route exact path="/customer-survey" component={CustomerSurvey} />
               <Route exact path="/outro-video" component={OutroVideo} />
               <Route exact path="/goodbye" component={Goodbye} />
-              <Route exact path="/image-test" component={ImageTest} /> // TMP
+              <Route exact path="/image-test" component={ImageTest} /> {/* TMP */}
             </Router>
           </header>
         </div>

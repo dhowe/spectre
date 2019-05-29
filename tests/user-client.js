@@ -8,8 +8,9 @@ describe('Client User', function () {
     it('Should correctly construct an empty user', function () {
       let user = new User();
       let fields = Object.keys(User.schema());
+      let ignore = ['clientId', 'hasImage' ];
       fields.forEach(f => {
-        if (f === 'clientId' || f === 'hasImage') return;
+        if  (ignore.indexOf(f) > -1) return;
         expect(user[f]).eq(undefined);
         expect(user).has.property(f);
       });
