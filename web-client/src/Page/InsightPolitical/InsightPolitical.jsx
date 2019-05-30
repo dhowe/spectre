@@ -29,7 +29,6 @@ class InsightPolitical extends React.Component {
             <Typography component="h6" variant="h6">What is {this.context.targetName}’s likely political preference?</Typography>
             <AvatarComponent target={{ image: '/targets/target0.png' }}/>
             <TextSliderText leftText="Left wing" rightText="Right Wing" />
-            <TextSliderText leftText="Liberal" rightText="Conservative" />
             <Link to="/insight-complete">
                 <IconButton icon="next" text="Next" />
             </Link>

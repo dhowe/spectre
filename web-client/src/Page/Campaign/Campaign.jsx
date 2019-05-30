@@ -17,6 +17,8 @@ const styles = {
   },
 };
 
+{/* Interstitial */}
+
 class Campaign extends React.Component {
   render() {
     const { classes } = this.props;
@@ -33,7 +35,7 @@ class Campaign extends React.Component {
               <Fade in={true} style={{transitionDelay: '1000ms'}}>
                 <Typography component="h6" variant="h6">We’re going to run a ‘grassroots’ campaign to influence {this.context.targetName} to vote {this.context.adIssue} in the next referendum.</Typography>
               </Fade>
-              <Link to="/influenced-by">
+              <Link to="/dark-ad">
                   <IconButton icon="next" text="Ready" />
               </Link>
           </div>
