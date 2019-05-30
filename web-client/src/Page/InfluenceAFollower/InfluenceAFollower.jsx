@@ -50,9 +50,9 @@ class InfluenceAFollower extends React.Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <SpectreHeader colour="white" />
+        <SpectreHeader colour="white" progressActive={true} progressNumber="one" />
         <div className={classes.content + " content"}>
-          <Typography component="h3" variant="h3">Influence a follower!</Typography>
+          <Typography component="h5" variant="h5"><strong>Influence a follower!</strong></Typography>
           <Typography component="h6" variant="h6" >Spectre has a global community of followers.</Typography>
           <Typography component="h5" variant="h5" >Choose a participant.</Typography>
           <Grid container justify="center" alignItems="center">

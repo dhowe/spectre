@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { Link, Redirect } from 'react-router-dom';
-import IconButton from '../../Components/IconButton/IconButton';
+import Fade from '@material-ui/core/Fade';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
+import Countdown from 'react-countdown-now';
 
 const styles = {
   root: {
@@ -37,18 +38,34 @@ class DataIs extends React.Component {
   renderRedirect() {// TMP
     if (this.state.toTest) return <Redirect to='/image-test' />
   }
+  goTo() {
+    this.props.history.push('/personalised-experience');
+  }
   render() {
     const { classes } = this.props;
+    const timer = ({ seconds, completed }) => {
+      if (completed) {
+        // Render a complete state
+        return null;
+      } else {
+        // Render a countdown
+        return <span>{seconds}</span>;
+      }
+    };
     console.log('User:', this.context);
     return (
       <div className={classes.root}>
         {this.renderRedirect()} {/* tmp */}
         <SpectreHeader colour="white" />
         <div className={classes.content + " content"}>
-          <Typography component="h6" variant="h6">DATA IS {(this.context.virtue || 'power').toUpperCase()}</Typography>
-          <Link to="/believe-in-dataism">
-            <IconButton icon="next" text="Next" />
-          </Link>
+          <Fade in={true} style={{transitionDelay: '200ms'}}>
+            <Typography component="h6" variant="h6">DATA IS {(this.context.virtue || 'power').toUpperCase()}</Typography>
+          </Fade>
+          <Countdown
+            onComplete={this.goTo.bind(this)}
+            date={Date.now() + 3000}
+            renderer={timer}
+          />
         </div>
         <FooterLogo />
       </div>

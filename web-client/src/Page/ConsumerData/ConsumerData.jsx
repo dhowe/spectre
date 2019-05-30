@@ -45,7 +45,7 @@ function ConsumerData(props) {
   const { classes } = props;
   return (
     <div className={classes.root}>
-        <SpectreHeader colour="white" />
+        <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
         <div className={classes.content + " content"}>
             <Typography component="h3" variant="h3">Choose 5 types of data:</Typography>
             <Typography component="h3" variant="h3">CONSUMER DATA:</Typography>

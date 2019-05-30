@@ -56,7 +56,7 @@ class darkAd extends React.Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <SpectreHeader colour="white" />
+        <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
         <div className={classes.content + " content"}>
           <Typography component="h6" variant="h6">Select Background Image:</Typography>
           <div>

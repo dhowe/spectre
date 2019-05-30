@@ -22,7 +22,7 @@ class SuccessAd extends React.Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <SpectreHeader colour="white" />
+        <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
         <div className={classes.content + " content"}>
           <Typography component="h6" variant="h6">
             Your Facebook ad was successful!
@@ -30,8 +30,8 @@ class SuccessAd extends React.Component {
           <Typography component="h6" variant="h6">
             What we see changes who we are.
         </Typography>
-          <Typography component="h3" variant="h3">
-            {this.props.selectedFollower.name} is now more likely to vote {this.context.adIssue} in the referendum.
+          <Typography component="h6" variant="h6">
+            <strong>{this.props.selectedFollower.name} is now more likely to vote {this.context.adIssue} in the referendum.</strong>
         </Typography>
 
           <Link to="/influence-a-nation">

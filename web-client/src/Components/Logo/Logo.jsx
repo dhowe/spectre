@@ -13,7 +13,7 @@ const styles = {
 function Logo(props) {
     const { classes } = props;
     return (
-        <div >
+        <div>
             <img className={classes.Logo} alt="logo" src={image}></img>
         </div>
     );
