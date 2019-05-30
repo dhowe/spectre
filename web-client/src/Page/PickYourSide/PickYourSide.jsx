@@ -25,7 +25,7 @@ class PickYourSide extends React.Component {
       <div className={classes.root}>
           <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
           <div className={classes.content + " content"}>
-              <Typography component="h6" variant="h6">Influence [username]'s vote on Brexit:</Typography>
+              <Typography component="h6" variant="h6">Influence {this.context.name}'s vote on Brexit:</Typography>
               <Link to="/campaign">
                   <img src="https://i.gyazo.com/1890ddef64e0bde795334a2e8564d3b1.png" alt='leave' onClick={() => { this.context.adIssue = 'leave' }}></img>
               </Link>
