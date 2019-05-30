@@ -1,5 +1,10 @@
 @import 'colors.scss';
 
+* {
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-tap-highlight-color: transparent;
+}
+
 html, body {
   font-size: 2em;
 }
@@ -43,6 +48,9 @@ html, body {
 
 a {
   text-decoration: none;
+  &:active, &:hover, &:focus {
+    outline: -webkit-focus-ring-color auto 0px;
+  }
 }
 
 .content {
