@@ -31,7 +31,7 @@ class SuccessAd extends React.Component {
             What we see changes who we are.
         </Typography>
           <Typography component="h6" variant="h6">
-            <strong>{this.props.selectedFollower.name} is now more likely to vote {this.context.adIssue} in the referendum.</strong>
+            <strong>{this.context.targetName} is now more likely to vote {this.context.adIssue} in the referendum.</strong>
         </Typography>
 
           <Link to="/influence-a-nation">

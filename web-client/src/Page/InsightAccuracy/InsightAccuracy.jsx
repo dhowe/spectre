@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
+import UserSession from '../../Components/UserSession/UserSession';
 
 const styles = {
   root: {
@@ -24,7 +25,7 @@ function InsightAccuracy(props) {
             <Typography component="h5" variant="h5">Excellent! </Typography>
             <IconButton icon="trophy" />
             <Typography component="h6" variant="h6">Your accuracy level is high.
-            You are starting to see {props.selectedFollower.name} as we see do.
+            You are starting to see {this.context.targetName} as we see do.
             </Typography>
             <Link to="/insight-financial">
                 <IconButton icon="next" text="Let's go deeper" />
@@ -38,5 +39,7 @@ function InsightAccuracy(props) {
 InsightAccuracy.propTypes = {
   classes: PropTypes.object.isRequired,
 };
+InsightAccuracy.contextType = UserSession;
+
 
 export default withStyles(styles)(InsightAccuracy);

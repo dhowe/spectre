@@ -8,6 +8,7 @@ import SpectreHeader from "../../Components/SpectreHeader/SpectreHeader";
 import FooterLogo from "../../Components/FooterLogo/FooterLogo";
 import TextSliderText from "../../Components/TextSliderText/TextSliderText";
 import AvatarComponent from "../../Components/AvatarComponent/AvatarComponent";
+import UserSession from '../../Components/UserSession/UserSession';
 
 const styles = {
   root: {
@@ -25,7 +26,7 @@ class InsightSkin extends React.Component {
         <SpectreHeader colour="white" progressActive={true} progressNumber="one" />
         <div className={classes.content + " content"}>
           <Typography component="h6" variant="h6">
-            What is {this.props.selectedFollower.name}'s likely skin colour?
+            What is {this.context.targetName}'s likely skin colour?
           </Typography>
           <AvatarComponent target={{ image: '/targets/target0.png' }}/>
           <TextSliderText leftText="Light" rightText="Dark" />
@@ -42,5 +43,7 @@ class InsightSkin extends React.Component {
 InsightSkin.propTypes = {
   classes: PropTypes.object.isRequired
 };
+InsightSkin.contextType = UserSession;
+
 
 export default withStyles(styles)(InsightSkin);

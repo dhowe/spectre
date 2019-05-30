@@ -8,6 +8,7 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import TextSliderText from "../../Components/TextSliderText/TextSliderText";
 import AvatarComponent from "../../Components/AvatarComponent/AvatarComponent";
+import UserSession from '../../Components/UserSession/UserSession';
 
 const styles = {
   root: {
@@ -17,13 +18,14 @@ const styles = {
   },
 };
 
-function InsightWeight(props) {
-  const { classes } = props;
-  return (
-    <div className={classes.root}>
+class InsightWeight extends React.Component {
+  render() {
+    const { classes } = props;
+    return (
+      <div className={classes.root}>
         <SpectreHeader colour="white" progressActive={true} progressNumber="one" />
         <div className={classes.content + " content"}>
-            <Typography component="h6" variant="h6">What’s {props.selectedFollower.name}’s likely weight?</Typography>
+            <Typography component="h6" variant="h6">What’s {this.context.targetName}’s likely weight?</Typography>
             <AvatarComponent target={{ image: '/targets/target0.png' }}/>
             <TextSliderText leftText="Underweight" rightText="Overweight" />
             <Link to="/insight-skin">
@@ -32,11 +34,13 @@ function InsightWeight(props) {
         </div>
         <FooterLogo />
     </div>
-  );
+    );
+  }
 }
 
 InsightWeight.propTypes = {
   classes: PropTypes.object.isRequired,
 };
+InsightWeight.contextType = UserSession;
 
 export default withStyles(styles)(InsightWeight);

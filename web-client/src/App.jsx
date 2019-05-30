@@ -25,7 +25,6 @@ import InsightThankYou from './Page/InsightThankYou/InsightThankYou';
 import InsightSexuality from './Page/InsightSexuality/InsightSexuality';
 import InsightPolitical from './Page/InsightPolitical/InsightPolitical';
 import InsightComplete from './Page/InsightComplete/InsightComplete';
-import IntroOceanVideo from './Page/IntroOceanVideo/IntroOceanVideo';
 import YourPower from './Page/YourPower/YourPower';
 import PickYourSide from './Page/PickYourSide/PickYourSide';
 import Campaign from './Page/Campaign/Campaign';
@@ -92,19 +91,16 @@ class App extends React.Component {
     this.test_state = this.test_state.bind(this);
     this.set_key = this.set_key.bind(this);
   };
-
   test_state() {
     this.setState({
       date: 'test2'
     });
   }
-
   set_key(key, value) {
     this.setState({
       [key]: value
     });
   }
-
   render() {
     return (
       <MuiThemeProvider theme={theme} >
@@ -127,27 +123,27 @@ class App extends React.Component {
               <Route exact path="/game" component={Game} />
               <Route exact path="/thank-you" component={ThankYou} />
               <Route exact path="/influence-a-follower" component={InfluenceAFollower} />
-              <Route exact path="/selected-avatar" render={() => <SelectedAvatar selectedFollower={this.state.selectedFollower} />} />
-              <Route exact path="/insight-gender" render={() => <InsightGender selectedFollower={this.state.selectedFollower} />} />
-              <Route exact path="/insight-skin" render={() => <InsightSkin selectedFollower={this.state.selectedFollower} />} />
-              <Route exact path="/insight-financial" render={() => <InsightFinancial selectedFollower={this.state.selectedFollower} />} />
+              <Route exact path="/selected-avatar" render={() => <SelectedAvatar />} />
+              <Route exact path="/insight-gender" render={() => <InsightGender  />} />
+              <Route exact path="/insight-skin" render={() => <InsightSkin/>} />
+              <Route exact path="/insight-financial" render={() => <InsightFinancial/>} />
               <Route exact path="/insight-thank-you" component={InsightThankYou} />
-              <Route exact path="/insight-sexuality" render={() => <InsightSexuality selectedFollower={this.state.selectedFollower} />} />
-              <Route exact path="/insight-political" render={() => <InsightPolitical selectedFollower={this.state.selectedFollower} />} />
-              <Route exact path="/insight-complete" render={() => <InsightComplete name={this.state.name} virtue={this.state.virtue} selectedFollower={this.state.selectedFollower} />} />
-              <Route exact path="/intro-ocean-video" component={IntroOceanVideo} />
+              <Route exact path="/insight-sexuality" render={() => <InsightSexuality />} />
+              <Route exact path="/insight-political" render={() => <InsightPolitical />} />
+              <Route exact path="/insight-complete" render={() => <InsightComplete />} />
+              {/*<Route exact path="/intro-ocean-video" component={IntroOceanVideo} />*/}
               <Route exact path="/your-power" component={YourPower} />
               <Route exact path="/pick-your-side" component={PickYourSide} />
-              <Route exact path="/campaign" render={() => <Campaign selectedFollower={this.state.selectedFollower} />} />
-              <Route exact path="/influenced-by" render={() => <InfluencedBy selectedFollower={this.state.selectedFollower} />} />
+              <Route exact path="/campaign" render={() => <Campaign />} />
+              <Route exact path="/influenced-by" render={() => <InfluencedBy  />} />
               <Route exact path="/dark-ad" component={DarkAd} />
-              <Route exact path="/target-ad" render={() => <TargetAd selectedFollower={this.state.selectedFollower} />} />
-              <Route exact path="/success-ad" render={() => <SuccessAd selectedFollower={this.state.selectedFollower} />} />
+              <Route exact path="/target-ad" render={() => <TargetAd  />} />
+              <Route exact path="/success-ad" render={() => <SuccessAd  />} />
               <Route exact path="/influence-a-nation" component={InfluenceANation} />
               <Route exact path="/consumer-data" component={ConsumerData} />
               <Route exact path="/political-data" component={PoliticalData} />
               <Route exact path="/home-data" component={HomeData} />
-              <Route exact path="/find-citizens" render={() => <FindCitizens selectedFollower={this.state.selectedFollower} />} />
+              <Route exact path="/find-citizens" render={() => <FindCitizens  />} />
               <Route exact path="/targets-found" component={TargetsFound} />
               <Route exact path="/social-media" component={SocialMedia} />
               <Route exact path="/launch-campaign" component={LaunchCampaign} />
@@ -177,7 +173,6 @@ class App extends React.Component {
           </header>
         </div>
       </MuiThemeProvider>
-
     );
   }
 }

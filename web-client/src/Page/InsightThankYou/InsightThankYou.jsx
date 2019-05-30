@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import Countdown from 'react-countdown-now';
+import UserSession from '../../Components/UserSession/UserSession';
 
 const styles = {
   root: {
@@ -52,5 +53,7 @@ class InsightThankYou extends React.Component {
 InsightThankYou.propTypes = {
   classes: PropTypes.object.isRequired,
 };
+InsightThankYou.contextType = UserSession;
+
 
 export default withStyles(styles)(InsightThankYou);

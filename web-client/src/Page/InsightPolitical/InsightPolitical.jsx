@@ -8,6 +8,7 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import TextSliderText from "../../Components/TextSliderText/TextSliderText";
 import AvatarComponent from "../../Components/AvatarComponent/AvatarComponent";
+import UserSession from '../../Components/UserSession/UserSession';
 
 const styles = {
   root: {
@@ -17,13 +18,15 @@ const styles = {
   },
 };
 
-function InsightPolitical(props) {
-  const { classes } = props;
-  return (
-    <div className={classes.root}>
+class InsightPolitical extends React.Component {
+  render() {
+    const { classes } = this.props;
+
+    return (
+      <div className={classes.root}>
         <SpectreHeader colour="white" progressActive={true} progressNumber="one" />
         <div className={classes.content + " content"}>
-            <Typography component="h6" variant="h6">What is {props.selectedFollower.name}’s likely political preference?</Typography>
+            <Typography component="h6" variant="h6">What is {this.context.targetName}’s likely political preference?</Typography>
             <AvatarComponent target={{ image: '/targets/target0.png' }}/>
             <TextSliderText leftText="Left wing" rightText="Right Wing" />
             <TextSliderText leftText="Liberal" rightText="Conservative" />
@@ -33,11 +36,13 @@ function InsightPolitical(props) {
         </div>
         <FooterLogo />
     </div>
-  );
+    );
+  }
 }
 
 InsightPolitical.propTypes = {
   classes: PropTypes.object.isRequired,
 };
+InsightPolitical.contextType = UserSession;
 
 export default withStyles(styles)(InsightPolitical);
