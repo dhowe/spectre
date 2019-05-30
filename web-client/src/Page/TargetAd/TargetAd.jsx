@@ -21,7 +21,7 @@ class TargetAd extends React.Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-      <SpectreHeader colour="white" />
+      <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
       <div className={classes.content + " content"}>
         <br/>
         <Typography component="h6" variant="h6">

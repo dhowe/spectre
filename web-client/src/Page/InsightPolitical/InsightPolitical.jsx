@@ -21,7 +21,7 @@ function InsightPolitical(props) {
   const { classes } = props;
   return (
     <div className={classes.root}>
-        <SpectreHeader colour="white" />
+        <SpectreHeader colour="white" progressActive={true} progressNumber="one" />
         <div className={classes.content + " content"}>
             <Typography component="h6" variant="h6">What is {props.selectedFollower.name}’s likely political preference?</Typography>
             <AvatarComponent target={{ image: '/targets/target0.png' }}/>

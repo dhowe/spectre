@@ -37,7 +37,7 @@ class InsightStyle extends React.Component {
         const { classes } = this.props;
         return (
             <div className={classes.root}>
-                <SpectreHeader colour="white" />
+                <SpectreHeader colour="white" progressActive={true} progressNumber="one" />
                 <div className={classes.content + " content"}>
                     <Typography component="h6" variant="h6">What’s {this.props.selectedFollower.name}‘s likely style category?</Typography>
                     <AvatarComponent target={{ image: '/targets/target0.png' }} />

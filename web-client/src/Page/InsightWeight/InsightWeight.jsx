@@ -21,7 +21,7 @@ function InsightWeight(props) {
   const { classes } = props;
   return (
     <div className={classes.root}>
-        <SpectreHeader colour="white" />
+        <SpectreHeader colour="white" progressActive={true} progressNumber="one" />
         <div className={classes.content + " content"}>
             <Typography component="h6" variant="h6">What’s {props.selectedFollower.name}’s likely weight?</Typography>
             <AvatarComponent target={{ image: '/targets/target0.png' }}/>

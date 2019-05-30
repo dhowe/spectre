@@ -21,7 +21,7 @@ class InfluenceANation extends React.Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-          <SpectreHeader colour="white" />
+          <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
           <div className={classes.content + " content"}>
               <Typography component="h3" variant="h3">Influence a nation</Typography>
               <Typography component="h6" variant="h6">Lets increase the {this.context.virtue||'influence'} of your campaign to convince lots of people to vote {this.context.adIssue} in the referendum.</Typography>

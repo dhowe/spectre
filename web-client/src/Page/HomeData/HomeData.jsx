@@ -45,7 +45,7 @@ function HomeData(props) {
   const { classes } = props;
   return (
     <div className={classes.root}>
-            <SpectreHeader colour="white" />
+            <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
             <div className={classes.content + " content"}>
                 <Typography component="h3" variant="h3">Last but not least</Typography>
                 <Typography component="h3" variant="h3">HOME DATA:</Typography>

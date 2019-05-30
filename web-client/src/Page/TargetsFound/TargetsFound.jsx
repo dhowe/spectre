@@ -25,7 +25,7 @@ function TargetsFound(props) {
   const { classes } = props;
   return (
     <div className={classes.root}>
-        <SpectreHeader colour="white" />
+        <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
         <div className={classes.content + " content"}>
             <Typography component="h6" variant="h6">Analysing data sets and looking for patterns...</Typography>
             <Typography component="h6" variant="h6">Consumer..... Political........ Home........</Typography>

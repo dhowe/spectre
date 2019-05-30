@@ -19,7 +19,7 @@ function InsightAccuracy(props) {
   const { classes } = props;
   return (
     <div className={classes.root}>
-        <SpectreHeader colour="white" />
+        <SpectreHeader colour="white" progressActive={true} progressNumber="one" />
         <div className={classes.content + " content"}>
             <Typography component="h5" variant="h5">Excellent! </Typography>
             <IconButton icon="trophy" />

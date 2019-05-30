@@ -22,7 +22,7 @@ class InsightSkin extends React.Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <SpectreHeader colour="white" />
+        <SpectreHeader colour="white" progressActive={true} progressNumber="one" />
         <div className={classes.content + " content"}>
           <Typography component="h6" variant="h6">
             What is {this.props.selectedFollower.name}'s likely skin colour?

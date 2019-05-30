@@ -24,7 +24,7 @@ class InfluenceACelebrity extends React.Component {
         const { classes } = this.props;
         return (
             <div className={classes.root}>
-                <SpectreHeader colour="white" />
+                <SpectreHeader colour="white" progressActive={true} progressNumber="three" />
                 <div className={classes.content + " content"}>
                     <Typography component="h6" variant="h6">Spectre has many famous followers.</Typography>
                     <Typography component="h6" variant="h6">They wouldn’t be where they are today without a little help from us!</Typography>

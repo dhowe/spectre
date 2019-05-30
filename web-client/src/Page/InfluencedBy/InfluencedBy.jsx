@@ -22,7 +22,7 @@ class InfluencedBy extends React.Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-          <SpectreHeader colour="white" />
+          <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
           <div className={classes.content + " content"}>
               <Typography component="h6" variant="h6">{this.props.selectedFollower.name}‘s OCEAN profile shows they are most likely influenced by:</Typography>
               <Typography component="h6" variant="h6">{influences.map((influence,i) => <p key={i}>&#10003;&nbsp;{influence}</p>)}</Typography>

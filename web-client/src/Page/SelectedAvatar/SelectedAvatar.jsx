@@ -22,9 +22,9 @@ class SelectedAvatar extends React.Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <SpectreHeader colour="white" />
+        <SpectreHeader colour="white" progressActive={true} progressNumber="one" />
         <div className={classes.content + " content"}>
-          <Typography component="h3" variant="h3">You selected {this.context.targetName}</Typography>
+          <Typography component="h6" variant="h6">You selected {this.context.targetName}</Typography>
           <AvatarComponent target={{ image: this.context.imageUrl }}/>
           <Typography component="h6" variant="h6">Lets start by verifying some of the basics to unlock {this.context.virtueAsAdverb()} insights into {this.context.targetName}. </Typography>
           <Typography component="h6" variant="h6">Don’t worry, only you will see the results. </Typography>
