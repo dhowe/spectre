@@ -8,9 +8,9 @@
     "start": "node -r esm server.js",
     "server": "node -r esm server.js",
     "client": "cd web-client && yarn start",
+    "build-client": "cd web-client && yarn build",
     "client-server": "yarn start",
-    "preclient-server": "cd web-client && yarn run build",
-    "Xheroku-postbuild": "cd api-test && npm install && npm run build"
+    "preclient-server": "cd web-client && yarn run build"
   },
   "author": "daniel howe",
   "dependencies": {
