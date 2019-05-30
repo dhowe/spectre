@@ -5,8 +5,10 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import UserSession from '../../Components/UserSession/UserSession';
+import Keyboard from 'react-simple-keyboard';
 
 import grey from '@material-ui/core/colors/grey';
+import 'react-simple-keyboard/build/css/index.css';
 import './SocialLogin.scss';
 
 const styles = {
@@ -46,6 +48,13 @@ class SocialLogin extends React.Component {
   handleChange = login => event => {
     this.context.login = event.target.value; // user-prop
   }
+  onChange = (input) => {
+    this.context.login = input;
+    document.getElementsByName('email')[0].value = input;
+  }
+  onKeyPress = (button) => {
+    console.log("Button pressed", button);
+  }
   render() {
     const { classes } = this.props;
     return (
@@ -57,8 +66,10 @@ class SocialLogin extends React.Component {
                 classes={{
                   root: classes.cssLabel,
                   focused: classes.cssFocused
-                }}><br />Email
-                  </InputLabel>
+                }}>Email
+              </InputLabel>
+              <Keyboard onChange={input => this.onChange(input)}
+                onKeyPress={button => this.onKeyPress(button)}/>
               <Input
                 name='email'
                 id="custom-css-standard-input"

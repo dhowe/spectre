@@ -20,6 +20,7 @@
     "react-p5-wrapper": "^0.0.4",
     "react-router-dom": "^5.0.0",
     "react-scripts": "2.1.8",
+    "react-simple-keyboard": "^1.22.3",
     "react-webcam": "^1.1.1"
   },
   "scripts": {
