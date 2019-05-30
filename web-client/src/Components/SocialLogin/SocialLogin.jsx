@@ -48,12 +48,9 @@ class SocialLogin extends React.Component {
   handleChange = login => event => {
     this.context.login = event.target.value; // user-prop
   }
-  onChange = (input) => {
+  onEmailChange = (input) => {
     this.context.login = input;
     document.getElementsByName('email')[0].value = input;
-  }
-  onKeyPress = (button) => {
-    console.log("Button pressed", button);
   }
   render() {
     const { classes } = this.props;
@@ -68,8 +65,7 @@ class SocialLogin extends React.Component {
                   focused: classes.cssFocused
                 }}>Email
               </InputLabel>
-              <Keyboard onChange={input => this.onChange(input)}
-                onKeyPress={button => this.onKeyPress(button)}/>
+              <Keyboard onChange={input => this.onEmailChange(input)}/>
               <Input
                 name='email'
                 id="custom-css-standard-input"
