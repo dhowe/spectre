@@ -30,7 +30,7 @@ class InsightGender extends React.Component {
           </Typography>
           <AvatarComponent target={{ image: '/targets/target0.png' }}/>
           <TextSliderText leftText="Male" rightText="Female" middleText="non-binary" />
-          <Link to="/insight-weight">
+          <Link to="/insight-skin">
             <IconButton icon="next" text="Next" />
           </Link>
         </div>

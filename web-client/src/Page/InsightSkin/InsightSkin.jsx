@@ -29,7 +29,7 @@ class InsightSkin extends React.Component {
           </Typography>
           <AvatarComponent target={{ image: '/targets/target0.png' }}/>
           <TextSliderText leftText="Light" rightText="Dark" />
-          <Link to="/insight-accuracy">
+          <Link to="/insight-financial">
             <IconButton icon="next" text="Next" />
           </Link>
         </div>

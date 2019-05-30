@@ -26,7 +26,7 @@ function InsightFinancial(props) {
             <Typography component="h6" variant="h6">What’s {props.selectedFollower.name}’s likely financial status?</Typography>
             <AvatarComponent target={{ image: '/targets/target0.png' }}/>
             <TextSliderText leftText="Poor" rightText="Rich" />
-            <Link to="/insight-style">
+            <Link to="/insight-thankyou">
                 <IconButton icon="next" text="Next" />
             </Link>
         </div>

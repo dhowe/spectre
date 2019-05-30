@@ -49,10 +49,10 @@ class Pledge extends React.Component {
               <Fade in={true} style={{transitionDelay: '200ms'}}>
                 <Typography component="h6" variant="h5">Welcome to the altar of dataism.</Typography>
               </Fade>
-              <Fade in={true} style={{transitionDelay: '600ms'}}>
+              <Fade in={true} style={{transitionDelay: '3200ms'}}>
                 <Typography component="h6" variant="h6">Our technologies can tell you things about yourself that you don’t know.</Typography>
               </Fade>
-              <Fade in={true} style={{transitionDelay: '1000ms'}}>
+              <Fade in={true} style={{transitionDelay: '6400ms'}}>
                 <Typography component="h6" variant="h6">In order for us to do this, first we need to get to know you a little bit.</Typography>
               </Fade>
               <Countdown
