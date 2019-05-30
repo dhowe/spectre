@@ -61,7 +61,7 @@ class LoginPage extends React.Component {
   }
   renderRedirect() {
     if (this.state.toNext) {
-      return <Redirect to='/intro-video' />
+      return <Redirect to='/username' />
     }
   }
   render() {

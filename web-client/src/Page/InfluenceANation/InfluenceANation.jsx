@@ -25,7 +25,7 @@ class InfluenceANation extends React.Component {
           <div className={classes.content + " content"}>
               <Typography component="h3" variant="h3">Influence a nation</Typography>
               <Typography component="h6" variant="h6">Lets increase the {this.context.virtue||'influence'} of your campaign to convince lots of people to vote {this.context.adIssue} in the referendum.</Typography>
-              <Typography component="h6" variant="h6">We can show you how, but first, you must...  get more DATA.</Typography>
+              <Typography component="h6" variant="h6">We can show you how, but first, you must...</Typography>
               <Link to="/consumer-data">
                   <IconButton icon="next" text="Get more data" />
               </Link>

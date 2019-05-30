@@ -112,7 +112,6 @@ class App extends React.Component {
               <Route exact path="/" component={VideoTest} />
               <Route exact path="/touch-to-begin" component={TouchToBegin} />
               <Route exact path="/login" component={LoginPage} />
-              <Route exact path="/intro-video" component={IntroVideo} />
               <Route exact path="/username" component={Username} />
               <Route exact path="/pledge" component={Pledge} />
               <Route exact path="/searching-for" component={SearchingFor} />
@@ -144,12 +143,10 @@ class App extends React.Component {
               <Route exact path="/political-data" component={PoliticalData} />
               <Route exact path="/home-data" component={HomeData} />
               <Route exact path="/find-citizens" render={() => <FindCitizens  />} />
-              <Route exact path="/targets-found" component={TargetsFound} />
-              <Route exact path="/social-media" component={SocialMedia} />
+              <Route exact path="/targets-found" component={TargetsFound} />/>
               <Route exact path="/launch-campaign" component={LaunchCampaign} />
               <Route exact path="/referendum-results" component={ReferendumResults} />
               <Route exact path="/win" component={Win} />
-              <Route exact path="/AI-is-the-future" component={AIIsTheFuture} />
               <Route exact path="/influence-a-celebrity" component={InfluenceACelebrity} />
               <Route exact path="/FRMask" component={FRMask} />
               <Route exact path="/generating-video" component={GeneratingVideo} />

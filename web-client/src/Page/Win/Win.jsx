@@ -24,11 +24,12 @@ class Win extends React.Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-          <SpectreHeader colour="white" progressActive={true} progressNumber="three" />
+          <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
           <div className={classes.content + " content"}>
+              {/* Swap between 'Believe' and 'BeLeave' below based on this.context.adIssues */}
               <Typography component="h6" variant="h6">Believe! {this.context.name}, your campaign was successful!</Typography>
               <Typography component="h6" variant="h6">Your silent army swung the vote!</Typography>
-              <Link to="/AI-is-the-future">
+              <Link to="/influence-a-celebrity">
                   <IconButton icon="next" text="Next" />
               </Link>
           </div >
