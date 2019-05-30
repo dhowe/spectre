@@ -3,6 +3,10 @@
 .textSliderText {
     overflow: hidden;
     height: 200px;
+    
+    p {
+        color: $grey;
+    }
 
     div[class*="MuiSlider-track"] {
         height: 20px !important;
