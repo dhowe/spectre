@@ -17,17 +17,17 @@ class TextSliderText extends React.Component {
     const { value } = this.state;
     return (
       <Grid className="textSliderText" container alignItems="center">
-        <Grid item xs={2}>
+        <Grid item xs={3}>
           <Typography>{this.props.leftText}</Typography>
         </Grid>
-        <Grid item xs={8}>
+        <Grid item xs={6}>
           <Slider
             value={value}
             aria-labelledby="label"
             onChange={this.handleChange}
           />
         </Grid>
-        <Grid item xs={2}>
+        <Grid item xs={3}>
           <Typography>{this.props.rightText}</Typography>
         </Grid>
         {this.props.middleText && (
