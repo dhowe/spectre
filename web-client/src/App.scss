@@ -57,3 +57,24 @@ a {
   }
 }
 
+strong {
+  color: $blue;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+@-webkit-keyframes rotating {
+  from{
+      -webkit-transform: rotate(0deg);
+  }
+  to{
+      -webkit-transform: rotate(360deg);
+  }
+}
+
+.beginLogo {
+  -webkit-animation: rotating 8s linear infinite;
+  display: inline-block;
+}

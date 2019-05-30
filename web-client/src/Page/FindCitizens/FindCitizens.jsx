@@ -20,7 +20,7 @@ function FindCitizens(props) {
   const { classes } = props;
   return (
     <div className={classes.root}>
-        <SpectreHeader colour="white" />
+        <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
         <div className={classes.content + " content"}>
             <Typography component="h5" variant="h5">Excellent.</Typography>
             <Typography component="h6" variant="h6">Now you can find all UK citizens with a similar OCEAN profile to {props.selectedFollower.name} that have never voted before!</Typography>

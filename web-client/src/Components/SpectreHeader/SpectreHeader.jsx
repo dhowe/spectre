@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import HeaderLogo from '../../Icons/headerlogo.svg';
 import HeaderLogoColour from '../../Icons/headerlogo-colour.svg';
+import Progress from '../Progress/Progress';
 
 import './SpectreHeader.scss';
 
@@ -14,6 +15,7 @@ function SpectreHeader(props) {
   return props.colour === "white" ? (
     <div className="SpectreHeader SpectreHeader-white">
       <img height="150" alt='header' src={HeaderLogoColour} />
+      <Progress active={props.progressActive} progressNumber={props.progressNumber}/>
     </div>
   ) : (
       <div className="SpectreHeader">
