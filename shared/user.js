@@ -10,7 +10,7 @@ export default class User {
     Object.keys(User.schema()).forEach(k => this[k] = undefined);
     Object.assign(this, tmpl);
     this.clientId = process.env.REACT_APP_CLIENT_ID || -1;
-    this.hasImage = (tmpl && tmpl.hasImage) || false;
+    this.isActive = (tmpl && tmpl.isActive) || false;
   }
 
   predictInfluences(num) { // TODO: should set property
@@ -81,23 +81,23 @@ export default class User {
 
   poss() {
     switch (this.gender) {
-      case 'male':
-        return 'his';
-      case 'female':
-        return 'her';
-      case 'other':
-        return 'their';
+    case 'male':
+      return 'his';
+    case 'female':
+      return 'her';
+    case 'other':
+      return 'their';
     }
   }
 
   pronoun() {
     switch (this.gender) {
-      case 'male':
-        return 'he';
-      case 'female':
-        return 'she';
-      case 'other':
-        return 'they';
+    case 'male':
+      return 'he';
+    case 'female':
+      return 'she';
+    case 'other':
+      return 'they';
     }
   }
 
@@ -107,10 +107,10 @@ export default class User {
     this.similars.forEach(sims => {
       let parts = sims.split("||");
       if (parts.length != 2) {
-        console.log("Bad similar: "+sims);
+        console.log("Bad similar: " + sims);
         return;
       }
-      result.push({id: parts[0], name: parts[1]});
+      result.push({ id: parts[0], name: parts[1] });
     });
     return result;
   }
@@ -156,10 +156,18 @@ User.schema = () => {
       default: -1
     },
     hasImage: {
-        type: 'boolean',
-        default: false
+      type: 'boolean',
+      default: false
+    },
+    isActive: {
+      type: 'boolean',
+      default: false
     },
     targetId: {
+      type: 'string'
+      //type: { type: 'objectId', ref: 'User' }
+    },
+    targetName: {
       type: 'string'
       //type: { type: 'objectId', ref: 'User' }
     },
@@ -185,7 +193,7 @@ User.schema = () => {
     },
     dataChoices: { // TODO: should be arrays
       consumer: { type: 'string' }, // comma-delimited
-      home: { type: 'string' },     // comma-delimited
+      home: { type: 'string' }, // comma-delimited
       political: { type: 'string' } // comma-delimited
     },
     loginType: {
@@ -215,34 +223,34 @@ User.oceanTraits = () => [
 User.adSlogans = {
   leave: {
     high: {
-        openness: [ 'Strap Line 1', 'Strap Line 2' ],
-        conscientiousness: [ 'Strap Line 1', 'Strap Line 2' ],
-        agreeableness: [ 'Strap Line 1', 'Strap Line 2' ],
-        extraversion: [ 'Strap Line 1', 'Strap Line 2' ],
-        neuroticism: [ 'Strap Line 1', 'Strap Line 2' ]
+      openness: ['Strap Line 1', 'Strap Line 2'],
+      conscientiousness: ['Strap Line 1', 'Strap Line 2'],
+      agreeableness: ['Strap Line 1', 'Strap Line 2'],
+      extraversion: ['Strap Line 1', 'Strap Line 2'],
+      neuroticism: ['Strap Line 1', 'Strap Line 2']
     },
     low: {
-      openness: [ 'Strap Line 1', 'Strap Line 2' ],
-      conscientiousness: [ 'Strap Line 1', 'Strap Line 2' ],
-      agreeableness: [ 'Strap Line 1', 'Strap Line 2' ],
-      extraversion: [ 'Strap Line 1', 'Strap Line 2' ],
-      neuroticism:[ 'Strap Line 1', 'Strap Line 2' ]
+      openness: ['Strap Line 1', 'Strap Line 2'],
+      conscientiousness: ['Strap Line 1', 'Strap Line 2'],
+      agreeableness: ['Strap Line 1', 'Strap Line 2'],
+      extraversion: ['Strap Line 1', 'Strap Line 2'],
+      neuroticism: ['Strap Line 1', 'Strap Line 2']
     }
   },
   remain: {
     high: {
-        openness: [ 'Strap Line 1', 'Strap Line 2' ],
-        conscientiousness: [ 'Strap Line 1', 'Strap Line 2' ],
-        agreeableness: [ 'Strap Line 1', 'Strap Line 2' ],
-        extraversion: [ 'Strap Line 1', 'Strap Line 2' ],
-        neuroticism:[ 'Strap Line 1', 'Strap Line 2' ],
+      openness: ['Strap Line 1', 'Strap Line 2'],
+      conscientiousness: ['Strap Line 1', 'Strap Line 2'],
+      agreeableness: ['Strap Line 1', 'Strap Line 2'],
+      extraversion: ['Strap Line 1', 'Strap Line 2'],
+      neuroticism: ['Strap Line 1', 'Strap Line 2'],
     },
     low: {
-      openness: [ 'Strap Line 1', 'Strap Line 2' ],
-      conscientiousness: [ 'Strap Line 1', 'Strap Line 2' ],
-      agreeableness: [ 'Strap Line 1', 'Strap Line 2' ],
-      extraversion: [ 'Strap Line 1', 'Strap Line 2' ],
-      neuroticism:[ 'Strap Line 1', 'Strap Line 2' ],
+      openness: ['Strap Line 1', 'Strap Line 2'],
+      conscientiousness: ['Strap Line 1', 'Strap Line 2'],
+      agreeableness: ['Strap Line 1', 'Strap Line 2'],
+      extraversion: ['Strap Line 1', 'Strap Line 2'],
+      neuroticism: ['Strap Line 1', 'Strap Line 2'],
     }
   }
 };

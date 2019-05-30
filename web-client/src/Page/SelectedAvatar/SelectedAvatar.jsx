@@ -24,9 +24,9 @@ class SelectedAvatar extends React.Component {
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive={true} progressNumber="one" />
         <div className={classes.content + " content"}>
-          <Typography component="h6" variant="h6">You selected {this.props.selectedFollower.name}</Typography>
-          <AvatarComponent target={{ image: '/targets/target0.png' }}/>
-          <Typography component="h6" variant="h6">Lets start by verifying some of the basics to unlock {this.context.virtueAsAdverb()} insights into {this.props.selectedFollower.name}. </Typography>
+          <Typography component="h6" variant="h6">You selected {this.context.targetName}</Typography>
+          <AvatarComponent target={{ image: this.context.imageUrl }}/>
+          <Typography component="h6" variant="h6">Lets start by verifying some of the basics to unlock {this.context.virtueAsAdverb()} insights into {this.context.targetName}. </Typography>
           <Typography component="h6" variant="h6">Don’t worry, only you will see the results. </Typography>
           <Link to="/insight-hair">
             <IconButton icon="next" text="DIVE IN" />
