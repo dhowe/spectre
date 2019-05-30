@@ -23,13 +23,12 @@ class InsightComplete extends React.Component {
       <div className={classes.root}>
           <SpectreHeader colour="white" />
           <div className={classes.content + " content"}>
-              <Typography component="h3" variant="h3">Congratulations {this.context.name} </Typography>
               <Typography component="h3" variant="h4">Verification complete. </Typography>
-              <IconButton icon="thumbup" />
-              <Typography component="h6" variant="h6">You've unlocked {this.props.selectedFollower.name}’s OCEAN profile. Our new behavioural products can create {this.context.virtueAsAdverb()} insights</Typography>
-              <Typography component="h6" variant="h6">You now have the <strong>power</strong> to influence {this.props.selectedFollower.name}</Typography>
-              <Link to="/intro-ocean-video">
-                  <IconButton icon="next" text="WTF is OCEAN?" />
+              <Typography component="h6" variant="h6">You've unlocked {this.context.targetName}’s OCEAN profile.</Typography>
+              {/* INSERT OCEAN TOPBAR COMPONENT HERE (1080x450)*/}
+              <Typography component="h6" variant="h6">You now have the <strong>power</strong> to influence {this.context.targetName}.</Typography>
+              <Link to="/your-power">
+                  <IconButton icon="next" text="Next" />
               </Link>
           </div>
           <FooterLogo />

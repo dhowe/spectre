@@ -43,12 +43,12 @@ class YourPower extends React.Component {
             <Fade in={true} style={{transitionDelay: '200ms'}}>
               <Typography component="h6" variant="h6">{this.context.name || 'Remy'}, your {this.context.virtue || 'Power'} is growing.</Typography>
             </Fade>
-            <Fade in={true} style={{transitionDelay: '600ms'}}>
+            <Fade in={true} style={{transitionDelay: '200ms'}}>
               <Typography component="h6" variant="h6">Let's put it into practice.</Typography>
             </Fade>
             <Countdown
               onComplete={this.goTo.bind(this)}
-              date={Date.now() + 2000}
+              date={Date.now() + 5000}
               renderer={timer}
             />
           </div>

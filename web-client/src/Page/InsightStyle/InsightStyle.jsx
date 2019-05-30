@@ -11,6 +11,7 @@ import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import AvatarComponent from "../../Components/AvatarComponent/AvatarComponent";
+import UserSession from '../../Components/UserSession/UserSession';
 
 const styles = {
     root: {
@@ -39,7 +40,7 @@ class InsightStyle extends React.Component {
             <div className={classes.root}>
                 <SpectreHeader colour="white" progressActive={true} progressNumber="one" />
                 <div className={classes.content + " content"}>
-                    <Typography component="h6" variant="h6">What’s {this.props.selectedFollower.name}‘s likely style category?</Typography>
+                    <Typography component="h6" variant="h6">What’s {this.context.targetName}‘s likely style category?</Typography>
                     <AvatarComponent target={{ image: '/targets/target0.png' }} />
                     <FormControl className={classes.formControl} component="fieldset" >
                         <RadioGroup
@@ -69,5 +70,7 @@ class InsightStyle extends React.Component {
 InsightStyle.propTypes = {
     classes: PropTypes.object.isRequired,
 };
+InsightStyle.contextType = UserSession;
+
 
 export default withStyles(styles)(InsightStyle);

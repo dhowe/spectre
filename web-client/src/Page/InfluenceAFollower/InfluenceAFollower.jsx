@@ -52,6 +52,7 @@ class InfluenceAFollower extends React.Component {
     }
   }
   handleSelect(target) {
+    console.log('handleSelect: '+target);
     this.context.targetId = target.id;
     this.context.targetName = target.name;
     this.context.imageUrl = '/profiles/'+target.id+'.jpg';
@@ -61,6 +62,7 @@ class InfluenceAFollower extends React.Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
+        {this.renderRedirect()}
         <SpectreHeader colour="white" progressActive={true} progressNumber="one" />
         <div className={classes.content + " content"}>
           <Typography component="h5" variant="h5"><strong>Influence a follower!</strong></Typography>
@@ -70,9 +72,6 @@ class InfluenceAFollower extends React.Component {
             {this.renderSimilars().map((n, i) => <AvatarComponent handleClick={() => this.handleSelect(n)}
               key={i} target={{ name: n.name, image: '/profiles/' + n.id + '.jpg' }} />)}
           </Grid>
-          {/*}<Link to="/selected-avatar">
-            <IconButton icon="next" text="Next" />
-          </Link>*/}
         </div>
         <FooterLogo />
       </div>

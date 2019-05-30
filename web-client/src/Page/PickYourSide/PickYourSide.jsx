@@ -25,13 +25,14 @@ class PickYourSide extends React.Component {
       <div className={classes.root}>
           <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
           <div className={classes.content + " content"}>
-              <Typography component="h6" variant="h6">What’s your preference?</Typography>
+              <Typography component="h6" variant="h6">Influence [username]'s vote on Brexit:</Typography>
               <Link to="/campaign">
                   <img src="https://i.gyazo.com/1890ddef64e0bde795334a2e8564d3b1.png" alt='leave' onClick={() => { this.context.adIssue = 'leave' }}></img>
               </Link>
               <Link to="/campaign">
                   <img src="https://i.gyazo.com/de4447b86eac589133ad3ae0e399b5d4.png" alt='remain' onClick={() => { this.context.adIssue = 'remain' }}></img>
               </Link>
+              <span/>
           </div >
           <FooterLogo />
       </div >

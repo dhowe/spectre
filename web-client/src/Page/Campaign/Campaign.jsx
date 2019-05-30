@@ -31,7 +31,7 @@ class Campaign extends React.Component {
                 <Typography component="h6" variant="h6">Longer delays to Brexit increase the risk of it not happening.</Typography>
               </Fade>
               <Fade in={true} style={{transitionDelay: '1000ms'}}>
-                <Typography component="h6" variant="h6">We’re going to run a ‘grassroots’ campaign to influence {this.props.selectedFollower.name} to vote {this.context.adIssue} in the next referendum.</Typography>
+                <Typography component="h6" variant="h6">We’re going to run a ‘grassroots’ campaign to influence {this.context.targetName} to vote {this.context.adIssue} in the next referendum.</Typography>
               </Fade>
               <Link to="/influenced-by">
                   <IconButton icon="next" text="Ready" />

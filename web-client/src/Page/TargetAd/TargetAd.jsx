@@ -25,7 +25,7 @@ class TargetAd extends React.Component {
       <div className={classes.content + " content"}>
         <br/>
         <Typography component="h6" variant="h6">
-          Share your targetted ad with {this.props.selectedFollower.name||'Remy'}?
+          Share your targetted ad with {this.context.targetName||'Remy'}?
         </Typography>
         <Link to="/success-ad">
           <Grid container justify="center">

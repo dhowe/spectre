@@ -8,6 +8,7 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import TextSliderText from "../../Components/TextSliderText/TextSliderText";
 import AvatarComponent from "../../Components/AvatarComponent/AvatarComponent";
+import UserSession from '../../Components/UserSession/UserSession';
 
 const styles = {
   root: {
@@ -17,26 +18,29 @@ const styles = {
   },
 };
 
-function InsightFinancial(props) {
-  const { classes } = props;
-  return (
-    <div className={classes.root}>
+class InsightFinancial extends React.Component {
+  render() {
+    const { classes } = this.props;
+    return (
+      <div className={classes.root}>
         <SpectreHeader colour="white" progressActive={true} progressNumber="one" />
         <div className={classes.content + " content"}>
-            <Typography component="h6" variant="h6">What’s {props.selectedFollower.name}’s likely financial status?</Typography>
+            <Typography component="h6" variant="h6">What’s {this.context.targetName}’s likely financial status?</Typography>
             <AvatarComponent target={{ image: '/targets/target0.png' }}/>
             <TextSliderText leftText="Poor" rightText="Rich" />
-            <Link to="/insight-style">
+            <Link to="/insight-thank-you">
                 <IconButton icon="next" text="Next" />
             </Link>
         </div>
         <FooterLogo />
     </div>
-  );
+    );
+  }
 }
 
 InsightFinancial.propTypes = {
   classes: PropTypes.object.isRequired,
 };
+InsightFinancial.contextType = UserSession;
 
 export default withStyles(styles)(InsightFinancial);
