@@ -7,6 +7,7 @@ import TouchToBegin from './Page/TouchToBegin/TouchToBegin';
 import LoginPage from './Page/LoginPage/LoginPage';
 import IntroVideo from './Page/IntroVideo/IntroVideo';
 import Username from './Page/Username/Username';
+import TakeSelfie from './Page/TakeSelfie/TakeSelfie';
 import Pledge from './Page/Pledge/Pledge';
 import SearchingFor from './Page/SearchingFor/SearchingFor';
 import DataIs from './Page/DataIs/DataIs'
@@ -113,6 +114,7 @@ class App extends React.Component {
               <Route exact path="/touch-to-begin" component={TouchToBegin} />
               <Route exact path="/login" component={LoginPage} />
               <Route exact path="/username" component={Username} />
+              <Route exact path="/take-selfie" component={TakeSelfie} />
               <Route exact path="/pledge" component={Pledge} />
               <Route exact path="/searching-for" component={SearchingFor} />
               <Route exact path="/data-is" component={DataIs} />
