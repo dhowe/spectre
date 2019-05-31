@@ -23,6 +23,7 @@ const styles = {
   }
 };
 
+// Interstitial
 class ThankYou extends React.Component {
   render() {
     const { classes } = this.props;

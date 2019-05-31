@@ -95,7 +95,7 @@ class Username extends React.Component {
           </FormControl>
           <Link to="/take-selfie">
             <IconButton icon="next" text="Begin" />
-          </Link>our
+          </Link>
         </div >
         <FooterLogo />
       </div >

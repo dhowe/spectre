@@ -5,7 +5,6 @@ import './App.scss';
 import { Route, BrowserRouter as Router } from 'react-router-dom';
 import TouchToBegin from './Page/TouchToBegin/TouchToBegin';
 import LoginPage from './Page/LoginPage/LoginPage';
-import IntroVideo from './Page/IntroVideo/IntroVideo';
 import Username from './Page/Username/Username';
 import TakeSelfie from './Page/TakeSelfie/TakeSelfie';
 import Pledge from './Page/Pledge/Pledge';
@@ -39,11 +38,9 @@ import PoliticalData from './Page/PoliticalData/PoliticalData';
 import HomeData from './Page/HomeData/HomeData';
 import FindCitizens from './Page/FindCitizens/FindCitizens';
 import TargetsFound from './Page/TargetsFound/TargetsFound';
-import SocialMedia from './Page/SocialMedia/SocialMedia';
 import LaunchCampaign from './Page/LaunchCampaign/LaunchCampaign';
 import ReferendumResults from './Page/ReferendumResults/ReferendumResults';
 import Win from './Page/Win/Win';
-import AIIsTheFuture from './Page/AIIsTheFuture/AIIsTheFuture';
 import InfluenceACelebrity from './Page/InfluenceACelebrity/InfluenceACelebrity';
 import FRMask from './Page/FRMask/FRMask';
 import GeneratingVideo from './Page/GeneratingVideo/GeneratingVideo';
@@ -132,7 +129,6 @@ class App extends React.Component {
               <Route exact path="/insight-sexuality" render={() => <InsightSexuality />} />
               <Route exact path="/insight-political" render={() => <InsightPolitical />} />
               <Route exact path="/insight-complete" render={() => <InsightComplete />} />
-              {/*<Route exact path="/intro-ocean-video" component={IntroOceanVideo} />*/}
               <Route exact path="/your-power" component={YourPower} />
               <Route exact path="/pick-your-side" component={PickYourSide} />
               <Route exact path="/campaign" render={() => <Campaign />} />
