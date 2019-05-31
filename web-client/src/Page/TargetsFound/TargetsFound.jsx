@@ -22,10 +22,11 @@ const styles = {
   }
 };
 
-function TargetsFound(props) {
-  const { classes } = props;
-  return (
-    <div className={classes.root}>
+class TargetsFound extends React.Component {
+  render() {
+    const { classes } = this.props;
+    return (
+      <div className={classes.root}>
         <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
         <div className={classes.content + " content"}>
             <Typography component="h4" variant="h4">[Video Animation #1]</Typography>
@@ -38,13 +39,13 @@ function TargetsFound(props) {
         </div>
         <FooterLogo />
     </div>
-  );
+    );
+  }
 }
 
 TargetsFound.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 TargetsFound.contextType = UserSession;
-
 
 export default withStyles(styles)(TargetsFound);

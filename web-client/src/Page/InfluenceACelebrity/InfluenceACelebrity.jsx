@@ -26,8 +26,8 @@ class InfluenceACelebrity extends React.Component {
       <div className={classes.root}>
           <SpectreHeader colour="white" progressActive={true} progressNumber="three" />
           <div className={classes.content + " content"}>
-              <Typography component="h6" variant="h6">Spectre has many famous followers.</Typography>
-              <Typography component="h6" variant="h6">Select a famous follower to hear their confession on {this.context.virtue}:</Typography>
+              <Typography component="h6" variant="h6">Spectre has <strong>many</strong><br/> famous followers.</Typography>
+              <Typography component="h6" variant="h6">Select one below to hear their confession on {this.context.virtue||'power'}:</Typography>
 
               {/* Add Circle of Clickable Celebrity Images Here */}
 

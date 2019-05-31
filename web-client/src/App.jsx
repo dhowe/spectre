@@ -55,7 +55,6 @@ import SharingOnSocialMedia from './Page/SharingOnSocialMedia/SharingOnSocialMed
 import WrapUp from './Page/WrapUp/WrapUp';
 import TakeBackControl from './Page/TakeBackControl/TakeBackControl';
 import WeAreSorry from './Page/WeAreSorry/WeAreSorry';
-import WeHopeYouEnjoyed from './Page/WeHopeYouEnjoyed/WeHopeYouEnjoyed';
 import CustomerSurvey from './Page/CustomerSurvey/CustomerSurvey';
 import OutroVideo from './Page/OutroVideo/OutroVideo';
 import Goodbye from './Page/Goodbye/Goodbye';
@@ -159,7 +158,6 @@ class App extends React.Component {
               <Route exact path="/wrap-up" component={WrapUp} />
               <Route exact path="/take-back-control" component={TakeBackControl} />
               <Route exact path="/we-are-sorry" component={WeAreSorry} />
-              <Route exact path="/we-hope-you-enjoyed" component={WeHopeYouEnjoyed} />
               <Route exact path="/customer-survey" component={CustomerSurvey} />
               <Route exact path="/outro-video" component={OutroVideo} />
               <Route exact path="/goodbye" component={Goodbye} />
