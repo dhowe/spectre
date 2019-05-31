@@ -1,3 +1,5 @@
+@import "../../colors.scss";
+
 .iconButtonText {
     color: #21c0fc;
     text-decoration: none;
@@ -8,4 +10,8 @@
     .iconButtonText {
         color: #ffffff;
     }
+}
+
+.disabled .iconButtonText {
+    color: $grey;
 }

@@ -19,6 +19,18 @@ const styles = {
 };
 
 class InsightPolitical extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {buttonEnabled: false};
+    this.EnableButton = this.EnableButton.bind(this);
+  }
+
+  EnableButton() {
+    this.setState({
+      buttonEnabled: true
+    });
+  }
+
   render() {
     const { classes } = this.props;
 
@@ -28,9 +40,11 @@ class InsightPolitical extends React.Component {
         <div className={classes.content + " content"}>
             <Typography component="h6" variant="h6">What is {this.context.targetName}’s likely political preference?</Typography>
             <AvatarComponent target={{ image: '/targets/target0.png' }}/>
-            <TextSliderText leftText="Left wing" rightText="Right Wing" />
-            <Link to="/insight-complete">
-                <IconButton icon="next" text="Next" />
+            <div onTouchEnd={this.EnableButton}>
+              <TextSliderText leftText="Left wing" rightText="Right Wing" />
+            </div>
+            <Link className={this.state.buttonEnabled ? "true" : "disabled"} to="/insight-complete">
+              <IconButton enabled={this.state.buttonEnabled} icon="next" text="Next" />
             </Link>
         </div>
         <FooterLogo />
