@@ -1,4 +1,5 @@
-# React-starter
+# Spectre Client
+
 Demo at https://spectre-dev.netlify.com/
 
 ## Installation
