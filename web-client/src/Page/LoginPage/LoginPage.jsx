@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import Logo from "../../Components/Logo/Logo";
 import { Link, Redirect } from 'react-router-dom';
 import SocialLogin from '../../Components/SocialLogin/SocialLogin';
 import IconButton from '../../Components/IconButton/IconButton';
@@ -72,9 +71,9 @@ class LoginPage extends React.Component {
         {this.renderRedirect()}
         <SpectreHeader />
         <div className={classes.content + " LoginPage-content content"}>
-          <Logo></Logo>
           <Typography component="h1" variant="h1">Hello</Typography>
           <Typography component="h2" variant="h2">Let's Play!</Typography>
+          <Typography component="h6" variant="h6">Enter Email</Typography>
           <SocialLogin />
           <Link to='' onClick={this.handleSubmit}>
             <IconButton colour="white" icon="next" text="Next" />
