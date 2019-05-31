@@ -8,7 +8,7 @@ describe('Client User', function () {
     it('Should correctly construct an empty user', function () {
       let user = new User();
       let fields = Object.keys(User.schema());
-      let ignores = ['clientId', 'isActive'];
+      let ignores = ['clientId', 'isActive', 'category'];
       fields.forEach(f => {
         if (ignores.indexOf(f) < 0) {
           expect(user[f]).eq(undefined);
@@ -16,6 +16,7 @@ describe('Client User', function () {
         }
       });
       expect(user.clientId).eq(-1);
+      expect(user.category).eq(0);
       expect(user.isActive).eq(false);
       expect(user.hasOceanTraits()).eq(false);
     });
@@ -43,16 +44,56 @@ describe('Client User', function () {
       expect(user.hasImage).eq(true);
       expect(user.loginType).eq("twitter");
       expect(user.lastPageVisit.page).eq("/Test");
-      //expect(user.lastPageVisit.time).is.a("date");
       expect(user.traits.openness).to.equal(1);
       expect(user.hasOceanTraits()).eq(true);
+      expect(user.categorize()).eq(1);
       expect(user.getSimilars()).is.a('array');
       expect(user.getSimilars().length).eq(2);
       expect(user.getSimilars()[0].name).eq('Dave');
       expect(user.getSimilars()[1].name).eq('Jen');
       expect(user.getSimilars()[0].id).eq('1111');
       expect(user.getSimilars()[1].id).eq('2222');
-      console.log(user);
+    });
+  });
+
+  describe('User.assignCategory()', function () {
+    it('Should assign correct category for given traits', function () {
+      expect(new User({
+        traits: {
+          agreeableness: .3,
+          conscientiousness: .4,
+          extraversion: .5,
+          openness: 1,
+          neuroticism: .3
+        }
+      }).categorize()).eq(1);
+      expect(new User({
+        traits: {
+          openness: .5,
+          agreeableness: .3,
+          conscientiousness: .4,
+          extraversion: .5,
+          neuroticism: .31
+        }
+      }).categorize()).eq(-4);
+      expect(new User({
+        traits: {
+          openness: .5,
+          agreeableness: .42,
+          conscientiousness: .4,
+          extraversion: .5,
+          neuroticism: .51
+        }
+      }).categorize()).eq(0);
+      expect(new User({
+        traits: {
+          openness: .5,
+          agreeableness: .42,
+          conscientiousness: .4,
+          extraversion: .5,
+          neuroticism: 0
+        }
+      }).categorize()).eq(-5);
     });
   });
 
