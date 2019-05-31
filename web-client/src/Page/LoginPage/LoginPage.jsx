@@ -27,8 +27,8 @@ const styles = {
 class LoginPage extends React.Component {
   constructor(props) {
     super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
     this.state = { toNext: false };
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
   handleSubmit(e) {
     e.preventDefault();
@@ -61,7 +61,7 @@ class LoginPage extends React.Component {
   }
   renderRedirect() {
     if (this.state.toNext) {
-      return <Redirect to='/intro-video' />
+      return <Redirect to='/username' />
     }
   }
   render() {

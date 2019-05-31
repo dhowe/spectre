@@ -12,7 +12,9 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import UserSession from '../../Components/UserSession/UserSession';
+import Keyboard from 'react-simple-keyboard';
 
+import 'react-simple-keyboard/build/css/index.css';
 import './Username.scss';
 
 const styles = {
@@ -26,6 +28,13 @@ const styles = {
   },
   radioGroup: {
     alignItems: 'center'
+  },
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  textField: {
+    marginLeft: '45%'
   }
 };
 
@@ -47,6 +56,10 @@ class Username extends React.Component {
     this.context.gender = event.target.value; // user-prop
     this.setState({ gender: event.target.value });
   };
+  onNameChange = (input) => {
+    this.context.name = input;
+    document.getElementById('name').value = input;
+  }
   render() {
     const { classes } = this.props;
     return (
@@ -54,9 +67,19 @@ class Username extends React.Component {
         <SpectreHeader colour="white" />
         <div className={classes.content + " Username-content content"}>
           <Typography variant="h6">YOUR FIRST NAME?</Typography>
-          <TextField value={this.state.name} onChange={this.handleChange('name')}></TextField>
-          {/* <RadioInput value={this.state.gender} onChange={this.handleRadioChange} options={['WOMAN', 'MAN', 'OTHER']}>YOUR GENDER?</RadioInput> */}
-          <Typography variant="h6">YOUR GENDER?</Typography>
+          <TextField
+             id="name"
+             label=""
+             className={classes.textField}
+             value=""
+             margin="normal"
+             variant="outlined"
+           />
+          <div id='keywrapper'>
+            <Keyboard onChange={input => this.onNameChange(input)}/>
+          </div>
+
+          <Typography variant="h6"><br/>YOUR GENDER?</Typography>
           <FormControl component="fieldset" className={classes.formControl}>
             <RadioGroup
               aria-label="Gender"
@@ -70,9 +93,9 @@ class Username extends React.Component {
               <FormControlLabel value="other" control={<Radio color='primary' />} label="Other" />
             </RadioGroup>
           </FormControl>
-          <Link to="/pledge">
+          <Link to="/take-selfie">
             <IconButton icon="next" text="Begin" />
-          </Link>
+          </Link>our
         </div >
         <FooterLogo />
       </div >

@@ -9,36 +9,37 @@ import UserSession from '../../Components/UserSession/UserSession';
 import IconButton from '../../Components/IconButton/IconButton';
 
 const styles = {
-    root: {
-        flexGrow: 1,
-        width: "100%",
-        color: 'black',
-    },
-    clickToContinue: {
-        margin: "20% 0",
-    }
+  root: {
+    flexGrow: 1,
+    width: "100%",
+    color: 'black',
+  },
+  clickToContinue: {
+    margin: "20% 0",
+  }
 };
 
 class WeAreSorry extends React.Component {
-    render() {
-        const { classes } = this.props;
-        return (
-            <div className={classes.root}>
-                <SpectreHeader colour="white" />
-                <div className={classes.content + " content"}>
-                    <Typography component="h6" variant="h6">We’re sorry [username] we’re afraid you can’t do that</Typography>
-                    <Link to="/we-hope-you-enjoyed">
-                        <IconButton icon="tick" text="Next" />
-                    </Link>
-                </div >
-                <FooterLogo />
-            </div >
-        );
-    }
+  render() {
+    const { classes } = this.props;
+    return (
+      <div className={classes.root}>
+          <SpectreHeader colour="white" />
+          <div className={classes.content + " content"}>
+              <Typography component="h6" variant="h6">We’re sorry {(this.context.name||'Barney').toUpperCase()},
+                we’re afraid you can’t do that.</Typography>
+              <Link to="/goodbye">
+                  <IconButton icon="tick" text="Next" />
+              </Link>
+          </div >
+          <FooterLogo />
+      </div >
+    );
+  }
 }
 
 WeAreSorry.propTypes = {
-    classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired,
 };
 WeAreSorry.contextType = UserSession;
 

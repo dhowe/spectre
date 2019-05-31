@@ -30,7 +30,9 @@ function TouchToBegin(props) {
         <div className={classes.content + " content"}>
             <Link className="touchToBegin-beginButton" to="/login">
                 <div className={classes.clickToContinue}>
-                    <Logo></Logo>
+                    <div className="beginLogo">
+                      <Logo></Logo>
+                    </div>
                     <Typography>Touch to Begin!</Typography>
                 </div>
             </Link>

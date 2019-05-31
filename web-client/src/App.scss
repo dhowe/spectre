@@ -1,5 +1,10 @@
 @import 'colors.scss';
 
+* {
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-tap-highlight-color: transparent;
+}
+
 html, body {
   font-size: 2em;
 }
@@ -43,6 +48,9 @@ html, body {
 
 a {
   text-decoration: none;
+  &:active, &:hover, &:focus {
+    outline: -webkit-focus-ring-color auto 0px;
+  }
 }
 
 .content {
@@ -59,4 +67,26 @@ a {
 
 a.disabled {
   pointer-events: none;
+}
+
+strong {
+  color: $blue;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+@-webkit-keyframes rotating {
+  from{
+      -webkit-transform: rotate(0deg);
+  }
+  to{
+      -webkit-transform: rotate(360deg);
+  }
+}
+
+.beginLogo {
+  -webkit-animation: rotating 8s linear infinite;
+  display: inline-block;
 }

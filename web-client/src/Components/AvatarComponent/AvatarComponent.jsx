@@ -30,11 +30,10 @@ class AvatarComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = { class: this.props.class }; //, image:  };
-  };
-
+  }
   render() {
     return (
-      <div >
+      <div onClick={this.props.handleClick}>
         <Grid container justify="center" alignItems="center">
           <Avatar alt={this.props.target.name} src={this.props.target.image} style={this.state.class === 'active' ? this.styles.active : this.styles.bigAvatar} />
         </Grid>

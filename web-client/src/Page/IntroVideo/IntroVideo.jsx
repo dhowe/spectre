@@ -1,12 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
-import { Link } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
-import IconButton from "../../Components/IconButton/IconButton";
 import SpectreHeader from "../../Components/SpectreHeader/SpectreHeader";
 import FooterLogo from "../../Components/FooterLogo/FooterLogo";
 import movie from "./Intro_to_Spectre_V1 .mp4";
+import Countdown from 'react-countdown-now';
 const styles = {};
 
 class IntroVideo extends React.Component {
@@ -16,8 +15,20 @@ class IntroVideo extends React.Component {
   playVideo() {
     this.refs.video.play();
   }
+  goTo() {
+    this.props.history.push('/username');
+  }
   render() {
     const { classes } = this.props;
+    const timer = ({ seconds, completed }) => {
+      if (completed) {
+        // Render a complete state
+        return null;
+      } else {
+        // Render a countdown
+        return <span>{seconds}</span>;
+      }
+    };
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" />
@@ -35,9 +46,13 @@ class IntroVideo extends React.Component {
           >
             Play!
           </button>
-          <Link to="/username">
-            <IconButton icon="next" text="Skip" />
-          </Link>
+          <div className="hidden">
+            <Countdown
+              onComplete={this.goTo.bind(this)}
+              date={Date.now() + 5000}
+              renderer={timer}
+            />
+          </div>
         </div>
         <FooterLogo />
       </div>

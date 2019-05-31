@@ -9,38 +9,38 @@ import UserSession from '../../Components/UserSession/UserSession';
 import IconButton from '../../Components/IconButton/IconButton';
 
 const styles = {
-    root: {
-        flexGrow: 1,
-        width: "100%",
-        color: 'black',
-    },
-    clickToContinue: {
-        margin: "20% 0",
-    }
+  root: {
+    flexGrow: 1,
+    width: "100%",
+    color: 'black',
+  },
+  clickToContinue: {
+    margin: "20% 0",
+  }
 };
 
 class OCEANReveal extends React.Component {
-    render() {
-        const { classes } = this.props;
-        return (
-            <div className={classes.root}>
-                <SpectreHeader colour="white" />
-                <div className={classes.content + " content"}>
-                <Typography component="h6" variant="h6">You've told us so much about yourself.</Typography>
-                <Typography component="h6" variant="h6">We know you are the type of person that is X, Y, Z.</Typography>
-                <Typography component="h6" variant="h6">We are going to make a video that will make you look [powerful]</Typography>
-                    <Link to="/shallow-fake">
-                        <IconButton icon="next" text="Next" />
-                    </Link>
-                </div >
-                <FooterLogo />
-            </div >
-        );
-    }
+  render() {
+    const { classes } = this.props;
+    return (
+      <div className={classes.root}>
+          <SpectreHeader colour="white" progressActive={true} progressNumber="three" />
+          <div className={classes.content + " content"}>
+          <Typography component="h6" variant="h6">A little data and a little tech goes a long way, doesn't it? </Typography>
+          <Typography component="h7" variant="h7">For example, we haven't known you very long, but already we know that {this.context.generateDescription()}</Typography>
+              <Link to="/take-back-control">
+                  {/* Next button brings up overlay video, then goes to take-back-control */}
+                  <IconButton icon="next" text="Next" />
+              </Link>
+          </div >
+          <FooterLogo />
+      </div >
+    );
+  }
 }
 
 OCEANReveal.propTypes = {
-    classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired,
 };
 OCEANReveal.contextType = UserSession;
 

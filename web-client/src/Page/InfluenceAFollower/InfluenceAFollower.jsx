@@ -2,10 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import AvatarComponent from '../../Components/AvatarComponent/AvatarComponent';
 import Grid from '@material-ui/core/Grid';
-import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
@@ -24,31 +23,55 @@ const styles = {
   }
 };
 
+const defaults = [{ name: 'Remy', id: '111111111111111111111111' }, { name: 'Bailey', id: '222222222222222222222222' }, { name: 'Devin', id: '333333333333333333333333' }, { name: 'Tyler', id: '444444444444444444444444' }, { name: 'Fran', id: '555555555555555555555555' }, { name: 'Pat', id: '666666666666666666666666' }, { name: 'Sam', id: '777777777777777777777777' }, { name: 'Reed', id: '888888888888888888888888' }, { name: 'Terry', id: '999999999999999999999999' }];
+
 class InfluenceAFollower extends React.Component {
   constructor(props) {
     super(props);
-    this.names = ['Remy', 'Bailey', 'Devin', 'Tyler', 'Fran', 'Pat', 'Sam', 'Reed'];
+    this.state = { toNext: false };
+    this.handleSelect = this.handleSelect.bind(this);
   }
   componentWillMount() {
     let user = this.context;
-    console.log('USER|', user);
+    if (typeof user === 'undefined' || typeof user._id === 'undefined') { // TMP
+      user.name = user.name || 'Barney';
+      user.loginType = user.loginType || 'email';
+      user.login = user.login || 'Barney' + (+new Date()) + '@aol.com';
+      UserSession.createUser(user);
+    }
+  }
+  renderSimilars() {
+    let result = defaults;
+    let sims = this.context.getSimilars();
+    if (sims && sims.length) result = sims;
+    return result;
+  }
+  renderRedirect() {
+    if (this.state.toNext) {
+      return <Redirect to='/selected-avatar' />
+    }
+  }
+  handleSelect(target) {
+    console.log('handleSelect: '+target);
+    this.context.targetId = target.id;
+    this.context.targetName = target.name;
+    this.context.imageUrl = '/profiles/'+target.id+'.jpg';
+    this.setState({ toNext: true });
   }
   render() {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <SpectreHeader colour="white" />
+        {this.renderRedirect()}
+        <SpectreHeader colour="white" progressActive={true} progressNumber="one" />
         <div className={classes.content + " content"}>
-          <Typography component="h3" variant="h3">Influence a follower!</Typography>
-          <Typography component="h4" variant="h4" >Spectre has a global community of followers.</Typography>
+          <Typography component="h5" variant="h5"><strong>Influence a follower!</strong></Typography>
+          <Typography component="h6" variant="h6" >Spectre has a global community of followers.</Typography>
           <Typography component="h5" variant="h5" >Choose a participant.</Typography>
           <Grid container justify="center" alignItems="center">
-            {this.names.map((n, i) => <AvatarComponent key={i}
-              target={{ name: n, image: '/targets/target' + i + '.png' }} />)}
+            {this.renderSimilars().map((n, i) => <AvatarComponent handleClick={() => this.handleSelect(n)}
+              key={i} target={{ name: n.name, image: '/profiles/' + n.id + '.jpg' }} />)}
           </Grid>
-          <Link to="/selected-avatar">
-            <IconButton icon="next" text="Next" />
-          </Link>
         </div>
         <FooterLogo />
       </div>

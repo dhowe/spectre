@@ -24,7 +24,7 @@ class OurAlgorithms extends React.Component {
         const { classes } = this.props;
         return (
             <div className={classes.root}>
-                <SpectreHeader colour="white" />
+                <SpectreHeader colour="white" progressActive={true} progressNumber="three" />
                 <div className={classes.content + " content"}>
                 <Typography component="h6" variant="h6">Our algorithms know this type of content will make you more [powerful]</Typography>
                     <Link to="/share-on-social-choice">

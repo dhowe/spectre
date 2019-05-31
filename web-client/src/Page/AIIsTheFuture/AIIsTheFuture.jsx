@@ -24,7 +24,7 @@ class AIIsTheFuture extends React.Component {
         const { classes } = this.props;
         return (
             <div className={classes.root}>
-                <SpectreHeader colour="white" />
+                <SpectreHeader colour="white" progressActive={true} progressNumber="three" />
                 <div className={classes.content + " content"}>
                 <Typography component="h6" variant="h6">AI is the future of data.</Typography>
                 <Typography component="h6" variant="h6">Spectre can show you how to achieve true [power] </Typography>

@@ -22,13 +22,13 @@ class SelectedAvatar extends React.Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <SpectreHeader colour="white" />
+        <SpectreHeader colour="white" progressActive={true} progressNumber="one" />
         <div className={classes.content + " content"}>
-          <Typography component="h3" variant="h3">You selected {this.props.selectedFollower.name}</Typography>
-          <AvatarComponent target={{ image: '/targets/target0.png' }}/>
-          <Typography component="h4" variant="h4">Lets start by verifying some of the basics to unlock {this.context.virtueAsAdverb()} insights into {this.props.selectedFollower.name}. </Typography>
-          <Typography component="h4" variant="h4">Don’t worry, only you will see the results. </Typography>
-          <Link to="/insight-hair">
+          <Typography component="h6" variant="h6">You selected {this.context.targetName}</Typography>
+          <AvatarComponent target={{ image: this.context.imageUrl }}/>
+          <Typography component="h6" variant="h6">Lets start by verifying some of the basics to unlock {this.context.virtueAsAdverb()} insights into {this.context.targetName}. </Typography>
+          <Typography component="h6" variant="h6">Don’t worry, only you will see the results. </Typography>
+          <Link to="/insight-gender">
             <IconButton icon="next" text="DIVE IN" />
           </Link>
         </div>

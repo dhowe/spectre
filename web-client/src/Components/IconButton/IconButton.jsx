@@ -10,30 +10,31 @@ const styles = {};
 class IconButton extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {colour: ""};
+    this.state = {colour: "#21c0fc"};
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.enabled === true) {
+      this.setState({ colour: "#21c0fc"});
+    }
   }
 
   componentDidMount() {
-    if (this.props.enabled) {
-      this.setState({
-        colour: "#21c0fc"
-      })
-    }
-    if (this.props.colour === "white") {
-      this.setState({
-        colour: "#ffffff"
-      })
-    }
     if (!this.props.enabled) {
       this.setState({
-        colour: "#aaaaaa"
+        colour: "#929391"
+      })
+    }
+    if (typeof this.props.enabled === "undefined") {
+      this.setState({
+        colour: "#21c0fc"
       })
     }
   }
 
   render () {
     return (
-    <div className={"iconButton-" + this.props.colour + " iconButton disabledButton"}>
+    <div className={"iconButton-" + this.props.colour + " iconButton" }>
       {this.props.icon === "next" && (
         <svg
           width="150"

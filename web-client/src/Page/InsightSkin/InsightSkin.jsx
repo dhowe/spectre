@@ -8,6 +8,7 @@ import SpectreHeader from "../../Components/SpectreHeader/SpectreHeader";
 import FooterLogo from "../../Components/FooterLogo/FooterLogo";
 import TextSliderText from "../../Components/TextSliderText/TextSliderText";
 import AvatarComponent from "../../Components/AvatarComponent/AvatarComponent";
+import UserSession from '../../Components/UserSession/UserSession';
 
 const styles = {
   root: {
@@ -18,19 +19,33 @@ const styles = {
 };
 
 class InsightSkin extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {buttonEnabled: false};
+    this.EnableButton = this.EnableButton.bind(this);
+  }
+
+  EnableButton() {
+    this.setState({
+      buttonEnabled: true
+    });
+  }
+
   render() {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <SpectreHeader colour="white" />
+        <SpectreHeader colour="white" progressActive={true} progressNumber="one" />
         <div className={classes.content + " content"}>
-          <Typography component="h4" variant="h4">
-            What is {this.props.selectedFollower.name}'s likely skin colour?
+          <Typography component="h6" variant="h6">
+            What is {this.context.targetName}'s likely skin colour?
           </Typography>
           <AvatarComponent target={{ image: '/targets/target0.png' }}/>
-          <TextSliderText leftText="Light" rightText="Dark" />
-          <Link to="/insight-accuracy">
-            <IconButton icon="next" text="Next" />
+          <div onTouchEnd={this.EnableButton}>
+            <TextSliderText leftText="Light" rightText="Dark" />
+          </div>
+          <Link className={this.state.buttonEnabled ? "true" : "disabled"} to="/insight-financial">
+            <IconButton enabled={this.state.buttonEnabled} icon="next" text="Next" />
           </Link>
         </div>
         <FooterLogo />
@@ -42,5 +57,7 @@ class InsightSkin extends React.Component {
 InsightSkin.propTypes = {
   classes: PropTypes.object.isRequired
 };
+InsightSkin.contextType = UserSession;
+
 
 export default withStyles(styles)(InsightSkin);

@@ -8,6 +8,7 @@ import SpectreHeader from "../../Components/SpectreHeader/SpectreHeader";
 import FooterLogo from "../../Components/FooterLogo/FooterLogo";
 import TextSliderText from "../../Components/TextSliderText/TextSliderText";
 import AvatarComponent from "../../Components/AvatarComponent/AvatarComponent";
+import UserSession from '../../Components/UserSession/UserSession';
 
 const styles = {
   root: {
@@ -35,20 +36,18 @@ class InsightGender extends React.Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <SpectreHeader colour="white" />
+        <SpectreHeader colour="white" progressActive={true} progressNumber="one" />
         <div className={classes.content + " content"}>
-          <Typography component="h4" variant="h4">
-            What’s {this.props.selectedFollower.name}’s likely gender?
+          <Typography component="h6" variant="h6">
+            What’s {this.context.targetName}’s likely gender?
           </Typography>
-          <AvatarComponent target={{ image: '/targets/target0.png' }}/>
+          <AvatarComponent target={{ image: this.context.profileUrl }}/>
           <div onTouchEnd={this.EnableButton}>
             <TextSliderText leftText="Male" rightText="Female" middleText="non-binary" />
           </div>
-          <Link className={this.state.buttonEnabled ? "enabled" : "disabled"} to="/insight-weight">
-            {this.state.buttonEnabled ? "enabled" : "disabled"}
+          <Link className={this.state.buttonEnabled ? "true" : "disabled"} to="/insight-skin">
             <IconButton enabled={this.state.buttonEnabled} icon="next" text="Next" />
           </Link>
-          <button onTouchEnd={this.EnableButton}>show alert</button>
         </div>
         <FooterLogo />
       </div>
@@ -59,5 +58,7 @@ class InsightGender extends React.Component {
 InsightGender.propTypes = {
   classes: PropTypes.object.isRequired
 };
+InsightGender.contextType = UserSession;
+
 
 export default withStyles(styles)(InsightGender);

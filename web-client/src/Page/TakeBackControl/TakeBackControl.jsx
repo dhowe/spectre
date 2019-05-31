@@ -10,46 +10,46 @@ import UserSession from '../../Components/UserSession/UserSession';
 import IconButton from '../../Components/IconButton/IconButton';
 
 const styles = {
-    root: {
-        flexGrow: 1,
-        width: "100%",
-        color: 'black',
-    },
-    clickToContinue: {
-        margin: "20% 0",
-    }
+  root: {
+    flexGrow: 1,
+    width: "100%",
+    color: 'black',
+  },
+  clickToContinue: {
+    margin: "20% 0",
+  }
 };
 
 class TakeBackControl extends React.Component {
-    render() {
-        const { classes } = this.props;
-        return (
-            <div className={classes.root}>
-                <SpectreHeader colour="white" />
-                <div className={classes.content + " content"}>
-                    <Typography component="h6" variant="h6">Take back control? </Typography>
-                    <Typography component="h6" variant="h6">Delete your personal data from Spectre’s system?</Typography>
-                    <Grid container justify="center">
-                        <Grid item>
-                            <Link to="/we-hope-you-enjoyed">
-                                <IconButton icon="tick" text="Keep" />
-                            </Link>
-                        </Grid>
-                        <Grid item>
-                            <Link to="/we-are-sorry">
-                                <IconButton icon="x" text="Delete" />
-                            </Link>
-                        </Grid>
-                    </Grid>
-                </div >
-                <FooterLogo />
-            </div >
-        );
-    }
+  render() {
+    const { classes } = this.props;
+    return (
+      <div className={classes.root}>
+          <SpectreHeader colour="white" />
+          <div className={classes.content + " content"}>
+              <Typography component="h6" variant="h6">Take back control? </Typography>
+              <Typography component="h6" variant="h6">Delete your data from Spectre’s system?</Typography>
+              <Grid container justify="center">
+                  <Grid item>
+                      <Link to="/we-hope-you-enjoyed">
+                          <IconButton icon="tick" text="Keep" />
+                      </Link>
+                  </Grid>
+                  <Grid item>
+                      <Link to="/we-are-sorry">
+                          <IconButton icon="x" text="Delete" />
+                      </Link>
+                  </Grid>
+              </Grid>
+          </div >
+          <FooterLogo />
+      </div >
+    );
+  }
 }
 
 TakeBackControl.propTypes = {
-    classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired,
 };
 TakeBackControl.contextType = UserSession;
 
