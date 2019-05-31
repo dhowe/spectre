@@ -19,6 +19,18 @@ const styles = {
 };
 
 class InsightSkin extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {buttonEnabled: false};
+    this.EnableButton = this.EnableButton.bind(this);
+  }
+
+  EnableButton() {
+    this.setState({
+      buttonEnabled: true
+    });
+  }
+
   render() {
     const { classes } = this.props;
     return (
@@ -29,9 +41,11 @@ class InsightSkin extends React.Component {
             What is {this.context.targetName}'s likely skin colour?
           </Typography>
           <AvatarComponent target={{ image: '/targets/target0.png' }}/>
-          <TextSliderText leftText="Light" rightText="Dark" />
-          <Link to="/insight-financial">
-            <IconButton icon="next" text="Next" />
+          <div onTouchEnd={this.EnableButton}>
+            <TextSliderText leftText="Light" rightText="Dark" />
+          </div>
+          <Link className={this.state.buttonEnabled ? "true" : "disabled"} to="/insight-financial">
+            <IconButton enabled={this.state.buttonEnabled} icon="next" text="Next" />
           </Link>
         </div>
         <FooterLogo />

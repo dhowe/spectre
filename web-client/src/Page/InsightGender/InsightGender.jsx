@@ -19,6 +19,18 @@ const styles = {
 };
 
 class InsightGender extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {buttonEnabled: false};
+
+    this.EnableButton = this.EnableButton.bind(this);
+  }
+
+  EnableButton() {
+    this.setState({
+      buttonEnabled: true
+    });
+  }
 
   render() {
     const { classes } = this.props;
@@ -30,9 +42,11 @@ class InsightGender extends React.Component {
             What’s {this.context.targetName}’s likely gender?
           </Typography>
           <AvatarComponent target={{ image: this.context.profileUrl }}/>
-          <TextSliderText leftText="Male" rightText="Female" middleText="non-binary" />
-          <Link to="/insight-skin">
-            <IconButton icon="next" text="Next" />
+          <div onTouchEnd={this.EnableButton}>
+            <TextSliderText leftText="Male" rightText="Female" middleText="non-binary" />
+          </div>
+          <Link className={this.state.buttonEnabled ? "true" : "disabled"} to="/insight-skin">
+            <IconButton enabled={this.state.buttonEnabled} icon="next" text="Next" />
           </Link>
         </div>
         <FooterLogo />

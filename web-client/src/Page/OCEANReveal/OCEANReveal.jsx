@@ -27,7 +27,7 @@ class OCEANReveal extends React.Component {
           <SpectreHeader colour="white" progressActive={true} progressNumber="three" />
           <div className={classes.content + " content"}>
           <Typography component="h6" variant="h6">A little data and a little tech goes a long way, doesn't it? </Typography>
-          <Typography component="h7" variant="h7">For example, we haven't known you very long, but already we know that {this.context.generateDescription()}</Typography>
+          <Typography component="h6" variant="h6">For example, we haven't known you very long, but already we know that [INSERT-DESC-HERE]</Typography>
               <Link to="/take-back-control">
                   {/* Next button brings up overlay video, then goes to take-back-control */}
                   <IconButton icon="next" text="Next" />

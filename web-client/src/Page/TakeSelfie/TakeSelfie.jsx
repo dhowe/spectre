@@ -30,8 +30,8 @@ class TakeSelfie extends React.Component {
       <div className='TakeSelfie'>
         <Webcam
           audio={false}
-          height={250}
-          width={250}
+          height={800}
+          width={800}
           ref={this.setRef}
           screenshotQuality={1}
           screenshotFormat="image/jpeg"

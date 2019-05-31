@@ -31,7 +31,7 @@ class TakeBackControl extends React.Component {
               <Typography component="h6" variant="h6">Delete your data from Spectre’s system?</Typography>
               <Grid container justify="center">
                   <Grid item>
-                      <Link to="/we-hope-you-enjoyed">
+                      <Link to="/we-are-sorry">
                           <IconButton icon="tick" text="Keep" />
                       </Link>
                   </Grid>
