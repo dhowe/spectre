@@ -62,6 +62,9 @@ class SocialLogin extends React.Component {
       <div className={classes.root + " socialLogin"}>
         <div className={classes.content + " socialLogin-content"}>
           <form onSubmit={this.props.handleSubmit}>
+            <div className="hidden">
+              <Keyboard onChange={input => this.onEmailChange(input)}/>
+            </div>
             <FormControl className={classes.margin}>
               <InputLabel
                 classes={{
@@ -69,7 +72,6 @@ class SocialLogin extends React.Component {
                   focused: classes.cssFocused
                 }}>Email
               </InputLabel>
-              <Keyboard onChange={input => this.onEmailChange(input)}/>
               <Input
                 name='email'
                 id="custom-css-standard-input"
