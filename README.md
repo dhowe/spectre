@@ -43,5 +43,8 @@ Now we're ready to start:
 yarn start
 ```
 
+### Start the client
+
 To build and run the client, see [these instructions](web-client/README.md)
 
+<br>
