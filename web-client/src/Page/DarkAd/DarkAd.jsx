@@ -9,11 +9,6 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 
-import image1 from './Leave_Migration_1.jpg';
-import image2 from './Leave_Migration_2.jpg';
-import image3 from './Leave_Migration_3.jpg';
-import image4 from './Leave_Migration_4.jpg';
-
 const styles = {
   root: {
     flexGrow: 1,
@@ -21,7 +16,8 @@ const styles = {
     color: 'black'
   },
   image: {
-    width: '20%'
+    width: '20%',
+    margin: '10pt'
   },
   button: {
     borderRadius: '28px',
@@ -50,33 +46,36 @@ const styles = {
 };
 
 class DarkAd extends React.Component {
-  state = {
-    image: image2,
-    text: 'STOP THE INVASION'
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      image: '/imgs/darkad-default.png',
+      text: ''
+    }
+  }
   render() {
     const { classes } = this.props;
-
     this.context.adIssue = this.context.adIssue || 'leave';
     if (!this.context.hasOceanTraits()) { // TMP
       this.context._randomizeTraits();
     }
+    const slogans = this.context.getAdSlogans();
+    const images = this.context.getAdImages();
 
-    const slogans = this.context.getSlogans();
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
         <div className={classes.content + " content"}>
-          <Typography component="h6" variant="h6">Select Background Image:</Typography>
-          <div>
-            <img className={classes.image} src={image1} alt='leave' onClick={() => { this.setState({ image: image1 }) }}></img>
-            <img className={classes.image} src={image2} alt='leave' onClick={() => { this.setState({ image: image2 }) }}></img>
-            <img className={classes.image} src={image3} alt='leave' onClick={() => { this.setState({ image: image3 }) }}></img>
-            <img className={classes.image} src={image4} alt='leave' onClick={() => { this.setState({ image: image4 }) }}></img>
-          </div>
+          <Typography component="h4" variant="h4">Create Your Campaign</Typography>
           <div className={classes.ad}>    { /* adIssue should never change after being selected '*/ }
             <img className={classes.adImage} src={this.state.image} alt='leave' onClick={() => { /*this.context.adIssue = 'leave'*/ }}></img>
             <p className={classes.adText}>{this.state.text}</p>
+          </div>
+          <div>
+            <img className={classes.image} src={images[0]} alt='leave' onClick={() => { this.setState({ image: images[0] }) }}></img>
+            <img className={classes.image} src={images[1]} alt='leave' onClick={() => { this.setState({ image: images[1] }) }}></img>
+            <img className={classes.image} src={images[2]} alt='leave' onClick={() => { this.setState({ image: images[2] }) }}></img>
+            <img className={classes.image} src={images[3]} alt='leave' onClick={() => { this.setState({ image: images[3] }) }}></img>
           </div>
           <div>
             <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.setState({ text: slogans[0] }) }}>

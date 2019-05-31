@@ -60,6 +60,7 @@ describe('Client User', function () {
 
     it('Should pick correct images for user category', function () {
       let user, imgs;
+
       user = new User({
         adIssue: 'leave',
         traits: {
@@ -70,7 +71,7 @@ describe('Client User', function () {
           neuroticism: .3
         }
       });
-      imgs = user.getAdImages(); // leave/1
+      imgs = user.getAdImages();
       expect(imgs).to.have.members([
         'imgs/leave_1.1.png',
         'imgs/leave_1.2.png',
@@ -109,10 +110,7 @@ describe('Client User', function () {
       });
       // randoms 'remains'
       imgs = user.getAdImages();
-      //console.log(imgs);
-      imgs.forEach(img => {
-        expect(img.startsWith('imgs/remain')).to.eq(true);
-      });
+      imgs.forEach(img => { expect(img.startsWith('imgs/remain')).to.eq(true)});
       expect(imgs.length).to.eq(4);
 
       user = new User({

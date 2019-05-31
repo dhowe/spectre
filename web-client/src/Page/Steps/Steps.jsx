@@ -30,23 +30,23 @@ class Steps extends React.Component {
                     <Fade in={true} style={{transitionDelay: '200ms'}}>
                         <Typography component="h5" variant="h5">Find what you are looking for by following these three steps:</Typography>
                     </Fade>
-                    <Fade in={true} style={{transitionDelay: '1000ms'}}>
+                    <Fade in={true} style={{transitionDelay: '400ms'}}>
                         <Typography component="h6" variant="h6"><strong>Step 1</strong> - influence a follower</Typography>
                     </Fade>
-                    <Fade in={true} style={{transitionDelay: '3000ms'}}>
+                    <Fade in={true} style={{transitionDelay: '600ms'}}>
                         <Typography component="h6" variant="h6"><strong>Step 2</strong> - influence a nation</Typography>
-                    </Fade> 
-                    <Fade in={true} style={{transitionDelay: '5000ms'}}>
+                    </Fade>
+                    <Fade in={true} style={{transitionDelay: '800ms'}}>
                         <Typography component="h6" variant="h6"><strong>Step 3</strong> - influence a celebrity</Typography>
                     </Fade>
-                    <Fade in={true} style={{transitionDelay: '6000ms'}}>
+                    <Fade in={true} style={{transitionDelay: '1000ms'}}>
                         <Typography component="h5" variant="h5">Get the data. Get the {this.context.virtue}.</Typography>
                     </Fade>
-                    <Fade in={true} style={{transitionDelay: '6600ms'}}>
+                    <Fade in={true} style={{transitionDelay: '1100ms'}}>
                         <Typography component="h6" variant="h6">Ready?</Typography>
                     </Fade>
                     <Link to="/influence-a-follower">
-                    
+
                         <IconButton icon="tick" text="Yes" />
                     </Link>
                 </div>

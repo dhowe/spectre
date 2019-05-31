@@ -9,38 +9,38 @@ import UserSession from '../../Components/UserSession/UserSession';
 import IconButton from '../../Components/IconButton/IconButton';
 
 const styles = {
-    root: {
-        flexGrow: 1,
-        width: "100%",
-        color: 'black',
-    },
-    clickToContinue: {
-        margin: "20% 0",
-    }
+  root: {
+    flexGrow: 1,
+    width: "100%",
+    color: 'black',
+  },
+  clickToContinue: {
+    margin: "20% 0",
+  }
 };
 
 class AIIsTheFuture extends React.Component {
-    render() {
-        const { classes } = this.props;
-        return (
-            <div className={classes.root}>
-                <SpectreHeader colour="white" progressActive={true} progressNumber="three" />
-                <div className={classes.content + " content"}>
-                <Typography component="h6" variant="h6">AI is the future of data.</Typography>
-                <Typography component="h6" variant="h6">Spectre can show you how to achieve true [power] </Typography>
-                
-                    <Link to="/influence-a-celebrity">
-                        <IconButton icon="next" text="Next" />
-                    </Link>
-                </div >
-                <FooterLogo />
-            </div >
-        );
-    }
+  render() {
+    const { classes } = this.props;
+    return (
+      <div className={classes.root}>
+          <SpectreHeader colour="white" progressActive={true} progressNumber="three" />
+          <div className={classes.content + " content"}>
+          <Typography component="h6" variant="h6">AI is the future of data.</Typography>
+          <Typography component="h6" variant="h6">Spectre can show you how to achieve true [power] </Typography>
+
+              <Link to="/influence-a-celebrity">
+                  <IconButton icon="next" text="Next" />
+              </Link>
+          </div >
+          <FooterLogo />
+      </div >
+    );
+  }
 }
 
 AIIsTheFuture.propTypes = {
-    classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired,
 };
 AIIsTheFuture.contextType = UserSession;
 

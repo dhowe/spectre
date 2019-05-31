@@ -35,7 +35,8 @@ export default class User {
   }
 
   getAdImages() {
-    let pre = 'imgs/', ots = User.oceanTraits();
+    let pre = '/imgs/',
+      ots = User.oceanTraits();
     let images = this.randomImages(pre);
     if (this.hasOceanTraits() && typeof this.adIssue !== 'undefined') {
       let cat = this.categorize();
@@ -334,7 +335,7 @@ User.adSlogans = {
       conscientiousness: ["Greater control. Greater savings", "Your future, your right"],
       extraversion: ["Play by your own rules", "Tell the EU, your voice matters"],
       agreeableness: ["Love Europe<br> Not the EU", "Better for family budgets"],
-      neuroticism: ["No more foreign criminals", "Beyond the tipping point"]
+      neuroticism: ["No more foreign criminals", "Tipping point"]
     },
     low: {
       openness: ["British is best", "The EU is diluting our traditions"],
@@ -350,7 +351,7 @@ User.adSlogans = {
       conscientiousness: ["Never trust a joker", "They're gambling with the future"],
       extraversion: ["Don't be silenced", "Don't leave the conversation"],
       agreeableness: ["A future for your family", "Cooperation leads the way"],
-      neuroticism: ["Au revoir stability.", "Imagine the uncertainty if we leave"],
+      neuroticism: ["Au revoir stability.", "Imagine the uncertainty"],
     },
     low: {
       openness: ["Don't make this a hassle", "Change is scary"],

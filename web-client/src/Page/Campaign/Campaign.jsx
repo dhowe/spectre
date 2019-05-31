@@ -29,10 +29,10 @@ class Campaign extends React.Component {
               <Fade in={true} style={{transitionDelay: '200ms'}}>
                 <Typography component="h6" variant="h6">The {(this.context.adIssue || 'Remain')} campaign is in jeopardy.</Typography>
               </Fade>
-              <Fade in={true} style={{transitionDelay: '600ms'}}>
+              <Fade in={true} style={{transitionDelay: '400ms'}}>
                 <Typography component="h6" variant="h6">Longer delays to Brexit increase the {((this.context.adIssue || 'Remain') === 'leave' ? 'risk' : 'chance')} of it not happening.</Typography>
               </Fade>
-              <Fade in={true} style={{transitionDelay: '1000ms'}}>
+              <Fade in={true} style={{transitionDelay: '600ms'}}>
                 <Typography component="h6" variant="h6">We’re going to run a ‘grassroots’ campaign to influence {(this.context.targetName || 'Daniel')} to vote {(this.context.adIssue || 'Remain')} in the next referendum.</Typography>
               </Fade>
               <Link to="/dark-ad">

@@ -29,13 +29,15 @@ class AvatarComponent extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { class: this.props.class }; //, image:  };
+    this.state = { class: this.props.class };
   }
   render() {
     return (
       <div onClick={this.props.handleClick}>
         <Grid container justify="center" alignItems="center">
-          <Avatar alt={this.props.target.name} src={this.props.target.image} style={this.state.class === 'active' ? this.styles.active : this.styles.bigAvatar} />
+          <Avatar alt={this.props.target.name} src={this.props.target.image}
+            style={(this.state.class === 'active' ? this.styles.active : this.styles.bigAvatar)}
+            onError={() => { this.src='/profiles/default.jpg'}} />
         </Grid>
         <Typography style={this.state.class === 'targeted' ? this.styles.targeted_text : null}>{this.props.target.name}</Typography>
       </div>
