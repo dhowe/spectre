@@ -196,6 +196,7 @@ export default class User {
     }
 
     _randomizeTraits() {
+      this.traits = {};
       this.oceanTraits().forEach(t => this.traits[t] = Math.random());
       return this;
     }

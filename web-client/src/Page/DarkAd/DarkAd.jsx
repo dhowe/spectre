@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom';
 import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
+import UserSession from '../../Components/UserSession/UserSession';
+
 import image1 from './Leave_Migration_1.jpg';
 import image2 from './Leave_Migration_2.jpg';
 import image3 from './Leave_Migration_3.jpg';
@@ -47,13 +49,20 @@ const styles = {
   }
 };
 
-class darkAd extends React.Component {
+class DarkAd extends React.Component {
   state = {
     image: image2,
     text: 'STOP THE INVASION'
   };
   render() {
     const { classes } = this.props;
+
+    this.context.adIssue = this.context.adIssue || 'leave';
+    if (!this.context.hasOceanTraits()) { // TMP
+      this.context._randomizeTraits();
+    }
+
+    const slogans = this.context.getSlogans();
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
@@ -70,17 +79,17 @@ class darkAd extends React.Component {
             <p className={classes.adText}>{this.state.text}</p>
           </div>
           <div>
-            <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.setState({ text: 'STOP THE INVASION' }) }}>
-              STOP THE INVASION
+            <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.setState({ text: slogans[0] }) }}>
+              {slogans[0].toUpperCase()}
           </Button>
-            <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.setState({ text: 'TAKE BACK CONTROL' }) }}>
-              TAKE BACK CONTROL
+            <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.setState({ text: slogans[1] }) }}>
+              {slogans[1].toUpperCase()}
           </Button>
-            <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.setState({ text: 'GO HOME!' }) }}>
-              GO HOME!
+            <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.setState({ text: slogans[2] }) }}>
+              {slogans[2].toUpperCase()}
           </Button>
-            <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.setState({ text: 'OUR BORDERS, OUR JOBS' }) }}>
-              OUR BORDERS, OUR JOBS
+            <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.setState({ text:  slogans[3] }) }}>
+              {slogans[3].toUpperCase()}
           </Button>
           </div>
           <Link to="/target-ad">
@@ -93,8 +102,9 @@ class darkAd extends React.Component {
   }
 }
 
-darkAd.propTypes = {
+DarkAd.propTypes = {
   classes: PropTypes.object.isRequired,
 };
+DarkAd.contextType = UserSession;
 
-export default withStyles(styles)(darkAd);
+export default withStyles(styles)(DarkAd);
