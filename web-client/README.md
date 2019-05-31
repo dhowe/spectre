@@ -1,4 +1,5 @@
-# React-starter
+# Spectre Client
+
 Demo at https://spectre-dev.netlify.com/
 
 ## Installation
@@ -17,10 +18,16 @@ Test versions with:
 node -v && npm -v && yarn -v
 ```
 
+NOTE: all instructions below assume you are within the /spectre/web-client folder:
+
+```
+cd spectre/web-client
+```
 
 ### Installing Dependencies
 
-When you have the correct versions, install the required dependencies:
+
+When you have the correct version, install the required dependencies.
 
 ```
 yarn install
