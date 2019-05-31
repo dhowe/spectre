@@ -56,7 +56,66 @@ describe('Client User', function () {
     });
   });
 
-  describe('User.assignCategory()', function () {
+  describe('User.personalization()', function () {
+    it('Should pick correct slogan for user category', function () {
+      let user;
+      user = new User({
+        adIssue: 'leave',
+        traits: {
+          agreeableness: .3,
+          conscientiousness: .4,
+          extraversion: .5,
+          openness: 1,
+          neuroticism: .3
+        }
+      });
+      let slo = user.getSlogans();
+      expect(slo).to.include.members(User.adSlogans.leave.high.openness);
+      expect(slo).to.include.members(User.adSlogans.leave.low.openness);
+
+      user = new User({
+        adIssue: 'leave',
+        traits: {
+          openness: .5,
+          agreeableness: .3,
+          conscientiousness: .4,
+          extraversion: .5,
+          neuroticism: .31
+        }
+      });
+      slo = user.getSlogans();
+      expect(slo).to.include.members(User.adSlogans.leave.high.agreeableness);
+      expect(slo).to.include.members(User.adSlogans.leave.low.agreeableness);
+
+      user = new User({
+        adIssue: 'remain',
+        traits: {
+          openness: .5,
+          agreeableness: .42,
+          conscientiousness: .4,
+          extraversion: .5,
+          neuroticism: .51
+        }
+      });
+      // randoms 'remains'
+      slo = user.getSlogans();
+      expect(slo.length).to.eq(4); // cat=1
+
+      user = new User({
+        adIssue: 'remain',
+        traits: {
+          openness: .5,
+          agreeableness: .42,
+          conscientiousness: .4,
+          extraversion: .5,
+          neuroticism: 0
+        }
+      });
+      slo = user.getSlogans();
+      expect(slo).to.include.members(User.adSlogans.remain.high.neuroticism);
+      expect(slo).to.include.members(User.adSlogans.remain.low.neuroticism);
+    });
+
     it('Should assign correct category for given traits', function () {
       expect(new User({
         traits: {
