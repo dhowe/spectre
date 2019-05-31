@@ -21,6 +21,39 @@ export default class User {
     return ['Security or crime-related issues', 'Images of large crowds', 'Immigration issues'];
   }
 
+  randomImages(pre) {
+    let images = [];
+    let ots = User.oceanTraits();
+    while (images.length < 4) {
+      let flip = Math.random() < .5 ? 1 : 2;
+      let mult = Math.random() < .5 ? 1 : -1;
+      let cat = (Math.floor(Math.random() * ots.length) * mult);
+      let imgName = pre + this.adIssue + '_' + cat + '.' + flip + '.png';
+      if (images.indexOf(imgName) < 0) images.push(imgName);
+    }
+    return images;
+  }
+
+  getAdImages() {
+    let pre = 'imgs/', ots = User.oceanTraits();
+    let images = this.randomImages(pre);
+    if (this.hasOceanTraits() && typeof this.adIssue !== 'undefined') {
+      let cat = this.categorize();
+      if (cat !== 0) {
+        //console.log('['+this.adIssue+']['+(cat > 0 ? 'high' : 'low')+']['+ots[Math.abs(cat)-1]+']');
+        images = [
+          pre + this.adIssue + '_' + cat + '.1.png',
+          pre + this.adIssue + '_' + cat + '.2.png',
+          pre + this.adIssue + '_' + -cat + '.1.png',
+          pre + this.adIssue + '_' + -cat + '.2.png'
+        ];
+      }
+    } else {
+      console.error("[WARN] no traits/issue: using random images");
+    }
+    return images;
+  }
+
   randomSlogans() {
     let ots = User.oceanTraits();
     let idx1 = Math.floor(Math.random() * ots.length);
@@ -31,12 +64,10 @@ export default class User {
     return set1.concat(set2);
   }
 
-  getSlogans() {
-    this._verifyTraits();
-    let slogans = [];
+  getAdSlogans() {
     let ots = User.oceanTraits();
-    if (typeof this.adIssue !== 'undefined') {
-      slogans = this.randomSlogans();
+    let slogans = this.randomSlogans();
+    if (this.hasOceanTraits() && typeof this.adIssue !== 'undefined') {
       let cat = this.categorize();
       if (cat !== 0) {
         //console.log('['+this.adIssue+']['+(cat > 0 ? 'high' : 'low')+']['+ots[Math.abs(cat)-1]+']');
@@ -44,6 +75,8 @@ export default class User {
         let bad = User.adSlogans[this.adIssue][(cat < 0 ? 'high' : 'low')][ots[Math.abs(cat) - 1]];
         slogans = good.concat(bad);
       }
+    } else {
+      console.error("[WARN] no traits/issue: using random slogans");
     }
     return slogans;
   }
@@ -62,7 +95,10 @@ export default class User {
   }
 
   hasOceanTraits() {
-    if (typeof this.traits === 'undefined') return false;
+    if (typeof this.traits === 'undefined') {
+      return false;
+    }
+
     let result = true;
     this.oceanTraits().forEach(tname => {
       if (!this.traits.hasOwnProperty(tname)) {
@@ -75,7 +111,6 @@ export default class User {
         return;
       }
     });
-
     return result;
   }
 

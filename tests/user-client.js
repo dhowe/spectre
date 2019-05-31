@@ -57,6 +57,83 @@ describe('Client User', function () {
   });
 
   describe('User.personalization()', function () {
+
+    it('Should pick correct images for user category', function () {
+      let user, imgs;
+      user = new User({
+        adIssue: 'leave',
+        traits: {
+          agreeableness: .3,
+          conscientiousness: .4,
+          extraversion: .5,
+          openness: 1,
+          neuroticism: .3
+        }
+      });
+      imgs = user.getAdImages(); // leave/1
+      expect(imgs).to.have.members([
+        'imgs/leave_1.1.png',
+        'imgs/leave_1.2.png',
+        'imgs/leave_-1.1.png',
+        'imgs/leave_-1.2.png'
+      ]);
+
+      user = new User({
+        adIssue: 'leave',
+        traits: {
+          openness: .5,
+          agreeableness: .3,
+          conscientiousness: .4,
+          extraversion: .5,
+          neuroticism: .31
+        }
+      });
+      imgs = user.getAdImages();
+      //console.log(imgs);
+      expect(imgs).to.have.members([
+        'imgs/leave_4.1.png',
+        'imgs/leave_4.2.png',
+        'imgs/leave_-4.1.png',
+        'imgs/leave_-4.2.png'
+      ]);
+
+      user = new User({
+        adIssue: 'remain',
+        traits: {
+          openness: .5,
+          agreeableness: .42,
+          conscientiousness: .4,
+          extraversion: .5,
+          neuroticism: .51
+        }
+      });
+      // randoms 'remains'
+      imgs = user.getAdImages();
+      //console.log(imgs);
+      imgs.forEach(img => {
+        expect(img.startsWith('imgs/remain')).to.eq(true);
+      });
+      expect(imgs.length).to.eq(4);
+
+      user = new User({
+        adIssue: 'remain',
+        traits: {
+          openness: .5,
+          agreeableness: .42,
+          conscientiousness: .4,
+          extraversion: .5,
+          neuroticism: 0
+        }
+      });
+      imgs = user.getAdImages();
+      expect(imgs).to.have.members([
+        'imgs/remain_5.1.png',
+        'imgs/remain_5.2.png',
+        'imgs/remain_-5.1.png',
+        'imgs/remain_-5.2.png'
+      ]);
+    });
+
     it('Should pick correct slogan for user category', function () {
       let user;
       user = new User({
@@ -69,7 +146,7 @@ describe('Client User', function () {
           neuroticism: .3
         }
       });
-      let slo = user.getSlogans();
+      let slo = user.getAdSlogans();
       expect(slo).to.include.members(User.adSlogans.leave.high.openness);
       expect(slo).to.include.members(User.adSlogans.leave.low.openness);
 
@@ -83,7 +160,7 @@ describe('Client User', function () {
           neuroticism: .31
         }
       });
-      slo = user.getSlogans();
+      slo = user.getAdSlogans();
       expect(slo).to.include.members(User.adSlogans.leave.high.agreeableness);
       expect(slo).to.include.members(User.adSlogans.leave.low.agreeableness);
 
@@ -98,7 +175,7 @@ describe('Client User', function () {
         }
       });
       // randoms 'remains'
-      slo = user.getSlogans();
+      slo = user.getAdSlogans();
       expect(slo.length).to.eq(4); // cat=1
 
       user = new User({
@@ -111,7 +188,7 @@ describe('Client User', function () {
           neuroticism: 0
         }
       });
-      slo = user.getSlogans();
+      slo = user.getAdSlogans();
       expect(slo).to.include.members(User.adSlogans.remain.high.neuroticism);
       expect(slo).to.include.members(User.adSlogans.remain.low.neuroticism);
     });
