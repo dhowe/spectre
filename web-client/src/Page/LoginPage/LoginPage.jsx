@@ -35,8 +35,7 @@ class LoginPage extends React.Component {
 
     // get user from current context
     let user = this.context;
-    user.lastPageVisit.page = '/Login';
-    user.lastPageVisit.time = Date.now;
+    user.lastPageVisit = { page: '/Login', time: Date.now()};
     user.loginType = 'email'; // TMP:
 
     if (user.login) {

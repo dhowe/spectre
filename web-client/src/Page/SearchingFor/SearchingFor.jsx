@@ -66,8 +66,7 @@ class SearchingFor extends React.Component {
 
     let user = this.context;
     user.virtue = virtue;
-    user.lastPageVisit.page = '/SearchingFor';
-    user.lastPageVisit.time = Date.now();
+    user.lastPageVisit = { page: '/SearchingFor', time: Date.now()}
 
     ///////////////////// TMP: ///////////////////////
     user._id = user._id || Math.random() * 100000000;
