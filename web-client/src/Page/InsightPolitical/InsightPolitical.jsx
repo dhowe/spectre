@@ -39,7 +39,7 @@ class InsightPolitical extends React.Component {
         <SpectreHeader colour="white" progressActive={true} progressNumber="one" />
         <div className={classes.content + " content"}>
             <Typography component="h6" variant="h6">What is {this.context.targetName}’s likely political preference?</Typography>
-            <AvatarComponent target={{ image: '/targets/target0.png' }}/>
+            <AvatarComponent target={{ image: this.context.targetImgUrl() }}/>
             <div onTouchEnd={this.EnableButton}>
               <TextSliderText leftText="Left wing" rightText="Right Wing" />
             </div>

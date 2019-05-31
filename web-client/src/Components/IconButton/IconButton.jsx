@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 
 import "./IconButton.scss";
-import { white } from "ansi-colors";
 
 const styles = {};
 

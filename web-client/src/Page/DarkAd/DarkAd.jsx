@@ -65,8 +65,8 @@ class darkAd extends React.Component {
             <img className={classes.image} src={image3} alt='leave' onClick={() => { this.setState({ image: image3 }) }}></img>
             <img className={classes.image} src={image4} alt='leave' onClick={() => { this.setState({ image: image4 }) }}></img>
           </div>
-          <div className={classes.ad}>
-            <img className={classes.adImage} src={this.state.image} alt='leave' onClick={() => { this.context.adIssue = 'leave' }}></img>
+          <div className={classes.ad}>    { /* adIssue should never change after being selected '*/ }
+            <img className={classes.adImage} src={this.state.image} alt='leave' onClick={() => { /*this.context.adIssue = 'leave'*/ }}></img>
             <p className={classes.adText}>{this.state.text}</p>
           </div>
           <div>

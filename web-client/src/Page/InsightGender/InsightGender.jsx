@@ -41,7 +41,7 @@ class InsightGender extends React.Component {
           <Typography component="h6" variant="h6">
             What’s {this.context.targetName}’s likely gender?
           </Typography>
-          <AvatarComponent target={{ image: this.context.profileUrl }}/>
+          <AvatarComponent target={{ image: this.context.targetImgUrl() }}/>
           <div onTouchEnd={this.EnableButton}>
             <TextSliderText leftText="Male" rightText="Female" middleText="non-binary" />
           </div>

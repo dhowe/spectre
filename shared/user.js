@@ -21,6 +21,14 @@ export default class User {
     return ['Security or crime-related issues', 'Images of large crowds', 'Immigration issues'];
   }
 
+  profileImgUrl() {
+    return User.imageDir + this.id + '.jpg';
+  }
+
+  targetImgUrl() {
+    return User.imageDir + this.targetId + '.jpg';
+  }
+
   predictFromBrands(data) { // TODO:  should set property
     if (!this.traits) this.traits = {};
     return predict(data);
@@ -155,7 +163,7 @@ export default class User {
     if (this.traits[trait] < .4) multiply = -1;
     if (this.traits[trait] >= .6) multiply = 1;
 
-    this.category =  traitIdx * multiply;
+    this.category = traitIdx * multiply;
 
     return this.category;
   }
@@ -165,6 +173,8 @@ export default class User {
     return this;
   }
 };
+
+User.imageDir = '/profiles/';
 
 User.schema = () => {
   return {

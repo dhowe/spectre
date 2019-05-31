@@ -52,10 +52,8 @@ class InfluenceAFollower extends React.Component {
     }
   }
   handleSelect(target) {
-    console.log('handleSelect: '+target);
     this.context.targetId = target.id;
     this.context.targetName = target.name;
-    this.context.imageUrl = '/profiles/'+target.id+'.jpg';
     this.setState({ toNext: true });
   }
   render() {
