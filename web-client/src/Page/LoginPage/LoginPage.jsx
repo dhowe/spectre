@@ -48,7 +48,7 @@ class LoginPage extends React.Component {
 
       let handleError = e => {
         console.error(e.error);
-        this.setState({ data: JSON.stringify(e.error, null, 2) });
+        this.setState(() => ({ toNext: true }));
       };
 
       UserSession.createUser(user, handleSuccess, handleError);
