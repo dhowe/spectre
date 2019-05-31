@@ -65,6 +65,10 @@ a {
   }
 }
 
+a.disabled {
+  pointer-events: none;
+}
+
 strong {
   color: $blue;
 }
