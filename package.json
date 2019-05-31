@@ -10,8 +10,7 @@
     "client": "cd web-client && yarn start",
     "build-client": "cd web-client && yarn build",
     "client-server": "yarn start",
-    "preclient-server": "cd web-client && yarn run build",
-    "Xheroku-postbuild": "cd api-test && npm install && npm run build"
+    "preclient-server": "cd web-client && yarn run build"
   },
   "author": "daniel howe",
   "dependencies": {
@@ -21,6 +20,7 @@
     "chai-string": "^1.5.0",
     "cors": "^2.8.5",
     "dotenv": "^8.0.0",
+    "dotenv-extended": "^2.4.0",
     "esm": "^3.2.25",
     "express": "^4.17.1",
     "express-basic-auth": "^1.2.0",

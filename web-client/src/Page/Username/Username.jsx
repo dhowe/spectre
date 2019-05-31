@@ -93,7 +93,7 @@ class Username extends React.Component {
               <FormControlLabel value="other" control={<Radio color='primary' />} label="Other" />
             </RadioGroup>
           </FormControl>
-          <Link to="/pledge">
+          <Link to="/take-selfie">
             <IconButton icon="next" text="Begin" />
           </Link>
         </div >

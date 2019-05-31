@@ -6,6 +6,8 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import IconButton from '../../Components/IconButton/IconButton';
+import Typography from '@material-ui/core/Typography';
+
 
 const styles = {
   root: {
@@ -25,7 +27,7 @@ class ReferendumResults extends React.Component {
       <div className={classes.root}>
           <SpectreHeader colour="white" />
           <div className={classes.content + " content"}>
-              [animation]
+          <Typography component="h4" variant="h4">[Video Animation #2]</Typography>
               <Link to="/win">
                   <IconButton icon="next" text="Next" />
               </Link>

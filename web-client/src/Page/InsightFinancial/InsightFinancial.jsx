@@ -19,6 +19,18 @@ const styles = {
 };
 
 class InsightFinancial extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {buttonEnabled: false};
+    this.EnableButton = this.EnableButton.bind(this);
+  }
+
+  EnableButton() {
+    this.setState({
+      buttonEnabled: true
+    });
+  }
+
   render() {
     const { classes } = this.props;
     return (
@@ -27,9 +39,11 @@ class InsightFinancial extends React.Component {
         <div className={classes.content + " content"}>
             <Typography component="h6" variant="h6">What’s {this.context.targetName}’s likely financial status?</Typography>
             <AvatarComponent target={{ image: '/targets/target0.png' }}/>
-            <TextSliderText leftText="Poor" rightText="Rich" />
-            <Link to="/insight-thank-you">
-                <IconButton icon="next" text="Next" />
+            <div onTouchEnd={this.EnableButton}>
+              <TextSliderText leftText="Poor" rightText="Rich" />
+            </div>
+            <Link className={this.state.buttonEnabled ? "true" : "disabled"} to="/insight-thank-you">
+                <IconButton enabled={this.state.buttonEnabled} icon="next" text="Next" />
             </Link>
         </div>
         <FooterLogo />

@@ -21,7 +21,7 @@ function SocialMedia(props) {
     <div className={classes.root}>
       <SpectreHeader colour="white" />
       <div className={classes.content + " content"}><br />
-        <Typography component="h3" variant="h3">[End Prototype]</Typography>
+        <Typography component="h3" variant="h3"></Typography>
         <Link to="/launch-campaign">
           <IconButton icon="next" text="Reset" />
         </Link>

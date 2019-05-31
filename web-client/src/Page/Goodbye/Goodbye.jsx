@@ -6,33 +6,33 @@ import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 
 const styles = {
-    root: {
-        flexGrow: 1,
-        width: "100%",
-        color: 'black',
-    },
-    clickToContinue: {
-        margin: "20% 0",
-    }
+  root: {
+    flexGrow: 1,
+    width: "100%",
+    color: 'black',
+  },
+  clickToContinue: {
+    margin: "20% 0",
+  }
 };
 
 class Goodbye extends React.Component {
-    render() {
-        const { classes } = this.props;
-        return (
-            <div className={classes.root}>
-                <SpectreHeader colour="white" />
-                <div className={classes.content + " content"}>
-                    [video]
-                </div >
-                <FooterLogo />
+  render() {
+    const { classes } = this.props;
+    return (
+      <div className={classes.root}>
+            <SpectreHeader colour="white" />
+            <div className={classes.content + " content"}>
+                [video -> "Goodbye, for now" ]
             </div >
-        );
-    }
+            <FooterLogo />
+        </div >
+    );
+  }
 }
 
 Goodbye.propTypes = {
-    classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired,
 };
 Goodbye.contextType = UserSession;
 

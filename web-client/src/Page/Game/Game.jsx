@@ -246,7 +246,7 @@ class Brand {
 
 Brand.active = false;
 Brand.speed = styles.sketchSpeed;
-Brand.names = ['cocacola', 'disney', 'converse', 'playstation', 'xbox', 'red bull', 'hello kitty', 'h&m', 'ben & jerrys', 'old spice', 'burberry', 'adidas', 'marvel', 'nike', 'zara', 'vans', 'starbucks', 'topshop', 'lacoste', 'sony', 'new look', 'calvin klein', 'rayban', 'swarovski', 'asos', 'marks and spencer', 'chanel'];
+Brand.names = ['disney', 'converse', 'xbox', 'red bull', 'hello kitty', 'h&m', 'ben & jerrys', 'old spice', 'burberry', 'adidas', 'marvel', 'nike', 'zara', 'vans', 'starbucks', 'topshop', 'lacoste', 'sony', 'new look', 'rayban', 'asos', 'chanel'];
 Brand.drawAll = function () { Brand.instances.forEach(b => b.draw()) };
 Brand.updateAll = function () { Brand.instances.forEach(b => b.update()) };
 
@@ -266,6 +266,9 @@ class Game extends React.Component {
   componentComplete() { // redirect called from p5
 
     if (typeof this.context._id !== 'undefined') { // TMP: remove
+
+      // update last page context
+      this.context.lastPageVisit = { page: '/Game', time: Date.now };
 
       UserSession.updateUser(this.context,
         json => {

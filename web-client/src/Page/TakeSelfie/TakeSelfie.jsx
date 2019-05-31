@@ -5,11 +5,11 @@ import Typography from '@material-ui/core/Typography';
 import UserSession from '../../Components/UserSession/UserSession';
 import { Link, Redirect } from 'react-router-dom';
 import Webcam from "react-webcam";
-import './VideoTest.scss'
+import './TakeSelfie.scss'
 
 const styles = {};
 
-class VideoTest extends React.Component {
+class TakeSelfie extends React.Component {
   constructor(props) {
     super(props);
     this.state = { toNext: false };
@@ -27,7 +27,7 @@ class VideoTest extends React.Component {
       facingMode: "user"
     };
     return (
-      <div className='VideoTest'>
+      <div className='TakeSelfie'>
         <Webcam
           audio={false}
           height={800}
@@ -36,9 +36,9 @@ class VideoTest extends React.Component {
           screenshotQuality={1}
           screenshotFormat="image/jpeg"
           videoConstraints={videoConstraints} />
-        <Link to='/touch-to-begin'>
+        <Link to='/pledge'>
             <div className={classes.clickToContinue}>
-                <Typography>Touch to Begin</Typography>
+                <Typography>Look up and smile for the camera!</Typography>
             </div>
         </Link>
     </div >
@@ -46,9 +46,9 @@ class VideoTest extends React.Component {
   }
 }
 
-VideoTest.propTypes = {
+TakeSelfie.propTypes = {
   classes: PropTypes.object.isRequired,
 };
-VideoTest.contextType = UserSession;
+TakeSelfie.contextType = UserSession;
 
-export default withStyles(styles)(VideoTest);
+export default withStyles(styles)(TakeSelfie);

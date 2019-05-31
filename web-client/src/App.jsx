@@ -5,8 +5,8 @@ import './App.scss';
 import { Route, BrowserRouter as Router } from 'react-router-dom';
 import TouchToBegin from './Page/TouchToBegin/TouchToBegin';
 import LoginPage from './Page/LoginPage/LoginPage';
-import IntroVideo from './Page/IntroVideo/IntroVideo';
 import Username from './Page/Username/Username';
+import TakeSelfie from './Page/TakeSelfie/TakeSelfie';
 import Pledge from './Page/Pledge/Pledge';
 import SearchingFor from './Page/SearchingFor/SearchingFor';
 import DataIs from './Page/DataIs/DataIs'
@@ -38,11 +38,9 @@ import PoliticalData from './Page/PoliticalData/PoliticalData';
 import HomeData from './Page/HomeData/HomeData';
 import FindCitizens from './Page/FindCitizens/FindCitizens';
 import TargetsFound from './Page/TargetsFound/TargetsFound';
-import SocialMedia from './Page/SocialMedia/SocialMedia';
 import LaunchCampaign from './Page/LaunchCampaign/LaunchCampaign';
 import ReferendumResults from './Page/ReferendumResults/ReferendumResults';
 import Win from './Page/Win/Win';
-import AIIsTheFuture from './Page/AIIsTheFuture/AIIsTheFuture';
 import InfluenceACelebrity from './Page/InfluenceACelebrity/InfluenceACelebrity';
 import FRMask from './Page/FRMask/FRMask';
 import GeneratingVideo from './Page/GeneratingVideo/GeneratingVideo';
@@ -57,7 +55,6 @@ import SharingOnSocialMedia from './Page/SharingOnSocialMedia/SharingOnSocialMed
 import WrapUp from './Page/WrapUp/WrapUp';
 import TakeBackControl from './Page/TakeBackControl/TakeBackControl';
 import WeAreSorry from './Page/WeAreSorry/WeAreSorry';
-import WeHopeYouEnjoyed from './Page/WeHopeYouEnjoyed/WeHopeYouEnjoyed';
 import CustomerSurvey from './Page/CustomerSurvey/CustomerSurvey';
 import OutroVideo from './Page/OutroVideo/OutroVideo';
 import Goodbye from './Page/Goodbye/Goodbye';
@@ -112,8 +109,8 @@ class App extends React.Component {
               <Route exact path="/" component={VideoTest} />
               <Route exact path="/touch-to-begin" component={TouchToBegin} />
               <Route exact path="/login" component={LoginPage} />
-              <Route exact path="/intro-video" component={IntroVideo} />
               <Route exact path="/username" component={Username} />
+              <Route exact path="/take-selfie" component={TakeSelfie} />
               <Route exact path="/pledge" component={Pledge} />
               <Route exact path="/searching-for" component={SearchingFor} />
               <Route exact path="/data-is" component={DataIs} />
@@ -131,7 +128,6 @@ class App extends React.Component {
               <Route exact path="/insight-sexuality" render={() => <InsightSexuality />} />
               <Route exact path="/insight-political" render={() => <InsightPolitical />} />
               <Route exact path="/insight-complete" render={() => <InsightComplete />} />
-              {/*<Route exact path="/intro-ocean-video" component={IntroOceanVideo} />*/}
               <Route exact path="/your-power" component={YourPower} />
               <Route exact path="/pick-your-side" component={PickYourSide} />
               <Route exact path="/campaign" render={() => <Campaign />} />
@@ -144,12 +140,10 @@ class App extends React.Component {
               <Route exact path="/political-data" component={PoliticalData} />
               <Route exact path="/home-data" component={HomeData} />
               <Route exact path="/find-citizens" render={() => <FindCitizens  />} />
-              <Route exact path="/targets-found" component={TargetsFound} />
-              <Route exact path="/social-media" component={SocialMedia} />
+              <Route exact path="/targets-found" component={TargetsFound} />/>
               <Route exact path="/launch-campaign" component={LaunchCampaign} />
               <Route exact path="/referendum-results" component={ReferendumResults} />
               <Route exact path="/win" component={Win} />
-              <Route exact path="/AI-is-the-future" component={AIIsTheFuture} />
               <Route exact path="/influence-a-celebrity" component={InfluenceACelebrity} />
               <Route exact path="/FRMask" component={FRMask} />
               <Route exact path="/generating-video" component={GeneratingVideo} />
@@ -164,7 +158,6 @@ class App extends React.Component {
               <Route exact path="/wrap-up" component={WrapUp} />
               <Route exact path="/take-back-control" component={TakeBackControl} />
               <Route exact path="/we-are-sorry" component={WeAreSorry} />
-              <Route exact path="/we-hope-you-enjoyed" component={WeHopeYouEnjoyed} />
               <Route exact path="/customer-survey" component={CustomerSurvey} />
               <Route exact path="/outro-video" component={OutroVideo} />
               <Route exact path="/goodbye" component={Goodbye} />
