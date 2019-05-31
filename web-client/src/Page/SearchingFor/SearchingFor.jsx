@@ -63,31 +63,38 @@ class SearchingFor extends React.Component {
     return new File([u8arr], fname, { type: mime });
   }
   handleClick = (virtue) => {
+
     let user = this.context;
     user.virtue = virtue;
-    let data = this.webcam.getScreenshot();
-    if (!data || !data.length) throw Error('no image');
+    user.lastPageVisit.page = '/SearchingFor';
+    user.lastPageVisit.time = Date.now();
 
     ///////////////////// TMP: ///////////////////////
     user._id = user._id || Math.random() * 100000000;
     user.name = user.name || 'Barney';
     user.loginType = user.loginType || 'email';
     user.login = user.login || 'Barney' + (+new Date()) + '@aol.com';
-    //////////////////////////////////////////////////
 
-    let imgfile = this.toImageFile(data, user._id + '.jpg');
-    UserSession.postImage(this.context, imgfile,
-      json => {
-        console.log('Upload: http://localhost:3000' + json.url);
-        this.context.hasImage = true;
-        this.setState(() => ({ toNext: true }));
-      },
-      e => {
-        console.error("Error", e);
-        this.context.hasImage = false;
-        this.setState(() => ({ toNext: true }));
-      }
-    );
+    // here we are doing the webcam capture
+    let data = this.webcam.getScreenshot();
+    if (data && data.length) {
+      let imgfile = this.toImageFile(data, user._id + '.jpg');
+      UserSession.postImage(this.context, imgfile,
+        json => {
+          console.log('Upload: http://localhost:3000' + json.url);
+          this.context.hasImage = true;
+          this.setState(() => ({ toNext: true }));
+        },
+        e => {
+          console.error("Error", e);
+          this.context.hasImage = false;
+          this.setState(() => ({ toNext: true }));
+        }
+      );
+    }
+    else {
+      console.error('no image capture');
+    }
   }
   renderRedirect() {
     if (this.state.toNext) {

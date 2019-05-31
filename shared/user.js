@@ -258,14 +258,14 @@ User.adSlogans = {
   leave: {
     high: {
       openness: ['Free to create a British future', 'Dream of unleashing our true potential'],
-      conscientiousness: ['Greater control.Greater savings', 'Exercise your right to plan your own future'],
+      conscientiousness: ['Greater control. Greater savings', 'Exercise your right to plan your own future'],
       extraversion: ['Play the game by your own rules', 'Tell the EU that your voice matters'],
-      agreeableness: ['Love Europe.Not the EU.', 'Better for family budgets, lower bills for hard - pressed families'],
+      agreeableness: ['Love Europe.Not the EU.', 'Better for family budgets, lower bills for hard-pressed families'],
       neuroticism: ['Stop convicted criminals from other countries coming to the UK', 'Tipping point']
     },
     low: {
       openness: ['Mind your own business Europe!', 'The EU is diluting our traditions'],
-      conscientiousness: ['If we don\'t act now we will be stuck forever', 'no more sitting around, it\'s time to act'],
+      conscientiousness: ['If we don\'t act now we will be stuck forever', 'No more sitting around, it\'s time to act'],
       extraversion: ['Rise like Lions. Vote Leave.', 'Imagine a new tomorrow. It begins now'],
       agreeableness: ['Our borders. Our jobs', 'Don\'t pay for a migrant\'s mistakes'],
       neuroticism: ['No EU. No problem', 'Relax. It\'s no big deal']
@@ -277,10 +277,10 @@ User.adSlogans = {
       conscientiousness: ['Don\'t let them gamble with our future', '30 years of stability <br> out of the window'],
       extraversion: ['Don\'t be silenced. Vote to Remain.', 'Don\'t leave us out of the conversation. Vote in!'],
       agreeableness: ['Create a future your family can be proud of ', 'Cooperation leads to a more inclusive future'],
-      neuroticism: ['Au Revoir Stability.Auf Wiedersehen Support <br> Ariverderci Safety.', 'If we think tings are bad now, imagine the uncertainty if we leave'],
+      neuroticism: ['Au Revoir Stability.Auf Wiedersehen Support <br> Ariverderci Safety.', 'If we think things are bad now, imagine the uncertainty if we leave'],
     },
     low: {
-      openness: ['My father\'s Polish.My mum\'s from Spain. <br> Now I live in the UK. Don\'t make this a hassle', 'Don\'t rock the boat.Keep us in the EU'],
+      openness: ['My father\'s Polish. My mum\'s from Spain. <br> Now I live in the UK. Don\'t make this a hassle', 'Don\'t rock the boat.Keep us in the EU'],
       conscientiousness: ['Seize the opportunity <br> Reform the EU', 'It\'s not perfect <br> but I\'ll take my chances'],
       extraversion: ['You don\'t need to join the crowd <br> to have your say', 'Contemplate your future.Vote in !'],
       agreeableness: ['The fastest way to lose is to quit', 'Control your future.Vote in !'],
