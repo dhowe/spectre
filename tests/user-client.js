@@ -27,6 +27,7 @@ describe('Client User', function () {
         hasImage: true,
         login: "dave@abc.com",
         loginType: "twitter",
+        lastPageVisit: { time: +Date.now(), page: '/Test' },
         similars: ["1111||Dave", "2222||Jen"],
         traits: {
           agreeableness: .3,
@@ -41,6 +42,8 @@ describe('Client User', function () {
       expect(user.login).eq("dave@abc.com");
       expect(user.hasImage).eq(true);
       expect(user.loginType).eq("twitter");
+      expect(user.lastPageVisit.page).eq("/Test");
+      //expect(user.lastPageVisit.time).is.a("date");
       expect(user.traits.openness).to.equal(1);
       expect(user.hasOceanTraits()).eq(true);
       expect(user.getSimilars()).is.a('array');
@@ -49,6 +52,7 @@ describe('Client User', function () {
       expect(user.getSimilars()[1].name).eq('Jen');
       expect(user.getSimilars()[0].id).eq('1111');
       expect(user.getSimilars()[1].id).eq('2222');
+      console.log(user);
     });
   });
 

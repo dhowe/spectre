@@ -267,6 +267,9 @@ class Game extends React.Component {
 
     if (typeof this.context._id !== 'undefined') { // TMP: remove
 
+      // update last page context
+      this.context.lastPageVisit = { page: '/Game', time: Date.now };
+
       UserSession.updateUser(this.context,
         json => {
           Object.assign(this.context, json);

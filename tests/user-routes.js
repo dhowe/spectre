@@ -31,42 +31,6 @@ describe('User Routes', () => {
     });
   });
 
-  /*describe('Images: POST /api/users/photoset/:uid', () => {
-
-    it('should upload a set of user photos', (done) => {
-      done();
-      return;
-
-      let imgObj = {};
-      for (var i = 0; i < 5; i++) {
-        let fname = 'target' + i + '.png';
-        imgObj[fname] = fs.readFileSync('./web-client/public/targets/' + fname);
-      }
-
-      let data = [];
-      for (var i = 0; i < 5; i++) {
-        let fname = 'target' + i + '.png';
-        data.push(fs.readFileSync('./web-client/public/targets/' + fname));
-      }
-
-      let uid = 'dfjalkj342';
-      chai.request(host)
-        .post('/api/users/photoset/' + uid)
-        .auth(env.API_USER, env.API_SECRET)
-        .field('videoId', 2)
-        .field('clientId', env.CLIENT_ID)
-        .attach('photoSet', data)
-        .end((err, res) => {
-          console.log('RES', res.body);
-          expect(res).to.have.status(200);
-          expect(res.body).is.a('array');
-          //expect(res.body.url).to.startsWith('/profiles/' + uid);
-          //expect(res.body.url).to.endsWith('.png');
-          done();
-        });
-    });
-  });*/
-
   describe('List: GET /api/users', () => {
 
     it('should return a list of all users', (done) => {
@@ -323,6 +287,7 @@ describe('User Routes', () => {
         login: "daniel2@aol.com",
         loginType: "facebook",
         clientId: 1,
+        lastPageVisit: { time: +Date.now(), page: '/Test' },
         traits: {
           agreeableness: 0.2038,
           conscientiousness: 0.2324,
@@ -342,6 +307,11 @@ describe('User Routes', () => {
           expect(res.body.clientId).eq(1);
           expect(res.body.name).eq(user.name);
           expect(res.body.traits.openness).eq(user.traits.openness);
+
+          Object.assign(user, res.body)
+          expect(user.name).eq("daniel2");
+          expect(user.lastPageVisit.page).eq("/Test");
+          
           done();
         });
     });

@@ -177,6 +177,10 @@ User.schema = () => {
     adIssue: {
       type: 'string'
     },
+    lastPageVisit: {
+      time: { type: 'date' },
+      page: { type: 'string' }
+    },
     traits: {
       openness: { type: 'number' },
       conscientiousness: { type: 'number' },
