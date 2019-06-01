@@ -1,0 +1,85 @@
+@import '../../colors.scss';
+
+.OceanProfile {
+    height: 450px;
+    background-color: $blue;
+    color: #ffffff;
+    width: 100vw;
+    .OceanIcons {
+        margin-right: 40px;
+        margin-left: 20px;
+    }
+    .OceanText {
+        max-width: 500px;
+        margin-right: 50px;
+    }
+    .OceanSliders {
+        width: 340px;
+        .textSliderText {
+            height: 80px;
+            color: #ffffff;
+
+            p {
+                color: #ffffff;
+                font-size: 16px;
+            }
+
+            .textSliderTextLeft {
+                p {
+                    font-size: 12px;
+                    margin-top: -10px;
+                    text-align: left;
+                }
+                svg {
+                    margin-left: -25px;
+                }
+                
+            }
+
+            div[class*="MuiSlider-track"] {
+                height: 6px !important;
+                background-color: #ffffff;
+                &[class*="MuiSlider-trackBefore"] {
+                    border-top-left-radius: 10px;
+                    border-bottom-left-radius: 10px;
+                }
+                &[class*="MuiSlider-trackAfter"] {
+                    opacity: 1;
+                    border-top-right-radius: 10px;
+                    border-bottom-right-radius: 10px;
+                }
+            }
+            
+            button[class*="MuiButtonBase"] {
+                width: 30px;
+                height: 30px;
+                background-color: $blue;
+                border: solid #ffffff 3px;
+                &[class*="MuiSlider-activated"]{
+                    width: 30px;
+                    height: 30px;
+                    background-color: $blue;
+                    border: solid #ffffff 3px;
+                    box-shadow: none;
+                }
+            }
+        }
+    }
+}
+
+.content .OceanProfile {
+    margin-left: -100px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    h6 {
+        color: #ffffff;
+        font-size: 18px;
+        text-align: left;
+        margin-bottom: 10px;
+        strong {
+            color: #ffffff;
+            font-weight: bold;
+        }
+    }
+}
