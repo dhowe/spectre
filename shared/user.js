@@ -1,5 +1,5 @@
-import Parser from './parser.js'
-import { predict } from './ppq.js'
+import Parser from './parser.js';
+import { predict } from './ppq.js';
 import DotEnv from 'dotenv';
 
 DotEnv.config();
@@ -35,7 +35,7 @@ export default class User {
   }
 
   targetAdImages() {
-    let pre = '/imgs/',
+    let pre = 'imgs/',
       ots = User.oceanTraits();
     let images = this.randomImages(pre);
     if (this.hasOceanTraits() && typeof this.adIssue !== 'undefined') {
@@ -226,8 +226,7 @@ export default class User {
   }
 
   _randomizeTraits() {
-    this.traits = {};
-    this.oceanTraits().forEach(t => this.traits[t] = Math.random());
+    this.traits = User._randomTraits();
     return this;
   }
 };
@@ -319,6 +318,11 @@ User.schema = () => {
       default: Date.now
     }
   }
+}
+
+User._randomTraits = function (tmpl) {
+  this.traits = {};
+  User.oceanTraits().forEach(t => this.traits[t] = Math.random());
 }
 
 User.oceanTraits = () => [

@@ -497,7 +497,7 @@ describe('User Routes', () => {
               expect(user2.similars).is.a('array');
               expect(user2.similars.length).is.gt(0);
               expect(user2.similars[0]).is.a('string');
-              
+
               expect(user2.getSimilars()).is.a('array');
               expect(user2.getSimilars().length).is.gt(0);
               expect(user2.getSimilars()[0]).is.a('object');
@@ -510,7 +510,9 @@ describe('User Routes', () => {
     });
 
     it('should update user with new array value', (done) => {
-      user.similars = [user._id + '2||Dave'];
+      let u = new User();
+      u._randomizeTraits();
+      user.similars = [{id: u._id, name: u.name, traits:u.traits }];
       chai.request(host)
         .put('/api/users/' + user._id)
         .auth(env.API_USER, env.API_SECRET)

@@ -30,7 +30,8 @@ describe('Client User', function () {
         login: "dave@abc.com",
         loginType: "twitter",
         lastPageVisit: { time: +Date.now(), page: '/Test' },
-        similars: ["1111||Dave", "2222||Jen"],
+        similars: [ JSON.stringify( { id: '1111', name: 'Dave', traits: User._randomTraits() } ),
+                    JSON.stringify( { id: '2222', name: 'Jen', traits: User._randomTraits()  } )],
         traits: {
           agreeableness: .3,
           conscientiousness: .4,
@@ -111,7 +112,7 @@ describe('Client User', function () {
       });
       // randoms 'remains'
       imgs = user.targetAdImages();
-      imgs.forEach(img => { expect(img.startsWith('imgs/remain')).to.eq(true)});
+      imgs.forEach(img => { expect(img.startsWith('imgs/remain')).to.eq(true) });
       expect(imgs.length).to.eq(4);
 
       user = new User({
