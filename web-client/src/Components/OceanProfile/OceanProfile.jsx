@@ -20,13 +20,7 @@ function OceanProfile(props) {
       <Grid container alignItems="center">
         <Grid className="OceanIcons" item>
           <div>
-            <Person/>
-          </div>
-          <div>
             <Play/>
-          </div>
-          <div>
-            <Question/>
           </div>
         </Grid>
         <Grid className="OceanText" item>
