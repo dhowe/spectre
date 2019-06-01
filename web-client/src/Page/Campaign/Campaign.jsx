@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import Fade from '@material-ui/core/Fade';
 import { Link } from 'react-router-dom';
 import IconButton from '../../Components/IconButton/IconButton';
-import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
+import OceanProfile from '../../Components/OceanProfile/OceanProfile';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 
@@ -24,7 +24,7 @@ class Campaign extends React.Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-          <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
+          <OceanProfile></OceanProfile>
           <div className={classes.content + " content"}>
               <Fade in={true} style={{transitionDelay: '200ms'}}>
                 <Typography component="h6" variant="h6">The {(this.context.adIssue || 'Remain')} campaign is in jeopardy.</Typography>
