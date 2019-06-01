@@ -106,8 +106,7 @@ class App extends React.Component {
             <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" />
             <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
             <Router>
-              <Route exact path="/" component={VideoTest} />
-              <Route exact path="/touch-to-begin" component={TouchToBegin} />
+              <Route exact path="/" component={TouchToBegin} />
               <Route exact path="/login" component={LoginPage} />
               <Route exact path="/username" component={Username} />
               <Route exact path="/take-selfie" component={TakeSelfie} />

@@ -74,7 +74,10 @@ class SearchingFor extends React.Component {
     user.loginType = user.loginType || 'email';
     user.login = user.login || 'Barney' + (+new Date()) + '@aol.com';
 
+    this.setState(() => ({ toNext: true })); // TMP
+
     // here we are doing the webcam capture
+    /*
     let data = this.webcam.getScreenshot();
     if (data && data.length) {
       let imgfile = this.toImageFile(data, user._id + '.jpg');
@@ -93,7 +96,7 @@ class SearchingFor extends React.Component {
     }
     else {
       console.error('no image capture');
-    }
+    }*/
   }
   renderRedirect() {
     if (this.state.toNext) {
