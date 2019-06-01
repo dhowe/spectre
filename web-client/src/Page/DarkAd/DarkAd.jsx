@@ -5,8 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import IconButton from '../../Components/IconButton/IconButton';
-import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
-import FooterLogo from '../../Components/FooterLogo/FooterLogo';
+import OceanProfile from '../../Components/OceanProfile/OceanProfile';
 import UserSession from '../../Components/UserSession/UserSession';
 
 const styles = {
@@ -64,7 +63,7 @@ class DarkAd extends React.Component {
 
     return (
       <div className={classes.root}>
-        <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
+        <OceanProfile></OceanProfile>
         <div className={classes.content + " content"}>
           <Typography component="h4" variant="h4">Create Your Campaign</Typography>
           <div className={classes.ad}>    { /* adIssue should never change after being selected '*/ }
@@ -95,7 +94,6 @@ class DarkAd extends React.Component {
             <IconButton icon="next" text="Next" />
           </Link>
         </div>
-        <FooterLogo />
       </div>
     );
   }

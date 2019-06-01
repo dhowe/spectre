@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
-import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
+import OceanProfile from '../../Components/OceanProfile/OceanProfile';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 
@@ -23,7 +23,7 @@ class PickYourSide extends React.Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-          <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
+          <OceanProfile></OceanProfile>
           <div className={classes.content + " content"}>
               <Typography component="h6" variant="h6">Influence {this.context.name}'s vote on Brexit:</Typography>
               <Link to="/campaign">
