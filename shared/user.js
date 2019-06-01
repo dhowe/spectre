@@ -174,11 +174,16 @@ export default class User {
   }
 
   getSimilars() {
-    return this.similars.map(s=>JSON.parse(s));
+    if (typeof this.similars === 'undefined') return [];
+    return this.similars.map(s => JSON.parse(s));
   }
 
   getTarget() {
-    return this.target.map(t=>JSON.parse(t));
+    if (typeof this.target === 'undefined') {
+      console.error("ERROR: user has no target");
+      return {id:'',name:'',traits: User._randomTraits()};
+    }
+    return this.target.map(t => JSON.parse(t));
   }
 
   virtueAsAdverb() {
