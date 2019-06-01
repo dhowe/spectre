@@ -8,6 +8,7 @@ import chai from 'chai';
 import fs from 'fs';
 
 import UserModel from '../user-model';
+import User from '../shared/user';
 
 const env = process.env;
 const expect = chai.expect;
@@ -311,7 +312,7 @@ describe('User Routes', () => {
           Object.assign(user, res.body)
           expect(user.name).eq("daniel2");
           expect(user.lastPageVisit.page).eq("/Test");
-          
+
           done();
         });
     });
@@ -452,7 +453,7 @@ describe('User Routes', () => {
           expect(res.body).is.a('object');
           expect(res.body.virtue).eq(user.virtue);
           expect(res.body.similars).is.a('array');
-          expect(res.body.targetId).eq(user.targetId);
+          //expect(res.body.targetId).eq(user.targetId);
           done();
         });
     });
@@ -470,7 +471,7 @@ describe('User Routes', () => {
         .send(user2)
         .end((err, res) => {
           if (err) throw err;
-          Object.assign(user2,res.body);
+          Object.assign(user2, res.body);
           let traits = {
             agreeableness: 0.5,
             conscientiousness: 0.5,
@@ -497,18 +498,22 @@ describe('User Routes', () => {
               expect(user2.similars).is.a('array');
               expect(user2.similars.length).is.gt(0);
               expect(user2.similars[0]).is.a('string');
+
               expect(user2.getSimilars()).is.a('array');
               expect(user2.getSimilars().length).is.gt(0);
               expect(user2.getSimilars()[0]).is.a('object');
               expect(user2.getSimilars()[0]).has.property('id');
               expect(user2.getSimilars()[0]).has.property('name');
+              expect(user2.getSimilars()[0]).has.property('traits');
               done();
             });
         });
     });
 
     it('should update user with new array value', (done) => {
-      user.similars = [user._id + '2||Dave'];
+      let u = new User();
+      u._randomizeTraits();
+      user.similars = [JSON.stringify({id: u._id, name: u.name, traits:u.traits })];
       chai.request(host)
         .put('/api/users/' + user._id)
         .auth(env.API_USER, env.API_SECRET)

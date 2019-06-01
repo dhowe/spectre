@@ -32,7 +32,7 @@ function OceanProfile(props) {
             how it is.
           </Typography>
           <Typography component="h6" variant="h6">
-            They may appear argumentative, confrontastional, insensitive,
+            They may appear argumentative, confrontational, insensitive,
             intimidating, and controlling.
           </Typography>
           <Typography component="h6" variant="h6">

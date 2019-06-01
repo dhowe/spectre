@@ -31,7 +31,7 @@ cd spectre
 When you have the correct version, install the required dependencies.
 
 ```
-yarn install
+yarn install && cd web-client && yarn install
 ```
 
 ## Running

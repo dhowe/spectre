@@ -1,5 +1,5 @@
-import Parser from './parser.js'
-import { predict } from './ppq.js'
+import Parser from './parser.js';
+import { predict } from './ppq.js';
 import DotEnv from 'dotenv';
 
 DotEnv.config();
@@ -34,8 +34,8 @@ export default class User {
     return images;
   }
 
-  getAdImages() {
-    let pre = '/imgs/',
+  targetAdImages() {
+    let pre = 'imgs/',
       ots = User.oceanTraits();
     let images = this.randomImages(pre);
     if (this.hasOceanTraits() && typeof this.adIssue !== 'undefined') {
@@ -65,7 +65,7 @@ export default class User {
     return set1.concat(set2);
   }
 
-  getAdSlogans() {
+  targetAdSlogans() {
     let ots = User.oceanTraits();
     let slogans = this.randomSlogans();
     if (this.hasOceanTraits() && typeof this.adIssue !== 'undefined') {
@@ -174,17 +174,16 @@ export default class User {
   }
 
   getSimilars() {
-    let result = [];
     if (typeof this.similars === 'undefined') return [];
-    this.similars.forEach(sims => {
-      let parts = sims.split("||");
-      if (parts.length != 2) {
-        console.log("Bad similar: " + sims);
-        return;
-      }
-      result.push({ id: parts[0], name: parts[1] });
-    });
-    return result;
+    return this.similars.map(s => JSON.parse(s));
+  }
+
+  getTarget() {
+    if (typeof this.target === 'undefined') {
+      console.error("ERROR: user has no target");
+      return {id:'',name:'',traits: User._randomTraits()};
+    }
+    return this.target.map(t => JSON.parse(t));
   }
 
   virtueAsAdverb() {
@@ -232,30 +231,37 @@ export default class User {
   }
 
   _randomizeTraits() {
-    this.traits = {};
-    this.oceanTraits().forEach(t => this.traits[t] = Math.random());
+    this.traits = User._randomTraits();
     return this;
   }
 };
 
 User.imageDir = '/profiles/';
 
+/**
+ * MongoDB database schema for the application
+ */
 User.schema = () => {
   return {
     name: {
       type: 'string'
     },
-    similars: { //
-      type: ['string']
-    },
     influencedBy: {
       type: ['string']
     },
-    clientId: { // in this case, the monolith id from .env file
+
+    /* In this case, the Monolith id from client's .env file */
+    clientId: {
       type: 'number',
       default: -1
     },
-    category: { // OCEAN-group: from -5 to 5, with 0 meaning neutral
+
+    /*
+     * OCEAN-group: from -5 to 5, according to OCEAN acronym (O=1, C=2, etc).
+     * Positive numbers mean 'high', negative numbers mean 'low',
+     * 0 means the user is neutral and gets random assignments
+     */
+    category: {
       type: 'number',
       default: 0,
     },
@@ -267,13 +273,12 @@ User.schema = () => {
       type: 'boolean',
       default: false
     },
-    targetId: {
+    target: { // JSON-stringified User
       type: 'string'
       //type: { type: 'objectId', ref: 'User' }
     },
-    targetName: {
-      type: 'string'
-      //type: { type: 'objectId', ref: 'User' }
+    similars: { // JSON-stringified Users
+      type: ['string']
     },
     virtue: {
       type: 'string'
@@ -288,8 +293,8 @@ User.schema = () => {
     traits: {
       openness: { type: 'number' },
       conscientiousness: { type: 'number' },
-      agreeableness: { type: 'number' },
       extraversion: { type: 'number' },
+      agreeableness: { type: 'number' },
       neuroticism: { type: 'number' },
       relationship: { type: 'number' },
       gender: { type: 'number' },
@@ -318,6 +323,12 @@ User.schema = () => {
       default: Date.now
     }
   }
+}
+
+User._randomTraits = function (tmpl) {
+  let traits = {};
+  User.oceanTraits().forEach(t => traits[t] = Math.random());
+  return traits;
 }
 
 User.oceanTraits = () => [

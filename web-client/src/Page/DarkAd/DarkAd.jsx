@@ -58,8 +58,8 @@ class DarkAd extends React.Component {
     if (!this.context.hasOceanTraits()) { // TMP
       this.context._randomizeTraits();
     }
-    const slogans = this.context.getAdSlogans();
-    const images = this.context.getAdImages();
+    const slogans = this.context.targetAdSlogans();
+    const images = this.context.targetAdImages();
 
     return (
       <div className={classes.root}>

@@ -77,8 +77,9 @@ const update = function (req, res) {
             'Unable to add similars for user #' + req.params.uid, err);
           return;
         }
-
-        users && users.map(u => user.similars.push(u._id+'||'+u.name));
+        users && users.map(({ id, name, traits }) => {
+          user.similars.push(JSON.stringify(({ id, name, traits })));
+        });
       });
     }
 
@@ -124,7 +125,7 @@ const photo = function (req, res) {
 
   if (typeof req.params.uid === 'undefined' ||
     req.params.uid === 'undefined') {
-    return error(res,'no uid sent');
+    return error(res, 'no uid sent');
   }
 
   let upload = multer({
@@ -143,7 +144,7 @@ const photo = function (req, res) {
     if (e) return error(res, e);
     if (!req.file) return error(res, 'E2: Null file');
     //let url = req.protocol + "://" +  req.hostname + '/' + req.file.path;
-    req.file.url = req.file.path.replace(/.*\/profiles/,'/profiles');
+    req.file.url = req.file.path.replace(/.*\/profiles/, '/profiles');
     //console.log('Upload: '+req.file.url);
     res.status(200).send(req.file);
   });
