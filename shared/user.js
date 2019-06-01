@@ -177,6 +177,10 @@ export default class User {
     return this.similars.map(s=>JSON.parse(s));
   }
 
+  getTarget() {
+    return this.target.map(t=>JSON.parse(t));
+  }
+
   virtueAsAdverb() {
     const adverbs = {
       power: 'powerful',
@@ -230,22 +234,30 @@ export default class User {
 
 User.imageDir = '/profiles/';
 
+/**
+ * MongoDB database schema for the application
+ */
 User.schema = () => {
   return {
     name: {
       type: 'string'
     },
-    similars: { //
-      type: ['string']
-    },
     influencedBy: {
       type: ['string']
     },
-    clientId: { // in this case, the monolith id from .env file
+
+    /* In this case, the Monolith id from client's .env file */
+    clientId: {
       type: 'number',
       default: -1
     },
-    category: { // OCEAN-group: from -5 to 5, with 0 meaning neutral
+
+    /*
+     * OCEAN-group: from -5 to 5, according to OCEAN acronym (O=1, C=2, etc).
+     * Positive numbers mean 'high', negative numbers mean 'low',
+     * 0 means the user is neutral and gets random assignments
+     */
+    category: {
       type: 'number',
       default: 0,
     },
@@ -257,13 +269,12 @@ User.schema = () => {
       type: 'boolean',
       default: false
     },
-    targetId: {
+    target: { // JSON-stringified User
       type: 'string'
       //type: { type: 'objectId', ref: 'User' }
     },
-    targetName: {
-      type: 'string'
-      //type: { type: 'objectId', ref: 'User' }
+    similars: { // JSON-stringified Users
+      type: ['string']
     },
     virtue: {
       type: 'string'
