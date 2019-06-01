@@ -321,8 +321,9 @@ User.schema = () => {
 }
 
 User._randomTraits = function (tmpl) {
-  this.traits = {};
-  User.oceanTraits().forEach(t => this.traits[t] = Math.random());
+  let traits = {};
+  User.oceanTraits().forEach(t => traits[t] = Math.random());
+  return traits;
 }
 
 User.oceanTraits = () => [

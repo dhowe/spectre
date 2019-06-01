@@ -8,6 +8,8 @@ describe('Client User', function () {
     it('Should correctly construct an empty user', function () {
       let user = new User();
       let fields = Object.keys(User.schema());
+
+      // these are fields defined with a default
       let ignores = ['clientId', 'isActive', 'category'];
       fields.forEach(f => {
         if (ignores.indexOf(f) < 0) {
@@ -19,7 +21,6 @@ describe('Client User', function () {
       expect(user.category).eq(0);
       expect(user.isActive).eq(false);
       expect(user.hasOceanTraits()).eq(false);
-      console.log(user);
     });
 
     it('Should create a user from a template', function () {
