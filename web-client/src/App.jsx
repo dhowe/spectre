@@ -13,7 +13,6 @@ import DataIs from './Page/DataIs/DataIs'
 import BelieveInDataism from './Page/BelieveInDataism/BelieveInDataism'
 import Steps from './Page/Steps/Steps'
 import PersonalisedExperience from './Page/PersonalisedExperience/PersonalisedExperience'
-import VideoTest from './Page/VideoTest/VideoTest'
 import Game from './Page/Game/Game'
 import ThankYou from './Page/ThankYou/ThankYou'
 import InfluenceAFollower from './Page/InfluenceAFollower/InfluenceAFollower';
