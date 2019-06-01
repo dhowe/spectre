@@ -46,8 +46,7 @@ function sketch(p) {
 
   p.setup = () => {
 
-    p.createCanvas(1080, 1320);
-
+    p.createCanvas(1080, 750);
     colors.sketchBg = p.color(styles.sketchBg);
     colors.sketchText = p.color(styles.sketchText);
     colors.sketchStroke = p.color(styles.sketchStroke);
@@ -55,7 +54,7 @@ function sketch(p) {
 
     p.textAlign(p.CENTER, p.CENTER);
     p.imageMode(p.CENTER);
-    brandSize = p.height / 15;
+    brandSize = p.height / 10;
 
     shuffle(Brand.names);
     Brand.instances = [];
