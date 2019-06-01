@@ -7,6 +7,7 @@ import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
+import OceanProfile from '../../Components/OceanProfile/OceanProfile';
 
 const styles = {
   root: {
@@ -26,6 +27,7 @@ class InsightComplete extends React.Component {
               <Typography component="h3" variant="h4">Verification complete. </Typography>
               <Typography component="h6" variant="h6">You've unlocked {this.context.targetName}’s OCEAN profile.</Typography>
               {/* INSERT OCEAN TOPBAR COMPONENT HERE (1080x450)*/}
+              <OceanProfile></OceanProfile>
               <Typography component="h6" variant="h6">You now have the <strong>power</strong> to influence {this.context.targetName}.</Typography>
               <Link to="/your-power">
                   <IconButton icon="next" text="Next" />
