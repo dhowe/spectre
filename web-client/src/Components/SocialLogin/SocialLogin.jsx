@@ -2,11 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Input from "@material-ui/core/Input";
-import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import UserSession from "../../Components/UserSession/UserSession";
 import Keyboard from "react-simple-keyboard";
-
+//import InputLabel from "@material-ui/core/InputLabel";
 import grey from "@material-ui/core/colors/grey";
 import "react-simple-keyboard/build/css/index.css";
 import "./SocialLogin.scss";
@@ -52,6 +51,7 @@ class SocialLogin extends React.Component {
     this.context.login = input;
     document.getElementsByName("email")[0].value = input;
   };
+  /* TODO: validate email here */
   validEmail = email => {
     var re = /^(([^<>()[]\\.,;:\s@"]+(\.[^<>()[]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
@@ -86,9 +86,7 @@ class SocialLogin extends React.Component {
                 classes={{
                   root: classes.cssLabel,
                   focused: classes.cssFocused
-                }}
-              >
-                
+                }}>
                 Email
               </InputLabel> */}
               <Input

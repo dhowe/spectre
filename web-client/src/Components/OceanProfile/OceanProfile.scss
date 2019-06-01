@@ -85,4 +85,17 @@
 .content .OceanProfile {
     margin-left: -100px;
     position: relative;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    h6 {
+        color: #ffffff;
+        font-size: 18px;
+        text-align: left;
+        margin-bottom: 10px;
+        strong {
+            color: #ffffff;
+            font-weight: bold;
+        }
+    }
 }
