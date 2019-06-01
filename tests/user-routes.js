@@ -311,7 +311,7 @@ describe('User Routes', () => {
           Object.assign(user, res.body)
           expect(user.name).eq("daniel2");
           expect(user.lastPageVisit.page).eq("/Test");
-          
+
           done();
         });
     });
@@ -497,11 +497,13 @@ describe('User Routes', () => {
               expect(user2.similars).is.a('array');
               expect(user2.similars.length).is.gt(0);
               expect(user2.similars[0]).is.a('string');
+              
               expect(user2.getSimilars()).is.a('array');
               expect(user2.getSimilars().length).is.gt(0);
               expect(user2.getSimilars()[0]).is.a('object');
               expect(user2.getSimilars()[0]).has.property('id');
               expect(user2.getSimilars()[0]).has.property('name');
+              expect(user2.getSimilars()[0]).has.property('traits');
               done();
             });
         });

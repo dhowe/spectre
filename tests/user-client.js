@@ -19,6 +19,7 @@ describe('Client User', function () {
       expect(user.category).eq(0);
       expect(user.isActive).eq(false);
       expect(user.hasOceanTraits()).eq(false);
+      console.log(user);
     });
 
     it('Should create a user from a template', function () {
@@ -71,7 +72,7 @@ describe('Client User', function () {
           neuroticism: .3
         }
       });
-      imgs = user.getAdImages();
+      imgs = user.targetAdImages();
       expect(imgs).to.have.members([
         'imgs/leave_1.1.png',
         'imgs/leave_1.2.png',
@@ -89,7 +90,7 @@ describe('Client User', function () {
           neuroticism: .31
         }
       });
-      imgs = user.getAdImages();
+      imgs = user.targetAdImages();
       //console.log(imgs);
       expect(imgs).to.have.members([
         'imgs/leave_4.1.png',
@@ -109,7 +110,7 @@ describe('Client User', function () {
         }
       });
       // randoms 'remains'
-      imgs = user.getAdImages();
+      imgs = user.targetAdImages();
       imgs.forEach(img => { expect(img.startsWith('imgs/remain')).to.eq(true)});
       expect(imgs.length).to.eq(4);
 
@@ -123,7 +124,7 @@ describe('Client User', function () {
           neuroticism: 0
         }
       });
-      imgs = user.getAdImages();
+      imgs = user.targetAdImages();
       expect(imgs).to.have.members([
         'imgs/remain_5.1.png',
         'imgs/remain_5.2.png',
@@ -144,7 +145,7 @@ describe('Client User', function () {
           neuroticism: .3
         }
       });
-      let slo = user.getAdSlogans();
+      let slo = user.targetAdSlogans();
       expect(slo).to.include.members(User.adSlogans.leave.high.openness);
       expect(slo).to.include.members(User.adSlogans.leave.low.openness);
 
@@ -158,7 +159,7 @@ describe('Client User', function () {
           neuroticism: .31
         }
       });
-      slo = user.getAdSlogans();
+      slo = user.targetAdSlogans();
       expect(slo).to.include.members(User.adSlogans.leave.high.agreeableness);
       expect(slo).to.include.members(User.adSlogans.leave.low.agreeableness);
 
@@ -173,7 +174,7 @@ describe('Client User', function () {
         }
       });
       // randoms 'remains'
-      slo = user.getAdSlogans();
+      slo = user.targetAdSlogans();
       expect(slo.length).to.eq(4); // cat=1
 
       user = new User({
@@ -186,7 +187,7 @@ describe('Client User', function () {
           neuroticism: 0
         }
       });
-      slo = user.getAdSlogans();
+      slo = user.targetAdSlogans();
       expect(slo).to.include.members(User.adSlogans.remain.high.neuroticism);
       expect(slo).to.include.members(User.adSlogans.remain.low.neuroticism);
     });

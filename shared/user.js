@@ -34,7 +34,7 @@ export default class User {
     return images;
   }
 
-  getAdImages() {
+  targetAdImages() {
     let pre = '/imgs/',
       ots = User.oceanTraits();
     let images = this.randomImages(pre);
@@ -65,7 +65,7 @@ export default class User {
     return set1.concat(set2);
   }
 
-  getAdSlogans() {
+  targetAdSlogans() {
     let ots = User.oceanTraits();
     let slogans = this.randomSlogans();
     if (this.hasOceanTraits() && typeof this.adIssue !== 'undefined') {
@@ -174,17 +174,7 @@ export default class User {
   }
 
   getSimilars() {
-    let result = [];
-    if (typeof this.similars === 'undefined') return [];
-    this.similars.forEach(sims => {
-      let parts = sims.split("||");
-      if (parts.length != 2) {
-        console.log("Bad similar: " + sims);
-        return;
-      }
-      result.push({ id: parts[0], name: parts[1] });
-    });
-    return result;
+    return this.similars.map(s=>JSON.parse(s));
   }
 
   virtueAsAdverb() {
@@ -288,8 +278,8 @@ User.schema = () => {
     traits: {
       openness: { type: 'number' },
       conscientiousness: { type: 'number' },
-      agreeableness: { type: 'number' },
       extraversion: { type: 'number' },
+      agreeableness: { type: 'number' },
       neuroticism: { type: 'number' },
       relationship: { type: 'number' },
       gender: { type: 'number' },
