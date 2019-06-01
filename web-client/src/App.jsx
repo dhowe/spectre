@@ -119,9 +119,9 @@ class App extends React.Component {
               <Route exact path="/thank-you" component={ThankYou} />
               <Route exact path="/influence-a-follower" component={InfluenceAFollower} />
               <Route exact path="/selected-avatar" render={() => <SelectedAvatar />} />
-              <Route exact path="/insight-gender" render={() => <InsightGender  />} />
-              <Route exact path="/insight-skin" render={() => <InsightSkin/>} />
-              <Route exact path="/insight-financial" render={() => <InsightFinancial/>} />
+              <Route exact path="/insight-gender" render={() => <InsightGender />} />
+              <Route exact path="/insight-skin" render={() => <InsightSkin />} />
+              <Route exact path="/insight-financial" render={() => <InsightFinancial />} />
               <Route exact path="/insight-thank-you" component={InsightThankYou} />
               <Route exact path="/insight-sexuality" render={() => <InsightSexuality />} />
               <Route exact path="/insight-political" render={() => <InsightPolitical />} />
@@ -129,15 +129,15 @@ class App extends React.Component {
               <Route exact path="/your-power" component={YourPower} />
               <Route exact path="/pick-your-side" component={PickYourSide} />
               <Route exact path="/campaign" render={() => <Campaign />} />
-              <Route exact path="/influenced-by" render={() => <InfluencedBy  />} />
+              <Route exact path="/influenced-by" render={() => <InfluencedBy />} />
               <Route exact path="/dark-ad" component={DarkAd} />
-              <Route exact path="/target-ad" render={() => <TargetAd  />} />
-              <Route exact path="/success-ad" render={() => <SuccessAd  />} />
+              <Route exact path="/target-ad" render={() => <TargetAd />} />
+              <Route exact path="/success-ad" render={() => <SuccessAd />} />
               <Route exact path="/influence-a-nation" component={InfluenceANation} />
               <Route exact path="/consumer-data" component={ConsumerData} />
               <Route exact path="/political-data" component={PoliticalData} />
               <Route exact path="/home-data" component={HomeData} />
-              <Route exact path="/find-citizens" render={() => <FindCitizens  />} />
+              <Route exact path="/find-citizens" render={() => <FindCitizens />} />
               <Route exact path="/targets-found" component={TargetsFound} />/>
               <Route exact path="/launch-campaign" component={LaunchCampaign} />
               <Route exact path="/referendum-results" component={ReferendumResults} />
