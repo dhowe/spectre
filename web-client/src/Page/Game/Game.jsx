@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Link, Redirect } from 'react-router-dom';
-import P5Wrapper from 'react-p5-wrapper';
+import P5Wrapper from 'P5Wrapper';
 import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
@@ -39,7 +39,7 @@ const styles = {
  *   the text-generation functions (if nothing
  *   is moved, brand ratings are randomized)
  */
-let percent, totalDist;
+let percent, totalDist, colors = {};
 
 function sketch(p) {
 
@@ -50,6 +50,12 @@ function sketch(p) {
     p.createCanvas(1080, 1320);
     //p.createCanvas(540, 760);
 
+
+    colors.sketchBg = p.color(styles.sketchBg);
+    colors.sketchText = p.color(styles.sketchText);
+    colors.sketchStroke = p.color(styles.sketchStroke);
+    colors.sketchStrokeSel = p.color(styles.sketchStrokeSel);
+
     p.textAlign(p.CENTER, p.CENTER);
     p.imageMode(p.CENTER);
     brandSize = p.height / 15;
@@ -57,7 +63,7 @@ function sketch(p) {
     shuffle(Brand.names);
     Brand.instances = [];
     for (let i = 0; i < Brand.names.length; i++) {
-      let bx = -i * (p.width / 4) + p.width / 2;
+      let bx = -i * (p.width / 6) + p.width / 3;
       Brand.instances.push(new Brand(p, bx, p.height / 2, brandSize, Brand.names[i]));
 
     }
@@ -67,8 +73,8 @@ function sketch(p) {
 
   p.draw = function () {
 
-    p.background(styles.sketchBg);
-    p.stroke(styles.sketchStroke);
+    p.background(colors.sketchBg);
+    p.stroke(colors.sketchStroke);
 
     let lineGap = p.height / numLines;
     for (let i = 0; i < numLines; i++) {
@@ -86,9 +92,11 @@ function sketch(p) {
 
       if (timer < 0 && !done) finished();
 
-      p.fill(styles.sketchText);
+      p.fill(colors.sketchText);
       p.textSize(40);
       p.text(Math.max(0, timer), p.width - 60, brandSize / 2);
+      p.textSize(24);
+      p.text('fps='+Math.round(p.frameRate()), 50, 30); // tmp
     }
   };
 
@@ -185,7 +193,7 @@ class Brand {
     this.sz = sz;
     this.item = item;
     this.rating = 0;
-    this.strokeWeight = styles.sketchStrokeMinWeight;
+    this.strokeWeight = colors.sketchStrokeMinWeight;
     this.logo = this.p.loadImage('/imgs/' + this.item.replace(/ /g, '_') + '.png');
   }
   draw() {
@@ -210,18 +218,18 @@ class Brand {
   }
   render() {
     let p = this.p;
-    p.fill(styles.sketchBg);
-    p.stroke(this === Brand.active ? styles.sketchStrokeSel : styles.sketchStroke);
+    p.fill(colors.sketchBg);
+    p.stroke(this === Brand.active ? colors.sketchStrokeSel : colors.sketchStroke);
     p.strokeWeight(this === Brand.active ? styles.sketchStrokeWeight : styles.sketchStrokeMinWeight);
     p.ellipse(this.x, this.y, this.sz);
 
     p.image(this.logo, this.x, this.y, this.sz * .8, this.sz * .8);
 
-    p.noStroke();
-    p.fill(styles.sketchText);
-    p.textSize(this.sz / 4);
-    p.textAlign(p.CENTER, p.TOP);
-    p.text(this.item, this.x, this.y + this.sz / 2 + 2);
+    // p.noStroke();
+    // p.fill(colors.sketchText);
+    // p.textSize(this.sz / 4);
+    // p.textAlign(p.CENTER, p.TOP);
+    // p.text(this.item, this.x, this.y + this.sz / 2 + 2);
 
     p.textAlign(p.CENTER, p.CENTER);
   }
