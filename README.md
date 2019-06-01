@@ -6,17 +6,17 @@ Worship at the Altar of Dataism
 
 ## Installation
 
-We use node and npm or yarn.
+We use node and yarn.
 
 ### Dependencies and Versions
 
-Node version: v10.15.3
-npm version: v6.4.1
+Node version: v10.2
+Yarn version: v1.16
 
 Test versions with:
 
 ```
-node -v && npm -v && yarn -v
+node -v && yarn -v
 ```
 
 NOTE: all instructions below assume you are within the /spectre folder:
@@ -36,9 +36,8 @@ yarn install
 
 ## Running
 
-### Start the server
+### Start the server (note: requires a local mongodb install)
 
-Now we're ready to start:
 ```
 yarn start
 ```
