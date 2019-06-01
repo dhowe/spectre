@@ -2,13 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Link, Redirect } from 'react-router-dom';
-import P5Wrapper from 'P5Wrapper';
+import P5Wrapper from 'react-p5-wrapper';
 import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 
-// TMP:
 import './Game.css';
 
 const styles = {
@@ -24,7 +23,7 @@ const styles = {
   sketchStrokeMinWeight: 2,
 
   // can grab css from sass
-  sketchBg: '#FFF',
+  sketchBg: '#FFFFFF',
   sketchText: '#929392',
   sketchStroke: '#929392',
   sketchStrokeSel: '#21c0fc',
@@ -35,21 +34,19 @@ const styles = {
  *
  * Ratings go from -.8 to .8 for each brand
  * Hit the space-bar or let the timer run out
- *   to compute the personality score and test
- *   the text-generation functions (if nothing
+ *   to compute the personality score (if nothing
  *   is moved, brand ratings are randomized)
  */
 let percent, totalDist, colors = {};
 
 function sketch(p) {
 
-  let done, brandSize, start, numLines = 9;
+  let done, brandSize, start, fps, numLines = 9,
+    linesY = [];
 
-  p.setup = function () {
+  p.setup = () => {
 
     p.createCanvas(1080, 1320);
-    //p.createCanvas(540, 760);
-
 
     colors.sketchBg = p.color(styles.sketchBg);
     colors.sketchText = p.color(styles.sketchText);
@@ -71,7 +68,7 @@ function sketch(p) {
     start = p.millis();
   };
 
-  p.draw = function () {
+  p.draw = () => {
 
     p.background(colors.sketchBg);
     p.stroke(colors.sketchStroke);
@@ -81,40 +78,50 @@ function sketch(p) {
       p.strokeWeight(i % 2 === 0 ? styles.sketchStrokeWeight : 0);
       let ypos = lineGap * (i + 1) - lineGap / 2;
       p.line(0, ypos, p.width, ypos);
+      if (p.frameCount === 1) linesY.push(ypos);
     }
+    if (p.frameCount === 1) console.log(linesY);
 
     if (!done) Brand.updateAll();
     Brand.drawAll();
 
     if (styles.allowedTimeMs) {
       percent = elapsed() / styles.allowedTimeMs;
-      let timer = Math.floor(((styles.allowedTimeMs - (styles.allowedTimeMs * percent)) / 1000));
+      let timer = Math.floor(((styles.allowedTimeMs -
+        (styles.allowedTimeMs * percent)) / 1000));
 
       if (timer < 0 && !done) finished();
 
       p.fill(colors.sketchText);
       p.textSize(40);
       p.text(Math.max(0, timer), p.width - 60, brandSize / 2);
-      p.textSize(24);
-      p.text('fps='+Math.round(p.frameRate()), 50, 30); // tmp
+      p.textSize(30);
+      if (p.frameCount % 10 === 1) fps = Math.round(p.frameRate());
+      p.text('fps: ' + fps, 50, 30); // tmp
     }
   };
 
-  p.keyReleased = function () {
+  p.keyReleased = () => {
     if (p.key === ' ') finished();
   };
 
-  p.mouseReleased = function () {
+  p.mouseReleased = () => {
     if (Brand.active) {
-      let lineIdx = Math.floor(p.map(p.mouseY, 1, p.height - 1, 0, numLines));
-      lineIdx = p.constrain(lineIdx, 0, numLines - 1); // ints from 0 to 8
+      let lineIdx = -1,
+        closestLine = 10000;
+      for (var i = 0; i < linesY.length; i++) {
+        if (p.abs(linesY[i] - p.mouseY) < closestLine) {
+          closestLine = p.abs(linesY[i] - p.mouseY);
+          lineIdx = i;
+        }
+      }
       Brand.active.rating = p.map(lineIdx, 0, numLines - 1, 8, -8) / 10;
-      Brand.active.snapTo((lineIdx + 1) / (numLines + 1) * p.height);
+      Brand.active.snapTo(linesY[lineIdx]);
       Brand.active = false;
     }
   };
 
-  p.mousePressed = function () {
+  p.mousePressed = () => {
     Brand.active = false;
     Brand.instances.forEach(b => {
       if (b.contains(p.mouseX, p.mouseY)) {
@@ -123,7 +130,7 @@ function sketch(p) {
     });
   };
 
-  p.mouseDragged = function () {
+  p.mouseDragged = () => {
     if (Brand.active) {
       Brand.active.y += p.mouseY - p.pmouseY;
     }
@@ -255,8 +262,8 @@ class Brand {
 Brand.active = false;
 Brand.speed = styles.sketchSpeed;
 Brand.names = ['disney', 'converse', 'xbox', 'red bull', 'hello kitty', 'h&m', 'ben & jerrys', 'old spice', 'burberry', 'adidas', 'marvel', 'nike', 'zara', 'vans', 'starbucks', 'topshop', 'lacoste', 'sony', 'new look', 'rayban', 'asos', 'chanel'];
-Brand.drawAll = function () { Brand.instances.forEach(b => b.draw()) };
-Brand.updateAll = function () { Brand.instances.forEach(b => b.update()) };
+Brand.drawAll = () => { Brand.instances.forEach(b => b.draw()) };
+Brand.updateAll = () => { Brand.instances.forEach(b => b.update()) };
 
 ///////////////////// End p5.js sketch ////////////////////////////
 
