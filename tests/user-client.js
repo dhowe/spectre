@@ -316,10 +316,11 @@ describe('Client User', function () {
       user.traits = User._randomTraits();
       let result = user.generateSentences(3);
       console.log(result);
-      expect(result).is.a('string');
-      expect(result.length).is.gt(0);
-      expect(result.startsWith('Jane')).eq(true);
-      expect(user.hasOceanTraits()).eq(true);
+      expect(result).is.a('array');
+      expect(result.length).is.eq(3);
+      expect(result[0].startsWith('Jane')).eq(true);
+      expect(result[1].startsWith('Jane')).eq(false);
+      expect(result[2].startsWith('Jane')).eq(false);
     });
   });
 });

@@ -129,7 +129,7 @@ export default class User {
     numSentences = numSentences || 3;
 
     let data = [];
-    let targetNum = 3;
+    let targetNum = 3, maxPerTrait = 2;
     let traitNames = User.oceanTraits();
     let lines = this._descriptionLines();
 
@@ -147,14 +147,23 @@ export default class User {
     let re = new RegExp(this.name, "g");
     for (let i = 0, idx = 0; i < data.length; i++) {
       let parts = this.splitSentences(data[i].line);
+      let added = 0;
       parts.forEach((p, j) => {
-        if (p.length && sentences.length < targetNum) {
+        if (p.length && added < maxPerTrait) {
           if (sentences.length) p = p.replace(re, this.pronoun());
-          sentences.push(p.ucf());
+          if (sentences.length < targetNum) {
+            sentences.push(p.ucf());
+            if (++added >= maxPerTrait) {
+              console.log('JUMP');
+              return;
+            }
+          }
+
         }
       });
     }
-    return sentences.join(' ').trim();
+
+    return sentences;
   }
 
   splitSentences(text) {
