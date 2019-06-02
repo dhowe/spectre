@@ -8,8 +8,9 @@ We use node and yarn
 
 ### Dependencies and Versions
 
-Node version: v10.15.3
-yarn version: v1.15.2
+Node version: v10.2
+Yarn version: v1.16
+
 
 Test versions with:
 
