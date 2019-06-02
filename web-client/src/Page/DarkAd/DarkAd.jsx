@@ -11,36 +11,39 @@ import UserSession from '../../Components/UserSession/UserSession';
 const styles = {
   root: {
     flexGrow: 1,
-    width: "100%",
-    color: 'black'
+    width: '100%',
+    color: 'black',
   },
   image: {
-    width: '20%',
-    margin: '10pt'
+    width: '160px',
+    height: '130px',
+    margin: '25px',
   },
   button: {
     borderRadius: '28px',
-    margin: '16px',
+    margin: '30px',
     border: 'solid 3px #929391',
     backgroundColor: '#ffffff',
     boxShadow: 'none',
     color: '#929391',
-    width: '40%',
-    // textOverflow: 'ellipsis',
+    width: '330px',
+    height: '54px',
     whiteSpace: 'nowrap',
     overflow: 'hidden',
   },
   ad: {
     position: 'relative',
     margin: '0 auto',
-    width: '850px',
+    width: '800px',
+    height: '570px',
   },
   adImage: {
-    width: '850px'
+    width: '800px',
+    height: '570px',
   },
   campaignImage: {
     position: 'absolute',
-    bottom: '12px',
+    bottom: '10px',
     right: '0',
     width: '150px',
   },
@@ -53,7 +56,7 @@ const styles = {
     textAlign: 'center',
     width: '100%',
     backgroundColor: 'red',
-  }
+  },
 };
 
 class DarkAd extends React.Component {
@@ -62,9 +65,10 @@ class DarkAd extends React.Component {
     this.state = {
       image: '/imgs/darkad-default.png',
       defaultImageSelected: true,
-      text: ''
-    }
+      text: '',
+    };
   }
+
   render() {
     const { classes } = this.props;
     const campaignImage = this.context.adIssue === 'remain' ? 'imgs/vote-remain.png' : 'imgs/vote-leave.png'
@@ -77,7 +81,7 @@ class DarkAd extends React.Component {
 
     return (
       <div className={classes.root}>
-        <OceanProfile></OceanProfile>
+        <OceanProfile />
         <div className={classes.content + " content"}>
           <Typography component="h4" variant="h4">Create Your Campaign</Typography>
           <div className={classes.ad}>    { /* adIssue should never change after being selected '*/}
