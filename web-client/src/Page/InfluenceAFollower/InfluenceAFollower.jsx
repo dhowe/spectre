@@ -23,6 +23,9 @@ const styles = {
   glow: {
     color: '#ffd700',
   },
+  content: {
+    display: 'block',
+  }
 };
 
 const defaults = [

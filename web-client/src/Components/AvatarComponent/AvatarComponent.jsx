@@ -9,6 +9,7 @@ const styles = {
     margin: 10,
     width: 150,
     height: 150,
+    border: 'solid #9c9da1 4px',
   },
   targeted: {
     margin: 10,
