@@ -23,7 +23,7 @@ class InfluenceANation extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <div className={classes.root}>
+      <div className={classes.root + "InfluenceANation"}>
           <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
           <div className={classes.content + " content"}>
               <Typography class="top"><strong>Influence a nation</strong></Typography>

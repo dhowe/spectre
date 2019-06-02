@@ -1,23 +1,25 @@
 @import '../../colors.scss';
 
-// .content {
-//     display:block;
-// }
-.content p {
-    font-size: 48px;
-    font-weight: 400;
-    margin: 0;
-}
-.top {
-  padding-top: 75px;
-}
-.middle {
-  padding-top: 80px;
-}
-.semi-bold {
-    padding-top: 100px;
-    font-weight: 500 !important;
-}
-#GetMoreDataButton {
-  margin-top:150px;
+.InfluenceANation {
+  .content {
+      display:block;
+  }
+  .content p {
+      font-size: 48px;
+      font-weight: 400;
+      margin: 0;
+  }
+  .top {
+    padding-top: 75px;
+  }
+  .middle {
+    padding-top: 80px;
+  }
+  .semi-bold {
+      padding-top: 100px;
+      font-weight: 500 !important;
+  }
+  #GetMoreDataButton {
+    margin-top:150px;
+  }
 }
