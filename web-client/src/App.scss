@@ -11,6 +11,12 @@
   font-weight: bold;
 }
 
+@font-face {
+  font-family: "Montserrat";
+  src: url(Fonts/Montserrat/Montserrat-SemiBold.ttf);
+  font-weight:500;
+}
+
 * {
   -webkit-tap-highlight-color: rgba(0,0,0,0);
   -webkit-tap-highlight-color: transparent;
