@@ -89,7 +89,10 @@ function ConsumerData(props) {
               </Grid>
           </div>
 
-          <Link to="/political-data" className="disabled">
+          {/* <Link to="/political-data" className="disabled">
+            <IconButton enabled={false} icon="next" text="Next" />
+          </Link> */}
+          <Link to="/political-data" >
             <IconButton enabled={false} icon="next" text="Next" />
           </Link>
       </div>
