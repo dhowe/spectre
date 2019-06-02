@@ -69,19 +69,19 @@ function ConsumerData(props) {
                 <Grid item sm={3}><IconButton enabled={false} icon="travel" text="Travel" /></Grid>
                 <Grid item sm={3}><IconButton enabled={false} icon="biometrics" text="Biometrics" /></Grid>
               </Grid>
-              <Grid container>
+              <Grid className={classes.icons} container>
                 <Grid item sm={3}><IconButton enabled={false} icon="television" text="Television" /></Grid>
                 <Grid item sm={3}><IconButton enabled={false} icon="news" text="News &amp; Magazines" /></Grid>
                 <Grid item sm={3}><IconButton enabled={false} icon="store" text="Store &amp; Loyaty Cards" /></Grid>
                 <Grid item sm={3}><IconButton enabled={false} icon="vehicle" text="Vehicle GPS" /></Grid>
               </Grid>
-              <Grid container>
+              <Grid className={classes.icons} container>
                 <Grid item sm={3}><IconButton enabled={false} icon="online" text="Online Search History" /></Grid>
                 <Grid item sm={3}><IconButton enabled={false} icon="shopping" text="Shopping &amp; Mail Order" /></Grid>
                 <Grid item sm={3}><IconButton enabled={false} icon="location" text="Location" /></Grid>
                 <Grid item sm={3}><IconButton enabled={false} icon="music" text="Spotify / ITunes" /></Grid>
               </Grid>
-              <Grid container>
+              <Grid className={classes.icons} container>
                 <Grid item sm={3}><IconButton enabled={false} icon="insurance" text="Insurance" /></Grid>
                 <Grid item sm={3}><IconButton enabled={false} icon="social" text="Social Media" /></Grid>
                 <Grid item sm={3}><IconButton enabled={false} icon="education" text="Education" /></Grid>

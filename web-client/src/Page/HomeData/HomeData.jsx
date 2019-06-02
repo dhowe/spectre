@@ -37,6 +37,9 @@ const styles = {
   column: {
     flexDirection: 'column',
     display: 'flex',
+  },
+  icons: {
+    marginBottom: "30px",
   }
 };
 
@@ -54,12 +57,12 @@ function HomeData(props) {
           <strong>Choose 3 types of home data:</strong>
         </Typography>
           <div className="HomeDataIcons">
-              <Grid container>
+              <Grid className={classes.icons} container>
                 <Grid item sm={4}><IconButton enabled={false} icon="smartwatch" text="Smart Watch" /></Grid>
                 <Grid item sm={4}><IconButton enabled={false} icon="wifi" text="Wifi Router" /></Grid>
                 <Grid item sm={4}><IconButton enabled={false} icon="computers" text="Computers" /></Grid>
               </Grid>
-              <Grid container>
+              <Grid className={classes.icons} container>
                 <Grid item sm={4}><IconButton enabled={false} icon="mobile" text="Mobile Devices" /></Grid>
                 <Grid item sm={4}><IconButton enabled={false} icon="smarttv" text="Smart TV" /></Grid>
                 <Grid item sm={4}><IconButton enabled={false} icon="smartassistant" text="Smart Assistant" /></Grid>
