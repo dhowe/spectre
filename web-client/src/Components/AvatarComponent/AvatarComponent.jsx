@@ -4,13 +4,9 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 
+import './AvatarComponent.scss';
+
 const styles = {
-  bigAvatar: {
-    margin: 10,
-    width: 150,
-    height: 150,
-    border: 'solid #9c9da1 5px',
-  },
   targeted: {
     margin: 10,
     width: 60,
@@ -44,7 +40,8 @@ class AvatarComponent extends React.Component {
           <Avatar
             alt={target.name}
             src={target.image}
-            style={(className === 'active' ? styles.active : styles.bigAvatar)}
+            className={className !== 'active' && 'avatar-image'}
+            style={(className === 'active' ? styles.active : null)}
             onError={() => { this.src = '/profiles/default.jpg'; }}
           />
         </Grid>
