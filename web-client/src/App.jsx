@@ -138,7 +138,7 @@ class App extends React.Component {
               <Route exact path="/political-data" component={PoliticalData} />
               <Route exact path="/home-data" component={HomeData} />
               <Route exact path="/find-citizens" render={() => <FindCitizens />} />
-              <Route exact path="/targets-found" component={TargetsFound} />/>
+              <Route exact path="/targets-found" component={TargetsFound} />
               <Route exact path="/launch-campaign" component={LaunchCampaign} />
               <Route exact path="/referendum-results" component={ReferendumResults} />
               <Route exact path="/win" component={Win} />
