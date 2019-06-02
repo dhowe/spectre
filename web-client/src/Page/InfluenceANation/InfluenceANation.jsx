@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
-import IconButton from '../../Components/IconButton/IconButton';
+//import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import GetMoreDataButton from '../../Icons/Get_more_data_button.svg';
-import Fade from '@material-ui/core/Fade';
+//import Fade from '@material-ui/core/Fade';
 import "./InfluenceANation.scss";
 
 const styles = {

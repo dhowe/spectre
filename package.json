@@ -8,6 +8,7 @@
     "start": "node -r esm server.js",
     "server": "node -r esm server.js",
     "client": "cd web-client && yarn start",
+    "full-install": "yarn install & cd web-client && yarn install && cd -",
     "build-client": "cd web-client && yarn build",
     "start-client": "cd web-client && yarn start",
     "client-server": "yarn start",

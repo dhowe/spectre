@@ -83,7 +83,8 @@ export default class User {
   }
 
   targetImgUrl() {
-    return User.imageDir + this.getTarget().id + '.jpg';
+    let target = this.getTarget();
+    return target.id ? User.imageDir + this.getTarget().id + '.jpg' : false;
   }
 
   setBrands(brandData) {

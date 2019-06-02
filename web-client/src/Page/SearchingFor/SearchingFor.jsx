@@ -7,7 +7,7 @@ import { Redirect } from 'react-router-dom';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
-import Webcam from "react-webcam";
+//import Webcam from "react-webcam";
 import "./SearchingFor.scss";
 
 const styles = {
@@ -77,27 +77,27 @@ class SearchingFor extends React.Component {
 
     this.setState(() => ({ toNext: true })); // TMP
 
-    // here we are doing the webcam capture
-    /*
-    let data = this.webcam.getScreenshot();
-    if (data && data.length) {
-      let imgfile = this.toImageFile(data, user._id + '.jpg');
-      UserSession.postImage(this.context, imgfile,
-        json => {
-          console.log('Upload: http://localhost:3000' + json.url);
-          this.context.hasImage = true;
-          this.setState(() => ({ toNext: true }));
-        },
-        e => {
-          console.error("Error", e);
-          this.context.hasImage = false;
-          this.setState(() => ({ toNext: true }));
-        }
-      );
+    // here we are doing the webcam capture, disabled for now
+    if (false) {
+      let data = this.webcam.getScreenshot();
+      if (data && data.length) {
+        let imgfile = this.toImageFile(data, user._id + '.jpg');
+        UserSession.postImage(this.context, imgfile,
+          json => {
+            console.log('Upload: http://localhost:3000' + json.url);
+            this.context.hasImage = true;
+          },
+          e => {
+            console.error("Error", e);
+            this.context.hasImage = false;
+          }
+        );
+        this.setState(() => ({ toNext: true }));
+      }
+      else {
+        console.error('no image capture');
+      }
     }
-    else {
-      console.error('no image capture');
-    }*/
   }
   renderRedirect() {
     if (this.state.toNext) {
@@ -106,28 +106,27 @@ class SearchingFor extends React.Component {
   }
   render() {
     const { classes } = this.props;
-    const videoConstraints = {
+    /*const videoConstraints = {
       width: styles.profileImage.width,
       height: styles.profileImage.height,
       facingMode: "user"
-    };
+    };*/
     return (
       <div className={classes.root}>
           {this.renderRedirect()}
           <SpectreHeader colour="white" />
           <div className={classes.content + " content"}>
-              <Typography class="username" component="h3" variant="h3">[username]{this.context.name}</Typography>
+              <Typography class="username" component="h3" variant="h3">{this.context.name}</Typography>
               <Typography class="question" component="h3" variant="h3">What are you searching for today?</Typography>
-
               <div className='ImageCapture'>
-                <Webcam ref={this.setRef}
+                {/*<Webcam ref={this.setRef}
                   audio={false}
                   screenshotQuality={1}
                   screenshotFormat="image/jpeg"
                   width={styles.profileImage.width}
                   height={styles.profileImage.height}
                   style={{left: '-5000px', position: 'relative'}}
-                  videoConstraints={videoConstraints} />
+                  videoConstraints={videoConstraints} />*/}
               </div>
               <div class="buttonWrapper">
                   <Button className={classes.button} variant="contained" color="primary" onClick={() => this.handleClick('power')}>Power</Button>
