@@ -2,8 +2,6 @@
 Worship at the Altar of Dataism
 
 
-# Spectre Server
-
 ## Installation
 
 We use node and yarn.
