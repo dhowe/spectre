@@ -74,7 +74,10 @@ function PoliticalData(props) {
               </Grid>
           </div>
 
-          <Link to="/home-data" className="disabled">
+          {/* <Link to="/home-data" className="disabled">
+            <IconButton enabled={false} icon="next" text="Next" />
+          </Link> */}
+          <Link to="/home-data">
             <IconButton enabled={false} icon="next" text="Next" />
           </Link>
       </div>
