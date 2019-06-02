@@ -44,6 +44,7 @@ const styles = {
 };
 
 class SocialLogin extends React.Component {
+<<<<<<< Updated upstream
   handleChange = login => event => {
     this.context.login = event.target.value; // user-prop
   };
@@ -52,10 +53,74 @@ class SocialLogin extends React.Component {
     document.getElementsByName("email")[0].value = input;
   };
   /* TODO: validate email here */
+=======
+  onEmailChange(input) {
+    this.setState({ email: input});
+    this.context.emailValid = this.validEmail(input);
+    this.context.login = input;
+  }
+
+  handleChange = event => {
+    let input = event.target.value;
+    this.setState(
+      {
+        email: input
+      },
+      () => {
+        this.keyboardRef.keyboard.setInput(input);
+      }
+    );
+    this.context.emailValid = this.validEmail(input);
+    this.context.login = event.target.value; // user-prop
+  };
+
+  handleShift = () => {
+    let layoutName = this.state.layoutName;
+    this.setState({
+      layoutName: layoutName === "default" ? "shift" : "default"
+    });
+  };
+
+  onKeyPress = button => {
+    console.log(`Layout name ${this.state.layoutName}`)
+    if (button === "{shift}") {
+      this.handleShift();
+      this.unShiftNeeded = true;
+    } else if (button === "{lock}") {
+      this.handleShift();
+      this.unShiftNeeded = false;
+    } else {
+      console.log(`this unshift needed ${this.unShiftNeeded}`)
+      if (this.unShiftNeeded) {
+        this.setState({
+          layoutName: "default"
+        });
+        this.unShiftNeeded = false;
+      }
+    }
+  };
+
+>>>>>>> Stashed changes
   validEmail = email => {
     var re = /^(([^<>()[]\\.,;:\s@"]+(\.[^<>()[]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
   };
+<<<<<<< Updated upstream
+=======
+
+  constructor(props) {
+    super(props);
+    this.onEmailChange = this.onEmailChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleShift = this.handleShift.bind(this);
+ 
+    this.validEmail = this.validEmail.bind(this);
+    this.onKeyPress = this.onKeyPress.bind(this);
+    this.state = { emailValid: false, email: "", layoutName: "default" };
+    this.unShiftNeeded = false;
+  }
+
+>>>>>>> Stashed changes
   render() {
     const { classes } = this.props;
     return (
@@ -89,11 +154,26 @@ class SocialLogin extends React.Component {
                   focused: classes.cssFocused
                 }}>
                 Email
+<<<<<<< Updated upstream
               </InputLabel> */}
               <Input
                 name="email"
                 id="custom-css-standard-input"
                 onChange={this.handleChange("name")}
+=======
+              </InputLabel>
+              <Keyboard
+                ref={r => (this.keyboardRef = r)}
+                onChange={input => this.onEmailChange(input)}
+                onKeyPress={button => this.onKeyPress(button)}
+                layoutName={this.state.layoutName}  
+              />
+              <Input
+                name="email"
+                id="custom-css-standard-input"
+                value={this.state.email}
+                onChange={this.handleChange}
+>>>>>>> Stashed changes
                 classes={{
                   root: classes.textField,
                   underline: classes.cssUnderline

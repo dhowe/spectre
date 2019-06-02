@@ -26,7 +26,13 @@ const styles = {
 class LoginPage extends React.Component {
   constructor(props) {
     super(props);
+<<<<<<< Updated upstream
     this.state = { toNext: false };
+=======
+    this.modalTitle = '';
+    this.modalContent = '';
+    this.state = { toNext: false, modalOpen: false };
+>>>>>>> Stashed changes
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   handleSubmit(e) {
