@@ -1,0 +1,13 @@
+@import "../../fonts";
+
+.TakeBackControl-root-1 h6 {
+  margin-bottom: 70px;
+  margin-top: 40px;
+  font-size: 41px;
+}
+
+.TakeBackControl-root-1 h5 {
+  @extend %title;
+  margin-top: 300px;
+  font-size: 41px;
+}

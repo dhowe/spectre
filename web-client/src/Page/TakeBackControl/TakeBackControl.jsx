@@ -4,20 +4,44 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import { Link } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
-import IconButton from '../../Components/IconButton/IconButton';
+
+import Styles from '../../Styles';
+import colours from '../../colors.scss';
+import './TakeBackControl.scss';
+
+const width = 180;
+const height = 53;
+const fontSize = 22;
 
 const styles = {
   root: {
     flexGrow: 1,
-    width: "100%",
+    width: '100%',
     color: 'black',
   },
   clickToContinue: {
-    margin: "20% 0",
-  }
+    margin: '20% 0',
+  },
+  keepButton: {
+    ...Styles.button,
+    color: colours.blue,
+    borderColor: colours.blue,
+    marginRight: 20,
+    fontSize,
+    width,
+    height,
+  },
+  deleteButton: {
+    ...Styles.button,
+    marginLeft: 20,
+    fontSize,
+    width,
+    height,
+  },
 };
 
 class TakeBackControl extends React.Component {
@@ -25,25 +49,25 @@ class TakeBackControl extends React.Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-          <SpectreHeader colour="white" />
-          <div className={classes.content + " content"}>
-              <Typography component="h6" variant="h6">Take back control? </Typography>
-              <Typography component="h6" variant="h6">Delete your data from Spectre’s system?</Typography>
-              <Grid container justify="center">
-                  <Grid item>
-                      <Link to="/we-are-sorry">
-                          <IconButton icon="tick" text="Keep" />
-                      </Link>
-                  </Grid>
-                  <Grid item>
-                      <Link to="/we-are-sorry">
-                          <IconButton icon="x" text="Delete" />
-                      </Link>
-                  </Grid>
-              </Grid>
-          </div >
-          <FooterLogo />
-      </div >
+        <SpectreHeader colour="white" />
+        <div className={`${classes.content} content`}>
+          <Typography component="h5" variant="h5">Take back control? </Typography>
+          <Typography component="h6" variant="h6">Delete your data from Spectre’s system?</Typography>
+          <Grid container justify="center">
+            <Grid item>
+              <Link to="/we-are-sorry">
+                <Button className={classes.keepButton}>Keep</Button>
+              </Link>
+            </Grid>
+            <Grid item>
+              <Link to="/we-are-sorry">
+                <Button className={classes.deleteButton}>Delete</Button>
+              </Link>
+            </Grid>
+          </Grid>
+        </div>
+        <FooterLogo />
+      </div>
     );
   }
 }
