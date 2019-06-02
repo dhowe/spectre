@@ -106,11 +106,11 @@ class SearchingFor extends React.Component {
   }
   render() {
     const { classes } = this.props;
-    const videoConstraints = {
+    /*const videoConstraints = {
       width: styles.profileImage.width,
       height: styles.profileImage.height,
       facingMode: "user"
-    };
+    };*/
     return (
       <div className={classes.root}>
           {this.renderRedirect()}
@@ -118,7 +118,6 @@ class SearchingFor extends React.Component {
           <div className={classes.content + " content"}>
               <Typography class="username" component="h3" variant="h3">{this.context.name}</Typography>
               <Typography class="question" component="h3" variant="h3">What are you searching for today?</Typography>
-
               <div className='ImageCapture'>
                 {/*<Webcam ref={this.setRef}
                   audio={false}
