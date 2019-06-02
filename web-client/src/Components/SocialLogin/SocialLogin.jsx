@@ -1,15 +1,15 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
-import Input from "@material-ui/core/Input";
-import InputLabel from "@material-ui/core/InputLabel";
-import FormControl from "@material-ui/core/FormControl";
-import UserSession from "../../Components/UserSession/UserSession";
-import Keyboard from "react-simple-keyboard";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import UserSession from '../../Components/UserSession/UserSession';
+import Keyboard from 'react-simple-keyboard';
 
-import grey from "@material-ui/core/colors/grey";
-import "react-simple-keyboard/build/css/index.css";
-import "./SocialLogin.scss";
+import grey from '@material-ui/core/colors/grey';
+import 'react-simple-keyboard/build/css/index.css';
+import './SocialLogin.scss';
 
 const styles = {
   root: {},
@@ -17,24 +17,24 @@ const styles = {
   textField: {
     width: 300,
     color: grey[50],
-    "&:before": {
-      borderColor: grey[50]
-    }
+    '&:before': {
+      borderColor: grey[50],
+    },
   },
   cssLabel: {
     transform: "translate(0,1.5rem)",
     color: grey[50],
-    "&$cssFocused": {
-      color: grey[50]
-    }
+    '&$cssFocused': {
+      color: grey[50],
+    },
   },
   cssFocused: {
-    "&:after": {
-      borderBottomColor: grey[50]
-    }
+    '&:after': {
+      borderBottomColor: grey[50],
+    },
   },
   cssUnderline: {
-    "&:after": {
+    '&:after': {
       borderBottomColor: grey[50]
     }
   },

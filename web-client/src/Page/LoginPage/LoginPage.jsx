@@ -1,14 +1,14 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 import Logo from "../../Components/Logo/Logo";
-import { Link, Redirect } from "react-router-dom";
+import { Link, Redirect } from 'react-router-dom';
 import Modal from "../../Components/Modal/Modal";
-import SocialLogin from "../../Components/SocialLogin/SocialLogin";
-import IconButton from "../../Components/IconButton/IconButton";
-import SpectreHeader from "../../Components/SpectreHeader/SpectreHeader";
-import UserSession from "../../Components/UserSession/UserSession";
+import SocialLogin from '../../Components/SocialLogin/SocialLogin';
+import IconButton from '../../Components/IconButton/IconButton';
+import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
+import UserSession from '../../Components/UserSession/UserSession';
 
 import "./LoginPage.scss";
 
@@ -18,10 +18,10 @@ const styles = {
   root: {
     flexGrow: 1,
     width: "100%",
-    backgroundSize: "cover"
+    backgroundSize: 'cover'
   },
   clickToContinue: {
-    margin: "20% 0"
+    margin: '20% 0'
   }
 };
 
