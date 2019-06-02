@@ -12,7 +12,6 @@ import { ReactComponent as ThumbUp } from '../../Icons/insightthankyou.svg';
 import colours from '../../colors.scss';
 import './InsightThankYou.scss';
 
-console.log(colours);
 const styles = {
   root: {
     flexGrow: 1,
@@ -40,7 +39,7 @@ const styles = {
   title: {
     color: colours.blue,
 
-  }
+  },
 };
 
 class InsightThankYou extends React.Component {
