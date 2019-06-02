@@ -277,14 +277,13 @@ describe('Client User', function () {
     });
   });
 
-  describe('User.generateDescription()', function () {
+  describe('User.generateLongDescription()', function () {
 
     it('Should fail for a user without traits', function () {
-      expect(() => new User().generateDescription()).to.throw();
-      //expect(() => User.Create().generateDescription()).to.throw();
+      expect(() => new User().generateLongDescription()).to.throw();
     });
 
-    it('Should describe a user based on OCEAN traits', function () {
+    it('Should long-describe a user based on OCEAN traits', function () {
       let user = new User(); //User.Create();
       user.name = "Jane";
       user.gender = "female";
@@ -295,8 +294,28 @@ describe('Client User', function () {
         openness: Math.random(),
         neuroticism: Math.random()
       }
-      let result = user.generateDescription();
+      let result = user.generateLongDescription();
       //console.log(result);
+      expect(result).is.a('string');
+      expect(result.length).is.gt(0);
+      expect(result.startsWith('Jane')).eq(true);
+      expect(user.hasOceanTraits()).eq(true);
+    });
+  });
+
+  describe('User.generateDescription()', function () {
+
+    it('Should fail for a user without traits', function () {
+      expect(() => new User().generateDescription()).to.throw();
+    });
+
+    it('Should describe a user based on OCEAN traits', function () {
+      let user = new User(); //User.Create();
+      user.name = "Jane";
+      user.gender = "female";
+      user.traits = User._randomTraits();
+      let result = user.generateSentences(3);
+      console.log(result);
       expect(result).is.a('string');
       expect(result.length).is.gt(0);
       expect(result.startsWith('Jane')).eq(true);

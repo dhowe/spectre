@@ -4,7 +4,6 @@ import DotEnv from 'dotenv';
 
 DotEnv.config();
 
-
 /*
  * Lifecycle:
  *    - created [ id, createdAt ]  {1}
@@ -120,14 +119,77 @@ export default class User {
     }
   }
 
-  generateDescription(parser) {
+  generateSentences(parser, numSentences) {
 
     this._verifyTraits();
+    if (arguments.length === 1 && typeof parser === 'number') {
+      numSentences = parser;
+      parser = undefined;
+    }
+    numSentences = numSentences || 3;
 
+    let data = [];
+    let targetNum = 3;
+    let traitNames = User.oceanTraits();
+    let lines = this._descriptionLines();
+
+    this._parseLines(parser, lines).forEach((l, i) => {
+      data.push({
+        line: l,
+        trait: traitNames[i],
+        score: this.traits[traitNames[i]]
+      });
+    });
+
+    data.sort((a, b) => Math.abs(b.score - .5) - Math.abs(a.score - .5));
+
+    let sentences = [];
+    let re = new RegExp(this.name, "g");
+    for (let i = 0, idx = 0; i < data.length; i++) {
+      let parts = this.splitSentences(data[i].line);
+      parts.forEach((p, j) => {
+        if (p.length && sentences.length < targetNum) {
+          if (sentences.length) p = p.replace(re, this.pronoun());
+          sentences.push(p.ucf());
+        }
+      });
+    }
+    return sentences.join(' ').trim();
+  }
+
+  splitSentences(text) {
+
+    let delim = '___';
+    let abbrs = User.abbreviations;
+    let re = new RegExp(delim, 'g');
+
+    let unescapeAbbrevs = (arr) => {
+      for (let i = 0; i < arr.length; i++) {
+        arr[i] = arr[i].replace(re, ".");
+      }
+      return arr;
+    }
+
+    let escapeAbbrevs = (text) => {
+      for (let i = 0; i < abbrs.length; i++) {
+        let abv = abbrs[i],
+          idx = text.indexOf(abv);
+        while (idx > -1) {
+          text = text.replace(abv, abv.replace('.', delim));
+          idx = text.indexOf(abv);
+        }
+      }
+      return text;
+    }
+
+    let arr = escapeAbbrevs(text).match(/(\S.+?[.!?]["”\u201D]?)(?=\s+|$)/g);
+    return (text.length && arr && arr.length) ? unescapeAbbrevs(arr) : [text];
+  }
+
+  _descriptionLines() {
     let lines = [];
-    let traitNames = this.oceanTraits();
-
-    for (var i = 0; i < traitNames.length; i++) {
+    let traitNames = User.oceanTraits();
+    for (let i = 0; i < traitNames.length; i++) {
       if (typeof User.descriptionTemplate[traitNames[i]] !== 'undefined') {
         let val = this.traits[traitNames[i]];
         if (val < 0 || val > 1) throw Error('Bad "' + traitNames[i] + '" trait -> ' + val);
@@ -135,17 +197,25 @@ export default class User {
         lines.push(User.descriptionTemplate[traitNames[i]].text[idx]);
       }
     }
+    return lines;
+  }
 
-    // verify we have a parser
+  // verify we have a parser, then parse each line
+  _parseLines(parser, lines) {
     if (!parser) {
       if (typeof Parser === 'undefined') throw Error('No Parser found');
       parser = new Parser(this);
     }
-
-    for (var i = 0; i < lines.length; i++) {
+    for (let i = 0; i < lines.length; i++) {
       lines[i] = parser.parse(lines[i]);
     }
+    return lines;
+  }
 
+  generateLongDescription(parser) {
+    this._verifyTraits();
+    let lines = this._descriptionLines();
+    this._parseLines(parser, lines);
     return lines.join(' ').trim();
   }
 
@@ -199,7 +269,7 @@ export default class User {
   getTarget() {
     if (typeof this.target === 'undefined') {
       console.error("ERROR: user has no target");
-      return {id:'',name:'',traits: User._randomTraits()};
+      return { id: '', name: '', traits: User._randomTraits() };
     }
     return JSON.parse(this.target); // TODO: cache
   }
@@ -391,6 +461,8 @@ User.adSlogans = {
   }
 };
 
+User.abbreviations = ["Adm.", "Capt.", "Cmdr.", "Col.", "Dr.", "Gen.", "Gov.", "Lt.", "Maj.", "Messrs.", "Mr.", "Mrs.", "Ms.", "Prof.", "Rep.", "Reps.", "Rev.", "Sen.", "Sens.", "Sgt.", "Sr.", "St.", "a.k.a.", "c.f.", "i.e.", "e.g.", "vs.", "v.", "Jan.", "Feb.", "Mar.", "Apr.", "Mar.", "Jun.", "Jul.", "Aug.", "Sept.", "Oct.", "Nov.", "Dec."];
+
 User.descriptionTemplate = {
   openness: {
     desc: 'Openness to experience relates to our imagination and the degree to which we are comfortable with unfamiliarity',
@@ -411,7 +483,7 @@ User.descriptionTemplate = {
     meta: 'People scoring high on this trait can be described as organized, reliable, and efficient, while people scoring low on this trait are generally characterized as spontaneous and impulsive.',
     text: [
           '$user.name.ucf() $user.toBe() impulsive and whimsical, and fine with it! $user.pronoun().ucf() would say that sometimes decisions need to be made quickly, and that $user.pronoun() makes them quicker than most. $user.pronoun().ucf() would say $user.pronoun() $user.toBe() zany, colourful, and just generally great fun to be with... as long as someone isn’t relying on $user.pronoun() to get some work done.',
-          '$user.name.ucf() $user.toBe() spontaneous and fun. $user.pronoun().ucf() like to do unexpected things that make life that bit more interesting. $user.pronoun().ucf() $user.toBe()n’t completely unreliable, but $user.pronoun()’ve been known to slip up on occasion.',
+          '$user.name.ucf() $user.toBe() spontaneous and fun. $user.pronoun().ucf() likes to do unexpected things that make life that bit more interesting. $user.pronoun().ucf() $user.toBe()n’t completely unreliable, but $user.pronoun()’ve been known to slip up on occasion.',
           '$user.name.ucf() $user.toBe() random and fun to be around but $user.pronoun() can plan and persist when life requires it. Depending on the situation, $user.pronoun() can make quick decisions or deliberate for longer if necessary.',
           '$user.name.ucf() avoids foreseeable trouble through purposeful planning and achieves success through persistence. $user.pronoun().ucf() $user.toBe() reliable and prepared for life’s challenges.',
           '$user.name.ucf() $user.toBe() a perfectionist. $user.pronoun().ucf() prefers to plan everything to the last detail, which has consequently led to $user.poss() being very successful and extremely reliable. $user.pronoun().ucf() enjoys seeing $user.poss() long-term plans come to fruition.'
@@ -427,7 +499,7 @@ User.descriptionTemplate = {
           '$user.name.ucf() prefers low-key social occasions, with a few close friends. It’s not that $user.pronoun() $user.toBe() afraid of large parties; they\'re just not that fun for $user.poss().',
           '$user.name.ucf() enjoys and actively seeks out social occasions, but would say that they’re not everything. $user.pronoun().ucf() might say that sometimes it $user.toBe() nice to step back for a while and have a quiet night in.',
           '$user.name.ucf() $user.toBe() energetic and active. $user.pronoun().ucf() is someone who enjoys and actively seeks out social occasions, and especially enjoys talking with a big group of people.',
-          '$user.name.ucf() $user.toBe() constantly energetic, exuberant and active. $user.pronoun().ucf() is someone who aims to be the centre of attention at social occasions, asserts onself in groups, and usually says, "Yes!"'
+          '$user.name.ucf() $user.toBe() constantly energetic, exuberant and active. $user.pronoun().ucf() is someone who aims to be the centre of attention at social occasions, takes charge in groups, and usually says "Yes" to challenges.'
         ]
   },
 
