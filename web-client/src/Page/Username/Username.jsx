@@ -39,27 +39,68 @@ const styles = {
 };
 
 class Username extends React.Component {
+  onNameChange(input) {
+    this.setState({ name: input });
+    this.context.name = input;
+  }
+
+  handleChange = name => event => {
+    let input = event.target.value;
+    this.setState(
+      {
+        name: input
+      },
+      () => {
+        this.keyboardRef.keyboard.setInput(input);
+      }
+    );
+    this.context.name = input;
+  };
+
+  handleShift = () => {
+    let layoutName = this.state.layoutName;
+    this.setState({
+      layoutName: layoutName === "default" ? "shift" : "default"
+    });
+  };
+
+
+  onKeyPress = button => {
+    if (button === "{shift}") {
+      this.handleShift();
+      this.unShiftNeeded = true;
+    } else if (button === "{lock}") {
+      this.handleShift();
+      this.unShiftNeeded = false;
+    } else {
+      if (this.unShiftNeeded) {
+        this.setState({
+          layoutName: "default"
+        });
+        this.unShiftNeeded = false;
+      }
+    }
+  };
+
   constructor(props) {
     super(props);
     this.state = {
       name: '',
       gender: 'woman',
+      layoutName: "default"
     };
+    this.unShiftNeeded = false;
+    this.handleChange = this.handleChange.bind(this);
+    this.onNameChange = this.onNameChange.bind(this);
+    this.handleShift = this.handleShift.bind(this);
+    this.onKeyPress = this.onKeyPress.bind(this);
   };
-  handleChange = name => event => {
-    this.context.name = event.target.value; // user-prop
-    this.setState({
-      [name]: event.target.value
-    });
-  };
+
   handleRadioChange = event => {
     this.context.gender = event.target.value; // user-prop
     this.setState({ gender: event.target.value });
   };
-  onNameChange = (input) => {
-    this.context.name = input;
-    document.getElementById('name').value = input;
-  }
+
   render() {
     const { classes } = this.props;
     return (
@@ -71,12 +112,34 @@ class Username extends React.Component {
              id="name"
              label=""
              className={classes.textField}
-             value=""
+             value={this.state.name}
+             onChange={this.handleChange("name")}
              margin="normal"
              variant="outlined"
            />
           <div id='keywrapper'>
-            <Keyboard onChange={input => this.onNameChange(input)}/>
+          <Keyboard
+              ref={r => (this.keyboardRef = r)}
+              onChange={input => this.onNameChange(input)}
+              onKeyPress={button => this.onKeyPress(button)}
+              layoutName={this.state.layoutName}
+              layout={{
+                default: [
+                  "` 1 2 3 4 5 6 7 8 9 0 - = {bksp}",
+                  "{tab} q w e r t y u i o p [ ] \\",
+                  "{lock} a s d f g h j k l ; ' {enter}",
+                  "{shift} z x c v b n m , . / {shift}",
+                  "@ {space}"
+                ],
+                shift: [
+                  "~ ! @ # $ % ^ & * ( ) _ + {bksp}",
+                  "{tab} Q W E R T Y U I O P { } |",
+                  '{lock} A S D F G H J K L : " {enter}',
+                  "{shift} Z X C V B N M < > ? {shift}",
+                  "@ {space}"
+                ]
+              }} 
+            />
           </div>
 
           <Typography variant="h6"><br/>YOUR GENDER?</Typography>

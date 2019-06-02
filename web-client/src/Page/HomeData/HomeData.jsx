@@ -68,7 +68,8 @@ function HomeData(props) {
               </Grid>
           </div>
 
-          <Link to="/find-citizens" className="disabled">
+          <Link to="/find-citizens">
+          {/* <Link to="/find-citizens" className="disabled"></Link> */}
             <IconButton enabled={false} icon="next" text="Next" />
           </Link>
 

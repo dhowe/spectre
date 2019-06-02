@@ -44,26 +44,70 @@ const styles = {
 };
 
 class SocialLogin extends React.Component {
-  handleChange = login => event => {
-    this.context.login = event.target.value; // user-prop
-  };
   onEmailChange = input => {
+    this.setState({ email: input });
+    this.context.emailValid = this.validEmail(input);
     this.context.login = input;
-    document.getElementsByName("email")[0].value = input;
   };
-  /* TODO: validate email here */
+  handleChange = login => event => {
+    let input = event.target.value;
+    this.setState(
+      {
+        email: input
+      },
+      () => {
+        this.keyboardRef.keyboard.setInput(input);
+      }
+    );
+    this.context.emailValid = this.validEmail(input);
+    this.context.login = event.target.value; // user-prop
+  }
   validEmail = email => {
-    var re = /^(([^<>()[]\\.,;:\s@"]+(\.[^<>()[]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email);
+    var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
   };
+  handleShift = () => {
+    let layoutName = this.state.layoutName;
+    this.setState({
+      layoutName: layoutName === "default" ? "shift" : "default"
+    });
+  };
+  onKeyPress = button => {
+    if (button === "{shift}") {
+      this.handleShift();
+      this.unShiftNeeded = true;
+    } else if (button === "{lock}") {
+      this.handleShift();
+      this.unShiftNeeded = false;
+    } else {
+      console.log(`this unshift needed ${this.unShiftNeeded}`)
+      if (this.unShiftNeeded) {
+        this.setState({
+          layoutName: "default"
+        });
+        this.unShiftNeeded = false;
+      }
+    }
+  };
+  constructor(props) {
+    super(props);
+    this.onEmailChange = this.onEmailChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.validEmail = this.validEmail.bind(this);
+    this.onKeyPress = this.onKeyPress.bind(this);
+    this.handleShift = this.handleShift.bind(this);
+    this.state = { emailValid: false, email: "", layoutName: "default" };
+    this.unShiftNeeded = false;
+  }
   render() {
     const { classes } = this.props;
     return (
       <div className={classes.root + " socialLogin"}>
         <div className={classes.content + " socialLogin-content"}>
-          <form onSubmit={this.props.handleSubmit}>
+          <form noValidate onSubmit={this.props.handleSubmit}>
           {/* #267: SHIFT / CAPS, etc. dont work */}
           <Keyboard
+            ref={r => (this.keyboardRef = r)}
                 layout={{
                   default: [
                     "~ 1 2 3 4 5 6 7 8 9 0 - + {delete}",
@@ -80,6 +124,8 @@ class SocialLogin extends React.Component {
                     ".com @ {space}"
                   ]
                 }}
+                onKeyPress={button => this.onKeyPress(button)}
+                layoutName={this.state.layoutName}
                 onChange={input => this.onEmailChange(input)}
               />
             <FormControl className={classes.margin}>
@@ -93,6 +139,7 @@ class SocialLogin extends React.Component {
               <Input
                 name="email"
                 id="custom-css-standard-input"
+                value={this.state.email}
                 onChange={this.handleChange("name")}
                 classes={{
                   root: classes.textField,

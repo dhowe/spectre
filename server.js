@@ -1,7 +1,7 @@
 import path from 'path';
 import cors from 'cors';
-import morgan from 'morgan';
 import express from 'express';
+import logger from './logger';
 //import multer from 'multer';
 import routes from './routes';
 import mongoose from 'mongoose';
@@ -28,7 +28,7 @@ app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: true }));
 
 // minimal logging
-app.all('*', morgan('[:date[clf]] :remote-addr :method :url :status', {
+app.all('*', logger('[:date[clf]] :remote-addr :method :url :status', {
   skip: () => dev
 }));
 
