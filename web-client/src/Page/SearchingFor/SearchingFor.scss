@@ -4,3 +4,34 @@
   border: 10px solid $red;
   display: none
 }
+.username {
+  padding-top: 635px;
+  color:$blue !important;
+  margin:0;
+  font-size: 44px;
+}
+.question {
+  height: 85px;
+  font-weight: 300;
+  font-size: 44px;
+  line-height: 115px;
+  vertical-align: baseline;
+  margin:0;
+}
+.buttonWrapper {
+  padding-left: -40px;
+  margin-top: 85px;
+}
+.buttonWrapper button{
+  display: inline-block;
+  width:180px;
+  height:53px;
+  font-size: 30px;
+  line-height: 32px;
+  font-weight: 500;
+  margin-left: 40px;
+  margin-top:0;
+  text-transform: capitalize;
+  letter-spacing: 0;
+  border-width:2px;
+}

@@ -15,6 +15,8 @@ import { ReactComponent as Question } from "../../Icons/question.svg";
 import "./OceanProfile.scss";
 
 function OceanProfile(props) {
+  let traits = props.subject.traits;
+  let tname = props.subject.name;
   return (
     <div className="OceanProfile">
       <Grid container alignItems="center">
@@ -25,10 +27,10 @@ function OceanProfile(props) {
         </Grid>
         <Grid className="OceanText" item>
           <Typography component="h6" variant="h6">
-            <strong>[USERNAME]’s OCEAN PROFILE</strong>
+            <strong>{tname.toUpperCase()}’s OCEAN PROFILE</strong>
           </Typography>
           <Typography component="h6" variant="h6">
-            [username] is the type of person that is not afraid to tell people
+            {tname} is the type of person that is not afraid to tell people
             how it is.
           </Typography>
           <Typography component="h6" variant="h6">
@@ -40,7 +42,7 @@ function OceanProfile(props) {
             desire to order the world around them.
           </Typography>
           <Typography component="h6" variant="h6">
-            <strong>[Username] is most likely influenced by contributor 1, contributor 2
+            <strong>{tname} is most likely influenced by contributor 1, contributor 2
             and contributor 3</strong>
           </Typography>
         </Grid>
@@ -51,10 +53,10 @@ function OceanProfile(props) {
               <Typography>Openness</Typography>
             </Grid>
             <Grid item xs={6}>
-              <Slider value={50} aria-labelledby="label" />
+              <Slider value={traits.openness*100} aria-labelledby="label" />
             </Grid>
             <Grid item xs={3}>
-              <Typography>100%</Typography>
+              <Typography>{Math.round(traits.openness*100)}%</Typography>
             </Grid>
           </Grid>
           <Grid className="textSliderText" container alignItems="center">
@@ -63,10 +65,10 @@ function OceanProfile(props) {
               <Typography>Conscientiousness</Typography>
             </Grid>
             <Grid item xs={6}>
-              <Slider value={50} aria-labelledby="label" />
+              <Slider value={traits.conscientiousness*100} aria-labelledby="label" />
             </Grid>
             <Grid item xs={3}>
-              <Typography>100%</Typography>
+              <Typography>{Math.round(traits.conscientiousness*100)}%</Typography>
             </Grid>
           </Grid>
           <Grid className="textSliderText" container alignItems="center">
@@ -75,10 +77,10 @@ function OceanProfile(props) {
               <Typography>Extroversion</Typography>
             </Grid>
             <Grid item xs={6}>
-              <Slider value={50} aria-labelledby="label" />
+              <Slider value={traits.extraversion*100} aria-labelledby="label" />
             </Grid>
             <Grid item xs={3}>
-              <Typography>100%</Typography>
+              <Typography>{Math.round(traits.extraversion*100)}%</Typography>
             </Grid>
           </Grid>
           <Grid className="textSliderText" container alignItems="center">
@@ -87,10 +89,10 @@ function OceanProfile(props) {
               <Typography>Agreeableness</Typography>
             </Grid>
             <Grid item xs={6}>
-              <Slider value={50} aria-labelledby="label" />
+              <Slider value={traits.agreeableness*100} aria-labelledby="label" />
             </Grid>
             <Grid item xs={3}>
-              <Typography>100%</Typography>
+              <Typography>{Math.round(traits.agreeableness*100)}%</Typography>
             </Grid>
           </Grid>
           <Grid className="textSliderText" container alignItems="center">
@@ -99,10 +101,10 @@ function OceanProfile(props) {
               <Typography>Neuroticism</Typography>
             </Grid>
             <Grid item xs={6}>
-              <Slider value={50} aria-labelledby="label" />
+              <Slider value={traits.neuroticism*100} aria-labelledby="label" />
             </Grid>
             <Grid item xs={3}>
-              <Typography>100%</Typography>
+              <Typography>{Math.round(traits.neuroticism*100)}%</Typography>
             </Grid>
           </Grid>
         </Grid>

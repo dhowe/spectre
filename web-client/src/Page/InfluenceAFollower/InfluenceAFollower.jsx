@@ -63,8 +63,7 @@ class InfluenceAFollower extends React.Component {
   }
 
   handleSelect(target) {
-    this.context.targetId = target.id;
-    this.context.targetName = target.name;
+    this.context.setTarget(target);
     this.setState({ toNext: true });
   }
 

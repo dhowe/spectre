@@ -382,10 +382,10 @@ describe('User Routes', () => {
 
   describe('Update: PUT /api/users/', () => {
 
-    let user;
+    let user, uid;
 
     beforeEach((done) => { // insert user before updating
-      user = {
+      user = new User({
         name: "daniel2",
         login: "daniel2@aol.com",
         loginType: "facebook",
@@ -397,20 +397,19 @@ describe('User Routes', () => {
           openness: 0.246,
           neuroticism: 0.465
         }
-      };
+      });
       chai.request(host)
         .post('/api/users')
         .auth(env.API_USER, env.API_SECRET)
         .send(user)
         .end((err, res) => {
           if (err) throw err;
-          user = res.body;
+          Object.assign(user, res.body);
           done();
         });
     });
 
     it('should fail for user with no id', (done) => {
-      user.virtue = 'truth';
       user._id = undefined;
       chai.request(host)
         .put('/api/users/' + user._id)
@@ -443,7 +442,8 @@ describe('User Routes', () => {
 
     it('should update user with new fields', (done) => {
       user.virtue = 'truth';
-      user.targetId = user._id + 'X';
+      let target = { id: user.id + 'X', name: 'Jay', traits: User._randomTraits() }
+      user.setTarget(target);
       chai.request(host)
         .put('/api/users/' + user._id)
         .auth(env.API_USER, env.API_SECRET)
@@ -453,7 +453,7 @@ describe('User Routes', () => {
           expect(res.body).is.a('object');
           expect(res.body.virtue).eq(user.virtue);
           expect(res.body.similars).is.a('array');
-          //expect(res.body.targetId).eq(user.targetId);
+          expect(res.body.target).eq(JSON.stringify(target));
           done();
         });
     });
@@ -513,7 +513,7 @@ describe('User Routes', () => {
     it('should update user with new array value', (done) => {
       let u = new User();
       u._randomizeTraits();
-      user.similars = [JSON.stringify({id: u._id, name: u.name, traits:u.traits })];
+      user.similars = [JSON.stringify({ id: u._id, name: u.name, traits: u.traits })];
       chai.request(host)
         .put('/api/users/' + user._id)
         .auth(env.API_USER, env.API_SECRET)

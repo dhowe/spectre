@@ -8,6 +8,7 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import Webcam from "react-webcam";
+import "./SearchingFor.scss";
 
 const styles = {
   root: {
@@ -115,8 +116,9 @@ class SearchingFor extends React.Component {
           {this.renderRedirect()}
           <SpectreHeader colour="white" />
           <div className={classes.content + " content"}>
-              <Typography component="h6" variant="h5">Welcome {this.context.name}</Typography>
-              <Typography component="h6" variant="h5">What are you searching for today?</Typography>
+              <Typography class="username" component="h3" variant="h3">[username]{this.context.name}</Typography>
+              <Typography class="question" component="h3" variant="h3">What are you searching for today?</Typography>
+
               <div className='ImageCapture'>
                 <Webcam ref={this.setRef}
                   audio={false}
@@ -127,11 +129,11 @@ class SearchingFor extends React.Component {
                   style={{left: '-5000px', position: 'relative'}}
                   videoConstraints={videoConstraints} />
               </div>
-              <div>
+              <div class="buttonWrapper">
                   <Button className={classes.button} variant="contained" color="primary" onClick={() => this.handleClick('power')}>Power</Button>
                   <Button className={classes.button} variant="contained" color="primary" onClick={() => this.handleClick('truth')}>Truth</Button>
-                  <Button className={classes.button} variant="contained" color="primary" onClick={() => this.handleClick('wealth')}>Wealth</Button>
-                  <Button className={classes.button} variant="contained" color="primary" onClick={() => this.handleClick('influence')}>Influence</Button>
+                  <Button className={classes.button} variant="contained" color="primary" onClick={() => this.handleClick('wealth')}>Influence</Button>
+                  <Button className={classes.button} variant="contained" color="primary" onClick={() => this.handleClick('influence')}>Wealth</Button>
               </div>
           </div>
           <FooterLogo />

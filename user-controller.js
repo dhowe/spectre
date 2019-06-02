@@ -64,6 +64,7 @@ const update = function (req, res) {
 
     Object.assign(user, req.body); // assign new traits to user
 
+    // TODO: if req.body has traits here, then call user.setTraits();
     if (user.hasOceanTraits() && user.similars.length < 1) {
 
       let limit = 8; // default limit

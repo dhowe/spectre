@@ -4,6 +4,13 @@ import DotEnv from 'dotenv';
 
 DotEnv.config();
 
+
+/*
+ * Lifecycle:
+ *    - created [ id, createdAt ]  {1}
+ *    - updated with brand data [ traits, influences, similars ]  {1}
+ *    - updated with lastPageVisit{url, time} [] {*}
+ */
 export default class User {
 
   constructor(tmpl) {
@@ -12,13 +19,6 @@ export default class User {
     this.clientId = process.env.REACT_APP_CLIENT_ID || -1;
     this.isActive = (tmpl && tmpl.isActive) || false;
     this.category = (tmpl && tmpl.category) || 0;
-  }
-
-  predictInfluences(num) { // TODO: should set property
-    num = num || 3;
-    this._verifyTraits();
-    // TMP:/TODO: implement
-    return ['Security or crime-related issues', 'Images of large crowds', 'Immigration issues'];
   }
 
   randomImages(pre) {
@@ -82,17 +82,14 @@ export default class User {
     return slogans;
   }
 
-  profileImgUrl() {
-    return User.imageDir + this.id + '.jpg';
-  }
-
   targetImgUrl() {
-    return User.imageDir + this.targetId + '.jpg';
+    return User.imageDir + this.getTarget().id + '.jpg';
   }
 
-  predictFromBrands(data) { // TODO:  should set property
-    if (!this.traits) this.traits = {};
-    return predict(data);
+  setBrands(brandData) {
+    let traits = predict(brandData);
+    // this.brands = brandData; // TODO
+    return this.setTraits(traits);
   }
 
   hasOceanTraits() {
@@ -173,9 +170,29 @@ export default class User {
     }
   }
 
+  setTraits(traits) {
+    if (typeof obj === 'string') throw Error('expecting traits object');
+    this.traits = traits;
+
+    // TODO: placeholder only
+    this.influences = ['Immigration issues', 'Images of large crowds', 'Short, punchy slogans'];
+
+    return this;
+  }
+
+  setSimilars(arr) {
+    if (!Array.isArray(arr)) throw Error('expecting array of objects');
+    this.similars = arr.map(obj => JSON.stringify(obj)); // TODO: cache
+  }
+
+  setTarget(obj) {
+    if (typeof obj === 'string') throw Error('expecting object');
+    this.target = JSON.stringify(obj); // TODO: cache
+  }
+
   getSimilars() {
     if (typeof this.similars === 'undefined') return [];
-    return this.similars.map(s => JSON.parse(s));
+    return this.similars.map(s => JSON.parse(s)); // TODO: cache
   }
 
   getTarget() {
@@ -183,7 +200,7 @@ export default class User {
       console.error("ERROR: user has no target");
       return {id:'',name:'',traits: User._randomTraits()};
     }
-    return this.target.map(t => JSON.parse(t));
+    return JSON.parse(this.target); // TODO: cache
   }
 
   virtueAsAdverb() {
@@ -231,8 +248,7 @@ export default class User {
   }
 
   _randomizeTraits() {
-    this.traits = User._randomTraits();
-    return this;
+    return this.setTraits(User._randomTraits());
   }
 };
 
@@ -246,7 +262,7 @@ User.schema = () => {
     name: {
       type: 'string'
     },
-    influencedBy: {
+    influences: {
       type: ['string']
     },
 

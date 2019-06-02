@@ -40,12 +40,12 @@ class AvatarComponent extends React.Component {
           <Avatar
             alt={target.name}
             src={target.image}
-            className={className !== 'active' && 'avatar-image'}
+            className={className !== 'active' ? 'avatar-image' : null}
             style={(className === 'active' ? styles.active : null)}
             onError={() => { this.src = '/profiles/default.jpg'; }}
           />
         </Grid>
-        <Typography style={className === 'targeted' ? styles.targeted_text : null}>{target.name}</Typography>
+        <Typography className="avatar-name" style={className === 'targeted' ? styles.targeted_text : null}>{target.name}</Typography>
       </div>
     );
   }

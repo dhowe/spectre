@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
 import { Link } from 'react-router-dom';
+import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import Button from '@material-ui/core/Button';
@@ -12,9 +14,6 @@ const styles = {
     flexGrow: 1,
     width: "100%",
     color: 'black'
-  },
-  content: {
-    paddingTop: "100px",
   },
   clickToContinue: {
     margin: "20% 0",
@@ -38,6 +37,9 @@ const styles = {
   column: {
     flexDirection: 'column',
     display: 'flex',
+  },
+  icons: {
+    marginBottom: "30px",
   }
 };
 
@@ -45,78 +47,34 @@ function HomeData(props) {
   const { classes } = props;
   return (
     <div className={classes.root}>
-            <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
-            <div className={classes.content + " content"}>
-                <Typography component="h3" variant="h3">Last but not least</Typography>
-                <Typography component="h3" variant="h3">HOME DATA:</Typography>
-                <div className={classes.row}>
-                    <div className={classes.column}>
-                        <Link to="/find-citizens">
-                            <Button className={classes.button} variant="contained" color="primary" >
-                                Smart TV
-                    </Button>
-                        </Link>
-                        <Link to="/find-citizens">
-                            <Button className={classes.button} variant="contained" color="primary" >
-                                Smart fridge
-                    </Button>
-                        </Link>
-                        <Link to="/find-citizens">
-                            <Button className={classes.button} variant="contained" color="primary" >
-                                Wifi Router
-                    </Button>
-                        </Link>
-                        <Link to="/find-citizens">
-                            <Button className={classes.button} variant="contained" color="primary" >
-                                Smart Assistant
-                    </Button>
-                        </Link>
-                        <Link to="/find-citizens">
-                            <Button className={classes.button} variant="contained" color="primary" >
-                                Mobile Devices
-                    </Button>
-                        </Link>
-                        <Link to="/find-citizens">
-                            <Button className={classes.button} variant="contained" color="primary" >
-                                Computer
-                    </Button>
-                        </Link>
-                    </div>
-                    <div className={classes.column}>
-                        <Link to="/find-citizens">
-                            <Button className={classes.button} variant="contained" color="primary" >
-                                Mobile Apps
-                    </Button>
-                        </Link>
-                        <Link to="/find-citizens">
-                            <Button className={classes.button} variant="contained" color="primary" >
-                                Thermostat
-                    </Button>
-                        </Link>
-                        <Link to="/find-citizens">
-                            <Button className={classes.button} variant="contained" color="primary" >
-                                Smart Watch
-                    </Button>
-                        </Link>
-                        <Link to="/find-citizens">
-                            <Button className={classes.button} variant="contained" color="primary" >
-                                Mobile Location Data
-                    </Button>
-                        </Link>
-                        <Link to="/find-citizens">
-                            <Button className={classes.button} variant="contained" color="primary" >
-                                Smart Home Hub
-                    </Button>
-                        </Link>
-                        <Link to="/find-citizens">
-                            <Button className={classes.button} variant="contained" color="primary" >
-                                Smart Lightbulbs
-                    </Button>
-                        </Link>
-                    </div >
-                </div >
-            </div >
-            <FooterLogo />
+            <SpectreHeader
+        colour="white"
+        progressActive={true}
+        progressNumber="two"
+      />
+      <div className={classes.content + " content"}>
+        <Typography component="h6" variant="h6">
+          <strong>Choose 3 types of home data:</strong>
+        </Typography>
+          <div className="HomeDataIcons">
+              <Grid className={classes.icons} container>
+                <Grid item sm={4}><IconButton enabled={false} icon="smartwatch" text="Smart Watch" /></Grid>
+                <Grid item sm={4}><IconButton enabled={false} icon="wifi" text="Wifi Router" /></Grid>
+                <Grid item sm={4}><IconButton enabled={false} icon="computers" text="Computers" /></Grid>
+              </Grid>
+              <Grid className={classes.icons} container>
+                <Grid item sm={4}><IconButton enabled={false} icon="mobile" text="Mobile Devices" /></Grid>
+                <Grid item sm={4}><IconButton enabled={false} icon="smarttv" text="Smart TV" /></Grid>
+                <Grid item sm={4}><IconButton enabled={false} icon="smartassistant" text="Smart Assistant" /></Grid>
+              </Grid>
+          </div>
+
+          <Link to="/find-citizens" className="disabled">
+            <IconButton enabled={false} icon="next" text="Next" />
+          </Link>
+
+      </div>
+      <FooterLogo />
         </div >
   );
 }

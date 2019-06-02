@@ -7,6 +7,9 @@ import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
+import GetMoreDataButton from '../../Icons/Get_more_data_button.svg';
+import Fade from '@material-ui/core/Fade';
+import "./InfluenceANation.scss";
 
 const styles = {
   root: {
@@ -23,11 +26,11 @@ class InfluenceANation extends React.Component {
       <div className={classes.root}>
           <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
           <div className={classes.content + " content"}>
-              <Typography component="h3" variant="h3">Influence a nation</Typography>
-              <Typography component="h6" variant="h6">Lets increase the {this.context.virtue||'influence'} of your campaign by convincing lots of people to vote {this.context.adIssue}.</Typography>
-              <Typography component="h6" variant="h6">We can show you how, but first, you must...</Typography>
+              <Typography class="top"><strong>Influence a nation</strong></Typography>
+              <Typography class="middle">Lets increase the {this.context.virtue||'influence'} of your campaign by convincing lots of people to vote {this.context.adIssue}.</Typography>
+              <Typography class="semi-bold">We can show you how, but first, you must...</Typography>
               <Link to="/consumer-data">
-                  <IconButton icon="next" text="Get more data" />
+                <img id="GetMoreDataButton" alt='Get more data' src={GetMoreDataButton} />
               </Link>
           </div>
           <FooterLogo />

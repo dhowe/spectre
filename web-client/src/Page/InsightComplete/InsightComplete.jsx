@@ -20,15 +20,19 @@ const styles = {
 class InsightComplete extends React.Component {
   render() {
     const { classes } = this.props;
+    if (typeof this.context.target === 'undefined') {
+      this.context.setTarget({ "id": "111111111111111111111111", "name": "Remy", "traits": { "openness": 0.5818180970605207, "conscientiousness": 0.07645862267650672, "extraversion": 0.2607193320319028, "agreeableness": 0.012588228025398163, "neuroticism": 0.16712815071948772 } });
+    }
+    const targetName = this.context.getTarget().name;
     return (
       <div className={classes.root}>
           <SpectreHeader colour="white" />
           <div className={classes.content + " content"}>
               <Typography component="h3" variant="h4">Verification complete. </Typography>
-              <Typography component="h6" variant="h6">You've unlocked {this.context.targetName}’s OCEAN profile.</Typography>
+              <Typography component="h6" variant="h6">You've unlocked {targetName}’s OCEAN profile.</Typography>
               {/* INSERT OCEAN TOPBAR COMPONENT HERE (1080x450)*/}
-              <OceanProfile></OceanProfile>
-              <Typography component="h6" variant="h6">You now have the <strong>power</strong> to influence {this.context.targetName}.</Typography>
+              <OceanProfile subject={this.context.getTarget()} classes={classes}></OceanProfile>
+              <Typography component="h6" variant="h6">You now have the <strong>power</strong> to influence {targetName}.</Typography>
               <Link to="/your-power">
                   <IconButton icon="next" text="Next" />
               </Link>
