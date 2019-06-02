@@ -44,26 +44,44 @@ const styles = {
 };
 
 class SocialLogin extends React.Component {
+  onEmailChange = input => {
+    this.setState({ email: input });
+    this.context.emailValid = this.validEmail(input);
+    this.context.login = input;
+  };
   handleChange = login => event => {
+    let input = event.target.value;
+    this.setState(
+      {
+        email: input
+      },
+      () => {
+        this.keyboardRef.keyboard.setInput(input);
+      }
+    );
+    this.context.emailValid = this.validEmail(input);
     this.context.login = event.target.value; // user-prop
   };
-  onEmailChange = input => {
-    this.context.login = input;
-    document.getElementsByName("email")[0].value = input;
-  };
-  /* TODO: validate email here */
   validEmail = email => {
-    var re = /^(([^<>()[]\\.,;:\s@"]+(\.[^<>()[]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email);
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
   };
+  constructor(props) {
+    super(props);
+    this.onEmailChange = this.onEmailChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.validEmail = this.validEmail.bind(this);
+    this.state = { emailValid: false, email: "" };
+  }
   render() {
     const { classes } = this.props;
     return (
       <div className={classes.root + " socialLogin"}>
         <div className={classes.content + " socialLogin-content"}>
-          <form onSubmit={this.props.handleSubmit}>
+          <form noValidate onSubmit={this.props.handleSubmit}>
           {/* #267: SHIFT / CAPS, etc. dont work */}
           <Keyboard
+            ref={r => (this.keyboardRef = r)}
                 layout={{
                   default: [
                     "~ 1 2 3 4 5 6 7 8 9 0 - + {delete}",
@@ -93,6 +111,7 @@ class SocialLogin extends React.Component {
               <Input
                 name="email"
                 id="custom-css-standard-input"
+                value={this.state.email}
                 onChange={this.handleChange("name")}
                 classes={{
                   root: classes.textField,
