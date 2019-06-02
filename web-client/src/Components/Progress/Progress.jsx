@@ -29,7 +29,7 @@ function Header({ active, progressNumber }) {
   const stages = [];
 
   for (let i = 1; i <= 3; i += 1) {
-    stages.push(<Position position={i} progress={cachedWordsToNumbers(progressNumber)} />);
+    stages.push(<Position key={i} position={i} progress={cachedWordsToNumbers(progressNumber)} />);
   }
 
   return (
@@ -39,9 +39,13 @@ function Header({ active, progressNumber }) {
   );
 }
 
+Header.defaultProps = {
+  active: false,
+  progressNumber: '0',
+};
 Header.propTypes = {
-  progressNumber: PropTypes.number.isRequired,
-  active: PropTypes.bool.isRequired,
+  progressNumber: PropTypes.string,
+  active: PropTypes.bool,
 };
 
 

@@ -1,0 +1,18 @@
+@import '../../colors.scss';
+
+div.avatar-image {
+  margin: 10px;
+  width: 150px;
+  height: 150px;
+  border: solid $grey 5px;
+
+  &:hover {
+      border-color: $blue;
+  }
+}
+
+.content p.avatar-name {
+  font-size: 24px;
+  font-weight: 500;
+  color: $lightGrey;
+}
