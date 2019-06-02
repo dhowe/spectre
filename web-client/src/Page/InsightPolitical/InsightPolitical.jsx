@@ -41,7 +41,7 @@ class InsightPolitical extends React.Component {
             <Typography component="h6" variant="h6">What is {this.context.targetName}’s likely political preference?</Typography>
             <AvatarComponent target={{ image: this.context.targetImgUrl() }}/>
             <div onTouchEnd={this.EnableButton}>
-              <TextSliderText leftText="Left wing" rightText="Right Wing" />
+              <TextSliderText leftText="Left wing" rightText="Right wing" />
             </div>
             <Link className={this.state.buttonEnabled ? "true" : "disabled"} to="/insight-complete">
               <IconButton enabled={this.state.buttonEnabled} icon="next" text="Next" />

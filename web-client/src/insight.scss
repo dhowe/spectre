@@ -1,0 +1,37 @@
+@import 'colors.scss';
+
+.iconButton {
+  margin-top: 200px;
+}
+.textSliderText {
+  margin-top: 125px;
+  font-weight: 300;
+  height:130px;
+}
+.textSliderText p {
+  display:inline-block;
+  font-weight: 300!important;
+  font-size: 40px !important;
+}
+
+div[class^="Insight"] h6{
+  font-size:40px;
+  font-weight: 300;
+  margin-top: 170px;
+  margin-bottom: 125px;
+}
+div[class^="Insight"] h6 span{
+  color:$blue;
+  font-weight: 500;
+}
+
+.textSliderText div[class*="MuiSlider-track"] {
+    height: 10px !important;
+    background-color:$blue;
+}
+.textSliderText button[class*="MuiButtonBase"], .textSliderText button[class*="MuiButtonBase"][class*="MuiSlider-activated"] {
+  border:solid white 8px;
+  width:60px;
+  height:60px;
+  background-color:$blue;
+}
