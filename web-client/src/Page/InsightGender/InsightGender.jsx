@@ -38,7 +38,7 @@ class InsightGender extends React.Component {
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive={true} progressNumber="one" />
-        <div className={classes.content + " content"}>
+        <div className={classes.content + " content insightPage"}>
           <Typography component="h6" variant="h6">
             What’s <span>{this.context.targetName}</span>’s likely gender?
           </Typography>

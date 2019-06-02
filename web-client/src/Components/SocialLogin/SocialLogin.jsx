@@ -66,12 +66,38 @@ class SocialLogin extends React.Component {
     var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
   };
+  handleShift = () => {
+    let layoutName = this.state.layoutName;
+    this.setState({
+      layoutName: layoutName === "default" ? "shift" : "default"
+    });
+  };
+  onKeyPress = button => {
+    if (button === "{shift}") {
+      this.handleShift();
+      this.unShiftNeeded = true;
+    } else if (button === "{lock}") {
+      this.handleShift();
+      this.unShiftNeeded = false;
+    } else {
+      console.log(`this unshift needed ${this.unShiftNeeded}`)
+      if (this.unShiftNeeded) {
+        this.setState({
+          layoutName: "default"
+        });
+        this.unShiftNeeded = false;
+      }
+    }
+  };
   constructor(props) {
     super(props);
     this.onEmailChange = this.onEmailChange.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.validEmail = this.validEmail.bind(this);
-    this.state = { emailValid: false, email: "" };
+    this.onKeyPress = this.onKeyPress.bind(this);
+    this.handleShift = this.handleShift.bind(this);
+    this.state = { emailValid: false, email: "", layoutName: "default" };
+    this.unShiftNeeded = false;
   }
   render() {
     const { classes } = this.props;
@@ -98,6 +124,8 @@ class SocialLogin extends React.Component {
                     ".com @ {space}"
                   ]
                 }}
+                onKeyPress={button => this.onKeyPress(button)}
+                layoutName={this.state.layoutName}  
                 onChange={input => this.onEmailChange(input)}
               />
             <FormControl className={classes.margin}>
