@@ -7,7 +7,7 @@ import { Redirect } from 'react-router-dom';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
-import Webcam from "react-webcam";
+//import Webcam from "react-webcam";
 import "./SearchingFor.scss";
 
 const styles = {
@@ -120,14 +120,14 @@ class SearchingFor extends React.Component {
               <Typography class="question" component="h3" variant="h3">What are you searching for today?</Typography>
 
               <div className='ImageCapture'>
-                <Webcam ref={this.setRef}
+                {/*<Webcam ref={this.setRef}
                   audio={false}
                   screenshotQuality={1}
                   screenshotFormat="image/jpeg"
                   width={styles.profileImage.width}
                   height={styles.profileImage.height}
                   style={{left: '-5000px', position: 'relative'}}
-                  videoConstraints={videoConstraints} />
+                  videoConstraints={videoConstraints} />*/}
               </div>
               <div class="buttonWrapper">
                   <Button className={classes.button} variant="contained" color="primary" onClick={() => this.handleClick('power')}>Power</Button>
