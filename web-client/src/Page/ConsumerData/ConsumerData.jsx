@@ -1,43 +1,50 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import { Link } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
-import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
-import FooterLogo from '../../Components/FooterLogo/FooterLogo';
+import React from "react";
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import { Link } from "react-router-dom";
+import Button from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid/Grid";
+import SpectreHeader from "../../Components/SpectreHeader/SpectreHeader";
+import FooterLogo from "../../Components/FooterLogo/FooterLogo";
+import IconButton from "../../Components/IconButton/IconButton";
 
 const styles = {
   root: {
     flexGrow: 1,
     width: "100%",
-    color: 'black'
-  },
-  content: {
-    paddingTop: "100px",
+    color: "black"
   },
   clickToContinue: {
-    margin: "20% 0",
+    margin: "20% 0"
   },
   button: {
-    borderRadius: '28px',
-    border: 'solid 3px #929391',
-    backgroundColor: '#ffffff',
-    boxShadow: 'none',
-    color: '#929391',
+    borderRadius: "28px",
+    border: "solid 3px #929391",
+    backgroundColor: "#ffffff",
+    boxShadow: "none",
+    color: "#929391"
   },
   link: {
-    display: 'block',
-    marginBottom: '30px',
+    display: "block",
+    marginBottom: "30px"
   },
   row: {
-    flexDirection: 'row',
-    display: 'flex',
-    padding: '0 30% 25% 25%' //tmp
+    flexDirection: "row",
+    display: "flex",
+    padding: "0 30% 25% 25%" //tmp
   },
   column: {
-    flexDirection: 'column',
-    display: 'flex',
+    flexDirection: "column",
+    display: "flex"
+  },
+  item: {
+    flexDirection: "column",
+    display: "flex",
+    padding: "30px"
+  },
+  icons: {
+    marginBottom: "30px",
   }
 };
 
@@ -45,94 +52,54 @@ function ConsumerData(props) {
   const { classes } = props;
   return (
     <div className={classes.root}>
-        <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
-        <div className={classes.content + " content"}>
-            <Typography component="h3" variant="h3">Choose 5 types of data:</Typography>
-            <Typography component="h3" variant="h3">CONSUMER DATA:</Typography>
-            <div className={classes.row}>
-                <div className={classes.column}>
-                    <Link to="/political-data">
-                        <Button className={classes.button} variant="contained" color="primary" >
-                            Health
-                        </Button>
-                    </Link>
-                    <Link to="/political-data">
-                        <Button className={classes.button} variant="contained" color="primary" >
-                            Finance
-                </Button>
-                    </Link>
-                    <Link to="/political-data">
-                        <Button className={classes.button} variant="contained" color="primary" >
-                            Travel
-                </Button>
-                    </Link>
-                    <Link to="/political-data">
-                        <Button className={classes.button} variant="contained" color="primary" >
-                            Biometrics
-                </Button>
-                    </Link>
-                    <Link to="/political-data">
-                        <Button className={classes.button} variant="contained" color="primary" >
-                            Television
-                </Button>
-                    </Link>
-                    <Link to="/political-data">
-                        <Button className={classes.button} variant="contained" color="primary" >
-                            News and Magazines
-                </Button>
-                    </Link>
-                    <Link to="/political-data">
-                        <Button className={classes.button} variant="contained" color="primary" >
-                            Store/Loyalty cards
-                    </Button>
-                    </Link>
-                </div>
-                <div className={classes.column}>
-                    <Link to="/political-data">
-                        <Button className={classes.button} variant="contained" color="primary" >
-                            Vehicle GPS
-                        </Button>
-                    </Link>
-                    <Link to="/political-data">
-                        <Button className={classes.button} variant="contained" color="primary" >
-                            Online Search History
-                </Button>
-                    </Link>
-                    <Link to="/political-data">
-                        <Button className={classes.button} variant="contained" color="primary" >
-                            Shopping and Mail Order
-                </Button>
-                    </Link>
-                    <Link to="/political-data">
-                        <Button className={classes.button} variant="contained" color="primary" >
-                            Location Data
-                </Button>
-                    </Link>
-                    <Link to="/political-data">
-                        <Button className={classes.button} variant="contained" color="primary" >
-                            Spotify/iTunes
-                </Button>
-                    </Link>
-                    <Link to="/political-data">
-                        <Button className={classes.button} variant="contained" color="primary" >
-                            Insurance
-                </Button>
-                    </Link>
-                    <Link to="/political-data">
-                        <Button className={classes.button} variant="contained" color="primary" >
-                            Social Media
-                </Button>
-                    </Link>
-                </div>
-            </div>
-        </div>
-        <FooterLogo />
+      <SpectreHeader
+        colour="white"
+        progressActive={true}
+        progressNumber="two"
+      />
+      <div className={classes.content + " content"}>
+        <Typography component="h6" variant="h6">
+          <strong>Choose 3 types of consumer data:</strong>
+        </Typography>
+
+          <div className="ConsumerDataIcons">
+              <Grid className={classes.icons} container>
+                <Grid item sm={3}><IconButton enabled={false} icon="health" text="Health" /></Grid>
+                <Grid item sm={3}><IconButton enabled={false} icon="finance" text="Finance" /></Grid>
+                <Grid item sm={3}><IconButton enabled={false} icon="travel" text="Travel" /></Grid>
+                <Grid item sm={3}><IconButton enabled={false} icon="biometrics" text="Biometrics" /></Grid>
+              </Grid>
+              <Grid container>
+                <Grid item sm={3}><IconButton enabled={false} icon="television" text="Television" /></Grid>
+                <Grid item sm={3}><IconButton enabled={false} icon="news" text="News &amp; Magazines" /></Grid>
+                <Grid item sm={3}><IconButton enabled={false} icon="store" text="Store &amp; Loyaty Cards" /></Grid>
+                <Grid item sm={3}><IconButton enabled={false} icon="vehicle" text="Vehicle GPS" /></Grid>
+              </Grid>
+              <Grid container>
+                <Grid item sm={3}><IconButton enabled={false} icon="online" text="Online Search History" /></Grid>
+                <Grid item sm={3}><IconButton enabled={false} icon="shopping" text="Shopping &amp; Mail Order" /></Grid>
+                <Grid item sm={3}><IconButton enabled={false} icon="location" text="Location" /></Grid>
+                <Grid item sm={3}><IconButton enabled={false} icon="music" text="Spotify / ITunes" /></Grid>
+              </Grid>
+              <Grid container>
+                <Grid item sm={3}><IconButton enabled={false} icon="insurance" text="Insurance" /></Grid>
+                <Grid item sm={3}><IconButton enabled={false} icon="social" text="Social Media" /></Grid>
+                <Grid item sm={3}><IconButton enabled={false} icon="education" text="Education" /></Grid>
+                <Grid item sm={3}><IconButton enabled={false} icon="payment" text="Payment" /></Grid>
+              </Grid>
+          </div>
+
+          <Link to="/political-data" className="disabled">
+            <IconButton enabled={false} icon="next" text="Next" />
+          </Link>
+      </div>
+      <FooterLogo />
     </div>
   );
 }
 
 ConsumerData.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(ConsumerData);
