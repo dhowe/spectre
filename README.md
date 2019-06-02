@@ -50,8 +50,19 @@ yarn start
 yarn test
 ```
 
-### Start the client
+## Running the client (no server required)
 
-To build, test and run the client, which does NOT require the server, see [these instructions](web-client/README.md)
+### To start the client for development:
 
+```
+yarn run start-client
+```
+
+### To build the client:
+
+```
+yarn run build-client
+```
+
+For more details on the client, see [these instructions](web-client/README.md)
 <br>
