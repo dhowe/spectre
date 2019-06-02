@@ -60,9 +60,10 @@ AvatarComponent.defaultProps = {
     image: 'https://material-ui.com/static/images/avatar/1.jpg',
   },
   className: null,
+  handleClick: () => {},
 };
 AvatarComponent.propTypes = {
-  handleClick: PropTypes.func.isRequired,
+  handleClick: PropTypes.func,
   target: PropTypes.object,
   className: PropTypes.string,
 };
