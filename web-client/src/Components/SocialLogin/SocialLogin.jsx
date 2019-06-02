@@ -61,7 +61,7 @@ class SocialLogin extends React.Component {
     );
     this.context.emailValid = this.validEmail(input);
     this.context.login = event.target.value; // user-prop
-  };
+  }
   validEmail = email => {
     var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
@@ -125,7 +125,7 @@ class SocialLogin extends React.Component {
                   ]
                 }}
                 onKeyPress={button => this.onKeyPress(button)}
-                layoutName={this.state.layoutName}  
+                layoutName={this.state.layoutName}
                 onChange={input => this.onEmailChange(input)}
               />
             <FormControl className={classes.margin}>
