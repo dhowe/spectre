@@ -77,27 +77,27 @@ class SearchingFor extends React.Component {
 
     this.setState(() => ({ toNext: true })); // TMP
 
-    // here we are doing the webcam capture
-    /*
-    let data = this.webcam.getScreenshot();
-    if (data && data.length) {
-      let imgfile = this.toImageFile(data, user._id + '.jpg');
-      UserSession.postImage(this.context, imgfile,
-        json => {
-          console.log('Upload: http://localhost:3000' + json.url);
-          this.context.hasImage = true;
-          this.setState(() => ({ toNext: true }));
-        },
-        e => {
-          console.error("Error", e);
-          this.context.hasImage = false;
-          this.setState(() => ({ toNext: true }));
-        }
-      );
+    // here we are doing the webcam capture, disabled for now
+    if (false) {
+      let data = this.webcam.getScreenshot();
+      if (data && data.length) {
+        let imgfile = this.toImageFile(data, user._id + '.jpg');
+        UserSession.postImage(this.context, imgfile,
+          json => {
+            console.log('Upload: http://localhost:3000' + json.url);
+            this.context.hasImage = true;
+          },
+          e => {
+            console.error("Error", e);
+            this.context.hasImage = false;
+          }
+        );
+        this.setState(() => ({ toNext: true }));
+      }
+      else {
+        console.error('no image capture');
+      }
     }
-    else {
-      console.error('no image capture');
-    }*/
   }
   renderRedirect() {
     if (this.state.toNext) {
