@@ -48,7 +48,8 @@ const styles = {
 
 class SocialLogin extends React.Component {
   onEmailChange(input) {
-    this.setState({ email: input, emailValid: this.validEmail(input) });
+    this.setState({ email: input });
+    this.context.emailValid = this.validEmail(input);
     this.context.login = input;
   }
 
@@ -56,13 +57,13 @@ class SocialLogin extends React.Component {
     let input = event.target.value;
     this.setState(
       {
-        email: input,
-        emailValid: this.validEmail(input)
+        email: input
       },
       () => {
         this.keyboardRef.keyboard.setInput(input);
       }
     );
+    this.context.emailValid = this.validEmail(input);
     this.context.login = event.target.value; // user-prop
   };
 
@@ -76,7 +77,7 @@ class SocialLogin extends React.Component {
     this.onEmailChange = this.onEmailChange.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.validEmail = this.validEmail.bind(this);
-    this.state = { emailValid: null, email: "" };
+    this.state = { emailValid: false, email: "" };
   }
 
   render() {
@@ -84,11 +85,6 @@ class SocialLogin extends React.Component {
     return (
       <div className={classes.root + " socialLogin"}>
         <div className={classes.content + " socialLogin-content"}>
-          <span>
-            {this.state.emailValid || this.state.email.length === 0
-              ? ""
-              : "Please enter a valid email"}
-          </span>
           <form noValidate onSubmit={this.props.handleSubmit}>
             <FormControl className={classes.margin}>
               <InputLabel
