@@ -65,9 +65,7 @@ yarn test
 
 ## Builds
 
-To make sure our builds work in different environments
-
-we introduce environment variables.
+To veirfy builds work in different contexts, we use environment variables.
 ```
  "build-dev": "REACT_APP_BUILD=dev npm-run-all build-css build-js",
  "build-prod": "REACT_APP_BUILD=prod npm-run-all build-css build-js",
