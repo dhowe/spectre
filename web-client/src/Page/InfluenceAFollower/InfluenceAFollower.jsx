@@ -7,13 +7,12 @@ import AvatarComponent from '../../Components/AvatarComponent/AvatarComponent';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
-import User from '../../Components/User/user';
 
 import './InfluenceAFollower.scss';
+import AvatarCircle from '../../Components/AvatarCircle/AvatarCircle';
 
 const styles = {
   root: {
-    // flexGrow: 1,
     width: '100%',
     color: 'black',
   },
@@ -98,17 +97,15 @@ class InfluenceAFollower extends React.Component {
           <Typography component="h5" variant="h5" className="influence-a-follower"><strong>Influence a follower!</strong></Typography>
           <Typography component="p" variant="body1" className="community">Spectre has a global community of followers.</Typography>
           <Typography component="h5" variant="h5" className="choose-participant">Choose a participant:</Typography>
-          <div className="follower-section">
-            <div className="follower-circle">
-              {this.renderSimilars().map((n, i) => (
-                <AvatarComponent
-                  handleClick={() => this.handleSelect(n)}
-                  key={InfluenceAFollower.generateKey(i)}
-                  target={{ name: n.name, image: `/profiles/${n.id}.jpg` }}
-                />
-              ))}
-            </div>
-          </div>
+          <AvatarCircle>
+            {this.renderSimilars().map((n, i) => (
+              <AvatarComponent
+                handleClick={() => this.handleSelect(n)}
+                key={InfluenceAFollower.generateKey(i)}
+                target={{ name: n.name, image: `/profiles/${n.id}.jpg` }}
+              />
+            ))}
+          </AvatarCircle>
         </div>
         <FooterLogo />
       </div>
@@ -117,8 +114,7 @@ class InfluenceAFollower extends React.Component {
 }
 
 InfluenceAFollower.propTypes = {
-  classes: PropTypes.objectOf({}).isRequired,
+  classes: PropTypes.object.isRequired,
 };
-//InfluenceAFollower.
 
 export default withStyles(styles)(InfluenceAFollower);
