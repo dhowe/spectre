@@ -29,6 +29,12 @@ class RadioButtonsGroup extends React.Component {
       <div className={classes.root}>
         <FormControl component="fieldset" className={classes.formControl}>
           <Typography variant="h6">{this.props.children}</Typography>
+          <Modal
+            isOpen={this.state.modalOpen}
+            title={this.modalTitle}
+            content={this.modalContent}
+            onClose={() => this.closeModal()}
+          />
           <RadioGroup
             aria-label="Gender"
             name="gender"
