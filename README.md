@@ -36,6 +36,8 @@ When you have the correct versions, install the required dependencies.
 yarn run full-install
 ```
 
+<br/>
+
 ## Server (no client required)
 
 ### Start (requires a local mongodb)
