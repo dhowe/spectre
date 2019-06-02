@@ -36,23 +36,24 @@ When you have the correct versions, install the required dependencies.
 yarn run full-install
 ```
 
-## Running
+## The server
 
-### Start the server (note: requires a local mongodb install)
+### Start (note: requires a local mongodb install)
 
 ```
 yarn start
 ```
 
-## Testing
 
-### Without starting the server, run the test suite
+### Test (without starting the server)
 
 ```
 yarn test
 ```
 
-## Running the client (no server required)
+<br/>
+
+## The client (no server required)
 
 ### To start the client for development:
 
