@@ -62,20 +62,21 @@ class SocialLogin extends React.Component {
       <div className={classes.root + " socialLogin"}>
         <div className={classes.content + " socialLogin-content"}>
           <form onSubmit={this.props.handleSubmit}>
+          {/* #267: SHIFT / CAPS, etc. dont work */}
           <Keyboard
                 layout={{
                   default: [
-                    "1 2 3 4 5 6 7 8 9 0 - {bksp}",
-                    "q w e r t y u i o p",
-                    "a s d f g h j k l",
-                    "z x c v b n m .",
+                    "~ 1 2 3 4 5 6 7 8 9 0 - + {delete}",
+                    "{tab} q w e r t y u i o p ",
+                    "{lock} a s d f g h j k l : ",
+                    "{shift} z x c v b n m , . ",
                     ".com @ {space}"
                   ],
                   shift: [
-                    "~ ! @ # $ % ^ & * ( ) _ + {bksp}",
-                    "{tab} Q W E R T Y U I O P { } |",
-                    '{lock} A S D F G H J K L : " {enter}',
-                    "{shift} Z X C V B N M < > ? {shift}",
+                    "` ! @ # $ % ^ & * ( ) _ + {bksp}",
+                    "{tab} Q W E R T Y U I O P ",
+                    '{lock} A S D F G H J K L : "',
+                    "{shift} Z X C V B N M < >",
                     ".com @ {space}"
                   ]
                 }}

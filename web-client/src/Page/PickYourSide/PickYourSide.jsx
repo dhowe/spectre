@@ -21,9 +21,12 @@ const styles = {
 class PickYourSide extends React.Component {
   render() {
     const { classes } = this.props;
+    if (typeof this.context.target === 'undefined') {
+      this.context.setTarget({ "id": "111111111111111111111111", "name": "Remy", "traits": { "openness": 0.5818180970605207, "conscientiousness": 0.07645862267650672, "extraversion": 0.2607193320319028, "agreeableness": 0.012588228025398163, "neuroticism": 0.16712815071948772 } });
+    }
     return (
       <div className={classes.root}>
-          <OceanProfile></OceanProfile>
+          <OceanProfile subject={this.context.getTarget()} ></OceanProfile>
           <div className={classes.content + " content"}>
               <Typography component="h6" variant="h6">Influence {this.context.name}'s vote on Brexit:</Typography>
               <Link to="/campaign">

@@ -143,8 +143,9 @@ function sketch(p) {
     done = true;
     checkData();
     let data = Brand.instances.map(b => ({ item: b.item, rating: b.rating }));
-    user.predictFromBrands(data).forEach(p => user.traits[p.trait] = p.score);
-    user.influencedBy = user.predictInfluences(3);
+    user.setBrands(data);
+    //.forEach(p => user.traits[p.trait] = p.score);
+    //user.influences = user.predictInfluences(3);
     game.componentComplete();
     //displayAsHtml(user);
   }

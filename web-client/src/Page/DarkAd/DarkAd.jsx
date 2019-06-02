@@ -72,7 +72,11 @@ class DarkAd extends React.Component {
   render() {
     const { classes } = this.props;
     const campaignImage = this.context.adIssue === 'remain' ? 'imgs/vote-remain.png' : 'imgs/vote-leave.png'
+    
     this.context.adIssue = this.context.adIssue || 'leave';
+    if (typeof this.context.target === 'undefined') {
+      this.context.setTarget({ "id": "111111111111111111111111", "name": "Remy", "traits": { "openness": 0.5818180970605207, "conscientiousness": 0.07645862267650672, "extraversion": 0.2607193320319028, "agreeableness": 0.012588228025398163, "neuroticism": 0.16712815071948772 } });
+    }
     if (!this.context.hasOceanTraits()) { // TMP
       this.context._randomizeTraits();
     }
@@ -81,7 +85,7 @@ class DarkAd extends React.Component {
 
     return (
       <div className={classes.root}>
-        <OceanProfile />
+        <OceanProfile subject={this.context.getTarget()} />
         <div className={classes.content + " content"}>
           <Typography component="h4" variant="h4">Create Your Campaign</Typography>
           <div className={classes.ad}>    { /* adIssue should never change after being selected '*/}
