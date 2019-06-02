@@ -36,7 +36,7 @@ yarn install
 
 ## Running
 
-### Main Project
+### The client
 
 Now we're ready to develop:
 ```
