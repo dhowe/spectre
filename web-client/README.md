@@ -41,12 +41,12 @@ Now we're ready to develop:
 yarn start
 ```
 
-Or create a static build:
+Or to create a build:
 ```
 yarn build
 ```
 
-or watch the CSS:
+or to watch the CSS:
 ```
 yarn watch-css
 ```
