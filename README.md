@@ -28,7 +28,7 @@ cd spectre
 ### Installing Dependencies
 
 
-When you have the correct version, install the required dependencies.
+When you have the correct versions, install the required dependencies.
 
 ```
 yarn install && cd web-client && yarn install
@@ -42,8 +42,16 @@ yarn install && cd web-client && yarn install
 yarn start
 ```
 
+## Testing
+
+### Without starting the server, run the test suite
+
+```
+yarn test
+```
+
 ### Start the client
 
-To build and run the client, see [these instructions](web-client/README.md)
+To build, test and run the client, which does NOT require the server, see [these instructions](web-client/README.md)
 
 <br>
