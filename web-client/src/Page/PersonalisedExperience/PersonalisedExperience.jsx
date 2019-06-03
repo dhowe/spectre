@@ -26,9 +26,16 @@ const styles = {
 };
 
 class PersonalisedExperience extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.goTo.bind(this);
+  }
+
   goTo() {
     this.props.history.push('/game');
   }
+
   render() {
     const { classes } = this.props;
     const timer = ({ seconds, completed }) => {
@@ -43,22 +50,25 @@ class PersonalisedExperience extends React.Component {
     return (
       <div className={classes.root + ' PersonalisedExperience'}>
         <SpectreHeader colour="white" />
-        <div className={classes.content + " content"}>
-          <Fade in={true} style={{transitionDelay: '200ms'}}>
-            <Typography component="h5" variant="h5">Excellent</Typography>
+        <div className={`${classes.content} content`}>
+          <Typography component="h5" variant="h5">Excellent</Typography>
+          <Fade in style={{transitionDelay: '2500ms'}}>
+            <Typography component="h5" variant="h5">
+              In order to create a&nbsp;
+              <strong>personalised experience</strong>
+            </Typography>
           </Fade>
-          <Fade in={true} style={{transitionDelay: '200ms'}}>
-            <Typography component="h5" variant="h5">In order to create a <strong>personalised experience</strong></Typography>
+          <Fade in style={{transitionDelay: '4500ms'}}>
+            <Typography component="h6" variant="h6">tell us what you love, tell us what you hate...</Typography>
           </Fade>
-          <Fade in={true} style={{transitionDelay: '200ms'}}>
-            <Typography component="h6" variant="h6" >tell us what you love, tell us what you hate...</Typography>
+          <Fade in style={{transitionDelay: '4500ms'}}>
+            <Countdown
+              onComplete={this.goTo}
+              date={Date.now() + 5000}
+              renderer={timer}
+            />
           </Fade>
-          <Countdown
-            onComplete={this.goTo.bind(this)}
-            date={Date.now() + 5000}
-            renderer={timer}
-          />
-        </div >
+        </div>
         <FooterLogo />
       </div>
     );

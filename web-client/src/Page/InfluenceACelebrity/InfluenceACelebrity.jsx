@@ -10,6 +10,7 @@ import IconButton from '../../Components/IconButton/IconButton';
 import AvatarCircle from '../../Components/AvatarCircle/AvatarCircle';
 import AvatarComponent from '../../Components/AvatarComponent/AvatarComponent';
 import Video from '../../Components/Video/Video';
+import Fade from '@material-ui/core/es/Fade/Fade';
 
 const styles = {
   root: {
@@ -28,17 +29,44 @@ class InfluenceACelebrity extends React.Component {
     this.play = this.play.bind(this);
     this.stop = this.stop.bind(this);
     this.state = { video: null };
-    this.celebs = [];
+    this.celebs = InfluenceACelebrity.shuffle(['Kardashian', 'Trump', 'Freeman', 'Duchamp', 'Hirst', 'Zuckerberg']);
+  }
+
+  save() {
+    this.context.celebrity = this.state.celebrity;
+    // Send data somewhere
+    window.location.assign("/OCEAN-reveal");
+  }
+
+  // Nabbed from StackOverflow: https://stackoverflow.com/a/2450976
+  static shuffle(array) {
+    let currentIndex = array.length;
+    let temporaryValue;
+    let randomIndex;
+
+    // While there remain elements to shuffle...
+    while(currentIndex !== 0) {
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+    return array;
   }
 
   stop() {
     this.setState({ video: null });
   }
 
-  play(index) {
-    const celeb = this.celebs[index];
-    const user = this.context;
-    this.setState({ video: `/video/virtue/${user.virtue}_${celeb}.mp4` });
+  play(name) {
+    this.setState({
+      celebrity: name,
+      video: `/video/virtue/${this.context.virtue}_${name}.mp4`
+    });
   }
 
   render() {
@@ -49,37 +77,42 @@ class InfluenceACelebrity extends React.Component {
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive progressNumber="three"/>
         <div className={classes.content + ' content'}>
-          <Typography component="h6" variant="h6">
-            Spectre has&nbsp;
-            <strong>many</strong>
-            <br />
-            famous followers.
-          </Typography>
-          <Typography component="h6" variant="h6">
-            Select one below to hear their confession
-            on&nbsp;
-            {user.virtue || 'power'}
-            :
-          </Typography>
-
-          {/* Add Circle of Clickable Celebrity Images Here */}
-          {video && <Video autoPlay onComplete={this.stop} movie={video} />}
+          <Fade in style={{transitionDelay: '200ms'}}>
+            <Typography className="title" component="h3" variant="h3">Influence a celebrity!</Typography>
+          </Fade>
+          <Fade in style={{ transitionDelay: '200ms' }}>
+            <Typography component="h6" variant="h6">
+              Spectre has&nbsp;
+              <strong>many</strong>
+              <br/>
+              famous followers.
+            </Typography>
+          </Fade>
+          <Fade in={true} style={{ transitionDelay: '200ms' }}>
+            <Typography component="h6" variant="h6">
+              Select one below to hear their confession
+              on&nbsp;
+              {user.virtue || 'power'}
+              :
+            </Typography>
+          </Fade>
+          {video && <Video autoPlay onComplete={this.stop} movie={video}/>}
           <AvatarCircle>
             {this.celebs
-              .map((n, i) => (
+              .map((name, i) => (
                 <AvatarComponent
-                  handleClick={() => this.play(n)}
+                  handleClick={() => this.play(name)}
                   key={AvatarComponent.generateKey(i)}
-                  target={{ name: n.name, image: `/profiles/${n.id}.jpg` }}
+                  target={{ name, image: `/imgs/${name}.jpg` }}
                 />
               ))}
           </AvatarCircle>
 
-          <Link to="/OCEAN-reveal">
+          <Link to="" onClick={this.save}>
             <IconButton icon="next" text="Next" />
           </Link>
         </div>
-        <FooterLogo />
+        <FooterLogo/>
       </div>
     );
   }
