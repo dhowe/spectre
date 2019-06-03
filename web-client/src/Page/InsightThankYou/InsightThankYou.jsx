@@ -11,6 +11,7 @@ import { ReactComponent as ThumbUp } from '../../Icons/insightthankyou.svg';
 
 import colours from '../../colors.scss';
 import './InsightThankYou.scss';
+import Styles from '../../Styles';
 
 const styles = {
   root: {
@@ -25,15 +26,9 @@ const styles = {
     margin: 0,
   },
   button: {
-    borderRadius: '28px',
-    margin: '16px',
+    ...Styles.button,
     border: `solid 3px ${colours.blue}`,
-    backgroundColor: '#ffffff',
-    boxShadow: 'none',
     color: colours.blue,
-    display: 'block',
-    marginLeft: 'auto',
-    marginRight: 'auto',
     fontSize: 18,
   },
   title: {
