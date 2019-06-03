@@ -104,7 +104,7 @@ class InfluenceACelebrity extends React.Component {
                 <AvatarComponent
                   handleClick={() => this.play(name)}
                   key={AvatarComponent.generateKey(i)}
-                  target={{ name, image: `/imgs/celebrities/${name}.png` }}
+                  target={{ name, image: `/imgs/${name}.png` }}
                 />
               ))}
           </AvatarCircle>
