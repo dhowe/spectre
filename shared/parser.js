@@ -30,18 +30,18 @@ export default class Parser {
     let parts, resolved, pre, pos;
     let ms = symbols.exec(s);
     while (ms) {
-
+//console.log(1,ms);
       parts = extractParts(ms[1])
       resolved = this.user[parts[0]];
 
       if (typeof resolved === 'function') {
         resolved = resolved.apply(this.user);
       }
-
+//console.log(2, 'resolved: '+resolved);
       if (typeof resolved !== 'string') {
         throw Error(this.user.hasOwnProperty(parts[0]) ?
           'user.'+parts[0] + ' is '+this.user[parts[0]] :
-          'Parser: No User.' + parts[0] + ' property');
+          'Parser: No User.' + parts[0] + ' property,'+(typeof this.user.pronoun)+'\n'+JSON.stringify(this.user));
       }
 
       for (var i = 1; i < parts.length; i++) {

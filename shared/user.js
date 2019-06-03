@@ -122,6 +122,7 @@ export default class User {
   generateSentences(parser, numSentences) {
 
     this._verifyTraits();
+
     if (arguments.length === 1 && typeof parser === 'number') {
       numSentences = parser;
       parser = undefined;
@@ -129,11 +130,17 @@ export default class User {
     numSentences = numSentences || 3;
 
     let data = [];
-    let targetNum = 3, maxPerTrait = 2;
+    let targetNum = 3,
+      maxPerTrait = 2;
     let traitNames = User.oceanTraits();
     let lines = this._descriptionLines();
 
-    this._parseLines(parser, lines).forEach((l, i) => {
+    parser = new Parser(this);
+    for (let i = 0; i < lines.length; i++) {
+      lines[i] = parser.parse(lines[i]);
+    }
+
+    lines.forEach((l, i) => {
       data.push({
         line: l,
         trait: traitNames[i],
@@ -154,11 +161,9 @@ export default class User {
           if (sentences.length < targetNum) {
             sentences.push(p.ucf());
             if (++added >= maxPerTrait) {
-              console.log('JUMP');
               return;
             }
           }
-
         }
       });
     }
@@ -210,21 +215,25 @@ export default class User {
   }
 
   // verify we have a parser, then parse each line
-  _parseLines(parser, lines) {
-    if (!parser) {
-      if (typeof Parser === 'undefined') throw Error('No Parser found');
-      parser = new Parser(this);
-    }
+  // _parseLines(parser, lines) {
+  //   if (!parser || parser.user !== this) {
+  //     if (typeof Parser === 'undefined') throw Error('No Parser found');
+  //     //console.log('creating parser: '+this.name);
+  //     parser = new Parser(this);
+  //   }
+  //   parser = new Parser(this);
+  //   for (let i = 0; i < lines.length; i++) {
+  //     lines[i] = parser.parse(lines[i]);
+  //   }
+  //   return lines;
+  // }
+
+  generateDescription() {
+    this._verifyTraits();
+    let lines = this._descriptionLines();
     for (let i = 0; i < lines.length; i++) {
       lines[i] = parser.parse(lines[i]);
     }
-    return lines;
-  }
-
-  generateLongDescription(parser) {
-    this._verifyTraits();
-    let lines = this._descriptionLines();
-    this._parseLines(parser, lines);
     return lines.join(' ').trim();
   }
 
@@ -232,10 +241,9 @@ export default class User {
     switch (this.gender) {
     case 'male':
       return 'his';
+    case 'other': //return 'their'; TODO:
     case 'female':
       return 'her';
-    case 'other':
-      return 'their';
     }
   }
 
@@ -243,19 +251,27 @@ export default class User {
     switch (this.gender) {
     case 'male':
       return 'he';
+    case 'other': //return 'they'; TODO:
     case 'female':
       return 'she';
-    case 'other':
-      return 'they';
     }
+  }
+
+  predictInfluences() {
+    // TODO
+    this.influences = ['Immigration issues', 'Images of large crowds', 'Short, punchy slogans'];
+  }
+
+  predictDescriptors() {
+    this.descriptors = this.generateSentences(3);
   }
 
   setTraits(traits) {
     if (typeof obj === 'string') throw Error('expecting traits object');
-    this.traits = traits;
 
-    // TODO: placeholder only
-    this.influences = ['Immigration issues', 'Images of large crowds', 'Short, punchy slogans'];
+    this.traits = traits;
+    this.predictInfluences();
+    predictDescriptors();
 
     return this;
   }
@@ -328,7 +344,7 @@ export default class User {
   }
 
   _randomizeTraits() {
-    return this.setTraits(User._randomTraits());
+    return this.traits = User._randomTraits();
   }
 };
 
@@ -376,6 +392,9 @@ User.schema = () => {
     similars: { // JSON-stringified Users
       type: ['string']
     },
+    descriptors: {
+      type: ['string']
+    },
     virtue: {
       type: 'string'
     },
@@ -419,6 +438,47 @@ User.schema = () => {
       default: Date.now
     }
   }
+}
+
+function rand() {
+  if (arguments.length === 1 && Array.isArray(arguments[0])) {
+    return arguments[0][irand(arguments[0].length)];
+  }
+  var randnum = Math.random();
+  if (!arguments.length) return randnum;
+  return (arguments.length === 1) ? randnum * arguments[0] :
+    randnum * (arguments[1] - arguments[0]) + arguments[0];
+}
+
+function irand() {
+  var randnum = Math.random();
+  if (!arguments.length) throw Error('requires args');
+  return (arguments.length === 1) ? Math.floor(randnum * arguments[0]) :
+    Math.floor(randnum * (arguments[1] - arguments[0]) + arguments[0]);
+}
+
+User._randomData = function (tmpl) {
+  if (!tmpl || typeof tmpl._id === 'undefined' || typeof tmpl.name === 'undefined') {
+    console.log(tmpl);
+    throw Error('id and login required' + tmpl);
+  }
+  let user = tmpl;
+  if (typeof tmpl.hasOceanTraits !== 'function') user = new User(tmpl);
+
+  user._randomizeTraits();
+  user.login = user.login || user.name.toLowerCase() + '@mail.com';
+  user.loginType = user.loginType || 'email';
+  user.adIssue = user.adIssue || rand(['leave', 'remain']);
+  user.gender = user.gender || rand(['male', 'female', 'other'])
+  user.virtue = user.virtue || rand(['power', 'wealth', 'influence', 'truth']);
+  // user.dataChoices = {};
+  // user.dataChoices.consumer = ['health', 'finance', 'travel'];
+  // user.dataChoices.home = ['smart watch', 'smart tv', 'smart assistant'];
+  // user.dataChoices.political = ['online maps', 'polls & surveys', 'voting records'];
+  user.clientId = user.clientId || irand(1, 7);
+  user.hasImage = true;
+
+  return user;
 }
 
 User._randomTraits = function (tmpl) {

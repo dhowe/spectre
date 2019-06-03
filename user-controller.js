@@ -52,45 +52,103 @@ const view = function (req, res) {
   });
 };
 
+// TODO: update 1
+// 1. find the user by id OR ERROR
+// 2. do the update OR ERROR
+// 3. check for traits but not generated fields
+// 4. if not, return 200/OK;
+// 5. if so, generate the fields OR ERROR (ignore?)
+// 6. re-update the user OR ERROR
+// 7. return 200/OK
+
+// TODO: update 2
+// 1. find the user by id OR ERROR
+// 2. check for traits but not generated fields
+// 3. if so, generate fields  OR ERROR
+// 4. update the user OR ERROR
+// 5. return 200/OK
+
 const update = function (req, res) {
-  /*
-   * Do the update:
-   *   If the user HAS all 5 traits, but NOT similar users,
-   *   then add them here
-   */
+
+  // add missing properties that can be computed
+  const computeProperties = function(usr) {
+    if (typeof usr.descriptors === 'undefined' || !usr.descriptors.length) {
+      usr.predictDescriptors();
+    }
+    if (typeof usr.influences === 'undefined' || !usr.influences.length) {
+      usr.predictInfluences();
+    }
+  };
+
   UserModel.findById(req.params.uid, function (err, user) {
 
     if (err) return error(res, 'No user #' + req.params.uid);
 
-    Object.assign(user, req.body); // assign new traits to user
+    if (user.hasOceanTraits()) {
 
-    // TODO: if req.body has traits here, then call user.setTraits();
-    if (user.hasOceanTraits() && user.similars.length < 1) {
+      computeProperties(user);
 
-      let limit = 8; // default limit
-      if (req.query.hasOwnProperty('limit')) {
-        limit = parseInt(req.query.limit);
-      }
+      // do they have similars ?
+      if (typeof user.similars === 'undefined' || !user.similars.length) {
 
-      user.findByOcean(limit, (users) => {
-        if (err) {
-          console.error(res.statusCode, res.statusMessage,
-            'Unable to add similars for user #' + req.params.uid, err);
-          return;
-        }
-        users && users.map(({ id, name, traits }) => {
-          user.similars.push(JSON.stringify(({ id, name, traits })));
+        user.findByOcean(limit, sims => {
+          if (err) return error(res, 'No similars for #' + req.params.uid);
+          sims.forEach(computeProperties);
+          res.status(200).send(user);
         });
-      });
+      }
     }
-
-    user.save((err, user) => {
-
-      if (err) return error(res, 'Unable to update user #' + req.params.uid);
-      res.status(200).send(user);
-    });
+    res.status(200).send(user);
   });
-};
+}
+
+/*
+ * Do the update:
+ *   If the user HAS all 5 traits, but NOT similar users,
+ *   then add them here
+ */
+// Object.assign(user, req.body); // assign new traits to user
+//
+//   user.save((err, user) => {
+//     if (err) return error(res, 'Unable to update user #' + req.params.uid);
+//
+//     // TODO: if req.body has traits here, then call user.setTraits();
+//     if (user.hasOceanTraits() && user.similars.length < 1) {
+//
+//       let limit = 6; // default limit
+//       if (req.query.hasOwnProperty('limit')) {
+//         limit = parseInt(req.query.limit);
+//       }
+//
+//       user.findByOcean(limit, sims => {
+//         //console.log('findByOcean',users.length, err);
+//         if (err) {
+//           console.error(res.statusCode, res.statusMessage,
+//             'Unable to add similars for user #' + req.params.uid, err);
+//           return;
+//         }
+//         // add descriptions for each similar if they don't have it
+//         sims.forEach(s => {
+//           if (s.hasOceanTraits() && (typeof s.descriptors === 'undefined' || s.descriptors.length < 1)) {
+//             s.descriptors = s.generateSentences(3);
+//           }
+//         });
+//         // add the most similars
+//         sims && sims.map(({ _id, name, influences, descriptors }) => {
+//           // here we specify which properties similars should get
+//           user.similars.push(JSON.stringify(({ _id, name, influences, descriptors })));
+//         });
+//
+//         user.save((err, usr) => {
+//           if (err) return error(res, 'Unable to update user #' + req.params.uid);
+//           res.status(200).send(usr);
+//         });
+//       });
+//     } else {
+//       res.status(200).send(user);
+//     }
+//   });
+// };
 
 const similar = function (req, res) {
 
