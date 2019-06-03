@@ -42,6 +42,9 @@ const styles = {
     width,
     height,
   },
+  content: {
+    justifyContent: 'center',
+  },
 };
 
 class TakeBackControl extends React.Component {
@@ -53,7 +56,7 @@ class TakeBackControl extends React.Component {
         <div className={`${classes.content} content`}>
           <Typography component="h5" variant="h5">Take back control? </Typography>
           <Typography component="h6" variant="h6">Delete your data from Spectre’s system?</Typography>
-          <Grid container justify="center">
+          <Grid className="take-back-control-buttons" container justify="center">
             <Grid item>
               <Link to="/we-are-sorry">
                 <Button className={classes.keepButton}>Keep</Button>
