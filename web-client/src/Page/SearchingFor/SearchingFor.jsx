@@ -7,7 +7,9 @@ import { Redirect } from 'react-router-dom';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
-import Webcam from "react-webcam";
+//import Webcam from "react-webcam";
+import "./SearchingFor.scss";
+import Styles from '../../Styles';
 
 const styles = {
   root: {
@@ -22,15 +24,7 @@ const styles = {
     margin: "20% 0",
   },
   button: {
-    borderRadius: '28px',
-    margin: '16px',
-    border: 'solid 3px #929391',
-    backgroundColor: '#ffffff',
-    boxShadow: 'none',
-    color: '#929391',
-    display: 'block',
-    marginLeft: 'auto',
-    marginRight: 'auto',
+    ...Styles.button
   },
   link: {
     display: 'block',
@@ -63,31 +57,40 @@ class SearchingFor extends React.Component {
     return new File([u8arr], fname, { type: mime });
   }
   handleClick = (virtue) => {
+
     let user = this.context;
     user.virtue = virtue;
-    let data = this.webcam.getScreenshot();
-    if (!data || !data.length) throw Error('no image');
+    user.lastPageVisit = { page: '/SearchingFor', time: Date.now()}
 
     ///////////////////// TMP: ///////////////////////
     user._id = user._id || Math.random() * 100000000;
     user.name = user.name || 'Barney';
     user.loginType = user.loginType || 'email';
     user.login = user.login || 'Barney' + (+new Date()) + '@aol.com';
-    //////////////////////////////////////////////////
 
-    let imgfile = this.toImageFile(data, user._id + '.jpg');
-    UserSession.postImage(this.context, imgfile,
-      json => {
-        console.log('Upload: http://localhost:3000' + json.url);
-        this.context.hasImage = true;
-        this.setState(() => ({ toNext: true }));
-      },
-      e => {
-        console.error("Error", e);
-        this.context.hasImage = false;
+    this.setState(() => ({ toNext: true })); // TMP
+
+    // here we are doing the webcam capture, disabled for now
+    if (false) {
+      let data = this.webcam.getScreenshot();
+      if (data && data.length) {
+        let imgfile = this.toImageFile(data, user._id + '.jpg');
+        UserSession.postImage(this.context, imgfile,
+          json => {
+            console.log('Upload: http://localhost:3000' + json.url);
+            this.context.hasImage = true;
+          },
+          e => {
+            console.error("Error", e);
+            this.context.hasImage = false;
+          }
+        );
         this.setState(() => ({ toNext: true }));
       }
-    );
+      else {
+        console.error('no image capture');
+      }
+    }
   }
   renderRedirect() {
     if (this.state.toNext) {
@@ -96,33 +99,33 @@ class SearchingFor extends React.Component {
   }
   render() {
     const { classes } = this.props;
-    const videoConstraints = {
+    /*const videoConstraints = {
       width: styles.profileImage.width,
       height: styles.profileImage.height,
       facingMode: "user"
-    };
+    };*/
     return (
       <div className={classes.root}>
           {this.renderRedirect()}
           <SpectreHeader colour="white" />
           <div className={classes.content + " content"}>
-              <Typography component="h6" variant="h5">Welcome {this.context.name}</Typography>
-              <Typography component="h6" variant="h5">What are you searching for today?</Typography>
+              <Typography class="username" component="h3" variant="h3">{this.context.name}</Typography>
+              <Typography class="question" component="h3" variant="h3">What are you searching for today?</Typography>
               <div className='ImageCapture'>
-                <Webcam ref={this.setRef}
+                {/*<Webcam ref={this.setRef}
                   audio={false}
                   screenshotQuality={1}
                   screenshotFormat="image/jpeg"
                   width={styles.profileImage.width}
                   height={styles.profileImage.height}
                   style={{left: '-5000px', position: 'relative'}}
-                  videoConstraints={videoConstraints} />
+                  videoConstraints={videoConstraints} />*/}
               </div>
-              <div>
+              <div class="buttonWrapper">
                   <Button className={classes.button} variant="contained" color="primary" onClick={() => this.handleClick('power')}>Power</Button>
                   <Button className={classes.button} variant="contained" color="primary" onClick={() => this.handleClick('truth')}>Truth</Button>
-                  <Button className={classes.button} variant="contained" color="primary" onClick={() => this.handleClick('wealth')}>Wealth</Button>
-                  <Button className={classes.button} variant="contained" color="primary" onClick={() => this.handleClick('influence')}>Influence</Button>
+                  <Button className={classes.button} variant="contained" color="primary" onClick={() => this.handleClick('wealth')}>Influence</Button>
+                  <Button className={classes.button} variant="contained" color="primary" onClick={() => this.handleClick('influence')}>Wealth</Button>
               </div>
           </div>
           <FooterLogo />

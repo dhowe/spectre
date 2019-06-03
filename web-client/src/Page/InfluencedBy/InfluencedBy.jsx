@@ -16,9 +16,9 @@ const styles = {
   },
 };
 
-class InfluencedBy extends React.Component {
+class influences extends React.Component {
   render() {
-    let influences = this.context.influencedBy || ['Security or crime-related issues', 'Images of large crowds', 'Immigration issues'];
+    let influences = this.context.influences || ['Security or crime-related issues', 'Images of large crowds', 'Immigration issues'];
     const { classes } = this.props;
     return (
       <div className={classes.root}>
@@ -37,9 +37,9 @@ class InfluencedBy extends React.Component {
   }
 }
 
-InfluencedBy.propTypes = {
+influences.propTypes = {
   classes: PropTypes.object.isRequired,
 };
-InfluencedBy.contextType = UserSession;
+influences.contextType = UserSession;
 
-export default withStyles(styles)(InfluencedBy);
+export default withStyles(styles)(influences);

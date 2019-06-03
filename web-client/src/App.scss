@@ -1,12 +1,37 @@
 @import 'colors.scss';
 
+@font-face {
+  font-family: 'Montserrat';
+  src: url(Fonts/Montserrat/Montserrat-Regular.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: "Montserrat";
+  src: url(Fonts/Montserrat/Montserrat-Bold.ttf);
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: "Montserrat";
+  src: url(Fonts/Montserrat/Montserrat-SemiBold.ttf);
+  font-weight:500;
+}
+
+@font-face {
+  font-family: "Montserrat";
+  src: url(Fonts/Montserrat/Montserrat-Light.ttf);
+  font-weight:300;
+}
+
 * {
   -webkit-tap-highlight-color: rgba(0,0,0,0);
   -webkit-tap-highlight-color: transparent;
+  font-family: 'Montserrat' !important;
 }
 
 html, body {
   font-size: 2em;
+  font-family: 'Montserrat' !important;
 }
 
 .App {

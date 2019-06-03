@@ -8,6 +8,7 @@ import chai from 'chai';
 import fs from 'fs';
 
 import UserModel from '../user-model';
+import User from '../shared/user';
 
 const env = process.env;
 const expect = chai.expect;
@@ -30,42 +31,6 @@ describe('User Routes', () => {
       done()
     });
   });
-
-  /*describe('Images: POST /api/users/photoset/:uid', () => {
-
-    it('should upload a set of user photos', (done) => {
-      done();
-      return;
-
-      let imgObj = {};
-      for (var i = 0; i < 5; i++) {
-        let fname = 'target' + i + '.png';
-        imgObj[fname] = fs.readFileSync('./web-client/public/targets/' + fname);
-      }
-
-      let data = [];
-      for (var i = 0; i < 5; i++) {
-        let fname = 'target' + i + '.png';
-        data.push(fs.readFileSync('./web-client/public/targets/' + fname));
-      }
-
-      let uid = 'dfjalkj342';
-      chai.request(host)
-        .post('/api/users/photoset/' + uid)
-        .auth(env.API_USER, env.API_SECRET)
-        .field('videoId', 2)
-        .field('clientId', env.CLIENT_ID)
-        .attach('photoSet', data)
-        .end((err, res) => {
-          console.log('RES', res.body);
-          expect(res).to.have.status(200);
-          expect(res.body).is.a('array');
-          //expect(res.body.url).to.startsWith('/profiles/' + uid);
-          //expect(res.body.url).to.endsWith('.png');
-          done();
-        });
-    });
-  });*/
 
   describe('List: GET /api/users', () => {
 
@@ -323,6 +288,7 @@ describe('User Routes', () => {
         login: "daniel2@aol.com",
         loginType: "facebook",
         clientId: 1,
+        lastPageVisit: { time: +Date.now(), page: '/Test' },
         traits: {
           agreeableness: 0.2038,
           conscientiousness: 0.2324,
@@ -342,6 +308,11 @@ describe('User Routes', () => {
           expect(res.body.clientId).eq(1);
           expect(res.body.name).eq(user.name);
           expect(res.body.traits.openness).eq(user.traits.openness);
+
+          Object.assign(user, res.body)
+          expect(user.name).eq("daniel2");
+          expect(user.lastPageVisit.page).eq("/Test");
+
           done();
         });
     });
@@ -411,10 +382,10 @@ describe('User Routes', () => {
 
   describe('Update: PUT /api/users/', () => {
 
-    let user;
+    let user, uid;
 
     beforeEach((done) => { // insert user before updating
-      user = {
+      user = new User({
         name: "daniel2",
         login: "daniel2@aol.com",
         loginType: "facebook",
@@ -426,20 +397,19 @@ describe('User Routes', () => {
           openness: 0.246,
           neuroticism: 0.465
         }
-      };
+      });
       chai.request(host)
         .post('/api/users')
         .auth(env.API_USER, env.API_SECRET)
         .send(user)
         .end((err, res) => {
           if (err) throw err;
-          user = res.body;
+          Object.assign(user, res.body);
           done();
         });
     });
 
     it('should fail for user with no id', (done) => {
-      user.virtue = 'truth';
       user._id = undefined;
       chai.request(host)
         .put('/api/users/' + user._id)
@@ -472,7 +442,8 @@ describe('User Routes', () => {
 
     it('should update user with new fields', (done) => {
       user.virtue = 'truth';
-      user.targetId = user._id + 'X';
+      let target = { id: user.id + 'X', name: 'Jay', traits: User._randomTraits() }
+      user.setTarget(target);
       chai.request(host)
         .put('/api/users/' + user._id)
         .auth(env.API_USER, env.API_SECRET)
@@ -482,7 +453,7 @@ describe('User Routes', () => {
           expect(res.body).is.a('object');
           expect(res.body.virtue).eq(user.virtue);
           expect(res.body.similars).is.a('array');
-          expect(res.body.targetId).eq(user.targetId);
+          expect(res.body.target).eq(JSON.stringify(target));
           done();
         });
     });
@@ -500,7 +471,7 @@ describe('User Routes', () => {
         .send(user2)
         .end((err, res) => {
           if (err) throw err;
-          Object.assign(user2,res.body);
+          Object.assign(user2, res.body);
           let traits = {
             agreeableness: 0.5,
             conscientiousness: 0.5,
@@ -527,18 +498,22 @@ describe('User Routes', () => {
               expect(user2.similars).is.a('array');
               expect(user2.similars.length).is.gt(0);
               expect(user2.similars[0]).is.a('string');
+
               expect(user2.getSimilars()).is.a('array');
               expect(user2.getSimilars().length).is.gt(0);
               expect(user2.getSimilars()[0]).is.a('object');
               expect(user2.getSimilars()[0]).has.property('id');
               expect(user2.getSimilars()[0]).has.property('name');
+              expect(user2.getSimilars()[0]).has.property('traits');
               done();
             });
         });
     });
 
     it('should update user with new array value', (done) => {
-      user.similars = [user._id + '2||Dave'];
+      let u = new User();
+      u._randomizeTraits();
+      user.similars = [JSON.stringify({ id: u._id, name: u.name, traits: u.traits })];
       chai.request(host)
         .put('/api/users/' + user._id)
         .auth(env.API_USER, env.API_SECRET)

@@ -5,96 +5,128 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import IconButton from '../../Components/IconButton/IconButton';
-import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
-import FooterLogo from '../../Components/FooterLogo/FooterLogo';
-import image1 from './Leave_Migration_1.jpg';
-import image2 from './Leave_Migration_2.jpg';
-import image3 from './Leave_Migration_3.jpg';
-import image4 from './Leave_Migration_4.jpg';
+import OceanProfile from '../../Components/OceanProfile/OceanProfile';
+import UserSession from '../../Components/UserSession/UserSession';
 
 const styles = {
   root: {
     flexGrow: 1,
-    width: "100%",
-    color: 'black'
+    width: '100%',
+    color: 'black',
   },
   image: {
-    width: '20%'
+    width: '160px',
+    height: '130px',
+    margin: '25px',
   },
   button: {
     borderRadius: '28px',
-    margin: '16px',
+    margin: '30px',
     border: 'solid 3px #929391',
     backgroundColor: '#ffffff',
     boxShadow: 'none',
     color: '#929391',
-    width: '20%'
+    width: '330px',
+    height: '54px',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
   },
   ad: {
     position: 'relative',
+    margin: '0 auto',
+    width: '800px',
+    height: '570px',
   },
   adImage: {
-    width: '850px'
+    width: '800px',
+    height: '570px',
+  },
+  campaignImage: {
+    position: 'absolute',
+    bottom: '10px',
+    right: '0',
+    width: '150px',
   },
   adText: {
     position: 'absolute',
-    top: '40%',
+    top: '30%',
     fontSize: '64px',
     color: '#fff',
     fontWeight: '800',
     textAlign: 'center',
-    width: '100%'
-  }
+    width: '100%',
+    backgroundColor: 'red',
+  },
 };
 
-class darkAd extends React.Component {
-  state = {
-    image: image2,
-    text: 'STOP THE INVASION'
-  };
+class DarkAd extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      image: '/imgs/darkad-default.png',
+      defaultImageSelected: true,
+      text: '',
+    };
+  }
+
   render() {
     const { classes } = this.props;
+    const campaignImage = this.context.adIssue === 'remain' ? 'imgs/vote-remain.png' : 'imgs/vote-leave.png'
+    
+    this.context.adIssue = this.context.adIssue || 'leave';
+    if (typeof this.context.target === 'undefined') {
+      this.context.setTarget({ "id": "111111111111111111111111", "name": "Remy", "traits": { "openness": 0.5818180970605207, "conscientiousness": 0.07645862267650672, "extraversion": 0.2607193320319028, "agreeableness": 0.012588228025398163, "neuroticism": 0.16712815071948772 } });
+    }
+    if (!this.context.hasOceanTraits()) { // TMP
+      this.context._randomizeTraits();
+    }
+    const slogans = this.context.targetAdSlogans();
+    const images = this.context.targetAdImages();
+
     return (
       <div className={classes.root}>
-        <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
+        <OceanProfile subject={this.context.getTarget()} />
         <div className={classes.content + " content"}>
-          <Typography component="h6" variant="h6">Select Background Image:</Typography>
-          <div>
-            <img className={classes.image} src={image1} alt='leave' onClick={() => { this.setState({ image: image1 }) }}></img>
-            <img className={classes.image} src={image2} alt='leave' onClick={() => { this.setState({ image: image2 }) }}></img>
-            <img className={classes.image} src={image3} alt='leave' onClick={() => { this.setState({ image: image3 }) }}></img>
-            <img className={classes.image} src={image4} alt='leave' onClick={() => { this.setState({ image: image4 }) }}></img>
-          </div>
-          <div className={classes.ad}>
-            <img className={classes.adImage} src={this.state.image} alt='leave' onClick={() => { this.context.adIssue = 'leave' }}></img>
+          <Typography component="h4" variant="h4">Create Your Campaign</Typography>
+          <div className={classes.ad}>    { /* adIssue should never change after being selected '*/}
+            <img className={classes.adImage} src={this.state.image} alt='leave'></img>
             <p className={classes.adText}>{this.state.text}</p>
+            {!this.state.defaultImageSelected ? <img className={classes.campaignImage} src={campaignImage} alt='leave'></img> : ''}
           </div>
           <div>
-            <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.setState({ text: 'STOP THE INVASION' }) }}>
-              STOP THE INVASION
-          </Button>
-            <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.setState({ text: 'TAKE BACK CONTROL' }) }}>
-              TAKE BACK CONTROL
-          </Button>
-            <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.setState({ text: 'GO HOME!' }) }}>
-              GO HOME!
-          </Button>
-            <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.setState({ text: 'OUR BORDERS, OUR JOBS' }) }}>
-              OUR BORDERS, OUR JOBS
-          </Button>
+            <img className={classes.image} src={images[0]} alt='leave' onClick={() => { this.setState({ image: images[0] }) }}></img>
+            <img className={classes.image} src={images[1]} alt='leave' onClick={() => { this.setState({ image: images[1] }) }}></img>
+            <img className={classes.image} src={images[2]} alt='leave' onClick={() => { this.setState({ image: images[2] }) }}></img>
+            <img className={classes.image} src={images[3]} alt='leave' onClick={() => { this.setState({ image: images[3] }) }}></img>
+          </div>
+          <div>
+            <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.setState({ text: slogans[0], defaultImageSelected: false }) }}>
+              {slogans[0].split(' ').slice(0, 2).join(' ') + '...'}
+            </Button>
+            <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.setState({ text: slogans[1], defaultImageSelected: false }) }}>
+              {slogans[1].split(' ').slice(0, 2).join(' ') + '...'}
+            </Button>
+            <div>
+              <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.setState({ text: slogans[2], defaultImageSelected: false }) }}>
+                {slogans[2].split(' ').slice(0, 2).join(' ') + '...'}
+              </Button>
+              <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.setState({ text: slogans[3], defaultImageSelected: false }) }}>
+                {slogans[3].split(' ').slice(0, 2).join(' ') + '...'}
+              </Button>
+            </div>
           </div>
           <Link to="/target-ad">
             <IconButton icon="next" text="Next" />
           </Link>
         </div>
-        <FooterLogo />
       </div>
     );
   }
 }
 
-darkAd.propTypes = {
+DarkAd.propTypes = {
   classes: PropTypes.object.isRequired,
 };
+DarkAd.contextType = UserSession;
 
-export default withStyles(styles)(darkAd);
+export default withStyles(styles)(DarkAd);

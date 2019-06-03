@@ -1,0 +1,15 @@
+@import "../../colors";
+@import "../../fonts";
+
+.insight-thank-you {
+  color: $blue;
+}
+
+.insight-thank-you-icon {
+  margin-top: 50px;
+  margin-bottom: 60px;
+}
+
+.InsightThankYou-root-1 .title {
+  @extend %title;
+}

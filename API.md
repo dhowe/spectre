@@ -37,14 +37,14 @@ GET: returns the K closest users (by OCEAN score) to the user with id
 
 ##### $ cd spectre
 
-##### $ npm install
+##### $ yarn install
 
-##### $ npm test (to run tests)
+##### $ yarn test (to run tests)
 
-##### $ npm run server (to start the server on port 8083)
+##### $ yarn run server (to start the server on port 8083)
 
-##### $ npm run client (to start the webapp on port 3000)
+##### $ yarn run client (to start the webapp on port 3000)
 
-##### $ npm run client-server (to start server + webapp on port 8083)
+##### $ yarn run client-server (to start server + webapp on port 8083)
 
 <br/>

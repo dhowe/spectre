@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Fade from '@material-ui/core/Fade';
-import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
+import OceanProfile from '../../Components/OceanProfile/OceanProfile';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import Countdown from 'react-countdown-now';
@@ -36,9 +36,12 @@ class YourPower extends React.Component {
         return <span>{seconds}</span>;
       }
     };
+    if (typeof this.context.target === 'undefined') {
+      this.context.setTarget({ "id": "111111111111111111111111", "name": "Remy", "traits": { "openness": 0.5818180970605207, "conscientiousness": 0.07645862267650672, "extraversion": 0.2607193320319028, "agreeableness": 0.012588228025398163, "neuroticism": 0.16712815071948772 } });
+    }
     return (
       <div className={classes.root}>
-          <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
+          <OceanProfile subject={this.context.getTarget()}></OceanProfile>
           <div className={classes.content + " content"}>
             <Fade in={true} style={{transitionDelay: '200ms'}}>
               <Typography component="h6" variant="h6">{this.context.name || 'Remy'}, your {this.context.virtue || 'Power'} is growing.</Typography>

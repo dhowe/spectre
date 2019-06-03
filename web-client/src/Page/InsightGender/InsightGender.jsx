@@ -9,6 +9,7 @@ import FooterLogo from "../../Components/FooterLogo/FooterLogo";
 import TextSliderText from "../../Components/TextSliderText/TextSliderText";
 import AvatarComponent from "../../Components/AvatarComponent/AvatarComponent";
 import UserSession from '../../Components/UserSession/UserSession';
+import "../../insight.scss";
 
 const styles = {
   root: {
@@ -37,13 +38,15 @@ class InsightGender extends React.Component {
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive={true} progressNumber="one" />
-        <div className={classes.content + " content"}>
+        <div className={classes.content + " content insightPage"}>
           <Typography component="h6" variant="h6">
-            What’s {this.context.targetName}’s likely gender?
+            What’s <span>{this.context.targetName}</span>’s likely gender?
           </Typography>
-          <AvatarComponent target={{ image: this.context.profileUrl }}/>
+
+          <AvatarComponent target={{ image: this.context.targetImgUrl() }}/>
+
           <div onTouchEnd={this.EnableButton}>
-            <TextSliderText leftText="Male" rightText="Female" middleText="non-binary" />
+            <TextSliderText leftText="Male" rightText="Female" middleText="Non-binary" />
           </div>
           <Link className={this.state.buttonEnabled ? "true" : "disabled"} to="/insight-skin">
             <IconButton enabled={this.state.buttonEnabled} icon="next" text="Next" />

@@ -14,63 +14,61 @@ import AvatarComponent from "../../Components/AvatarComponent/AvatarComponent";
 import UserSession from '../../Components/UserSession/UserSession';
 
 const styles = {
-    root: {
-        flexGrow: 1,
-        width: "100%",
-        color: 'black'
-    },
-    radioGroup: {
-        alignItems: 'center'
-    }
+  root: {
+    flexGrow: 1,
+    width: "100%",
+    color: 'black'
+  },
+  radioGroup: {
+    alignItems: 'center'
+  }
 };
 
 class InsightStyle extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            style: 'woman',
-        };
+  constructor(props) {
+    super(props);
+    this.state = {
+      style: 'woman',
     };
-    handleRadioChange = event => {
-        this.setState({ style: event.target.value });
-    };
-    render() {
-        const { classes } = this.props;
-        return (
-            <div className={classes.root}>
-                <SpectreHeader colour="white" progressActive={true} progressNumber="one" />
-                <div className={classes.content + " content"}>
-                    <Typography component="h6" variant="h6">What’s {this.context.targetName}‘s likely style category?</Typography>
-                    <AvatarComponent target={{ image: '/targets/target0.png' }} />
-                    <FormControl className={classes.formControl} component="fieldset" >
-                        <RadioGroup
-                            aria-label="Style"
-                            name="style"
-                            value={this.state.value}
-                            onChange={this.handleRadioChange}
-                            className={classes.radioGroup}
-                        >
-                            <FormControlLabel value="classic" control={<Radio color='primary' />} label="Classic - conservative and traditional " />
-                            <FormControlLabel value="feminine" control={<Radio color='primary' />} label="Feminine - soft, romantic, delicate" />
-                            <FormControlLabel value="creative" control={<Radio color='primary' />} label="Creative - creative, unique, fashionable " />
-                            <FormControlLabel value="sporty" control={<Radio color='primary' />} label="Sporty - casual, practical, easy " />
-                            <FormControlLabel value="bold" control={<Radio color='primary' />} label="Bold - eccentric, bold, theatrical" />
-                        </RadioGroup>
-                    </FormControl>
-                    <Link to="/insight-thank-you">
-                        <IconButton icon="next" text="Next" />
-                    </Link>
-                </div>
-                <FooterLogo />
-            </div>
-        );
-    }
+  };
+  handleRadioChange = event => {
+    this.setState({ style: event.target.value });
+  };
+  render() {
+    const { classes } = this.props;
+    return (
+      <div className={classes.root}>
+          <SpectreHeader colour="white" progressActive={true} progressNumber="one" />
+          <div className={classes.content + " content"}>
+              <Typography component="h6" variant="h6">What’s {this.context.targetName}‘s likely style category?</Typography>
+              <AvatarComponent target={{ image: this.context.targetImgUrl() }}/>
+              <FormControl className={classes.formControl} component="fieldset" >
+                  <RadioGroup
+                      aria-label="Style"
+                      name="style"
+                      value={this.state.value}
+                      onChange={this.handleRadioChange}
+                      className={classes.radioGroup}>
+                      <FormControlLabel value="classic" control={<Radio color='primary' />} label="Classic - conservative and traditional " />
+                      <FormControlLabel value="feminine" control={<Radio color='primary' />} label="Feminine - soft, romantic, delicate" />
+                      <FormControlLabel value="creative" control={<Radio color='primary' />} label="Creative - creative, unique, fashionable " />
+                      <FormControlLabel value="sporty" control={<Radio color='primary' />} label="Sporty - casual, practical, easy " />
+                      <FormControlLabel value="bold" control={<Radio color='primary' />} label="Bold - eccentric, bold, theatrical" />
+                  </RadioGroup>
+              </FormControl>
+              <Link to="/insight-thank-you">
+                  <IconButton icon="next" text="Next" />
+              </Link>
+          </div>
+          <FooterLogo />
+      </div>
+    );
+  }
 }
 
 InsightStyle.propTypes = {
-    classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired,
 };
 InsightStyle.contextType = UserSession;
-
 
 export default withStyles(styles)(InsightStyle);

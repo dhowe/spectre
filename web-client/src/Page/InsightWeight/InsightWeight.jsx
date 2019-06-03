@@ -26,7 +26,7 @@ class InsightWeight extends React.Component {
         <SpectreHeader colour="white" progressActive={true} progressNumber="one" />
         <div className={classes.content + " content"}>
             <Typography component="h6" variant="h6">What’s {this.context.targetName}’s likely weight?</Typography>
-            <AvatarComponent target={{ image: '/targets/target0.png' }}/>
+            <AvatarComponent target={{ image: this.context.targetImgUrl() }}/>
             <TextSliderText leftText="Underweight" rightText="Overweight" />
             <Link to="/insight-skin">
                 <IconButton icon="next" text="Next" />
