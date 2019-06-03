@@ -25,6 +25,7 @@ const styles = {
 };
 
 class LoginPage extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = { toNext: false, modalOpen: false };
@@ -32,40 +33,45 @@ class LoginPage extends React.Component {
     this.modalContent = '';
     this.modalTitle = '';
   }
+
   handleSubmit(e) {
     e.preventDefault();
 
     // get user from current context
     let user = this.context;
-    user.lastPageVisit = { page: '/Login', time: Date.now()};
+    user.lastPageVisit = { page: '/Login', time: Date.now() };
     user.loginType = 'email'; // TMP:
+
     if (user.login && user.emailValid) {
       let handleSuccess = json => {
         Object.assign(user, json);
         this.setState(() => ({ toNext: true }));
         console.log("User:", user);
       };
+
       let handleError = e => {
-        if (e.error === "Some error about email in use") {
+        if (e.error === "EmailInUse") {
           this.modalTitle = "Invalid email";
           this.modalContent = "Email has already been used";
           this.setState({ modalOpen: true });
         } else {
-          this.modalTitle = "Oops";
-          this.modalContent = "Unknown error";
-          this.setState({ modalOpen: true });
+          console.error(e);
+          this.setState({ toNext: true });
         }
-        //        console.error(e.error);
-        //       this.setState({ data: JSON.stringify(e.error, null, 2) });
+        //this.setState({ data: JSON.stringify(e.error, null, 2) });
       };
       UserSession.createUser(user, handleSuccess, handleError);
+
     } else if (user.login && !user.emailValid) {
-      this.modalTitle = "Invalid email";
-      this.modalContent = "Please enter a valid email";
+
+      this.modalTitle = "Oops...";
+      this.modalContent = "We couldn't find that email, please try again";
       this.setState({ modalOpen: true });
+
     } else {
+
       // TMP: should reject without successful User creation
-      this.context.login = "test" + +new Date() + "@test.com";
+      this.context.login = "test" + (+new Date()) + "@test.com";
       this.setState(() => ({ toNext: true }));
     }
   }
@@ -77,6 +83,7 @@ class LoginPage extends React.Component {
       return <Redirect to = '/username' />
     }
   }
+
   render() {
     const { classes } = this.props;
     return (
