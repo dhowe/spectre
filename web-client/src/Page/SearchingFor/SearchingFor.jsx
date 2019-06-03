@@ -124,8 +124,8 @@ class SearchingFor extends React.Component {
               <div class="buttonWrapper">
                   <Button className={classes.button} variant="contained" color="primary" onClick={() => this.handleClick('power')}>Power</Button>
                   <Button className={classes.button} variant="contained" color="primary" onClick={() => this.handleClick('truth')}>Truth</Button>
-                  <Button className={classes.button} variant="contained" color="primary" onClick={() => this.handleClick('wealth')}>Influence</Button>
-                  <Button className={classes.button} variant="contained" color="primary" onClick={() => this.handleClick('influence')}>Wealth</Button>
+                  <Button className={classes.button} variant="contained" color="primary" onClick={() => this.handleClick('influence')}>Influence</Button>
+                  <Button className={classes.button} variant="contained" color="primary" onClick={() => this.handleClick('wealth')}>Wealth</Button>
               </div>
           </div>
           <FooterLogo />
