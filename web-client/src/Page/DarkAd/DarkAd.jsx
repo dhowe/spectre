@@ -33,6 +33,7 @@ const styles = {
     height: '54px',
     whiteSpace: 'nowrap',
     overflow: 'hidden',
+    padding: 0,
     '&:hover': {
       backgroundColor: '#21c0fc',
       color: '#ffffff'
@@ -56,8 +57,8 @@ const styles = {
   },
   adText: {
     position: 'absolute',
-    top: '30%',
-    fontSize: '64px',
+    top: '37%',
+    fontSize: '52px',
     color: '#fff',
     fontWeight: '800',
     textAlign: 'center',
