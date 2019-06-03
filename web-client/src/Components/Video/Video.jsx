@@ -1,28 +1,78 @@
-
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import movie from "./movie.mp4"
 
 const styles = {
-
-}
-
-function Video(props) {
-
-
-    return (
-        <div >
-            <video width={window.innerWidth} autoPlay controls>
-                <source src={movie} type="video/mp4" />
-                Your browser does not support the video tag.
-            </video>
-        </div>
-    );
-}
-
-Video.propTypes = {
-    classes: PropTypes.object.isRequired,
+  video: {
+    backgroundColor: '#000000d1',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: 999,
+    display: 'flex',
+    justifyContent: 'center',
+  },
 };
 
-export default withStyles(styles)(Video);
+class Video extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.errorRender = this.errorRender.bind(this);
+
+    this.state = {
+      shouldShow: props.autoPlay,
+    };
+  }
+
+  errorRender(error) {
+    console.error(`Cannot open file ${error.currentTarget.currentSrc}`);
+    console.error(`Playback error: ${error.currentTarget.error}`);
+    this.setState({ shouldShow: false });
+  }
+
+  render() {
+    const { onComplete, movie } = this.props;
+    const { shouldShow } = this.state;
+    return (
+      shouldShow && (
+        <div style={styles.video}>
+          <video
+            onEnded={() => onComplete(this)}
+            onError={this.errorRender}
+            width={window.innerWidth}
+            autoPlay
+          >
+            <source src={movie} type="video/mp4"/>
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      )
+    );
+  }
+
+  play() {
+    this.setState({ shouldShow: true });
+  }
+
+  close() {
+    this.setState({ shouldShow: false });
+  }
+}
+
+
+Video.defaultProps = {
+  onComplete: (video) => {
+    video.close();
+  },
+  autoPlay: true,
+};
+Video.propTypes = {
+  // classes: PropTypes.object.isRequired,
+  onComplete: PropTypes.func,
+  movie: PropTypes.node.isRequired,
+  autoPlay: PropTypes.bool,
+};
+
+export default Video;

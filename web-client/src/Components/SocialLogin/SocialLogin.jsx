@@ -5,7 +5,7 @@ import Input from "@material-ui/core/Input";
 import FormControl from "@material-ui/core/FormControl";
 import UserSession from "../../Components/UserSession/UserSession";
 import Keyboard from "react-simple-keyboard";
-//import InputLabel from "@material-ui/core/InputLabel";
+
 import grey from "@material-ui/core/colors/grey";
 import "react-simple-keyboard/build/css/index.css";
 import "./SocialLogin.scss";
