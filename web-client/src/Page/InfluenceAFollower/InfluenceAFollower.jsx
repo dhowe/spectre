@@ -41,9 +41,6 @@ const defaults = [
 
 class InfluenceAFollower extends React.Component {
   static contextType = UserSession;
-  static generateKey(index) {
-    return (7 * index);
-  }
 
   constructor(props) {
     super(props);
@@ -100,7 +97,7 @@ class InfluenceAFollower extends React.Component {
             {this.renderSimilars().map((n, i) => (
               <AvatarComponent
                 handleClick={() => this.handleSelect(n)}
-                key={InfluenceAFollower.generateKey(i)}
+                key={AvatarComponent.generateKey(i)}
                 target={{ name: n.name, image: `/profiles/${n.id}.jpg` }}
               />
             ))}

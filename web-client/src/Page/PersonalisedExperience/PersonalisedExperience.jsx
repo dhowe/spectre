@@ -29,7 +29,7 @@ class PersonalisedExperience extends React.Component {
   constructor(props) {
     super(props);
 
-    this.goTo.bind(this);
+    this.goTo = this.goTo.bind(this);
   }
 
   goTo() {

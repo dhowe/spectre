@@ -19,9 +19,17 @@ class Video extends React.Component {
   constructor(props) {
     super(props);
 
+    this.errorRender = this.errorRender.bind(this);
+
     this.state = {
       shouldShow: props.autoPlay,
     };
+  }
+
+  errorRender(error) {
+    console.error(`Cannot open file ${error.currentTarget.currentSrc}`);
+    console.error(`Playback error: ${error.currentTarget.error}`);
+    this.setState({ shouldShow: false });
   }
 
   render() {
@@ -32,6 +40,7 @@ class Video extends React.Component {
         <div style={styles.video}>
           <video
             onEnded={() => onComplete(this)}
+            onError={this.errorRender}
             width={window.innerWidth}
             autoPlay
           >
