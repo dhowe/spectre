@@ -30,7 +30,7 @@ class Goodbye extends React.Component {
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" />
-        <Video ref={this.video} movie={movie} autoPlay onComplete="/touch-to-complete" />
+        <Video ref={this.video} movie={movie} autoPlay onComplete="/" />
         <FooterLogo />
       </div>
     );

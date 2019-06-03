@@ -74,7 +74,7 @@ class LoginPage extends React.Component {
     } else {
 
       // TMP: should reject without successful User creation
-      this.context.login = 'test' + (+new Date()) + '@test.com';
+      this.context.login = `test${+new Date()}@test.com`;
       this.showVideo();
     }
   }
@@ -85,7 +85,7 @@ class LoginPage extends React.Component {
 
   renderRedirect() {
     if(this.state.toNext) {
-      return <Redirect to='/username'/>;
+      return <Redirect to="/username" />;
     }
   }
 
@@ -113,9 +113,13 @@ class LoginPage extends React.Component {
             content={this.modalContent}
             onClose={() => this.closeModal()}
           />
-          <Video ref={(el) => { this.video = el; }} movie="/video/SpectreIntro.mp4" autoPlay={false}
-                 onComplete={this.continue}/>
-          <SocialLogin/>
+          <Video
+            ref={(el) => { this.video = el; }}
+            movie="/video/SpectreIntro.mp4"
+            autoPlay={false}
+            onComplete={this.continue}
+          />
+          <SocialLogin />
           <Link to='' onClick={this.handleSubmit}>
             <IconButton colour="white" icon="next" text="Next"/>
           </Link>
