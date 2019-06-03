@@ -22,7 +22,7 @@ export default class User {
 
   randomImages(pre) {
     let images = [];
-    let ots = User.oceanTraits();
+    let ots = User.oceanTraits;
     while (images.length < 4) {
       let flip = Math.random() < .5 ? 1 : 2;
       let mult = Math.random() < .5 ? 1 : -1;
@@ -35,7 +35,7 @@ export default class User {
 
   targetAdImages() {
     let pre = 'imgs/',
-      ots = User.oceanTraits();
+      ots = User.oceanTraits;
     let images = this.randomImages(pre);
     if (this.hasOceanTraits() && typeof this.adIssue !== 'undefined') {
       let cat = this.categorize();
@@ -55,7 +55,7 @@ export default class User {
   }
 
   randomSlogans() {
-    let ots = User.oceanTraits();
+    let ots = User.oceanTraits;
     let idx1 = Math.floor(Math.random() * ots.length);
     let idx2 = Math.floor(Math.random() * ots.length)
     //console.log('['+this.adIssue+']['+(Math.random() < .5 ? 'high' : 'low')+']['+[ots[idx1]]+']');
@@ -65,7 +65,7 @@ export default class User {
   }
 
   targetAdSlogans() {
-    let ots = User.oceanTraits();
+    let ots = User.oceanTraits;
     let slogans = this.randomSlogans();
     if (this.hasOceanTraits() && typeof this.adIssue !== 'undefined') {
       let cat = this.categorize();
@@ -134,7 +134,7 @@ export default class User {
     let data = [];
     let targetNum = 3,
       maxPerTrait = 2;
-    let traitNames = User.oceanTraits();
+    let traitNames = User.oceanTraits;
     let lines = this._descriptionLines();
 
     parser = new Parser(this);
@@ -204,7 +204,7 @@ export default class User {
 
   _descriptionLines() {
     let lines = [];
-    let traitNames = User.oceanTraits();
+    let traitNames = User.oceanTraits;
     for (let i = 0; i < traitNames.length; i++) {
       if (typeof User.descriptionTemplate[traitNames[i]] !== 'undefined') {
         let val = this.traits[traitNames[i]];
@@ -317,7 +317,7 @@ export default class User {
   }
 
   oceanTraits() {
-    return User.oceanTraits();
+    return User.oceanTraits;
   }
 
   categorize() {
@@ -486,17 +486,50 @@ User._randomData = function (tmpl) {
 
 User._randomTraits = function (tmpl) {
   let traits = {};
-  User.oceanTraits().forEach(t => traits[t] = Math.random());
+  User.oceanTraits.forEach(t => traits[t] = Math.random());
   return traits;
 }
 
-User.oceanTraits = () => [
-    'openness',
-    'conscientiousness',
-    'extraversion',
-    'agreeableness',
-    'neuroticism'
-  ];
+User.oceanTraits = () => {
+  return [ 'openness', 'conscientiousness', 'extraversion', 'agreeableness', 'neuroticism']
+};
+
+User.adInfluences = {
+  User.influencedBys = {
+    leave: {
+      high: {
+        openness: ["freedom or expansive skies", "‘freedom’, ‘future’ or ‘potential’"],
+        conscientiousness: ["money or financial focus, taking control", "‘control’, ‘savings’ or ‘your rights’"],
+        extraversion: ["not being silenced, being a ‘success’", "‘your rules’ or ‘your rights’ "],
+        agreeableness: ["family scenes, or relaxing locations", "‘against the EU’ or ‘family finances’"],
+        neuroticism: ["negative imagery, the fear of ‘others’", "‘criminals’ and fearful messages "]
+      },
+      low: {
+        openness: ["british traditions and british culture", "‘British’ or ‘traditions’"],
+        conscientiousness: ["taking action, not ‘hiding’ away", "‘no more’ or ‘time to act’"],
+        extraversion: ["strong characters or visions of a new tomorrow", "‘rising up’ or imagining a new ‘tomorrow’"],
+        agreeableness: ["less concern with cooperation or social harmony ", "‘borders’, ‘jobs’ or paying for other’s ‘mistakes’"],
+        neuroticism: ["easy going, relaxing scenes", "‘relax’ or ‘no big deal’"]
+      }
+    },
+    remain: {
+      high: {
+        openness: ["aspirational or inclusive scenes", "‘solidarity’ or mention collective action "],
+        conscientiousness: ["gambling or risk taking ", "‘gambling’ or ‘trust’"],
+        extraversion: ["being ‘left out’ or ‘silenced’ ", "’your own rules’ or‘ your voice’"],
+        agreeableness: ["social or family harmony", "‘family’ or ‘cooperation’"],
+        neuroticism: ["fearful or uncertain activities ", "‘stability’ or ‘uncertainty’"],
+      },
+      low: {
+        openness: ["conventional or traditional family scenes", "‘change is scary’, or ‘hassle’"],
+        conscientiousness: ["impulsive actions like gambling, risk taking", "‘sitting around’ or ‘time to act’"],
+        extraversion: ["solitary people, ‘loners’", "having ‘your say’ or contemplating ‘your future’"],
+        agreeableness: ["competitive sports, not being a ‘loser’", "losing’, ’quitting’ or ‘control’"],
+        neuroticism: ["laid back, relaxed scenes", "‘hassle’ or ‘worry’"],
+      }
+    }
+  };
+}
 
 User.adSlogans = {
   leave: {

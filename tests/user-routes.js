@@ -150,7 +150,7 @@ describe('User Routes', () => {
       for (var i = 0; i < 10; i++) {
         let data = { name: "dave" + i, login: "dave" + i + "@abc.com", loginType: "twitter" };
         let user = UserModel.Create(data);
-        let keys = user.oceanTraits();
+        let keys = User.oceanTraits;
         keys.forEach(k => user.traits[k] = i / 10);
         users.push(user);
         //console.log(user.name, user._id, user.createdAt);
@@ -563,7 +563,7 @@ describe('User Routes', () => {
       for (var i = 0; i < 10; i++) {
         let data = { name: "dave" + i, login: "dave" + i + "@abc.com", loginType: "twitter", clientId: 1 };
         let user = UserModel.Create(data);
-        let keys = user.oceanTraits();
+        let keys = User.oceanTraits;
         keys.forEach(k => user.traits[k] = i / 10);
         users.push(user);
       }
