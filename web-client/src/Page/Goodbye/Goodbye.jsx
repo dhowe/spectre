@@ -23,7 +23,7 @@ class Goodbye extends React.Component {
   constructor(props) {
     super(props);
     this.state = { toNext: false};
-
+    this.stop = this.stop.bind(this);
     //this.state = { movie: `/video/goodbye/Goodbye_${this.context.celeb}.mp4` };
   }
   stop() {
