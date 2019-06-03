@@ -9,6 +9,7 @@ import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 //import Webcam from "react-webcam";
 import "./SearchingFor.scss";
+import Styles from '../../Styles';
 
 const styles = {
   root: {
@@ -23,15 +24,7 @@ const styles = {
     margin: "20% 0",
   },
   button: {
-    borderRadius: '28px',
-    margin: '16px',
-    border: 'solid 3px #929391',
-    backgroundColor: '#ffffff',
-    boxShadow: 'none',
-    color: '#929391',
-    display: 'block',
-    marginLeft: 'auto',
-    marginRight: 'auto',
+    ...Styles.button
   },
   link: {
     display: 'block',

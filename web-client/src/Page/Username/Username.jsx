@@ -34,7 +34,8 @@ const styles = {
     flexWrap: 'wrap',
   },
   textField: {
-    marginLeft: '45%'
+    //marginLeft: '500px',
+    //width: '280px'
   }
 };
 
@@ -63,7 +64,6 @@ class Username extends React.Component {
       layoutName: layoutName === "default" ? "shift" : "default"
     });
   };
-
 
   onKeyPress = button => {
     if (button === "{shift}") {
@@ -138,7 +138,7 @@ class Username extends React.Component {
                   "{shift} Z X C V B N M < > ? {shift}",
                   "@ {space}"
                 ]
-              }} 
+              }}
             />
           </div>
 
