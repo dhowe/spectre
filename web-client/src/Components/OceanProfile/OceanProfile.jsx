@@ -42,10 +42,7 @@ function OceanProfile(props) {
             desire to order the world around them.
           </Typography>
           <Typography component="h6" variant="h6">
-            <strong>{tname} is most likely influenced by
-             scenes of crowds, loud or bright colors and messages concerning
-            ‘stability’ or ‘uncertainty’.
-            </strong>
+            <strong>{tname}</strong> is most likely influenced by <strong>images</strong> that contain scenes of crowds, loud or bright colors and <strong>slogans</strong> that mention ‘stability’ or ‘uncertainty’.
           </Typography>
         </Grid>
         <Grid className="OceanSliders" item>

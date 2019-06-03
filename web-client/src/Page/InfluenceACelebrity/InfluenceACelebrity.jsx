@@ -22,12 +22,13 @@ const styles = {
 class InfluenceACelebrity extends React.Component {
   render() {
     const { classes } = this.props;
+    this.context.virtue = this.context.virtue || 'power';
     return (
       <div className={classes.root}>
           <SpectreHeader colour="white" progressActive={true} progressNumber="three" />
           <div className={classes.content + " content"}>
               <Typography component="h6" variant="h6">Spectre has <strong>many</strong><br/> famous followers.</Typography>
-              <Typography component="h6" variant="h6">Select one below to hear their confession on {this.context.virtue||'power'}:</Typography>
+              <Typography component="h6" variant="h6">Select one below to hear their confession on {this.context.virtue}</Typography>
 
               {/* Add Circle of Clickable Celebrity Images Here */}
 
