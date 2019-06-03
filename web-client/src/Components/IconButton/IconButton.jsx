@@ -13,9 +13,7 @@ class IconButton extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.enabled === true) {
-      this.setState({ colour: "#21c0fc"});
-    }
+    nextProps.enabled === true ? (this.setState({ colour: "#21c0fc"})) : (this.setState({ colour: "#929391"}));
   }
 
   componentDidMount() {
