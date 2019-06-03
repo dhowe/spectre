@@ -14,6 +14,9 @@ const styles = {
     width: '100%',
     color: 'black',
   },
+  content: {
+    paddingTop: '500px',
+  },
   image: {
     width: '160px',
     height: '130px',
@@ -30,6 +33,10 @@ const styles = {
     height: '54px',
     whiteSpace: 'nowrap',
     overflow: 'hidden',
+    '&:hover': {
+      backgroundColor: '#21c0fc',
+      color: '#ffffff'
+    },
   },
   ad: {
     position: 'relative',
@@ -84,10 +91,10 @@ class DarkAd extends React.Component {
     const images = this.context.targetAdImages();
 
     return (
-      <div className={classes.root}>
+      <div className={classes.root + " darkAd"}>
         <OceanProfile subject={this.context.getTarget()} />
         <div className={classes.content + " content"}>
-          <Typography component="h4" variant="h4">Create Your Campaign</Typography>
+          <Typography component="h6" variant="h6"><strong>Create Your Campaign</strong></Typography>
           <div className={classes.ad}>    { /* adIssue should never change after being selected '*/}
             <img className={classes.adImage} src={this.state.image} alt='leave'></img>
             <p className={classes.adText}>{this.state.text}</p>
