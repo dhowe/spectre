@@ -31,11 +31,14 @@ class InfluenceACelebrity extends React.Component {
     this.play = this.play.bind(this);
     this.stop = this.stop.bind(this);
     this.state = { video: null };
-    this.celebs = InfluenceACelebrity.shuffle(['Kardashian', 'Trump', 'Freeman', 'Duchamp', 'Mercury', 'Zuckerberg']);
+    let fcelebs = ['Kardashian', 'Abramovic'];
+    let mcelebs = ['Freeman', 'Duchamp', 'Mercury', 'Trump', 'Zuckerberg'];
+    mcelebs = InfluenceACelebrity.shuffle(mcelebs).splice(0,4);
+    this.celebs = InfluenceACelebrity.shuffle(mcelebs.concat(fcelebs));
   }
 
   save() {
-    this.context.celebrity = this.state.celebrity;
+    //this.context.celebrity = this.state.celebrity;
     // Send data somewhere
     window.location.assign('/OCEAN-reveal');
   }
@@ -65,6 +68,7 @@ class InfluenceACelebrity extends React.Component {
   }
 
   play(name) {
+    this.context.celebrity = name;
     this.setState({
       celebrity: name,
       video: `/video/${this.context.virtue}_${name}.mp4`,
@@ -75,7 +79,8 @@ class InfluenceACelebrity extends React.Component {
     const { classes } = this.props;
     const { video } = this.state;
     const user = this.context;
-    this.context.virtue = this.context.virtue || 'power';
+
+    user.virtue = user.virtue || 'power';
 
     return (
       <div className={classes.root}>
