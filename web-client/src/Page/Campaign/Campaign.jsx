@@ -35,7 +35,7 @@ class Campaign extends React.Component {
                 <Typography component="h6" variant="h6">Longer delays to Brexit increase the {((this.context.adIssue || 'Remain') === 'leave' ? 'risk' : 'chance')} of it not happening.</Typography>
               </Fade>
               <Fade in={true} style={{transitionDelay: '600ms'}}>
-                <Typography component="h6" variant="h6">We’re going to run a ‘grassroots’ campaign to influence {(this.context.targetName || 'Daniel')} to vote {(this.context.adIssue || 'Remain')} in the next referendum.</Typography>
+                <Typography component="h6" variant="h6">We’re going to run a ‘grassroots’ campaign to influence {this.context.target.name} to vote {(this.context.adIssue || 'Remain')} in the next referendum.</Typography>
               </Fade>
               <Link to="/dark-ad">
                   <IconButton icon="next" text="Ready" />

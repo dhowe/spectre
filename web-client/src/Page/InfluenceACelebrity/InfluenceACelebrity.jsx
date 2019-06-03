@@ -31,7 +31,7 @@ class InfluenceACelebrity extends React.Component {
     this.play = this.play.bind(this);
     this.stop = this.stop.bind(this);
     this.state = { video: null };
-    this.celebs = InfluenceACelebrity.shuffle(['Kardashian', 'Trump', 'Freeman', 'Duchamp', 'Hirst', 'Zuckerberg']);
+    this.celebs = InfluenceACelebrity.shuffle(['Kardashian', 'Trump', 'Freeman', 'Duchamp', 'Mercury', 'Zuckerberg']);
   }
 
   save() {
@@ -67,7 +67,7 @@ class InfluenceACelebrity extends React.Component {
   play(name) {
     this.setState({
       celebrity: name,
-      video: `/video/virtue/${this.context.virtue}_${name}.mp4`,
+      video: `/video/${this.context.virtue}_${name}.mp4`,
     });
   }
 
