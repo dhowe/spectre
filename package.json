@@ -16,6 +16,11 @@
   },
   "author": "daniel howe",
   "dependencies": {
+    "basic-auth": "~2.0.0",
+    "debug": "2.6.9",
+    "depd": "~1.1.2",
+    "on-finished": "~2.3.0",
+    "on-headers": "~1.0.1",
     "archiver": "^3.0.0",
     "body-parser": "^1.19.0",
     "chai-fs": "^2.0.0",
