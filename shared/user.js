@@ -346,6 +346,9 @@ User.schema = () => {
     name: {
       type: 'string'
     },
+    celebrity: {
+      type: 'string'
+    },
     influences: {
       type: ['string']
     },

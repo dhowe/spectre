@@ -58,7 +58,7 @@ class TakeBackControl extends React.Component {
           <Typography component="h6" variant="h6">Delete your data from Spectre’s system?</Typography>
           <Grid className="take-back-control-buttons" container justify="center">
             <Grid item>
-              <Link to="/we-are-sorry">
+              <Link to="/goodbye">
                 <Button className={classes.keepButton}>Keep</Button>
               </Link>
             </Grid>
