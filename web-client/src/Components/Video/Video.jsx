@@ -17,7 +17,7 @@ const styles = {
   },
 };
 
-class Video extends React.PureComponent {
+class Video extends React.Component {
   constructor(props) {
     super(props);
 
@@ -27,22 +27,20 @@ class Video extends React.PureComponent {
   }
 
   render() {
-    const { classes, onComplete, movie } = this.props;
+    const { onComplete, movie } = this.props;
     const { shouldShow } = this.state;
     return (
       shouldShow && (
-        <Fade in style={{ transitionDelay: '200ms' }}>
-          <div className={classes.video}>
-            <video
-              onEnded={() => onComplete(this)}
-              width={window.innerWidth}
-              autoPlay
-            >
-              <source src={movie} type="video/mp4"/>
-              Your browser does not support the video tag.
-            </video>
-          </div>
-        </Fade>
+        <div style={styles.video}>
+          <video
+            onEnded={() => onComplete(this)}
+            width={window.innerWidth}
+            autoPlay
+          >
+            <source src={movie} type="video/mp4"/>
+            Your browser does not support the video tag.
+          </video>
+        </div>
       )
     );
   }
@@ -64,10 +62,10 @@ Video.defaultProps = {
   autoPlay: true,
 };
 Video.propTypes = {
-  classes: PropTypes.object.isRequired,
+  // classes: PropTypes.object.isRequired,
   onComplete: PropTypes.func,
   movie: PropTypes.node.isRequired,
   autoPlay: PropTypes.bool,
 };
 
-export default withStyles(styles)(Video);
+export default Video;
