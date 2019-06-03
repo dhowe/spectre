@@ -33,14 +33,16 @@ class InsightSkin extends React.Component {
 
   render() {
     const { classes } = this.props;
+    const tname = (this.context.getTarget().name || 'Pat');
+    const timg = this.context.targetImgUrl() || '/profiles/default.jpg';
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive={true} progressNumber="one" />
         <div className={classes.content + " content insightPage"}>
           <Typography component="h6" variant="h6">
-            What is {this.context.targetName}'s likely skin colour?
+            What is {tname}'s likely skin colour?
           </Typography>
-          <AvatarComponent target={{ image: this.context.targetImgUrl() }}/>
+          <AvatarComponent target={{ image: timg }}/>
           <div onTouchEnd={this.EnableButton}>
             <TextSliderText leftText="Light" rightText="Dark" />
           </div>

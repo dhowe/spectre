@@ -75,6 +75,8 @@ class InfluenceACelebrity extends React.Component {
     const { classes } = this.props;
     const { video } = this.state;
     const user = this.context;
+    this.context.virtue = this.context.virtue || 'power';
+
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive progressNumber="three"/>

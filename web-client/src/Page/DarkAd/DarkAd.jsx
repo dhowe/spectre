@@ -33,6 +33,7 @@ const styles = {
     height: '54px',
     whiteSpace: 'nowrap',
     overflow: 'hidden',
+    padding: 0,
     '&:hover': {
       backgroundColor: '#21c0fc',
       color: '#ffffff'
@@ -56,8 +57,8 @@ const styles = {
   },
   adText: {
     position: 'absolute',
-    top: '30%',
-    fontSize: '64px',
+    top: '37%',
+    fontSize: '52px',
     color: '#fff',
     fontWeight: '800',
     textAlign: 'center',
@@ -79,7 +80,7 @@ class DarkAd extends React.Component {
   render() {
     const { classes } = this.props;
     const campaignImage = this.context.adIssue === 'remain' ? 'imgs/vote-remain.png' : 'imgs/vote-leave.png'
-    
+
     this.context.adIssue = this.context.adIssue || 'leave';
     if (typeof this.context.target === 'undefined') {
       this.context.setTarget({ "id": "111111111111111111111111", "name": "Remy", "traits": { "openness": 0.5818180970605207, "conscientiousness": 0.07645862267650672, "extraversion": 0.2607193320319028, "agreeableness": 0.012588228025398163, "neuroticism": 0.16712815071948772 } });
@@ -88,6 +89,7 @@ class DarkAd extends React.Component {
       this.context._randomizeTraits();
     }
     const slogans = this.context.targetAdSlogans();
+    slogans.forEach(s => s = s.replace('/<br>/',''));
     const images = this.context.targetAdImages();
 
     return (
