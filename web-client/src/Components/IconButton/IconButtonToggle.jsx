@@ -23,7 +23,7 @@ class IconButtonToggle extends React.Component {
 
   render () {
     return (
-    <a href="silence-warning" onClick={ this.handleClick } className={this.state.condition ? "iconEnabled" : "iconDisabled"}>
+    <a onClick={ this.handleClick } className={this.state.condition ? "iconEnabled" : "iconDisabled"}>
       <IconButton enabled={this.state.condition} icon={this.props.icon} text={this.props.text}></IconButton>
     </a>
     );
