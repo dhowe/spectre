@@ -15,3 +15,11 @@
 .disabled .iconButtonText {
     color: $grey;
 }
+
+.iconButton {
+  background: transparent no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+}

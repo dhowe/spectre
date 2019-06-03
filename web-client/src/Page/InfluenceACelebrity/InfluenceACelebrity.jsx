@@ -73,7 +73,7 @@ class InfluenceACelebrity extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { video, celebrity } = this.state;
+    const { video } = this.state;
     const user = this.context;
     return (
       <div className={classes.root}>
@@ -107,9 +107,7 @@ class InfluenceACelebrity extends React.Component {
               ))}
           </AvatarCircle>
 
-          <Link to="" onClick={this.save}>
-            <IconButton icon="next" text="Next"/>
-          </Link>
+          <IconButton onClick={this.save} icon="next" text="Next"/>
         </div>
         <FooterLogo/>
       </div>

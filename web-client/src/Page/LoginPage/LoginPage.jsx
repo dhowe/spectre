@@ -120,9 +120,7 @@ class LoginPage extends React.Component {
             onComplete={this.continue}
           />
           <SocialLogin />
-          <Link to='' onClick={this.handleSubmit}>
-            <IconButton colour="white" icon="next" text="Next"/>
-          </Link>
+          <IconButton onClick={this.handleSubmit} colour="white" icon="next" text="Next"/>
         </div>
       </div>
     );
