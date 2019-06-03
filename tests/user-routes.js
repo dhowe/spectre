@@ -389,6 +389,7 @@ describe('User Routes', () => {
         name: "daniel2",
         login: "daniel2@aol.com",
         loginType: "facebook",
+        gender: 'male',
         clientId: 1,
         traits: {
           agreeableness: 0.2038,
@@ -470,20 +471,21 @@ describe('User Routes', () => {
         .auth(env.API_USER, env.API_SECRET)
         .send(user)
         .end((err, res) => {
+          console.log(res.body);
           expect(res).to.have.status(200);
-          // /console.log("BODY",res.body);
-          // expect(res.body).is.a('object');
-          // expect(res.body.traits).is.a('object');
-          // expect(res.body.traits.openness).eq(traits.openness);
-          // expect(res.body.similars).is.a('array');
-          // expect(res.body.similars.length).is.gt(0);
-          // Object.assign(user2, res.body);
-          // expect(user2).is.a('object');
-          // expect(user2.traits).is.a('object');
-          // expect(user2.traits.openness).eq(traits.openness);
-          // expect(user2.similars).is.a('array');
-          // expect(user2.similars.length).is.gt(0);
-          // expect(user2.similars[0]).is.a('string');
+          expect(res.body).is.a('object');
+          expect(res.body.traits).is.a('object');
+          expect(res.body.traits.openness).is.gte(0);
+          expect(res.body.traits.openness).is.lt(1);
+          expect(res.body.similars).is.a('array');
+          expect(res.body.similars.length).is.gt(0);
+          Object.assign(user2, res.body);
+          expect(user2).is.a('object');
+          expect(user2.traits).is.a('object');
+          expect(user2.traits.openness).eq(traits.openness);
+          expect(user2.similars).is.a('array');
+          expect(user2.similars.length).is.gt(0);
+          expect(user2.similars[0]).is.a('string');
           //
           // expect(user2.getSimilars()).is.a('array');
           // expect(user2.getSimilars().length).is.gt(0);

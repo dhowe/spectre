@@ -72,6 +72,7 @@ const update = function (req, res) {
 
   // add missing properties that can be computed
   const computeProperties = function(usr) {
+    console.log('computeProperties', usr.name);
     if (typeof usr.descriptors === 'undefined' || !usr.descriptors.length) {
       usr.predictDescriptors();
     }
@@ -91,11 +92,19 @@ const update = function (req, res) {
       // do they have similars ?
       if (typeof user.similars === 'undefined' || !user.similars.length) {
 
+        let limit = 6; // default limit
+        req.query.hasOwnProperty('limit') && (limit = parseInt(req.query.limit));
+
         user.findByOcean(limit, sims => {
+
           if (err) return error(res, 'No similars for #' + req.params.uid);
+          console.log('found: ', sims.length);
           sims.forEach(computeProperties);
           res.status(200).send(user);
         });
+      }
+      else {
+        console.log("NO SIMS ********");
       }
     }
     res.status(200).send(user);

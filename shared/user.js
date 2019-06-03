@@ -123,6 +123,8 @@ export default class User {
 
     this._verifyTraits();
 
+    if (typeof this.gender === 'undefined') throw Error('gender required');
+
     if (arguments.length === 1 && typeof parser === 'number') {
       numSentences = parser;
       parser = undefined;
@@ -344,7 +346,8 @@ export default class User {
   }
 
   _randomizeTraits() {
-    return this.traits = User._randomTraits();
+    this.traits = User._randomTraits();
+    return this;
   }
 };
 
