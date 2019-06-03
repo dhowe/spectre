@@ -1,28 +1,73 @@
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import movie from "./movie.mp4"
+import Fade from '@material-ui/core/es/Fade/Fade';
 
 const styles = {
+  video: {
+    backgroundColor: '#000000d1',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: 999,
+    display: 'flex',
+    justifyContent: 'center',
+  },
+};
 
-}
+class Video extends React.PureComponent {
+  constructor(props) {
+    super(props);
 
-function Video(props) {
+    this.state = {
+      shouldShow: props.autoPlay,
+    };
+  }
 
-
+  render() {
+    const { classes, onComplete, movie } = this.props;
+    const { shouldShow } = this.state;
     return (
-        <div >
-            <video width={window.innerWidth} autoPlay controls>
-                <source src={movie} type="video/mp4" />
-                Your browser does not support the video tag.
+      shouldShow && (
+        <Fade in style={{ transitionDelay: '200ms' }}>
+          <div className={classes.video}>
+            <video
+              onEnded={() => onComplete(this)}
+              width={window.innerWidth}
+              autoPlay
+            >
+              <source src={movie} type="video/mp4"/>
+              Your browser does not support the video tag.
             </video>
-        </div>
+          </div>
+        </Fade>
+      )
     );
+  }
+
+  play() {
+    this.setState({ shouldShow: true });
+  }
+
+  close() {
+    this.setState({ shouldShow: false });
+  }
 }
 
+
+Video.defaultProps = {
+  onComplete: (video) => {
+    video.close();
+  },
+  autoPlay: true,
+};
 Video.propTypes = {
-    classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired,
+  onComplete: PropTypes.func,
+  movie: PropTypes.node.isRequired,
+  autoPlay: PropTypes.bool,
 };
 
 export default withStyles(styles)(Video);
