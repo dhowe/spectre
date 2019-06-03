@@ -59,7 +59,7 @@ class HomeData extends React.Component {
   }
 
   componentDidUpdate() {
-    if (document.getElementsByClassName("iconEnabled").length != this.state.count) {
+    if (document.getElementsByClassName("iconEnabled").length !== this.state.count) {
       this.setState({ count: document.getElementsByClassName("iconEnabled").length });
     }
   }
