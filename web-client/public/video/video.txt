@@ -1,0 +1,1 @@
+videos should not be stored in git, but instead downloaded as part of install and placed in this folder
