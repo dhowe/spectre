@@ -1,7 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Fade from '@material-ui/core/es/Fade/Fade';
 
 const styles = {
   video: {
