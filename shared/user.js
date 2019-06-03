@@ -83,6 +83,10 @@ export default class User {
 
   targetImgUrl() {
     let target = this.getTarget();
+    // //if (!target.name.length)
+    // target.id = target.id.length || '111111111111111111111111'
+    // target.name = target.name.length || 'Pat'
+    // console.log(target);
     return target.id ? User.imageDir + this.getTarget().id + '.jpg' : false;
   }
 
@@ -278,7 +282,7 @@ export default class User {
   getTarget() {
     if (typeof this.target === 'undefined') {
       console.error("ERROR: user has no target");
-      return { id: '', name: '', traits: User._randomTraits() };
+      return { id: null, name: null, traits: User._randomTraits() };
     }
     return JSON.parse(this.target); // TODO: cache
   }
