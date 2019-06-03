@@ -109,7 +109,7 @@ class SearchingFor extends React.Component {
           {this.renderRedirect()}
           <SpectreHeader colour="white" />
           <div className={classes.content + " content"}>
-              <Typography class="username" component="h3" variant="h3">{this.context.name}</Typography>
+              <Typography class="username" component="h3" variant="h3">{this.context.name||'Barney'}</Typography>
               <Typography class="question" component="h3" variant="h3">What are you searching for today?</Typography>
               <div className='ImageCapture'>
                 {/*<Webcam ref={this.setRef}
