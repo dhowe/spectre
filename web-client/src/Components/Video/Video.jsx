@@ -52,18 +52,16 @@ class Video extends React.Component {
     const { shouldShow } = this.state;
 
     const overlay = !(className || style);
-
-    const doNothing = e => {
-      e.stopPropagation();
+    const ended = () => {
+      onComplete(this);
     };
 
     return (
       shouldShow && (
         <div style={overlay ? styles.video : style} className={className} onTouchEnd={this.stop}>
           <video
-            onTouchEnd={doNothing}
             ref={this.videoPlayer}
-            onEnded={() => onComplete(this)}
+            onEnded={ended}
             onError={this.errorRender}
             width={'100%'}
             autoPlay
