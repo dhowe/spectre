@@ -48,6 +48,7 @@ class Pledge extends React.Component {
       <div className={classes.root}>
         <SpectreHeader colour="white" />
         <div className={`${classes.content} content`}>
+          <div className="pledge">
           <Fade in timeout={1000}>
             <p className="copy">
               Welcome to the altar of&nbsp;
@@ -60,6 +61,7 @@ class Pledge extends React.Component {
           <Fade in timeout={1000} style={{ transitionDelay: '4500ms' }}>
             <p className="copy">In order for us to do this, first we need to get to know you a little bit.</p>
           </Fade>
+          </div>
         </div>
         <FooterLogo />
       </div>
