@@ -39,7 +39,7 @@ class InfluenceACelebrity extends React.Component {
   save() {
     //this.context.celebrity = this.state.celebrity;
     // Send data somewhere
-    window.location.assign('/OCEAN-reveal');
+    this.props.history.push('/OCEAN-reveal');
   }
 
   // Nabbed from StackOverflow: https://stackoverflow.com/a/2450976
@@ -120,6 +120,7 @@ class InfluenceACelebrity extends React.Component {
 
 InfluenceACelebrity.propTypes = {
   classes: PropTypes.object.isRequired,
+  history: PropTypes.func.isRequired,
 };
 InfluenceACelebrity.contextType = UserSession;
 

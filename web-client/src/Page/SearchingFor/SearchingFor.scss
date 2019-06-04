@@ -4,12 +4,13 @@
   border: 10px solid $red;
   display: none
 }
-.username {
-  padding-top: 500px;
-  color:$blue !important;
+
+h3.username {
+  color:$blue;
   margin:0;
   font-size: 44px;
 }
+
 .question {
   height: 85px;
   font-weight: 300;
@@ -18,10 +19,12 @@
   vertical-align: baseline;
   margin:0;
 }
+
 .buttonWrapper {
   padding-left: -40px;
   margin-top: 85px;
 }
+
 .buttonWrapper button{
   display: inline-block;
   width:180px;

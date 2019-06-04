@@ -37,7 +37,7 @@ class ReferendumResults extends React.Component {
             className={classes.video}
             autoPlay
             movie="/video/ReferendumResults_animation.mp4"
-            onComplete={() => window.location.assign('/win')}
+            onComplete={() => this.props.history.push('/win')}
           />
         </div>
         <FooterLogo />
@@ -48,6 +48,7 @@ class ReferendumResults extends React.Component {
 
 ReferendumResults.propTypes = {
   classes: PropTypes.object.isRequired,
+  history: PropTypes.func.isRequired,
 };
 ReferendumResults.contextType = UserSession;
 
