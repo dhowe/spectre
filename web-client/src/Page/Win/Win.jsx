@@ -7,6 +7,7 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import IconButton from '../../Components/IconButton/IconButton';
+import {ReactComponent as Trophy} from '../../Icons/trophy.svg';
 
 const styles = {
   root: {
@@ -28,6 +29,7 @@ class Win extends React.Component {
           <div className={classes.content + " content"}>
               <Typography component="h6" variant="h6">{this.context.adIssue === 'remain' ? 'Believe!' : 'BeLeave!'}
                 &nbsp;Your campaign was successful...</Typography>
+              <p className="icon"><Trophy/></p>
               <Typography component="h6" variant="h6">Your silent army <br/> swung the vote!</Typography>
               <Link to="/influence-a-celebrity">
                   <IconButton icon="next" text="Next" />
