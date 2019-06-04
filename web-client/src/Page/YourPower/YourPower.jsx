@@ -37,16 +37,16 @@ class YourPower extends React.Component {
       }
     };
     if (typeof this.context.target === 'undefined') {
-      this.context.setTarget({ "id": "111111111111111111111111", "name": "Remy", "traits": { "openness": 0.5818180970605207, "conscientiousness": 0.07645862267650672, "extraversion": 0.2607193320319028, "agreeableness": 0.012588228025398163, "neuroticism": 0.16712815071948772 } });
+      this.context.setTarget({ "id": "111111111111111111111111", "name": "Remy", "gender": "male", "traits": { "openness": 0.5818180970605207, "conscientiousness": 0.07645862267650672, "extraversion": 0.2607193320319028, "agreeableness": 0.012588228025398163, "neuroticism": 0.16712815071948772 } });
     }
     return (
       <div className={classes.root}>
           <OceanProfile subject={this.context.getTarget()}></OceanProfile>
           <div className={classes.content + " content"}>
-            <Fade in={true} style={{transitionDelay: '200ms'}}>
+            <Fade in={true} style={{transitionDelay: '200ms', marginTop:'300px'}}>
               <Typography component="h6" variant="h6">{this.context.name || 'Remy'}, your {this.context.virtue || 'Power'} is growing.</Typography>
             </Fade>
-            <Fade in={true} style={{transitionDelay: '200ms'}}>
+            <Fade in={true} style={{transitionDelay: '2000ms', marginBottom:'200px'}}>
               <Typography component="h6" variant="h6">Let's put it into practice.</Typography>
             </Fade>
             <Countdown
