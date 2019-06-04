@@ -25,7 +25,7 @@ if (typeof env.API_HOST != 'undefined')
 
 describe('User Routes', () => {
 
-  beforeEach((done) => { // empty db before each test
+  0 && beforeEach((done) => { // empty db before each test
     UserModel.deleteMany({}, (err) => {
       err && console.error(err);
       done()
@@ -390,14 +390,14 @@ describe('User Routes', () => {
         login: "daniel2@aol.com",
         loginType: "facebook",
         gender: 'male',
-        clientId: 1,
-        traits: {
-          agreeableness: 0.2038,
-          conscientiousness: 0.2324,
-          extraversion: 0.2229,
-          openness: 0.246,
-          neuroticism: 0.465
-        }
+        clientId: 1
+        // traits: {
+        //   agreeableness: 0.2038,
+        //   conscientiousness: 0.2324,
+        //   extraversion: 0.2229,
+        //   openness: 0.246,
+        //   neuroticism: 0.465
+        // }
       });
       chai.request(host)
         .post('/api/users')
@@ -406,6 +406,7 @@ describe('User Routes', () => {
         .end((err, res) => {
           if (err) throw err;
           Object.assign(user, res.body);
+          //console.log("beforeEach:INSERTED: "+user.name+"\n");
           done();
         });
     });
@@ -427,6 +428,7 @@ describe('User Routes', () => {
 
     it('should ignore fields not present in schema', (done) => {
       user.virtue = 'truth';
+      user.gender = 'female';
       user.notInSchema = 'notInSchema';
       console.log(user);
       chai.request(host)
@@ -434,7 +436,7 @@ describe('User Routes', () => {
         .auth(env.API_USER, env.API_SECRET)
         .send(user)
         .end((err, res) => {
-          console.log(res.body);
+          console.log('BODY\n',res.body);
           expect(res).to.have.status(200);
           expect(res.body).is.a('object');
           expect(res.body.virtue).eq(user.virtue);
@@ -481,20 +483,21 @@ describe('User Routes', () => {
           expect(res.body.traits.openness).is.lt(1);
           expect(res.body.similars).is.a('array');
           expect(res.body.similars.length).is.gt(0);
-          Object.assign(user2, res.body);
-          expect(user2).is.a('object');
-          expect(user2.traits).is.a('object');
-          expect(user2.traits.openness).eq(traits.openness);
-          expect(user2.similars).is.a('array');
-          expect(user2.similars.length).is.gt(0);
-          expect(user2.similars[0]).is.a('string');
+          Object.assign(user, res.body);
+          expect(user).is.a('object');
+          expect(user.traits).is.a('object');
+          expect(user.traits.openness).is.gte(0);
+          expect(user.traits.openness).is.lt(1);
+          expect(user.similars).is.a('array');
+          expect(user.similars.length).is.gt(0);
+          expect(user.similars[0]).is.a('string');
           //
-          // expect(user2.getSimilars()).is.a('array');
-          // expect(user2.getSimilars().length).is.gt(0);
-          // expect(user2.getSimilars()[0]).is.a('object');
-          // expect(user2.getSimilars()[0]).has.property('id');
-          // expect(user2.getSimilars()[0]).has.property('name');
-          // expect(user2.getSimilars()[0]).has.property('traits');
+          // expect(user.getSimilars()).is.a('array');
+          // expect(user.getSimilars().length).is.gt(0);
+          // expect(user.getSimilars()[0]).is.a('object');
+          // expect(user.getSimilars()[0]).has.property('id');
+          // expect(user.getSimilars()[0]).has.property('name');
+          // expect(user.getSimilars()[0]).has.property('traits');
           done();
         });
     });
@@ -695,7 +698,7 @@ describe('User Routes', () => {
 
     let noid, uid = 'dfjalkj34';
     let name = 'target4.png';
-    let img = './web-client/public/targets/' + name;
+    let img = './web-client/public/profiles/' + name;
 
     it('should fail on null user-id', (done) => {
       chai.request(host)
@@ -729,7 +732,7 @@ describe('User Routes', () => {
 
       let uid = 'dfjalkj34';
       let name = 'target4.png';
-      let img = './web-client/public/targets/' + name;
+      let img = './web-client/public/profiles/' + name;
 
       chai.request(host)
         .post('/api/users/photo/' + uid)

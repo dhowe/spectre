@@ -21,7 +21,6 @@ const current = function (req, res) { // not used at present
 };
 
 const create = function (req, res) {
-
   if (!(req.body.login && req.body.loginType)) return error(res,
     "UserModel with no login/loginType:" + req.body);
 
@@ -71,47 +70,134 @@ const view = function (req, res) {
 const update = function (req, res) {
 
   // add missing properties that can be computed
-  const computeProperties = function(usr) {
-    console.log('computeProperties', usr.name);
+  const computeProperties = (usr) => {
+    //console.log('computeProperties', usr.name);
+    let mods = false;
     if (typeof usr.descriptors === 'undefined' || !usr.descriptors.length) {
       usr.predictDescriptors();
+      mods = true;
     }
     if (typeof usr.influences === 'undefined' || !usr.influences.length) {
       usr.predictInfluences();
+      mods = true;
+    }
+    return mods;
+  };
+  //
+  let headersSent = false;
+  const saveAndRespond = (usr, sims) => {
+    if (!headersSent) {
+      headersSent = true;
+      //console.log(sims);
+      // if (typeof sims !== 'undefined' && sims.length) {
+      //   usr.similars = sims;
+      // }
+      console.log("ALMOST1....",usr.id, usr.similars.length);
+
+      usr.save((err, u) => {
+        if (err) {
+          console.error('ERROR(22): ', err, u);
+          return error(res, 'Unable to update user #' + u.id);
+        }
+        console.log("ALMOST2....",u.id, u.similars.length);
+        res.status(200).send(u);
+      });
     }
   };
+  //let headersSent = false;
 
-  UserModel.findById(req.params.uid, function (err, user) {
+  UserModel.findByIdAndUpdate(req.params.uid, req.body, { new: true }, function (err, user) {
 
-    if (err) return error(res, 'No user #' + req.params.uid);
+    if (err) {
+      console.log("ERROR", err, err.error);
+      return error(res, 'Update fail #' + req.params.uid);
+    }
 
-    console.log(1, user.name);
     if (user.hasOceanTraits()) {
-console.log(2, user.name);
-      computeProperties(user);
-console.log(3, user.name);
+
+      computeProperties(user); // can happen multiple times
+
       // do they have similars ?
-      if (typeof user.similars === 'undefined' || !user.similars.length) {
-console.log(4, user.name);
+      if (false && typeof user.similars === 'undefined' || !user.similars.length) {
+
         let limit = 6; // default limit
         req.query.hasOwnProperty('limit') && (limit = parseInt(req.query.limit));
 
         user.findByOcean(limit, sims => {
-console.log(5, user.name);
           if (err) return error(res, 'No similars for #' + req.params.uid);
-          console.log('found: ', sims.length);
-          sims.forEach(computeProperties);
-          res.status(200).send(user);
+
+          console.log('sims found: ', sims.length);
+
+          // if so get their properties
+          //let updated = [];
+          user.similars = sims;
+          sims.forEach((s) => computeProperties(s) && console.log('saving '+s.name) && s.save(err));
+              // UserModel.findByIdAndUpdate(s._id, s, { new: true }, function (err, s) {
+              //   if (err) console.error(err + '\nUnable to update user #' + s._id);
+              //   console.log('updated '+s._id);
+              //   if (--count === 0) {
+              //     console.log('PASSING Sims',sims.length);
+              //     //saveAndRespond(user, sims);
+              //   }
+              // });
+              // s.save((err, s) => {
+              //   if (err) console.error(err + '\nUnable to update user #' + s._id);
+              // });
+            //}
+          //});
+
         });
-        user.save
-      }
-      else {
-        console.log("NO SIMS ********");
+        saveAndRespond(user);
+
+      } else {
+
+        console.log("NO SIMS ********, continuing");
       }
     }
-    res.status(200).send(user);
+    if (!headersSent) res.status(200).send(user);
   });
 }
+
+//
+//   UserModel.findById(req.params.uid, function (err, user) {
+//
+//     if (err) return error(res, 'No user #' + req.params.uid);
+//
+//     if (user.hasOceanTraits()) {
+//
+//       computeProperties(user); // can happen multiple times
+//
+//       // do they have similars ?
+//       if (typeof user.similars === 'undefined' || !user.similars.length) {
+//
+//         let limit = 6; // default limit
+//         req.query.hasOwnProperty('limit') && (limit = parseInt(req.query.limit));
+//
+//         user.findByOcean(limit, sims => {
+//           if (err) return error(res, 'No similars for #' + req.params.uid);
+//
+//           console.log('sims found: ', sims.length);
+//
+//           // if so get their properties
+//           0 &&sims.forEach((s) => {
+//             if (computeProperties(s)) {
+//               s.save((err, s) => {
+//                 if (err) console.error(err + '\nUnable to update user #' + s._id);
+//               });
+//             }
+//           });
+//           saveAndRespond(user);
+//         });
+//         saveAndRespond(user);
+//
+//       } else {
+//
+//         console.log("NO SIMS ********, continuing");
+//       }
+//     }
+//     saveAndRespond(user);
+//   });
+// }
 
 /*
  * Do the update:

@@ -20,6 +20,7 @@ describe('Client User', function () {
       expect(user.clientId).eq(-1);
       expect(user.category).eq(0);
       expect(user.isActive).eq(false);
+      expect(user.virtue).eq(undefined);
       expect(user.hasOceanTraits()).eq(false);
     });
 
@@ -30,6 +31,8 @@ describe('Client User', function () {
         hasImage: true,
         login: "dave@abc.com",
         loginType: "twitter",
+        virtue: 'truth',
+        gender: 'male',
         lastPageVisit: { time: +Date.now(), page: '/Test' },
         //similars: [JSON.stringify({ id: '1111', name: 'Dave', traits: User._randomTraits() }),
         //JSON.stringify({ id: '2222', name: 'Jen', traits: User._randomTraits() })],
@@ -44,6 +47,8 @@ describe('Client User', function () {
       });
 
       expect(user.name).eq("dave");
+      expect(user.virtue).eq("truth");
+      expect(user.gender).eq("male");
       expect(user.login).eq("dave@abc.com");
       expect(user.hasImage).eq(true);
       expect(user.loginType).eq("twitter");

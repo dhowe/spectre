@@ -1,5 +1,5 @@
 /*
- * usage: mongo --eval "let dbname='SB_NAME'" create-users.js
+ * usage: mongo --eval "let dbname='DB_NAME'" create-users.js
  */
 
 // check dbname arg
@@ -144,7 +144,7 @@ db.users.insertMany([
     }
 }])
 
-let cursor = db.users.find({}, { login: 1, loginType: 1, name: 1, id: 1 });
+let cursor = db.users.find({}, { login: 1, name: 1, id: 1 });
 while (cursor.hasNext()) { printjson(cursor.next()); }
 
 print('\nCreated ' + db.users.count({}) + ' user records');
