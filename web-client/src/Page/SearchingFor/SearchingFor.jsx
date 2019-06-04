@@ -42,7 +42,6 @@ const styles = {
 class SearchingFor extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { toNext: false };
 
     this.setRef = this.setRef.bind(this);
   }
@@ -76,8 +75,6 @@ class SearchingFor extends React.Component {
     user.name = user.name || 'Barney';
     user.loginType = user.loginType || 'email';
     user.login = user.login || `Barney${+new Date()}@aol.com`;
-
-    this.setState(() => ({ toNext: true })); // TMP
 
     // here we are doing the webcam capture, disabled for now
     if (false) {
@@ -142,7 +139,6 @@ class SearchingFor extends React.Component {
 
 SearchingFor.propTypes = {
   classes: PropTypes.object.isRequired,
-  history: PropTypes.func.isRequired,
 };
 SearchingFor.contextType = UserSession;
 
