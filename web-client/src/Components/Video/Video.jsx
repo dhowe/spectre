@@ -20,10 +20,13 @@ class Video extends React.Component {
     super(props);
 
     this.errorRender = this.errorRender.bind(this);
+    this.stop = this.stop.bind(this);
 
     this.state = {
       shouldShow: props.autoPlay,
     };
+
+    this.videoPlayer = React.createRef();
   }
 
   errorRender(error) {
@@ -32,24 +35,8 @@ class Video extends React.Component {
     this.setState({ shouldShow: false });
   }
 
-  render() {
-    const { onComplete, movie } = this.props;
-    const { shouldShow } = this.state;
-    return (
-      shouldShow && (
-        <div style={styles.video}>
-          <video
-            onEnded={() => onComplete(this)}
-            onError={this.errorRender}
-            width={window.innerWidth}
-            autoPlay
-          >
-            <source src={movie} type="video/mp4"/>
-            Your browser does not support the video tag.
-          </video>
-        </div>
-      )
-    );
+  stop() {
+    this.videoPlayer.current.currentTime = Number.MAX_SAFE_INTEGER;
   }
 
   play() {
@@ -59,6 +46,33 @@ class Video extends React.Component {
   close() {
     this.setState({ shouldShow: false });
   }
+
+  render() {
+    const { onComplete, movie, className, style } = this.props;
+    const { shouldShow } = this.state;
+
+    const overlay = !(className || style);
+    const ended = () => {
+      onComplete(this);
+    };
+
+    return (
+      shouldShow && (
+        <div style={overlay ? styles.video : style} className={className} onTouchEnd={this.stop}>
+          <video
+            ref={this.videoPlayer}
+            onEnded={ended}
+            onError={this.errorRender}
+            width={'100%'}
+            autoPlay
+          >
+            <source src={movie} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      )
+    );
+  }
 }
 
 
@@ -67,12 +81,16 @@ Video.defaultProps = {
     video.close();
   },
   autoPlay: true,
+  className: null,
+  style: null,
 };
 Video.propTypes = {
   // classes: PropTypes.object.isRequired,
-  onComplete: PropTypes.func,
   movie: PropTypes.node.isRequired,
+  onComplete: PropTypes.func,
   autoPlay: PropTypes.bool,
+  className: PropTypes.string,
+  style: PropTypes.string,
 };
 
 export default Video;

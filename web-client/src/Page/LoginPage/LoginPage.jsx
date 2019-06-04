@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import Modal from '../../Components/Modal/Modal';
 import SocialLogin from '../../Components/SocialLogin/SocialLogin';
 import IconButton from '../../Components/IconButton/IconButton';

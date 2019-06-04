@@ -15,6 +15,15 @@ const styles = {
   clickToContinue: {
     margin: '20% 0',
   },
+  video: {
+    width: '100%',
+  },
+  content: {
+    display: 'flex',
+    width: '100%',
+    justifyContent: 'center',
+    alignContent: 'center',
+  },
 };
 
 class ReferendumResults extends React.Component {
@@ -22,9 +31,10 @@ class ReferendumResults extends React.Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <SpectreHeader colour="white"/>
+        <SpectreHeader colour="white" />
         <div className={classes.content + ' content'}>
           <Video
+            className={classes.video}
             autoPlay
             movie="/video/ReferendumResults_animation.mp4"
             onComplete={() => window.location.assign('/win')}
