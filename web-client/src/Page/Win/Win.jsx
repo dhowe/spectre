@@ -28,7 +28,7 @@ class Win extends React.Component {
           <div className={classes.content + " content"}>
               <Typography component="h6" variant="h6" style={{marginTop:'100px'}}><strong>{this.context.adIssue === 'remain' ? 'Believe!' : 'BeLeave!'}</strong><br/>
                 &nbsp;Your campaign was successful...</Typography>
-              <Typography component="h6" variant="h6">Your silent army <br/> swung the vote!</Typography>
+              <Typography component="h6" variant="h6">Your silent army swung the vote!</Typography>
               <Link to="/influence-a-celebrity">
                   <IconButton icon="next" text="Next" />
               </Link>
