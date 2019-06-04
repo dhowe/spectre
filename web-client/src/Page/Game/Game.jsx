@@ -172,10 +172,11 @@ function sketch(p) {
     let otr = '<tr><td>';
     let ctd = '</td><td>';
     let ctr = '</td></tr>'
-    let rows = User.oceanTraits.length;
+    let traits = user.oceanTraits();
+    let rows = traits.length;
     let desc = '</td><td rowspan=' + rows +
       ' id="desc">' + user.generateDescription();
-    let html = User.oceanTraits.reduce((acc, t, i) => {
+    let html = traits.reduce((acc, t, i) => {
       return acc + otr + t + ctd + user.traits[t] + (i ? '' : desc) + ctr;
     }, '');
     document.getElementById("content").style.display = 'inline-block';

@@ -19,7 +19,7 @@ const styles = {
 class FindCitizens extends React.Component {
   render() {
     const { classes } = this.props;
-    const tname = 'Remy';
+    let tname = 'Remy';
     if (this.context && typeof this.context.getTarget === 'function') {
       let target = this.context.getTarget();
       if (target && target.name && target.name.length) {
