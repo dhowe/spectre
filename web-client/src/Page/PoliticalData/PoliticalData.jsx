@@ -54,12 +54,11 @@ class PoliticalData extends React.Component {
   constructor(props) {
     super(props);
     this.state = { count: 0 };
-
     this.countAdd = this.countAdd.bind(this);
   }
 
   componentDidUpdate() {
-    if (document.getElementsByClassName("iconEnabled").length != this.state.count) {
+    if (document.getElementsByClassName("iconEnabled").length !== this.state.count) {
       this.setState({ count: document.getElementsByClassName("iconEnabled").length });
     }
   }

@@ -5,7 +5,7 @@ import Input from "@material-ui/core/Input";
 import FormControl from "@material-ui/core/FormControl";
 import UserSession from "../../Components/UserSession/UserSession";
 import Keyboard from "react-simple-keyboard";
-//import InputLabel from "@material-ui/core/InputLabel";
+
 import grey from "@material-ui/core/colors/grey";
 import "react-simple-keyboard/build/css/index.css";
 import "./SocialLogin.scss";
@@ -117,7 +117,7 @@ class SocialLogin extends React.Component {
                     ".com @ {space}"
                   ],
                   shift: [
-                    "` ! @ # $ % ^ & * ( ) _ + {bksp}",
+                    "` ! @ # $ % ^ & * ( ) _ + {delete}",
                     "{tab} Q W E R T Y U I O P ",
                     '{lock} A S D F G H J K L : "',
                     "{shift} Z X C V B N M < >",

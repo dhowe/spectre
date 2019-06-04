@@ -43,6 +43,9 @@ class DataIs extends React.Component {
   }
   render() {
     const { classes } = this.props;
+    this.context.virtue = this.context.virtue || 'power';
+    const virtue = this.context.virtue;
+    const virtueAs = this.context.virtueAsAdverb();
     const timer = ({ seconds, completed }) => {
       if (completed) {
         // Render a complete state
@@ -59,11 +62,18 @@ class DataIs extends React.Component {
         <SpectreHeader colour="white" />
         <div className={classes.content + " content"}>
           <Fade in={true} style={{transitionDelay: '200ms'}}>
-            <Typography component="h6" variant="h6">DATA IS {(this.context.virtue || 'power').toUpperCase()}</Typography>
+            <Typography component="h6" variant="h6">DATA IS {virtue.toUpperCase()}</Typography>
+          </Fade>
+          <Fade in={true} style={{transitionDelay: '1200ms'}}>
+
+            <Typography component="h6" variant="h6">To become more {virtueAs} you need&nbsp;more&nbsp;data</Typography>
+          </Fade>
+          <Fade in={true} style={{transitionDelay: '2000ms'}}>
+            <Typography component="h6" variant="h6">We can help you believe in the {virtue}&nbsp;of&nbsp;Dataism.</Typography>
           </Fade>
           <Countdown
             onComplete={this.goTo.bind(this)}
-            date={Date.now() + 3000}
+            date={Date.now() + 5000}
             renderer={timer}
           />
         </div>

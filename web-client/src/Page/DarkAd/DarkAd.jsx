@@ -33,6 +33,9 @@ const styles = {
     height: '54px',
     whiteSpace: 'nowrap',
     overflow: 'hidden',
+    padding: 0,
+    textTransform: 'initial',
+    fontSize: '24px',
     '&:hover': {
       backgroundColor: '#21c0fc',
       color: '#ffffff'
@@ -56,8 +59,8 @@ const styles = {
   },
   adText: {
     position: 'absolute',
-    top: '30%',
-    fontSize: '64px',
+    top: '43%',
+    fontSize: '45px',
     color: '#fff',
     fontWeight: '800',
     textAlign: 'center',
@@ -78,8 +81,8 @@ class DarkAd extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const campaignImage = this.context.adIssue === 'remain' ? 'imgs/vote-remain.png' : 'imgs/vote-leave.png'
-    
+    const campaignImage = this.context.adIssue === 'remain' ? 'imgs/vote-remain.png' : 'imgs/vote-leave.svg'
+
     this.context.adIssue = this.context.adIssue || 'leave';
     if (typeof this.context.target === 'undefined') {
       this.context.setTarget({ "id": "111111111111111111111111", "name": "Remy", "traits": { "openness": 0.5818180970605207, "conscientiousness": 0.07645862267650672, "extraversion": 0.2607193320319028, "agreeableness": 0.012588228025398163, "neuroticism": 0.16712815071948772 } });
@@ -88,7 +91,9 @@ class DarkAd extends React.Component {
       this.context._randomizeTraits();
     }
     const slogans = this.context.targetAdSlogans();
+    slogans.forEach(s => s = s.replace('/<br>/',''));
     const images = this.context.targetAdImages();
+    images.push("imgs/darkadred.png");
 
     return (
       <div className={classes.root + " darkAd"}>
@@ -101,23 +106,24 @@ class DarkAd extends React.Component {
             {!this.state.defaultImageSelected ? <img className={classes.campaignImage} src={campaignImage} alt='leave'></img> : ''}
           </div>
           <div>
-            <img className={classes.image} src={images[0]} alt='leave' onClick={() => { this.setState({ image: images[0] }) }}></img>
-            <img className={classes.image} src={images[1]} alt='leave' onClick={() => { this.setState({ image: images[1] }) }}></img>
-            <img className={classes.image} src={images[2]} alt='leave' onClick={() => { this.setState({ image: images[2] }) }}></img>
-            <img className={classes.image} src={images[3]} alt='leave' onClick={() => { this.setState({ image: images[3] }) }}></img>
+            {console.log(images)}
+            <img className={classes.image} src={images[0]} alt='leave' onClick={() => { this.setState({ image: images[0], defaultImageSelected: false }) }}></img>
+            <img className={classes.image} src={images[1]} alt='leave' onClick={() => { this.setState({ image: images[1], defaultImageSelected: false }) }}></img>
+            <img className={classes.image} src={images[2]} alt='leave' onClick={() => { this.setState({ image: images[2], defaultImageSelected: false }) }}></img>
+            <img className={classes.image} src={images[3]} alt='leave' onClick={() => { this.setState({ image: images[3], defaultImageSelected: false }) }}></img>
           </div>
           <div>
-            <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.setState({ text: slogans[0], defaultImageSelected: false }) }}>
+            <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.state.defaultImageSelected && this.setState({ image: images[4] }); this.setState({ text: slogans[0], defaultImageSelected: false }) }}>
               {slogans[0].split(' ').slice(0, 2).join(' ') + '...'}
             </Button>
-            <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.setState({ text: slogans[1], defaultImageSelected: false }) }}>
+            <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.state.defaultImageSelected && this.setState({ image: images[4] }); this.setState({ text: slogans[1], defaultImageSelected: false }) }}>
               {slogans[1].split(' ').slice(0, 2).join(' ') + '...'}
             </Button>
             <div>
-              <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.setState({ text: slogans[2], defaultImageSelected: false }) }}>
+              <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.state.defaultImageSelected && this.setState({ image: images[4] }); this.setState({ text: slogans[2], defaultImageSelected: false }) }}>
                 {slogans[2].split(' ').slice(0, 2).join(' ') + '...'}
               </Button>
-              <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.setState({ text: slogans[3], defaultImageSelected: false }) }}>
+              <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.state.defaultImageSelected && this.setState({ image: images[4] }); this.setState({ text: slogans[3], defaultImageSelected: false }) }}>
                 {slogans[3].split(' ').slice(0, 2).join(' ') + '...'}
               </Button>
             </div>

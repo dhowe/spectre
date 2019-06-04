@@ -4,6 +4,7 @@
     color: #21c0fc;
     text-decoration: none;
     margin-top: -15px;
+    font-size: 45px;
 }
 
 .iconButton-white {
@@ -14,4 +15,12 @@
 
 .disabled .iconButtonText {
     color: $grey;
+}
+
+.iconButton {
+  background: transparent no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
 }

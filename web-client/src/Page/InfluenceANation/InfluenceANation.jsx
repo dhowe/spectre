@@ -7,9 +7,14 @@ import { Link } from 'react-router-dom';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
-import GetMoreDataButton from '../../Icons/Get_more_data_button.svg';
+import Styles from '../../Styles';
+import colours from '../../colors.scss';
+import Button from '@material-ui/core/Button';
 //import Fade from '@material-ui/core/Fade';
 import "./InfluenceANation.scss";
+
+const height = 53;
+const fontSize = 22;
 
 const styles = {
   root: {
@@ -17,20 +22,31 @@ const styles = {
     width: "100%",
     color: 'black'
   },
+  button: {
+    ...Styles.button,
+    color: colours.blue,
+    borderColor: colours.blue,
+    marginRight: 20,
+    fontSize,
+    height,
+    display: 'inline-block',
+    marginTop: '150px'
+  },
 };
 
 class InfluenceANation extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <div className={classes.root + "InfluenceANation"}>
+      <div className={classes.root + " InfluenceANation"}>
           <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
           <div className={classes.content + " content"}>
-              <Typography class="top"><strong>Influence a nation</strong></Typography>
-              <Typography class="middle">Lets increase the {this.context.virtue||'influence'} of your campaign by convincing lots of people to vote {this.context.adIssue}.</Typography>
+              <Typography class="top"><strong>Influence a Nation</strong></Typography>
+              <Typography class="middle">Let's amplify your campaign by convincing
+              lots of others to vote {this.context.adIssue}.</Typography>
               <Typography class="semi-bold">We can show you how, but first, you must...</Typography>
               <Link to="/consumer-data">
-                <img id="GetMoreDataButton" alt='Get more data' src={GetMoreDataButton} />
+                <Button className={classes.button}>Get more data!</Button>
               </Link>
           </div>
           <FooterLogo />
