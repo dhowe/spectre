@@ -61,9 +61,16 @@ class DataIs extends React.Component {
           <Fade in={true} style={{transitionDelay: '200ms'}}>
             <Typography component="h6" variant="h6">DATA IS {(this.context.virtue || 'power').toUpperCase()}</Typography>
           </Fade>
+          <Fade in={true} style={{transitionDelay: '1200ms'}}>
+
+            <Typography component="h6" variant="h6">To become more powerful you need more data</Typography>
+          </Fade>
+          <Fade in={true} style={{transitionDelay: '2000ms'}}>
+            <Typography component="h6" variant="h6">We can help you believe in the power of dataism.</Typography>
+          </Fade>
           <Countdown
             onComplete={this.goTo.bind(this)}
-            date={Date.now() + 3000}
+            date={Date.now() + 5000}
             renderer={timer}
           />
         </div>
