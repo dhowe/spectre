@@ -24,14 +24,12 @@ class OCEANReveal extends React.Component {
   constructor(props) {
     super(props);
 
-    this.video = React.createRef();
-    this.state = { movie: null};// `/video/wrapup_${this.context.celebrity||'Trump'}.mp4` };
+    this.video = React.createRef(); // NOTE: should be `/video/wrapup_${this.context.celebrity}.mp4`
+    this.state = { movie: `/video/wrapup/wrapup_${this.context.celeb}.mp4` };
     this.showVideo = this.showVideo.bind(this);
   }
 
   showVideo() {
-    this.setState({ movie: `/video/wrapup_${this.context.celebrity||'Trump'}.mp4` });
-    console.log(this.state);
     this.video.play();
   }
 
