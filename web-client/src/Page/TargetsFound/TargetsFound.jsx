@@ -27,8 +27,14 @@ const styles = {
 };
 
 class TargetsFound extends React.Component {
-  static onComplete() {
-    window.location.assign('/launch-campaign');
+  constructor(props) {
+    super(props);
+
+    this.onComplete = this.onComplete.bind(this);
+  }
+
+  onComplete() {
+    this.props.history.push('/launch-campaign');
   }
 
   render() {
@@ -37,7 +43,7 @@ class TargetsFound extends React.Component {
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive progressNumber="two" />
         <div className={`${classes.content} content`}>
-          <Video autoPlay style={{ width: '100%' }} movie="/video/TargetsFound_Animation.mp4" onComplete={TargetsFound.onComplete} />
+          <Video autoPlay style={{ width: '100%' }} movie="/video/TargetsFound_Animation.mp4" onComplete={this.onComplete} />
         </div>
         <FooterLogo />
       </div>
@@ -47,6 +53,7 @@ class TargetsFound extends React.Component {
 
 TargetsFound.propTypes = {
   classes: PropTypes.object.isRequired,
+  history: PropTypes.func.isRequired,
 };
 TargetsFound.contextType = UserSession;
 
