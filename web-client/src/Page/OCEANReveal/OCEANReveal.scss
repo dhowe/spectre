@@ -2,10 +2,16 @@
   transition: 2s ease-in all;
 }
 
-.first {
-  -webkit-transition: color 2s ease-in-out;
-  -moz-transition: color 2s;
-  -ms-transition: color 2s;
-  -o-transition: color 2s;
-  transition: color 2s;
+.show:nth-child() {
+  transition: hide-animation 2s 0s;
+}
+
+@keyframes hide-animation {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes show-animation {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
