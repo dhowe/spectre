@@ -87,7 +87,7 @@ class InfluenceACelebrity extends React.Component {
         <SpectreHeader colour="white" progressActive progressNumber="three"/>
         <div className={classes.content + ' content'}>
           <Fade in style={{ transitionDelay: '200ms' }}>
-            <Typography className="title" component="h3" variant="h3">Influence a celebrity!</Typography>
+            <Typography className="title" component="h4" variant="h4">Influence a celebrity!</Typography>
           </Fade>
           <Fade in style={{ transitionDelay: '200ms' }}>
             <Typography component="h6" variant="h6">
@@ -96,10 +96,7 @@ class InfluenceACelebrity extends React.Component {
           </Fade>
           <Fade in style={{ transitionDelay: '200ms' }}>
             <Typography component="h6" variant="h6">
-              Select a famous follower to hear their confession
-              on&nbsp;
-              {user.virtue}
-              :
+              Pick one to hear their <br/>confession on&nbsp;{user.virtue}:
             </Typography>
           </Fade>
           {video && <Video autoPlay onComplete={this.stop} movie={video}/>}
