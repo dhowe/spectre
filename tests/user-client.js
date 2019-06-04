@@ -31,9 +31,9 @@ describe('Client User', function () {
         login: "dave@abc.com",
         loginType: "twitter",
         lastPageVisit: { time: +Date.now(), page: '/Test' },
-        similars: [JSON.stringify({ id: '1111', name: 'Dave', traits: User._randomTraits() }),
-        JSON.stringify({ id: '2222', name: 'Jen', traits: User._randomTraits() })],
-        target: JSON.stringify({ id: '2222', name: 'Jen', traits: User._randomTraits() }),
+        //similars: [JSON.stringify({ id: '1111', name: 'Dave', traits: User._randomTraits() }),
+        //JSON.stringify({ id: '2222', name: 'Jen', traits: User._randomTraits() })],
+        //target: JSON.stringify({ id: '2222', name: 'Jen', traits: User._randomTraits() }),
         traits: {
           agreeableness: .3,
           conscientiousness: .4,
@@ -51,16 +51,16 @@ describe('Client User', function () {
       expect(user.traits.openness).to.equal(1);
       expect(user.hasOceanTraits()).eq(true);
       expect(user.categorize()).eq(1);
-      expect(user.getSimilars()).is.a('array');
-      expect(user.getSimilars().length).eq(2);
-      expect(user.getSimilars()[0].name).eq('Dave');
-      expect(user.getSimilars()[1].name).eq('Jen');
-      expect(user.getSimilars()[0].id).eq('1111');
-      expect(user.getSimilars()[1].id).eq('2222');
-      expect(user.getTarget().name).eq('Jen');
-      expect(user.getTarget().id).eq('2222');
-      expect(user.getTarget().traits.openness).is.gte(0);
-      expect(user.getTarget().traits.openness).is.lt(1);
+      // expect(user.getSimilars()).is.a('array');
+      // expect(user.getSimilars().length).eq(2);
+      // expect(user.getSimilars()[0].name).eq('Dave');
+      // expect(user.getSimilars()[1].name).eq('Jen');
+      // expect(user.getSimilars()[0].id).eq('1111');
+      // expect(user.getSimilars()[1].id).eq('2222');
+      // expect(user.getTarget().name).eq('Jen');
+      // expect(user.getTarget().id).eq('2222');
+      // expect(user.getTarget().traits.openness).is.gte(0);
+      // expect(user.getTarget().traits.openness).is.lt(1);
     });
   });
 

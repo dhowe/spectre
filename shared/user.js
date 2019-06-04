@@ -236,6 +236,7 @@ export default class User {
 
   generateDescription() {
     this._verifyTraits();
+    let parser = new Parser(this);
     let lines = this._descriptionLines();
     for (let i = 0; i < lines.length; i++) {
       lines[i] = parser.parse(lines[i]);
@@ -497,9 +498,7 @@ User._randomTraits = function (tmpl) {
   return traits;
 }
 
-User.oceanTraits = () => {
-  return ['openness', 'conscientiousness', 'extraversion', 'agreeableness', 'neuroticism']
-};
+User.oceanTraits = ['openness', 'conscientiousness', 'extraversion', 'agreeableness', 'neuroticism'];
 
 User.adInfluences = {
   leave: {

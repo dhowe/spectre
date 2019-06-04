@@ -428,11 +428,13 @@ describe('User Routes', () => {
     it('should ignore fields not present in schema', (done) => {
       user.virtue = 'truth';
       user.notInSchema = 'notInSchema';
+      console.log(user);
       chai.request(host)
         .put('/api/users/' + user._id)
         .auth(env.API_USER, env.API_SECRET)
         .send(user)
         .end((err, res) => {
+          console.log(res.body);
           expect(res).to.have.status(200);
           expect(res.body).is.a('object');
           expect(res.body.virtue).eq(user.virtue);

@@ -10,7 +10,7 @@ const list = function (req, res) {
   });
 };
 
-const current = function (req, res) {
+const current = function (req, res) { // not used at present
 
   UserModel.findOne({ clientId: req.params.uid }, {}, {
     sort: { 'createdAt': -1 }
@@ -85,23 +85,25 @@ const update = function (req, res) {
 
     if (err) return error(res, 'No user #' + req.params.uid);
 
+    console.log(1, user.name);
     if (user.hasOceanTraits()) {
-
+console.log(2, user.name);
       computeProperties(user);
-
+console.log(3, user.name);
       // do they have similars ?
       if (typeof user.similars === 'undefined' || !user.similars.length) {
-
+console.log(4, user.name);
         let limit = 6; // default limit
         req.query.hasOwnProperty('limit') && (limit = parseInt(req.query.limit));
 
         user.findByOcean(limit, sims => {
-
+console.log(5, user.name);
           if (err) return error(res, 'No similars for #' + req.params.uid);
           console.log('found: ', sims.length);
           sims.forEach(computeProperties);
           res.status(200).send(user);
         });
+        user.save
       }
       else {
         console.log("NO SIMS ********");
