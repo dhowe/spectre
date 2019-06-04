@@ -28,11 +28,11 @@ class PickYourSide extends React.Component {
       <div className={classes.root}>
           <OceanProfile subject={this.context.getTarget()} ></OceanProfile>
           <div className={classes.content + " content"}>
-              <Typography component="h6" variant="h6">Influence {this.context.name}'s vote on Brexit:</Typography>
+              <Typography component="h6" variant="h6" style={{marginTop:'400px'}}>Choose a side:</Typography>
               <Link to="/campaign">
                   <img src="https://i.gyazo.com/1890ddef64e0bde795334a2e8564d3b1.png" alt='leave' onClick={() => { this.context.adIssue = 'leave' }}></img>
               </Link>
-              <Link to="/campaign">
+              <Link to="/campaign" style={{marginBottom:'100px'}}>
                   <img src="https://i.gyazo.com/de4447b86eac589133ad3ae0e399b5d4.png" alt='remain' onClick={() => { this.context.adIssue = 'remain' }}></img>
               </Link>
               <span/>
