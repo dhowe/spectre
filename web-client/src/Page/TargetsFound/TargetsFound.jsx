@@ -25,7 +25,7 @@ const styles = {
 
 class TargetsFound extends React.Component {
   onComplete() {
-    window.location.assign('/referendum-results');
+    window.location.assign('/launch-campaign');
   }
 
   render() {

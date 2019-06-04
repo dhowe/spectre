@@ -117,7 +117,7 @@ class SocialLogin extends React.Component {
                     ".com @ {space}"
                   ],
                   shift: [
-                    "` ! @ # $ % ^ & * ( ) _ + {bksp}",
+                    "` ! @ # $ % ^ & * ( ) _ + {delete}",
                     "{tab} Q W E R T Y U I O P ",
                     '{lock} A S D F G H J K L : "',
                     "{shift} Z X C V B N M < >",

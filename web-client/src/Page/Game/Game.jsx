@@ -37,12 +37,19 @@ const styles = {
  *   to compute the personality score (if nothing
  *   is moved, brand ratings are randomized)
  */
-let percent, totalDist, colors = {};
+let percent, totalDist, colors = {}, logos = {};
 
 function sketch(p) {
 
-  let done, brandSize, start, fps, numLines = 9,
-    linesY = [];
+  let done, brandSize, start, fps, numLines = 9, showFps = false,
+    linesY = [], instruct, instructions = true;
+
+  p.preload = () => {
+    instruct = p.loadImage('/imgs/game_instruct.png');
+    Brand.names.forEach((name) => {
+      logos[name] = p.loadImage('/imgs/' + name.replace(/ /g, '_') + '.png');
+    });
+  }
 
   p.setup = () => {
 
@@ -61,7 +68,6 @@ function sketch(p) {
     for (let i = 0; i < Brand.names.length; i++) {
       let bx = -i * (p.width / 6) + p.width / 3;
       Brand.instances.push(new Brand(p, bx, p.height / 2, brandSize, Brand.names[i]));
-
     }
     totalDist = p.width - Brand.instances[Brand.instances.length - 1].x;
     start = p.millis();
@@ -79,7 +85,13 @@ function sketch(p) {
       p.line(0, ypos, p.width, ypos);
       if (p.frameCount === 1) linesY.push(ypos);
     }
-    if (p.frameCount === 1) console.log(linesY);
+
+    drawInfo(p, colors.sketchText);
+
+    if (instructions) {
+      p.image(instruct, p.width/2, p.height/2-100);
+      return;
+    }
 
     if (!done) Brand.updateAll();
     Brand.drawAll();
@@ -92,19 +104,25 @@ function sketch(p) {
       if (timer < 0 && !done) finished();
 
       p.fill(colors.sketchText);
+      p.noStroke();
       p.textSize(40);
-      p.text(Math.max(0, timer), p.width - 60, brandSize / 2);
-      p.textSize(30);
+      p.text(Math.max(0, timer), p.width - 60, 20);
       if (p.frameCount % 10 === 1) fps = Math.round(p.frameRate());
-      p.text('fps: ' + fps, 50, 30); // tmp
+      if (showFps) p.text('fps: ' + fps, 50, 20); // tmp
     }
   };
 
   p.keyReleased = () => {
     if (p.key === ' ') finished();
+    if (p.key === 'f') showFps = !showFps;
   };
 
   p.mouseReleased = () => {
+    if (instructions) {
+      instructions = false;
+      start = p.millis();
+      return;
+    }
     if (Brand.active) {
       let lineIdx = -1,
         closestLine = 10000;
@@ -172,6 +190,14 @@ function sketch(p) {
     });
   }
 
+  function drawInfo(p, c) {
+    p.textSize(40);
+    p.fill(c);
+    p.noStroke();
+    p.text('+ Love', p.width/2, 20);
+    p.text('- Hate', p.width/2, p.height-20)
+  }
+
   function checkData() {
     let nodata = true;
     Brand.instances.forEach(b => {
@@ -201,7 +227,9 @@ class Brand {
     this.item = item;
     this.rating = 0;
     this.strokeWeight = colors.sketchStrokeMinWeight;
-    this.logo = this.p.loadImage('/imgs/' + this.item.replace(/ /g, '_') + '.png');
+    // HERE
+    //this.logo = this.p.loadImage('/imgs/' + this.item.replace(/ /g, '_') + '.png');
+    this.logo = logos[item];
   }
   draw() {
     if (this.x > -this.sz) this.render();

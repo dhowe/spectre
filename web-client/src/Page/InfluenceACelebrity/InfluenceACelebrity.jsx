@@ -30,11 +30,14 @@ class InfluenceACelebrity extends React.Component {
     this.play = this.play.bind(this);
     this.stop = this.stop.bind(this);
     this.state = { video: null };
-    this.celebs = InfluenceACelebrity.shuffle(['Kardashian', 'Trump', 'Freeman', 'Duchamp', 'Hirst', 'Zuckerberg']);
+    let fcelebs = ['Kardashian', 'Abramovic'];
+    let mcelebs = ['Freeman', 'Duchamp', 'Mercury', 'Trump', 'Zuckerberg'];
+    mcelebs = InfluenceACelebrity.shuffle(mcelebs).splice(0,4);
+    this.celebs = InfluenceACelebrity.shuffle(mcelebs.concat(fcelebs));
   }
 
   save() {
-    this.context.celebrity = this.state.celebrity;
+    //this.context.celebrity = this.state.celebrity;
     // Send data somewhere
     window.location.assign('/OCEAN-reveal');
   }
@@ -64,9 +67,10 @@ class InfluenceACelebrity extends React.Component {
   }
 
   play(name) {
+    this.context.celebrity = name;
     this.setState({
       celebrity: name,
-      video: `/video/virtue/${this.context.virtue}_${name}.mp4`,
+      video: `/video/${this.context.virtue}_${name}.mp4`,
     });
   }
 
@@ -74,14 +78,15 @@ class InfluenceACelebrity extends React.Component {
     const { classes } = this.props;
     const { video } = this.state;
     const user = this.context;
-    this.context.virtue = this.context.virtue || 'power';
+
+    user.virtue = user.virtue || 'power';
 
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive progressNumber="three"/>
         <div className={classes.content + ' content'}>
           <Fade in style={{ transitionDelay: '200ms' }}>
-            <Typography className="title" component="h3" variant="h3">Influence a celebrity!</Typography>
+            <Typography className="title" component="h4" variant="h4">Influence a celebrity!</Typography>
           </Fade>
           <Fade in style={{ transitionDelay: '200ms' }}>
             <Typography component="h6" variant="h6">
@@ -90,10 +95,7 @@ class InfluenceACelebrity extends React.Component {
           </Fade>
           <Fade in style={{ transitionDelay: '200ms' }}>
             <Typography component="h6" variant="h6">
-              Select a famous follower to hear their confession
-              on&nbsp;
-              {user.virtue}
-              :
+              Pick one to hear their <br/>confession on&nbsp;{user.virtue}:
             </Typography>
           </Fade>
           {video && <Video autoPlay onComplete={this.stop} movie={video}/>}
@@ -103,7 +105,7 @@ class InfluenceACelebrity extends React.Component {
                 <AvatarComponent
                   handleClick={() => this.play(name)}
                   key={AvatarComponent.generateKey(i)}
-                  target={{ name, image: `/imgs/celebrities/${name}.png` }}
+                  target={{ name, image: `/imgs/${name}.png` }}
                 />
               ))}
           </AvatarCircle>

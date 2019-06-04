@@ -14,7 +14,6 @@ const styles = {
   root: {
     flexGrow: 1,
     width: "100%",
-
     color: 'black'
   },
   clickToContinue: {
@@ -28,7 +27,6 @@ const styles = {
 class PersonalisedExperience extends React.Component {
   constructor(props) {
     super(props);
-
     this.goTo = this.goTo.bind(this);
   }
 
@@ -51,17 +49,19 @@ class PersonalisedExperience extends React.Component {
       <div className={classes.root + ' PersonalisedExperience'}>
         <SpectreHeader colour="white" />
         <div className={`${classes.content} content`}>
-          <Typography component="h5" variant="h5">Excellent</Typography>
-          <Fade in style={{transitionDelay: '2500ms'}}>
-            <Typography component="h5" variant="h5">
+          <Fade in style={{transitionDelay: '500ms'}}>
+            <Typography component="h5" variant="h5" style={{marginTop: '200px'}}>
               In order to create a&nbsp;
-              <strong>personalised experience</strong>
+              <br/><strong>personalised experience</strong>
             </Typography>
           </Fade>
-          <Fade in style={{transitionDelay: '4500ms'}}>
-            <Typography component="h6" variant="h6">tell us what you love, tell us what you hate...</Typography>
+          <Fade in style={{transitionDelay: '2000ms'}}>
+            <Typography component="h6" variant="h6" style={{marginBottom: '200px'}}>
+            tell us what you love,
+            <br/>tell us what you hate...
+            </Typography>
           </Fade>
-          <Fade in style={{transitionDelay: '4500ms'}}>
+          <Fade in style={{transitionDelay: '2500ms'}}>
             <Countdown
               onComplete={this.goTo}
               date={Date.now() + 5000}
