@@ -120,6 +120,7 @@ function sketch(p) {
   p.mouseReleased = () => {
     if (instructions) {
       instructions = false;
+      start = p.millis();
       return;
     }
     if (Brand.active) {
