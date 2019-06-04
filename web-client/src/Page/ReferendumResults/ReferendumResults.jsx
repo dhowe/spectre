@@ -48,7 +48,7 @@ class ReferendumResults extends React.Component {
 
 ReferendumResults.propTypes = {
   classes: PropTypes.object.isRequired,
-  history: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
 };
 ReferendumResults.contextType = UserSession;
 

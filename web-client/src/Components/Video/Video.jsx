@@ -90,7 +90,7 @@ Video.propTypes = {
   onComplete: PropTypes.func,
   autoPlay: PropTypes.bool,
   className: PropTypes.string,
-  style: PropTypes.string,
+  style: PropTypes.object,
 };
 
 export default Video;

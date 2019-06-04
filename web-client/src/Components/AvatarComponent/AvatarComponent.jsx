@@ -36,7 +36,7 @@ class AvatarComponent extends React.Component {
   }
 
   render() {
-    const { handleClick, target } = this.props;
+    const { handleClick, target, active } = this.props;
     const { className } = this.state;
     return (
       <div onClick={handleClick}>
@@ -44,8 +44,8 @@ class AvatarComponent extends React.Component {
           <Avatar
             alt={target.name}
             src={target.image}
-            className={className !== 'active' ? 'avatar-image' : null}
-            style={(className === 'active' ? styles.active : null)}
+            className={(active || className !== 'active') ? 'avatar-image' : null}
+            style={(active ? styles.active : null)}
             onError={() => { this.src = '/profiles/default.jpg'; }}
           />
         </Grid>
@@ -61,12 +61,14 @@ AvatarComponent.defaultProps = {
     image: 'https://material-ui.com/static/images/avatar/1.jpg',
   },
   className: null,
+  active: false,
   handleClick: () => {},
 };
 AvatarComponent.propTypes = {
   handleClick: PropTypes.func,
   target: PropTypes.object,
   className: PropTypes.string,
+  active: PropTypes.bool,
 };
 
 export default AvatarComponent;

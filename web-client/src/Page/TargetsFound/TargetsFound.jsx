@@ -53,7 +53,7 @@ class TargetsFound extends React.Component {
 
 TargetsFound.propTypes = {
   classes: PropTypes.object.isRequired,
-  history: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
 };
 TargetsFound.contextType = UserSession;
 

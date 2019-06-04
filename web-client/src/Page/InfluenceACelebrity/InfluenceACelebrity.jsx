@@ -29,6 +29,7 @@ class InfluenceACelebrity extends React.Component {
     super(props);
     this.play = this.play.bind(this);
     this.stop = this.stop.bind(this);
+    this.save = this.save.bind(this);
     this.state = { video: null };
     let fcelebs = ['Kardashian', 'Abramovic'];
     let mcelebs = ['Freeman', 'Duchamp', 'Mercury', 'Trump', 'Zuckerberg'];
@@ -75,7 +76,7 @@ class InfluenceACelebrity extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, celebrity } = this.props;
     const { video } = this.state;
     const user = this.context;
 
@@ -84,7 +85,7 @@ class InfluenceACelebrity extends React.Component {
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive progressNumber="three"/>
-        <div className={classes.content + ' content'}>
+        <div className={`${classes.content} content`}>
           <Fade in style={{ transitionDelay: '200ms' }}>
             <Typography className="title" component="h4" variant="h4">Influence a celebrity!</Typography>
           </Fade>
@@ -95,7 +96,7 @@ class InfluenceACelebrity extends React.Component {
           </Fade>
           <Fade in style={{ transitionDelay: '200ms' }}>
             <Typography component="h6" variant="h6">
-              Pick one to hear their <br/>confession on&nbsp;{user.virtue}:
+              Pick one to hear their <br />confession on&nbsp;{user.virtue}:
             </Typography>
           </Fade>
           {video && <Video autoPlay onComplete={this.stop} movie={video}/>}
@@ -103,6 +104,7 @@ class InfluenceACelebrity extends React.Component {
             {this.celebs
               .map((name, i) => (
                 <AvatarComponent
+                  active={name === celebrity}
                   handleClick={() => this.play(name)}
                   key={AvatarComponent.generateKey(i)}
                   target={{ name, image: `/imgs/${name}.png` }}
@@ -112,7 +114,7 @@ class InfluenceACelebrity extends React.Component {
 
           <IconButton onClick={this.save} icon="next" text="Next"/>
         </div>
-        <FooterLogo/>
+        <FooterLogo />
       </div>
     );
   }
@@ -120,7 +122,7 @@ class InfluenceACelebrity extends React.Component {
 
 InfluenceACelebrity.propTypes = {
   classes: PropTypes.object.isRequired,
-  history: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
 };
 InfluenceACelebrity.contextType = UserSession;
 
