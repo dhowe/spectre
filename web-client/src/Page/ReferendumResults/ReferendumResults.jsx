@@ -5,6 +5,7 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import Video from '../../Components/Video/Video';
+import NavigationHack from '../NavigationHack';
 
 const styles = {
   root: {
@@ -26,7 +27,11 @@ const styles = {
   },
 };
 
-class ReferendumResults extends React.Component {
+class ReferendumResults extends NavigationHack {
+  constructor(props) {
+    super(props, '/win');
+  }
+
   render() {
     const { classes } = this.props;
     return (
@@ -37,7 +42,7 @@ class ReferendumResults extends React.Component {
             className={classes.video}
             autoPlay
             movie="/video/ReferendumResults_animation.mp4"
-            onComplete={() => this.props.history.push('/win')}
+            onComplete={this.next}
           />
         </div>
         <FooterLogo />

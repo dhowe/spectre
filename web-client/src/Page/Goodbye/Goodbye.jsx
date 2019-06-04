@@ -5,6 +5,7 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import Video from '../../Components/Video/Video';
+import NavigationHack from '../NavigationHack';
 
 const styles = {
   root: {
@@ -17,14 +18,9 @@ const styles = {
   },
 };
 
-class Goodbye extends React.Component {
+class Goodbye extends NavigationHack {
   constructor(props) {
-    super(props);
-    this.stop = this.stop.bind(this);
-  }
-
-  stop() {
-    this.props.history.push('/');
+    super(props, '/');
   }
 
   render() {
@@ -33,7 +29,7 @@ class Goodbye extends React.Component {
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" />
-        <Video ref={this.video} movie={movie} autoPlay onComplete={this.stop} />
+        <Video ref={this.video} movie={movie} autoPlay onComplete={this.next} />
         <FooterLogo />
       </div>
     );

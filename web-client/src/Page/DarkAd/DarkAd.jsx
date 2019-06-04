@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import IconButton from '../../Components/IconButton/IconButton';
 import OceanProfile from '../../Components/OceanProfile/OceanProfile';
 import UserSession from '../../Components/UserSession/UserSession';
+import NavigationHack from '../NavigationHack';
 
 const styles = {
   root: {
@@ -38,7 +39,7 @@ const styles = {
     fontSize: '24px',
     '&:hover': {
       backgroundColor: '#21c0fc',
-      color: '#ffffff'
+      color: '#ffffff',
     },
   },
   ad: {
@@ -69,9 +70,9 @@ const styles = {
   },
 };
 
-class DarkAd extends React.Component {
+class DarkAd extends NavigationHack {
   constructor(props) {
-    super(props);
+    super(props, '/target-ad');
     this.state = {
       image: '/imgs/darkad-default.png',
       defaultImageSelected: true,

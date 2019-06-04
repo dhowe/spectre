@@ -8,16 +8,20 @@ import IconButton from '../../Components/IconButton/IconButton';
 import OceanProfile from '../../Components/OceanProfile/OceanProfile';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
+import NavigationHack from '../NavigationHack';
 
 const styles = {
   root: {
     flexGrow: 1,
-    width: "100%",
-    color: 'black'
+    width: '100%',
+    color: 'black',
   },
 };
 
-class Campaign extends React.Component {
+class Campaign extends NavigationHack {
+  constructor(props) {
+    super(props, '/dark-ad');
+  }
 
   render() {
     const { classes } = this.props;

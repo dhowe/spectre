@@ -12,6 +12,7 @@ import UserSession from '../../Components/UserSession/UserSession';
 import Styles from '../../Styles';
 import colours from '../../colors.scss';
 import './TakeBackControl.scss';
+import NavigationHack from '../NavigationHack';
 
 const width = 180;
 const height = 53;
@@ -47,7 +48,11 @@ const styles = {
   },
 };
 
-class TakeBackControl extends React.Component {
+class TakeBackControl extends NavigationHack {
+  constructor(props) {
+    super(props, '/goodbye');
+  }
+
   render() {
     const { classes } = this.props;
     return (

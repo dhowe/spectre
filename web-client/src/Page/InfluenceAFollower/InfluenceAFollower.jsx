@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import { Redirect } from 'react-router-dom';
 import AvatarComponent from '../../Components/AvatarComponent/AvatarComponent';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
@@ -10,6 +9,7 @@ import UserSession from '../../Components/UserSession/UserSession';
 
 import './InfluenceAFollower.scss';
 import AvatarCircle from '../../Components/AvatarCircle/AvatarCircle';
+import NavigationHack from '../NavigationHack';
 
 const styles = {
   root: {
@@ -39,12 +39,9 @@ const defaults = [
   { "id": "999999999999999999999999", "name": "Terry", "traits": { "openness": 0.30426635874427355, "conscientiousness": 0.5341590821850326, "extraversion": 0.509056193557774, "agreeableness": 0.8109949037515642, "neuroticism": 0.4252958718086144 } }
 ];
 
-class InfluenceAFollower extends React.Component {
-  static contextType = UserSession;
-
+class InfluenceAFollower extends NavigationHack {
   constructor(props) {
-    super(props);
-    this.state = { toNext: false };
+    super(props, '/selected-avatar');
     this.handleSelect = this.handleSelect.bind(this);
   }
 
@@ -61,16 +58,7 @@ class InfluenceAFollower extends React.Component {
 
   handleSelect(target) {
     this.context.setTarget(target);
-    this.setState({ toNext: true });
-  }
-
-  renderRedirect() {
-    const { toNext } = this.state;
-
-    if (toNext) {
-      return <Redirect to="/selected-avatar" />;
-    }
-    return null;
+    this.next();
   }
 
   renderSimilars() {
@@ -87,7 +75,6 @@ class InfluenceAFollower extends React.Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        {this.renderRedirect()}
         <SpectreHeader colour="white" progressActive progressNumber="one" />
         <div className={`${classes.content} content`}>
           <Typography component="h5" variant="h5" className="influence-a-follower"><strong>Influence a follower!</strong></Typography>
@@ -112,5 +99,7 @@ class InfluenceAFollower extends React.Component {
 InfluenceAFollower.propTypes = {
   classes: PropTypes.object.isRequired,
 };
+
+InfluenceAFollower.contextType = UserSession;
 
 export default withStyles(styles)(InfluenceAFollower);

@@ -12,6 +12,7 @@ import colours from '../../colors.scss';
 import Button from '@material-ui/core/Button';
 //import Fade from '@material-ui/core/Fade';
 import "./InfluenceANation.scss";
+import NavigationHack from '../NavigationHack';
 
 const height = 53;
 const fontSize = 22;
@@ -34,13 +35,17 @@ const styles = {
   },
 };
 
-class InfluenceANation extends React.Component {
+class InfluenceANation extends NavigationHack {
+  constructor(props) {
+    super(props, '/consumer-data');
+  }
+
   render() {
     const { classes } = this.props;
     return (
-      <div className={classes.root + " InfluenceANation"}>
+      <div className={`${classes.root} InfluenceANation`}>
           <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
-          <div className={classes.content + " content"}>
+          <div className={`${classes.content} content`}>
               <Typography class="top"><strong>Influence a Nation</strong></Typography>
               <Typography class="middle">Let's amplify your campaign by convincing
               lots of others to vote {this.context.adIssue}.</Typography>

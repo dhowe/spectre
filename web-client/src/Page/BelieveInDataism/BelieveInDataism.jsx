@@ -7,6 +7,7 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import Countdown from 'react-countdown-now';
+import NavigationHack from '../NavigationHack';
 
 const styles = {
   root: {
@@ -21,20 +22,20 @@ const styles = {
 
 function toAdjPhrase(virtue) {
   const content = {
-    influence: 'To become more influencial',
+    influence: 'To become more influential',
     faith: 'To become more faithful',
     wealth: 'To become more wealthy',
     truth: 'To find more truth',
     power: 'To become more powerful',
-  }
-  return content[virtue]
+  };
+  return content[virtue];
 }
 
-class BelieveInDataism extends React.Component {
-
-  goTo() {
-    this.props.history.push('/steps');
+class BelieveInDataism extends NavigationHack {
+  constructor(props) {
+    super(props, '/steps');
   }
+
 
   render() {
     const { classes } = this.props;
@@ -50,15 +51,15 @@ class BelieveInDataism extends React.Component {
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" />
-        <div className={classes.content + " content"}>
-          <Fade in={true} style={{transitionDelay: '200ms'}}>
+        <div className={`${classes.content} content`}>
+          <Fade in style={{transitionDelay: '200ms'}}>
             <Typography component="h6" variant="h6">{(toAdjPhrase(this.context.virtue)||"So")}, you need more data.</Typography>
           </Fade>
-          <Fade in={true} style={{transitionDelay: '600ms'}}>
+          <Fade in style={{transitionDelay: '600ms'}}>
             <Typography component="h6" variant="h6">We can help you believe in the {this.context.virtue} of dataism</Typography>
           </Fade>
           <Countdown
-            onComplete={this.goTo.bind(this)}
+            onComplete={this.next}
             date={Date.now() + 5000}
             renderer={timer}
           />

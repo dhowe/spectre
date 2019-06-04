@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import P5Wrapper from 'react-p5-wrapper';
 import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
@@ -9,11 +9,12 @@ import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 
 import './Game.css';
+import NavigationHack from '../NavigationHack';
 
 const styles = {
   root: {
     flexGrow: 1,
-    width: "100%",
+    width: '100%',
     color: 'black',
   },
 
@@ -251,6 +252,7 @@ class Brand {
     this.ty = my;
     this.t = 0;
   }
+
   render() {
     let p = this.p;
     p.fill(colors.sketchBg);
@@ -295,36 +297,13 @@ Brand.updateAll = () => { Brand.instances.forEach(b => b.update()) };
 
 ///////////////////// End p5.js sketch ////////////////////////////
 
-let user, game;
+let user;
+let game;
 
-class Game extends React.Component {
-
+class Game extends NavigationHack {
   constructor(props) {
-
-    super(props);
+    super(props, "/thank-you");
     game = this; // handle for p5js
-    this.state = { toThankYou: false };
-  }
-
-  componentComplete() { // redirect called from p5
-
-    if (typeof this.context._id !== 'undefined') { // TMP: remove
-
-      // update last page context
-      this.context.lastPageVisit = { page: '/Game', time: Date.now };
-
-      UserSession.updateUser(this.context,
-        json => {
-          Object.assign(this.context, json);
-          this.setState(() => ({ toThankYou: true }));
-        }, err => {
-          console.error(err);
-          this.setState(() => ({ toThankYou: true }));
-        });
-
-    } else { // TMP: remove
-      console.warn('WARN: not updating Db with User info!');
-    }
   }
 
   componentWillMount() {
@@ -340,26 +319,41 @@ class Game extends React.Component {
     }
     //////////////////////////////////////////////////
 
-    console.log("User:", this.context);
+    console.log('User:', this.context);
+  }
+
+  componentComplete() { // redirect called from p5
+
+    if (typeof this.context._id !== 'undefined') { // TMP: remove
+
+      // update last page context
+      this.context.lastPageVisit = { page: '/Game', time: Date.now };
+
+      UserSession.updateUser(this.context,
+        (json) => {
+          Object.assign(this.context, json);
+          this.next();
+        }, (err) => {
+          console.error(err);
+          this.next();
+        });
+
+    } else { // TMP: remove
+      console.warn('WARN: not updating Db with User info!');
+    }
   }
 
   render() {
-
     const { classes } = this.props;
-    if (this.state.toThankYou === true) { // hack redirect
-      return <Redirect to='/thank-you' />
-    }
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" />
-        {/*<div className={"game content"}>*/}
-          <P5Wrapper sketch={sketch} className="wrapper" />
-          <Link to="/thank-you">
-            <IconButton icon="next" text="Next" />
-          </Link>
-        {/*</div >*/}
+        <P5Wrapper sketch={sketch} className="wrapper" />
+        <Link to="/thank-you">
+          <IconButton icon="next" text="Next" />
+        </Link>
         <FooterLogo />
-      </div >
+      </div>
     );
   }
 }

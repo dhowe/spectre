@@ -2,45 +2,29 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import { Redirect } from 'react-router-dom';
 import Fade from '@material-ui/core/Fade';
+import Countdown from 'react-countdown-now';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
-import Countdown from 'react-countdown-now';
+import NavigationHack from '../NavigationHack';
 
 const styles = {
   root: {
     flexGrow: 1,
-    width: "100%",
-    color: 'black'
+    width: '100%',
+    color: 'black',
   },
   clickToContinue: {
-    margin: "20% 0",
-  }
+    margin: '20% 0',
+  },
 };
 
-class DataIs extends React.Component {
+class DataIs extends NavigationHack {
   constructor(props) {
-    super(props)
-    this.state = { toTest: false }; // TMP
-    this.handleKeyUp = this.handleKeyUp.bind(this);
+    super(props, '/personalised-experience');
   }
-  handleKeyUp(evt) {// TMP
-    if (evt.key === ' ') this.setState(() => ({ toTest: true }));
-  }
-  componentDidMount() {// TMP
-    document.addEventListener("keyup", this.handleKeyUp);
-  }
-  componentWillUnmount() {// TMP
-    document.removeEventListener("keyup", this.handleKeyUp);
-  }
-  renderRedirect() {// TMP
-    if (this.state.toTest) return <Redirect to='/image-test' />
-  }
-  goTo() {
-    this.props.history.push('/personalised-experience');
-  }
+
   render() {
     const { classes } = this.props;
     this.context.virtue = this.context.virtue || 'power';
@@ -58,21 +42,20 @@ class DataIs extends React.Component {
     console.log('User:', this.context);
     return (
       <div className={classes.root}>
-        {this.renderRedirect()} {/* tmp */}
         <SpectreHeader colour="white" />
-        <div className={classes.content + " content"}>
-          <Fade in={true} style={{transitionDelay: '200ms'}}>
+        <div className={`${classes.content} content`}>
+          <Fade in={true} style={{ transitionDelay: '200ms' }}>
             <Typography component="h6" variant="h6">DATA IS {virtue.toUpperCase()}</Typography>
           </Fade>
-          <Fade in={true} style={{transitionDelay: '1200ms'}}>
+          <Fade in={true} style={{ transitionDelay: '1200ms' }}>
 
             <Typography component="h6" variant="h6">To become more {virtueAs} you need&nbsp;more&nbsp;data</Typography>
           </Fade>
-          <Fade in={true} style={{transitionDelay: '2000ms'}}>
+          <Fade in={true} style={{ transitionDelay: '2000ms' }}>
             <Typography component="h6" variant="h6">We can help you believe in the {virtue}&nbsp;of&nbsp;Dataism.</Typography>
           </Fade>
           <Countdown
-            onComplete={this.goTo.bind(this)}
+            onComplete={this.next}
             date={Date.now() + 5000}
             renderer={timer}
           />
