@@ -66,7 +66,7 @@ SimpleModal.propTypes = {
   title: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
   isOpen: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired
+  onClose: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(SimpleModal);

@@ -25,6 +25,10 @@ const styles = {
 };
 
 class AvatarComponent extends React.Component {
+  static generateKey(index) {
+    return (7 * index);
+  }
+
   constructor(props) {
     super(props);
 

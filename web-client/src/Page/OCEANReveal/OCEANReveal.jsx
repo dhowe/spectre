@@ -7,34 +7,54 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import IconButton from '../../Components/IconButton/IconButton';
+import Video from '../../Components/Video/Video';
 
 const styles = {
   root: {
     flexGrow: 1,
-    width: "100%",
+    width: '100%',
     color: 'black',
   },
   clickToContinue: {
-    margin: "20% 0",
-  }
+    margin: '20% 0',
+  },
 };
 
 class OCEANReveal extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.video = React.createRef();
+    this.state = { movie: `/video/wrapup/wrapup_${this.context.celeb}.mp4` };
+
+    this.showVideo = this.showVideo.bind(this);
+  }
+
+  showVideo() {
+    this.video.play();
+  }
+
   render() {
+    const { movie } = this.state;
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-          <SpectreHeader colour="white" progressActive={true} progressNumber="three" />
-          <div className={classes.content + " content"}>
-          <Typography component="h6" variant="h6">A little data and a little tech goes a long way, doesn't it? </Typography>
-          <Typography component="h6" variant="h6">For example, we haven't known you very long, but already we know that [INSERT-DESC-HERE]</Typography>
-              <Link to="/take-back-control">
-                  {/* Next button brings up overlay video, then goes to take-back-control */}
-                  <IconButton icon="next" text="Next" />
-              </Link>
-          </div >
-          <FooterLogo />
-      </div >
+        <SpectreHeader colour="white" progressActive progressNumber="three" />
+        <div className={classes.content + ' content'}>
+          <Typography component="h6" variant="h6">
+            A little data and a little tech goes a long way, doesn&apos;t it?
+          </Typography>
+          <Typography component="h6" variant="h6">
+            For example, we haven&apos;t known you very long, but already we know that
+            [INSERT-DESC-HERE]
+          </Typography>
+          <Link to="" onClick={this.showVideo}>
+            <Video ref={this.video} movie={movie} onComplete={() => { window.location.assign('/take-back-control'); }}/>
+            <IconButton icon="next" text="Next" />
+          </Link>
+        </div>
+        <FooterLogo />
+      </div>
     );
   }
 }

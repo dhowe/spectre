@@ -20,24 +20,25 @@ const styles = {
 class SuccessAd extends React.Component {
   render() {
     const { classes } = this.props;
+    const tname = (this.context.getTarget().name || 'Pat');
+    const issue = this.context.adIssue || 'remain';
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
         <div className={classes.content + " content"}>
           <Typography component="h6" variant="h6">
             Your targeted ad was successful!
-        </Typography>
+          </Typography>
 
-        <Typography component="h6" variant="h6">
-        <strong>{(this.context.targetName||'Daniel')}</strong> is now more likely to vote {this.context.adIssue} in the referendum.
-        </Typography>
-
+          <Typography component="h6" variant="h6">
+          <strong>{tname}</strong> is now more likely to vote {issue} in the referendum.
+          </Typography>
           <Link to="/influence-a-nation">
             <IconButton icon="next" text="Next" />
           </Link>
         </div>
-        <FooterLogo />
-      </div>
+          <FooterLogo />
+        </div>
     );
   }
 }
