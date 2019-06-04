@@ -19,7 +19,13 @@ const styles = {
 class FindCitizens extends React.Component {
   render() {
     const { classes } = this.props;
-    const tname = this.context.getTarget().name || 'Remy';
+    const tname = 'Remy';
+    if (this.context && typeof this.context.getTarget === 'function') {
+      let target = this.context.getTarget();
+      if (target && target.name && target.name.length) {
+        tname = target.name;
+      }
+    }
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
