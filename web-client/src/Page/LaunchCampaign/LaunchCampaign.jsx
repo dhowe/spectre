@@ -25,7 +25,7 @@ class LaunchCampaign extends React.Component {
   }
   renderRedirect() {
     if (this.state.toNext) {
-      return <Redirect to="/username" />;
+      return <Redirect to="/referendum-results" />;
     }
   }
   render() {
@@ -36,10 +36,10 @@ class LaunchCampaign extends React.Component {
           {this.renderRedirect()}
           <SpectreHeader colour="white" />
           <div className={classes.content + " content"}>
-              <Typography component="h6" variant="h6">Launch Campaign</Typography>
-              <Link to="/targets-found">
-                  <img src={launchImg} alt='leave' ></img>
-                  <img className={classes.image} src={launchImg} alt='launch capmpaign' onClick={() => { this.setState({ toNext: true }) }}></img>
+              <Typography component="h6" variant="h6" style={{marginTop:'300px'}}>Launch Campaign!</Typography>
+              <Link to="/targets-found" style={{marginBottom:'500px'}}>
+                  <img className={classes.image} src={launchImg} alt='launch capmpaign'
+                   onClick={() => { this.setState({ toNext: true }) }}></img>
               </Link>
           </div >
           <FooterLogo />
