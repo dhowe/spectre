@@ -25,12 +25,13 @@ class OCEANReveal extends React.Component {
     super(props);
 
     this.video = React.createRef();
-    this.state = { movie: `/video/wrapup/wrapup_${this.context.celeb}.mp4` };
-
+    this.state = { movie: null};// `/video/wrapup_${this.context.celebrity||'Trump'}.mp4` };
     this.showVideo = this.showVideo.bind(this);
   }
 
   showVideo() {
+    this.setState({ movie: `/video/wrapup_${this.context.celebrity||'Trump'}.mp4` });
+    console.log(this.state);
     this.video.play();
   }
 
@@ -45,8 +46,7 @@ class OCEANReveal extends React.Component {
             A little data and a little tech goes a long way, doesn&apos;t it?
           </Typography>
           <Typography component="h6" variant="h6">
-            For example, we haven&apos;t known you very long, but already we know that
-            [INSERT-DESC-HERE]
+            For example, we haven&apos;t known you very long, but already we know that...
           </Typography>
           <Link to="" onClick={this.showVideo}>
             <Video ref={this.video} movie={movie} onComplete={() => { window.location.assign('/take-back-control'); }}/>
