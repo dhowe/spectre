@@ -8,6 +8,7 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import OceanProfile from '../../Components/OceanProfile/OceanProfile';
+import NavigationHack from '../NavigationHack';
 
 const styles = {
   root: {
@@ -17,7 +18,11 @@ const styles = {
   },
 };
 
-class InsightComplete extends React.Component {
+class InsightComplete extends NavigationHack {
+  constructor(props) {
+    super(props, '/your-power');
+  }
+
   render() {
     const { classes } = this.props;
     if (typeof this.context.target === 'undefined') {

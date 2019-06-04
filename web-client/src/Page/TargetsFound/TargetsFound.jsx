@@ -5,6 +5,7 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import Video from '../../Components/Video/Video';
+import NavigationHack from '../NavigationHack';
 
 const styles = {
   root: {
@@ -26,15 +27,9 @@ const styles = {
   },
 };
 
-class TargetsFound extends React.Component {
+class TargetsFound extends NavigationHack {
   constructor(props) {
-    super(props);
-
-    this.onComplete = this.onComplete.bind(this);
-  }
-
-  onComplete() {
-    this.props.history.push('/launch-campaign');
+    super(props, '/launch-campaign');
   }
 
   render() {
@@ -43,7 +38,7 @@ class TargetsFound extends React.Component {
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive progressNumber="two" />
         <div className={`${classes.content} content`}>
-          <Video autoPlay style={{ width: '100%' }} movie="/video/TargetsFound_Animation.mp4" onComplete={this.onComplete} />
+          <Video autoPlay style={{ width: '100%' }} movie="/video/TargetsFound_Animation.mp4" onComplete={this.next} />
         </div>
         <FooterLogo />
       </div>

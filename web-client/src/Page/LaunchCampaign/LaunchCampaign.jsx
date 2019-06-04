@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
+import NavigationHack from '../NavigationHack';
 
 const styles = {
   root: {
@@ -18,7 +19,11 @@ const styles = {
   },
 };
 
-class LaunchCampaign extends React.Component {
+class LaunchCampaign extends NavigationHack {
+  constructor(props) {
+    super(props, '/referendum-results');
+  }
+
   render() {
     const { classes } = this.props;
     const launchImg = `/imgs/vote-${(this.context.adIssue || 'remain')}.png`;

@@ -3,27 +3,29 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Fade from '@material-ui/core/Fade';
+import Countdown from 'react-countdown-now';
 import OceanProfile from '../../Components/OceanProfile/OceanProfile';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
-import Countdown from 'react-countdown-now';
+import NavigationHack from '../NavigationHack';
 
 const styles = {
   root: {
     flexGrow: 1,
-    width: "100%",
+    width: '100%',
 
-    color: 'black'
+    color: 'black',
   },
   clickToContinue: {
-    margin: "20% 0",
-  }
+    margin: '20% 0',
+  },
 };
 
-class YourPower extends React.Component {
-  goTo() {
-    this.props.history.push('/pick-your-side');
+class YourPower extends NavigationHack {
+  constructor(props) {
+    super(props, '/pick-your-side');
   }
+
   render() {
     console.log('User:', this.context);
     const { classes } = this.props;
@@ -41,22 +43,22 @@ class YourPower extends React.Component {
     }
     return (
       <div className={classes.root}>
-          <OceanProfile subject={this.context.getTarget()}></OceanProfile>
-          <div className={classes.content + " content"}>
-            <Fade in={true} style={{transitionDelay: '200ms', marginTop:'300px'}}>
-              <Typography component="h6" variant="h6">{this.context.name || 'Remy'}, your {this.context.virtue || 'Power'} is growing.</Typography>
-            </Fade>
-            <Fade in={true} style={{transitionDelay: '2000ms', marginBottom:'200px'}}>
-              <Typography component="h6" variant="h6">Let's put it into practice.</Typography>
-            </Fade>
-            <Countdown
-              onComplete={this.goTo.bind(this)}
-              date={Date.now() + 5000}
-              renderer={timer}
-            />
-          </div>
-          <FooterLogo />
-      </div >
+        <OceanProfile subject={this.context.getTarget()} />
+        <div className={`${classes.content} content`}>
+          <Fade in style={{ transitionDelay: '200ms', marginTop: '300px' }}>
+            <Typography component="h6" variant="h6">{this.context.name || 'Remy'}, your {this.context.virtue || 'Power'} is growing.</Typography>
+          </Fade>
+          <Fade in style={{ transitionDelay: '2000ms', marginBottom: '200px' }}>
+            <Typography component="h6" variant="h6">Let's put it into practice.</Typography>
+          </Fade>
+          <Countdown
+            onComplete={this.next}
+            date={Date.now() + 5000}
+            renderer={timer}
+          />
+        </div>
+        <FooterLogo />
+      </div>
     );
   }
 }

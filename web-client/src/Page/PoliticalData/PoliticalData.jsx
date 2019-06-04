@@ -1,58 +1,59 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import { Link } from "react-router-dom";
-import Grid from "@material-ui/core/Grid/Grid";
-import SpectreHeader from "../../Components/SpectreHeader/SpectreHeader";
-import FooterLogo from "../../Components/FooterLogo/FooterLogo";
-import IconButton from "../../Components/IconButton/IconButton";
-import IconButtonToggle from "../../Components/IconButton/IconButtonToggle";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import { Link } from 'react-router-dom';
+import Grid from '@material-ui/core/Grid/Grid';
+import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
+import FooterLogo from '../../Components/FooterLogo/FooterLogo';
+import IconButton from '../../Components/IconButton/IconButton';
+import IconButtonToggle from '../../Components/IconButton/IconButtonToggle';
 
-import "./PoliticalData.scss";
+import './PoliticalData.scss';
+import NavigationHack from '../NavigationHack';
 
 const styles = {
   root: {
     flexGrow: 1,
-    width: "100%",
-    color: "black"
+    width: '100%',
+    color: 'black',
   },
   clickToContinue: {
-    margin: "20% 0"
+    margin: '20% 0',
   },
   button: {
-    borderRadius: "28px",
-    border: "solid 3px #929391",
-    backgroundColor: "#ffffff",
-    boxShadow: "none",
-    color: "#929391"
+    borderRadius: '28px',
+    border: 'solid 3px #929391',
+    backgroundColor: '#ffffff',
+    boxShadow: 'none',
+    color: '#929391',
   },
   link: {
-    display: "block",
-    marginBottom: "30px"
+    display: 'block',
+    marginBottom: '30px',
   },
   row: {
-    flexDirection: "row",
-    display: "flex",
-    padding: "0 30% 25% 25%" //tmp
+    flexDirection: 'row',
+    display: 'flex',
+    padding: '0 30% 25% 25%', //tmp
   },
   column: {
-    flexDirection: "column",
-    display: "flex"
+    flexDirection: 'column',
+    display: 'flex',
   },
   item: {
-    flexDirection: "column",
-    display: "flex",
-    padding: "30px"
+    flexDirection: 'column',
+    display: 'flex',
+    padding: '30px',
   },
   icons: {
-    marginBottom: "30px"
-  }
+    marginBottom: '30px',
+  },
 };
 
-class PoliticalData extends React.Component {
+class PoliticalData extends NavigationHack {
   constructor(props) {
-    super(props);
+    super(props, '/home-data');
     this.state = { count: 0 };
     this.countAdd = this.countAdd.bind(this);
   }
@@ -96,7 +97,7 @@ class PoliticalData extends React.Component {
           </div>
 
           <Link className={this.state.count >= 3 ? "true" : "disabled"} to="/home-data">
-            <IconButton enabled={this.state.count >= 3 ? true : false} icon="next" text="Next" />
+            <IconButton enabled={this.state.count >= 3} icon="next" text="Next" />
           </Link>
         </div>
         <FooterLogo />

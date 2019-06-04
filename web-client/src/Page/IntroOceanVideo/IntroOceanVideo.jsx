@@ -1,24 +1,24 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import { Link } from "react-router-dom";
-import IconButton from "../../Components/IconButton/IconButton";
-import SpectreHeader from "../../Components/SpectreHeader/SpectreHeader";
-import FooterLogo from "../../Components/FooterLogo/FooterLogo";
-import movie from "./OCEAN Intro V1.mp4";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 import Countdown from 'react-countdown-now';
+import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
+import FooterLogo from '../../Components/FooterLogo/FooterLogo';
+import movie from './OCEAN Intro V1.mp4';
+import NavigationHack from '../NavigationHack';
+
 const styles = {};
 
-class IntroOceanVideo extends React.Component {
+class IntroOceanVideo extends NavigationHack {
+  constructor(props) {
+    super(props, '/your-power');
+  }
   componentDidMount() {
     this.refs.playVideo.click();
   }
   playVideo() {
     this.refs.video.play();
-  }
-  goTo() {
-    this.props.history.push('/your-power');
   }
   render() {
     const { classes } = this.props;
@@ -42,7 +42,7 @@ class IntroOceanVideo extends React.Component {
           </video>
           <button hidden ref="playVideo" id='playButton' onClick={this.playVideo.bind(this)}>Play!</button>
           <Countdown
-            onComplete={this.goTo.bind(this)}
+            onComplete={this.next}
             date={Date.now() + 5000}
             renderer={timer}
           />

@@ -3,35 +3,31 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Fade from '@material-ui/core/Fade';
+import Countdown from 'react-countdown-now';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
-import Countdown from 'react-countdown-now';
+import NavigationHack from '../NavigationHack';
 
-import "./PersonalisedExperience.scss";
+import './PersonalisedExperience.scss';
 
 const styles = {
   root: {
     flexGrow: 1,
-    width: "100%",
-    color: 'black'
+    width: '100%',
+    color: 'black',
   },
   clickToContinue: {
-    margin: "20% 0",
+    margin: '20% 0',
   },
   glow: {
-    color: '#ffd700'
-  }
+    color: '#ffd700',
+  },
 };
 
-class PersonalisedExperience extends React.Component {
+class PersonalisedExperience extends NavigationHack {
   constructor(props) {
-    super(props);
-    this.goTo = this.goTo.bind(this);
-  }
-
-  goTo() {
-    this.props.history.push('/game');
+    super(props, '/game');
   }
 
   render() {
@@ -40,10 +36,9 @@ class PersonalisedExperience extends React.Component {
       if (completed) {
         // Render a complete state
         return null;
-      } else {
-        // Render a countdown
-        return <span>{seconds}</span>;
       }
+      // Render a countdown
+      return <span>{seconds}</span>;
     };
     return (
       <div className={classes.root + ' PersonalisedExperience'}>
@@ -52,18 +47,20 @@ class PersonalisedExperience extends React.Component {
           <Fade in style={{transitionDelay: '500ms'}}>
             <Typography component="h5" variant="h5" style={{marginTop: '200px'}}>
               In order to create a&nbsp;
-              <br/><strong>personalised experience</strong>
+              <br/ >
+              <strong>personalised experience</strong>
             </Typography>
           </Fade>
           <Fade in style={{transitionDelay: '2000ms'}}>
-            <Typography component="h6" variant="h6" style={{marginBottom: '200px'}}>
-            tell us what you love,
-            <br/>tell us what you hate...
+            <Typography component="h6" variant="h6" style={{ marginBottom: '200px' }}>
+              tell us what you love,
+              <br />
+              tell us what you hate...
             </Typography>
           </Fade>
-          <Fade in style={{transitionDelay: '2500ms'}}>
+          <Fade in style={{ transitionDelay: '2500ms' }}>
             <Countdown
-              onComplete={this.goTo}
+              onComplete={this.next}
               date={Date.now() + 5000}
               renderer={timer}
             />

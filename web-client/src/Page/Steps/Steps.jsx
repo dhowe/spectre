@@ -8,19 +8,24 @@ import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
+import NavigationHack from '../NavigationHack';
 
 const styles = {
   root: {
     flexGrow: 1,
-    width: "100%",
-    color: 'black'
+    width: '100%',
+    color: 'black',
   },
   clickToContinue: {
-    margin: "20% 0",
-  }
+    margin: '20% 0',
+  },
 };
 
-class Steps extends React.Component {
+class Steps extends NavigationHack {
+  constructor(props) {
+    super(props, '/influence-a-follower');
+  }
+
   render() {
     const { classes } = this.props;
     return (
