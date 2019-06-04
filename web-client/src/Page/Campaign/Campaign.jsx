@@ -42,7 +42,7 @@ class Campaign extends React.Component {
                 </strong> in the next referendum.</Typography>*/}
                 <Typography component="h6" variant="h6">Use {this.context.getTarget().name}'s
                 OCEAN profile and our custom design tool to create a targeted <strong>Facebook</strong> ad
-                to influence {this.context.pronoun()||"his"} vote to <strong>{issue}
+                to influence {this.context.poss()||"his"} vote to <strong>{issue}
                 </strong>.</Typography>
               </Fade>
               <Link to="/dark-ad">

@@ -19,13 +19,21 @@ const styles = {
 class FindCitizens extends React.Component {
   render() {
     const { classes } = this.props;
+    const tname = 'Remy';
+    if (this.context && typeof this.context.getTarget === 'function') {
+      let target = this.context.getTarget();
+      if (target && target.name && target.name.length) {
+        tname = target.name;
+      }
+    }
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
         <div className={classes.content + " content"}>
             <Typography component="h5" variant="h5">Excellent.</Typography>
-            <Typography component="h6" variant="h6">Now you can find all UK citizens with a similar OCEAN profile to {this.context.targetName} that have never voted before!</Typography>
-            <Typography component="h6" variant="h6">A silent army that could well tip the balance.</Typography>
+            <Typography component="h6" variant="h6">Now target UK citizens with a similar OCEAN profile to
+              {tname}!</Typography>
+            <Typography component="h6" variant="h6">A silent army that could well tip the balance...</Typography>
             <Link to="/targets-found">
                 <IconButton icon="next" text="Find them" />
             </Link>
