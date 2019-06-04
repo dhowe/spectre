@@ -1,0 +1,11 @@
+.first {
+  transition: 2s ease-in all;
+}
+
+.first {
+  -webkit-transition: color 2s ease-in-out;
+  -moz-transition: color 2s;
+  -ms-transition: color 2s;
+  -o-transition: color 2s;
+  transition: color 2s;
+}

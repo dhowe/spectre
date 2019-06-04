@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import { Link, Redirect } from 'react-router-dom';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import IconButton from '../../Components/IconButton/IconButton';
 import Video from '../../Components/Video/Video';
 import Modal from '../../Components/Modal/Modal';
+import Fade from '@material-ui/core/es/Fade/Fade';
 
 const styles = {
   root: {
@@ -24,42 +24,58 @@ const styles = {
 class OCEANReveal extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { toNext: false, modalOpen: false };
+    this.state = { modalOpen: false };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.continue = this.continue.bind(this);
     this.modalContent = '';
     this.modalTitle = '';
-    this.refs = {};
+    this.video = React.createRef();
   }
+
   handleSubmit(e) {
     e.preventDefault();
     this.showVideo();
   }
+
   closeModal() {
     this.setState({ modalOpen: false });
   }
-  renderRedirect() {
-    if (this.state.toNext) {
-      return <Redirect to="/take-back-control" />;
-    }
-  }
+
   showVideo() {
-    this.video.play();
+    this.video.current.play();
   }
-  continue () {
-    this.setState(() => ({ toNext: true }));
+
+  continue() {
+    this.props.history.push('/take-back-control');
   }
+
   render() {
     const { classes } = this.props;
     const celeb = this.context.celebrity || 'Trump';
     return (
       <div className={classes.root}>
-        {this.renderRedirect()}
         <SpectreHeader colour="white" progressActive progressNumber="three" />
-        <Typography component="h6" variant="h6"
-          style={{marginTop:'500px'}}>A little data and a little tech <br/>goes a long way, doesn&apos;t it?</Typography>
-        <Typography component="h6" variant="h6"
-          style={{marginTop:'100px'}}>For example, we haven&apos;t known<br/> you very long, but already <br/>we know that...</Typography>
+        <Fade in />
+        <Typography
+          component="h6"
+          variant="h6"
+          style={{ marginTop: '165px' }}
+        >
+          A little data and a little tech
+          <br />
+          goes a long way, doesn&apos;t it?
+        </Typography>
+        <Typography
+          component="h6"
+          variant="h6"
+          style={{ marginTop: '100px' }}
+        >
+          For example, we haven&apos;t known
+          <br />
+          you very long, but already
+          <br />
+          we know that...
+        </Typography>
         <Modal
           isOpen={this.state.modalOpen}
           title={this.modalTitle}
@@ -67,13 +83,12 @@ class OCEANReveal extends React.Component {
           onClose={() => this.closeModal()}
         />
         <Video
-          ref={(el) => { this.video = el; }}
-          movie={'/video/wrapup_'+celeb+'.mp4'}
+          ref={this.video}
+          movie={`/video/wrapup/wrapup_${celeb}.mp4`}
           autoPlay={false}
           onComplete={this.continue}
         />
-        <br/>
-        <IconButton onClick={this.handleSubmit} icon="next" text="Next"/>
+        <br />
         <FooterLogo />
       </div>
     );
@@ -82,6 +97,7 @@ class OCEANReveal extends React.Component {
 
 OCEANReveal.propTypes = {
   classes: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
 };
 OCEANReveal.contextType = UserSession;
 
