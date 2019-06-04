@@ -28,7 +28,7 @@ class Goodbye extends React.Component {
   }
 
   render() {
-    const { movie } = { movie: `video/goodbye/Goodbye_${this.context.celebrity || 'Freeman'}.mp4` };
+    const { movie } = { movie: `video/goodbye_${this.context.celebrity || 'Freeman'}.mp4` };
     const { classes } = this.props;
     return (
       <div className={classes.root}>
