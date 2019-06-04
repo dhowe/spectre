@@ -30,7 +30,7 @@ class TargetAd extends React.Component {
         <Link to="/success-ad">
           <Grid container justify="center">
             <Grid item>
-              <IconButton icon="tick" text="Yes" style={{fontSize:'400px'}}/>
+              <IconButton icon="tick" text="Yes"/>
             </Grid>
             <Grid item>
               <IconButton icon="next" text="No" />
