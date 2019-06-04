@@ -51,8 +51,7 @@ class SocialLogin extends React.Component {
   };
   handleChange = login => event => {
     let input = event.target.value;
-    this.setState(
-      {
+    this.setState({
         email: input
       },
       () => {
@@ -80,7 +79,7 @@ class SocialLogin extends React.Component {
       this.handleShift();
       this.unShiftNeeded = false;
     } else {
-      console.log(`this unshift needed ${this.unShiftNeeded}`)
+      //console.log(`this unshift needed ${this.unShiftNeeded}`)
       if (this.unShiftNeeded) {
         this.setState({
           layoutName: "default"

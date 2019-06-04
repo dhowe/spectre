@@ -59,10 +59,12 @@ class LoginPage extends React.Component {
           this.setState({ modalOpen: true });
         } else {
           console.error(e);
+          //console.log(UserSession.defaults);
           this.showVideo();
         }
         //this.setState({ data: JSON.stringify(e.error, null, 2) });
       };
+      console.log("DEFAULTS",UserSession.defaults);
       UserSession.createUser(user, handleSuccess, handleError);
 
     } else if(user.login && !user.emailValid) {

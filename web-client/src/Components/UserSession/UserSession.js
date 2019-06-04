@@ -6,6 +6,17 @@ import FormData from 'form-data';
 
 let UserSession = React.createContext(new User());
 
+fetch('/gusers.json').then(response => {
+  return response.json();
+}).then(data => {
+
+  // Work with JSON data here
+  UserSession.defaults = data;
+
+}).catch(err => {
+  console.log(err);
+});
+
 let doConfig = () => {
 
   // get auth from .env or heroku configs
