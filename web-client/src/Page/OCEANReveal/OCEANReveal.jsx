@@ -9,6 +9,7 @@ import IconButton from '../../Components/IconButton/IconButton';
 import Video from '../../Components/Video/Video';
 import Modal from '../../Components/Modal/Modal';
 import NavigationHack from '../NavigationHack';
+import Fade from '@material-ui/core/es/Fade/Fade';
 
 const styles = {
   root: {
@@ -24,15 +25,65 @@ const styles = {
 class OCEANReveal extends NavigationHack {
   constructor(props) {
     super(props, '/take-back-control');
+    this.durationMS = 1000;
+    this.showMS = 3000;
     this.state = { modalOpen: false };
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.prepNext = this.prepNext.bind(this);
+    this.timeout = this.timeout.bind(this);
     this.modalContent = '';
     this.modalTitle = '';
+
+    const user = this.context || { celebrity: 'Freeman', generateSummary: () => {}, hasOceanTraits: () => true };
+
+    if (user && !user.hasOceanTraits()) {
+      user._randomizeTraits();
+    }
+    this.sentences = [
+      'A little data and a little tech goes a long way.',
+      'We haven\'t known you for very long, but already we know that…',
+      'more',
+      'another more',
+    ];
+    this.sentences = this.sentences.concat(user.generateSummary());
+    for (let i = 0; i < this.sentences.length; i++) {
+      const fadeKey = `fade-${i}`;
+      this.state = {
+        ...this.state,
+        [fadeKey]: true,
+      };
+
+    }
+    this.step = 0;
+
+    this.prepNext();
   }
 
-  handleSubmit(e) {
-    e.preventDefault();
-    this.showVideo();
+  timeout() {
+    if (this.step < this.sentences.length) {
+      this.setState({
+        [`fade-${this.step}`]: false,
+      });
+    } else {
+      this.showVideo();
+    }
+
+    this.step += 1;
+    this.prepNext();
+  }
+
+  prepNext() {
+    setTimeout(() => {
+      if (this.step < this.sentences.length) {
+        this.setState({
+          [`fade-${this.step}`]: false,
+        });
+      } else {
+        this.showVideo();
+      }
+
+      this.step += 1;
+      this.prepNext();
+    }, ((this.duration * 2) + this.showMS));
   }
 
   closeModal() {
@@ -40,29 +91,43 @@ class OCEANReveal extends NavigationHack {
   }
 
   showVideo() {
-    this.video.current.play();
+    this.video.play();
   }
 
   render() {
     const { classes } = this.props;
 
-    const user = this.context;
+    const user = this.context || {};
     user.name = user.name || 'Pat';
     user.gender = user.gender || 'female';
     user.celebrity = user.celebrity || 'Trump';
-    if (!user.hasOceanTraits()) user._randomizeTraits();
-
-    let sentences = ['A little data and a little tech goes a long way.',
-              'We haven\'t known you for very long, but already we know that…'];
-    sentences = sentences.concat(this.context.generateSummary());
 
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive progressNumber="three" />
-        {sentences.map((sent,i) => (
-          <Typography component="h6" style={{ marginTop: '170px'}}
-            key={i} variant="h6">{sent}</Typography>
-        ))}
+        <div style={{
+          height: 600,
+          marginTop: 400,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center' }}
+        >
+          {this.sentences.map((sent, i) => {
+            const fadeKey = `fade-${i}`;
+            return (
+              <Fade in={this.state[fadeKey]} style={{ transitionDelay: `${((this.duration * 2) + this.showMS) * i}ms`, transitionDuration: `${this.durationMS}ms` }}>
+                <Typography
+                  variant="h6"
+                  component="h6"
+                  key={fadeKey}
+                  style={{ position: 'absolute' }}
+                >
+                  {sent}
+                </Typography>
+              </Fade>
+            );
+          })}
+        </div>
         <Modal
           isOpen={this.state.modalOpen}
           title={this.modalTitle}
@@ -76,7 +141,6 @@ class OCEANReveal extends NavigationHack {
           onComplete={this.next}
         />
         <br />
-        <IconButton onClick={this.handleSubmit} icon="next" text="Next"/>
         <FooterLogo />
       </div>
     );

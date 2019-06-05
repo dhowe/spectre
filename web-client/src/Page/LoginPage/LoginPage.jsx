@@ -124,7 +124,7 @@ class LoginPage extends NavigationHack {
     } else {
       // TMP: should reject without successful User creation
       this.context.login = email;
-      this.context.username = name; // user-prop
+      this.context.name = name; // user-prop
       this.showVideo();
     }
   }
@@ -143,7 +143,7 @@ class LoginPage extends NavigationHack {
       <div className={classes.root + ' LoginPage'}>
         <SpectreHeader />
         <div className={classes.content + ' LoginPage-content content'}>
-          <Typography component="h2" variant="h2">Let's Play!</Typography>
+          <Typography style={{ marginBottom: 70 }} component="h2" variant="h2">Let's Play!</Typography>
           <Modal
             isOpen={this.state.modalOpen}
             title={this.modalTitle}
