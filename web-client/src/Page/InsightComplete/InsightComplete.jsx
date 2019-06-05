@@ -44,7 +44,7 @@ class InsightComplete extends NavigationHack {
         <SpectreHeader colour="white" />
         <div className={`${classes.content} content`}>
           <Typography className="title" component="h3" variant="h3">Excelent.</Typography>
-          <Typography component="h3" variant="h4">Verification complete!</Typography>
+          <Typography component="h6" variant="h6">Verification complete!</Typography>
           <Typography component="h6" variant="h6">You've unlocked OCEAN profiling!</Typography>
           {/* INSERT OCEAN TOPBAR COMPONENT HERE (1080x450)*/}
           <OceanProfile subject={this.context.getTarget()} classes={classes}></OceanProfile>
