@@ -35,7 +35,8 @@ class Campaign extends NavigationHack {
     }
 
     let target = this.context.getTarget();
-    let poss = target.gender === 'male' ? 'he' : 'she';
+    let pron = target.gender === 'male' ? 'he' : 'she';
+    let poss = target.gender === 'male' ? 'him' : 'her';
     let name = target.name.ucf();
 
     return (
@@ -46,7 +47,7 @@ class Campaign extends NavigationHack {
                 Now use a simple design tool to create a targeted Facebook ad.
               </Typography>
               <Typography component="h6" variant="h6">
-                {name}'s OCEAN profile shows that {poss} is can be influenced by:
+                {name}'s OCEAN profile shows that {pron} can be influenced by:
               </Typography>
               <Typography component="h6" variant="h6">
                 <strong>Images</strong> that contain {target.influences[0]}
@@ -55,7 +56,7 @@ class Campaign extends NavigationHack {
                 <strong>Slogans</strong> that contain {target.influences[1]}
               </Typography>
               <Typography component="h6" variant="h6">
-                Influence them!
+                Influence {poss}!
               </Typography>
               <Link to="/dark-ad">
                   <IconButton icon="next" text="Ready" />
