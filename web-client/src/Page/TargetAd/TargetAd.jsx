@@ -8,6 +8,7 @@ import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import NavigationHack from '../NavigationHack';
+import UserSession from '../../Components/UserSession/UserSession';
 
 const styles = {
   root: {
@@ -30,7 +31,7 @@ class TargetAd extends NavigationHack {
       <div className={`${classes.content} content`}>
         <br/>
         <Typography component="h6" variant="h6">
-          Share your targeted ad with {this.context.targetName||'Remy'}?
+          Share your targeted ad with {this.context.getTarget().name||'Remy'}?
         </Typography>
         <Link to="/success-ad">
           <Grid container justify="center">
@@ -50,6 +51,7 @@ class TargetAd extends NavigationHack {
   }
 }
 
+TargetAd.contextType = UserSession;
 TargetAd.propTypes = {
   classes: PropTypes.object.isRequired,
 };
