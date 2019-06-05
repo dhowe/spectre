@@ -20,6 +20,71 @@ export default class User {
     this.category = (tmpl && tmpl.category) || 0;
   }
 
+  generateSummary(num) {
+    return this.generateSentences(User.secondPersonTemplate, num);
+  }
+
+  generateSentences(template, numSentences) {
+
+    this._verifyTraits();
+
+
+    if (arguments.length === 1 && typeof template === 'number') {
+
+      numSentences = template;
+      template = null;
+    }
+
+    if (typeof this.gender === 'undefined') {
+      console.error('gender required, found: ' + this.gender);
+      this.gender = 'female';
+    }
+
+    numSentences = numSentences || 3;
+
+    let data = [];
+    let targetNum = 3;
+    let maxPerTrait = 2;
+    let parser = new Parser(this);
+    let traitNames = User.oceanTraits;
+    let lines = this._descriptionLines(template);
+
+
+    for (let i = 0; i < lines.length; i++) {
+      lines[i] = parser.parse(lines[i]);
+    }
+
+    lines.forEach((l, i) => {
+      data.push({
+        line: l,
+        trait: traitNames[i],
+        score: this.traits[traitNames[i]]
+      });
+    });
+
+    data.sort((a, b) => Math.abs(b.score - .5) - Math.abs(a.score - .5));
+
+    let sentences = [];
+    let re = new RegExp(this.name, "g");
+    for (let i = 0, idx = 0; i < data.length; i++) {
+      let parts = this.splitSentences(data[i].line);
+      let added = 0;
+      parts.forEach((p, j) => {
+        if (p.length && added < maxPerTrait) {
+          if (sentences.length) p = p.replace(re, this.pronoun());
+          if (sentences.length < targetNum) {
+            sentences.push(p.ucf());
+            if (++added >= maxPerTrait) {
+              return;
+            }
+          }
+        }
+      });
+    }
+
+    return sentences;
+  }
+
   randomImages(pre) {
     let images = [];
     let ots = User.oceanTraits;
@@ -105,7 +170,7 @@ export default class User {
     }
 
     let result = true;
-    this.oceanTraits().forEach((tname,i) => {
+    this.oceanTraits().forEach((tname, i) => {
       if (!this.traits.hasOwnProperty(tname)) {
         result = false;
         return;
@@ -124,63 +189,6 @@ export default class User {
     if (!this.hasOceanTraits()) {
       throw Error('User with traits required');
     }
-  }
-
-  generateSentences(parser, numSentences) {
-
-    this._verifyTraits();
-
-    if (typeof this.gender === 'undefined') {
-      console.error('gender required, found: '+this.gender);
-      this.gender = 'female';
-    }
-
-    if (arguments.length === 1 && typeof parser === 'number') {
-      numSentences = parser;
-      parser = undefined;
-    }
-    numSentences = numSentences || 3;
-
-    let data = [];
-    let targetNum = 3,
-      maxPerTrait = 2;
-    let traitNames = User.oceanTraits;
-    let lines = this._descriptionLines();
-
-    parser = new Parser(this);
-    for (let i = 0; i < lines.length; i++) {
-      lines[i] = parser.parse(lines[i]);
-    }
-
-    lines.forEach((l, i) => {
-      data.push({
-        line: l,
-        trait: traitNames[i],
-        score: this.traits[traitNames[i]]
-      });
-    });
-
-    data.sort((a, b) => Math.abs(b.score - .5) - Math.abs(a.score - .5));
-
-    let sentences = [];
-    let re = new RegExp(this.name, "g");
-    for (let i = 0, idx = 0; i < data.length; i++) {
-      let parts = this.splitSentences(data[i].line);
-      let added = 0;
-      parts.forEach((p, j) => {
-        if (p.length && added < maxPerTrait) {
-          if (sentences.length) p = p.replace(re, this.pronoun());
-          if (sentences.length < targetNum) {
-            sentences.push(p.ucf());
-            if (++added >= maxPerTrait) {
-              return;
-            }
-          }
-        }
-      });
-    }
-
-    return sentences;
   }
 
   splitSentences(text) {
@@ -212,15 +220,18 @@ export default class User {
     return (text.length && arr && arr.length) ? unescapeAbbrevs(arr) : [text];
   }
 
-  _descriptionLines() {
+  _descriptionLines(tmpl) {
+
+    tmpl = tmpl || User.descriptionTemplate;
+
     let lines = [];
     let traitNames = User.oceanTraits;
     for (let i = 0; i < traitNames.length; i++) {
-      if (typeof User.descriptionTemplate[traitNames[i]] !== 'undefined') {
+      if (typeof tmpl[traitNames[i]] !== 'undefined') {
         let val = this.traits[traitNames[i]];
         if (val < 0 || val > 1) throw Error('Bad "' + traitNames[i] + '" trait -> ' + val);
         let idx = Math.min(traitNames.length - 1, Math.floor(val * traitNames.length));
-        lines.push(User.descriptionTemplate[traitNames[i]].text[idx]);
+        lines.push(tmpl[traitNames[i]].text[idx]);
       }
     }
     return lines;
@@ -641,6 +652,73 @@ User.descriptionTemplate = {
           '$user.name.ucf() $user.toBe() generally calm. $user.pronoun().ucf() comes across as someone who can feel emotional or stressed out by some experiences, but $user.poss() feelings tend to be warranted by the situation.',
           '$user.name.ucf() tends to be more self-conscious than many. $user.pronoun().ucf() comes across as someone who can find it hard to not get caught up by anxious or stressful situations. $user.pronoun().ucf() $user.toBe() in touch with $user.poss() own feelings.',
           '$user.name.ucf() reacts poorly to stressful situations, and consequently worries about them more than most. However $user.pronoun() has an emotional depth that others may lack.'
+        ]
+  }
+};
+
+User.secondPersonTemplate = {
+  openness: {
+    desc: 'Openness to experience relates to our imagination and the degree to which we are comfortable with unfamiliarity',
+    poles: ['Conservative and Traditional', 'Liberal and Artistic'],
+    meta: 'People scoring high on this trait can be described as intellectually curious, sensitive to beauty, and unconventional, while people scoring low on this trait can be characterized as traditional and are more likely to prefer the familiar over the unusual.',
+    text: [
+          'You are down-to-earth and prefers things simple and straightforward. You find life easier when things don’t change too much. Though you value the arts, tradition is more important to you than experimentation.',
+          'You dislike needless complexity, and prefer the familiar over the unusual. You\'re more conservative than some and value practical outcomes over flights of imagination.',
+          'You are aware of your feelings but don\'t get carried away with your imagination. You embraces change when it are necessary while still resisting it when you thinks otherwise. Beauty are important to your, but it’s not everything.',
+          'You are intellectually curious and appreciative of what you considers beautiful, no matter what others think. Your imagination are vivid and makes your more creative than many others.',
+          'You are far more intellectually curious and sensitive to beauty than most. Your beliefs are individualistic and frequently drift towards the unconventional. You enjoys your imagination and the exciting places it takes your.'
+        ]
+  },
+
+  conscientiousness: {
+    desc: 'Conscientiousness concerns the way in which we control, regulate, and direct our impulses.',
+    poles: ['Impulsive and Spontaneous', 'Organized and Hard-working'],
+    meta: 'People scoring high on this trait can be described as organized, reliable, and efficient, while people scoring low on this trait are generally characterized as spontaneous and impulsive.',
+    text: [
+          'You are impulsive and whimsical. You know that decisions often need to be made quickly and you can make them quicker than most. Friends might say you are zany, colourful, and just generally fun to be with...',
+          'You\'re spontaneous and fun and you like to do unexpected things to keep life interesting. You aren’t unreliable per se, but you have been known to slip up from time to time.',
+          'You are random and fun to be around but you can plan when life requires it. Depending on the situation, you can make quick decisions or deliberate for longer if necessary.',
+          'You avoid foreseeable trouble through planning and achieve success through persistence. You are reliable and prepared for  challenges.',
+          'You are a bit of a perfectionist. You prefer to plan things to the last detail, which has helped you achieve success. You most enjoy seeing long-term plans come to fruition.'
+        ]
+  },
+
+  extraversion: {
+    desc: 'Extraversion refers to the extent to which people get their energy from the company of others, and whether they actively seek excitement and stimulation',
+    poles: ['Contemplative', 'Engaged with Outside World'],
+    meta: 'People scoring high on this trait can be described as energetic, talkative and sociable, while people scoring low on this trait tend to be more shy, reserved and comfortable in their own company.',
+    text: [
+          'You are quiet and a bit withdrawn, someone who doesn’t need lots of people around to have fun. You even find people tiring at times.',
+          'You prefer low-key social occasions with a few close friends. It’s not that you are afraid of large parties, they\'re just not that fun for you.',
+          'You enjoy and actively seek out social occasions, but don\'t think them super important. You might say that sometimes its nice to take a step back and have a quiet night in.',
+          'You are energetic and active. You\'re someone who enjoys and actively seeks out social occasions, and especially enjoys talking with groups of people.',
+          'You are energetic, exuberant and active. You like to be the center of attention at social occasions and you\'re generally ready to say "Yes" to challenges.'
+        ]
+  },
+
+  agreeableness: {
+    desc: 'Agreeableness reflects individual differences concerning cooperation and social harmony.',
+    poles: ['Competitive', 'Team-working and Trusting'],
+    meta: 'People scoring high on this trait are generally considered soft-hearted, generous, and sympathetic, while people scoring low on this trait tend to be more driven, self-confident and competitive.',
+    text: [
+          'You are willing to make tough decisions when necessary, and will point out when something\'s wrong, no matter what others  think. You are tough and uncompromising.',
+          'You often find it difficult to get along with new people you meet, as you can be suspicious of their motives. Over time, however, you make good connections, though this doesn’t stop your from telling them \'how it is\'.',
+          'You get along with people, especially once they\'ve proved themselves trustworthy. You have a healthy scepticism about others’ motives, but that doesn’t stop you from considering them basically honest and decent.',
+          'You\'re someone people get along with easily. You\'re considerate, friendly, and generally expect others to be honest and decent.',
+          'You are very easy to get along with. You are considerate, friendly, and helpful and you expect others to act similarly.'
+        ]
+  },
+
+  neuroticism: {
+    desc: 'Neuroticism refers to the tendency to experience negative emotions.',
+    poles: ['Laid-back and Relaxed', 'Easily Stressed and Emotional'],
+    meta: 'People scoring high on this trait generally worry more than most, and react poorly to stressful situations. However, they often show an emotional depth that others lack.',
+    text: [
+          'You are difficult to upset or stress out as you rarely react with negative emotions, even when you are anxious. You comes across as very calm and resilient.',
+          'You\'re calm and emotionally stable, and come across as someone who\'s rarely bothered by things. When they do get you down, the feeling doesn\'t persist very long.',
+          'You are generally calm. Though you can feel emotional or stressed out by some experiences, your feelings tend to be warranted by the situation.',
+          'You are more self-conscious than some, and tend to get caught up in anxious or stressful situations. Though, on the other hand, you are very \"in touch\" with your own feelings.',
+          'You react poorly to stressful situations, and consequently worry about them more than most. On the other hand you have an emotional depth that others may lack.'
         ]
   }
 };
