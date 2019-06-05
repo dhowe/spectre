@@ -71,6 +71,9 @@ class Username extends React.Component {
     } else if (button === "{lock}") {
       this.handleShift();
       this.unShiftNeeded = false;
+    } if (button === "{delete}") {
+      this.handleShift();
+      this.unShiftNeeded = false;
     } else {
       if (this.unShiftNeeded) {
         this.setState({

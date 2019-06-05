@@ -11,6 +11,7 @@ import UserSession from '../../Components/UserSession/UserSession';
 import './LoginPage.scss';
 import Video from '../../Components/Video/Video';
 import NavigationHack from '../NavigationHack';
+import grey from '@material-ui/core/colors/grey';
 
 window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true; // TMP: #138
 
@@ -23,6 +24,41 @@ const styles = {
   clickToContinue: {
     margin: '20% 0',
   },
+  marginTop: {
+    marginBottom: 75,
+  },
+  border: {
+    borderBottomColor: 'white',
+  },
+  textField: {
+    color: grey[50],
+    '&:before': {
+      borderColor: grey[50],
+    },
+  },
+  cssLabel: {
+    transform: 'translate(0,1.5rem)',
+    color: grey[50],
+    '&$cssFocused': {
+      color: grey[50],
+    },
+  },
+  cssFocused: {
+    '&:after': {
+      borderBottomColor: grey[50],
+    },
+  },
+  cssUnderline: {
+    '&:after': {
+      borderBottomColor: grey[50],
+    },
+  },
+  cssOutlinedInput: {
+    // TMP: removed to silence warning in console
+    // '&$cssFocused $notchedOutline': {
+    //   borderColor: grey[50],
+    // }
+  },
 };
 
 class LoginPage extends NavigationHack {
@@ -30,8 +66,23 @@ class LoginPage extends NavigationHack {
     super(props, '/username');
     this.state = { toNext: false, modalOpen: false };
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.modalContent = '';
     this.modalTitle = '';
+  }
+
+  handleChange(event) {
+    const input = event.target.value;
+    this.setState(
+      {
+        email: input,
+      },
+      () => {
+        this.keyboardRef.keyboard.setInput(input);
+      },
+    );
+    this.context.emailValid = this.validEmail(input);
+    this.context.login = event.target.value; // user-prop
   }
 
   handleSubmit(e) {
@@ -85,9 +136,7 @@ class LoginPage extends NavigationHack {
       <div className={classes.root + ' LoginPage'}>
         <SpectreHeader />
         <div className={classes.content + ' LoginPage-content content'}>
-          <Typography component="h1" variant="h1">Hello</Typography>
           <Typography component="h2" variant="h2">Let's Play!</Typography>
-          <Typography component="h6" variant="h6">Enter Email</Typography>
           <Modal
             isOpen={this.state.modalOpen}
             title={this.modalTitle}
