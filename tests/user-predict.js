@@ -108,8 +108,10 @@ describe('OCEAN Metrics', function () {
       expect(oceanDist(user, user)).to.eq(0);
     });
     it('Should return a positive distance for random users', function () {
-      let userA = UserModel.Create()._randomizeTraits();
-      let userB = UserModel.Create()._randomizeTraits();
+      let userA = UserModel.Create()
+      userA._randomizeTraits();
+      let userB = UserModel.Create()
+      userB._randomizeTraits();
       expect(oceanDist(userA, userB)).gt(0);
     });
     it('Should return the correct distance for two users', function () {

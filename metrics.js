@@ -15,7 +15,7 @@ const oceanDist = (a, b) => {
   let total = 0;
   let ta = a.traits;
   let tb = b.traits;
-  let traitNames = User.oceanTraits();
+  let traitNames = User.oceanTraits;
   for (let i = 0; i < traitNames.length; i++) {
     diff = ta[traitNames[i]] - tb[traitNames[i]];
     total += diff * diff;

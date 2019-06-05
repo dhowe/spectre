@@ -20,6 +20,7 @@ describe('Client User', function () {
       expect(user.clientId).eq(-1);
       expect(user.category).eq(0);
       expect(user.isActive).eq(false);
+      expect(user.virtue).eq(undefined);
       expect(user.hasOceanTraits()).eq(false);
     });
 
@@ -30,10 +31,12 @@ describe('Client User', function () {
         hasImage: true,
         login: "dave@abc.com",
         loginType: "twitter",
+        virtue: 'truth',
+        gender: 'male',
         lastPageVisit: { time: +Date.now(), page: '/Test' },
-        similars: [JSON.stringify({ id: '1111', name: 'Dave', traits: User._randomTraits() }),
-        JSON.stringify({ id: '2222', name: 'Jen', traits: User._randomTraits() })],
-        target: JSON.stringify({ id: '2222', name: 'Jen', traits: User._randomTraits() }),
+        //similars: [JSON.stringify({ id: '1111', name: 'Dave', traits: User._randomTraits() }),
+        //JSON.stringify({ id: '2222', name: 'Jen', traits: User._randomTraits() })],
+        //target: JSON.stringify({ id: '2222', name: 'Jen', traits: User._randomTraits() }),
         traits: {
           agreeableness: .3,
           conscientiousness: .4,
@@ -44,6 +47,8 @@ describe('Client User', function () {
       });
 
       expect(user.name).eq("dave");
+      expect(user.virtue).eq("truth");
+      expect(user.gender).eq("male");
       expect(user.login).eq("dave@abc.com");
       expect(user.hasImage).eq(true);
       expect(user.loginType).eq("twitter");
@@ -51,16 +56,16 @@ describe('Client User', function () {
       expect(user.traits.openness).to.equal(1);
       expect(user.hasOceanTraits()).eq(true);
       expect(user.categorize()).eq(1);
-      expect(user.getSimilars()).is.a('array');
-      expect(user.getSimilars().length).eq(2);
-      expect(user.getSimilars()[0].name).eq('Dave');
-      expect(user.getSimilars()[1].name).eq('Jen');
-      expect(user.getSimilars()[0].id).eq('1111');
-      expect(user.getSimilars()[1].id).eq('2222');
-      expect(user.getTarget().name).eq('Jen');
-      expect(user.getTarget().id).eq('2222');
-      expect(user.getTarget().traits.openness).is.gte(0);
-      expect(user.getTarget().traits.openness).is.lt(1);
+      // expect(user.getSimilars()).is.a('array');
+      // expect(user.getSimilars().length).eq(2);
+      // expect(user.getSimilars()[0].name).eq('Dave');
+      // expect(user.getSimilars()[1].name).eq('Jen');
+      // expect(user.getSimilars()[0].id).eq('1111');
+      // expect(user.getSimilars()[1].id).eq('2222');
+      // expect(user.getTarget().name).eq('Jen');
+      // expect(user.getTarget().id).eq('2222');
+      // expect(user.getTarget().traits.openness).is.gte(0);
+      // expect(user.getTarget().traits.openness).is.lt(1);
     });
   });
 
@@ -274,53 +279,6 @@ describe('Client User', function () {
           neuroticism: 0
         }
       }).categorize()).eq(-5);
-    });
-  });
-
-  describe('User.generateLongDescription()', function () {
-
-    it('Should fail for a user without traits', function () {
-      expect(() => new User().generateLongDescription()).to.throw();
-    });
-
-    it('Should long-describe a user based on OCEAN traits', function () {
-      let user = new User(); //User.Create();
-      user.name = "Jane";
-      user.gender = "female";
-      user.traits = {
-        agreeableness: 0.3,
-        conscientiousness: Math.random(),
-        extraversion: Math.random(),
-        openness: Math.random(),
-        neuroticism: Math.random()
-      }
-      let result = user.generateLongDescription();
-      //console.log(result);
-      expect(result).is.a('string');
-      expect(result.length).is.gt(0);
-      expect(result.startsWith('Jane')).eq(true);
-      expect(user.hasOceanTraits()).eq(true);
-    });
-  });
-
-  describe('User.generateDescription()', function () {
-
-    it('Should fail for a user without traits', function () {
-      expect(() => new User().generateDescription()).to.throw();
-    });
-
-    it('Should describe a user based on OCEAN traits', function () {
-      let user = new User(); //User.Create();
-      user.name = "Jane";
-      user.gender = "female";
-      user.traits = User._randomTraits();
-      let result = user.generateSentences(3);
-      console.log(result);
-      expect(result).is.a('array');
-      expect(result.length).is.eq(3);
-      expect(result[0].startsWith('Jane')).eq(true);
-      expect(result[1].startsWith('Jane')).eq(false);
-      expect(result[2].startsWith('Jane')).eq(false);
     });
   });
 });

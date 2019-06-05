@@ -48,7 +48,7 @@ app.get('*', (req, res) => {
 
 /////////////////////////// DbConnect ///////////////////////////////
 
-const opts = { useNewUrlParser: true };
+const opts = { useNewUrlParser: true, useFindAndModify: false };
 const dbu = dev ? dbUrl + '-dev' : dbUrl;
 const dbn = dbu.substring(dbu.lastIndexOf('/') + 1);
 

@@ -105,8 +105,7 @@ class SocialLogin extends React.Component {
       console.log(JSON.stringify(keyboard));
       keyboard.keyboard.input = (keyboard.keyboard.input.splice(0, keyboard.keyboard.input.length - 2));
     } else {
-      console.log(`this unshift needed ${this.unShiftNeeded}`);
-      if(this.unShiftNeeded) {
+      if (this.unShiftNeeded) {
         this.setState({
           layoutName: 'default',
         });

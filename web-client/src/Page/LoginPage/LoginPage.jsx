@@ -106,7 +106,8 @@ class LoginPage extends NavigationHack {
           this.modalContent = 'Email has already been used';
           this.setState({ modalOpen: true });
         } else {
-          console.error(error);
+          console.error(e);
+          //console.log(UserSession.defaults);
           this.showVideo();
         }
       };

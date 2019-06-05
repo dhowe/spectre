@@ -22,7 +22,7 @@ export default class User {
 
   randomImages(pre) {
     let images = [];
-    let ots = User.oceanTraits();
+    let ots = User.oceanTraits;
     while (images.length < 4) {
       let flip = Math.random() < .5 ? 1 : 2;
       let mult = Math.random() < .5 ? 1 : -1;
@@ -35,7 +35,7 @@ export default class User {
 
   targetAdImages() {
     let pre = 'imgs/',
-      ots = User.oceanTraits();
+      ots = User.oceanTraits;
     let images = this.randomImages(pre);
     if (this.hasOceanTraits() && typeof this.adIssue !== 'undefined') {
       let cat = this.categorize();
@@ -55,7 +55,7 @@ export default class User {
   }
 
   randomSlogans() {
-    let ots = User.oceanTraits();
+    let ots = User.oceanTraits;
     let idx1 = Math.floor(Math.random() * ots.length);
     let idx2 = Math.floor(Math.random() * ots.length)
     //console.log('['+this.adIssue+']['+(Math.random() < .5 ? 'high' : 'low')+']['+[ots[idx1]]+']');
@@ -65,7 +65,7 @@ export default class User {
   }
 
   targetAdSlogans() {
-    let ots = User.oceanTraits();
+    let ots = User.oceanTraits;
     let slogans = this.randomSlogans();
     if (this.hasOceanTraits() && typeof this.adIssue !== 'undefined') {
       let cat = this.categorize();
@@ -91,8 +91,11 @@ export default class User {
   }
 
   setBrands(brandData) {
-    let traits = predict(brandData);
-    // this.brands = brandData; // TODO
+    let traitObjs = predict(brandData);
+    let traits = {};
+    traitObjs.forEach(tobj => {
+      traits[tobj.trait] = tobj.score;
+    });
     return this.setTraits(traits);
   }
 
@@ -102,7 +105,7 @@ export default class User {
     }
 
     let result = true;
-    this.oceanTraits().forEach(tname => {
+    this.oceanTraits().forEach((tname,i) => {
       if (!this.traits.hasOwnProperty(tname)) {
         result = false;
         return;
@@ -126,6 +129,12 @@ export default class User {
   generateSentences(parser, numSentences) {
 
     this._verifyTraits();
+
+    if (typeof this.gender === 'undefined') {
+      console.error('gender required, found: '+this.gender);
+      this.gender = 'female';
+    }
+
     if (arguments.length === 1 && typeof parser === 'number') {
       numSentences = parser;
       parser = undefined;
@@ -133,11 +142,17 @@ export default class User {
     numSentences = numSentences || 3;
 
     let data = [];
-    let targetNum = 3, maxPerTrait = 2;
-    let traitNames = User.oceanTraits();
+    let targetNum = 3,
+      maxPerTrait = 2;
+    let traitNames = User.oceanTraits;
     let lines = this._descriptionLines();
 
-    this._parseLines(parser, lines).forEach((l, i) => {
+    parser = new Parser(this);
+    for (let i = 0; i < lines.length; i++) {
+      lines[i] = parser.parse(lines[i]);
+    }
+
+    lines.forEach((l, i) => {
       data.push({
         line: l,
         trait: traitNames[i],
@@ -158,11 +173,9 @@ export default class User {
           if (sentences.length < targetNum) {
             sentences.push(p.ucf());
             if (++added >= maxPerTrait) {
-              console.log('JUMP');
               return;
             }
           }
-
         }
       });
     }
@@ -201,7 +214,7 @@ export default class User {
 
   _descriptionLines() {
     let lines = [];
-    let traitNames = User.oceanTraits();
+    let traitNames = User.oceanTraits;
     for (let i = 0; i < traitNames.length; i++) {
       if (typeof User.descriptionTemplate[traitNames[i]] !== 'undefined') {
         let val = this.traits[traitNames[i]];
@@ -214,21 +227,26 @@ export default class User {
   }
 
   // verify we have a parser, then parse each line
-  _parseLines(parser, lines) {
-    if (!parser) {
-      if (typeof Parser === 'undefined') throw Error('No Parser found');
-      parser = new Parser(this);
-    }
+  // _parseLines(parser, lines) {
+  //   if (!parser || parser.user !== this) {
+  //     if (typeof Parser === 'undefined') throw Error('No Parser found');
+  //     //console.log('creating parser: '+this.name);
+  //     parser = new Parser(this);
+  //   }
+  //   parser = new Parser(this);
+  //   for (let i = 0; i < lines.length; i++) {
+  //     lines[i] = parser.parse(lines[i]);
+  //   }
+  //   return lines;
+  // }
+
+  generateDescription() {
+    this._verifyTraits();
+    let parser = new Parser(this);
+    let lines = this._descriptionLines();
     for (let i = 0; i < lines.length; i++) {
       lines[i] = parser.parse(lines[i]);
     }
-    return lines;
-  }
-
-  generateLongDescription(parser) {
-    this._verifyTraits();
-    let lines = this._descriptionLines();
-    this._parseLines(parser, lines);
     return lines.join(' ').trim();
   }
 
@@ -236,10 +254,9 @@ export default class User {
     switch (this.gender) {
     case 'male':
       return 'his';
+    case 'other': //return 'their'; TODO:
     case 'female':
       return 'her';
-    case 'other':
-      return 'their';
     }
   }
 
@@ -247,19 +264,27 @@ export default class User {
     switch (this.gender) {
     case 'male':
       return 'he';
+    case 'other': //return 'they'; TODO:
     case 'female':
       return 'she';
-    case 'other':
-      return 'they';
     }
+  }
+
+  predictInfluences() {
+    // TODO
+    this.influences = ['Immigration issues', 'Images of large crowds', 'Short, punchy slogans'];
+  }
+
+  predictDescriptors() {
+    this.descriptors = this.generateSentences(3);
   }
 
   setTraits(traits) {
     if (typeof obj === 'string') throw Error('expecting traits object');
-    this.traits = traits;
 
-    // TODO: placeholder only
-    this.influences = ['Immigration issues', 'Images of large crowds', 'Short, punchy slogans'];
+    this.traits = traits;
+    this.predictInfluences();
+    this.predictDescriptors();
 
     return this;
   }
@@ -303,7 +328,7 @@ export default class User {
   }
 
   oceanTraits() {
-    return User.oceanTraits();
+    return User.oceanTraits;
   }
 
   categorize() {
@@ -332,7 +357,8 @@ export default class User {
   }
 
   _randomizeTraits() {
-    return this.setTraits(User._randomTraits());
+    this.traits = User._randomTraits();
+    return this;
   }
 };
 
@@ -383,6 +409,9 @@ User.schema = () => {
     similars: { // JSON-stringified Users
       type: ['string']
     },
+    descriptors: {
+      type: ['string']
+    },
     virtue: {
       type: 'string'
     },
@@ -428,19 +457,89 @@ User.schema = () => {
   }
 }
 
+function rand() {
+  if (arguments.length === 1 && Array.isArray(arguments[0])) {
+    return arguments[0][irand(arguments[0].length)];
+  }
+  var randnum = Math.random();
+  if (!arguments.length) return randnum;
+  return (arguments.length === 1) ? randnum * arguments[0] :
+    randnum * (arguments[1] - arguments[0]) + arguments[0];
+}
+
+function irand() {
+  var randnum = Math.random();
+  if (!arguments.length) throw Error('requires args');
+  return (arguments.length === 1) ? Math.floor(randnum * arguments[0]) :
+    Math.floor(randnum * (arguments[1] - arguments[0]) + arguments[0]);
+}
+
+User._randomData = function (tmpl) {
+  if (!tmpl || typeof tmpl._id === 'undefined' || typeof tmpl.name === 'undefined') {
+    console.log(tmpl);
+    throw Error('id and login required' + tmpl);
+  }
+  let user = tmpl;
+  if (typeof tmpl.hasOceanTraits !== 'function') user = new User(tmpl);
+
+  user._randomizeTraits();
+  user.login = user.login || user.name.toLowerCase() + '@mail.com';
+  user.loginType = user.loginType || 'email';
+  user.adIssue = user.adIssue || rand(['leave', 'remain']);
+  user.gender = user.gender || rand(['male', 'female', 'other'])
+  user.virtue = user.virtue || rand(['power', 'wealth', 'influence', 'truth']);
+  // user.dataChoices = {};
+  // user.dataChoices.consumer = ['health', 'finance', 'travel'];
+  // user.dataChoices.home = ['smart watch', 'smart tv', 'smart assistant'];
+  // user.dataChoices.political = ['online maps', 'polls & surveys', 'voting records'];
+  user.clientId = user.clientId || irand(1, 7);
+  user.hasImage = true;
+
+  return user;
+}
+
 User._randomTraits = function (tmpl) {
   let traits = {};
-  User.oceanTraits().forEach(t => traits[t] = Math.random());
+  User.oceanTraits.forEach(t => traits[t] = Math.random());
   return traits;
 }
 
-User.oceanTraits = () => [
-    'openness',
-    'conscientiousness',
-    'extraversion',
-    'agreeableness',
-    'neuroticism'
-  ];
+User.oceanTraits = ['openness', 'conscientiousness', 'extraversion', 'agreeableness', 'neuroticism'];
+
+User.adInfluences = {
+  leave: {
+    high: {
+      openness: ["freedom or expansive skies", "‘freedom’, ‘future’ or ‘potential’"],
+      conscientiousness: ["money or financial focus, taking control", "‘control’, ‘savings’ or ‘your rights’"],
+      extraversion: ["not being silenced, being a ‘success’", "‘your rules’ or ‘your rights’ "],
+      agreeableness: ["family scenes, or relaxing locations", "‘against the EU’ or ‘family finances’"],
+      neuroticism: ["negative imagery, the fear of ‘others’", "‘criminals’ and fearful messages "]
+    },
+    low: {
+      openness: ["british traditions and british culture", "‘British’ or ‘traditions’"],
+      conscientiousness: ["taking action, not ‘hiding’ away", "‘no more’ or ‘time to act’"],
+      extraversion: ["strong characters or visions of a new tomorrow", "‘rising up’ or imagining a new ‘tomorrow’"],
+      agreeableness: ["less concern with cooperation or social harmony ", "‘borders’, ‘jobs’ or paying for other’s ‘mistakes’"],
+      neuroticism: ["easy going, relaxing scenes", "‘relax’ or ‘no big deal’"]
+    }
+  },
+  remain: {
+    high: {
+      openness: ["aspirational or inclusive scenes", "‘solidarity’ or mention collective action "],
+      conscientiousness: ["gambling or risk taking ", "‘gambling’ or ‘trust’"],
+      extraversion: ["being ‘left out’ or ‘silenced’ ", "’your own rules’ or‘ your voice’"],
+      agreeableness: ["social or family harmony", "‘family’ or ‘cooperation’"],
+      neuroticism: ["fearful or uncertain activities ", "‘stability’ or ‘uncertainty’"],
+    },
+    low: {
+      openness: ["conventional or traditional family scenes", "‘change is scary’, or ‘hassle’"],
+      conscientiousness: ["impulsive actions like gambling, risk taking", "‘sitting around’ or ‘time to act’"],
+      extraversion: ["solitary people, ‘loners’", "having ‘your say’ or contemplating ‘your future’"],
+      agreeableness: ["competitive sports, not being a ‘loser’", "losing’, ’quitting’ or ‘control’"],
+      neuroticism: ["laid back, relaxed scenes", "‘hassle’ or ‘worry’"],
+    }
+  }
+};
 
 User.adSlogans = {
   leave: {

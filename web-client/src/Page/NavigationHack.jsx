@@ -23,7 +23,7 @@ class NavigationHack extends React.Component {
   }
 
   navigate(event) {
-    console.log('touched', event.keyCode);
+    //console.log('touched', event.keyCode);
     switch (event.keyCode) {
     case LEFT_ARROW:
       this.previous();
