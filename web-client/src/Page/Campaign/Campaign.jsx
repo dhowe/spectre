@@ -34,7 +34,6 @@ class Campaign extends NavigationHack {
       });
     }
     const target = this.context.getTarget();
-    console.log('target',target);
     const name = target.name.ucf();
     const pron = target.gender === 'male' ? 'he' : 'she';
     const poss = target.gender === 'male' ? 'him' : 'her';
@@ -56,6 +55,7 @@ class Campaign extends NavigationHack {
           <Typography component="h6" variant="h6">
             <strong>Slogans</strong> that contain {infls[1]}
           </Typography>
+          </div>
       </div>
     );
   }
@@ -65,4 +65,5 @@ Campaign.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 Campaign.contextType = UserSession;
+
 export default withStyles(styles)(Campaign);
