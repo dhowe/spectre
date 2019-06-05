@@ -448,7 +448,7 @@ User.adSlogans = {
       openness: ["Free to create a British future", "Unleash our true potential"],
       conscientiousness: ["Greater control. Greater savings", "Your future, your right"],
       extraversion: ["Play by your own rules", "Tell the EU, your voice matters"],
-      agreeableness: ["Love Europe<br> Not the EU", "Better for family budgets"],
+      agreeableness: ["Love Europe Not the EU", "Better for family budgets"],
       neuroticism: ["No more foreign criminals", "Tipping point"]
     },
     low: {
@@ -470,7 +470,7 @@ User.adSlogans = {
     low: {
       openness: ["Don't make this a hassle", "Change is scary"],
       conscientiousness: ["Seize the opportunity ", "I'll take my chances"],
-      extraversion: ["You don't need the crowd<br>to have your say", "Contemplate your future"],
+      extraversion: ["You don't need the crowd to have your say", "Contemplate your future"],
       agreeableness: ["The fastest way to lose is to quit", "Control your destiny"],
       neuroticism: ["Who needs the hassle?", "Who has time to worry?"],
     }
