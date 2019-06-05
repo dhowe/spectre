@@ -81,63 +81,39 @@ class ConsumerData extends NavigationHack {
 
           <div onClick={this.countAdd} className="ConsumerDataIcons">
             <Grid className={classes.icons} container>
-              <Grid item sm={3}>
+              <Grid item sm={4}>
                 <IconButtonToggle enabled={true} icon="health" text="Health" />
               </Grid>
-              <Grid item sm={3}>
+              <Grid item sm={4}>
                 <IconButtonToggle enabled={false} icon="finance" text="Finance" />
               </Grid>
-              <Grid item sm={3}>
-                <IconButtonToggle enabled={false} icon="travel" text="Travel" />
-              </Grid>
-              <Grid item sm={3}>
+              <Grid item sm={4}>
                 <IconButtonToggle enabled={false} icon="biometrics" text="Biometrics" />
               </Grid>
             </Grid>
             <Grid className={classes.icons} container>
-              <Grid item sm={3}>
-                <IconButtonToggle enabled={false} icon="television" text="Television" />
-              </Grid>
-              <Grid item sm={3}>
-                <IconButtonToggle enabled={false} icon="news" text="News &amp; Magazines" />
-              </Grid>
-              <Grid item sm={3}>
-                <IconButtonToggle enabled={false} icon="store" text="Store &amp; Loyaty Cards" />
-              </Grid>
-              <Grid item sm={3}>
-                <IconButtonToggle enabled={false} icon="vehicle" text="Vehicle GPS" />
-              </Grid>
-            </Grid>
-            <Grid className={classes.icons} container>
-              <Grid item sm={3}>
+              <Grid item sm={4}>
                 <IconButtonToggle enabled={false} icon="online" text="Online Search History" />
               </Grid>
-              <Grid item sm={3}>
+              <Grid item sm={4}>
                 <IconButtonToggle enabled={false} icon="shopping" text="Shopping &amp; Mail Order" />
               </Grid>
-              <Grid item sm={3}>
-                <IconButtonToggle enabled={false} icon="location" text="Location" />
-              </Grid>
-              <Grid item sm={3}>
-                <IconButtonToggle enabled={false} icon="music" text="Spotify / ITunes" />
+              <Grid item sm={4}>
+                <IconButtonToggle enabled={false} icon="insurance" text="Insurance" />
               </Grid>
             </Grid>
             <Grid className={classes.icons} container>
-              <Grid item sm={3}>
-                <IconButtonToggle enabled={false} icon="insurance" text="Insurance" />
-              </Grid>
-              <Grid item sm={3}>
+              <Grid item sm={4}>
                 <IconButtonToggle enabled={false} icon="social" text="Social Media" />
               </Grid>
-              <Grid item sm={3}>
-                <IconButtonToggle enabled={false} icon="education" text="Education" />
+              <Grid item sm={4}>
+                <IconButtonToggle enabled={false} icon="travel" text="Travel" />
               </Grid>
-              <Grid item sm={3}>
-                <IconButtonToggle enabled={false} icon="payment" text="Payment" />
+              <Grid item sm={4}>
+                <IconButtonToggle enabled={false} icon="location" text="Location" />
               </Grid>
             </Grid>
           </div>
-
           <Link className={this.state.count >= 3 ? 'true' : 'disabled'} to="/political-data">
             <IconButton enabled={this.state.count >= 3} icon="next" text="Next" />
           </Link>
