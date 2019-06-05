@@ -20,17 +20,16 @@ export default class User {
     this.category = (tmpl && tmpl.category) || 0;
   }
 
-  generateSummary(num) {
-    return this.generateSentences(User.secondPersonTemplate, num);
+  generateSummary(numSentences) {
+
+    return this.generateSentences(User.secondPersonTemplate, numSentences);
   }
 
   generateSentences(template, numSentences) {
 
     this._verifyTraits();
 
-
     if (arguments.length === 1 && typeof template === 'number') {
-
       numSentences = template;
       template = null;
     }
@@ -49,14 +48,12 @@ export default class User {
     let traitNames = User.oceanTraits;
     let lines = this._descriptionLines(template);
 
-
-    for (let i = 0; i < lines.length; i++) {
-      lines[i] = parser.parse(lines[i]);
-    }
+    //lines.forEach(l => parser.parse(l));
 
     lines.forEach((l, i) => {
+
       data.push({
-        line: l,
+        line: parser.parse(l),
         trait: traitNames[i],
         score: this.traits[traitNames[i]]
       });
@@ -678,8 +675,8 @@ User.secondPersonTemplate = {
           'You are impulsive and whimsical. You know that decisions often need to be made quickly and you can make them quicker than most. Friends might say you are zany, colourful, and just generally fun to be with...',
           'You\'re spontaneous and fun and you like to do unexpected things to keep life interesting. You aren’t unreliable per se, but you have been known to slip up from time to time.',
           'You are random and fun to be around but you can plan when life requires it. Depending on the situation, you can make quick decisions or deliberate for longer if necessary.',
-          'You avoid foreseeable trouble through planning and achieve success through persistence. You are reliable and prepared for  challenges.',
-          'You are a bit of a perfectionist. You prefer to plan things to the last detail, which has helped you achieve success. You most enjoy seeing long-term plans come to fruition.'
+          'You avoid trouble through planning and think persistence will get you where you want to go.',
+          'You\'re a bit of a perfectionist, planning things to the most minute detail. You most enjoy seeing long-term plans come to fruition.'
         ]
   },
 
@@ -691,8 +688,8 @@ User.secondPersonTemplate = {
           'You are quiet and a bit withdrawn, someone who doesn’t need lots of people around to have fun. You even find people tiring at times.',
           'You prefer low-key social occasions with a few close friends. It’s not that you are afraid of large parties, they\'re just not that fun for you.',
           'You enjoy and actively seek out social occasions, but don\'t think them super important. You might say that sometimes its nice to take a step back and have a quiet night in.',
-          'You are energetic and active. You\'re someone who enjoys and actively seeks out social occasions, and especially enjoys talking with groups of people.',
-          'You are energetic, exuberant and active. You like to be the center of attention at social occasions and you\'re generally ready to say "Yes" to challenges.'
+          'You like to think you are energetic and active. You\'re someone who enjoys and actively seeks out social occasions, and especially enjoys talking with groups of people.',
+          'You like to think you are energetic, exuberant and active. You are often the center of attention at social occasions and think you\'re ready to step up to any challenge.'
         ]
   },
 

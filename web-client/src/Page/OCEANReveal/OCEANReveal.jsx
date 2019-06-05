@@ -45,14 +45,24 @@ class OCEANReveal extends NavigationHack {
 
   render() {
     const { classes } = this.props;
-    const celeb = this.context.celebrity || 'Trump';
+
+    const user = this.context;
+    user.name = user.name || 'Pat';
+    user.gender = user.gender || 'female';
+    user.celebrity = user.celebrity || 'Trump';
+    if (!user.hasOceanTraits()) user._randomizeTraits();
+
+    let sentences = ['A little data and a little tech goes a long way.',
+              'We haven\'t known you for very long, but already we know that…'];
+    sentences = sentences.concat(this.context.generateSummary());
+
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive progressNumber="three" />
-        <Typography component="h6" variant="h6"
-          style={{ marginTop:'500px' }}>A little data and a little tech <br/>goes a long way, doesn&apos;t it?</Typography>
-        <Typography component="h6" variant="h6"
-          style={{ marginTop:'100px' }}>We haven&apos;t known<br/> you very long, but already <br />we know that...</Typography>
+        {sentences.map((sent,i) => (
+          <Typography component="h6" style={{ marginTop: '170px'}}
+            key={i} variant="h6">{sent}</Typography>
+        ))}
         <Modal
           isOpen={this.state.modalOpen}
           title={this.modalTitle}
@@ -61,7 +71,7 @@ class OCEANReveal extends NavigationHack {
         />
         <Video
           ref={(el) => { this.video = el; }}
-          movie={`/video/wrapup_${celeb}.mp4`}
+          movie={`/video/wrapup_${user.celebrity}.mp4`}
           autoPlay={false}
           onComplete={this.next}
         />
