@@ -79,7 +79,7 @@ class InfluenceAFollower extends NavigationHack {
         <div className={`${classes.content} content`}>
           <Typography component="h5" variant="h5" className="influence-a-follower"><strong>Influence a follower!</strong></Typography>
           <Typography component="p" variant="body1" className="community">Spectre has a global community of followers.</Typography>
-          <Typography component="h5" variant="h5" className="choose-participant">Choose a participant:</Typography>
+          <Typography component="h5" variant="h5" className="choose-participant">Choose one:</Typography>
           <AvatarCircle>
             {this.renderSimilars().map((n, i) => (
               <AvatarComponent
