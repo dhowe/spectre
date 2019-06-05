@@ -8,6 +8,7 @@ import IconButton from '../../Components/IconButton/IconButton';
 import OceanProfile from '../../Components/OceanProfile/OceanProfile';
 import UserSession from '../../Components/UserSession/UserSession';
 import NavigationHack from '../NavigationHack';
+import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 
 const styles = {
   root: {
@@ -98,20 +99,20 @@ class DarkAd extends NavigationHack {
 
     return (
       <div className={classes.root + " darkAd"}>
-        <OceanProfile subject={this.context.getTarget()} />
-        <div className={classes.content + " content"}>
+        <SpectreHeader colour="white" progressActive progressNumber="one" />
+        <div className={`${classes.content} content`}>
           <Typography component="h6" variant="h6"><strong>Create Your Campaign</strong></Typography>
           <div className={classes.ad}>    { /* adIssue should never change after being selected '*/}
-            <img className={classes.adImage} src={this.state.image} alt='leave'></img>
+            <img className={classes.adImage} src={this.state.image} alt="leave"></img>
             <p className={classes.adText}>{this.state.text}</p>
-            {!this.state.defaultImageSelected ? <img className={classes.campaignImage} src={campaignImage} alt='leave'></img> : ''}
+            {!this.state.defaultImageSelected ? <img className={classes.campaignImage} src={campaignImage} alt="leave"></img> : ''}
           </div>
           <div>
             {console.log(images)}
-            <img className={classes.image} src={images[0]} alt='leave' onClick={() => { this.setState({ image: images[0], defaultImageSelected: false }) }}></img>
-            <img className={classes.image} src={images[1]} alt='leave' onClick={() => { this.setState({ image: images[1], defaultImageSelected: false }) }}></img>
-            <img className={classes.image} src={images[2]} alt='leave' onClick={() => { this.setState({ image: images[2], defaultImageSelected: false }) }}></img>
-            <img className={classes.image} src={images[3]} alt='leave' onClick={() => { this.setState({ image: images[3], defaultImageSelected: false }) }}></img>
+            <img className={classes.image} src={images[0]} alt="leave" onClick={() => { this.setState({ image: images[0], defaultImageSelected: false }); }}></img>
+            <img className={classes.image} src={images[1]} alt="leave" onClick={() => { this.setState({ image: images[1], defaultImageSelected: false }); }}></img>
+            <img className={classes.image} src={images[2]} alt="leave" onClick={() => { this.setState({ image: images[2], defaultImageSelected: false }); }}></img>
+            <img className={classes.image} src={images[3]} alt="leave" onClick={() => { this.setState({ image: images[3], defaultImageSelected: false }); }}></img>
           </div>
           <div>
             <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.state.defaultImageSelected && this.setState({ image: images[4] }); this.setState({ text: slogans[0], defaultImageSelected: false }) }}>
