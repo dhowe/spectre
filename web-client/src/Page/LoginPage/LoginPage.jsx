@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import { Redirect } from 'react-router-dom';
 import Modal from '../../Components/Modal/Modal';
 import SocialLogin from '../../Components/SocialLogin/SocialLogin';
 import IconButton from '../../Components/IconButton/IconButton';
@@ -11,6 +10,7 @@ import UserSession from '../../Components/UserSession/UserSession';
 
 import './LoginPage.scss';
 import Video from '../../Components/Video/Video';
+import NavigationHack from '../NavigationHack';
 
 window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true; // TMP: #138
 
@@ -25,35 +25,32 @@ const styles = {
   },
 };
 
-class LoginPage extends React.Component {
-
+class LoginPage extends NavigationHack {
   constructor(props) {
-    super(props);
+    super(props, '/username');
     this.state = { toNext: false, modalOpen: false };
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.continue = this.continue.bind(this);
     this.modalContent = '';
     this.modalTitle = '';
-    this.refs = {};
   }
 
   handleSubmit(e) {
     e.preventDefault();
 
     // get user from current context
-    let user = this.context;
+    const user = this.context;
     user.lastPageVisit = { page: '/Login', time: Date.now() };
     user.loginType = 'email'; // TMP:
 
-    if(user.login && user.emailValid) {
-      let handleSuccess = json => {
+    if (user.login && user.emailValid) {
+      const handleSuccess = (json) => {
         Object.assign(user, json);
         this.showVideo();
         console.log('User:', user);
       };
 
-      let handleError = e => {
-        if(e.error === 'EmailInUse') {
+      const handleError = (error) => {
+        if (e.error === 'EmailInUse') {
           this.modalTitle = 'Invalid email';
           this.modalContent = 'Email has already been used';
           this.setState({ modalOpen: true });
@@ -62,19 +59,13 @@ class LoginPage extends React.Component {
           //console.log(UserSession.defaults);
           this.showVideo();
         }
-        //this.setState({ data: JSON.stringify(e.error, null, 2) });
       };
-      console.log("DEFAULTS",UserSession.defaults);
       UserSession.createUser(user, handleSuccess, handleError);
-
-    } else if(user.login && !user.emailValid) {
-
+    } else if (user.login && !user.emailValid) {
       this.modalTitle = 'Oops...';
       this.modalContent = 'We couldn\'t find that email, please try again';
       this.setState({ modalOpen: true });
-
     } else {
-
       // TMP: should reject without successful User creation
       this.context.login = `test${+new Date()}@test.com`;
       this.showVideo();
@@ -85,26 +76,15 @@ class LoginPage extends React.Component {
     this.setState({ modalOpen: false });
   }
 
-  renderRedirect() {
-    if(this.state.toNext) {
-      return <Redirect to="/username" />;
-    }
-  }
-
   showVideo() {
     this.video.play();
-  }
-
-  continue() {
-    this.setState(() => ({ toNext: true }));
   }
 
   render() {
     const { classes } = this.props;
     return (
       <div className={classes.root + ' LoginPage'}>
-        {this.renderRedirect()}
-        <SpectreHeader/>
+        <SpectreHeader />
         <div className={classes.content + ' LoginPage-content content'}>
           <Typography component="h1" variant="h1">Hello</Typography>
           <Typography component="h2" variant="h2">Let's Play!</Typography>
@@ -119,10 +99,10 @@ class LoginPage extends React.Component {
             ref={(el) => { this.video = el; }}
             movie="/video/SpectreIntro.mp4"
             autoPlay={false}
-            onComplete={this.continue}
+            onComplete={this.next}
           />
           <SocialLogin />
-          <IconButton onClick={this.handleSubmit} colour="white" icon="next" text="Next"/>
+          <IconButton onClick={this.handleSubmit} colour="white" icon="next" text="Next" />
         </div>
       </div>
     );

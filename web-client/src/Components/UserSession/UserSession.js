@@ -6,7 +6,6 @@ import FormData from 'form-data';
 
 let UserSession = React.createContext(new User());
 
-let UserSesdata =
 UserSession.defaultUsers = function (onSuccess, onError) {
   fetch('/gusers.json').then(res => res.json())
     .then(data => {

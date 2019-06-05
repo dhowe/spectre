@@ -32,7 +32,8 @@ class Video extends React.Component {
   errorRender(error) {
     console.error(`Cannot open file ${error.currentTarget.currentSrc}`);
     console.error(`Playback error: ${error.currentTarget.error}`);
-    this.setState({ shouldShow: false });
+
+    this.props.onComplete(this);
   }
 
   stop() {
@@ -90,7 +91,7 @@ Video.propTypes = {
   onComplete: PropTypes.func,
   autoPlay: PropTypes.bool,
   className: PropTypes.string,
-  style: PropTypes.string,
+  style: PropTypes.object,
 };
 
 export default Video;

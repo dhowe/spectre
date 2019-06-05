@@ -12,6 +12,7 @@ import AvatarComponent from '../../Components/AvatarComponent/AvatarComponent';
 import Video from '../../Components/Video/Video';
 
 import './InfluenceACelebrity.scss';
+import NavigationHack from '../NavigationHack';
 
 const styles = {
   root: {
@@ -24,22 +25,23 @@ const styles = {
   },
 };
 
-class InfluenceACelebrity extends React.Component {
+class InfluenceACelebrity extends NavigationHack {
   constructor(props) {
-    super(props);
+    super(props, '/OCEAN-reveal');
     this.play = this.play.bind(this);
     this.stop = this.stop.bind(this);
+    this.save = this.save.bind(this);
     this.state = { video: null };
     let fcelebs = ['Kardashian', 'Abramovic'];
     let mcelebs = ['Freeman', 'Duchamp', 'Mercury', 'Trump', 'Zuckerberg'];
-    mcelebs = InfluenceACelebrity.shuffle(mcelebs).splice(0,4);
+    mcelebs = InfluenceACelebrity.shuffle(mcelebs).splice(0, 4);
     this.celebs = InfluenceACelebrity.shuffle(mcelebs.concat(fcelebs));
   }
 
   save() {
     //this.context.celebrity = this.state.celebrity;
     // Send data somewhere
-    window.location.assign('/OCEAN-reveal');
+    this.next();
   }
 
   // Nabbed from StackOverflow: https://stackoverflow.com/a/2450976
@@ -70,12 +72,12 @@ class InfluenceACelebrity extends React.Component {
     this.context.celebrity = name;
     this.setState({
       celebrity: name,
-      video: `/video/${this.context.virtue}_${name}.mp4`,
+      video: `/video/${this.context.virtue || 'power'}_${name}.mp4`,
     });
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, celebrity } = this.props;
     const { video } = this.state;
     const user = this.context;
 
@@ -84,7 +86,7 @@ class InfluenceACelebrity extends React.Component {
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive progressNumber="three"/>
-        <div className={classes.content + ' content'}>
+        <div className={`${classes.content} content`}>
           <Fade in style={{ transitionDelay: '200ms' }}>
             <Typography className="title" component="h4" variant="h4">Influence a celebrity!</Typography>
           </Fade>
@@ -95,7 +97,7 @@ class InfluenceACelebrity extends React.Component {
           </Fade>
           <Fade in style={{ transitionDelay: '200ms' }}>
             <Typography component="h6" variant="h6">
-              Pick one to hear their <br/>confession on&nbsp;{user.virtue}:
+              Listen to their confessions on&nbsp;{user.virtue}:
             </Typography>
           </Fade>
           {video && <Video autoPlay onComplete={this.stop} movie={video}/>}
@@ -103,6 +105,7 @@ class InfluenceACelebrity extends React.Component {
             {this.celebs
               .map((name, i) => (
                 <AvatarComponent
+                  active={name === celebrity}
                   handleClick={() => this.play(name)}
                   key={AvatarComponent.generateKey(i)}
                   target={{ name, image: `/imgs/${name}.png` }}
@@ -110,9 +113,9 @@ class InfluenceACelebrity extends React.Component {
               ))}
           </AvatarCircle>
 
-          <IconButton onClick={this.save} icon="next" text="Next"/>
+          <IconButton onClick={this.save} icon="next" text="Next" />
         </div>
-        <FooterLogo/>
+        <FooterLogo />
       </div>
     );
   }
@@ -120,6 +123,7 @@ class InfluenceACelebrity extends React.Component {
 
 InfluenceACelebrity.propTypes = {
   classes: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
 };
 InfluenceACelebrity.contextType = UserSession;
 

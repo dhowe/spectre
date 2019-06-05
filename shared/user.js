@@ -91,8 +91,11 @@ export default class User {
   }
 
   setBrands(brandData) {
-    let traits = predict(brandData);
-    // this.brands = brandData; // TODO
+    let traitObjs = predict(brandData);
+    let traits = {};
+    traitObjs.forEach(tobj => {
+      traits[tobj.trait] = tobj.score;
+    });
     return this.setTraits(traits);
   }
 
@@ -102,7 +105,9 @@ export default class User {
     }
 
     let result = true;
-    this.oceanTraits().forEach(tname => {
+    console.log(this.traits);
+    this.oceanTraits().forEach((tname,i) => {
+      console.log(tname, "=", this.traits[tname]);
       if (!this.traits.hasOwnProperty(tname)) {
         result = false;
         return;
@@ -127,7 +132,10 @@ export default class User {
 
     this._verifyTraits();
 
-    if (typeof this.gender === 'undefined') throw Error('gender required');
+    if (typeof this.gender === 'undefined') {
+      console.error('gender required, found: '+this.gender);
+      this.gender = 'female';
+    }
 
     if (arguments.length === 1 && typeof parser === 'number') {
       numSentences = parser;
@@ -274,11 +282,12 @@ export default class User {
   }
 
   setTraits(traits) {
+    console.log('setTraits:'+traits);
     if (typeof obj === 'string') throw Error('expecting traits object');
 
     this.traits = traits;
     this.predictInfluences();
-    predictDescriptors();
+    this.predictDescriptors();
 
     return this;
   }
@@ -541,7 +550,7 @@ User.adSlogans = {
       openness: ["Free to create a British future", "Unleash our true potential"],
       conscientiousness: ["Greater control. Greater savings", "Your future, your right"],
       extraversion: ["Play by your own rules", "Tell the EU, your voice matters"],
-      agreeableness: ["Love Europe<br> Not the EU", "Better for family budgets"],
+      agreeableness: ["Love Europe Not the EU", "Better for family budgets"],
       neuroticism: ["No more foreign criminals", "Tipping point"]
     },
     low: {
@@ -563,7 +572,7 @@ User.adSlogans = {
     low: {
       openness: ["Don't make this a hassle", "Change is scary"],
       conscientiousness: ["Seize the opportunity ", "I'll take my chances"],
-      extraversion: ["You don't need the crowd<br>to have your say", "Contemplate your future"],
+      extraversion: ["You don't need the crowd to have your say", "Contemplate your future"],
       agreeableness: ["The fastest way to lose is to quit", "Control your destiny"],
       neuroticism: ["Who needs the hassle?", "Who has time to worry?"],
     }

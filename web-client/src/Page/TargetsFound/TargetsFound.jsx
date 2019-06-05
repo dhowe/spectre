@@ -5,6 +5,7 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import Video from '../../Components/Video/Video';
+import NavigationHack from '../NavigationHack';
 
 const styles = {
   root: {
@@ -26,9 +27,9 @@ const styles = {
   },
 };
 
-class TargetsFound extends React.Component {
-  static onComplete() {
-    window.location.assign('/launch-campaign');
+class TargetsFound extends NavigationHack {
+  constructor(props) {
+    super(props, '/launch-campaign');
   }
 
   render() {
@@ -37,7 +38,7 @@ class TargetsFound extends React.Component {
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive progressNumber="two" />
         <div className={`${classes.content} content`}>
-          <Video autoPlay style={{ width: '100%' }} movie="/video/TargetsFound_Animation.mp4" onComplete={TargetsFound.onComplete} />
+          <Video autoPlay style={{ width: '100%' }} movie="/video/TargetsFound_Animation.mp4" onComplete={this.next} />
         </div>
         <FooterLogo />
       </div>
@@ -47,6 +48,7 @@ class TargetsFound extends React.Component {
 
 TargetsFound.propTypes = {
   classes: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
 };
 TargetsFound.contextType = UserSession;
 

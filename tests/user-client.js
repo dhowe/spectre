@@ -320,7 +320,7 @@ describe('Client User', function () {
       user.gender = "female";
       user.traits = User._randomTraits();
       let result = user.generateSentences(3);
-      //console.log(result);
+      console.log(result);
       expect(result).is.a('array');
       expect(result.length).is.eq(3);
       expect(result[0].startsWith('Jane')).eq(true);

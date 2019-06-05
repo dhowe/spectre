@@ -5,46 +5,31 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import Video from '../../Components/Video/Video';
-import { Redirect } from 'react-router-dom';
-
+import NavigationHack from '../NavigationHack';
 
 const styles = {
   root: {
     flexGrow: 1,
     width: '100%',
-    color: 'black'
+    color: 'black',
   },
   clickToContinue: {
     margin: '20% 0',
   },
 };
 
-class Goodbye extends React.Component {
+class Goodbye extends NavigationHack {
   constructor(props) {
-    super(props);
-    this.state = { toNext: false};
-    this.stop = this.stop.bind(this);
-    //this.state = { movie: `/video/goodbye/Goodbye_${this.context.celeb}.mp4` };
-  }
-  stop() {
-    this.setState(() => ({ toNext: true }));
+    super(props, '/');
   }
 
-  renderRedirect() {
-    if (this.state.toNext) {
-      return <Redirect to="/" />;
-    }
-  }
   render() {
-
-    const { movie } = { movie: 'video/goodbye_Freeman.mp4' };
-    //const { movie } = { movie: 'video/goodbye_'+this.context.celebrity||'Freeman'+'.mp4' };
+    const { movie } = { movie: `video/goodbye_${this.context.celebrity || 'Freeman'}.mp4` };
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        {this.renderRedirect()}
         <SpectreHeader colour="white" />
-        <Video ref={this.video} movie={movie} autoPlay onComplete={this.stop} />
+        <Video ref={this.video} movie={movie} autoPlay onComplete={this.next} />
         <FooterLogo />
       </div>
     );
@@ -53,6 +38,7 @@ class Goodbye extends React.Component {
 
 Goodbye.propTypes = {
   classes: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
 };
 Goodbye.contextType = UserSession;
 

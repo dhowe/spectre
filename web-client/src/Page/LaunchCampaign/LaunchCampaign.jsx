@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
+import IconButton from '../../Components/IconButton/IconButton';
+import NavigationHack from '../NavigationHack';
 
 const styles = {
   root: {
@@ -18,7 +20,11 @@ const styles = {
   },
 };
 
-class LaunchCampaign extends React.Component {
+class LaunchCampaign extends NavigationHack {
+  constructor(props) {
+    super(props, '/referendum-results');
+  }
+
   render() {
     const { classes } = this.props;
     const launchImg = `/imgs/vote-${(this.context.adIssue || 'remain')}.png`;
@@ -26,13 +32,16 @@ class LaunchCampaign extends React.Component {
       <div className={classes.root}>
         <SpectreHeader colour="white" />
         <div className={`${classes.content} content`}>
-          <Typography component="h6" variant="h6" style={{ marginTop: '300px' }}>Launch Campaign!</Typography>
-          <Link to="/referendum-results" style={{ marginBottom: '500px' }}>
+          <Typography component="h6" variant="h6" style={{ marginTop: '250px' }}>Launch Campaign!</Typography>
+          <Link to="/referendum-results" style={{ marginBottom: '300px' }}>
             <img
               className={classes.image}
               src={launchImg}
               alt="launch campaign"
             />
+          </Link>
+          <Link to="/referendum-results">
+              <IconButton icon="next" text="Go" />
           </Link>
         </div>
         <FooterLogo />
