@@ -44,27 +44,28 @@ class PersonalisedExperience extends NavigationHack {
       <div className={classes.root + ' PersonalisedExperience'}>
         <SpectreHeader colour="white" />
         <div className={`${classes.content} content`}>
-          <Fade in style={{transitionDelay: '500ms'}}>
-            <Typography component="h5" variant="h5" style={{marginTop: '200px'}}>
+          <div>
+          <Fade in>
+            <p className="copy" style={{marginTop: '200px'}}>
               In order to create a&nbsp;
               <br/ >
               <strong>personalised experience</strong>
-            </Typography>
+            </p>
           </Fade>
-          <Fade in style={{transitionDelay: '2000ms'}}>
-            <Typography component="h6" variant="h6" style={{ marginBottom: '200px' }}>
+          <Fade in style={{transitionDelay: '1000ms'}}>
+            <p className="copy" style={{ marginBottom: '200px', fontWeight:'light', }}>
               Tell us what you love,
-              <br />
-              tell us what you hate...
-            </Typography>
+              tell us what <br/> you hate...
+            </p>
           </Fade>
-          <Fade in style={{ transitionDelay: '2500ms' }}>
-            <Countdown
-              onComplete={this.next}
-              date={Date.now() + 5000}
-              renderer={timer}
-            />
-          </Fade>
+          </div>
+            <div className="hidden">
+              <Countdown
+                onComplete={this.next}
+                date={Date.now() + 5000}
+                renderer={timer}
+              />
+            </div>
         </div>
         <FooterLogo />
       </div>
