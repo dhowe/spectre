@@ -5,16 +5,15 @@ import './App.scss';
 import { Route, BrowserRouter as Router } from 'react-router-dom';
 import TouchToBegin from './Page/TouchToBegin/TouchToBegin';
 import LoginPage from './Page/LoginPage/LoginPage';
-import Username from './Page/Username/Username';
 import TakeSelfie from './Page/TakeSelfie/TakeSelfie';
 import Pledge from './Page/Pledge/Pledge';
 import SearchingFor from './Page/SearchingFor/SearchingFor';
-import DataIs from './Page/DataIs/DataIs'
-import BelieveInDataism from './Page/BelieveInDataism/BelieveInDataism'
-import Steps from './Page/Steps/Steps'
-import PersonalisedExperience from './Page/PersonalisedExperience/PersonalisedExperience'
-import Game from './Page/Game/Game'
-import ThankYou from './Page/ThankYou/ThankYou'
+import DataIs from './Page/DataIs/DataIs';
+import BelieveInDataism from './Page/BelieveInDataism/BelieveInDataism';
+import Steps from './Page/Steps/Steps';
+import PersonalisedExperience from './Page/PersonalisedExperience/PersonalisedExperience';
+import Game from './Page/Game/Game';
+import ThankYou from './Page/ThankYou/ThankYou';
 import InfluenceAFollower from './Page/InfluenceAFollower/InfluenceAFollower';
 import SelectedAvatar from './Page/SelectedAvatar/SelectedAvatar';
 import InsightThankYou from './Page/InsightThankYou/InsightThankYou';
@@ -104,7 +103,6 @@ class App extends React.Component {
             <Router>
               <Route exact path="/" component={TouchToBegin} />
               <Route exact path="/login" component={LoginPage} />
-              <Route exact path="/username" component={Username} />
               <Route exact path="/take-selfie" component={TakeSelfie} />
               <Route exact path="/pledge" component={Pledge} />
               <Route exact path="/searching-for" component={SearchingFor} />

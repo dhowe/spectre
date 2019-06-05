@@ -9,9 +9,10 @@ import Keyboard from 'react-simple-keyboard';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-
 import grey from '@material-ui/core/colors/grey';
 import 'react-simple-keyboard/build/css/index.css';
+
+import IconButton from '../../Components/IconButton/IconButton';
 import './SocialLogin.scss';
 
 const styles = {
@@ -20,6 +21,7 @@ const styles = {
   },
   textField: {
     position: 'static',
+    width: '100%',
     color: grey[50],
     '&:before': {
       borderColor: grey[50],
@@ -47,7 +49,7 @@ const styles = {
     marginBottom: 75,
   },
   radioGroup: {
-    alignItems: 'center'
+    alignItems: 'center',
   },
   cssOutlinedInput: {
     // TMP: removed to silence warning in console
@@ -58,22 +60,52 @@ const styles = {
 };
 
 class SocialLogin extends React.Component {
-  onTextChange = (callback) => {
-    return input => {
-      callback && callback(input);
+  constructor(props) {
+    super(props);
+    this.onKeyPress = this.onKeyPress.bind(this);
+    this.handleShift = this.handleShift.bind(this);
+    this.changeFocus = this.changeFocus.bind(this);
+    this.handleRadioChange = this.handleRadioChange.bind(this);
+    this.clearEmail = this.clearEmail.bind(this);
+    this.state = {
+      emailValid: false,
+      email: '',
+      name: '',
+      focus: 'name',
+      layoutName: 'default',
+      clearEmail: this.clearEmail,
     };
-  };
-
-  onEmailChange(input) {
-    this.context.emailValid = this.validEmail(input);
-    this.context.login = input;
-    console.log(JSON.stringify(this.context));
+    this.unShiftNeeded = false;
+    this.form = React.createRef();
   }
 
-  validEmail(email) {
-    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email)
-      .toLowerCase());
+  onKeyPress(button) {
+    if (button === '{shift}') {
+      this.handleShift();
+      this.unShiftNeeded = !this.unShiftNeeded;
+    } else if (button === '{lock}') {
+      this.handleShift();
+      this.unShiftNeeded = false;
+    } else if (button === '{delete}') {
+      const { focus } = this.state;
+      const input = this.state[focus];
+
+      this.setState({
+        [focus]: (input.substr(0, input.length - 1))
+      });
+    } else if (!(button.startsWith('{') || button.endsWith('}'))) {
+      const { focus } = this.state;
+      const text = this.state[focus];
+
+      this.setState({
+        [focus]: text.concat(button),
+      });
+
+      if (this.unShiftNeeded) {
+        this.handleShift();
+        this.unShiftNeeded = false;
+      }
+    }
   }
 
   handleShift() {
@@ -83,51 +115,17 @@ class SocialLogin extends React.Component {
     });
   }
 
-  onKeyPress(button) {
-    if(button === '{shift}') {
-      this.handleShift();
-      this.unShiftNeeded = true;
-    } else if(button === '{lock}') {
-      this.handleShift();
-      this.unShiftNeeded = false;
-    } if(button === '{delete}') {
-      const { focus } = this.state;
-      const input = this.state[focus];
-
-      this.setState({
-        [focus]: (input.substr(0, input.length - 1))
-      });
-    } else if(!(button.startsWith('{') || button.endsWith('}'))) {
-      const { focus } = this.state;
-      const text = this.state[focus];
-
-      this.setState({
-        [focus]: text.concat(button),
-      });
-    } else {
-      if (this.unShiftNeeded) {
-        this.setState({
-          layoutName: 'default',
-        });
-        this.unShiftNeeded = false;
-      }
-    }
-  };
+  handleRadioChange(event) {
+    this.context.gender = event.target.value; // user-prop
+    this.setState({ gender: event.target.value });
+  }
 
   changeFocus(focus) {
     return () => this.setState({ focus });
   }
 
-  constructor(props) {
-    super(props);
-    this.onEmailChange = this.onEmailChange.bind(this);
-    this.validEmail = this.validEmail.bind(this);
-    this.onKeyPress = this.onKeyPress.bind(this);
-    this.handleShift = this.handleShift.bind(this);
-    this.onTextChange = this.onTextChange.bind(this);
-    this.changeFocus = this.changeFocus.bind(this);
-    this.state = { emailValid: false, email: '', name: '', focus: 'name', layoutName: 'default' };
-    this.unShiftNeeded = false;
+  clearEmail() {
+    this.setState({ email: '' });
   }
 
   render() {
@@ -135,7 +133,7 @@ class SocialLogin extends React.Component {
     return (
       <div className={`${classes.root} socialLogin`}>
         <div className={`${classes.content} socialLogin-content`}>
-          <form noValidate onSubmit={this.props.handleSubmit}>
+          <form noValidate>
             {/* #267: SHIFT / CAPS, etc. dont work */}
             <FormControl className={classes.margin}>
 
@@ -145,7 +143,6 @@ class SocialLogin extends React.Component {
                 name="name"
                 id="custom-css-standard-input"
                 value={this.state.name}
-                onChange={this.onTextChange(this.onEmailChange)}
                 classes={{
                   root: classes.textField,
                   underline: classes.cssUnderline,
@@ -161,7 +158,6 @@ class SocialLogin extends React.Component {
                 name="email"
                 id="custom-css-standard-input"
                 value={this.state.email}
-                onChange={this.onTextChange(input => this.context.username = input)}
                 classes={{
                   root: classes.textField,
                   underline: classes.cssUnderline,
@@ -179,13 +175,12 @@ class SocialLogin extends React.Component {
                 onChange={this.handleRadioChange}
                 className={classes.radioGroup}
               >
-                <FormControlLabel className={'radio'} value="female" control={<Radio color='primary' />} label="Woman" />
-                <FormControlLabel className={'radio'} value="male" control={<Radio color='primary' />} label="Man" />
-                <FormControlLabel className={'radio'} value="other" control={<Radio color='primary' />} label="Other" />
+                <FormControlLabel className="radio" value="female" control={<Radio color="primary" />} label="Woman" />
+                <FormControlLabel className="radio" value="male" control={<Radio color="primary" />} label="Man" />
+                <FormControlLabel className="radio" value="other" control={<Radio color="primary" />} label="Other" />
               </RadioGroup>
             </FormControl>
             <Keyboard
-              ref={(r) => { this.keyboardRef = r; }}
               layout={{
                 default: [
                   '~ 1 2 3 4 5 6 7 8 9 0 - + {delete}',
@@ -205,6 +200,7 @@ class SocialLogin extends React.Component {
               onKeyPress={button => this.onKeyPress(button)}
               layoutName={this.state.layoutName}
             />
+            <IconButton onClick={e => this.props.handleSubmit(e, this.state)} colour="white" icon="next" text="Next" />
           </form>
         </div>
       </div>
@@ -214,6 +210,7 @@ class SocialLogin extends React.Component {
 
 SocialLogin.propTypes = {
   classes: PropTypes.object.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
 };
 SocialLogin.contextType = UserSession;
 
