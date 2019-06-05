@@ -7,6 +7,7 @@ import OceanProfile from '../../Components/OceanProfile/OceanProfile';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import NavigationHack from '../NavigationHack';
+import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 
 const styles = {
   root: {
@@ -33,18 +34,20 @@ class PickYourSide extends NavigationHack {
     const target = this.context.getTarget();
     return (
       <div className={classes.root}>
-          <OceanProfile subject={this.context.getTarget()} ></OceanProfile>
-          <div className={classes.content + " content"}>
-              <Typography component="h6" variant="h6" style={{marginTop:'300px'}}>Persuade {target.name} to:</Typography>
-              <Link to="/campaign">
-                  <img src="https://rednoise.org/ftp/vote_leave.png" width={400} alt='leave' onClick={() => { this.context.adIssue = 'leave' }}></img>
-              </Link>
-              <Link to="/campaign" style={{marginBottom:'100px'}}>
-                  <img src='https://rednoise.org/ftp/vote_remain.png' width={300} alt='remain' onClick={() => { this.context.adIssue = 'remain' }}></img>
-              </Link>
-              <span/>
-          </div>
-          <FooterLogo />
+        <SpectreHeader colour="white" progressActive progressNumber="one"/>
+        <div className={`${classes.content} content`}>
+          <Typography component="h6" variant="h6" style={{ marginTop: '300px' }}>Persuade {target.name} to:</Typography>
+          <Link to="/campaign">
+            <img src="https://rednoise.org/ftp/vote_leave.png" width={400} alt="leave"
+                 onClick={() => { this.context.adIssue = 'leave'; }}></img>
+          </Link>
+          <Link to="/campaign" style={{ marginBottom: '100px' }}>
+            <img src='https://rednoise.org/ftp/vote_remain.png' width={300} alt="remain"
+                 onClick={() => { this.context.adIssue = 'remain'; }}></img>
+          </Link>
+          <span/>
+        </div>
+        <FooterLogo/>
       </div>
     );
   }

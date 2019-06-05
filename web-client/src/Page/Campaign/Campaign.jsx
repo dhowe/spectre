@@ -7,6 +7,7 @@ import IconButton from '../../Components/IconButton/IconButton';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import NavigationHack from '../NavigationHack';
+import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 
 const styles = {
   root: {
@@ -41,28 +42,20 @@ class Campaign extends NavigationHack {
 
     return (
       <div className={classes.root}>
-          {/*<OceanProfile subject={this.context.getTarget()} ></OceanProfile>*/}
-          <div className={classes.content + " content"}>
-              <Typography component="h6" variant="h6" style={{ marginTop: '170px'}}>
-                Now use a simple design tool to create a targeted Facebook ad.
-              </Typography>
-              <Typography component="h6" variant="h6">
-                {name}'s OCEAN profile shows that {pron} can be influenced by:
-              </Typography>
-              <Typography component="h6" variant="h6">
-                <strong>Images</strong> that contain {infls[0]}
-              </Typography>
-              <Typography component="h6" variant="h6">
-                <strong>Slogans</strong> that contain {infls[1]}
-              </Typography>
-              <Typography component="h6" variant="h6">
-                Influence {poss}!
-              </Typography>
-              <Link to="/dark-ad">
-                  <IconButton icon="next" text="Ready" />
-              </Link>
-          </div>
-          <FooterLogo />
+        <SpectreHeader colour="white" progressActive progressNumber="one" />
+        <div className={`${classes.content} content`}>
+          <Typography component="h6" variant="h6" style={{ marginTop: '170px'}}>
+            Now use a simple design tool to create a targeted Facebook ad.
+          </Typography>
+          <Typography component="h6" variant="h6">
+            {name}'s OCEAN profile shows that {pron} can be influenced by:
+          </Typography>
+          <Typography component="h6" variant="h6">
+            <strong>Images</strong> that contain {infls[0]}
+          </Typography>
+          <Typography component="h6" variant="h6">
+            <strong>Slogans</strong> that contain {infls[1]}
+          </Typography>
       </div>
     );
   }
