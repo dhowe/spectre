@@ -20,93 +20,78 @@ function OceanProfile(props) {
   return (
     <div className="OceanProfile">
       <Grid container alignItems="center">
-        <Grid className="OceanIcons" item>
-          <div>
-            <Play/>
-          </div>
-        </Grid>
-        <Grid className="OceanText" item>
-          <Typography component="h6" variant="h6">
-            <strong>{tname.toUpperCase()}’s OCEAN PROFILE</strong>
-          </Typography>
-          <Typography component="h6" variant="h6">
-            {tname} is the type of person that is not afraid to tell people
-            how it is.
-          </Typography>
-          <Typography component="h6" variant="h6">
-            They may appear argumentative, confrontational, insensitive,
-            intimidating, and controlling.
-          </Typography>
-          <Typography component="h6" variant="h6">
-            They can overwhelm others with their energy, intelligence, and
-            desire to order the world around them.
-          </Typography>
-          <Typography component="h6" variant="h6">
-            <strong>{tname}</strong> is most likely influenced by <strong>images</strong> that contain scenes of crowds, loud or bright colors and <strong>slogans</strong> that mention ‘stability’ or ‘uncertainty’.
-          </Typography>
-        </Grid>
-        <Grid className="OceanSliders" item>
-          <Grid className="textSliderText" container alignItems="center">
-            <Grid className="textSliderTextLeft" item xs={3}>
+        <div className="OceanSliders">
+        <div className="">
+          <div className="textSliderText">
+            <Typography>{Math.round(traits.openness*100)}%</Typography>
+            <div className="sliderContainer">
+                <div className="slider">
+                <Slider value={traits.openness*100} aria-labelledby="label" />
+                </div>
+            </div>
+            <div className="iconText">
               <Openness/>
               <Typography>Openness</Typography>
-            </Grid>
-            <Grid item xs={6}>
-              <Slider value={traits.openness*100} aria-labelledby="label" />
-            </Grid>
-            <Grid item xs={3}>
-              <Typography>{Math.round(traits.openness*100)}%</Typography>
-            </Grid>
-          </Grid>
-          <Grid className="textSliderText" container alignItems="center">
-            <Grid className="textSliderTextLeft" item xs={3}>
+            </div>
+          </div>
+        </div>
+        <div className="">
+          <div className="textSliderText">
+            <Typography>{Math.round(traits.conscientiousness*100)}%</Typography>
+            <div className="sliderContainer">
+                <div className="slider">
+                <Slider value={traits.conscientiousness*100} aria-labelledby="label" />
+                </div>
+            </div>
+            <div className="iconText">
               <Conscientiousness/>
               <Typography>Conscientiousness</Typography>
-            </Grid>
-            <Grid item xs={6}>
-              <Slider value={traits.conscientiousness*100} aria-labelledby="label" />
-            </Grid>
-            <Grid item xs={3}>
-              <Typography>{Math.round(traits.conscientiousness*100)}%</Typography>
-            </Grid>
-          </Grid>
-          <Grid className="textSliderText" container alignItems="center">
-            <Grid className="textSliderTextLeft" item xs={3}>
+            </div>
+          </div>
+        </div>
+        <div className="">
+          <div className="textSliderText">
+            <Typography>{Math.round(traits.extraversion*100)}%</Typography>
+            <div className="sliderContainer">
+                <div className="slider">
+                  <Slider value={traits.extraversion*100} aria-labelledby="label" />
+                </div>
+            </div>
+            <div className="iconText">
               <Extroversion/>
               <Typography>Extroversion</Typography>
-            </Grid>
-            <Grid item xs={6}>
-              <Slider value={traits.extraversion*100} aria-labelledby="label" />
-            </Grid>
-            <Grid item xs={3}>
-              <Typography>{Math.round(traits.extraversion*100)}%</Typography>
-            </Grid>
-          </Grid>
-          <Grid className="textSliderText" container alignItems="center">
-            <Grid className="textSliderTextLeft" item xs={3}>
+            </div>
+          </div>
+        </div>
+        <div className="">
+          <div className="textSliderText">
+            <Typography>{Math.round(traits.agreeableness*100)}%</Typography>
+            <div className="sliderContainer">
+                <div className="slider">
+                  <Slider value={traits.agreeableness*100} aria-labelledby="label" />
+                </div>
+            </div>
+            <div className="iconText">
               <Agreeableness/>
               <Typography>Agreeableness</Typography>
-            </Grid>
-            <Grid item xs={6}>
-              <Slider value={traits.agreeableness*100} aria-labelledby="label" />
-            </Grid>
-            <Grid item xs={3}>
-              <Typography>{Math.round(traits.agreeableness*100)}%</Typography>
-            </Grid>
-          </Grid>
-          <Grid className="textSliderText" container alignItems="center">
-            <Grid className="textSliderTextLeft" item xs={3}>
+            </div>
+          </div>
+        </div>
+        <div className="">
+          <div className="textSliderText">
+            <Typography>{Math.round(traits.neuroticism*100)}%</Typography>
+            <div className="sliderContainer">
+                <div className="slider">
+                  <Slider value={traits.neuroticism*100} aria-labelledby="label" />
+                </div>
+            </div>
+            <div className="iconText">
               <Neuroticism/>
               <Typography>Neuroticism</Typography>
-            </Grid>
-            <Grid item xs={6}>
-              <Slider value={traits.neuroticism*100} aria-labelledby="label" />
-            </Grid>
-            <Grid item xs={3}>
-              <Typography>{Math.round(traits.neuroticism*100)}%</Typography>
-            </Grid>
-          </Grid>
-        </Grid>
+            </div>
+          </div>
+        </div>
+        </div>
       </Grid>
     </div>
   );
