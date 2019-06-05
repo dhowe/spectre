@@ -1,17 +1,5 @@
-.first {
-  transition: 2s ease-in all;
-}
+@import "../../colors";
 
-.show:nth-child() {
-  transition: hide-animation 2s 0s;
-}
-
-@keyframes hide-animation {
-  from { opacity: 1; }
-  to { opacity: 0; }
-}
-
-@keyframes show-animation {
-  from { opacity: 0; }
-  to { opacity: 1; }
+.OCEANReveal-root-181 h6 {
+  color: $grey;
 }

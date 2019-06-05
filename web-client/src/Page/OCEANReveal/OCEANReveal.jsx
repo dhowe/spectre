@@ -2,20 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import Fade from '@material-ui/core/es/Fade/Fade';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
-import IconButton from '../../Components/IconButton/IconButton';
 import Video from '../../Components/Video/Video';
 import Modal from '../../Components/Modal/Modal';
 import NavigationHack from '../NavigationHack';
-import Fade from '@material-ui/core/es/Fade/Fade';
+
+import colours from '../../colors.scss';
 
 const styles = {
   root: {
     flexGrow: 1,
     width: '100%',
-    color: 'black',
   },
   clickToContinue: {
     margin: '20% 0',
@@ -25,11 +25,10 @@ const styles = {
 class OCEANReveal extends NavigationHack {
   constructor(props) {
     super(props, '/take-back-control');
-    this.durationMS = 1000;
-    this.showMS = 3000;
+    this.durationMS = 500;
+    this.showMS = 2000;
+    this.showVideo = this.showVideo.bind(this);
     this.state = { modalOpen: false };
-    this.prepNext = this.prepNext.bind(this);
-    this.timeout = this.timeout.bind(this);
     this.modalContent = '';
     this.modalTitle = '';
 
@@ -41,8 +40,6 @@ class OCEANReveal extends NavigationHack {
     this.sentences = [
       'A little data and a little tech goes a long way.',
       'We haven\'t known you for very long, but already we know that…',
-      'more',
-      'another more',
     ];
     this.sentences = this.sentences.concat(user.generateSummary());
     for (let i = 0; i < this.sentences.length; i++) {
@@ -53,37 +50,7 @@ class OCEANReveal extends NavigationHack {
       };
 
     }
-    this.step = 0;
-
-    this.prepNext();
-  }
-
-  timeout() {
-    if (this.step < this.sentences.length) {
-      this.setState({
-        [`fade-${this.step}`]: false,
-      });
-    } else {
-      this.showVideo();
-    }
-
-    this.step += 1;
-    this.prepNext();
-  }
-
-  prepNext() {
-    setTimeout(() => {
-      if (this.step < this.sentences.length) {
-        this.setState({
-          [`fade-${this.step}`]: false,
-        });
-      } else {
-        this.showVideo();
-      }
-
-      this.step += 1;
-      this.prepNext();
-    }, ((this.duration * 2) + this.showMS));
+    setTimeout(this.showVideo, ((this.durationMS * 2) + this.showMS) * this.sentences.length);
   }
 
   closeModal() {
@@ -109,18 +76,19 @@ class OCEANReveal extends NavigationHack {
           height: 600,
           marginTop: 400,
           display: 'flex',
+          flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center' }}
         >
           {this.sentences.map((sent, i) => {
             const fadeKey = `fade-${i}`;
             return (
-              <Fade in={this.state[fadeKey]} style={{ transitionDelay: `${((this.duration * 2) + this.showMS) * i}ms`, transitionDuration: `${this.durationMS}ms` }}>
+              <Fade key={`${fadeKey}-${i}`} in={this.state[fadeKey]} style={{ transitionDelay: `${((this.durationMS * 2) + this.showMS) * i}ms`, transitionDuration: `${this.durationMS}ms` }}>
                 <Typography
                   variant="h6"
                   component="h6"
                   key={fadeKey}
-                  style={{ position: 'absolute' }}
+                  style={{ marginTop: 80, color: colours.grey, width: '80%' }}
                 >
                   {sent}
                 </Typography>
