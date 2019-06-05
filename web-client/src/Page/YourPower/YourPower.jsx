@@ -8,6 +8,7 @@ import OceanProfile from '../../Components/OceanProfile/OceanProfile';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import NavigationHack from '../NavigationHack';
+import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 
 const styles = {
   root: {
@@ -43,7 +44,7 @@ class YourPower extends NavigationHack {
     }
     return (
       <div className={classes.root}>
-        <OceanProfile subject={this.context.getTarget()} />
+        <SpectreHeader colour="white" progressActive progressNumber="one" />
         <div className={`${classes.content} content`}>
           <Fade in style={{ transitionDelay: '200ms', marginTop: '300px' }}>
             <Typography component="h6" variant="h6">{this.context.name || 'Remy'}, your {this.context.virtue || 'Power'} is growing.</Typography>
