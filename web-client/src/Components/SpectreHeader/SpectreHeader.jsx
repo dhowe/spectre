@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import HeaderLogo from '../../Icons/headerlogo.svg';
 import HeaderLogoColour from '../../Icons/headerlogo-colour.svg';
 import Progress from '../Progress/Progress';
+import Divider from '@material-ui/core/Divider';
 
 import './SpectreHeader.scss';
 
@@ -16,12 +17,13 @@ function SpectreHeader(props) {
     <div className="SpectreHeader SpectreHeader-white">
       <img height="150" alt='header' src={HeaderLogoColour} />
       <Progress active={props.progressActive} progressNumber={props.progressNumber}/>
+      <Divider light style={{marginTop: '50px'}}/>
     </div>
-  ) : (
-      <div className="SpectreHeader">
+    ) : (
+    <div className="SpectreHeader">
         <img height="150" alt='logo' src={HeaderLogo} />
       </div>
-    );
+  );
 }
 
 SpectreHeader.propTypes = {
