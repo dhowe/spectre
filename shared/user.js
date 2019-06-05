@@ -96,11 +96,19 @@ export default class User {
   }
 
   targetAdImages() {
-    let pre = 'imgs/',
-      ots = User.oceanTraits;
+    let pre = 'imgs/';
+    let ots = User.oceanTraits;
+
+    if (typeof this.target === 'undefined') {
+      throw Error('No target for adImages!', this);
+    }
+
     let images = this.randomImages(pre);
-    if (this.hasOceanTraits() && typeof this.adIssue !== 'undefined') {
-      let cat = this.categorize();
+    if (typeof this.target !== 'undefined' &&
+      this.hasOceanTraits(this.target) &&
+      typeof this.adIssue !== 'undefined') {
+
+      let cat = this.categorize(this.target);
       if (cat !== 0) {
         //console.log('['+this.adIssue+']['+(cat > 0 ? 'high' : 'low')+']['+ots[Math.abs(cat)-1]+']');
         images = [
@@ -111,45 +119,92 @@ export default class User {
         ];
       }
     } else {
-      console.error("[WARN] no traits/issue: using random images");
+      console.error("[WARN] no target/traits/issue: "+
+        "using random images, issue=" + this.adIssue, this.target.traits);
     }
+
     return images;
+  }
+
+  targetAdInfluences() {
+
+    if (typeof this.target === 'undefined') { //TMP: remove
+      throw Error('No target for adInfluences!', this);
+    }
+
+    let ots = User.oceanTraits;
+    let influences = this.randomInfluences();
+    console.log("OT",this.hasOceanTraits(this.target), typeof this.target);
+    if (typeof this.target !== 'undefined' &&
+      this.hasOceanTraits(this.target) &&
+      typeof this.adIssue !== 'undefined') {
+
+      let cat = this.categorize(this.target);
+      if (cat !== 0) {
+        influences = User.adInfluences[this.adIssue]
+          [(cat > 0 ? 'high' : 'low')][ots[Math.abs(cat) - 1]];
+      }
+    } else {
+      console.error("[WARN] no target/traits/issue: "+
+        "using random influences [issue=" + this.adIssue+"] target=", this.target);
+    }
+    return influences;
+  }
+
+  // TODO: combine these 3: targetAdItem(type) ?
+  targetAdSlogans() {
+
+    if (typeof this.target === 'undefined') { //TMP: remove
+      throw Error('No target for adSlogans!', this);
+    }
+
+    let ots = User.oceanTraits;
+    let slogans = this.randomSlogans();
+    if (typeof this.target !== 'undefined' &&
+      this.hasOceanTraits(this.target) &&
+      typeof this.adIssue !== 'undefined') {
+
+      let cat = this.categorize(this.target);
+      if (cat !== 0) {
+        //console.log('['+this.adIssue+']['+(cat > 0 ? 'high' : 'low')+']['+ots[Math.abs(cat)-1]+']');
+        let good = User.adSlogans[this.adIssue]
+          [(cat > 0 ? 'high' : 'low')][ots[Math.abs(cat) - 1]];
+        let bad = User.adSlogans[this.adIssue]
+          [(cat < 0 ? 'high' : 'low')][ots[Math.abs(cat) - 1]];
+        slogans = good.concat(bad);
+      }
+    } else {
+      console.error("[WARN] no target/traits/issue: using random slogan, issue=" + this.adIssue, this.target.traits);
+    }
+
+    return slogans;
   }
 
   randomSlogans() {
     let ots = User.oceanTraits;
+    let issue = this.adIssue;
     let idx1 = Math.floor(Math.random() * ots.length);
     let idx2 = Math.floor(Math.random() * ots.length)
     //console.log('['+this.adIssue+']['+(Math.random() < .5 ? 'high' : 'low')+']['+[ots[idx1]]+']');
-    let set1 = User.adSlogans[this.adIssue][(Math.random() < .5 ? 'high' : 'low')][ots[idx1]];
-    let set2 = User.adSlogans[this.adIssue][(Math.random() < .5 ? 'high' : 'low')][ots[idx2]];
+    let set1 = User.adSlogans[issue]
+      [(Math.random() < .5 ? 'high' : 'low')][ots[idx1]];
+    let set2 = User.adSlogans[issue]
+      [(Math.random() < .5 ? 'high' : 'low')][ots[idx2]];
     return set1.concat(set2);
   }
 
-  targetAdSlogans() {
+  randomInfluences() {
     let ots = User.oceanTraits;
-    let slogans = this.randomSlogans();
-    if (this.hasOceanTraits() && typeof this.adIssue !== 'undefined') {
-      let cat = this.categorize();
-      if (cat !== 0) {
-        //console.log('['+this.adIssue+']['+(cat > 0 ? 'high' : 'low')+']['+ots[Math.abs(cat)-1]+']');
-        let good = User.adSlogans[this.adIssue][(cat > 0 ? 'high' : 'low')][ots[Math.abs(cat) - 1]];
-        let bad = User.adSlogans[this.adIssue][(cat < 0 ? 'high' : 'low')][ots[Math.abs(cat) - 1]];
-        slogans = good.concat(bad);
-      }
-    } else {
-      console.error("[WARN] no traits/issue: using random slogans");
-    }
-    return slogans;
+    let idx = Math.floor(Math.random() * ots.length);
+    console.log(this.adIssue, this);
+    return User.adInfluences[this.adIssue]
+      [(Math.random() < .5 ? 'high' : 'low')][ots[idx]];
   }
 
   targetImgUrl() {
     let target = this.getTarget();
-    // //if (!target.name.length)
-    // target.id = target.id.length || '111111111111111111111111'
-    // target.name = target.name.length || 'Pat'
-    // console.log(target);
-    return target.id ? User.imageDir + this.getTarget().id + '.jpg' : false;
+    return target.id ? User.imageDir +
+      this.getTarget().id + '.jpg' : false;
   }
 
   setBrands(brandData) {
@@ -161,19 +216,24 @@ export default class User {
     return this.setTraits(traits);
   }
 
-  hasOceanTraits() {
-    if (typeof this.traits === 'undefined') {
+  hasOceanTraits(obj) {
+    obj = obj || this;
+    if (typeof obj === 'string') {
+      obj = JSON.parse(obj); // TMP:for targets
+    }
+    if (typeof obj.traits === 'undefined') {
       return false;
     }
-
     let result = true;
-    this.oceanTraits().forEach((tname, i) => {
-      if (!this.traits.hasOwnProperty(tname)) {
+    let ots = User.oceanTraits;
+    User.oceanTraits.forEach((tname, i) => {
+      if (typeof obj.traits[tname] === 'undefined') {
+        //if (obj.traits.hasOwnProperty(tname)) {
         result = false;
         return;
       }
-      let t = this.traits[tname];
-      if (typeof t === 'undefined' || t < 0 || t > 1) {
+      let val = obj.traits[tname];
+      if (typeof val === 'undefined' || val < 0 || val > 1) {
         result = false;
         return;
       }
@@ -233,20 +293,6 @@ export default class User {
     }
     return lines;
   }
-
-  // verify we have a parser, then parse each line
-  // _parseLines(parser, lines) {
-  //   if (!parser || parser.user !== this) {
-  //     if (typeof Parser === 'undefined') throw Error('No Parser found');
-  //     //console.log('creating parser: '+this.name);
-  //     parser = new Parser(this);
-  //   }
-  //   parser = new Parser(this);
-  //   for (let i = 0; i < lines.length; i++) {
-  //     lines[i] = parser.parse(lines[i]);
-  //   }
-  //   return lines;
-  // }
 
   generateDescription() {
     this._verifyTraits();
@@ -339,29 +385,37 @@ export default class User {
     return User.oceanTraits;
   }
 
-  categorize() {
-    this.category = 0;
+  categorize(obj) {
+
+    obj = obj || this;
+    if (typeof obj === 'string') {
+      obj = JSON.parse(obj); // TMP:for targets
+    }
+    obj.category = 0;
+
     let maxVal = 0;
     let trait = null;
-    let traits = this.oceanTraits();
+    let traits = User.oceanTraits;
+
     traits.forEach(t => {
-      let val = this.traits[t];
+      let val = obj.traits[t];
       if (Math.abs(val - .5) > maxVal) {
         maxVal = Math.abs(val - .5);
         trait = t;
       }
     });
+
     let traitIdx = 1 + traits.indexOf(trait);
 
     //console.log('def-trait: '+trait, this.traits[trait], 'idx='+traitIdx);
 
     let multiply = 0;
-    if (this.traits[trait] < .4) multiply = -1;
-    if (this.traits[trait] >= .6) multiply = 1;
+    if (obj.traits[trait] < .4) multiply = -1;
+    if (obj.traits[trait] >= .6) multiply = 1;
 
-    this.category = traitIdx * multiply;
+    obj.category = traitIdx * multiply;
 
-    return this.category;
+    return obj.category;
   }
 
   _randomizeTraits() {

@@ -108,7 +108,6 @@ class DarkAd extends NavigationHack {
             {!this.state.defaultImageSelected ? <img className={classes.campaignImage} src={campaignImage} alt="leave"></img> : ''}
           </div>
           <div>
-            {console.log(images)}
             <img className={classes.image} src={images[0]} alt="leave" onClick={() => { this.setState({ image: images[0], defaultImageSelected: false }); }}></img>
             <img className={classes.image} src={images[1]} alt="leave" onClick={() => { this.setState({ image: images[1], defaultImageSelected: false }); }}></img>
             <img className={classes.image} src={images[2]} alt="leave" onClick={() => { this.setState({ image: images[2], defaultImageSelected: false }); }}></img>
