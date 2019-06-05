@@ -63,7 +63,7 @@ const styles = {
 
 class LoginPage extends NavigationHack {
   constructor(props) {
-    super(props, '/username');
+    super(props, '/pledge');
     this.state = { toNext: false, modalOpen: false };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);

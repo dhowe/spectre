@@ -58,40 +58,32 @@ const styles = {
 };
 
 class SocialLogin extends React.Component {
-  setKeyboard = name => keyboard => this.keyboards[name] = keyboard;
-
-  onTextChange = callback => input => {
-    const { focus } = this.state;
-
-    const keyboard = this.keyboards[focus];
-    if(keyboard) {
-      this.setState({
-        [focus]: input,
-      }, () => keyboard.keyboard.setInput(input));
-    }
-    callback && callback(input);
+  onTextChange = (callback) => {
+    return input => {
+      callback && callback(input);
+    };
   };
 
-  onEmailChange = input => {
-    this.setState({ email: input });
+  onEmailChange(input) {
     this.context.emailValid = this.validEmail(input);
     this.context.login = input;
-  };
+    console.log(JSON.stringify(this.context));
+  }
 
-  validEmail = email => {
+  validEmail(email) {
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email)
       .toLowerCase());
-  };
+  }
 
-  handleShift = () => {
-    let layoutName = this.state.layoutName;
+  handleShift() {
+    const { layoutName } = this.state;
     this.setState({
       layoutName: layoutName === 'default' ? 'shift' : 'default',
     });
-  };
+  }
 
-  onKeyPress = button => {
+  onKeyPress(button) {
     if(button === '{shift}') {
       this.handleShift();
       this.unShiftNeeded = true;
@@ -100,10 +92,18 @@ class SocialLogin extends React.Component {
       this.unShiftNeeded = false;
     } if(button === '{delete}') {
       const { focus } = this.state;
+      const input = this.state[focus];
 
-      const keyboard = this.keyboards[focus];
-      console.log(JSON.stringify(keyboard));
-      keyboard.keyboard.input = (keyboard.keyboard.input.splice(0, keyboard.keyboard.input.length - 2));
+      this.setState({
+        [focus]: (input.substr(0, input.length - 1))
+      });
+    } else if(!(button.startsWith('{') || button.endsWith('}'))) {
+      const { focus } = this.state;
+      const text = this.state[focus];
+
+      this.setState({
+        [focus]: text.concat(button),
+      });
     } else {
       if (this.unShiftNeeded) {
         this.setState({
@@ -114,6 +114,10 @@ class SocialLogin extends React.Component {
     }
   };
 
+  changeFocus(focus) {
+    return () => this.setState({ focus });
+  }
+
   constructor(props) {
     super(props);
     this.onEmailChange = this.onEmailChange.bind(this);
@@ -121,9 +125,7 @@ class SocialLogin extends React.Component {
     this.onKeyPress = this.onKeyPress.bind(this);
     this.handleShift = this.handleShift.bind(this);
     this.onTextChange = this.onTextChange.bind(this);
-    this.setKeyboard = this.setKeyboard.bind(this);
-
-    this.keyboards = {};
+    this.changeFocus = this.changeFocus.bind(this);
     this.state = { emailValid: false, email: '', name: '', focus: 'name', layoutName: 'default' };
     this.unShiftNeeded = false;
   }
@@ -139,14 +141,11 @@ class SocialLogin extends React.Component {
 
               <Typography component="h6" variant="h6">Enter your name:</Typography>
               <Input
-                ref={this.setKeyboard('name')}
+                onClick={this.changeFocus('name')}
                 name="name"
                 id="custom-css-standard-input"
-                value={this.state.email}
-                onChange={this.onTextChange(input => {
-                  this.context.emailValid = this.validEmail(input);
-                  this.context.login = input; // user-prop
-                })}
+                value={this.state.name}
+                onChange={this.onTextChange(this.onEmailChange)}
                 classes={{
                   root: classes.textField,
                   underline: classes.cssUnderline,
@@ -158,7 +157,7 @@ class SocialLogin extends React.Component {
               <Typography component="h6" variant="h6">Your email:</Typography>
 
               <Input
-                ref={this.setKeyboard('email')}
+                onClick={this.changeFocus('email')}
                 name="email"
                 id="custom-css-standard-input"
                 value={this.state.email}
@@ -186,7 +185,7 @@ class SocialLogin extends React.Component {
               </RadioGroup>
             </FormControl>
             <Keyboard
-              ref={r => (this.keyboardRef = r)}
+              ref={(r) => { this.keyboardRef = r; }}
               layout={{
                 default: [
                   '~ 1 2 3 4 5 6 7 8 9 0 - + {delete}',
@@ -205,7 +204,6 @@ class SocialLogin extends React.Component {
               }}
               onKeyPress={button => this.onKeyPress(button)}
               layoutName={this.state.layoutName}
-              onChange={this.onTextChange(() => {})}
             />
           </form>
         </div>
