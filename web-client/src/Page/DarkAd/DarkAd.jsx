@@ -9,6 +9,7 @@ import OceanProfile from '../../Components/OceanProfile/OceanProfile';
 import UserSession from '../../Components/UserSession/UserSession';
 import NavigationHack from '../NavigationHack';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
+import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 
 const styles = {
   root: {
@@ -17,7 +18,6 @@ const styles = {
     color: 'black',
   },
   content: {
-    paddingTop: '500px',
   },
   image: {
     width: '160px',
@@ -133,6 +133,7 @@ class DarkAd extends NavigationHack {
             <IconButton icon="next" text="Next" />
           </Link>
         </div>
+        <FooterLogo />
       </div>
     );
   }
