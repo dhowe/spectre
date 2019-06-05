@@ -8,6 +8,7 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import OceanProfile from '../../Components/OceanProfile/OceanProfile';
+import NavigationHack from '../NavigationHack';
 
 const styles = {
   root: {
@@ -17,7 +18,11 @@ const styles = {
   },
 };
 
-class InsightComplete extends React.Component {
+class InsightComplete extends NavigationHack {
+  constructor(props) {
+    super(props, '/your-power');
+  }
+
   render() {
     const { classes } = this.props;
     if (typeof this.context.target === 'undefined') {
@@ -32,7 +37,7 @@ class InsightComplete extends React.Component {
               <Typography component="h6" variant="h6">You've unlocked {targetName}’s OCEAN profile.</Typography>
               {/* INSERT OCEAN TOPBAR COMPONENT HERE (1080x450)*/}
               <OceanProfile subject={this.context.getTarget()} classes={classes}></OceanProfile>
-              <Typography component="h6" variant="h6">You now have the <strong>power</strong> to influence {targetName}.</Typography>
+              <Typography component="h6" variant="h6">You now have the <strong>power</strong> to influence&nbsp;{targetName}.</Typography>
               <Link to="/your-power">
                   <IconButton icon="next" text="Next" />
               </Link>

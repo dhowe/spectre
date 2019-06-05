@@ -5,28 +5,27 @@ import { Typography } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 
 const styles = {
-    TextInput: {
-
-    }
-}
+  TextInput: {},
+};
 
 function TextInput(props) {
-    const { classes } = props;
-    return (
-        <div >
-            <Typography variant="h6">{props.children}</Typography>
-            <TextField
-            id="standard-bare"
-            className={classes.textField}
-            defaultValue=""
-            margin="normal"
-            />
-        </div>
-    );
+  const { classes, children } = props;
+  return (
+    <div>
+      <Typography variant="h6">{children}</Typography>
+      <TextField
+        id="standard-bare"
+        className={classes.textField}
+        defaultValue=""
+        margin="normal"
+      />
+    </div>
+  );
 }
 
 TextInput.propTypes = {
-    classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired,
+  children: PropTypes.arrayOf(PropTypes.element).isRequired,
 };
 
 export default withStyles(styles)(TextInput);

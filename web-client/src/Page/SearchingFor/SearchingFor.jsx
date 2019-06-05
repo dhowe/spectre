@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import { Redirect } from 'react-router-dom';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 //import Webcam from "react-webcam";
 import './SearchingFor.scss';
 import Styles from '../../Styles';
+import NavigationHack from '../NavigationHack';
 
 
 const styles = {
@@ -39,10 +39,9 @@ const styles = {
   },
 };
 
-class SearchingFor extends React.Component {
+class SearchingFor extends NavigationHack {
   constructor(props) {
-    super(props);
-    this.state = { toNext: false };
+    super(props, 'data-is');
 
     this.setRef = this.setRef.bind(this);
   }
@@ -69,15 +68,13 @@ class SearchingFor extends React.Component {
   handleClick(virtue) {
     const user = this.context;
     user.virtue = virtue;
-    user.lastPageVisit = { page: '/SearchingFor', time: Date.now()}
+    user.lastPageVisit = { page: '/SearchingFor', time: Date.now()};
 
     ///////////////////// TMP: ///////////////////////
     user._id = user._id || Math.random() * 100000000;
     user.name = user.name || 'Barney';
     user.loginType = user.loginType || 'email';
     user.login = user.login || `Barney${+new Date()}@aol.com`;
-
-    this.setState(() => ({ toNext: true })); // TMP
 
     // here we are doing the webcam capture, disabled for now
     if (false) {
@@ -86,11 +83,11 @@ class SearchingFor extends React.Component {
         const imgfile = this.toImageFile(data, user._id + '.jpg');
         UserSession.postImage(this.context, imgfile,
           (json) => {
-            console.log('Upload: http://localhost:3000' + json.url);
+            console.log(`Upload: http://localhost:3000${json.url}`);
             this.context.hasImage = true;
           },
           (e) => {
-            console.error("Error", e);
+            console.error('Error', e);
             this.context.hasImage = false;
           },
         );
@@ -101,7 +98,7 @@ class SearchingFor extends React.Component {
       }
     }
 
-    this.props.history.push('/data-is');
+    this.next();
   }
 
   render() {
@@ -115,8 +112,8 @@ class SearchingFor extends React.Component {
       <div className={classes.root}>
         <SpectreHeader colour="white" />
         <div className={`${classes.content} content`}>
-          <Typography class="username" component="h3" variant="h3">{this.context.name || 'Barney'}</Typography>
-          <Typography class="question" component="h3" variant="h3">What are you searching for today?</Typography>
+          <Typography className="username" component="h3" variant="h3">{this.context.name || 'Barney'}</Typography>
+          <Typography className="question" component="h3" variant="h3">What are you searching for today?</Typography>
           <div className="ImageCapture">
             {/*<Webcam ref={this.setRef}
                   audio={false}
@@ -142,7 +139,6 @@ class SearchingFor extends React.Component {
 
 SearchingFor.propTypes = {
   classes: PropTypes.object.isRequired,
-  history: PropTypes.func.isRequired,
 };
 SearchingFor.contextType = UserSession;
 

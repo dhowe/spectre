@@ -12,6 +12,7 @@ import { ReactComponent as ThumbUp } from '../../Icons/insightthankyou.svg';
 import colours from '../../colors.scss';
 import './InsightThankYou.scss';
 import Styles from '../../Styles';
+import NavigationHack from '../NavigationHack';
 
 const styles = {
   root: {
@@ -37,16 +38,9 @@ const styles = {
   },
 };
 
-class InsightThankYou extends React.Component {
+class InsightThankYou extends NavigationHack {
   constructor(props) {
-    super(props);
-
-    this.goTo = this.goTo.bind(this);
-  }
-
-  goTo() {
-    const { history } = this.props;
-    history.push('/insight-sexuality');
+    super(props, '/insight-sexuality');
   }
 
   render() {
@@ -59,7 +53,7 @@ class InsightThankYou extends React.Component {
           <ThumbUp className="insight-thank-you-icon" />
           <Typography style={styles.beginningToThink} component="h6" variant="h6">Now you are beginning to think like an algorithm.</Typography>
           <Typography style={styles.twoMore} component="h6" variant="h6">Just two more to go</Typography>
-          <Button className={classes.button} variant="contained" color="primary" onClick={this.goTo}>Lets go deeper!</Button>
+          <Button className={classes.button} variant="contained" color="primary" onClick={this.next}>Lets go deeper!</Button>
         </div>
         <FooterLogo />
       </div>

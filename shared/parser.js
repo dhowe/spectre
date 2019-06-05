@@ -13,13 +13,10 @@ export default class Parser {
   }
 
   parseSymbols(s) {
-
-    function extractParts(match) {
-
+    let extractParts = (match) => {
       let parts = match.split('.');
       parts.shift();
       for (var i = 0; i < parts.length; i++) {
-
         if (parts[i].endsWith('()')) {
           parts[i] = parts[i].substring(0, parts[i].length - 2);
         }
@@ -30,7 +27,6 @@ export default class Parser {
     let parts, resolved, pre, pos;
     let ms = symbols.exec(s);
     while (ms) {
-
       parts = extractParts(ms[1])
       resolved = this.user[parts[0]];
 
@@ -41,7 +37,7 @@ export default class Parser {
       if (typeof resolved !== 'string') {
         throw Error(this.user.hasOwnProperty(parts[0]) ?
           'user.'+parts[0] + ' is '+this.user[parts[0]] :
-          'Parser: No User.' + parts[0] + ' property');
+          'Parser: No User.' + parts[0] + ' property for '+this.user.name);
       }
 
       for (var i = 1; i < parts.length; i++) {

@@ -8,7 +8,7 @@ import UserSession from '../../Components/UserSession/UserSession';
 import IconButton from '../../Components/IconButton/IconButton';
 import Video from '../../Components/Video/Video';
 import Modal from '../../Components/Modal/Modal';
-import Fade from '@material-ui/core/es/Fade/Fade';
+import NavigationHack from '../NavigationHack';
 
 const styles = {
   root: {
@@ -21,15 +21,13 @@ const styles = {
   },
 };
 
-class OCEANReveal extends React.Component {
+class OCEANReveal extends NavigationHack {
   constructor(props) {
-    super(props);
+    super(props, '/take-back-control');
     this.state = { modalOpen: false };
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.continue = this.continue.bind(this);
     this.modalContent = '';
     this.modalTitle = '';
-    this.video = React.createRef();
   }
 
   handleSubmit(e) {
@@ -45,37 +43,26 @@ class OCEANReveal extends React.Component {
     this.video.current.play();
   }
 
-  continue() {
-    this.props.history.push('/take-back-control');
-  }
-
   render() {
     const { classes } = this.props;
-    const celeb = this.context.celebrity || 'Trump';
+
+    const user = this.context;
+    user.name = user.name || 'Pat';
+    user.gender = user.gender || 'female';
+    user.celebrity = user.celebrity || 'Trump';
+    if (!user.hasOceanTraits()) user._randomizeTraits();
+
+    let sentences = ['A little data and a little tech goes a long way.',
+              'We haven\'t known you for very long, but already we know that…'];
+    sentences = sentences.concat(this.context.generateSummary());
+
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive progressNumber="three" />
-        <Fade in />
-        <Typography
-          component="h6"
-          variant="h6"
-          style={{ marginTop: '165px' }}
-        >
-          A little data and a little tech
-          <br />
-          goes a long way, doesn&apos;t it?
-        </Typography>
-        <Typography
-          component="h6"
-          variant="h6"
-          style={{ marginTop: '100px' }}
-        >
-          For example, we haven&apos;t known
-          <br />
-          you very long, but already
-          <br />
-          we know that...
-        </Typography>
+        {sentences.map((sent,i) => (
+          <Typography component="h6" style={{ marginTop: '170px'}}
+            key={i} variant="h6">{sent}</Typography>
+        ))}
         <Modal
           isOpen={this.state.modalOpen}
           title={this.modalTitle}
@@ -83,12 +70,13 @@ class OCEANReveal extends React.Component {
           onClose={() => this.closeModal()}
         />
         <Video
-          ref={this.video}
-          movie={`/video/wrapup/wrapup_${celeb}.mp4`}
+          ref={(el) => { this.video = el; }}
+          movie={`/video/wrapup_${user.celebrity}.mp4`}
           autoPlay={false}
-          onComplete={this.continue}
+          onComplete={this.next}
         />
         <br />
+        <IconButton onClick={this.handleSubmit} icon="next" text="Next"/>
         <FooterLogo />
       </div>
     );

@@ -7,34 +7,44 @@ import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
+import NavigationHack from '../NavigationHack';
+import { ReactComponent as ThumbUp } from '../../Icons/insightthankyou.svg';
 
 const styles = {
   root: {
     flexGrow: 1,
-    width: "100%",
-
-    color: 'black'
+    width: '100%',
+    color: 'black',
   },
   clickToContinue: {
-    margin: "20% 0",
+    margin: '20% 0',
   },
   glow: {
-    color: '#ffd700'
+    color: '#ffd700',
+  },
+  copy: {
+    fontSize: '48px',
   }
 };
 
 // Interstitial
-class ThankYou extends React.Component {
+class ThankYou extends NavigationHack {
+  constructor(props) {
+    super(props, '/steps');
+  }
+
   render() {
     const { classes } = this.props;
     console.log("User:", this.context);
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" />
-        <div className={classes.content + " content"}>
-          <Typography component="h3" variant="h3">Thank you, {this.context.name}!</Typography>
-          {/* <img src='https://cdn.pixabay.com/photo/2013/07/13/12/15/hand-159474__340.png' alt='thumbs up'></img> */}
-          <Typography component="h6" variant="h6" >Your experience has been personalised.</Typography>
+        <div className={`${classes.content} content`}>
+          <div>
+            <p className={classes.copy}>Thank you, <strong>{this.context.name}!</strong></p>
+            <ThumbUp className="insight-thank-you-icon" />
+            <p className={classes.copy}>Your experience has been <strong>personalised.</strong></p>
+          </div>
           <Link to="/steps">
             <IconButton icon="next" text="Next" />
           </Link>

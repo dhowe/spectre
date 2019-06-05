@@ -1,6 +1,7 @@
 import Parser from './parser.js';
 import { predict } from './ppq.js';
 import DotEnv from 'dotenv';
+import text2p from './text2p';
 
 DotEnv.config();
 
@@ -20,126 +21,40 @@ export default class User {
     this.category = (tmpl && tmpl.category) || 0;
   }
 
-  randomImages(pre) {
-    let images = [];
-    let ots = User.oceanTraits();
-    while (images.length < 4) {
-      let flip = Math.random() < .5 ? 1 : 2;
-      let mult = Math.random() < .5 ? 1 : -1;
-      let cat = (Math.floor(Math.random() * ots.length) * mult);
-      let imgName = pre + this.adIssue + '_' + cat + '.' + flip + '.png';
-      if (images.indexOf(imgName) < 0) images.push(imgName);
-    }
-    return images;
+  generateSummary(numSentences) {
+
+    return this.generateSentences(User.secondPersonTemplate, numSentences);
   }
 
-  targetAdImages() {
-    let pre = 'imgs/',
-      ots = User.oceanTraits();
-    let images = this.randomImages(pre);
-    if (this.hasOceanTraits() && typeof this.adIssue !== 'undefined') {
-      let cat = this.categorize();
-      if (cat !== 0) {
-        //console.log('['+this.adIssue+']['+(cat > 0 ? 'high' : 'low')+']['+ots[Math.abs(cat)-1]+']');
-        images = [
-          pre + this.adIssue + '_' + cat + '.1.png',
-          pre + this.adIssue + '_' + cat + '.2.png',
-          pre + this.adIssue + '_' + -cat + '.1.png',
-          pre + this.adIssue + '_' + -cat + '.2.png'
-        ];
-      }
-    } else {
-      console.error("[WARN] no traits/issue: using random images");
-    }
-    return images;
-  }
-
-  randomSlogans() {
-    let ots = User.oceanTraits();
-    let idx1 = Math.floor(Math.random() * ots.length);
-    let idx2 = Math.floor(Math.random() * ots.length)
-    //console.log('['+this.adIssue+']['+(Math.random() < .5 ? 'high' : 'low')+']['+[ots[idx1]]+']');
-    let set1 = User.adSlogans[this.adIssue][(Math.random() < .5 ? 'high' : 'low')][ots[idx1]];
-    let set2 = User.adSlogans[this.adIssue][(Math.random() < .5 ? 'high' : 'low')][ots[idx2]];
-    return set1.concat(set2);
-  }
-
-  targetAdSlogans() {
-    let ots = User.oceanTraits();
-    let slogans = this.randomSlogans();
-    if (this.hasOceanTraits() && typeof this.adIssue !== 'undefined') {
-      let cat = this.categorize();
-      if (cat !== 0) {
-        //console.log('['+this.adIssue+']['+(cat > 0 ? 'high' : 'low')+']['+ots[Math.abs(cat)-1]+']');
-        let good = User.adSlogans[this.adIssue][(cat > 0 ? 'high' : 'low')][ots[Math.abs(cat) - 1]];
-        let bad = User.adSlogans[this.adIssue][(cat < 0 ? 'high' : 'low')][ots[Math.abs(cat) - 1]];
-        slogans = good.concat(bad);
-      }
-    } else {
-      console.error("[WARN] no traits/issue: using random slogans");
-    }
-    return slogans;
-  }
-
-  targetImgUrl() {
-    let target = this.getTarget();
-    // //if (!target.name.length)
-    // target.id = target.id.length || '111111111111111111111111'
-    // target.name = target.name.length || 'Pat'
-    // console.log(target);
-    return target.id ? User.imageDir + this.getTarget().id + '.jpg' : false;
-  }
-
-  setBrands(brandData) {
-    let traits = predict(brandData);
-    // this.brands = brandData; // TODO
-    return this.setTraits(traits);
-  }
-
-  hasOceanTraits() {
-    if (typeof this.traits === 'undefined') {
-      return false;
-    }
-
-    let result = true;
-    this.oceanTraits().forEach(tname => {
-      if (!this.traits.hasOwnProperty(tname)) {
-        result = false;
-        return;
-      }
-      let t = this.traits[tname];
-      if (typeof t === 'undefined' || t < 0 || t > 1) {
-        result = false;
-        return;
-      }
-    });
-    return result;
-  }
-
-  _verifyTraits() {
-
-    if (!this.hasOceanTraits()) {
-      throw Error('User with traits required');
-    }
-  }
-
-  generateSentences(parser, numSentences) {
+  generateSentences(template, numSentences) {
 
     this._verifyTraits();
-    if (arguments.length === 1 && typeof parser === 'number') {
-      numSentences = parser;
-      parser = undefined;
+
+    if (arguments.length === 1 && typeof template === 'number') {
+      numSentences = template;
+      template = null;
     }
+
+    if (typeof this.gender === 'undefined') {
+      console.error('gender required, found: ' + this.gender);
+      this.gender = 'female';
+    }
+
     numSentences = numSentences || 3;
 
     let data = [];
-    let targetNum = 3, maxPerTrait = 2;
-    let traitNames = User.oceanTraits();
-    let lines = this._descriptionLines();
+    let targetNum = 3;
+    let maxPerTrait = 2;
+    let parser = new Parser(this);
+    let traitNames = User.oceanTraits;
+    let lines = this._descriptionLines(template);
 
-    this._parseLines(parser, lines).forEach((l, i) => {
+    //lines.forEach(l => parser.parse(l));
+
+    lines.forEach((l, i) => {
+
       data.push({
-        line: l,
+        line: parser.parse(l),
         trait: traitNames[i],
         score: this.traits[traitNames[i]]
       });
@@ -158,16 +73,179 @@ export default class User {
           if (sentences.length < targetNum) {
             sentences.push(p.ucf());
             if (++added >= maxPerTrait) {
-              console.log('JUMP');
               return;
             }
           }
-
         }
       });
     }
-
     return sentences;
+  }
+
+  randomImages(pre) {
+    let images = [];
+    let ots = User.oceanTraits;
+    while (images.length < 4) {
+      let flip = Math.random() < .5 ? 1 : 2;
+      let mult = Math.random() < .5 ? 1 : -1;
+      let cat = (Math.floor(Math.random() * ots.length) * mult);
+      let imgName = pre + this.adIssue + '_' + cat + '.' + flip + '.png';
+      if (images.indexOf(imgName) < 0) images.push(imgName);
+    }
+    return images;
+  }
+
+  targetAdImages() {
+    let pre = 'imgs/';
+    let ots = User.oceanTraits;
+
+    if (typeof this.target === 'undefined') {
+      throw Error('No target for adImages!', this);
+    }
+
+    let images = this.randomImages(pre);
+    if (typeof this.target !== 'undefined' &&
+      this.hasOceanTraits(this.target) &&
+      typeof this.adIssue !== 'undefined') {
+
+      let cat = this.categorize(this.target);
+      if (cat !== 0) {
+        //console.log('['+this.adIssue+']['+(cat > 0 ? 'high' : 'low')+']['+ots[Math.abs(cat)-1]+']');
+        images = [
+          pre + this.adIssue + '_' + cat + '.1.png',
+          pre + this.adIssue + '_' + cat + '.2.png',
+          pre + this.adIssue + '_' + -cat + '.1.png',
+          pre + this.adIssue + '_' + -cat + '.2.png'
+        ];
+      }
+    } else {
+      console.error("[WARN] no target/traits/issue: "+
+        "using random images, issue=" + this.adIssue, this.target.traits);
+    }
+
+    return images;
+  }
+
+  targetAdInfluences() {
+
+    if (typeof this.target === 'undefined') { //TMP: remove
+      throw Error('No target for adInfluences!', this);
+    }
+
+    let ots = User.oceanTraits;
+    let influences = this.randomInfluences();
+    console.log("OT",this.hasOceanTraits(this.target), typeof this.target);
+    if (typeof this.target !== 'undefined' &&
+      this.hasOceanTraits(this.target) &&
+      typeof this.adIssue !== 'undefined') {
+
+      let cat = this.categorize(this.target);
+      if (cat !== 0) {
+        influences = User.adInfluences[this.adIssue]
+          [(cat > 0 ? 'high' : 'low')][ots[Math.abs(cat) - 1]];
+      }
+    } else {
+      console.error("[WARN] no target/traits/issue: "+
+        "using random influences [issue=" + this.adIssue+"] target=", this.target);
+    }
+    return influences;
+  }
+
+  // TODO: combine these 3: targetAdItem(type) ?
+  targetAdSlogans() {
+
+    if (typeof this.target === 'undefined') { //TMP: remove
+      throw Error('No target for adSlogans!', this);
+    }
+
+    let ots = User.oceanTraits;
+    let slogans = this.randomSlogans();
+    if (typeof this.target !== 'undefined' &&
+      this.hasOceanTraits(this.target) &&
+      typeof this.adIssue !== 'undefined') {
+
+      let cat = this.categorize(this.target);
+      if (cat !== 0) {
+        //console.log('['+this.adIssue+']['+(cat > 0 ? 'high' : 'low')+']['+ots[Math.abs(cat)-1]+']');
+        let good = User.adSlogans[this.adIssue]
+          [(cat > 0 ? 'high' : 'low')][ots[Math.abs(cat) - 1]];
+        let bad = User.adSlogans[this.adIssue]
+          [(cat < 0 ? 'high' : 'low')][ots[Math.abs(cat) - 1]];
+        slogans = good.concat(bad);
+      }
+    } else {
+      console.error("[WARN] no target/traits/issue: using random slogan, issue=" + this.adIssue, this.target.traits);
+    }
+
+    return slogans;
+  }
+
+  randomSlogans() {
+    let ots = User.oceanTraits;
+    let issue = this.adIssue;
+    let idx1 = Math.floor(Math.random() * ots.length);
+    let idx2 = Math.floor(Math.random() * ots.length)
+    //console.log('['+this.adIssue+']['+(Math.random() < .5 ? 'high' : 'low')+']['+[ots[idx1]]+']');
+    let set1 = User.adSlogans[issue]
+      [(Math.random() < .5 ? 'high' : 'low')][ots[idx1]];
+    let set2 = User.adSlogans[issue]
+      [(Math.random() < .5 ? 'high' : 'low')][ots[idx2]];
+    return set1.concat(set2);
+  }
+
+  randomInfluences() {
+    let ots = User.oceanTraits;
+    let idx = Math.floor(Math.random() * ots.length);
+    console.log(this.adIssue, this);
+    return User.adInfluences[this.adIssue]
+      [(Math.random() < .5 ? 'high' : 'low')][ots[idx]];
+  }
+
+  targetImgUrl() {
+    let target = this.getTarget();
+    return target.id ? User.imageDir +
+      this.getTarget().id + '.jpg' : false;
+  }
+
+  setBrands(brandData) {
+    let traitObjs = predict(brandData);
+    let traits = {};
+    traitObjs.forEach(tobj => {
+      traits[tobj.trait] = tobj.score;
+    });
+    return this.setTraits(traits);
+  }
+
+  hasOceanTraits(obj) {
+    obj = obj || this;
+    if (typeof obj === 'string') {
+      obj = JSON.parse(obj); // TMP:for targets
+    }
+    if (typeof obj.traits === 'undefined') {
+      return false;
+    }
+    let result = true;
+    let ots = User.oceanTraits;
+    User.oceanTraits.forEach((tname, i) => {
+      if (typeof obj.traits[tname] === 'undefined') {
+        //if (obj.traits.hasOwnProperty(tname)) {
+        result = false;
+        return;
+      }
+      let val = obj.traits[tname];
+      if (typeof val === 'undefined' || val < 0 || val > 1) {
+        result = false;
+        return;
+      }
+    });
+    return result;
+  }
+
+  _verifyTraits() {
+
+    if (!this.hasOceanTraits()) {
+      throw Error('User with traits required');
+    }
   }
 
   splitSentences(text) {
@@ -199,36 +277,30 @@ export default class User {
     return (text.length && arr && arr.length) ? unescapeAbbrevs(arr) : [text];
   }
 
-  _descriptionLines() {
+  _descriptionLines(tmpl) {
+
+    tmpl = tmpl || User.descriptionTemplate;
+
     let lines = [];
-    let traitNames = User.oceanTraits();
+    let traitNames = User.oceanTraits;
     for (let i = 0; i < traitNames.length; i++) {
-      if (typeof User.descriptionTemplate[traitNames[i]] !== 'undefined') {
+      if (typeof tmpl[traitNames[i]] !== 'undefined') {
         let val = this.traits[traitNames[i]];
         if (val < 0 || val > 1) throw Error('Bad "' + traitNames[i] + '" trait -> ' + val);
         let idx = Math.min(traitNames.length - 1, Math.floor(val * traitNames.length));
-        lines.push(User.descriptionTemplate[traitNames[i]].text[idx]);
+        lines.push(tmpl[traitNames[i]].text[idx]);
       }
     }
     return lines;
   }
 
-  // verify we have a parser, then parse each line
-  _parseLines(parser, lines) {
-    if (!parser) {
-      if (typeof Parser === 'undefined') throw Error('No Parser found');
-      parser = new Parser(this);
-    }
+  generateDescription() {
+    this._verifyTraits();
+    let parser = new Parser(this);
+    let lines = this._descriptionLines();
     for (let i = 0; i < lines.length; i++) {
       lines[i] = parser.parse(lines[i]);
     }
-    return lines;
-  }
-
-  generateLongDescription(parser) {
-    this._verifyTraits();
-    let lines = this._descriptionLines();
-    this._parseLines(parser, lines);
     return lines.join(' ').trim();
   }
 
@@ -236,10 +308,9 @@ export default class User {
     switch (this.gender) {
     case 'male':
       return 'his';
+    case 'other': //return 'their'; TODO:
     case 'female':
       return 'her';
-    case 'other':
-      return 'their';
     }
   }
 
@@ -247,19 +318,27 @@ export default class User {
     switch (this.gender) {
     case 'male':
       return 'he';
+    case 'other': //return 'they'; TODO:
     case 'female':
       return 'she';
-    case 'other':
-      return 'they';
     }
+  }
+
+  predictInfluences() {
+    // TODO
+    this.influences = ['Images that contain X and Y', 'Slogans that contain X and Y'];
+  }
+
+  predictDescriptors() {
+    this.descriptors = this.generateSentences(3);
   }
 
   setTraits(traits) {
     if (typeof obj === 'string') throw Error('expecting traits object');
-    this.traits = traits;
 
-    // TODO: placeholder only
-    this.influences = ['Immigration issues', 'Images of large crowds', 'Short, punchy slogans'];
+    this.traits = traits;
+    this.predictInfluences();
+    this.predictDescriptors();
 
     return this;
   }
@@ -303,36 +382,45 @@ export default class User {
   }
 
   oceanTraits() {
-    return User.oceanTraits();
+    return User.oceanTraits;
   }
 
-  categorize() {
-    this.category = 0;
+  categorize(obj) {
+
+    obj = obj || this;
+    if (typeof obj === 'string') {
+      obj = JSON.parse(obj); // TMP:for targets
+    }
+    obj.category = 0;
+
     let maxVal = 0;
     let trait = null;
-    let traits = this.oceanTraits();
+    let traits = User.oceanTraits;
+
     traits.forEach(t => {
-      let val = this.traits[t];
+      let val = obj.traits[t];
       if (Math.abs(val - .5) > maxVal) {
         maxVal = Math.abs(val - .5);
         trait = t;
       }
     });
+
     let traitIdx = 1 + traits.indexOf(trait);
 
     //console.log('def-trait: '+trait, this.traits[trait], 'idx='+traitIdx);
 
     let multiply = 0;
-    if (this.traits[trait] < .4) multiply = -1;
-    if (this.traits[trait] >= .6) multiply = 1;
+    if (obj.traits[trait] < .4) multiply = -1;
+    if (obj.traits[trait] >= .6) multiply = 1;
 
-    this.category = traitIdx * multiply;
+    obj.category = traitIdx * multiply;
 
-    return this.category;
+    return obj.category;
   }
 
   _randomizeTraits() {
-    return this.setTraits(User._randomTraits());
+    this.traits = User._randomTraits();
+    return this;
   }
 };
 
@@ -383,6 +471,9 @@ User.schema = () => {
     similars: { // JSON-stringified Users
       type: ['string']
     },
+    descriptors: {
+      type: ['string']
+    },
     virtue: {
       type: 'string'
     },
@@ -428,19 +519,89 @@ User.schema = () => {
   }
 }
 
+function rand() {
+  if (arguments.length === 1 && Array.isArray(arguments[0])) {
+    return arguments[0][irand(arguments[0].length)];
+  }
+  var randnum = Math.random();
+  if (!arguments.length) return randnum;
+  return (arguments.length === 1) ? randnum * arguments[0] :
+    randnum * (arguments[1] - arguments[0]) + arguments[0];
+}
+
+function irand() {
+  var randnum = Math.random();
+  if (!arguments.length) throw Error('requires args');
+  return (arguments.length === 1) ? Math.floor(randnum * arguments[0]) :
+    Math.floor(randnum * (arguments[1] - arguments[0]) + arguments[0]);
+}
+
+User._randomData = function (tmpl) {
+  if (!tmpl || typeof tmpl._id === 'undefined' || typeof tmpl.name === 'undefined') {
+    console.log(tmpl);
+    throw Error('id and login required' + tmpl);
+  }
+  let user = tmpl;
+  if (typeof tmpl.hasOceanTraits !== 'function') user = new User(tmpl);
+
+  user._randomizeTraits();
+  user.login = user.login || user.name.toLowerCase() + '@mail.com';
+  user.loginType = user.loginType || 'email';
+  user.adIssue = user.adIssue || rand(['leave', 'remain']);
+  user.gender = user.gender || rand(['male', 'female', 'other'])
+  user.virtue = user.virtue || rand(['power', 'wealth', 'influence', 'truth']);
+  // user.dataChoices = {};
+  // user.dataChoices.consumer = ['health', 'finance', 'travel'];
+  // user.dataChoices.home = ['smart watch', 'smart tv', 'smart assistant'];
+  // user.dataChoices.political = ['online maps', 'polls & surveys', 'voting records'];
+  user.clientId = user.clientId || irand(1, 7);
+  user.hasImage = true;
+
+  return user;
+}
+
 User._randomTraits = function (tmpl) {
   let traits = {};
-  User.oceanTraits().forEach(t => traits[t] = Math.random());
+  User.oceanTraits.forEach(t => traits[t] = Math.random());
   return traits;
 }
 
-User.oceanTraits = () => [
-    'openness',
-    'conscientiousness',
-    'extraversion',
-    'agreeableness',
-    'neuroticism'
-  ];
+User.oceanTraits = ['openness', 'conscientiousness', 'extraversion', 'agreeableness', 'neuroticism'];
+
+User.adInfluences = {
+  leave: {
+    high: {
+      openness: ["freedom or expansive skies", "‘freedom’, ‘future’ or ‘potential’"],
+      conscientiousness: ["money or financial focus, taking control", "‘control’, ‘savings’ or ‘your rights’"],
+      extraversion: ["not being silenced, being a ‘success’", "‘your rules’ or ‘your rights’ "],
+      agreeableness: ["family scenes, or relaxing locations", "‘against the EU’ or ‘family finances’"],
+      neuroticism: ["negative imagery, the fear of ‘others’", "‘criminals’ and fearful messages "]
+    },
+    low: {
+      openness: ["british traditions and british culture", "‘British’ or ‘traditions’"],
+      conscientiousness: ["taking action, not ‘hiding’ away", "‘no more’ or ‘time to act’"],
+      extraversion: ["strong characters or visions of a new tomorrow", "‘rising up’ or imagining a new ‘tomorrow’"],
+      agreeableness: ["less concern with cooperation or social harmony ", "‘borders’, ‘jobs’ or paying for other’s ‘mistakes’"],
+      neuroticism: ["easy going, relaxing scenes", "‘relax’ or ‘no big deal’"]
+    }
+  },
+  remain: {
+    high: {
+      openness: ["aspirational or inclusive scenes", "‘solidarity’ or mention collective action "],
+      conscientiousness: ["gambling or risk taking ", "‘gambling’ or ‘trust’"],
+      extraversion: ["being ‘left out’ or ‘silenced’ ", "’your own rules’ or‘ your voice’"],
+      agreeableness: ["social or family harmony", "‘family’ or ‘cooperation’"],
+      neuroticism: ["fearful or uncertain activities ", "‘stability’ or ‘uncertainty’"],
+    },
+    low: {
+      openness: ["conventional or traditional family scenes", "‘change is scary’, or ‘hassle’"],
+      conscientiousness: ["impulsive actions like gambling, risk taking", "‘sitting around’ or ‘time to act’"],
+      extraversion: ["solitary people, ‘loners’", "having ‘your say’ or contemplating ‘your future’"],
+      agreeableness: ["competitive sports, not being a ‘loser’", "losing’, ’quitting’ or ‘control’"],
+      neuroticism: ["laid back, relaxed scenes", "‘hassle’ or ‘worry’"],
+    }
+  }
+};
 
 User.adSlogans = {
   leave: {
@@ -448,7 +609,7 @@ User.adSlogans = {
       openness: ["Free to create a British future", "Unleash our true potential"],
       conscientiousness: ["Greater control. Greater savings", "Your future, your right"],
       extraversion: ["Play by your own rules", "Tell the EU, your voice matters"],
-      agreeableness: ["Love Europe<br> Not the EU", "Better for family budgets"],
+      agreeableness: ["Love Europe Not the EU", "Better for family budgets"],
       neuroticism: ["No more foreign criminals", "Tipping point"]
     },
     low: {
@@ -470,7 +631,7 @@ User.adSlogans = {
     low: {
       openness: ["Don't make this a hassle", "Change is scary"],
       conscientiousness: ["Seize the opportunity ", "I'll take my chances"],
-      extraversion: ["You don't need the crowd<br>to have your say", "Contemplate your future"],
+      extraversion: ["You don't need the crowd to have your say", "Contemplate your future"],
       agreeableness: ["The fastest way to lose is to quit", "Control your destiny"],
       neuroticism: ["Who needs the hassle?", "Who has time to worry?"],
     }
@@ -478,6 +639,8 @@ User.adSlogans = {
 };
 
 User.abbreviations = ["Adm.", "Capt.", "Cmdr.", "Col.", "Dr.", "Gen.", "Gov.", "Lt.", "Maj.", "Messrs.", "Mr.", "Mrs.", "Ms.", "Prof.", "Rep.", "Reps.", "Rev.", "Sen.", "Sens.", "Sgt.", "Sr.", "St.", "a.k.a.", "c.f.", "i.e.", "e.g.", "vs.", "v.", "Jan.", "Feb.", "Mar.", "Apr.", "Mar.", "Jun.", "Jul.", "Aug.", "Sept.", "Oct.", "Nov.", "Dec."];
+
+User.secondPersonTemplate = text2p;
 
 User.descriptionTemplate = {
   openness: {

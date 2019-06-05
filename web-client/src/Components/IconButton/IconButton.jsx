@@ -278,22 +278,36 @@ class IconButton extends React.Component {
 
   componentDidMount() {
     const { enabled } = this.props;
+    let type = typeof enabled;
     if (!enabled) {
       this.setState({
         colour: colours.grey,
       });
-    } else if (typeof enabled === 'undefined') {
+    } else if (type === 'string') {
+      this.setState({
+        colour: enabled,
+      });
+    } else if (enabled || type === 'undefined') {
       this.setState({
         colour: colours.blue,
       });
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.enabled === true) {
-      this.setState({ colour: colours.blue });
-    } else {
-      this.setState({ colour: colours.grey });
+  componentWillReceiveProps({ enabled }) {
+    let type = typeof enabled;
+    if (enabled === false) {
+      this.setState({
+        colour: colours.grey,
+      });
+    } else if (type === 'string') {
+      this.setState({
+        colour: enabled,
+      });
+    } else if (enabled || type === 'undefined') {
+      this.setState({
+        colour: colours.blue,
+      });
     }
   }
 
@@ -309,7 +323,7 @@ class IconButton extends React.Component {
     return (
       <button onClick={onClick} className={classNames.join(' ')}>
         {icons[icon] && icons[icon](colour)}
-        <div className="iconButtonText">{text}</div>
+        <div style={{ color: colour }} className="iconButtonText">{text}</div>
       </button>
     );
   }
@@ -324,7 +338,7 @@ IconButton.defaultProps = {
 IconButton.propTypes = {
   onClick: PropTypes.func,
   classes: PropTypes.object,
-  enabled: PropTypes.bool,
+  enabled: PropTypes.any,
   colour: PropTypes.string,
   icon: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,

@@ -1,11 +1,12 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import SpectreHeader from "../../Components/SpectreHeader/SpectreHeader";
-import FooterLogo from "../../Components/FooterLogo/FooterLogo";
-import movie from "./Intro_to_Spectre_V1 .mp4";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 import Countdown from 'react-countdown-now';
+import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
+import FooterLogo from '../../Components/FooterLogo/FooterLogo';
+import movie from './Intro_to_Spectre_V1 .mp4';
+
 const styles = {};
 
 class IntroVideo extends React.Component {
