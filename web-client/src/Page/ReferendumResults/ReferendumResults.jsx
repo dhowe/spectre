@@ -42,7 +42,7 @@ class ReferendumResults extends NavigationHack {
             className={classes.video}
             autoPlay
             movie="/video/ReferendumResults_animation.mp4"
-            onComplete={this.next}
+            onComplete={() => setTimeout(this.next, 1000)}
           />
         </div>
         <FooterLogo />

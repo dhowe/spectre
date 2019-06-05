@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
+import IconButton from '../../Components/IconButton/IconButton';
 import NavigationHack from '../NavigationHack';
 
 const styles = {
@@ -38,6 +39,9 @@ class LaunchCampaign extends NavigationHack {
               src={launchImg}
               alt="launch campaign"
             />
+          </Link>
+          <Link to="/referendum-results">
+              <IconButton icon="next" text="Go" />
           </Link>
         </div>
         <FooterLogo />

@@ -52,7 +52,7 @@ class OCEANReveal extends NavigationHack {
         <Typography component="h6" variant="h6"
           style={{ marginTop:'500px' }}>A little data and a little tech <br/>goes a long way, doesn&apos;t it?</Typography>
         <Typography component="h6" variant="h6"
-          style={{ marginTop:'100px' }}>For example, we haven&apos;t known<br/> you very long, but already <br />we know that...</Typography>
+          style={{ marginTop:'100px' }}>We haven&apos;t known<br/> you very long, but already <br />we know that...</Typography>
         <Modal
           isOpen={this.state.modalOpen}
           title={this.modalTitle}

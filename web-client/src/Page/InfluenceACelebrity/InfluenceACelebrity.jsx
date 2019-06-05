@@ -97,11 +97,7 @@ class InfluenceACelebrity extends NavigationHack {
           </Fade>
           <Fade in style={{ transitionDelay: '200ms' }}>
             <Typography component="h6" variant="h6">
-              Pick one to hear their&nbsp;
-              <br />
-              confession on&nbsp;
-              {user.virtue}
-              :
+              Listen to their confessions on&nbsp;{user.virtue}:
             </Typography>
           </Fade>
           {video && <Video autoPlay onComplete={this.stop} movie={video}/>}

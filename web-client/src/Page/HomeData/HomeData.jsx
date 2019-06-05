@@ -76,7 +76,7 @@ class HomeData extends NavigationHack {
         <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
         <div className={classes.content + " content"}>
           <Typography component="h6" variant="h6">
-            <strong>Choose 3 types of home data:</strong>
+            <strong>Choose 2 types of home data:</strong>
           </Typography>
 
           <div onClick={this.countAdd} className="HomeDataIcons">
@@ -92,8 +92,8 @@ class HomeData extends NavigationHack {
               </Grid>
           </div>
 
-          <Link className={this.state.count >= 3 ? "true" : "disabled"} to="/find-citizens">
-            <IconButton enabled={this.state.count >= 3} icon="next" text="Next" />
+          <Link className={this.state.count >= 2 ? "true" : "disabled"} to="/find-citizens">
+            <IconButton enabled={this.state.count >= 2} icon="next" text="Next" />
           </Link>
         </div>
         <FooterLogo />

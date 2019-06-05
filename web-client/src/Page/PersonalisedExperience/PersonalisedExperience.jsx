@@ -53,7 +53,7 @@ class PersonalisedExperience extends NavigationHack {
           </Fade>
           <Fade in style={{transitionDelay: '2000ms'}}>
             <Typography component="h6" variant="h6" style={{ marginBottom: '200px' }}>
-              tell us what you love,
+              Tell us what you love,
               <br />
               tell us what you hate...
             </Typography>

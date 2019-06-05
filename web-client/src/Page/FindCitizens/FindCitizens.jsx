@@ -37,7 +37,7 @@ class FindCitizens extends NavigationHack {
         <div className={`${classes.content} content`}>
             <Typography component="h5" variant="h5">Excellent.</Typography>
             <Typography component="h6" variant="h6">Now target UK citizens with a similar OCEAN profile to
-              {tname}!</Typography>
+              &nbsp;{tname}!</Typography>
             <Typography component="h6" variant="h6">A silent army that could well tip the balance...</Typography>
             <Link to="/targets-found">
                 <IconButton icon="next" text="Find them" />
