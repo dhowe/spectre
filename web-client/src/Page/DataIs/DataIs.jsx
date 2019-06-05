@@ -30,15 +30,6 @@ class DataIs extends NavigationHack {
     this.context.virtue = this.context.virtue || 'power';
     const virtue = this.context.virtue;
     const virtueAs = this.context.virtueAsAdverb();
-    const timer = ({ seconds, completed }) => {
-      if (completed) {
-        // Render a complete state
-        return null;
-      } else {
-        // Render a countdown
-        return <span>{seconds}</span>;
-      }
-    };
     console.log('User:', this.context);
     return (
       <div className={classes.root}>
@@ -57,7 +48,7 @@ class DataIs extends NavigationHack {
           <Countdown
             onComplete={this.next}
             date={Date.now() + 5000}
-            renderer={timer}
+            renderer={() => null}
           />
         </div>
         <FooterLogo />
