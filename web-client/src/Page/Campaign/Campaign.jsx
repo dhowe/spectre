@@ -34,10 +34,10 @@ class Campaign extends NavigationHack {
       });
     }
 
-    let target = this.context.getTarget();
-    let pron = target.gender === 'male' ? 'he' : 'she';
-    let poss = target.gender === 'male' ? 'him' : 'her';
-    let name = target.name.ucf();
+    const target = this.context.getTarget();
+    const pron = target.gender === 'male' ? 'he' : 'she';
+    const poss = target.gender === 'male' ? 'him' : 'her';
+    const name = target.name.ucf();
 
     return (
       <div className={classes.root}>

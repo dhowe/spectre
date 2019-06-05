@@ -108,39 +108,114 @@ describe('Client User', function () {
 
   describe('User.personalization()', function () {
 
-    it('Should pick correct images for user category', function () {
+    it('Should pick correct influences for target', function () {
+      let user, infls;
+
+      user = new User({
+        adIssue: 'leave',
+        target: {
+          name: 'TARGET',
+          traits: {
+            agreeableness: .3,
+            conscientiousness: .4,
+            extraversion: .5,
+            openness: 1,
+            neuroticism: .3
+          }
+        }
+      });
+      infls = user.targetAdInfluences();
+      expect(infls).to.have.members(["freedom or expansive skies", "‘freedom’, ‘future’ or ‘potential’"]);
+
+      user = new User({
+        adIssue: 'leave',
+        target: {
+          name: 'TARGET',
+          traits: {
+            openness: .5,
+            agreeableness: .3,
+            conscientiousness: .4,
+            extraversion: .5,
+            neuroticism: .31
+          }
+        }
+      });
+      infls = user.targetAdInfluences();
+      expect(infls).to.have.members(["less concern with cooperation or social harmony ", "‘borders’, ‘jobs’ or paying for other’s ‘mistakes’"]);
+
+      user = new User({
+        adIssue: 'remain',
+        target: {
+          name: 'TARGET',
+          traits: {
+            openness: .5,
+            agreeableness: .42,
+            conscientiousness: .4,
+            extraversion: .5,
+            neuroticism: .51
+          }
+        }
+      });
+      infls = user.targetAdInfluences();
+      expect(infls.length).to.eq(2); // random
+
+      user = new User({
+        adIssue: 'remain',
+        target: {
+          name: 'TARGET',
+          traits: {
+            openness: .5,
+            agreeableness: .42,
+            conscientiousness: .4,
+            extraversion: .5,
+            neuroticism: 0
+          }
+        }
+      });
+      infls = user.targetAdInfluences();
+      expect(infls).to.have.members(["laid back, relaxed scenes", "‘hassle’ or ‘worry’"]);
+    });
+
+    it('Should pick correct images for target category', function () {
       let user, imgs;
 
       user = new User({
         adIssue: 'leave',
-        traits: {
-          agreeableness: .3,
-          conscientiousness: .4,
-          extraversion: .5,
-          openness: 1,
-          neuroticism: .3
+        target: {
+          name: 'TARGET',
+          traits: {
+            agreeableness: .3,
+            conscientiousness: .4,
+            extraversion: .5,
+            openness: 1,
+            neuroticism: .3
+          }
         }
       });
+
       imgs = user.targetAdImages();
       expect(imgs).to.have.members([
-'imgs/leave_1.1.png',
-'imgs/leave_1.2.png',
-'imgs/leave_-1.1.png',
-'imgs/leave_-1.2.png'
-]);
+        'imgs/leave_1.1.png',
+        'imgs/leave_1.2.png',
+        'imgs/leave_-1.1.png',
+        'imgs/leave_-1.2.png'
+        ]);
 
       user = new User({
         adIssue: 'leave',
-        traits: {
-          openness: .5,
-          agreeableness: .3,
-          conscientiousness: .4,
-          extraversion: .5,
-          neuroticism: .31
+        target: {
+          name: 'TARGET',
+          traits: {
+            openness: .5,
+            agreeableness: .3,
+            conscientiousness: .4,
+            extraversion: .5,
+            neuroticism: .31
+          }
         }
       });
+
       imgs = user.targetAdImages();
-      //console.log(imgs);
       expect(imgs).to.have.members([
         'imgs/leave_4.1.png',
         'imgs/leave_4.2.png',
@@ -150,12 +225,15 @@ describe('Client User', function () {
 
       user = new User({
         adIssue: 'remain',
-        traits: {
-          openness: .5,
-          agreeableness: .42,
-          conscientiousness: .4,
-          extraversion: .5,
-          neuroticism: .51
+        target: {
+          name: 'TARGET',
+          traits: {
+            openness: .5,
+            agreeableness: .42,
+            conscientiousness: .4,
+            extraversion: .5,
+            neuroticism: .51
+          }
         }
       });
 
@@ -166,12 +244,15 @@ describe('Client User', function () {
 
       user = new User({
         adIssue: 'remain',
-        traits: {
-          openness: .5,
-          agreeableness: .42,
-          conscientiousness: .4,
-          extraversion: .5,
-          neuroticism: 0
+        target: {
+          name: 'TARGET',
+          traits: {
+            openness: .5,
+            agreeableness: .42,
+            conscientiousness: .4,
+            extraversion: .5,
+            neuroticism: 0
+          }
         }
       });
       imgs = user.targetAdImages();
@@ -183,16 +264,20 @@ describe('Client User', function () {
       ]);
     });
 
-    it('Should pick correct slogan for user category', function () {
+    it('Should pick correct slogan for target category', function () {
       let user;
+
       user = new User({
         adIssue: 'leave',
-        traits: {
-          agreeableness: .3,
-          conscientiousness: .4,
-          extraversion: .5,
-          openness: 1,
-          neuroticism: .3
+        target: {
+          name: 'TARGET',
+          traits: {
+            agreeableness: .3,
+            conscientiousness: .4,
+            extraversion: .5,
+            openness: 1,
+            neuroticism: .3
+          }
         }
       });
       let slo = user.targetAdSlogans();
@@ -201,12 +286,15 @@ describe('Client User', function () {
 
       user = new User({
         adIssue: 'leave',
-        traits: {
-          openness: .5,
-          agreeableness: .3,
-          conscientiousness: .4,
-          extraversion: .5,
-          neuroticism: .31
+        target: {
+          name: 'TARGET',
+          traits: {
+            openness: .5,
+            agreeableness: .3,
+            conscientiousness: .4,
+            extraversion: .5,
+            neuroticism: .31
+          }
         }
       });
       slo = user.targetAdSlogans();
@@ -215,12 +303,15 @@ describe('Client User', function () {
 
       user = new User({
         adIssue: 'remain',
-        traits: {
-          openness: .5,
-          agreeableness: .42,
-          conscientiousness: .4,
-          extraversion: .5,
-          neuroticism: .51
+        target: {
+          name: 'TARGET',
+          traits: {
+            openness: .5,
+            agreeableness: .42,
+            conscientiousness: .4,
+            extraversion: .5,
+            neuroticism: .51
+          }
         }
       });
       // randoms 'remains'
@@ -229,12 +320,15 @@ describe('Client User', function () {
 
       user = new User({
         adIssue: 'remain',
-        traits: {
-          openness: .5,
-          agreeableness: .42,
-          conscientiousness: .4,
-          extraversion: .5,
-          neuroticism: 0
+        target: {
+          name: 'TARGET',
+          traits: {
+            openness: .5,
+            agreeableness: .42,
+            conscientiousness: .4,
+            extraversion: .5,
+            neuroticism: 0
+          }
         }
       });
       slo = user.targetAdSlogans();
