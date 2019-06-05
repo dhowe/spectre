@@ -32,8 +32,8 @@ class LaunchCampaign extends NavigationHack {
       <div className={classes.root}>
         <SpectreHeader colour="white" />
         <div className={`${classes.content} content`}>
-          <Typography component="h6" variant="h6" style={{ marginTop: '300px' }}>Launch Campaign!</Typography>
-          <Link to="/referendum-results" style={{ marginBottom: '500px' }}>
+          <Typography component="h6" variant="h6" style={{ marginTop: '250px' }}>Launch Campaign!</Typography>
+          <Link to="/referendum-results" style={{ marginBottom: '300px' }}>
             <img
               className={classes.image}
               src={launchImg}

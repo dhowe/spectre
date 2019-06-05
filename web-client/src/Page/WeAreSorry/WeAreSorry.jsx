@@ -27,7 +27,7 @@ class WeAreSorry extends React.Component {
           <SpectreHeader colour="white" />
           <div className={classes.content + " content"}>
               <Typography component="h6" variant="h6">We’re sorry {(this.context.name||'Barney')},
-                we’re afraid you can’t do that.</Typography>
+                we’re afraid you can’t&nbsp;do&nbsp;that.</Typography>
               <Link to="/goodbye">
                   <IconButton icon="tick" text="Next" />
               </Link>

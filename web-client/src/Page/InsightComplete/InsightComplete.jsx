@@ -37,7 +37,7 @@ class InsightComplete extends NavigationHack {
               <Typography component="h6" variant="h6">You've unlocked {targetName}’s OCEAN profile.</Typography>
               {/* INSERT OCEAN TOPBAR COMPONENT HERE (1080x450)*/}
               <OceanProfile subject={this.context.getTarget()} classes={classes}></OceanProfile>
-              <Typography component="h6" variant="h6">You now have the <strong>power</strong> to influence {targetName}.</Typography>
+              <Typography component="h6" variant="h6">You now have the <strong>power</strong> to influence&nbsp;{targetName}.</Typography>
               <Link to="/your-power">
                   <IconButton icon="next" text="Next" />
               </Link>

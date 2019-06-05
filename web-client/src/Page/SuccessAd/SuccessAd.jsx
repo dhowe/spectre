@@ -25,7 +25,7 @@ class SuccessAd extends NavigationHack {
   }
 
   componentDidMount() {
-    const timeout = setTimeout(this.next, 7500);
+    const timeout = setTimeout(this.next, 6500);
     this.setState({ timeout });
   }
 
