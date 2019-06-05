@@ -4,9 +4,6 @@
     background-color: #ffffff;
     color: $blue;
     width: 100vw;
-    display: flex;
-    align-items: center;
-    flex-direction: row;
     position: fixed;
     h6 {
         color: $blue;
@@ -100,9 +97,6 @@
 .content .OceanProfile {
     margin-left: -100px;
     position: relative;
-    display: flex;
-    align-items: center;
-    flex-direction: row;
     h6 {
         color: $blue;
         font-size: 18px;

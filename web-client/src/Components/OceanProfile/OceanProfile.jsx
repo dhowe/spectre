@@ -19,6 +19,9 @@ function OceanProfile(props) {
   let tname = props.subject.name;
   return (
     <div className="OceanProfile">
+      <div>
+        <p><strong>{tname}'s OCEAN Profile</strong></p>
+      </div>
       <Grid container alignItems="center">
         <div className="OceanSliders">
         <div className="">
