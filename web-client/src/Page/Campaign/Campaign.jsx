@@ -23,21 +23,21 @@ class Campaign extends NavigationHack {
 
   render() {
     const { classes } = this.props;
-    console.log(this.context);
+    this.context.adIssue = this.context.adIssue || 'leave';
     if (typeof this.context.target === 'undefined') {
       this.context.setTarget({
         "id": "111111111111111111111111",
         "gender": "male",
         "name": "Remy",
-        influences: ['A & B', 'X & Y'],
         "traits": { "openness": 0.5818180970605207, "conscientiousness": 0.07645862267650672, "extraversion": 0.2607193320319028, "agreeableness": 0.012588228025398163, "neuroticism": 0.16712815071948772 }
       });
     }
-
     const target = this.context.getTarget();
+    console.log('target',target);
+    const name = target.name.ucf();
     const pron = target.gender === 'male' ? 'he' : 'she';
     const poss = target.gender === 'male' ? 'him' : 'her';
-    const name = target.name.ucf();
+    const infls = this.context.targetAdInfluences();
 
     return (
       <div className={classes.root}>
@@ -50,10 +50,10 @@ class Campaign extends NavigationHack {
                 {name}'s OCEAN profile shows that {pron} can be influenced by:
               </Typography>
               <Typography component="h6" variant="h6">
-                <strong>Images</strong> that contain {target.influences[0]}
+                <strong>Images</strong> that contain {infls[0]}
               </Typography>
               <Typography component="h6" variant="h6">
-                <strong>Slogans</strong> that contain {target.influences[1]}
+                <strong>Slogans</strong> that contain {infls[1]}
               </Typography>
               <Typography component="h6" variant="h6">
                 Influence {poss}!

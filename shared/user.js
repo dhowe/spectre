@@ -119,7 +119,8 @@ export default class User {
         ];
       }
     } else {
-      console.error("[WARN] no target/traits/issue: using random images, issue=" + this.adIssue, this.target.traits);
+      console.error("[WARN] no target/traits/issue: "+
+        "using random images, issue=" + this.adIssue, this.target.traits);
     }
 
     return images;
@@ -133,6 +134,7 @@ export default class User {
 
     let ots = User.oceanTraits;
     let influences = this.randomInfluences();
+    console.log("OT",this.hasOceanTraits(this.target), typeof this.target);
     if (typeof this.target !== 'undefined' &&
       this.hasOceanTraits(this.target) &&
       typeof this.adIssue !== 'undefined') {
@@ -143,7 +145,8 @@ export default class User {
           [(cat > 0 ? 'high' : 'low')][ots[Math.abs(cat) - 1]];
       }
     } else {
-      console.error("[WARN] no target/traits/issue: using random influences, issue=" + this.adIssue, this.target.traits);
+      console.error("[WARN] no target/traits/issue: "+
+        "using random influences [issue=" + this.adIssue+"] target=", this.target);
     }
     return influences;
   }
@@ -179,12 +182,13 @@ export default class User {
 
   randomSlogans() {
     let ots = User.oceanTraits;
+    let issue = this.adIssue;
     let idx1 = Math.floor(Math.random() * ots.length);
     let idx2 = Math.floor(Math.random() * ots.length)
     //console.log('['+this.adIssue+']['+(Math.random() < .5 ? 'high' : 'low')+']['+[ots[idx1]]+']');
-    let set1 = User.adSlogans[this.adIssue]
+    let set1 = User.adSlogans[issue]
       [(Math.random() < .5 ? 'high' : 'low')][ots[idx1]];
-    let set2 = User.adSlogans[this.adIssue]
+    let set2 = User.adSlogans[issue]
       [(Math.random() < .5 ? 'high' : 'low')][ots[idx2]];
     return set1.concat(set2);
   }
@@ -192,6 +196,7 @@ export default class User {
   randomInfluences() {
     let ots = User.oceanTraits;
     let idx = Math.floor(Math.random() * ots.length);
+    console.log(this.adIssue, this);
     return User.adInfluences[this.adIssue]
       [(Math.random() < .5 ? 'high' : 'low')][ots[idx]];
   }
@@ -213,6 +218,9 @@ export default class User {
 
   hasOceanTraits(obj) {
     obj = obj || this;
+    if (typeof obj === 'string') {
+      obj = JSON.parse(obj); // TMP:for targets
+    }
     if (typeof obj.traits === 'undefined') {
       return false;
     }
@@ -380,6 +388,9 @@ export default class User {
   categorize(obj) {
 
     obj = obj || this;
+    if (typeof obj === 'string') {
+      obj = JSON.parse(obj); // TMP:for targets
+    }
     obj.category = 0;
 
     let maxVal = 0;
