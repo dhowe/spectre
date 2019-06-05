@@ -105,9 +105,7 @@ export default class User {
     }
 
     let result = true;
-    console.log(this.traits);
     this.oceanTraits().forEach((tname,i) => {
-      console.log(tname, "=", this.traits[tname]);
       if (!this.traits.hasOwnProperty(tname)) {
         result = false;
         return;
@@ -282,7 +280,6 @@ export default class User {
   }
 
   setTraits(traits) {
-    console.log('setTraits:'+traits);
     if (typeof obj === 'string') throw Error('expecting traits object');
 
     this.traits = traits;
