@@ -22,15 +22,6 @@ class IntroOceanVideo extends NavigationHack {
   }
   render() {
     const { classes } = this.props;
-    const timer = ({ seconds, completed }) => {
-      if (completed) {
-        // Render a complete state
-        return null;
-      } else {
-        // Render a countdown
-        return <span className="hidden">{seconds}</span>;
-      }
-    };
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" />
@@ -44,7 +35,7 @@ class IntroOceanVideo extends NavigationHack {
           <Countdown
             onComplete={this.next}
             date={Date.now() + 5000}
-            renderer={timer}
+            renderer={() => null}
           />
         </div>
         <FooterLogo />

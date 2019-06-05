@@ -39,15 +39,6 @@ class BelieveInDataism extends NavigationHack {
 
   render() {
     const { classes } = this.props;
-    const timer = ({ seconds, completed }) => {
-      if (completed) {
-        // Render a complete state
-        return null;
-      } else {
-        // Render a countdown
-        return <span>{seconds}</span>;
-      }
-    };
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" />
@@ -61,7 +52,7 @@ class BelieveInDataism extends NavigationHack {
           <Countdown
             onComplete={this.next}
             date={Date.now() + 5000}
-            renderer={timer}
+            renderer={() => null}
           />
         </div>
         <FooterLogo />

@@ -32,14 +32,6 @@ class PersonalisedExperience extends NavigationHack {
 
   render() {
     const { classes } = this.props;
-    const timer = ({ seconds, completed }) => {
-      if (completed) {
-        // Render a complete state
-        return null;
-      }
-      // Render a countdown
-      return <span>{seconds}</span>;
-    };
     return (
       <div className={classes.root + ' PersonalisedExperience'}>
         <SpectreHeader colour="white" />
@@ -63,7 +55,7 @@ class PersonalisedExperience extends NavigationHack {
               <Countdown
                 onComplete={this.next}
                 date={Date.now() + 5000}
-                renderer={timer}
+                renderer={() => null}
               />
             </div>
         </div>

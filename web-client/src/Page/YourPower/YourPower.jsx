@@ -30,15 +30,6 @@ class YourPower extends NavigationHack {
   render() {
     console.log('User:', this.context);
     const { classes } = this.props;
-    const timer = ({ seconds, completed }) => {
-      if (completed) {
-        // Render a complete state
-        return null;
-      } else {
-        // Render a countdown
-        return <span>{seconds}</span>;
-      }
-    };
     if (typeof this.context.target === 'undefined') {
       this.context.setTarget({ "id": "111111111111111111111111", "name": "Remy", "gender": "male", "traits": { "openness": 0.5818180970605207, "conscientiousness": 0.07645862267650672, "extraversion": 0.2607193320319028, "agreeableness": 0.012588228025398163, "neuroticism": 0.16712815071948772 } });
     }
@@ -55,7 +46,7 @@ class YourPower extends NavigationHack {
           <Countdown
             onComplete={this.next}
             date={Date.now() + 5000}
-            renderer={timer}
+            renderer={() => null}
           />
         </div>
         <FooterLogo />

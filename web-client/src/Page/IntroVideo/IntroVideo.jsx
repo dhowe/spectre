@@ -21,15 +21,6 @@ class IntroVideo extends React.Component {
   }
   render() {
     const { classes } = this.props;
-    const timer = ({ seconds, completed }) => {
-      if (completed) {
-        // Render a complete state
-        return null;
-      } else {
-        // Render a countdown
-        return <span>{seconds}</span>;
-      }
-    };
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" />
@@ -51,7 +42,7 @@ class IntroVideo extends React.Component {
             <Countdown
               onComplete={this.goTo.bind(this)}
               date={Date.now() + 5000}
-              renderer={timer}
+              renderer={() => null}
             />
           </div>
         </div>

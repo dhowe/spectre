@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import { Link } from 'react-router-dom';
-import IconButton from '../../Components/IconButton/IconButton';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import NavigationHack from '../NavigationHack';
@@ -55,7 +53,8 @@ class Campaign extends NavigationHack {
           <Typography component="h6" variant="h6">
             <strong>Slogans</strong> that contain {infls[1]}
           </Typography>
-          </div>
+        </div>
+        <FooterLogo />
       </div>
     );
   }
