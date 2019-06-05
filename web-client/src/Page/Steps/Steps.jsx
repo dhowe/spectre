@@ -32,22 +32,22 @@ class Steps extends NavigationHack {
       <div className={classes.root}>
         <SpectreHeader colour="white" />
         <div className={classes.content + " content"}>
-            <Fade in={true} style={{transitionDelay: '200ms'}}>
+            <Fade in={true} >
                 <Typography component="h5" variant="h5">Find what you are looking for by following these three steps:</Typography>
             </Fade>
-            <Fade in={true} style={{transitionDelay: '400ms'}}>
+            <Fade in={true} style={{transitionDelay: '1000ms'}}>
                 <Typography component="h6" variant="h6"><strong>Step 1</strong> - influence a follower</Typography>
             </Fade>
-            <Fade in={true} style={{transitionDelay: '600ms'}}>
+            <Fade in={true} style={{transitionDelay: '2000ms'}}>
                 <Typography component="h6" variant="h6"><strong>Step 2</strong> - influence a nation</Typography>
             </Fade>
-            <Fade in={true} style={{transitionDelay: '800ms'}}>
+            <Fade in={true} style={{transitionDelay: '3000ms'}}>
                 <Typography component="h6" variant="h6"><strong>Step 3</strong> - influence a celebrity</Typography>
             </Fade>
-            <Fade in={true} style={{transitionDelay: '1000ms'}}>
+            <Fade in={true} style={{transitionDelay: '4000ms'}}>
                 <Typography component="h5" variant="h5">Get the data. Get the {this.context.virtue}.</Typography>
             </Fade>
-            <Fade in={true} style={{transitionDelay: '1100ms'}}>
+            <Fade in={true} style={{transitionDelay: '5000ms'}}>
                 <Typography component="h6" variant="h6">Ready?</Typography>
             </Fade>
             <Link to="/influence-a-follower">
