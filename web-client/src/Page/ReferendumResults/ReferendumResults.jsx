@@ -31,8 +31,8 @@ class ReferendumResults extends NavigationHack {
   constructor(props) {
     super(props, '/win');
   }
-
   render() {
+    let issue = this.context.adIssue;
     const { classes } = this.props;
     return (
       <div className={classes.root}>
@@ -41,7 +41,7 @@ class ReferendumResults extends NavigationHack {
           <Video
             className={classes.video}
             autoPlay
-            movie="/video/ReferendumResults_animation.mp4"
+            movie={'/video/ReferendumResults_'+issue+'.mp4'}
             onComplete={() => setTimeout(this.next, 1000)}
           />
         </div>

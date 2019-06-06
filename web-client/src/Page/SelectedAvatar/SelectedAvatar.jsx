@@ -44,16 +44,17 @@ class SelectedAvatar extends NavigationHack {
 
   render() {
     const { classes } = this.props;
-    const target = this.context.getTarget();
-    const tname = target.name || 'Targ';
-    const pimg = this.context.targetImgUrl() || '/profiles/default.jpg';
+
+    this.context.target = this.context.target || UserSession.defaults[0];
+    const timage = this.context.targetImgUrl() || '/profiles/default.jpg';
+    const tname = this.context.target.name;
     return (
       <div className={`${classes.root} SelectedAvatar`}>
         <SpectreHeader colour="white" progressActive={true} progressNumber="one" />
         <div className={`${classes.content} content`}>
           <p className="title">You selected:</p>
           <div>
-            <AvatarComponent target={{ image: pimg }} />
+            <AvatarComponent target={{ image: timage }} />
             <p className="avatarName">{tname}</p>
           </div>
           <p className="copy">Let&apos;s start by verifying some of the basics to unlock insight into {tname}. </p>

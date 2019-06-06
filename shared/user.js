@@ -174,7 +174,8 @@ export default class User {
         slogans = good.concat(bad);
       }
     } else {
-      console.error("[WARN] no target/traits/issue: using random slogan, issue=" + this.adIssue, this.target.traits);
+      console.error("[WARN] no target/traits/issue: using random slogan, issue="
+        + this.adIssue, this.target.traits);
     }
 
     return slogans;
@@ -202,9 +203,9 @@ export default class User {
   }
 
   targetImgUrl() {
-    let target = this.getTarget();
-    return target.id ? User.imageDir +
-      this.getTarget().id + '.jpg' : false;
+    //let target = this.getTarget();
+    return this.target.id ? User.imageDir +
+      this.target.id + '.jpg' : false;
   }
 
   setBrands(brandData) {
@@ -343,28 +344,28 @@ export default class User {
     return this;
   }
 
-  setSimilars(arr) {
-    if (!Array.isArray(arr)) throw Error('expecting array of objects');
-    this.similars = arr.map(obj => JSON.stringify(obj)); // TODO: cache
-  }
-
-  setTarget(obj) {
-    if (typeof obj === 'string') throw Error('expecting object');
-    this.target = JSON.stringify(obj); // TODO: cache
-  }
-
-  getSimilars() {
-    if (typeof this.similars === 'undefined') return [];
-    return this.similars.map(s => JSON.parse(s)); // TODO: cache
-  }
-
-  getTarget() {
-    if (typeof this.target === 'undefined') {
-      console.error("ERROR: user has no target");
-      return { id: null, name: null, traits: User._randomTraits() };
-    }
-    return JSON.parse(this.target); // TODO: cache
-  }
+  // setSimilars(arr) {
+  //   if (!Array.isArray(arr)) throw Error('expecting array of objects');
+  //   //this.similars = arr.map(obj => JSON.stringify(obj)); // TODO: cache
+  // }
+  // setTarget(obj) {
+  //   if (typeof obj === 'string') throw Error('expecting object');
+  //   this.target = JSON.stringify(obj); // TODO: cache
+  //   //this.target = obj;
+  // }
+  //
+  // getSimilars() {
+  //   if (typeof this.similars === 'undefined') return [];
+  //   return this.similars.map(s => JSON.parse(s)); // TODO: cache
+  // }
+  //
+  // getTarget() {
+  //   if (typeof this.target === 'undefined') {
+  //     console.error("ERROR: user has no target");
+  //     return { id: null, name: null, traits: User._randomTraits() };
+  //   }
+  //   return JSON.parse(this.target); // TODO: cache
+  // }
 
   virtueAsAdverb() {
     const adverbs = {

@@ -43,8 +43,10 @@ class Insight extends NavigationHack {
       progress,
     } = this.props;
 
-    const name = (this.context.getTarget().name || 'Pat');
+    this.context.target = this.context.target || UserSession.defaults[0];
     const image = this.context.targetImgUrl() || '/profiles/default.jpg';
+    const name = this.context.target.name;
+
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive progressNumber={progress} />

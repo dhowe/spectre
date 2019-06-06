@@ -51,7 +51,6 @@ class Steps extends NavigationHack {
                 <Typography component="h6" variant="h6">Ready?</Typography>
             </Fade>
             <Link to="/influence-a-follower">
-
                 <IconButton icon="tick" text="Yes" />
             </Link>
         </div>

@@ -11,22 +11,20 @@ const styles = {
     backgroundRepeat: 'no-repeat',
   },
 };
-const imageCount = 2;
+const imageCount = 3;
 
 class FooterLogo extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { imageNumber: Math.ceil(Math.random() * imageCount) };
+    this.state = { imageNumber: Math.floor(Math.random() * imageCount) };
   }
 
   render() {
     const { classes } = this.props;
     const { imageNumber } = this.state;
     return (
-      <div
-        className={`${classes.root} FooterLogo`}
-        style={{ backgroundImage: `url(/imgs/footer-banner-${imageNumber}.png)` }}
-      >
+      <div className={`${classes.root} FooterLogo`}
+        style={{ backgroundImage: `url(/imgs/footer-banner-${imageNumber}.png)` }}>
         <svg
           width="150"
           height="150"
