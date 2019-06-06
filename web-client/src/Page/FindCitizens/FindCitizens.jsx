@@ -37,10 +37,10 @@ class FindCitizens extends NavigationHack {
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
         <div className={`${classes.content} content`}>
-          <Typography component="h5" variant="h5">Excellent.</Typography>
+          <Typography component="h4" variant="h4"><strong>Excellent.</strong></Typography>
           <Typography component="h6" variant="h6">Now target UK citizens with a similar OCEAN profile to
             &nbsp;{targetName}!</Typography>
-          <Typography component="h6" variant="h6">A silent army that could well tip the balance...</Typography>
+          <Typography component="h6" variant="h6">A silent army that could well tip the&nbsp;balance...</Typography>
           <Link to="/targets-found">
             <IconButton icon="next" text="Find them" />
           </Link>

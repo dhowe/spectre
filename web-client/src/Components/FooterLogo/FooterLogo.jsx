@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import Divider from '@material-ui/core/Divider';
 
 import './FooterLogo.scss';
 
@@ -11,7 +12,7 @@ const styles = {
     backgroundRepeat: 'no-repeat',
   },
 };
-const imageCount = 12;
+const imageCount = 10;
 
 class FooterLogo extends React.Component {
   constructor(props) {
@@ -23,6 +24,7 @@ class FooterLogo extends React.Component {
     const { classes } = this.props;
     const { imageNumber } = this.state;
     return (
+      <div>
       <div className={`${classes.root} FooterLogo`}
         style={{ backgroundImage: `url(/imgs/footer-banner-${imageNumber}.png)` }}>
         <svg
@@ -81,7 +83,7 @@ class FooterLogo extends React.Component {
             fill="#00BFFF"
           />
         </svg>
-      </div>
+      </div></div>
     );
   }
 }
