@@ -330,7 +330,6 @@ class IconButton extends React.Component {
     if (className) {
       classNames.push(className);
     }
-
     return (
       <button onClick={onClick} className={classNames.join(' ')}>
         {icons[icon] && icons[icon](colour)}

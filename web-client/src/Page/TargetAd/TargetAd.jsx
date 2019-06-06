@@ -25,13 +25,16 @@ class TargetAd extends NavigationHack {
 
   render() {
     const { classes } = this.props;
+    this.context.adIssue = this.context.adIssue || 'leave';
+    this.context.target = this.context.target || UserSession.defaults[0];
+    const tname = this.context.target.name;
     return (
       <div className={classes.root}>
       <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
       <div className={`${classes.content} content`}>
         <br/>
         <Typography component="h6" variant="h6">
-          Share your targeted ad with {this.context.getTarget().name||'Remy'}?
+          Share your targeted ad with {tname}?
         </Typography>
         <Link to="/success-ad">
           <Grid container justify="center">

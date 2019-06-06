@@ -32,17 +32,20 @@ class Win extends NavigationHack {
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive progressNumber="two" />
         <div className={`${classes.content} content`}>
-          <Typography component="h6" variant="h6" style={{ marginTop:'100px' }}><strong>{this.context.adIssue === 'remain' ? 'Believe!' : 'BeLeave!'}</strong><br/>
+          <Typography component="h4" variant="h4" style={{ marginTop:'100px' }}>
+            <strong>{this.context.adIssue === 'remain' ? 'Believe!' : 'BeLeave!'}</strong>
+          </Typography>
+          <Typography component="h5" variant="h5" style={{ marginTop:'100px' }}>
             &nbsp;Your campaign was successful...</Typography>
           <p className="icon">
             <Trophy />
           </p>
-          <Typography component="h6" variant="h6">Your silent army swung the vote!</Typography>
+          <Typography component="h5" variant="h5">Your silent army swung the vote!</Typography>
           <Link to="/influence-a-celebrity">
             <IconButton icon="next" text="Next" />
           </Link>
         </div>
-        <FooterLogo />
+        <FooterLogo/>
       </div>
     );
   }

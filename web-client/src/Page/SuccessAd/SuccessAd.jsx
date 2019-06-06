@@ -35,8 +35,11 @@ class SuccessAd extends NavigationHack {
 
   render() {
     const { classes } = this.props;
-    const tname = (this.context.getTarget().name || 'Pat');
-    const issue = this.context.adIssue || 'remain';
+    this.context.adIssue = this.context.adIssue || 'leave';
+    this.context.target = this.context.target || UserSession.defaults[0];
+    const timage = this.context.targetImgUrl() || '/profiles/default.jpg';
+    const tname = this.context.target.name;
+    const issue = this.context.adIssue;
     return (
       <div className={`${classes.root} successAd`}>
         <SpectreHeader colour="white" progressActive progressNumber="two" />

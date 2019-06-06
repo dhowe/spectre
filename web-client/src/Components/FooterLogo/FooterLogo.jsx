@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import Divider from '@material-ui/core/Divider';
 
 import './FooterLogo.scss';
 
@@ -11,22 +12,21 @@ const styles = {
     backgroundRepeat: 'no-repeat',
   },
 };
-const imageCount = 2;
+const imageCount = 10;
 
 class FooterLogo extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { imageNumber: Math.ceil(Math.random() * imageCount) };
+    this.state = { imageNumber: Math.floor(Math.random() * imageCount) };
   }
 
   render() {
     const { classes } = this.props;
     const { imageNumber } = this.state;
     return (
-      <div
-        className={`${classes.root} FooterLogo`}
-        style={{ backgroundImage: `url(/imgs/footer-banner-${imageNumber}.png)` }}
-      >
+      <div>
+      <div className={`${classes.root} FooterLogo`}
+        style={{ backgroundImage: `url(/imgs/footer-banner-${imageNumber}.png)` }}>
         <svg
           width="150"
           height="150"
@@ -83,7 +83,7 @@ class FooterLogo extends React.Component {
             fill="#00BFFF"
           />
         </svg>
-      </div>
+      </div></div>
     );
   }
 }

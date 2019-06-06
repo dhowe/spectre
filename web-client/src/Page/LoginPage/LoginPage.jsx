@@ -61,11 +61,11 @@ const styles = {
 };
 
 class LoginPage extends NavigationHack {
+
   static validEmail(email) {
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return email.length > 0 && re.test(email.toLowerCase());
   }
-
   static validName(name) {
     return name.length > 0;
   }
@@ -83,6 +83,14 @@ class LoginPage extends NavigationHack {
     this.modalTitle = '';
   }
 
+  componentWillMount() {
+    console.log(this.context);
+    UserSession.defaultUsers((users) => {
+      this.context.similars = users;
+      console.log('User:', this.context);
+    });
+  }
+
   handleSubmit(e, { name, email, clearEmail }) {
     e.preventDefault();
     const { emailErrorCount, nameErrorCount } = this.state;
@@ -92,16 +100,20 @@ class LoginPage extends NavigationHack {
     // get user from current context
     const user = this.context;
     user.lastPageVisit = { page: '/Login', time: Date.now() };
-    user.loginType = 'email'; // TMP:
+
 
     if (nameValid && emailValid) {
-      const handleSuccess = (json) => {
+
+      user.loginType = 'email'; // TMP:
+      user.login = email;
+      user.name = name.ucf();
+      /*const handleSuccess = (json) => {
         Object.assign(user, json);
         this.showVideo();
-        console.log('User:', user);
       };
 
       const handleError = () => {
+
         if (e.error === 'EmailInUse') {
           this.modalTitle = 'Invalid email';
           this.modalContent = 'Email has already been used';
@@ -110,18 +122,25 @@ class LoginPage extends NavigationHack {
           console.error(e);
           this.showVideo();
         }
-      };
-      UserSession.createUser(user, handleSuccess, handleError);
+      };*/
+      console.log(user);
+      this.showVideo();
+      //UserSession.createUser(user, handleSuccess, handleError);
+
     } else if (!nameValid && nameErrorCount < 3) {
+
       this.modalTitle = 'Oops...';
       this.modalContent = 'You need to enter a name, please try again';
       this.setState({ modalOpen: true, nameErrorCount: nameErrorCount + 1 });
+
     } else if (!emailValid && emailErrorCount < 3) {
+
       this.modalTitle = 'Oops...';
       this.modalContent = 'That doesn\'t look like a valid email address, please try again';
       this.setState({ modalOpen: true, emailErrorCount: emailErrorCount + 1 });
       clearEmail();
     } else {
+
       // TMP: should reject without successful User creation
       this.context.login = email;
       this.context.name = name; // user-prop

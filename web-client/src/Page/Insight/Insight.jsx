@@ -43,8 +43,10 @@ class Insight extends NavigationHack {
       progress,
     } = this.props;
 
-    const name = (this.context.getTarget().name || 'Pat');
+    this.context.target = this.context.target || UserSession.defaults[0];
     const image = this.context.targetImgUrl() || '/profiles/default.jpg';
+    const name = this.context.target.name;
+
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive progressNumber={progress} />
@@ -54,8 +56,8 @@ class Insight extends NavigationHack {
           <div onTouchEnd={this.EnableButton}>
             <TextSliderText leftText={leftText} rightText={rightText} middleText={middleText} />
           </div>
-          <Link className={this.state.buttonEnabled ? 'true' : 'disabled'} to={next}>
-            <IconButton enabled={this.state.buttonEnabled} icon="next" text="Next" />
+          <Link className={true} to={next}>
+            <IconButton enabled={true} icon="next" text="Next" />
           </Link>
         </div>
         <FooterLogo />

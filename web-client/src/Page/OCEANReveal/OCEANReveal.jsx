@@ -88,7 +88,7 @@ class OCEANReveal extends NavigationHack {
                   variant="h6"
                   component="h6"
                   key={fadeKey}
-                  style={{ marginTop: 80, color: colours.grey, width: '80%' }}
+                  style={{ color: colours.grey, width: '80%', margin: '110px 100px 100px 100px' }}
                 >
                   {sent}
                 </Typography>

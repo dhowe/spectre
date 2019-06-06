@@ -174,7 +174,8 @@ export default class User {
         slogans = good.concat(bad);
       }
     } else {
-      console.error("[WARN] no target/traits/issue: using random slogan, issue=" + this.adIssue, this.target.traits);
+      console.error("[WARN] no target/traits/issue: using random slogan, issue="
+        + this.adIssue, this.target.traits);
     }
 
     return slogans;
@@ -202,9 +203,9 @@ export default class User {
   }
 
   targetImgUrl() {
-    let target = this.getTarget();
-    return target.id ? User.imageDir +
-      this.getTarget().id + '.jpg' : false;
+    //let target = this.getTarget();
+    return this.target.id ? User.imageDir +
+      this.target.id + '.jpg' : false;
   }
 
   setBrands(brandData) {
@@ -343,28 +344,28 @@ export default class User {
     return this;
   }
 
-  setSimilars(arr) {
-    if (!Array.isArray(arr)) throw Error('expecting array of objects');
-    this.similars = arr.map(obj => JSON.stringify(obj)); // TODO: cache
-  }
-
-  setTarget(obj) {
-    if (typeof obj === 'string') throw Error('expecting object');
-    this.target = JSON.stringify(obj); // TODO: cache
-  }
-
-  getSimilars() {
-    if (typeof this.similars === 'undefined') return [];
-    return this.similars.map(s => JSON.parse(s)); // TODO: cache
-  }
-
-  getTarget() {
-    if (typeof this.target === 'undefined') {
-      console.error("ERROR: user has no target");
-      return { id: null, name: null, traits: User._randomTraits() };
-    }
-    return JSON.parse(this.target); // TODO: cache
-  }
+  // setSimilars(arr) {
+  //   if (!Array.isArray(arr)) throw Error('expecting array of objects');
+  //   //this.similars = arr.map(obj => JSON.stringify(obj)); // TODO: cache
+  // }
+  // setTarget(obj) {
+  //   if (typeof obj === 'string') throw Error('expecting object');
+  //   this.target = JSON.stringify(obj); // TODO: cache
+  //   //this.target = obj;
+  // }
+  //
+  // getSimilars() {
+  //   if (typeof this.similars === 'undefined') return [];
+  //   return this.similars.map(s => JSON.parse(s)); // TODO: cache
+  // }
+  //
+  // getTarget() {
+  //   if (typeof this.target === 'undefined') {
+  //     console.error("ERROR: user has no target");
+  //     return { id: null, name: null, traits: User._randomTraits() };
+  //   }
+  //   return JSON.parse(this.target); // TODO: cache
+  // }
 
   virtueAsAdverb() {
     const adverbs = {
@@ -571,34 +572,34 @@ User.oceanTraits = ['openness', 'conscientiousness', 'extraversion', 'agreeablen
 User.adInfluences = {
   leave: {
     high: {
-      openness: ["freedom or expansive skies", "‘freedom’, ‘future’ or ‘potential’"],
-      conscientiousness: ["money or financial focus, taking control", "‘control’, ‘savings’ or ‘your rights’"],
-      extraversion: ["not being silenced, being a ‘success’", "‘your rules’ or ‘your rights’ "],
-      agreeableness: ["family scenes, or relaxing locations", "‘against the EU’ or ‘family finances’"],
-      neuroticism: ["negative imagery, the fear of ‘others’", "‘criminals’ and fearful messages "]
+      openness: ["expansive, open themes", "‘freedom’, ‘future’ or ‘potential’"],
+      conscientiousness: ["money or financial focus", "‘control’, ‘savings’ or ‘rights’"],
+      extraversion: ["successful, outspoken people", "‘your rules’ or ‘your rights’ "],
+      agreeableness: ["family scenes, or relaxing locations", "negativity toward institutions"],
+      neuroticism: ["negative imagery, fear of ‘others’", "messages of fear"]
     },
     low: {
-      openness: ["british traditions and british culture", "‘British’ or ‘traditions’"],
-      conscientiousness: ["taking action, not ‘hiding’ away", "‘no more’ or ‘time to act’"],
-      extraversion: ["strong characters or visions of a new tomorrow", "‘rising up’ or imagining a new ‘tomorrow’"],
-      agreeableness: ["less concern with cooperation or social harmony ", "‘borders’, ‘jobs’ or paying for other’s ‘mistakes’"],
-      neuroticism: ["easy going, relaxing scenes", "‘relax’ or ‘no big deal’"]
+      openness: ["British traditions and culture", "‘British’ or ‘traditions’"],
+      conscientiousness: ["action rather than tranquility", "‘no more’ or ‘time to act’"],
+      extraversion: ["strong characters and visions of the future", "ideas of a ‘new’ tomorrow"],
+      agreeableness: ["struggle or strife", "‘borders’, ‘jobs’ or ‘mistakes’"],
+      neuroticism: ["easy-going or relaxing themes ", "‘relax’ or ‘no big deal’"]
     }
   },
   remain: {
     high: {
-      openness: ["aspirational or inclusive scenes", "‘solidarity’ or mention collective action "],
-      conscientiousness: ["gambling or risk taking ", "‘gambling’ or ‘trust’"],
-      extraversion: ["being ‘left out’ or ‘silenced’ ", "’your own rules’ or‘ your voice’"],
-      agreeableness: ["social or family harmony", "‘family’ or ‘cooperation’"],
-      neuroticism: ["fearful or uncertain activities ", "‘stability’ or ‘uncertainty’"],
+      openness: ["aspirational or inclusive themes", "‘solidarity’ or collective action "],
+      conscientiousness: ["gambling or risk-taking ", "‘gambling’ or ‘trust’"],
+      extraversion: ["successful, outspoken people", "outspoken or vocal themes"],
+      agreeableness: ["social or familial harmony", "familial or cooperative themes"],
+      neuroticism: ["fear and uncertainty", "‘stability’ or ‘uncertainty’"],
     },
     low: {
-      openness: ["conventional or traditional family scenes", "‘change is scary’, or ‘hassle’"],
-      conscientiousness: ["impulsive actions like gambling, risk taking", "‘sitting around’ or ‘time to act’"],
-      extraversion: ["solitary people, ‘loners’", "having ‘your say’ or contemplating ‘your future’"],
-      agreeableness: ["competitive sports, not being a ‘loser’", "losing’, ’quitting’ or ‘control’"],
-      neuroticism: ["laid back, relaxed scenes", "‘hassle’ or ‘worry’"],
+      openness: ["conventional or traditional families", "change and fear"],
+      conscientiousness: ["impulsive, risky actions", "risk and danger"],
+      extraversion: ["solitary people or ‘loners’", "thoughts of the future"],
+      agreeableness: ["competition or contest", "losing’, ’quitting’ or ‘control’"],
+      neuroticism: ["scenes of relaxation", "‘hassle’ or ‘worry’"],
     }
   }
 };
