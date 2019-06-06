@@ -11,7 +11,7 @@ const styles = {
     backgroundRepeat: 'no-repeat',
   },
 };
-const imageCount = 3;
+const imageCount = 12;
 
 class FooterLogo extends React.Component {
   constructor(props) {

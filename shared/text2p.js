@@ -17,7 +17,7 @@ export default {
     poles: ['Impulsive and Spontaneous', 'Organized and Hard-working'],
     meta: 'People scoring high on this trait can be described as organized, reliable, and efficient, while people scoring low on this trait are generally characterized as spontaneous and impulsive.',
     text: [
-          'You are somewhat impulsive, even whimsical at times. But you can make decisions quickly and decisively. Friends might call you colourful, and just generally fun to be with...',
+          'You are somewhat impulsive, even whimsical... But you are able to make decisions quickly and decisively. Friends might call you colourful, and just generally fun to be with...',
           'You\'re spontaneous and fun and you like to do unexpected things to keep life interesting. You aren’t unreliable per se, but you have been known to slip up from time to time.',
           'You are random and fun to be around but you can plan when life requires it. Depending on the situation, you can make quick decisions or deliberate for longer if necessary.',
           'You avoid trouble through planning and imagine that you persistence will get you where you want to go.',

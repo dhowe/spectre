@@ -60,7 +60,7 @@ class OCEANReveal extends NavigationHack {
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive progressNumber="three" />
         {sentences.map((sent,i) => (
-          <Typography component="h6" style={{ marginTop: '170px'}}
+          <Typography component="h6" style={{ margin: '110px 100px 100px 100px', color:'gray'}}
             key={i} variant="h6">{sent}</Typography>
         ))}
         <Modal
