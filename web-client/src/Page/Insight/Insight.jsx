@@ -56,8 +56,8 @@ class Insight extends NavigationHack {
           <div onTouchEnd={this.EnableButton}>
             <TextSliderText leftText={leftText} rightText={rightText} middleText={middleText} />
           </div>
-          <Link className={this.state.buttonEnabled ? 'true' : 'disabled'} to={next}>
-            <IconButton enabled={this.state.buttonEnabled} icon="next" text="Next" />
+          <Link className={true} to={next}>
+            <IconButton enabled={true} icon="next" text="Next" />
           </Link>
         </div>
         <FooterLogo />
