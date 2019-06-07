@@ -86,14 +86,16 @@ class OCEANReveal extends NavigationHack {
           {this.sentences.map((sent, i) => {
             const fadeKey = `fade-${i}`;
             return (
-              <Typography
-                variant="h6"
-                component="h6"
-                key={fadeKey}
-                style={{ color: colours.grey, width: '80%', margin: '50px 0' }}
-              >
-                {sent}
-              </Typography>
+              <Fade key={`${fadeKey}-${i}`} in={this.state[fadeKey]} style={{ transitionDelay: `${((this.durationMS * 2) + this.showMS) * i}ms`, transitionDuration: `${this.durationMS}ms` }}>
+                <Typography
+                  variant="h6"
+                  component="h6"
+                  key={fadeKey}
+                  style={{ color: colours.grey, width: '80%', margin: '50px 0' }}
+                >
+                  {sent}
+                </Typography>
+              </Fade>
             );
           })}
         </div>
