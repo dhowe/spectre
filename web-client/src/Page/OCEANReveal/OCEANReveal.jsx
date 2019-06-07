@@ -44,7 +44,7 @@ class OCEANReveal extends NavigationHack {
     ];
     let summary = user.generateSummary();
     console.log(summary);
-    this.sentences = this.sentences.concat(/*summary*/);
+    this.sentences = this.sentences.concat(summary);
 
     for (let i = 0; i < this.sentences.length; i++) {
       const fadeKey = `fade-${i}`;
