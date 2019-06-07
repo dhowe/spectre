@@ -16,8 +16,7 @@ const styles = {
     width: '100%',
     color: 'black',
   },
-  content: {
-  },
+  content: {},
   image: {
     width: '160px',
     height: '130px',
@@ -84,15 +83,14 @@ class DarkAd extends NavigationHack {
     const { classes } = this.props;
 
     if (!this.context.hasOceanTraits()) this.context._randomizeTraits();
-    this.context.target = this.context.target || UserSession.defaults[Math.floor(Math.random()*9)];
-    this.context.adIssue = this.context.adIssue || 'remain';
+    this.context.target = this.context.target || UserSession.defaults[0];
+    this.context.adIssue = this.context.adIssue || 'leave';
 
     const issue = this.context.adIssue;
-    const cimage = 'imgs/vote-'+issue+'.png';
     const slogans = this.context.targetAdSlogans();
-    slogans.forEach(s => s = s.replace('/<br>/',''));
     const images = this.context.targetAdImages();
-    images.push("imgs/darkadred.png");
+    const redimg = UserSession.imageDir + 'darkadred.png';
+    const cimage = UserSession.imageDir + 'vote-' + issue + '.png';
 
     return (
       <div className={classes.root + " darkAd"}>
@@ -111,17 +109,17 @@ class DarkAd extends NavigationHack {
             <img className={classes.image} src={images[3]} alt="leave" onClick={() => { this.setState({ image: images[3], defaultImageSelected: false }); }}></img>
           </div>
           <div>
-            <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.state.defaultImageSelected && this.setState({ image: images[4] }); this.setState({ text: slogans[0], defaultImageSelected: false }) }}>
+            <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.state.defaultImageSelected && this.setState({ image: redimg }); this.setState({ text: slogans[0], defaultImageSelected: false }) }}>
               {slogans[0].split(' ').slice(0, 2).join(' ') + '...'}
             </Button>
-            <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.state.defaultImageSelected && this.setState({ image: images[4] }); this.setState({ text: slogans[1], defaultImageSelected: false }) }}>
+            <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.state.defaultImageSelected && this.setState({ image: redimg }); this.setState({ text: slogans[1], defaultImageSelected: false }) }}>
               {slogans[1].split(' ').slice(0, 2).join(' ') + '...'}
             </Button>
             <div>
-              <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.state.defaultImageSelected && this.setState({ image: images[4] }); this.setState({ text: slogans[2], defaultImageSelected: false }) }}>
+              <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.state.defaultImageSelected && this.setState({ image: redimg }); this.setState({ text: slogans[2], defaultImageSelected: false }) }}>
                 {slogans[2].split(' ').slice(0, 2).join(' ') + '...'}
               </Button>
-              <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.state.defaultImageSelected && this.setState({ image: images[4] }); this.setState({ text: slogans[3], defaultImageSelected: false }) }}>
+              <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.state.defaultImageSelected && this.setState({ image: redimg }); this.setState({ text: slogans[3], defaultImageSelected: false }) }}>
                 {slogans[3].split(' ').slice(0, 2).join(' ') + '...'}
               </Button>
             </div>
