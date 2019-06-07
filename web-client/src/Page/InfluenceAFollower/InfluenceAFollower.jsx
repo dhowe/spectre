@@ -47,7 +47,6 @@ class InfluenceAFollower extends NavigationHack {
 
   handleSelect(target) {
     this.context.target = target;
-    console.log('TARGET:', target);
     this.next();
   }
 
@@ -61,9 +60,10 @@ class InfluenceAFollower extends NavigationHack {
     return result;
   }
 
-  shuffle(arr) {
+  shuffle(arr) { // TODO: duplicated
     if (!arr) arr = [];
     arr.sort(() => Math.random() - 0.5);
+    return arr;
   }
 
   render() {

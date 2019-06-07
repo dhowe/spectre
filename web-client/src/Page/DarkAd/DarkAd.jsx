@@ -82,15 +82,13 @@ class DarkAd extends NavigationHack {
 
   render() {
     const { classes } = this.props;
-    const campaignImage = this.context.adIssue === 'remain' ? 'imgs/vote-remain.png' : 'imgs/vote-leave.svg'
 
+    if (!this.context.hasOceanTraits()) this.context._randomizeTraits();
+    this.context.target = this.context.target || UserSession.defaults[Math.floor(Math.random()*9)];
     this.context.adIssue = this.context.adIssue || 'leave';
-    if (typeof this.context.target === 'undefined') {
-      this.context.setTarget({ "id": "111111111111111111111111", "name": "Remy", "traits": { "openness": 0.5818180970605207, "conscientiousness": 0.07645862267650672, "extraversion": 0.2607193320319028, "agreeableness": 0.012588228025398163, "neuroticism": 0.16712815071948772 } });
-    }
-    if (!this.context.hasOceanTraits()) { // TMP
-      this.context._randomizeTraits();
-    }
+
+    const issue = this.context.adIssue;
+    const cimage = 'imgs/vote-'+issue+'.png';
     const slogans = this.context.targetAdSlogans();
     slogans.forEach(s => s = s.replace('/<br>/',''));
     const images = this.context.targetAdImages();
@@ -104,7 +102,7 @@ class DarkAd extends NavigationHack {
           <div className={classes.ad}>    { /* adIssue should never change after being selected '*/}
             <img className={classes.adImage} src={this.state.image} alt="leave"></img>
             <p className={classes.adText}>{this.state.text}</p>
-            {!this.state.defaultImageSelected ? <img className={classes.campaignImage} src={campaignImage} alt="leave"></img> : ''}
+            {!this.state.defaultImageSelected ? <img className={classes.cimage} src={cimage} alt="leave"></img> : ''}
           </div>
           <div>
             <img className={classes.image} src={images[0]} alt="leave" onClick={() => { this.setState({ image: images[0], defaultImageSelected: false }); }}></img>

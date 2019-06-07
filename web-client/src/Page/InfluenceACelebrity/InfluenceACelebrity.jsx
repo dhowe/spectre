@@ -32,6 +32,8 @@ class InfluenceACelebrity extends NavigationHack {
     this.stop = this.stop.bind(this);
     this.save = this.save.bind(this);
     this.state = { video: null };
+
+    // a random set, always with two femals
     let fcelebs = ['Kardashian', 'Abramovic'];
     let mcelebs = ['Freeman', 'Duchamp', 'Mercury', 'Trump', 'Zuckerberg'];
     mcelebs = InfluenceACelebrity.shuffle(mcelebs).splice(0, 4);
@@ -44,24 +46,10 @@ class InfluenceACelebrity extends NavigationHack {
     this.next();
   }
 
-  // Nabbed from StackOverflow: https://stackoverflow.com/a/2450976
-  static shuffle(array) {
-    let currentIndex = array.length;
-    let temporaryValue;
-    let randomIndex;
-
-    // While there remain elements to shuffle...
-    while(currentIndex !== 0) {
-      // Pick a remaining element...
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
-
-      // And swap it with the current element.
-      temporaryValue = array[currentIndex];
-      array[currentIndex] = array[randomIndex];
-      array[randomIndex] = temporaryValue;
-    }
-    return array;
+  static shuffle(arr) {
+    if (!arr) arr = [];
+    arr.sort(() => Math.random() - 0.5);
+    return arr;
   }
 
   stop() {
