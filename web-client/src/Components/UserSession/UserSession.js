@@ -29,6 +29,9 @@ UserSession.defaults = [
   { "id": "999999999999999999999999", "name": "Terry", "traits": { "openness": 0.30426635874427355, "conscientiousness": 0.5341590821850326, "extraversion": 0.509056193557774, "agreeableness": 0.8109949037515642, "neuroticism": 0.4252958718086144 } }
 ];
 
+UserSession.profileDir = User.profileDir
+UserSession.imageDir = User.imageDir
+
 let doConfig = () => {
 
   // get auth from .env or heroku configs

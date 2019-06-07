@@ -85,7 +85,7 @@ class DarkAd extends NavigationHack {
 
     if (!this.context.hasOceanTraits()) this.context._randomizeTraits();
     this.context.target = this.context.target || UserSession.defaults[Math.floor(Math.random()*9)];
-    this.context.adIssue = this.context.adIssue || 'leave';
+    this.context.adIssue = this.context.adIssue || 'remain';
 
     const issue = this.context.adIssue;
     const cimage = 'imgs/vote-'+issue+'.png';

@@ -27,16 +27,18 @@ class YourPower extends NavigationHack {
   }
 
   render() {
-    console.log('User:', this.context);
+
     const { classes } = this.props;
-    this.context.name = this.context.name || 'Barney';
-    this.context.virtue = this.context.virtue || 'power';
+    const name = this.context.name;
+    let heading = name ? (name+ ', your ') : 'Your ';
+    heading += (this.context.virtue || 'Power') + ' is growing.';
+
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive progressNumber="one" />
         <div className={`${classes.content} content`}>
           <Fade in style={{ transitionDelay: '200ms', marginTop: '300px' }}>
-            <Typography component="h6" variant="h6">{this.context.name || 'Remy'}, your {this.context.virtue || 'Power'} is growing.</Typography>
+            <Typography component="h6" variant="h6">{heading} </Typography>
           </Fade>
           <Fade in style={{ transitionDelay: '2000ms', marginBottom: '200px' }}>
             <Typography component="h6" variant="h6">Let's put it into practice.</Typography>
