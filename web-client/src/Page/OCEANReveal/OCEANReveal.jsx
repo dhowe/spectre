@@ -40,9 +40,11 @@ class OCEANReveal extends NavigationHack {
 
     this.sentences = [
       'A little data and a little tech goes a long way.',
-      'We haven\'t known you for very long, but already we know that…',
+      'We haven\'t known you for very long, but already we know…',
     ];
-    this.sentences = this.sentences.concat(user.generateSummary());
+    let summary = user.generateSummary();
+    console.log(summary);
+    this.sentences = this.sentences.concat(/*summary*/);
 
     for (let i = 0; i < this.sentences.length; i++) {
       const fadeKey = `fade-${i}`;
