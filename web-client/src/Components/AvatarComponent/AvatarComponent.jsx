@@ -2,6 +2,8 @@ import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import UserSession from '../../Components/UserSession/UserSession';
+import User from '../../Components/User/User';
 import PropTypes from 'prop-types';
 
 import './AvatarComponent.scss';
@@ -31,37 +33,39 @@ class AvatarComponent extends React.Component {
 
   constructor(props) {
     super(props);
-
     this.state = { className: props.className };
   }
 
   render() {
     const { handleClick, target, active } = this.props;
     const { className } = this.state;
+
     return (
       <div onClick={handleClick}>
         <Grid container justify="center" alignItems="center">
           <Avatar
-            alt={target.name}
-            src={target.image}
+            alt={target.name }
+            src={target.image }
             className={(active || className !== 'active') ? 'avatar-image' : null}
             style={(active ? styles.active : null)}
-            onError={() => { this.src = '/profiles/default.jpg'; }}
+            onError={() => { this.src = User.profileDir + 'default.jpg'; }}
           />
         </Grid>
-        <Typography className="avatar-name" style={className === 'targeted' ? styles.targeted_text : null}>{target.name}</Typography>
+        <Typography className="avatar-name" style={className === 'targeted' ?
+          styles.targeted_text : null}>{target.name}</Typography>
       </div>
     );
   }
 }
 
+const defaultTarget = {
+  image: User.profileDir +UserSession.defaults[0].id + '.jpg',
+  name: UserSession.defaults[0].name
+}
 AvatarComponent.defaultProps = {
-  target: {
-    name: 'Remy Sharp',
-    image: 'https://material-ui.com/static/images/avatar/1.jpg',
-  },
   className: null,
   active: false,
+  target: defaultTarget,
   handleClick: () => {},
 };
 AvatarComponent.propTypes = {

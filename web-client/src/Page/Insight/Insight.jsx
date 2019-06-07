@@ -44,19 +44,18 @@ class Insight extends NavigationHack {
     } = this.props;
 
     this.context.target = this.context.target || UserSession.defaults[0];
-    const image = this.context.targetImgUrl() || '/profiles/default.jpg';
-    const name = this.context.target.name;
-
+    const tname = this.context.target.name;
+    const timage = this.context.targetImgUrl();
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive progressNumber={progress} />
         <div className={`${classes.content} content insightPage`}>
-          <Typography component="h6" variant="h6">{question(name)}</Typography>
-          <AvatarComponent target={{ image }} />
+          <Typography component="h6" variant="h6">{question(tname)}</Typography>
+          <AvatarComponent target= {{name: tname, image: timage }} />
           <div onTouchEnd={this.EnableButton}>
             <TextSliderText leftText={leftText} rightText={rightText} middleText={middleText} />
           </div>
-          <Link className={true} to={next}>
+          <Link to={next}>
             <IconButton enabled={true} icon="next" text="Next" />
           </Link>
         </div>

@@ -51,7 +51,7 @@ class InfluenceAFollower extends NavigationHack {
     this.next();
   }
 
-  renderSimilars(cb) {
+  renderSimilars() {
     let result = UserSession.defaults; //UserSession.defaultUsers();
     const sims = this.context.similars;
     if (sims && sims.length) result = sims;
@@ -76,11 +76,11 @@ class InfluenceAFollower extends NavigationHack {
           <Typography component="p" variant="body1" className="community">Spectre has a global community of followers.</Typography>
           <Typography component="h5" variant="h5" className="choose-participant">Choose one:</Typography>
           <AvatarCircle>
-            {this.renderSimilars().map((n, i) => (
+            {this.renderSimilars().map((sim, i) => (
               <AvatarComponent
-                handleClick={() => this.handleSelect(n)}
+                handleClick={() => this.handleSelect(sim)}
                 key={AvatarComponent.generateKey(i)}
-                target={{ name: n.name, image: `/profiles/${n.id}.jpg` }}
+                target={{ name: sim.name, image: `${User.profileDir}/${sim.id}.jpg` }}
               />
             ))}
          </AvatarCircle>

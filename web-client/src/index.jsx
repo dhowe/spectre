@@ -38,7 +38,7 @@ function exitFull() {
   }
 }
 
-goFull();
+//goFull();
 
 document.addEventListener('keypress', (event) => {
   if (event.keyCode === 99) {

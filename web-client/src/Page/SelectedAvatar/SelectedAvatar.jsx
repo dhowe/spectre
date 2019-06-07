@@ -46,7 +46,7 @@ class SelectedAvatar extends NavigationHack {
     const { classes } = this.props;
 
     this.context.target = this.context.target || UserSession.defaults[0];
-    const timage = this.context.targetImgUrl() || '/profiles/default.jpg';
+    const timage = this.context.targetImgUrl();
     const tname = this.context.target.name;
     return (
       <div className={`${classes.root} SelectedAvatar`}>
@@ -54,7 +54,7 @@ class SelectedAvatar extends NavigationHack {
         <div className={`${classes.content} content`}>
           <p className="title">You selected:</p>
           <div>
-            <AvatarComponent target={{ image: timage }} />
+            <AvatarComponent target={ {name: tname, image: timage } } />
             <p className="avatarName">{tname}</p>
           </div>
           <p className="copy">Let&apos;s start by verifying some of the basics to unlock insight into {tname}. </p>

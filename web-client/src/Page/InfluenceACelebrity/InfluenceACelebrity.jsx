@@ -80,7 +80,6 @@ class InfluenceACelebrity extends NavigationHack {
     const { classes, celebrity } = this.props;
     const { video } = this.state;
     const user = this.context;
-
     user.virtue = user.virtue || 'power';
 
     return (

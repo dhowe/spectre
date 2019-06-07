@@ -37,7 +37,6 @@ class SuccessAd extends NavigationHack {
     const { classes } = this.props;
     this.context.adIssue = this.context.adIssue || 'leave';
     this.context.target = this.context.target || UserSession.defaults[0];
-    const timage = this.context.targetImgUrl() || '/profiles/default.jpg';
     const tname = this.context.target.name;
     const issue = this.context.adIssue;
     return (

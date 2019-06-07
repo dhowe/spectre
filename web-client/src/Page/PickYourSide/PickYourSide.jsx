@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
-import OceanProfile from '../../Components/OceanProfile/OceanProfile';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import NavigationHack from '../NavigationHack';
@@ -28,7 +27,6 @@ class PickYourSide extends NavigationHack {
   render() {
     const { classes } = this.props;
     this.context.target = this.context.target || UserSession.defaults[0];
-    const timage = this.context.targetImgUrl() || '/profiles/default.jpg';
     const tname = this.context.target.name;
     return (
       <div className={classes.root}>

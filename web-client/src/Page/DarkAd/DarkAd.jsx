@@ -5,7 +5,6 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import IconButton from '../../Components/IconButton/IconButton';
-import OceanProfile from '../../Components/OceanProfile/OceanProfile';
 import UserSession from '../../Components/UserSession/UserSession';
 import NavigationHack from '../NavigationHack';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';

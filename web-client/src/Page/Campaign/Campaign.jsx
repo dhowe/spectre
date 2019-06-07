@@ -29,12 +29,11 @@ class Campaign extends NavigationHack {
     const { classes } = this.props;
     this.context.adIssue = this.context.adIssue || 'leave';
     this.context.target = this.context.target || UserSession.defaults[0];
-    const timage = this.context.targetImgUrl() || '/profiles/default.jpg';
-    const tname = this.context.target.name;
-    const name = this.context.target.name.ucf();
     const pron = this.context.target.gender === 'male' ? 'he' : 'she';
-    const poss = this.context.target.gender === 'male' ? 'him' : 'her';
+    //const poss = this.context.target.gender === 'male' ? 'him' : 'her';
     const infls = this.context.targetAdInfluences();
+    const tname = this.context.target.name;
+    const name = tname.ucf();
 
     return (
       <div className={classes.root}>

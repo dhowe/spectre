@@ -35,10 +35,7 @@ export default class User {
       template = null;
     }
 
-    if (typeof this.gender === 'undefined') {
-      console.error('gender required, found: ' + this.gender);
-      this.gender = 'female';
-    }
+    if (typeof this.gender === 'undefined') this.gender = 'female';
 
     numSentences = numSentences || 3;
 
@@ -48,8 +45,6 @@ export default class User {
     let parser = new Parser(this);
     let traitNames = User.oceanTraits;
     let lines = this._descriptionLines(template);
-
-    //lines.forEach(l => parser.parse(l));
 
     lines.forEach((l, i) => {
 
@@ -203,9 +198,10 @@ export default class User {
   }
 
   targetImgUrl() {
-    //let target = this.getTarget();
-    return this.target.id ? User.imageDir +
-      this.target.id + '.jpg' : false;
+    let tid = 'default';
+    if (typeof this.target.id !== 'undefined' && this.target.id)
+      tid = this.target.id;
+    return User.profileDir + tid+ '.jpg';
   }
 
   setBrands(brandData) {
@@ -425,7 +421,8 @@ export default class User {
   }
 };
 
-User.imageDir = '/profiles/';
+User.profileDir = process.env.PUBLIC_URL+'/profiles/';
+User.imageDir = process.env.PUBLIC_URL+'/imgs/';
 
 /**
  * MongoDB database schema for the application

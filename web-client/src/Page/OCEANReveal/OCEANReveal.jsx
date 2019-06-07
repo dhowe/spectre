@@ -8,6 +8,7 @@ import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import Video from '../../Components/Video/Video';
 import Modal from '../../Components/Modal/Modal';
+import User from '../../Components/User/User';
 import NavigationHack from '../NavigationHack';
 
 import colours from '../../colors.scss';
@@ -32,16 +33,17 @@ class OCEANReveal extends NavigationHack {
     this.modalContent = '';
     this.modalTitle = '';
 
-    const user = this.context || { celebrity: 'Freeman', generateSummary: () => {}, hasOceanTraits: () => true };
-
+    const user = this.context || new User(UserSession.defaults[0]);
     if (user && !user.hasOceanTraits()) {
       user._randomizeTraits();
     }
+
     this.sentences = [
       'A little data and a little tech goes a long way.',
       'We haven\'t known you for very long, but already we know that…',
     ];
     this.sentences = this.sentences.concat(user.generateSummary());
+
     for (let i = 0; i < this.sentences.length; i++) {
       const fadeKey = `fade-${i}`;
       this.state = {

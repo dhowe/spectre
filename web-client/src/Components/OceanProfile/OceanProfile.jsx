@@ -8,9 +8,6 @@ import { ReactComponent as Conscientiousness } from "../../Icons/conscientiousne
 import { ReactComponent as Extroversion } from "../../Icons/extroversion.svg";
 import { ReactComponent as Agreeableness } from "../../Icons/agreeableness.svg";
 import { ReactComponent as Neuroticism } from "../../Icons/neuroticism.svg";
-//import { ReactComponent as Person } from "../../Icons/person.svg";
-import { ReactComponent as Play } from "../../Icons/play.svg";
-//import { ReactComponent as Question } from "../../Icons/question.svg";
 
 import "./OceanProfile.scss";
 
