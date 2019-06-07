@@ -48,7 +48,6 @@ class OCEANReveal extends NavigationHack {
         ...this.state,
         [fadeKey]: true,
       };
-
     }
     setTimeout(this.showVideo, ((this.durationMS * 2) + this.showMS) * this.sentences.length);
   }
@@ -74,7 +73,7 @@ class OCEANReveal extends NavigationHack {
         <SpectreHeader colour="white" progressActive progressNumber="three" />
         <div style={{
           height: 600,
-          marginTop: 400,
+          marginTop: 300,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
