@@ -91,6 +91,7 @@ class DarkAd extends NavigationHack {
     const images = this.context.targetAdImages();
     const redimg = UserSession.imageDir + 'darkadred.png';
     const cimage = UserSession.imageDir + 'vote-' + issue + '.png';
+    console.log('CLASS:'+classes.cimage, cimage, classes);
 
     return (
       <div className={classes.root + " darkAd"}>
@@ -100,7 +101,7 @@ class DarkAd extends NavigationHack {
           <div className={classes.ad}>    { /* adIssue should never change after being selected '*/}
             <img className={classes.adImage} src={this.state.image} alt="leave"></img>
             <p className={classes.adText}>{this.state.text}</p>
-            {!this.state.defaultImageSelected ? <img className={classes.cimage} src={cimage} alt="leave"></img> : ''}
+            {!this.state.defaultImageSelected ? <img className={classes.campaignImage} src={cimage} alt="leave"></img> : ''}
           </div>
           <div>
             <img className={classes.image} src={images[0]} alt="leave" onClick={() => { this.setState({ image: images[0], defaultImageSelected: false }); }}></img>
