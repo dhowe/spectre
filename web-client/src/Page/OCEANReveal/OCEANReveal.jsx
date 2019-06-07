@@ -52,7 +52,6 @@ class OCEANReveal extends NavigationHack {
         ...this.state,
         [fadeKey]: true,
       };
-
     }
     setTimeout(this.showVideo, ((this.durationMS * 2) + this.showMS) * this.sentences.length);
   }
@@ -78,7 +77,7 @@ class OCEANReveal extends NavigationHack {
         <SpectreHeader colour="white" progressActive progressNumber="three" />
         <div style={{
           height: 600,
-          marginTop: 400,
+          marginTop: 300,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
@@ -87,16 +86,14 @@ class OCEANReveal extends NavigationHack {
           {this.sentences.map((sent, i) => {
             const fadeKey = `fade-${i}`;
             return (
-              <Fade key={`${fadeKey}-${i}`} in={this.state[fadeKey]} style={{ transitionDelay: `${((this.durationMS * 2) + this.showMS) * i}ms`, transitionDuration: `${this.durationMS}ms` }}>
-                <Typography
-                  variant="h6"
-                  component="h6"
-                  key={fadeKey}
-                  style={{ color: colours.grey, width: '80%', margin: '110px 100px 100px 100px' }}
-                >
-                  {sent}
-                </Typography>
-              </Fade>
+              <Typography
+                variant="h6"
+                component="h6"
+                key={fadeKey}
+                style={{ color: colours.grey, width: '80%', margin: '50px 0' }}
+              >
+                {sent}
+              </Typography>
             );
           })}
         </div>
