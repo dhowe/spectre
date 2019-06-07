@@ -59,12 +59,12 @@ class AvatarComponent extends React.Component {
 }
 
 const defaultTarget = {
-  image: User.profileDir +UserSession.defaults[0].id + '.jpg',
+  image: User.profileDir +UserSession.defaults[0]._id + '.jpg',
   name: UserSession.defaults[0].name
 }
 AvatarComponent.defaultProps = {
-  className: null,
   active: false,
+  className: null,
   target: defaultTarget,
   handleClick: () => {},
 };

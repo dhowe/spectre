@@ -51,9 +51,16 @@ class InfluenceAFollower extends NavigationHack {
   }
 
   renderSimilars() {
-    let result = UserSession.defaults; //UserSession.defaultUsers();
+    let result = UserSession.defaults;
     const sims = this.context.similars;
-    if (sims && sims.length) result = sims;
+    if (sims && sims.length) {
+      console.log('using sims', sims);
+      result = sims;
+    }
+    else {
+      console.log('using defaults');
+
+    }
     this.shuffle(result);
     result = result.slice(0, 6);
     console.log(result);
@@ -80,7 +87,7 @@ class InfluenceAFollower extends NavigationHack {
               <AvatarComponent
                 handleClick={() => this.handleSelect(sim)}
                 key={AvatarComponent.generateKey(i)}
-                target={{ name: sim.name, image: `${User.profileDir}/${sim.id}.jpg` }}
+                target={{ name: sim.name, image: `${User.profileDir}/${sim._id}.jpg` }}
               />
             ))}
          </AvatarCircle>

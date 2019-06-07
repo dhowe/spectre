@@ -60,10 +60,10 @@ describe('Client User', function () {
       // expect(user.getSimilars().length).eq(2);
       // expect(user.getSimilars()[0].name).eq('Dave');
       // expect(user.getSimilars()[1].name).eq('Jen');
-      // expect(user.getSimilars()[0].id).eq('1111');
-      // expect(user.getSimilars()[1].id).eq('2222');
+      // expect(user.getSimilars()[0]._id).eq('1111');
+      // expect(user.getSimilars()[1]._id).eq('2222');
       // expect(user.getTarget().name).eq('Jen');
-      // expect(user.getTarget().id).eq('2222');
+      // expect(user.getTarget()._id).eq('2222');
       // expect(user.getTarget().traits.openness).is.gte(0);
       // expect(user.getTarget().traits.openness).is.lt(1);
     });
@@ -86,8 +86,8 @@ describe('Client User', function () {
       expect(user.getSimilars().length).eq(2);
       expect(user.getSimilars()[0].name).eq('Dave');
       expect(user.getSimilars()[1].name).eq('Jen');
-      expect(user.getSimilars()[0].id).eq('1111');
-      expect(user.getSimilars()[1].id).eq('2222');
+      expect(user.getSimilars()[0]._id).eq('1111');
+      expect(user.getSimilars()[1]._id).eq('2222');
     });
 
     it('Should correctly set target as strings', function () {
@@ -100,7 +100,7 @@ describe('Client User', function () {
       expect(user.name).eq("dave");
       expect(user.login).eq("dave@abc.com");
       expect(user.getTarget().name).eq('Jen');
-      expect(user.getTarget().id).eq('2222');
+      expect(user.getTarget()._id).eq('2222');
       expect(user.getTarget().traits.openness).is.gte(0);
       expect(user.getTarget().traits.openness).is.lt(1);
     });

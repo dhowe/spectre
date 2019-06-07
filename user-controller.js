@@ -92,14 +92,14 @@ const update = function (req, res) {
       // if (typeof sims !== 'undefined' && sims.length) {
       //   usr.similars = sims;
       // }
-      console.log("ALMOST1....",usr.id, usr.similars.length);
+      console.log("ALMOST1....",usr._id, usr.similars.length);
 
       usr.save((err, u) => {
         if (err) {
           console.error('ERROR(22): ', err, u);
-          return error(res, 'Unable to update user #' + u.id);
+          return error(res, 'Unable to update user #' + u._id);
         }
-        console.log("ALMOST2....",u.id, u.similars.length);
+        console.log("ALMOST2....",u._id, u.similars.length);
         res.status(200).send(u);
       });
     }

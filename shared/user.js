@@ -199,8 +199,8 @@ export default class User {
 
   targetImgUrl() {
     let tid = 'default';
-    if (typeof this.target.id !== 'undefined' && this.target.id)
-      tid = this.target.id;
+    if (typeof this.target._id !== 'undefined' && this.target._id)
+      tid = this.target._id;
     return User.profileDir + tid+ '.jpg';
   }
 
