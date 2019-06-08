@@ -26,14 +26,15 @@ const styles = {
 class OCEANReveal extends NavigationHack {
   constructor(props) {
     super(props, '/take-back-control');
-    this.durationMS = 500;
     this.showMS = 2000;
+    this.durationMS = 500;
     this.showVideo = this.showVideo.bind(this);
     this.state = { modalOpen: false };
     this.modalContent = '';
     this.modalTitle = '';
 
-    const user = this.context || new User(UserSession.defaults[0]);
+    const user = this.context || new User(UserSession.defaults[Math.floor
+      (Math.random()*UserSession.defaults.length)]);
     if (user && !user.hasOceanTraits()) {
       user._randomizeTraits();
     }
@@ -43,8 +44,8 @@ class OCEANReveal extends NavigationHack {
       'We haven\'t known you for very long, but already we know…',
     ];
     let summary = user.generateSummary();
-    console.log(summary);
-    this.sentences = this.sentences.concat(/*summary*/);
+    this.sentences = this.sentences.concat(summary);
+    console.log(this.sentences);
 
     for (let i = 0; i < this.sentences.length; i++) {
       const fadeKey = `fade-${i}`;
@@ -77,7 +78,7 @@ class OCEANReveal extends NavigationHack {
         <SpectreHeader colour="white" progressActive progressNumber="three" />
         <div style={{
           height: 600,
-          marginTop: 300,
+          marginTop: 600,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
