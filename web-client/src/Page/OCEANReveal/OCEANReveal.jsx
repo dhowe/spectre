@@ -77,7 +77,7 @@ class OCEANReveal extends NavigationHack {
         <SpectreHeader colour="white" progressActive progressNumber="three" />
         <div style={{
           height: 600,
-          marginTop: 300,
+          marginTop: 400,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
@@ -90,7 +90,7 @@ class OCEANReveal extends NavigationHack {
                 variant="h6"
                 component="h6"
                 key={fadeKey}
-                style={{ color: colours.grey, width: '80%', margin: '50px 0' }}
+                style={{ color: colours.grey, width: '80%', margin: '50px 0', marginTop: '50px' }}
               >
                 {sent}
               </Typography>
