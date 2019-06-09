@@ -34,11 +34,11 @@ class PickYourSide extends NavigationHack {
         <div className={`${classes.content} content`}>
           <Typography component="h6" variant="h6" style={{ marginTop: '300px' }}>Persuade {tname} to:</Typography>
           <Link to="/campaign">
-            <img src="https://rednoise.org/ftp/vote_leave.png" width={420} alt="leave"
+            <img src="/imgs/vote_leave.png" width={420} alt="leave"
                  onClick={() => { this.context.adIssue = 'leave'; }}></img>
           </Link>
           <Link to="/campaign" style={{ marginBottom: '100px' }}>
-            <img src='https://rednoise.org/ftp/vote_remain.png' width={300} alt="remain"
+            <img src='/imgs/vote_remain.png' width={300} alt="remain"
                  onClick={() => { this.context.adIssue = 'remain'; }}></img>
           </Link>
           <span/>
