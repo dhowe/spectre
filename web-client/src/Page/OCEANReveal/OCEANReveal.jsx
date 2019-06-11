@@ -33,11 +33,15 @@ class OCEANReveal extends NavigationHack {
     this.modalContent = '';
     this.modalTitle = '';
 
-    const user = this.context || new User(UserSession.defaults[0]);
+
+    let user = this.context;
+    if (typeof user === 'undefined') {
+      let idx = Math.floor(Math.random() * UserSession.defaults.length);
+      user = new User(UserSession.defaults[idx]);
+    }
     if (user && !user.hasOceanTraits()) {
       user._randomizeTraits();
     }
-
     this.sentences = [
       'A little data and a little tech goes a long way.',
       'We haven\'t known you for very long, but already we know…',
