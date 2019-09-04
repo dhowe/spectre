@@ -7,6 +7,7 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import IconButton from '../../Components/IconButton/IconButton';
+import './WeAreSorry.scss';
 
 const styles = {
   root: {
@@ -26,8 +27,8 @@ class WeAreSorry extends React.Component {
       <div className={classes.root}>
           <SpectreHeader colour="white" />
           <div className={classes.content + " content"}>
-              <Typography component="h5" variant="h5" style={{ marginTop: '170px', marginLeft: '100px', marginRight: '100px'}}>We’re sorry {(this.context.name||'Remy')},
-                we’re afraid you can’t&nbsp;do&nbsp;that.</Typography>
+          <Typography className="username" component="h3" variant="h3" >We’re sorry {(this.context.name||'Remy')},<br/>
+            <Typography className="normaltext" component="h3" variant="h3">we’re afraid you can’t do that.</Typography></Typography>
               <Link to="/goodbye" style={{ marginBottom: '270px'}}>
                   <IconButton icon="tick" text="Next" />
               </Link>
