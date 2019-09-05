@@ -8,6 +8,10 @@ import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import IconButton from '../../Components/IconButton/IconButton';
 import './WeAreSorry.scss';
+import Video from '../../Components/Video/Video';
+import Fade from '@material-ui/core/Fade';
+import Countdown from 'react-countdown-now';
+import NavigationHack from '../NavigationHack';
 
 const styles = {
   root: {
@@ -20,18 +24,55 @@ const styles = {
   }
 };
 
-class WeAreSorry extends React.Component {
+class WeAreSorry extends NavigationHack  {
+
+  constructor(props) {
+      super(props,'/Goodbye')
+      this.showVideo = this.showVideo.bind(this)
+
+      this.state = {
+        fadeOut: false
+      };
+    }
+
+  componentDidMount() {
+    setTimeout(function() { //Start the timer
+        this.setState({videoPlayback: true}) //After 1 second, set render to true
+    }.bind(this), 1000)
+
+  }
+
+  showVideo() {
+    this.video.play();
+  }
+  changeFade(){
+    this.state.fadeOut = !this.state.fadeOut;
+  }
   render() {
     const { classes } = this.props;
+    let isFade = true;
     return (
       <div className={classes.root}>
           <SpectreHeader colour="white" />
           <div className={classes.content + " content"}>
-          <Typography className="username" component="h3" variant="h3" >We’re sorry {(this.context.name||'Remy')},<br/>
-            <Typography className="normaltext" component="h3" variant="h3">we’re afraid you can’t do that.</Typography></Typography>
-              <Link to="/goodbye" style={{ marginBottom: '270px'}}>
-                  <IconButton icon="tick" text="Next" />
-              </Link>
+          <Fade in={!this.state.fadeOut} timeout={1000} style={{transitionDelay: '1000ms'}}>
+          <Typography className="normaltext" component="h3" variant="h3" ><strong className="username">We’re sorry {(this.context.name||'Remy')},<br/></strong>
+            we’re afraid you can’t do that.</Typography>
+            </Fade>
+
+              <Countdown
+                onComplete={this.showVideo}
+                date={Date.now() + 5000}
+                renderer={() => null}
+              />
+
+              <Video
+                ref={(el) => { this.video = el; }}
+                movie="/video/SpectreIntro.mp4"
+                autoPlay={false}
+                onComplete={this.next}
+              />
+
           </div >
           <FooterLogo />
       </div >
