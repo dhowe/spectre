@@ -7,7 +7,7 @@ import grey from '@material-ui/core/colors/grey';
 import SocialLogin from '../../Components/SocialLogin/SocialLogin';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import UserSession from '../../Components/UserSession/UserSession';
-
+import { Link } from 'react-router-dom';
 import './LoginPage.scss';
 import Video from '../../Components/Video/Video';
 import NavigationHack from '../NavigationHack';
@@ -176,7 +176,9 @@ class LoginPage extends NavigationHack {
             onComplete={this.next}
           />
           <SocialLogin handleSubmit={this.handleSubmit} />
+
         </div>
+                  <Link className='tos' to='#here'>Terms of Service</Link>
       </div>
     );
   }
