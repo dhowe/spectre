@@ -53,7 +53,7 @@ const styles = {
   },
   campaignImage: {
     position: 'absolute',
-    bottom: '10px',
+    bottom: '0px',
     right: '0',
     width: '150px',
   },
