@@ -4,6 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Modal from "@material-ui/core/Modal";
 import Button from "@material-ui/core/Button";
+import "./Modal.scss";
 
 function getModalStyle() {
   return {
@@ -20,9 +21,9 @@ const styles = theme => ({
     backgroundColor: "white",
     boxShadow: theme.shadows[5],
     outline: "none",
-    borderRadius: "8px",
-    border: "1px solid blue",
+
     padding: "12px"
+
   },
   title: {
     textAlign: "left"
@@ -44,8 +45,9 @@ function SimpleModal(props) {
       aria-describedby="simple-modal-description"
       open={props.isOpen}
       onClose={props.onClose}
+
     >
-      <div style={modalStyle} className={classes.paper}>
+      <div style={modalStyle} className={classes.paper} id="modal-title-div">
         <Typography variant="h6" className={classes.title} id="modal-title">
           {props.title}
         </Typography>
@@ -56,7 +58,7 @@ function SimpleModal(props) {
         >
           {props.content}
         </Typography>
-        <Button onClick={props.onClose}>Close</Button>
+        <Button onClick={props.onClose} id="simple-modal-button">Close</Button>
       </div>
     </Modal>
   );

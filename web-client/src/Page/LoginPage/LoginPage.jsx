@@ -178,7 +178,7 @@ class LoginPage extends NavigationHack {
           <SocialLogin handleSubmit={this.handleSubmit} />
 
         </div>
-                  <Link className='tos' to='#here'>Terms of Service</Link>
+          <Link className='tos' to='#here'>Terms of Service</Link>
       </div>
     );
   }

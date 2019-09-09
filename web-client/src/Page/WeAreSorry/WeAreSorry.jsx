@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
-import IconButton from '../../Components/IconButton/IconButton';
+//import IconButton from '../../Components/IconButton/IconButton';
 import './WeAreSorry.scss';
 import Video from '../../Components/Video/Video';
 import Fade from '@material-ui/core/Fade';
@@ -49,7 +49,6 @@ class WeAreSorry extends NavigationHack  {
   }
   render() {
     const { classes } = this.props;
-    let isFade = true;
     return (
       <div className={classes.root}>
           <SpectreHeader colour="white" />
