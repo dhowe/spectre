@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import FormControl from '@material-ui/core/FormControl';
 import UserSession from '../../Components/UserSession/UserSession';
 import Keyboard from 'react-simple-keyboard';
+import Autocaps from "./Autocaps";
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -73,6 +74,7 @@ class SocialLogin extends React.Component {
       name: '',
       focus: 'name',
       layoutName: 'default',
+      input: "",
       clearEmail: this.clearEmail,
     };
     this.unShiftNeeded = false;
@@ -89,7 +91,6 @@ class SocialLogin extends React.Component {
     } else if (button === '{delete}') {
       const { focus } = this.state;
       const input = this.state[focus];
-
       this.setState({
         [focus]: (input.substr(0, input.length - 1))
       });
@@ -107,6 +108,7 @@ class SocialLogin extends React.Component {
       }
     }
   }
+
 
   handleShift() {
     const { layoutName } = this.state;
@@ -130,6 +132,24 @@ class SocialLogin extends React.Component {
 
   render() {
     const { classes } = this.props;
+  //  console.log(this.state)
+    /*  For name field, first letter press SHIFT here*/
+    if(this.state.focus === "name"){
+      if(this.state.name.length === 0){
+        this.state.layoutName = 'shift'
+        this.unShiftNeeded = true;
+        //console.log("is empty, shift");
+      }
+    }
+    /*
+    if(this.state.focus === "email"){
+      if(this.state.email.length === 0){
+        this.state.layoutName = 'shift'
+        this.unShiftNeeded = true;
+        console.log("is empty, shift");
+      }
+    }
+    */
     return (
       <div className={`${classes.root} socialLogin`}>
         <div className={`${classes.content} socialLogin-content`}>
@@ -199,6 +219,7 @@ class SocialLogin extends React.Component {
               }}
               onKeyPress={button => this.onKeyPress(button)}
               layoutName={this.state.layoutName}
+            //  modules={[Autocaps]}
             />
             <IconButton onClick={e => this.props.handleSubmit(e, this.state)} enabled="white" colour="white" icon="next" text="Next" />
           </form>
