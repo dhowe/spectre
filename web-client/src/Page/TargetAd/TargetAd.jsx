@@ -36,16 +36,20 @@ class TargetAd extends NavigationHack {
         <Typography component="h6" variant="h6">
           Share your targeted ad with {tname}?
         </Typography>
-        <Link to="/success-ad">
+
           <Grid container justify="center">
             <Grid item>
+              <Link to="/success-ad">
               <IconButton icon="tick" text="Yes"/>
+              </Link>
             </Grid>
             <Grid item>
+            <Link to="/we-are-sorry"> 
               <IconButton icon="next" text="No" />
+              </Link>
             </Grid>
           </Grid>
-        </Link>
+
         <br/>
       </div>
       <FooterLogo />
