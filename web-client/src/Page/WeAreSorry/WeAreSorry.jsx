@@ -59,11 +59,11 @@ class WeAreSorry extends NavigationHack  {
             </Fade>
 
               <Countdown
-                onComplete={this.showVideo}
+                onComplete={this.next}
                 date={Date.now() + 5000}
                 renderer={() => null}
               />
-
+              /* video unused, go to goodbye page directly*/
               <Video
                 ref={(el) => { this.video = el; }}
                 movie="/video/SpectreIntro.mp4"
