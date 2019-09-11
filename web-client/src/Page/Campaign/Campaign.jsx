@@ -43,7 +43,7 @@ class Campaign extends NavigationHack {
             Now use a simple design tool to create a targeted Facebook ad.
           </Typography>
           <Typography component="h6" variant="h6">
-            {name}'s OCEAN profile shows that {pron} can be influenced by:
+            <strong>{name}</strong>'s OCEAN profile shows that {pron} can be influenced by:
           </Typography>
           <Typography component="h6" variant="h6">
             <strong>Images</strong> that contain {infls[0]}

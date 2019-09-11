@@ -46,7 +46,7 @@ class InsightComplete extends NavigationHack {
           <Typography component="h6" variant="h6">You've unlocked OCEAN profiling!</Typography>
           {/* INSERT OCEAN TOPBAR COMPONENT HERE (1080x450)*/}
           <OceanProfile subject={this.context.target} classes={classes}></OceanProfile>
-          <Typography component="h6" variant="h6">You now have the <strong>power</strong> to influence&nbsp;{tname}.</Typography>
+          <Typography component="h6" variant="h6">You now have the <strong>power</strong> to influence&nbsp;<strong>{tname}</strong>.</Typography>
           <IconButton icon="play" text="Next" onClick={() => this.video.play()} Button={<Button style={{ marginTop: 20, }} className={classes.button} variant="contained" color="primary">WTF is OCEAN?</Button>} />
           <Video ref={(el) => { this.video = el; }} onComplete={this.next} autoPlay={false} movie="/video/OceanIntro.mp4" />
         </div>

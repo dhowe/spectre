@@ -54,7 +54,7 @@ class WeAreSorry extends NavigationHack  {
           <SpectreHeader colour="white" />
           <div className={classes.content + " content"}>
           <Fade in={!this.state.fadeOut} timeout={1000} style={{transitionDelay: '1000ms'}}>
-          <Typography className="normaltext" component="h3" variant="h3" ><strong className="username">We’re sorry {(this.context.name||'Remy')},<br/></strong>
+          <Typography className="normaltext" component="h3" variant="h3" >We’re sorry <strong>{(this.context.name||'Remy')}</strong>,<br/>
             we’re afraid you can’t do that.</Typography>
             </Fade>
 
@@ -63,7 +63,7 @@ class WeAreSorry extends NavigationHack  {
                 date={Date.now() + 5000}
                 renderer={() => null}
               />
-              /* video unused, go to goodbye page directly*/
+
               <Video
                 ref={(el) => { this.video = el; }}
                 movie="/video/SpectreIntro.mp4"

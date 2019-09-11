@@ -34,7 +34,7 @@ class TargetAd extends NavigationHack {
       <div className={`${classes.content} content`}>
         <br/>
         <Typography component="h6" variant="h6">
-          Share your targeted ad with {tname}?
+          Share your targeted ad with <strong>{tname}</strong>?
         </Typography>
 
           <Grid container justify="center">
@@ -44,7 +44,7 @@ class TargetAd extends NavigationHack {
               </Link>
             </Grid>
             <Grid item>
-            <Link to="/we-are-sorry"> 
+            <Link to="/we-are-sorry">
               <IconButton icon="next" text="No" />
               </Link>
             </Grid>

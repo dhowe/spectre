@@ -24,9 +24,9 @@ class influences extends React.Component {
       <div className={classes.root}>
           <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
           <div className={classes.content + " content"}>
-              <Typography component="h6" variant="h6">{this.context.targetName}‘s OCEAN profile shows they are most likely influenced by:</Typography>
+              <Typography component="h6" variant="h6"><strong>{this.context.targetName}</strong>‘s OCEAN profile shows they are most likely influenced by:</Typography>
               <Typography component="h6" variant="h6">{influences.map((influence,i) => <p key={i}>&#10003;&nbsp;{influence}</p>)}</Typography>
-              <Typography component="h6" variant="h6">Use our design tool to create a targeted Facebook ad to influence {this.context.targetName}’s vote.</Typography>
+              <Typography component="h6" variant="h6">Use our design tool to create a targeted Facebook ad to influence <strong>{this.context.targetName}</strong>’s vote.</Typography>
               <Link to="/dark-ad">
                   <IconButton icon="next" text="Let's go" />
               </Link>

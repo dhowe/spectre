@@ -32,7 +32,7 @@ class PickYourSide extends NavigationHack {
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive progressNumber="one"/>
         <div className={`${classes.content} content`}>
-          <Typography component="h6" variant="h6" style={{ marginTop: '300px' }}>Persuade {tname} to:</Typography>
+          <Typography component="h6" variant="h6" style={{ marginTop: '300px' }}>Persuade <strong>{tname}</strong> to:</Typography>
           <Link to="/campaign">
             <img src="/imgs/vote_leave.png" width={420} alt="leave"
                  onClick={() => { this.context.adIssue = 'leave'; }}></img>

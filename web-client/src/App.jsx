@@ -76,7 +76,7 @@ class App extends React.Component {
       selectedFollower: {
         name: 'Remy',
         gender: 'man',
-        image: 'https://material-ui.com/static/images/avatar/1.jpg'
+        image: '/imgs/remy.jpg'
       },
     };
     this.test_state = this.test_state.bind(this);

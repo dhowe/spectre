@@ -57,7 +57,7 @@ class SelectedAvatar extends NavigationHack {
             <AvatarComponent target={ {name: tname, image: timage } } />
             <p className="avatarName">{tname}</p>
           </div>
-          <p className="copy">Let&apos;s start by verifying some of the basics to unlock insight into {tname}. </p>
+          <p className="copy">Let&apos;s start by verifying some of the basics to unlock insight into <strong>{tname}</strong>. </p>
           <p className="copy">Don’t worry, only you will see the results. </p>
           <Link to="/insight-gender">
             <Button className={classes.button}>Dive in</Button>
