@@ -77,10 +77,14 @@ class LoginPage extends NavigationHack {
       nameErrorCount: 0,
       modalOpen: false,
       clearEmail: true,
+      idleTimer : 0
     };
+    this.addinc = this.addinc.bind(this);
+    //this.handleIdle = this.handleIdle.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.modalContent = '';
     this.modalTitle = '';
+
   }
 
   componentWillMount() {
@@ -90,6 +94,15 @@ class LoginPage extends NavigationHack {
       console.log('User:', this.context);
     });
   }
+
+  addinc(){
+    this.state.idleTimer =this.state.idleTimer + 1;
+
+    var timer = this.state.idleTimer;
+    console.log(timer);
+  }
+
+
 
   handleSubmit(e, { name, email, clearEmail }) {
     e.preventDefault();
@@ -158,6 +171,7 @@ class LoginPage extends NavigationHack {
 
   render() {
     const { classes } = this.props;
+    var clockint = setInterval(this.addinc, 1000);
     return (
       <div className={classes.root + ' LoginPage'}>
         <SpectreHeader />
