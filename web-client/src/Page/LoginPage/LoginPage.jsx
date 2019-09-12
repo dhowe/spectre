@@ -61,6 +61,7 @@ const styles = {
   },
 };
 
+
 class LoginPage extends NavigationHack {
 
   static validEmail(email) {
@@ -86,13 +87,15 @@ class LoginPage extends NavigationHack {
     this.handleIdle = this.handleIdle.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.termsOfService = this.termsOfService.bind(this);
     this.modalContent = '';
     this.modalTitle = '';
+    this.intervall = '';
 
   }
   componentDidMount() {
     document.addEventListener('click', this.handleClick);
-    setInterval(this.handleIdle, 1000);
+    this.intervall = setInterval(this.handleIdle, 1000);
   }
 
   componentWillMount() {
@@ -102,22 +105,26 @@ class LoginPage extends NavigationHack {
       console.log('User:', this.context);
     });
     document.removeEventListener('click', this.handleClick);
+    clearInterval(this.intervall);
   }
 
 
   handleIdle(){
 
     let timer = this.state.idleTimer;
-  //  console.log(timer);
+    console.log(timer);
     if(timer > 10 ){
       this.state.isIdle = true;
     }else{
-      if(this.video.videoPlayer.current == null){
-        this.state.idleTimer = this.state.idleTimer + 1;
-      }
+      if(this.video != null ){
+        if(this.video.videoPlayer.current == null){
+          this.state.idleTimer = this.state.idleTimer + 1;
+        }
+    }
+
     }
     if(this.state.isIdle){
-      this.modalTitle = this.state.resetTimer;
+      this.modalTitle = this.state.resetTimer + '';
       this.modalContent = 'Are you still here?';
       this.setState({ modalOpen: true });
       this.state.resetTimer -= 1;
@@ -128,7 +135,6 @@ class LoginPage extends NavigationHack {
   }
 
   handleClick(e) {
-
     if (e) {
       this.state.idleTimer = 0;
       this.state.isIdle = false;
@@ -204,6 +210,13 @@ class LoginPage extends NavigationHack {
     this.video.play();
   }
 
+  termsOfService(){
+    console.log("click");
+    this.modalTitle = 'Terms of Service';
+    this.modalContent = 'Brungard told the court he -was drunk when the incident took placeBrungard told the court he -was drunk when the incident took placeBrungard told the court he -was drunk when the incident took placeBrungard told the court he -was drunk when the incident took placeBrungard told the court he -was drunk when the incident took placeBrungard told the court he -was drunk when the incident took place';
+    this.setState({ modalOpen: true });
+  }
+
   render() {
     const { classes } = this.props;
 
@@ -225,9 +238,8 @@ class LoginPage extends NavigationHack {
             onComplete={this.next}
           />
           <SocialLogin handleSubmit={this.handleSubmit} />
-
         </div>
-          <Link className='tos' to='#here'>Terms of Service</Link>
+          <div onClick={this.termsOfService}><Link className='tos' to='#here'>Terms of Service</Link></div>
       </div>
     );
   }
