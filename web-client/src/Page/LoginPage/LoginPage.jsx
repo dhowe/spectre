@@ -12,6 +12,7 @@ import './LoginPage.scss';
 import Video from '../../Components/Video/Video';
 import NavigationHack from '../NavigationHack';
 
+
 window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true; // TMP: #138
 
 const styles = {
@@ -77,14 +78,21 @@ class LoginPage extends NavigationHack {
       nameErrorCount: 0,
       modalOpen: false,
       clearEmail: true,
-      idleTimer : 0
+      idleTimer : 0,
+      resetTimer : 5,
+      isIdle : false
     };
-    this.addinc = this.addinc.bind(this);
-    //this.handleIdle = this.handleIdle.bind(this);
+
+    this.handleIdle = this.handleIdle.bind(this);
+    this.handleClick = this.handleClick.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.modalContent = '';
     this.modalTitle = '';
 
+  }
+  componentDidMount() {
+    document.addEventListener('click', this.handleClick);
+    setInterval(this.handleIdle, 1000);
   }
 
   componentWillMount() {
@@ -93,16 +101,43 @@ class LoginPage extends NavigationHack {
       this.context.similars = users;
       console.log('User:', this.context);
     });
-  }
-
-  addinc(){
-    this.state.idleTimer =this.state.idleTimer + 1;
-
-    var timer = this.state.idleTimer;
-    console.log(timer);
+    document.removeEventListener('click', this.handleClick);
   }
 
 
+  handleIdle(){
+
+    let timer = this.state.idleTimer;
+  //  console.log(timer);
+    if(timer > 10 ){
+      this.state.isIdle = true;
+    }else{
+      if(this.video.videoPlayer.current == null){
+        this.state.idleTimer = this.state.idleTimer + 1;
+      }
+    }
+    if(this.state.isIdle){
+      this.modalTitle = this.state.resetTimer;
+      this.modalContent = 'Are you still here?';
+      this.setState({ modalOpen: true });
+      this.state.resetTimer -= 1;
+    }
+    if(this.state.resetTimer<=-1){
+        window.open("/", "_self");
+    }
+  }
+
+  handleClick(e) {
+
+    if (e) {
+      this.state.idleTimer = 0;
+      this.state.isIdle = false;
+      this.state.resetTimer = 5;
+      if(this.modalContent.includes('Are you still here?') && this.state.modalOpen){
+        this.closeModal();
+      }
+    }
+  }
 
   handleSubmit(e, { name, email, clearEmail }) {
     e.preventDefault();
@@ -171,9 +206,9 @@ class LoginPage extends NavigationHack {
 
   render() {
     const { classes } = this.props;
-    var clockint = setInterval(this.addinc, 1000);
+
     return (
-      <div className={classes.root + ' LoginPage'}>
+      <div className={classes.root + ' LoginPage'} id='View' onClick={this.handleClick}>
         <SpectreHeader />
         <div className={classes.content + ' LoginPage-content content'}>
           <Typography style={{ marginBottom: 70 }} component="h2" variant="h2">Let's Play!</Typography>

@@ -6,7 +6,6 @@ import Typography from '@material-ui/core/Typography';
 import FormControl from '@material-ui/core/FormControl';
 import UserSession from '../../Components/UserSession/UserSession';
 import Keyboard from 'react-simple-keyboard';
-import Autocaps from "./Autocaps";
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -64,6 +63,7 @@ class SocialLogin extends React.Component {
   constructor(props) {
     super(props);
     this.onKeyPress = this.onKeyPress.bind(this);
+    this.shiftCheck = this.shiftCheck.bind(this);
     this.handleShift = this.handleShift.bind(this);
     this.changeFocus = this.changeFocus.bind(this);
     this.handleRadioChange = this.handleRadioChange.bind(this);
@@ -73,15 +73,29 @@ class SocialLogin extends React.Component {
       email: '',
       name: '',
       focus: 'name',
-      layoutName: 'default',
+      layoutName: 'shift',
       input: "",
       clearEmail: this.clearEmail,
     };
-    this.unShiftNeeded = false;
+    this.unShiftNeeded = true;
     this.form = React.createRef();
   }
 
+  componentDidMount() {
+    document.addEventListener('click', this.shiftCheck);
+
+  }
+
+  componentWillMount() {
+    document.removeEventListener('click', this.shiftCheck);
+  }
+
   onKeyPress(button) {
+
+
+
+
+
     if (button === '{shift}') {
       this.handleShift();
       this.unShiftNeeded = !this.unShiftNeeded;
@@ -109,6 +123,19 @@ class SocialLogin extends React.Component {
     }
   }
 
+  shiftCheck(){
+    if(this.state.focus === "name"){
+      if(this.state.name.length === 0){
+           const { layoutName } = this.state;
+          this.setState({
+            layoutName: layoutName === 'default' ? 'shift' : 'shift',
+          });
+      //  this.state.layoutName = 'shift'
+        this.unShiftNeeded = true;
+        //console.log("is empty, shift");
+      }
+    }
+  }
 
   handleShift() {
     const { layoutName } = this.state;
@@ -134,22 +161,7 @@ class SocialLogin extends React.Component {
     const { classes } = this.props;
   //  console.log(this.state)
     /*  For name field, first letter press SHIFT here*/
-    if(this.state.focus === "name"){
-      if(this.state.name.length === 0){
-        this.state.layoutName = 'shift'
-        this.unShiftNeeded = true;
-        //console.log("is empty, shift");
-      }
-    }
-    /*
-    if(this.state.focus === "email"){
-      if(this.state.email.length === 0){
-        this.state.layoutName = 'shift'
-        this.unShiftNeeded = true;
-        console.log("is empty, shift");
-      }
-    }
-    */
+
     return (
       <div className={`${classes.root} socialLogin`}>
         <div className={`${classes.content} socialLogin-content`}>
@@ -219,7 +231,6 @@ class SocialLogin extends React.Component {
               }}
               onKeyPress={button => this.onKeyPress(button)}
               layoutName={this.state.layoutName}
-            //  modules={[Autocaps]}
             />
             <IconButton onClick={e => this.props.handleSubmit(e, this.state)} enabled="white" colour="white" icon="next" text="Next" />
           </form>
