@@ -320,7 +320,7 @@ class Game extends NavigationHack {
     this.modalTitle = '';
     //timout checker
     this.handleIdle = this.handleIdle.bind(this);
-    this.handleClickTimer = this.handleClickTimer.bind(this);
+    this.detectClick = this.detectClick.bind(this);
     this.interval = '';
   }
 
@@ -370,7 +370,7 @@ class Game extends NavigationHack {
     }
   }
 
-handleClickTimer(e) {
+detectClick(e) {
     if (e) {
       this.state.idleTimer = 0;
       this.state.isIdle = false;
@@ -382,7 +382,7 @@ handleClickTimer(e) {
 }
 
 componentComplete() { // redirect called from p5
-
+  clearInterval(this.interval);
   if (typeof this.context._id !== 'undefined') { // TMP: remove
 
     // update last page context
@@ -408,9 +408,9 @@ componentComplete() { // redirect called from p5
   render() {
     const { classes } = this.props;
     return (
-      <div className={classes.root} onClick={this.handleClickTimer} id='clickMe'>
+      <div className={classes.root} onClick={this.detectClick} id='clickMe'>
         <SpectreHeader colour="white" />
-        <P5Wrapper sketch={sketch} className="wrapper" onClick={this.handleClickTimer}/>
+        <P5Wrapper sketch={sketch} className="wrapper" onClick={this.detectClick}/>
         <Modal
           isOpen={this.state.modalOpen}
           title={this.modalTitle}

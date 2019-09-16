@@ -93,7 +93,7 @@ class LoginPage extends NavigationHack {
     this.modalTitle = '';
     //timout checker
     this.handleIdle = this.handleIdle.bind(this);
-    this.handleClickTimer = this.handleClickTimer.bind(this);
+    this.detectClick = this.detectClick.bind(this);
     this.interval = '';
 
   }
@@ -136,7 +136,7 @@ class LoginPage extends NavigationHack {
     }
   }
 
-  handleClickTimer(e) {
+  detectClick(e) {
     if (e) {
       this.state.idleTimer = 0;
       this.state.isIdle = false;
@@ -223,7 +223,7 @@ class LoginPage extends NavigationHack {
     const { classes } = this.props;
 
     return (
-      <div className={classes.root + ' LoginPage'} onClick={this.handleClickTimer}>
+      <div className={classes.root + ' LoginPage'} onClick={this.detectClick}>
         <SpectreHeader />
         <div className={classes.content + ' LoginPage-content content'}>
           <Typography style={{ marginBottom: 70 }} component="h2" variant="h2">Let's Play!</Typography>

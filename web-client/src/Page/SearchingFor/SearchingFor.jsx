@@ -70,8 +70,6 @@ class SearchingFor extends NavigationHack {
     this.interval = setInterval(this.handleIdle, 1000);
   }
 
-
-
   handleIdle(){
 
     let timer = this.state.idleTimer;
