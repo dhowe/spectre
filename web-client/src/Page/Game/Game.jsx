@@ -7,6 +7,7 @@ import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
+import Modal from '../../Components/Modal/Modal';
 
 import './Game.css';
 import NavigationHack from '../NavigationHack';
@@ -140,6 +141,7 @@ function sketch(p) {
   };
 
   p.mousePressed = () => {
+    document.getElementById("clickMe").click();
     Brand.active = false;
     Brand.instances.forEach(b => {
       if (b.contains(p.mouseX, p.mouseY)) {
@@ -305,6 +307,21 @@ class Game extends NavigationHack {
   constructor(props) {
     super(props, "/thank-you");
     game = this; // handle for p5js
+    this.state = {
+      //modal
+      modalOpen: false,
+      //timout checker
+      idleTimer : 0,
+      resetTimer : 5,
+      isIdle : false,
+    }
+    //modal
+    this.modalContent = '';
+    this.modalTitle = '';
+    //timout checker
+    this.handleIdle = this.handleIdle.bind(this);
+    this.handleClickTimer = this.handleClickTimer.bind(this);
+    this.interval = '';
   }
 
   componentWillMount() {
@@ -323,34 +340,83 @@ class Game extends NavigationHack {
     console.log('User:', this.context);
   }
 
-  componentComplete() { // redirect called from p5
+  closeModal() {
+    this.setState({ modalOpen: false });
+  }
 
-    if (typeof this.context._id !== 'undefined') { // TMP: remove
+  componentDidMount() {
+    this.interval = setInterval(this.handleIdle, 1000);
+  }
 
-      // update last page context
-      this.context.lastPageVisit = { page: '/Game', time: Date.now };
+  handleIdle() {
 
-      UserSession.updateUser(this.context,
-        (json) => {
-          Object.assign(this.context, json);
-          this.next();
-        }, (err) => {
-          console.error(err);
-          this.next();
-        });
-
-    } else { // TMP: remove
-      console.warn('WARN: not updating Db with User info!');
-      this.next();
+    let timer = this.state.idleTimer;
+    console.log(timer);
+    if (timer > 10) {
+      this.state.isIdle = true;
+    } else {
+      this.state.idleTimer = this.state.idleTimer + 1;
+    }
+    if (this.state.isIdle) {
+      this.modalTitle = this.state.resetTimer + '';
+      this.modalContent = 'Are you still here?';
+      this.setState({
+        modalOpen: true
+      });
+      this.state.resetTimer -= 1;
+    }
+    if (this.state.resetTimer <= -1) {
+      window.open("/", "_self");
     }
   }
 
+handleClickTimer(e) {
+    if (e) {
+      this.state.idleTimer = 0;
+      this.state.isIdle = false;
+      this.state.resetTimer = 5;
+      if (this.modalContent.includes('Are you still here?') && this.state.modalOpen) {
+        this.closeModal();
+      }
+    }
+}
+
+componentComplete() { // redirect called from p5
+
+  if (typeof this.context._id !== 'undefined') { // TMP: remove
+
+    // update last page context
+    this.context.lastPageVisit = {
+      page: '/Game',
+      time: Date.now
+    };
+
+    UserSession.updateUser(this.context,
+      (json) => {
+        Object.assign(this.context, json);
+        this.next();
+      }, (err) => {
+        console.error(err);
+        this.next();
+      });
+
+  } else { // TMP: remove
+    console.warn('WARN: not updating Db with User info!');
+    this.next();
+  }
+}
   render() {
     const { classes } = this.props;
     return (
-      <div className={classes.root}>
+      <div className={classes.root} onClick={this.handleClickTimer} id='clickMe'>
         <SpectreHeader colour="white" />
-        <P5Wrapper sketch={sketch} className="wrapper" />
+        <P5Wrapper sketch={sketch} className="wrapper" onClick={this.handleClickTimer}/>
+        <Modal
+          isOpen={this.state.modalOpen}
+          title={this.modalTitle}
+          content={this.modalContent}
+          onClose={() => this.closeModal()}
+        />
         <Link to="/thank-you">
           <IconButton icon="next" text="Next" />
         </Link>

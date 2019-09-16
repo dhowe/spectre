@@ -79,23 +79,27 @@ class LoginPage extends NavigationHack {
       nameErrorCount: 0,
       modalOpen: false,
       clearEmail: true,
+      //timout checker
       idleTimer : 0,
       resetTimer : 5,
       isIdle : false
     };
 
-    this.handleIdle = this.handleIdle.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+
     this.handleSubmit = this.handleSubmit.bind(this);
     this.termsOfService = this.termsOfService.bind(this);
+    //modal
     this.modalContent = '';
     this.modalTitle = '';
-    this.intervall = '';
+    //timout checker
+    this.handleIdle = this.handleIdle.bind(this);
+    this.handleClickTimer = this.handleClickTimer.bind(this);
+    this.interval = '';
 
   }
+
   componentDidMount() {
-    document.addEventListener('click', this.handleClick);
-    this.intervall = setInterval(this.handleIdle, 1000);
+    this.interval = setInterval(this.handleIdle, 1000);
   }
 
   componentWillMount() {
@@ -104,8 +108,6 @@ class LoginPage extends NavigationHack {
       this.context.similars = users;
       console.log('User:', this.context);
     });
-    document.removeEventListener('click', this.handleClick);
-    clearInterval(this.intervall);
   }
 
 
@@ -116,11 +118,11 @@ class LoginPage extends NavigationHack {
     if(timer > 10 ){
       this.state.isIdle = true;
     }else{
-      if(this.video != null ){
-        if(this.video.videoPlayer.current == null){
+      //if(this.video != null ){
+      //  if(this.video.videoPlayer.current == null){
           this.state.idleTimer = this.state.idleTimer + 1;
-        }
-    }
+    //    }
+    //  }
 
     }
     if(this.state.isIdle){
@@ -134,11 +136,12 @@ class LoginPage extends NavigationHack {
     }
   }
 
-  handleClick(e) {
+  handleClickTimer(e) {
     if (e) {
       this.state.idleTimer = 0;
       this.state.isIdle = false;
       this.state.resetTimer = 5;
+      console.log("Click")
       if(this.modalContent.includes('Are you still here?') && this.state.modalOpen){
         this.closeModal();
       }
@@ -180,7 +183,7 @@ class LoginPage extends NavigationHack {
       console.log(user);
       this.showVideo();
       //UserSession.createUser(user, handleSuccess, handleError);
-
+      clearInterval(this.interval);
     } else if (!nameValid && nameErrorCount < 3) {
 
       this.modalTitle = 'Oops...';
@@ -211,7 +214,6 @@ class LoginPage extends NavigationHack {
   }
 
   termsOfService(){
-    console.log("click");
     this.modalTitle = 'Terms of Service';
     this.modalContent = 'Brungard told the court he -was drunk when the incident took placeBrungard told the court he -was drunk when the incident took placeBrungard told the court he -was drunk when the incident took placeBrungard told the court he -was drunk when the incident took placeBrungard told the court he -was drunk when the incident took placeBrungard told the court he -was drunk when the incident took place';
     this.setState({ modalOpen: true });
@@ -221,7 +223,7 @@ class LoginPage extends NavigationHack {
     const { classes } = this.props;
 
     return (
-      <div className={classes.root + ' LoginPage'} id='View' onClick={this.handleClick}>
+      <div className={classes.root + ' LoginPage'} onClick={this.handleClickTimer}>
         <SpectreHeader />
         <div className={classes.content + ' LoginPage-content content'}>
           <Typography style={{ marginBottom: 70 }} component="h2" variant="h2">Let's Play!</Typography>
