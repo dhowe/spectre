@@ -8,6 +8,7 @@ import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import IconButton from '../../Components/IconButton/IconButton';
 import NavigationHack from '../NavigationHack';
+import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
 const styles = {
   root: {
@@ -31,6 +32,7 @@ class LaunchCampaign extends NavigationHack {
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" />
+        <IdleChecker />
         <div className={`${classes.content} content`}>
           <Typography component="h6" variant="h6" style={{ marginTop: '250px' }}>Launch Campaign!</Typography>
           <Link to="/referendum-results" style={{ marginBottom: '300px' }}>

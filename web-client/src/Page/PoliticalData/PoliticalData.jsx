@@ -11,6 +11,7 @@ import IconButtonToggle from '../../Components/IconButton/IconButtonToggle';
 
 import './PoliticalData.scss';
 import NavigationHack from '../NavigationHack';
+import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
 const styles = {
   root: {
@@ -73,6 +74,7 @@ class PoliticalData extends NavigationHack {
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
+        <IdleChecker />
         <div className={classes.content + " content"}>
           <Typography component="h6" variant="h6">
             <strong>Choose 3 types of political data:</strong>

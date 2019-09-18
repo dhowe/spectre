@@ -9,7 +9,8 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import NavigationHack from '../NavigationHack';
-import Modal from '../../Components/Modal/Modal';
+import IdleChecker from '../../Components/IdleChecker/IdleChecker';
+
 
 const styles = {
   root: {
@@ -25,72 +26,14 @@ const styles = {
 class Steps extends NavigationHack {
   constructor(props) {
     super(props, '/influence-a-follower');
-    this.state = {
-      //modal
-      modalOpen: false,
-      //timout checker
-      idleTimer : 0,
-      resetTimer : 5,
-      isIdle : false,
-    }
-    //modal
-    this.modalContent = '';
-    this.modalTitle = '';
-    //timout checker
-    this.handleIdle = this.handleIdle.bind(this);
-    this.detectClick = this.detectClick.bind(this);
-    this.clearTimer = this.clearTimer.bind(this);
-    this.interval = '';
-  }
-
-  closeModal() {
-    this.setState({ modalOpen: false });
-  }
-
-  componentDidMount() {
-    this.interval = setInterval(this.handleIdle, 1000);
-  }
-
-  handleIdle(){
-
-    let timer = this.state.idleTimer;
-    console.log(timer);
-    if(timer > 10 ){
-      this.state.isIdle = true;
-    }else{
-      this.state.idleTimer = this.state.idleTimer + 1;
-    }
-    if(this.state.isIdle){
-      this.modalTitle = this.state.resetTimer + '';
-      this.modalContent = 'Are you still here?';
-      this.setState({ modalOpen: true });
-      this.state.resetTimer -= 1;
-    }
-    if(this.state.resetTimer<=-1){
-        window.open("/", "_self");
-    }
-  }
-
-  detectClick(e) {
-    if (e) {
-      this.state.idleTimer = 0;
-      this.state.isIdle = false;
-      this.state.resetTimer = 5;
-      if(this.modalContent.includes('Are you still here?') && this.state.modalOpen){
-        this.closeModal();
-      }
-    }
-  }
-
-  clearTimer(){
-    clearInterval(this.interval);
   }
 
   render() {
     const { classes } = this.props;
     return (
-      <div className={classes.root} onClick={this.detectClick}>
+      <div className={classes.root}>
         <SpectreHeader colour="white" />
+        <IdleChecker setIdleTime={14}/>
         <div className={classes.content + " content"}>
             <Fade in={true} >
                 <Typography component="h5" variant="h5">Find what you are looking for by following these three steps:</Typography>
@@ -111,15 +54,9 @@ class Steps extends NavigationHack {
                 <Typography component="h6" variant="h6">Ready?</Typography>
             </Fade>
             <Link to="/influence-a-follower">
-                <IconButton icon="tick" text="Yes" onClick={this.clearTimer}/>
+                <IconButton icon="tick" text="Yes" />
             </Link>
         </div>
-        <Modal
-          isOpen={this.state.modalOpen}
-          title={this.modalTitle}
-          content={this.modalContent}
-          onClose={() => this.closeModal()}
-        />
         <FooterLogo />
     </div>
     );

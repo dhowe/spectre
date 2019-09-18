@@ -9,6 +9,7 @@ import UserSession from '../../Components/UserSession/UserSession';
 import IconButton from '../../Components/IconButton/IconButton';
 import { ReactComponent as Trophy } from '../../Icons/trophy.svg';
 import NavigationHack from '../NavigationHack';
+import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
 const styles = {
   root: {
@@ -31,6 +32,7 @@ class Win extends NavigationHack {
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive progressNumber="two" />
+        <IdleChecker />
         <div className={`${classes.content} content`}>
           <Typography component="h4" variant="h4" style={{ marginTop:'100px' }}>
             <strong>{this.context.adIssue === 'remain' ? 'Believe!' : 'BeLeave!'}</strong>

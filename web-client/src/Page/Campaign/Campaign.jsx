@@ -8,6 +8,7 @@ import NavigationHack from '../NavigationHack';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import IconButton from '../../Components/IconButton/IconButton';
 import { Link } from 'react-router-dom';
+import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
 const styles = {
   root: {
@@ -38,6 +39,7 @@ class Campaign extends NavigationHack {
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive progressNumber="one" />
+        <IdleChecker />
         <div className={`${classes.content} content`}>
           <Typography component="h6" variant="h6" style={{ marginTop: '100px'}}>
             Now use a simple design tool to create a targeted Facebook ad.

@@ -10,6 +10,7 @@ import TextSliderText from '../../Components/TextSliderText/TextSliderText';
 import AvatarComponent from '../../Components/AvatarComponent/AvatarComponent';
 import UserSession from '../../Components/UserSession/UserSession';
 import NavigationHack from '../NavigationHack';
+import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
 const styles = {
   root: {
@@ -25,11 +26,11 @@ class Insight extends NavigationHack {
     this.state = { buttonEnabled: false };
     this.EnableButton = this.EnableButton.bind(this);
   }
-
   EnableButton() {
     this.setState({
       buttonEnabled: true,
     });
+    document.getElementById("clickMe").click();
   }
 
   render() {
@@ -47,8 +48,9 @@ class Insight extends NavigationHack {
     const tname = this.context.target.name;
     const timage = this.context.targetImgUrl();
     return (
-      <div className={classes.root}>
+      <div className={classes.root} id='clickMe'>
         <SpectreHeader colour="white" progressActive progressNumber={progress} />
+        <IdleChecker />
         <div className={`${classes.content} content insightPage`}>
           <Typography component="h6" variant="h6">{question(tname)}</Typography>
           <AvatarComponent target= {{name: tname, image: timage }} />

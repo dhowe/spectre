@@ -9,6 +9,7 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import NavigationHack from '../NavigationHack';
 import UserSession from '../../Components/UserSession/UserSession';
+import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
 const styles = {
   root: {
@@ -31,6 +32,7 @@ class TargetAd extends NavigationHack {
     return (
       <div className={classes.root}>
       <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
+      <IdleChecker />
       <div className={`${classes.content} content`}>
         <br/>
         <Typography component="h6" variant="h6">

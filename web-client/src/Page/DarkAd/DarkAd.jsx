@@ -9,6 +9,7 @@ import UserSession from '../../Components/UserSession/UserSession';
 import NavigationHack from '../NavigationHack';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
+import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
 const styles = {
   root: {
@@ -96,6 +97,7 @@ class DarkAd extends NavigationHack {
     return (
       <div className={classes.root + " darkAd"}>
         <SpectreHeader colour="white" progressActive progressNumber="one" />
+        <IdleChecker />
         <div className={`${classes.content} content`}>
           <Typography component="h6" variant="h6"><strong>Create Your Campaign</strong></Typography>
           <div className={classes.ad}>    { /* adIssue should never change after being selected '*/}

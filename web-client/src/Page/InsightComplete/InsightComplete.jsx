@@ -14,6 +14,7 @@ import Video from '../../Components/Video/Video';
 import Styles from '../../Styles';
 import colours from '../../colors.scss';
 import './InsightComplete.scss';
+import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
 const styles = {
   root: {
@@ -31,6 +32,17 @@ const styles = {
 class InsightComplete extends NavigationHack {
   constructor(props) {
     super(props, '/your-power');
+    this.state = {
+      idleCheckerIsDone: false,
+    };
+
+    this.showVideo = this.showVideo.bind(this);
+
+  }
+
+  showVideo() {
+    this.video.play();
+    this.setState({ idleCheckerIsDone: true });
   }
 
   render() {
@@ -40,6 +52,7 @@ class InsightComplete extends NavigationHack {
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" />
+        <IdleChecker forceTerminate={this.state.idleCheckerIsDone}/>
         <div className={`${classes.content} content`}>
           <Typography className="title" component="h3" variant="h3">Excellent.</Typography>
           <Typography component="h6" variant="h6">Verification complete!</Typography>
@@ -47,7 +60,7 @@ class InsightComplete extends NavigationHack {
           {/* INSERT OCEAN TOPBAR COMPONENT HERE (1080x450)*/}
           <OceanProfile subject={this.context.target} classes={classes}></OceanProfile>
           <Typography component="h6" variant="h6">You now have the <strong>power</strong> to influence&nbsp;<strong>{tname}</strong>.</Typography>
-          <IconButton icon="play" text="Next" onClick={() => this.video.play()} Button={<Button style={{ marginTop: 20, }} className={classes.button} variant="contained" color="primary">WTF is OCEAN?</Button>} />
+          <IconButton icon="play" text="Next" onClick={this.showVideo} Button={<Button style={{ marginTop: 20, }} className={classes.button} variant="contained" color="primary">WTF is OCEAN?</Button>} />
           <Video ref={(el) => { this.video = el; }} onComplete={this.next} autoPlay={false} movie="/video/OceanIntro.mp4" />
         </div>
         <FooterLogo />

@@ -12,6 +12,7 @@ import colours from '../../colors.scss';
 
 import './SelectedAvatar.scss';
 import NavigationHack from '../NavigationHack';
+import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
 const height = 53;
 const fontSize = 22;
@@ -51,6 +52,7 @@ class SelectedAvatar extends NavigationHack {
     return (
       <div className={`${classes.root} SelectedAvatar`}>
         <SpectreHeader colour="white" progressActive={true} progressNumber="one" />
+        <IdleChecker />
         <div className={`${classes.content} content`}>
           <p className="title">You selected:</p>
           <div>

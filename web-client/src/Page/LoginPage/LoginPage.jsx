@@ -134,7 +134,7 @@ class LoginPage extends NavigationHack {
         }
       };*/
       console.log(user);
-      this.setState({ idleCheckerIsDone: true });
+
       this.showVideo();
       //UserSession.createUser(user, handleSuccess, handleError);
     } else if (!nameValid && nameErrorCount < 3) {
@@ -164,6 +164,7 @@ class LoginPage extends NavigationHack {
 
   showVideo() {
     this.video.play();
+    this.setState({ idleCheckerIsDone: true });
   }
 
   termsOfService(){
@@ -178,7 +179,7 @@ class LoginPage extends NavigationHack {
     return (
       <div className={classes.root + ' LoginPage'}>
         <SpectreHeader />
-        <IdleChecker clicked={this.state.isDone}/>
+        <IdleChecker forceTerminate={this.state.idleCheckerIsDone}/>
         <div className={classes.content + ' LoginPage-content content'}>
           <Typography style={{ marginBottom: 70 }} component="h2" variant="h2">Let's Play!</Typography>
           <Modal

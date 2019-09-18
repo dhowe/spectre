@@ -13,6 +13,7 @@ import Video from '../../Components/Video/Video';
 
 import './InfluenceACelebrity.scss';
 import NavigationHack from '../NavigationHack';
+import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
 const styles = {
   root: {
@@ -31,7 +32,9 @@ class InfluenceACelebrity extends NavigationHack {
     this.play = this.play.bind(this);
     this.stop = this.stop.bind(this);
     this.save = this.save.bind(this);
-    this.state = { video: null };
+    this.state = { video: null,
+                  idleCheckerIsDone: false,
+     };
 
     // a random set, always with two femals
     let fcelebs = ['Kardashian', 'Abramovic'];
@@ -54,6 +57,7 @@ class InfluenceACelebrity extends NavigationHack {
 
   stop() {
     this.setState({ video: null });
+    this.setState({ idleCheckerIsDone: false });
   }
 
   play(name) {
@@ -62,6 +66,7 @@ class InfluenceACelebrity extends NavigationHack {
       celebrity: name,
       video: `/video/${this.context.virtue || 'power'}_${name}.mp4`,
     });
+    this.setState({ idleCheckerIsDone: true });
   }
 
   render() {
@@ -73,6 +78,7 @@ class InfluenceACelebrity extends NavigationHack {
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive progressNumber="three"/>
+        <IdleChecker forceTerminate={this.state.idleCheckerIsDone}/>
         <div className={`${classes.content} content`}>
           <Fade in style={{ transitionDelay: '200ms' }}>
             <Typography className="title" component="h4" variant="h4">Influence a celebrity!</Typography>
