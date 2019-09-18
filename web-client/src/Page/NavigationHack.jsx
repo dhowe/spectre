@@ -12,6 +12,7 @@ class NavigationHack extends React.Component {
     this.navigate = this.navigate.bind(this);
     this.next = this.next.bind(this);
     this.previous = this.previous.bind(this);
+
   }
 
   componentDidMount() {

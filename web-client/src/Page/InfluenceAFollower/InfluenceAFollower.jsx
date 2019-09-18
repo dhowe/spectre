@@ -12,6 +12,8 @@ import './InfluenceAFollower.scss';
 import AvatarCircle from '../../Components/AvatarCircle/AvatarCircle';
 import NavigationHack from '../NavigationHack';
 
+import Modal from '../../Components/Modal/Modal';
+
 const styles = {
   root: {
     width: '100%',
@@ -32,6 +34,22 @@ class InfluenceAFollower extends NavigationHack {
   constructor(props) {
     super(props, '/selected-avatar');
     this.handleSelect = this.handleSelect.bind(this);
+
+    this.state = {
+      //modal
+      modalOpen: false,
+      //timout checker
+      idleTimer : 0,
+      resetTimer : 5,
+      isIdle : false,
+    }
+    //modal
+    this.modalContent = '';
+    this.modalTitle = '';
+    //timout checker
+    this.handleIdle = this.handleIdle.bind(this);
+    this.detectClick = this.detectClick.bind(this);
+    this.interval = '';
   }
 
   componentWillMount() {
@@ -42,6 +60,45 @@ class InfluenceAFollower extends NavigationHack {
       user.loginType = user.loginType || 'email';
       user.login = user.login || `Barney${+new Date()}@aol.com`;
       //UserSession.createUser(user);
+    }
+  }
+
+  closeModal() {
+    this.setState({ modalOpen: false });
+  }
+
+  componentDidMount() {
+    this.interval = setInterval(this.handleIdle, 1000);
+  }
+
+  handleIdle(){
+
+    let timer = this.state.idleTimer;
+    console.log(timer);
+    if(timer > 10 ){
+      this.state.isIdle = true;
+    }else{
+      this.state.idleTimer = this.state.idleTimer + 1;
+    }
+    if(this.state.isIdle){
+      this.modalTitle = this.state.resetTimer + '';
+      this.modalContent = 'Are you still here?';
+      this.setState({ modalOpen: true });
+      this.state.resetTimer -= 1;
+    }
+    if(this.state.resetTimer<=-1){
+        window.open("/", "_self");
+    }
+  }
+
+  detectClick(e) {
+    if (e) {
+      this.state.idleTimer = 0;
+      this.state.isIdle = false;
+      this.state.resetTimer = 5;
+      if(this.modalContent.includes('Are you still here?') && this.state.modalOpen){
+        this.closeModal();
+      }
     }
   }
 
@@ -76,7 +133,7 @@ class InfluenceAFollower extends NavigationHack {
   render() {
     const { classes } = this.props;
     return (
-      <div className={classes.root}>
+      <div className={classes.root} onClick={this.detectClick}>
         <SpectreHeader colour="white" progressActive progressNumber="one" />
         <div className={`${classes.content} content`}>
           <Typography component="h5" variant="h5" className="influence-a-follower"><strong>Influence a follower!</strong></Typography>
@@ -91,6 +148,12 @@ class InfluenceAFollower extends NavigationHack {
               />
             ))}
          </AvatarCircle>
+         <Modal
+           isOpen={this.state.modalOpen}
+           title={this.modalTitle}
+           content={this.modalContent}
+           onClose={() => this.closeModal()}
+         />
         </div>
         <FooterLogo />
       </div>

@@ -10,8 +10,7 @@ import UserSession from '../../Components/UserSession/UserSession';
 import './SearchingFor.scss';
 import Styles from '../../Styles';
 import NavigationHack from '../NavigationHack';
-import Modal from '../../Components/Modal/Modal';
-
+import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
 const styles = {
   root: {
@@ -45,61 +44,9 @@ class SearchingFor extends NavigationHack {
     super(props, 'data-is');
 
     this.setRef = this.setRef.bind(this);
-    this.state = {
-      //modal
-      modalOpen: false,
-      //timout checker
-      idleTimer : 0,
-      resetTimer : 5,
-      isIdle : false,
-    }
-    //modal
-    this.modalContent = '';
-    this.modalTitle = '';
-    //timout checker
-    this.handleIdle = this.handleIdle.bind(this);
-    this.handleClickTimer = this.handleClickTimer.bind(this);
-    this.interval = '';
   }
 
-  closeModal() {
-    this.setState({ modalOpen: false });
-  }
 
-  componentDidMount() {
-    this.interval = setInterval(this.handleIdle, 1000);
-  }
-
-  handleIdle(){
-
-    let timer = this.state.idleTimer;
-    console.log(timer);
-    if(timer > 10 ){
-      this.state.isIdle = true;
-    }else{
-      this.state.idleTimer = this.state.idleTimer + 1;
-    }
-    if(this.state.isIdle){
-      this.modalTitle = this.state.resetTimer + '';
-      this.modalContent = 'Are you still here?';
-      this.setState({ modalOpen: true });
-      this.state.resetTimer -= 1;
-    }
-    if(this.state.resetTimer<=-1){
-        window.open("/", "_self");
-    }
-  }
-
-  handleClickTimer(e) {
-    if (e) {
-      this.state.idleTimer = 0;
-      this.state.isIdle = false;
-      this.state.resetTimer = 5;
-      if(this.modalContent.includes('Are you still here?') && this.state.modalOpen){
-        this.closeModal();
-      }
-    }
-  }
 
   setRef(webcam) {
     this.webcam = webcam;
@@ -153,9 +100,11 @@ class SearchingFor extends NavigationHack {
         console.error('no image capture');
       }
     }
-    clearInterval(this.interval);
+
     this.next();
   }
+
+
 
   render() {
     const { classes } = this.props;
@@ -165,12 +114,15 @@ class SearchingFor extends NavigationHack {
       facingMode: "user"
     };*/
     return (
-      <div className={classes.root} onClick={this.handleClickTimer}>
+      <div className={classes.root}>
         <SpectreHeader colour="white" />
+        <IdleChecker />
         <div className={`${classes.content} content`}>
           <Typography className="username" component="h3" variant="h3">{this.context.name || 'Barney'}</Typography>
           <Typography className="question" component="h3" variant="h3">What are you searching for today?</Typography>
+
           <div className="ImageCapture">
+
             {/*<Webcam ref={this.setRef}
                   audio={false}
                   screenshotQuality={1}
@@ -180,12 +132,7 @@ class SearchingFor extends NavigationHack {
                   style={{left: '-5000px', position: 'relative'}}
                   videoConstraints={videoConstraints} />*/}
           </div>
-          <Modal
-            isOpen={this.state.modalOpen}
-            title={this.modalTitle}
-            content={this.modalContent}
-            onClose={() => this.closeModal()}
-          />
+
           <div className="buttonWrapper">
             <Button className={classes.button} variant="contained" color="primary" onClick={() => this.handleClick('power')}>Power</Button>
             <Button className={classes.button} variant="contained" color="primary" onClick={() => this.handleClick('truth')}>Truth</Button>

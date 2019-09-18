@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom';
 import './LoginPage.scss';
 import Video from '../../Components/Video/Video';
 import NavigationHack from '../NavigationHack';
+import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
 
 window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true; // TMP: #138
@@ -79,10 +80,7 @@ class LoginPage extends NavigationHack {
       nameErrorCount: 0,
       modalOpen: false,
       clearEmail: true,
-      //timout checker
-      idleTimer : 0,
-      resetTimer : 5,
-      isIdle : false
+      idleCheckerIsDone: false,
     };
 
 
@@ -91,16 +89,9 @@ class LoginPage extends NavigationHack {
     //modal
     this.modalContent = '';
     this.modalTitle = '';
-    //timout checker
-    this.handleIdle = this.handleIdle.bind(this);
-    this.detectClick = this.detectClick.bind(this);
-    this.interval = '';
 
   }
 
-  componentDidMount() {
-    this.interval = setInterval(this.handleIdle, 1000);
-  }
 
   componentWillMount() {
     console.log(this.context);
@@ -108,44 +99,6 @@ class LoginPage extends NavigationHack {
       this.context.similars = users;
       console.log('User:', this.context);
     });
-  }
-
-
-  handleIdle(){
-
-    let timer = this.state.idleTimer;
-    console.log(timer);
-    if(timer > 10 ){
-      this.state.isIdle = true;
-    }else{
-      //if(this.video != null ){
-      //  if(this.video.videoPlayer.current == null){
-          this.state.idleTimer = this.state.idleTimer + 1;
-    //    }
-    //  }
-
-    }
-    if(this.state.isIdle){
-      this.modalTitle = this.state.resetTimer + '';
-      this.modalContent = 'Are you still here?';
-      this.setState({ modalOpen: true });
-      this.state.resetTimer -= 1;
-    }
-    if(this.state.resetTimer<=-1){
-        window.open("/", "_self");
-    }
-  }
-
-  detectClick(e) {
-    if (e) {
-      this.state.idleTimer = 0;
-      this.state.isIdle = false;
-      this.state.resetTimer = 5;
-      console.log("Click")
-      if(this.modalContent.includes('Are you still here?') && this.state.modalOpen){
-        this.closeModal();
-      }
-    }
   }
 
   handleSubmit(e, { name, email, clearEmail }) {
@@ -181,9 +134,9 @@ class LoginPage extends NavigationHack {
         }
       };*/
       console.log(user);
+      this.setState({ idleCheckerIsDone: true });
       this.showVideo();
       //UserSession.createUser(user, handleSuccess, handleError);
-      clearInterval(this.interval);
     } else if (!nameValid && nameErrorCount < 3) {
 
       this.modalTitle = 'Oops...';
@@ -223,8 +176,9 @@ class LoginPage extends NavigationHack {
     const { classes } = this.props;
 
     return (
-      <div className={classes.root + ' LoginPage'} onClick={this.detectClick}>
+      <div className={classes.root + ' LoginPage'}>
         <SpectreHeader />
+        <IdleChecker clicked={this.state.isDone}/>
         <div className={classes.content + ' LoginPage-content content'}>
           <Typography style={{ marginBottom: 70 }} component="h2" variant="h2">Let's Play!</Typography>
           <Modal
