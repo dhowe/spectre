@@ -6,19 +6,18 @@ Worship at the Altar of Dataism
 
 ## Installation
 
-We use node and yarn.
+We use yarn.
 
 ### Dependencies and Versions
 
 ```
-Node version: v10.2
 Yarn version: v1.16
 ```
 
 Test versions with:
 
 ```
-node -v && yarn -v
+yarn -v
 ```
 
 NOTE: all instructions below assume you are within the /spectre folder:
