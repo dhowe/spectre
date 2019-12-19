@@ -1,10 +1,12 @@
 {
   "name": "spectre-server",
+  "license": "UNLICENSED",
   "version": "1.0.2",
   "description": "Server component for the SPECTRE system",
   "main": "app.js",
   "scripts": {
     "test": "NODE_ENV=test mocha ./tests --recursive --exit -r esm",
+    "test-grep": "NODE_ENV=test mocha ./tests --recursive --exit -r esm -g",
     "start": "node -r esm server.js",
     "server": "node -r esm server.js",
     "client": "cd web-client && yarn start",
@@ -41,6 +43,7 @@
     "sync-request": "^6.1.0"
   },
   "devDependencies": {
+    "@types/chai-fs": "^2.0.2",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "mocha": "^6.1.4"

@@ -55,7 +55,6 @@ class SelectedAvatar extends NavigationHack {
           <p className="title">You selected:</p>
           <div>
             <AvatarComponent target={ {name: tname, image: timage } } />
-            <p className="avatarName">{tname}</p>
           </div>
           <p className="copy">Let&apos;s start by verifying some of the basics to unlock insight into {tname}. </p>
           <p className="copy">Don’t worry, only you will see the results. </p>

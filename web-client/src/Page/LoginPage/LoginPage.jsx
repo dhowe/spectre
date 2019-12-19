@@ -84,7 +84,7 @@ class LoginPage extends NavigationHack {
   }
 
   componentWillMount() {
-    console.log(this.context);
+
     UserSession.defaultUsers((users) => {
       this.context.similars = users;
       console.log('User:', this.context);
@@ -100,7 +100,6 @@ class LoginPage extends NavigationHack {
     // get user from current context
     const user = this.context;
     user.lastPageVisit = { page: '/Login', time: Date.now() };
-
 
     if (nameValid && emailValid) {
 
@@ -139,6 +138,7 @@ class LoginPage extends NavigationHack {
       this.modalContent = 'That doesn\'t look like a valid email address, please try again';
       this.setState({ modalOpen: true, emailErrorCount: emailErrorCount + 1 });
       clearEmail();
+
     } else {
 
       // TMP: should reject without successful User creation

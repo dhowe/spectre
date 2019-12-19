@@ -11,7 +11,7 @@ describe('Text Parser', function () {
       user.name = "jen";
 
       let parser = new Parser(user);
-      expect(parser.parse("Was $user.name (ok | ok)?")).eq('Was Jen ok?');
+      expect(parser.parse("Was $user.name.ucf() (ok | ok)?")).eq('Was Jen ok?');
     });
   });
 
