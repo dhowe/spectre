@@ -70,5 +70,5 @@ To verify builds work in different contexts, we use environment variables.
  "build-prod": "REACT_APP_BUILD=prod npm-run-all build-css build-js",
  "build-test": "REACT_APP_BUILD=test npm-run-all build-css build-js",
 ```
-With environment variables in place we are able to add conditional statements for differernt cases
+With environment variables in place we are able to add conditional statements for different cases
 
