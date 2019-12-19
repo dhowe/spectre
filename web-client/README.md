@@ -4,19 +4,18 @@ Demo at https://spectre-dev.netlify.com/
 
 ## Installation
 
-We use node and yarn
+We use yarn
 
 ### Dependencies and Versions
 
 ```
-Node version: v10.2
 Yarn version: v1.16
 ```
 
 Test versions with:
 
 ```
-node -v && yarn -v
+yarn -v
 ```
 
 NOTE: all instructions below assume you are within the /spectre/web-client folder:
@@ -65,11 +64,11 @@ yarn test
 
 ## Builds
 
-To veirfy builds work in different contexts, we use environment variables.
+To verify builds work in different contexts, we use environment variables.
 ```
  "build-dev": "REACT_APP_BUILD=dev npm-run-all build-css build-js",
  "build-prod": "REACT_APP_BUILD=prod npm-run-all build-css build-js",
  "build-test": "REACT_APP_BUILD=test npm-run-all build-css build-js",
 ```
-With environment variables in place we are able to add conditional statements for differernt cases
+With environment variables in place we are able to add conditional statements for different cases
 
