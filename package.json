@@ -10,8 +10,8 @@
     "client": "yarn --cwd client start",
     "client-start": "yarn --cwd client start",
     "client-build": "yarn --cwd client build",
-    "build": "yarn run server",
-    "prebuild": "yarn run client-build",
+    "build-prod": "NPM_CONFIG_PRODUCTION=true yarn run server",
+    "prepbuild-prod": "yarn run client-build",
     "start": "concurrently --kill-others-on-fail \"yarn run server\" \"yarn run client-start\"",
     "full-install": "concurrently --kill-others-on-fail \"yarn install\" \"yarn --cwd client install\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false yarn --cwd client install && yarn --cwd client run build"
