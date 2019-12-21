@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
+import { ReactComponent as ThumbUp } from '../../Icons/insightthankyou.svg';
 import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import QuickNav from '../QuickNav';
-import { ReactComponent as ThumbUp } from '../../Icons/insightthankyou.svg';
 
 const styles = {
   root: {
