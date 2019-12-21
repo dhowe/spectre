@@ -3,10 +3,9 @@ Worship at the Altar of Dataism
 
 <br/>
 
-
 ## Installation
 
-We use yarn.
+We use yarn
 
 ### Dependencies and Versions
 
@@ -37,12 +36,21 @@ yarn run full-install
 
 <br/>
 
-## Server (no client required)
+## Client+Server (production, requires mongodb)
+
+```
+yarn start
+
+```
+
+<br/>
+
+## Server-only (no client required)
 
 ### Start (requires a local mongodb)
 
 ```
-yarn start
+yarn run server
 ```
 
 
@@ -54,19 +62,19 @@ yarn test
 
 <br/>
 
-## Client (no server required)
+## Client-only
 
-### Start (for dev)
-
-```
-yarn run start-client
-```
-
-### Build (for deploy)
+### Start (for development)
 
 ```
-yarn run build-client
+yarn run client-start
 ```
 
-For more details on the client, see [these instructions](web-client/README.md)
+### Build (for deployment)
+
+```
+yarn run client-build
+```
+
+For more details on the client, see [these instructions](client/README.md)
 <br>

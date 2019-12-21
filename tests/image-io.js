@@ -13,7 +13,7 @@ describe('Image IO', function () {
     });
     it('Should zip files in directory', function () {
       let path = '/tmp/targets.zip';
-      zipAll('web-client/public/targets', path).then(() => {
+      zipAll('client/public/targets', path).then(() => {
         expect(path).to.be.a.path();
       });
     });

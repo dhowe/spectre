@@ -1,0 +1,122 @@
+@import '../../colors.scss';
+
+.OceanProfile {
+  background-color: #ffffff;
+  color: $blue;
+  width: 100vw;
+  position: fixed;
+
+  h6 {
+    color: $blue;
+    font-size: 18px;
+    text-align: left;
+    margin-bottom: 10px;
+
+    strong {
+      color: $blue;
+      font-weight: bold;
+    }
+  }
+
+  .OceanIcons {
+    margin-right: 40px;
+    margin-left: 20px;
+    height: 320px;
+  }
+
+  .OceanText {
+    max-width: 500px;
+    margin-right: 50px;
+  }
+
+  .OceanSliders {
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+
+    .textSliderText {
+      color: $blue;
+      width: 120px;
+      text-align: center;
+      height: auto;
+      overflow: visible;
+
+      p {
+        color: $blue;
+        font-size: 16px;
+        font-size: 12px;
+        //margin-top: -10px;
+        text-align: center;
+        width: 100%;
+      }
+
+      .iconText {
+        width: 100%;
+        text-align: center;
+        margin-top: -90px;
+      }
+
+      .sliderContainer {
+        height: 200px;
+        display: inline-flex;
+        padding-top: 50px;
+      }
+
+      .slider {
+        transform: rotate(270deg);
+        height: 5px;
+        width: 92px;
+        margin-right: -6px;
+      }
+
+      div[class*="MuiSlider-track"] {
+        //height: 9px !important;
+        background-color: $blue;
+
+        &[class*="MuiSlider-trackBefore"] {
+          border-top-left-radius: 0;
+          border-bottom-left-radius: 0;
+        }
+
+        &[class*="MuiSlider-trackAfter"] {
+          opacity: 0;
+          border-top-right-radius: 0;
+          border-bottom-right-radius: 0;
+        }
+      }
+
+      button[class*="MuiButtonBase"] {
+        width: 30px;
+        height: 30px;
+        background-color: $blue;
+        border: solid $blue 3px;
+        display: none;
+
+        &[class*="MuiSlider-activated"] {
+          width: 30px;
+          height: 30px;
+          background-color: $blue;
+          border: solid $blue 3px;
+          box-shadow: none;
+        }
+      }
+    }
+  }
+}
+
+.content .OceanProfile {
+  margin-left: -100px;
+  position: relative;
+
+  h6 {
+    color: $blue;
+    font-size: 18px;
+    text-align: left;
+    margin-bottom: 10px;
+
+    strong {
+      color: $blue;
+      font-weight: bold;
+    }
+  }
+}

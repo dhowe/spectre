@@ -1,0 +1,10 @@
+@import "../../fonts";
+
+.pledge {
+  p.copy {
+    @extend %body;
+    margin-bottom: 160px;
+    font-size: 48px;
+  }
+}
+

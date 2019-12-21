@@ -275,7 +275,7 @@ const remove = function (req, res) {
   });
 };
 
-const profiles = './web-client/public/profiles/';
+const profiles = './client/public/profiles/';
 
 const photo = function (req, res) {
 

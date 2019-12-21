@@ -1,0 +1,25 @@
+{
+  "extends": [
+    "prettier",
+    "prettier/react",
+    "airbnb"
+  ],
+  "rules": {
+    "func-names": [
+      "error",
+      "never"
+    ],
+    "indent": [
+      "error",
+      2
+    ],
+    "react/jsx-indent": [
+      "error",
+      2
+    ]
+  },
+  "env": {
+    "browser": true,
+    "jest": true
+  }
+}

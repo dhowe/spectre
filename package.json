@@ -6,15 +6,14 @@
   "main": "app.js",
   "scripts": {
     "test": "NODE_ENV=test mocha ./tests --recursive --exit -r esm",
-    "test-grep": "NODE_ENV=test mocha ./tests --recursive --exit -r esm -g",
-    "start": "node -r esm server.js",
-    "server": "node -r esm server.js",
-    "client": "cd web-client && yarn start",
-    "full-install": "yarn install & cd web-client && yarn install && cd -",
-    "build-client": "cd web-client && yarn build",
-    "start-client": "cd web-client && yarn start",
-    "client-server": "yarn start",
-    "preclient-server": "cd web-client && yarn run build"
+    "test-g": "NODE_ENV=test mocha ./tests --recursive --exit -r esm -g",
+    "server": "nodemon -r esm server.js",
+    "client": "yarn --cwd client start",
+    "client-start": "yarn --cwd client start",
+    "client-build": "yarn --cwd client build",
+    "build": "concurrently --kill-others-on-fail \"yarn run server\" \"yarn run client-build\"",
+    "start": "concurrently --kill-others-on-fail \"yarn run server\" \"yarn run client-start\"",
+    "full-install": "concurrently --kill-others-on-fail \"yarn install\" \"yarn --cwd client install\""
   },
   "author": "daniel howe",
   "dependencies": {
@@ -24,28 +23,30 @@
     "chai-fs": "^2.0.0",
     "chai-string": "^1.5.0",
     "cors": "^2.8.5",
-    "debug": "2.6.9",
-    "depd": "~1.1.2",
+    "debug": "4.1.1",
+    "depd": "~2.0.0",
     "dotenv": "^8.0.0",
     "dotenv-extended": "^2.4.0",
     "esm": "^3.2.25",
     "express": "^4.17.1",
     "express-basic-auth": "^1.2.0",
-    "form-data": "^2.3.3",
+    "form-data": "^3.0.0",
     "json-loader": "^0.5.7",
     "lodash": "^4.17.13",
-    "mongodb": "^3.2.6",
-    "mongoose": "^5.8.1",
+    "mongodb": "^3.4.1",
+    "mongoose": "^5.8.2",
     "morgan": "^1.9.1",
     "multer": "^1.4.1",
     "on-finished": "~2.3.0",
     "on-headers": "~1.0.1",
     "sync-request": "^6.1.0"
   },
+  "homepage": ".",
   "devDependencies": {
-    "@types/chai-fs": "^2.0.2",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
-    "mocha": "^6.1.4"
+    "mocha": "^6.1.4",
+    "nodemon": "^2.0.2",
+    "concurrently": "^5.0.2"
   }
 }
