@@ -1,7 +1,5 @@
 # Spectre Client
 
-Demo at https://spectre-dev.netlify.com/
-
 ## Installation
 
 We use yarn
