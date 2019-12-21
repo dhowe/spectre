@@ -1,6 +1,5 @@
 {
   "name": "spectre-server",
-  "license": "UNLICENSED",
   "version": "1.0.2",
   "description": "Server component for the SPECTRE system",
   "main": "app.js",
@@ -11,9 +10,11 @@
     "client": "yarn --cwd client start",
     "client-start": "yarn --cwd client start",
     "client-build": "yarn --cwd client build",
-    "build": "concurrently --kill-others-on-fail \"yarn run server\" \"yarn run client-build\"",
+    "build": "yarn run server",
+    "prebuild": "yarn run client-build",
     "start": "concurrently --kill-others-on-fail \"yarn run server\" \"yarn run client-start\"",
-    "full-install": "concurrently --kill-others-on-fail \"yarn install\" \"yarn --cwd client install\""
+    "full-install": "concurrently --kill-others-on-fail \"yarn install\" \"yarn --cwd client install\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false yarn --cwd client install && yarn --cwd client run build"
   },
   "author": "daniel howe",
   "dependencies": {
@@ -42,6 +43,7 @@
     "sync-request": "^6.1.0"
   },
   "homepage": ".",
+  "license": "UNLICENSED",
   "devDependencies": {
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
