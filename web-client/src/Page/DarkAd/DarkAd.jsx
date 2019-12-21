@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import IconButton from '../../Components/IconButton/IconButton';
 import UserSession from '../../Components/UserSession/UserSession';
-import NavigationHack from '../NavigationHack';
+import QuickNav from '../QuickNav';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 
@@ -69,7 +69,7 @@ const styles = {
   },
 };
 
-class DarkAd extends NavigationHack {
+class DarkAd extends QuickNav {
   constructor(props) {
     super(props, '/target-ad');
     this.state = {

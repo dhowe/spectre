@@ -9,7 +9,7 @@ import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 
 import './Game.css';
-import NavigationHack from '../NavigationHack';
+import QuickNav from '../QuickNav';
 
 const styles = {
   root: {
@@ -301,7 +301,7 @@ Brand.updateAll = () => { Brand.instances.forEach(b => b.update()) };
 let user;
 let game;
 
-class Game extends NavigationHack {
+class Game extends QuickNav {
   constructor(props) {
     super(props, "/thank-you");
     game = this; // handle for p5js

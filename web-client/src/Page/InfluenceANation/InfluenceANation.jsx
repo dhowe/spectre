@@ -12,7 +12,7 @@ import colours from '../../colors.scss';
 import Button from '@material-ui/core/Button';
 //import Fade from '@material-ui/core/Fade';
 import "./InfluenceANation.scss";
-import NavigationHack from '../NavigationHack';
+import QuickNav from '../QuickNav';
 
 const height = 53;
 const fontSize = 22;
@@ -35,7 +35,7 @@ const styles = {
   },
 };
 
-class InfluenceANation extends NavigationHack {
+class InfluenceANation extends QuickNav {
   constructor(props) {
     super(props, '/consumer-data');
   }

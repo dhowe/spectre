@@ -6,7 +6,7 @@ import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
-import NavigationHack from '../NavigationHack';
+import QuickNav from '../QuickNav';
 import { ReactComponent as ThumbUp } from '../../Icons/insightthankyou.svg';
 
 const styles = {
@@ -27,7 +27,7 @@ const styles = {
 };
 
 // Interstitial
-class ThankYou extends NavigationHack {
+class ThankYou extends QuickNav {
   constructor(props) {
     super(props, '/steps');
   }

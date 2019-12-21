@@ -7,7 +7,7 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import IconButton from '../../Components/IconButton/IconButton';
-import NavigationHack from '../NavigationHack';
+import QuickNav from '../QuickNav';
 
 const styles = {
   root: {
@@ -20,7 +20,7 @@ const styles = {
   },
 };
 
-class LaunchCampaign extends NavigationHack {
+class LaunchCampaign extends QuickNav {
   constructor(props) {
     super(props, '/referendum-results');
   }

@@ -8,7 +8,7 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import BeginBackground from '../../Images/1_Standby_Screen_1080px_by_1620px.jpg';
 
 import './TouchToBegin.scss';
-import NavigationHack from '../NavigationHack';
+import QuickNav from '../QuickNav';
 
 const styles = {
   root: {
@@ -23,7 +23,7 @@ const styles = {
   },
 };
 
-class TouchToBegin extends NavigationHack {
+class TouchToBegin extends QuickNav {
   constructor(props) {
     super(props, '/login');
   }

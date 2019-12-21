@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
-import NavigationHack from '../NavigationHack';
+import QuickNav from '../QuickNav';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 
 const styles = {
@@ -19,7 +19,7 @@ const styles = {
   },
 };
 
-class PickYourSide extends NavigationHack {
+class PickYourSide extends QuickNav {
   constructor(props) {
     super(props, '/campaign');
   }

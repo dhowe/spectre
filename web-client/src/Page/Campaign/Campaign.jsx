@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
-import NavigationHack from '../NavigationHack';
+import QuickNav from '../QuickNav';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import IconButton from '../../Components/IconButton/IconButton';
 import { Link } from 'react-router-dom';
@@ -20,7 +20,7 @@ const styles = {
   },
 };
 
-class Campaign extends NavigationHack {
+class Campaign extends QuickNav {
   constructor(props) {
     super(props, '/dark-ad');
   }

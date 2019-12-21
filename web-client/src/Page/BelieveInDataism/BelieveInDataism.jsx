@@ -7,7 +7,7 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import Countdown from 'react-countdown-now';
-import NavigationHack from '../NavigationHack';
+import QuickNav from '../QuickNav';
 
 const styles = {
   root: {
@@ -31,7 +31,7 @@ function toAdjPhrase(virtue) {
   return content[virtue];
 }
 
-class BelieveInDataism extends NavigationHack {
+class BelieveInDataism extends QuickNav {
   constructor(props) {
     super(props, '/steps');
   }

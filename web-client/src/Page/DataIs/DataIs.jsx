@@ -7,7 +7,7 @@ import Countdown from 'react-countdown-now';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
-import NavigationHack from '../NavigationHack';
+import QuickNav from '../QuickNav';
 
 const styles = {
   root: {
@@ -20,7 +20,7 @@ const styles = {
   },
 };
 
-class DataIs extends NavigationHack {
+class DataIs extends QuickNav {
   constructor(props) {
     super(props, '/personalised-experience');
   }

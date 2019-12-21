@@ -12,7 +12,7 @@ import AvatarComponent from '../../Components/AvatarComponent/AvatarComponent';
 import Video from '../../Components/Video/Video';
 
 import './InfluenceACelebrity.scss';
-import NavigationHack from '../NavigationHack';
+import QuickNav from '../QuickNav';
 
 const styles = {
   root: {
@@ -25,7 +25,7 @@ const styles = {
   },
 };
 
-class InfluenceACelebrity extends NavigationHack {
+class InfluenceACelebrity extends QuickNav {
   constructor(props) {
     super(props, '/OCEAN-reveal');
     this.play = this.play.bind(this);

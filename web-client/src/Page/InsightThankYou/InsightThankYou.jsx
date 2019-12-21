@@ -12,7 +12,7 @@ import { ReactComponent as ThumbUp } from '../../Icons/insightthankyou.svg';
 import colours from '../../colors.scss';
 import './InsightThankYou.scss';
 import Styles from '../../Styles';
-import NavigationHack from '../NavigationHack';
+import QuickNav from '../QuickNav';
 
 const styles = {
   root: {
@@ -38,7 +38,7 @@ const styles = {
   },
 };
 
-class InsightThankYou extends NavigationHack {
+class InsightThankYou extends QuickNav {
   constructor(props) {
     super(props, '/insight-sexuality');
   }

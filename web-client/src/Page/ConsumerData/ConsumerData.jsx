@@ -10,7 +10,7 @@ import IconButton from '../../Components/IconButton/IconButton';
 import IconButtonToggle from '../../Components/IconButton/IconButtonToggle';
 
 import './ConsumerData.scss';
-import NavigationHack from '../NavigationHack';
+import QuickNav from '../QuickNav';
 
 const styles = {
   root: {
@@ -51,7 +51,7 @@ const styles = {
   },
 };
 
-class ConsumerData extends NavigationHack {
+class ConsumerData extends QuickNav {
   constructor(props) {
     super(props, '/political-data');
     this.state = { count: 0 };

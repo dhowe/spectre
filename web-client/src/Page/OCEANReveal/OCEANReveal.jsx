@@ -9,7 +9,7 @@ import UserSession from '../../Components/UserSession/UserSession';
 import Video from '../../Components/Video/Video';
 import Modal from '../../Components/Modal/Modal';
 import User from '../../Components/User/User';
-import NavigationHack from '../NavigationHack';
+import QuickNav from '../QuickNav';
 
 import colours from '../../colors.scss';
 
@@ -23,7 +23,7 @@ const styles = {
   },
 };
 
-class OCEANReveal extends NavigationHack {
+class OCEANReveal extends QuickNav {
   constructor(props) {
     super(props, '/take-back-control');
     this.durationMS = 500;

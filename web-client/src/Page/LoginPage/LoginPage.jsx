@@ -10,7 +10,7 @@ import UserSession from '../../Components/UserSession/UserSession';
 
 import './LoginPage.scss';
 import Video from '../../Components/Video/Video';
-import NavigationHack from '../NavigationHack';
+import QuickNav from '../QuickNav';
 
 window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true; // TMP: #138
 
@@ -60,15 +60,7 @@ const styles = {
   },
 };
 
-class LoginPage extends NavigationHack {
-
-  static validEmail(email) {
-    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return email.length > 0 && re.test(email.toLowerCase());
-  }
-  static validName(name) {
-    return name.length > 0;
-  }
+class LoginPage extends QuickNav {
 
   constructor(props) {
     super(props, '/pledge');
@@ -179,6 +171,15 @@ class LoginPage extends NavigationHack {
         </div>
       </div>
     );
+  }
+
+  static validEmail(email) {
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return email.length > 0 && re.test(email.toLowerCase());
+  }
+
+  static validName(name) {
+    return name.length > 0;
   }
 }
 

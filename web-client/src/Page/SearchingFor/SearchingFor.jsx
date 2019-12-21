@@ -9,7 +9,7 @@ import UserSession from '../../Components/UserSession/UserSession';
 //import Webcam from "react-webcam";
 import './SearchingFor.scss';
 import Styles from '../../Styles';
-import NavigationHack from '../NavigationHack';
+import QuickNav from '../QuickNav';
 
 
 const styles = {
@@ -39,7 +39,7 @@ const styles = {
   },
 };
 
-class SearchingFor extends NavigationHack {
+class SearchingFor extends QuickNav {
   constructor(props) {
     super(props, 'data-is');
 

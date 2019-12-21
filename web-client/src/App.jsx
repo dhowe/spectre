@@ -68,6 +68,7 @@ const theme = createMuiTheme({
 class App extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       date: 'test',
       virtue: 'default',
@@ -79,15 +80,17 @@ class App extends React.Component {
         image: 'https://material-ui.com/static/images/avatar/1.jpg'
       },
     };
-    this.test_state = this.test_state.bind(this);
-    this.set_key = this.set_key.bind(this);
+    
+    this.testState = this.testState.bind(this);
+    this.setKey = this.setKey.bind(this);
   };
-  test_state() {
+
+  testState() {
     this.setState({
       date: 'test2',
     });
   }
-  set_key(key, value) {
+  setKey(key, value) {
     this.setState({
       [key]: value,
     });

@@ -5,7 +5,7 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import Video from '../../Components/Video/Video';
-import NavigationHack from '../NavigationHack';
+import QuickNav from '../QuickNav';
 
 const styles = {
   root: {
@@ -18,7 +18,7 @@ const styles = {
   },
 };
 
-class Goodbye extends NavigationHack {
+class Goodbye extends QuickNav {
   constructor(props) {
     super(props, '/');
   }

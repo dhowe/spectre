@@ -8,7 +8,7 @@ import UserSession from '../../Components/UserSession/UserSession';
 import { ReactComponent as Trophy } from '../../Icons/trophy.svg';
 
 import './SuccessAd.scss';
-import NavigationHack from '../NavigationHack';
+import QuickNav from '../QuickNav';
 
 const styles = {
   root: {
@@ -18,7 +18,7 @@ const styles = {
   },
 };
 
-class SuccessAd extends NavigationHack {
+class SuccessAd extends QuickNav {
   constructor(props) {
     super(props, '/influence-a-nation');
     this.state = { timeout: null };

@@ -6,7 +6,7 @@ import Fade from '@material-ui/core/Fade';
 import Countdown from 'react-countdown-now';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
-import NavigationHack from '../NavigationHack';
+import QuickNav from '../QuickNav';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 
 const styles = {
@@ -21,7 +21,7 @@ const styles = {
   },
 };
 
-class YourPower extends NavigationHack {
+class YourPower extends QuickNav {
   constructor(props) {
     super(props, '/pick-your-side');
   }

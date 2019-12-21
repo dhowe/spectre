@@ -8,7 +8,7 @@ import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import IconButton from '../../Components/IconButton/IconButton';
 import { ReactComponent as Trophy } from '../../Icons/trophy.svg';
-import NavigationHack from '../NavigationHack';
+import QuickNav from '../QuickNav';
 
 const styles = {
   root: {
@@ -21,7 +21,7 @@ const styles = {
   },
 };
 
-class Win extends NavigationHack {
+class Win extends QuickNav {
   constructor(props) {
     super(props, '/influence-a-celebrity');
   }

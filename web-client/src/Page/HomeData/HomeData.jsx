@@ -10,7 +10,7 @@ import IconButton from '../../Components/IconButton/IconButton';
 import IconButtonToggle from '../../Components/IconButton/IconButtonToggle';
 
 import './HomeData.scss';
-import NavigationHack from '../NavigationHack';
+import QuickNav from '../QuickNav';
 
 const styles = {
   root: {
@@ -51,7 +51,7 @@ const styles = {
   },
 };
 
-class HomeData extends NavigationHack {
+class HomeData extends QuickNav {
   constructor(props) {
     super(props, '/find-citizens');
     this.state = { count: 0 };

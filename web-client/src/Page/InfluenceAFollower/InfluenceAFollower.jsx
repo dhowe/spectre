@@ -10,7 +10,7 @@ import User from '../../Components/User/User';
 
 import './InfluenceAFollower.scss';
 import AvatarCircle from '../../Components/AvatarCircle/AvatarCircle';
-import NavigationHack from '../NavigationHack';
+import QuickNav from '../QuickNav';
 
 const styles = {
   root: {
@@ -28,7 +28,7 @@ const styles = {
   }
 };
 
-class InfluenceAFollower extends NavigationHack {
+class InfluenceAFollower extends QuickNav {
   constructor(props) {
     super(props, '/selected-avatar');
     this.handleSelect = this.handleSelect.bind(this);

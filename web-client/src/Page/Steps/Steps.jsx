@@ -8,7 +8,7 @@ import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
-import NavigationHack from '../NavigationHack';
+import QuickNav from '../QuickNav';
 
 const styles = {
   root: {
@@ -21,7 +21,7 @@ const styles = {
   },
 };
 
-class Steps extends NavigationHack {
+class Steps extends QuickNav {
   constructor(props) {
     super(props, '/influence-a-follower');
   }

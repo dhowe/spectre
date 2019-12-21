@@ -12,7 +12,7 @@ import UserSession from '../../Components/UserSession/UserSession';
 import Styles from '../../Styles';
 import colours from '../../colors.scss';
 import './TakeBackControl.scss';
-import NavigationHack from '../NavigationHack';
+import QuickNav from '../QuickNav';
 
 const width = 180;
 const height = 53;
@@ -48,7 +48,7 @@ const styles = {
   },
 };
 
-class TakeBackControl extends NavigationHack {
+class TakeBackControl extends QuickNav {
   constructor(props) {
     super(props, '/goodbye');
   }

@@ -11,7 +11,7 @@ import Styles from '../../Styles';
 import colours from '../../colors.scss';
 
 import './SelectedAvatar.scss';
-import NavigationHack from '../NavigationHack';
+import QuickNav from '../QuickNav';
 
 const height = 53;
 const fontSize = 22;
@@ -37,7 +37,7 @@ const styles = {
   },
 };
 
-class SelectedAvatar extends NavigationHack {
+class SelectedAvatar extends QuickNav {
   constructor(props) {
     super(props, '/insight-gender');
   }
