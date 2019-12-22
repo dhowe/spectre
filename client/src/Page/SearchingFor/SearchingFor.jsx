@@ -9,7 +9,7 @@ import UserSession from '../../Components/UserSession/UserSession';
 //import Webcam from "react-webcam";
 import './SearchingFor.scss';
 import Styles from '../../Styles';
-import QuickNav from '../QuickNav';
+import SpectrePage from '../SpectrePage';
 
 
 const styles = {
@@ -39,7 +39,7 @@ const styles = {
   },
 };
 
-class SearchingFor extends QuickNav {
+class SearchingFor extends SpectrePage {
   constructor(props) {
     super(props, 'data-is');
 

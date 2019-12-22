@@ -8,7 +8,7 @@ import UserSession from '../../Components/UserSession/UserSession';
 
 import colours from '../../colors.scss';
 import './Pledge.scss';
-import QuickNav from '../QuickNav';
+import SpectrePage from '../SpectrePage';
 
 const styles = {
   root: {
@@ -25,14 +25,14 @@ const styles = {
   },
 };
 
-class Pledge extends QuickNav {
+class Pledge extends SpectrePage {
   constructor(props) {
     super(props, '/searching-for');
     this.state = { timeout: null };
   }
 
   componentDidMount() {
-    if (!this.context.name) this.context.name = 'Barney'; // TMP: remove
+    //if (!this.context.name) this.context.name = 'Barney'; // TMP: remove
     const timeout = setTimeout(this.next, 7500);
     this.setState({ timeout });
   }

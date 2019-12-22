@@ -10,7 +10,7 @@ import IconButton from '../../Components/IconButton/IconButton';
 import IconButtonToggle from '../../Components/IconButton/IconButtonToggle';
 
 import './ConsumerData.scss';
-import QuickNav from '../QuickNav';
+import SpectrePage from '../SpectrePage';
 
 const styles = {
   root: {
@@ -51,7 +51,7 @@ const styles = {
   },
 };
 
-class ConsumerData extends QuickNav {
+class ConsumerData extends SpectrePage {
   constructor(props) {
     super(props, '/political-data');
     this.state = { count: 0 };

@@ -10,7 +10,7 @@ import User from '../../Components/User/User';
 
 import './InfluenceAFollower.scss';
 import AvatarCircle from '../../Components/AvatarCircle/AvatarCircle';
-import QuickNav from '../QuickNav';
+import SpectrePage from '../SpectrePage';
 
 const styles = {
   root: {
@@ -28,7 +28,7 @@ const styles = {
   }
 };
 
-class InfluenceAFollower extends QuickNav {
+class InfluenceAFollower extends SpectrePage {
   constructor(props) {
     super(props, '/selected-avatar');
     this.handleSelect = this.handleSelect.bind(this);

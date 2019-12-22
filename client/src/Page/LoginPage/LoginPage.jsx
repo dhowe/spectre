@@ -10,7 +10,7 @@ import UserSession from '../../Components/UserSession/UserSession';
 
 import './LoginPage.scss';
 import Video from '../../Components/Video/Video';
-import QuickNav from '../QuickNav';
+import SpectrePage from '../SpectrePage';
 
 window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true; // TMP: #138
 
@@ -60,7 +60,7 @@ const styles = {
   },
 };
 
-class LoginPage extends QuickNav {
+class LoginPage extends SpectrePage {
 
   constructor(props) {
     super(props, '/pledge');
@@ -69,8 +69,10 @@ class LoginPage extends QuickNav {
       nameErrorCount: 0,
       modalOpen: false,
       clearEmail: true,
+      videoStarted: false
     };
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.skipVideo = this.skipVideo.bind(this);
     this.modalContent = '';
     this.modalTitle = '';
   }
@@ -140,7 +142,7 @@ class LoginPage extends QuickNav {
 
     } else {
 
-      // TMP: should reject without successful User creation
+      // TODO: TMP: should reject without successful User creation
       this.context.login = email;
       this.context.name = name; // user-prop
       this.showVideo();
@@ -152,7 +154,12 @@ class LoginPage extends QuickNav {
   }
 
   showVideo() {
+    this.setState({ videoStarted: true });
     this.video.play();
+  }
+
+  skipVideo() { // dev-only
+    this.state.videoStarted && this.next();
   }
 
   render() {
@@ -173,6 +180,7 @@ class LoginPage extends QuickNav {
             movie="/video/SpectreIntro.mp4"
             autoPlay={false}
             onComplete={this.next}
+            onKeyUp={this.skipVideo}
           />
           <SocialLogin handleSubmit={this.handleSubmit} />
         </div>

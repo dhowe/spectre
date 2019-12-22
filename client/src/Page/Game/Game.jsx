@@ -9,7 +9,7 @@ import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 
 import './Game.css';
-import QuickNav from '../QuickNav';
+import SpectrePage from '../SpectrePage';
 
 const styles = {
   root: {
@@ -300,7 +300,7 @@ Brand.updateAll = () => { Brand.instances.forEach(b => b.update()) };
 
 let user, game;
 
-class Game extends QuickNav {
+class Game extends SpectrePage {
   constructor(props) {
     super(props, "/thank-you");
     game = this; // handle for p5js

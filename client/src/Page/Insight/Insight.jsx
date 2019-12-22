@@ -9,7 +9,7 @@ import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import TextSliderText from '../../Components/TextSliderText/TextSliderText';
 import AvatarComponent from '../../Components/AvatarComponent/AvatarComponent';
 import UserSession from '../../Components/UserSession/UserSession';
-import QuickNav from '../QuickNav';
+import SpectrePage from '../SpectrePage';
 
 const styles = {
   root: {
@@ -19,7 +19,7 @@ const styles = {
   },
 };
 
-class Insight extends QuickNav {
+class Insight extends SpectrePage {
   constructor(props) {
     super(props, props.next);
     this.state = { buttonEnabled: false };

@@ -11,7 +11,7 @@ import Styles from '../../Styles';
 import colours from '../../colors.scss';
 
 import './SelectedAvatar.scss';
-import QuickNav from '../QuickNav';
+import SpectrePage from '../SpectrePage';
 
 const height = 53;
 const fontSize = 22;
@@ -37,7 +37,7 @@ const styles = {
   },
 };
 
-class SelectedAvatar extends QuickNav {
+class SelectedAvatar extends SpectrePage {
   constructor(props) {
     super(props, '/insight-gender');
   }

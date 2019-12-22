@@ -5,7 +5,7 @@ const LEFT_ARROW = 37;
 const RIGHT_ARROW = 39;
 
 // Allows quick navigation via left-right arrows for dev
-class QuickNav extends React.Component {
+class SpectrePage extends React.Component {
 
   constructor(props, next = '/') {
     super(props);
@@ -45,9 +45,9 @@ class QuickNav extends React.Component {
   }
 }
 
-QuickNav.propTypes = {
+SpectrePage.propTypes = {
   history: PropTypes.object.isRequired,
   next: PropTypes.string.isRequired,
 };
 
-export default QuickNav;
+export default SpectrePage;

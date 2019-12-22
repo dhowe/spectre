@@ -10,7 +10,7 @@ import IconButton from '../../Components/IconButton/IconButton';
 import IconButtonToggle from '../../Components/IconButton/IconButtonToggle';
 
 import './HomeData.scss';
-import QuickNav from '../QuickNav';
+import SpectrePage from '../SpectrePage';
 
 const styles = {
   root: {
@@ -51,7 +51,7 @@ const styles = {
   },
 };
 
-class HomeData extends QuickNav {
+class HomeData extends SpectrePage {
   constructor(props) {
     super(props, '/find-citizens');
     this.state = { count: 0 };

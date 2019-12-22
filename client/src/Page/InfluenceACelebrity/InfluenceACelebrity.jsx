@@ -12,7 +12,7 @@ import AvatarComponent from '../../Components/AvatarComponent/AvatarComponent';
 import Video from '../../Components/Video/Video';
 
 import './InfluenceACelebrity.scss';
-import QuickNav from '../QuickNav';
+import SpectrePage from '../SpectrePage';
 
 const styles = {
   root: {
@@ -25,7 +25,7 @@ const styles = {
   },
 };
 
-class InfluenceACelebrity extends QuickNav {
+class InfluenceACelebrity extends SpectrePage {
   constructor(props) {
     super(props, '/OCEAN-reveal');
     this.play = this.play.bind(this);

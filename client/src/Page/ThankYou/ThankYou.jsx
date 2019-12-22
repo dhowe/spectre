@@ -7,7 +7,7 @@ import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
-import QuickNav from '../QuickNav';
+import SpectrePage from '../SpectrePage';
 
 const styles = {
   root: {
@@ -27,7 +27,7 @@ const styles = {
 };
 
 // Interstitial
-class ThankYou extends QuickNav {
+class ThankYou extends SpectrePage {
   constructor(props) {
     super(props, '/steps');
   }

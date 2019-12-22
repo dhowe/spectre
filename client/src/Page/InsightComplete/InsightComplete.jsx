@@ -9,7 +9,7 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import OceanProfile from '../../Components/OceanProfile/OceanProfile';
-import QuickNav from '../QuickNav';
+import SpectrePage from '../SpectrePage';
 import Video from '../../Components/Video/Video';
 import Styles from '../../Styles';
 import colours from '../../colors.scss';
@@ -28,7 +28,7 @@ const styles = {
   },
 };
 
-class InsightComplete extends QuickNav {
+class InsightComplete extends SpectrePage {
   constructor(props) {
     super(props, '/your-power');
   }

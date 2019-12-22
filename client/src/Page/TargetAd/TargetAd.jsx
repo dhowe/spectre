@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
-import QuickNav from '../QuickNav';
+import SpectrePage from '../SpectrePage';
 import UserSession from '../../Components/UserSession/UserSession';
 
 const styles = {
@@ -18,7 +18,7 @@ const styles = {
   },
 };
 
-class TargetAd extends QuickNav {
+class TargetAd extends SpectrePage {
   constructor(props) {
     super(props, '/success-ad');
   }

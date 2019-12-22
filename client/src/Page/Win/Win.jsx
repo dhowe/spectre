@@ -8,7 +8,7 @@ import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import IconButton from '../../Components/IconButton/IconButton';
 import { ReactComponent as Trophy } from '../../Icons/trophy.svg';
-import QuickNav from '../QuickNav';
+import SpectrePage from '../SpectrePage';
 
 const styles = {
   root: {
@@ -21,7 +21,7 @@ const styles = {
   },
 };
 
-class Win extends QuickNav {
+class Win extends SpectrePage {
   constructor(props) {
     super(props, '/influence-a-celebrity');
   }
