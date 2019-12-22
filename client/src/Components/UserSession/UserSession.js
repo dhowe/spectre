@@ -85,12 +85,12 @@ UserSession.initialize = function(onSuccess, onError) {
 
 UserSession.createUser = function(user, onSuccess, onError) {
 
-  let { route, auth, cid } = doConfig();
+  let { route, auth, cid, mode } = doConfig();
   if (!onSuccess) onSuccess = (json) => Object.assign(user, json);
   if (!onError) onError = (e) => console.error(e);
   if (user.clientId < 0) user.clientId = cid;
 
-  console.log('POST(Db.CreateUser): ' + route, user);
+  console.log('[' + mode + '] POST(Db.CreateUser): ' + route, user);
 
   fetch(route, {
     method: "post",
@@ -111,11 +111,11 @@ UserSession.updateUser = function(user, onSuccess, onError) {
     throw Error('user._id required');
   }
 
-  let { route, auth, cid } = doConfig();
+  let { route, auth, cid, mode } = doConfig();
   if (!onSuccess) onSuccess = json => Object.assign(user, json);
   if (!onError) onError = e => console.error(e);
 
-  console.log('PUT(Db.UpdateUser): ' + route);
+  console.log('[' + mode + '] PUT(Db.UpdateUser): ' + route);
 
   if (user.clientId < 0) user.clientId = cid;
 
@@ -134,11 +134,11 @@ UserSession.updateUser = function(user, onSuccess, onError) {
 
 UserSession.postImage = function(user, image, onSuccess, onError) {
 
-  let { route, auth } = doConfig();
+  let { route, auth, mode } = doConfig();
   if (!onSuccess) onSuccess = () => { };
   if (!onError) onError = (e) => console.error(e);
 
-  console.log('POST(Db.postImage): ' + route);
+  console.log('[' + mode + '] POST(Db.postImage): ' + route);
 
   //if (typeof image === 'string') image = toImageFile(image);
 

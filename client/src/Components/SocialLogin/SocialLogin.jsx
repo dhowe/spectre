@@ -71,6 +71,7 @@ class SocialLogin extends React.Component {
     this.handleRadioChange = this.handleRadioChange.bind(this);
     this.clearEmail = this.clearEmail.bind(this);
     this.state = {
+      userStubbed: false,
       emailValid: false,
       email: '',
       name: '',
@@ -80,28 +81,31 @@ class SocialLogin extends React.Component {
       clearEmail: this.clearEmail,
     };
     this.unShiftNeeded = false;
+    this.fakedUser = false;
     this.form = React.createRef();
-    this.fillAndGo = this.fillAndGo.bind(this);
+    this.stubbedSubmit = this.stubbedSubmit.bind(this);
   }
   componentDidMount() {
-    document.addEventListener("keyup", this.fillAndgo, false);
+    document.addEventListener("keyup", this.stubbedSubmit, false);
   }
   componentWillUnmount() {
-    document.removeEventListener("keyup", this.escFunction, false);
+    document.removeEventListener("keyup", this.stubbedSubmit, false);
   }
-  fillAndGo(event) {
-    if (event.keyCode === RIGHT_ARROW) {
+  stubbedSubmit(event) { // dev-only
+    if (event.keyCode === RIGHT_ARROW && !this.fakedUser ) {
+      this.fakedUser = true;
+      console.log('Creating stubbed user');
       let cons = "bcdfghjklmnprstvxz", vows = "aeiou";
       let name = cons[Math.floor(Math.random()*cons.length)]
         + vows[Math.floor(Math.random()*vows.length)]
         + cons[Math.floor(Math.random()*cons.length)];
       let data = {
-        name: name,
+        name: name.ucf(),
         email: name + (+new Date()) + '@test.com',
         gender: ['male', 'female','other'][Math.floor(Math.random()*3)]
       };
-      this.setState(data);
-      setTimeout(() => this.props.handleSubmit(0, this.state), 300);
+      this.setState(data); // update form and submit
+      setTimeout(() => this.props.handleSubmit(0, this.state), 1000);
     }
   }
   onKeyPress(button) {
