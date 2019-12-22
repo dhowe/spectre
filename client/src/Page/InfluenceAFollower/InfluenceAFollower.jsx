@@ -59,11 +59,10 @@ class InfluenceAFollower extends QuickNav {
     }
     else {
       console.log('using defaults');
-
     }
     this.shuffle(result);
     result = result.slice(0, 6);
-    console.log(result);
+    //console.log(result);
     return result;
   }
 

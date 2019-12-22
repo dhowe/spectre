@@ -61,55 +61,42 @@ const styles = {
 
 const RIGHT_ARROW = 39;
 
+let stateObj = {
+  userStubbed: false,
+  emailValid: false,
+  email: '',
+  name: '',
+  gender: '',
+  focus: 'name',
+  layoutName: 'default'
+  //clearEmail: this.clearEmail,
+};
+
 class SocialLogin extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = stateObj;
+    this.fakedUser = false;
+    this.unShiftNeeded = false;
     this.onKeyPress = this.onKeyPress.bind(this);
     this.handleShift = this.handleShift.bind(this);
     this.changeFocus = this.changeFocus.bind(this);
     this.handleRadioChange = this.handleRadioChange.bind(this);
     this.clearEmail = this.clearEmail.bind(this);
-    this.state = {
-      userStubbed: false,
-      emailValid: false,
-      email: '',
-      name: '',
-      gender: '',
-      focus: 'name',
-      layoutName: 'default',
-      clearEmail: this.clearEmail,
-    };
-    this.unShiftNeeded = false;
-    this.fakedUser = false;
-    this.form = React.createRef();
     this.stubbedSubmit = this.stubbedSubmit.bind(this);
+    this.form = React.createRef();
   }
+
   componentDidMount() {
     document.addEventListener("keyup", this.stubbedSubmit, false);
   }
+
   componentWillUnmount() {
     document.removeEventListener("keyup", this.stubbedSubmit, false);
   }
-  stubbedSubmit(event) { // dev-only
-    if (event.keyCode === RIGHT_ARROW && !this.fakedUser ) {
-      this.fakedUser = true;
-      console.log('Creating stubbed user');
-      let cons = "bcdfghjklmnprstvxz", vows = "aeiou";
-      let name = cons[Math.floor(Math.random()*cons.length)]
-        + vows[Math.floor(Math.random()*vows.length)]
-        + cons[Math.floor(Math.random()*cons.length)];
-      let data = {
-        name: name.ucf(),
-        email: name + (+new Date()) + '@test.com',
-        gender: ['male', 'female','other'][Math.floor(Math.random()*3)]
-      };
-      this.setState(data); // update form and submit
-      setTimeout(() => this.props.handleSubmit(0, this.state), 1000);
-    }
-  }
-  onKeyPress(button) {
 
+  onKeyPress(button) {
     if (button === '{shift}') {
       this.handleShift();
       this.unShiftNeeded = !this.unShiftNeeded;
@@ -168,7 +155,6 @@ class SocialLogin extends React.Component {
         <div className={`${classes.content} socialLogin-content`}>
           <form noValidate>
             {/* #267: SHIFT / CAPS, etc. dont work */}
-
             <FormControl className={classes.margin}>
               <Typography component="h6" variant="h6">Enter your name:</Typography>
               <Input
@@ -182,7 +168,6 @@ class SocialLogin extends React.Component {
                 }}
               />
             </FormControl>
-
             <FormControl className={classes.margin}>
               <Typography component="h6" variant="h6">Your email:</Typography>
               <Input
@@ -236,6 +221,23 @@ class SocialLogin extends React.Component {
         </div>
       </div>
     );
+  }
+  stubbedSubmit(event) { // for dev-only
+    if (event.keyCode === RIGHT_ARROW && !this.fakedUser) {
+      this.fakedUser = true;
+      console.log('Creating stubbed user');
+      let cons = "bcdfghjklmnprstvxz", vows = "aeiou";
+      let name = cons[Math.floor(Math.random() * cons.length)]
+        + vows[Math.floor(Math.random() * vows.length)]
+        + cons[Math.floor(Math.random() * cons.length)];
+      let data = {
+        name: name.ucf(),
+        email: name + (+new Date()) + '@test.com',
+        gender: ['male', 'female', 'other'][Math.floor(Math.random() * 3)]
+      };
+      this.setState(data); // update form and submit
+      setTimeout(() => this.props.handleSubmit(0, this.state), 1000);
+    }
   }
 }
 

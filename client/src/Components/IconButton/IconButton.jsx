@@ -287,27 +287,12 @@ class IconButton extends React.Component {
     this.state = { colour: props.colour };
   }
 
-  componentDidMount() {
+  /*componentDidMount() {
     this.updateUserColor(this.props.enabled);
   }
-
   componentWillReceiveProps({ enabled }) {
     this.updateUserColor(enabled);
   }
-
-  render() {
-    const { onClick, icon, text, className, Button, classes } = this.props;
-    const { colour } = this.state;
-    const classNames = [`iconButton-${colour}`, 'iconButton', classes.button];
-    if (className) classNames.push(className);
-    return (
-      <button onClick={onClick} className={classNames.join(' ')}>
-        {icons[icon] && icons[icon](colour)}
-        {Button || <div style={{ color: colour }} className="iconButtonText">{text}</div>}
-      </button>
-    );
-  }
-
   updateUserColor(enabled) {
     const etype = typeof enabled;
     if (!enabled) {
@@ -323,6 +308,31 @@ class IconButton extends React.Component {
         colour: colours.blue,
       });
     }
+  }
+  */
+
+  render() {
+
+    const { onClick, icon, text, className, Button, classes, enabled } = this.props;
+    //const { colour } = this.state;
+    // this code replaces deprecated componentWillReceiveProps()
+    // and componentDidMount()) above, TODO: needs checking
+    let colour = colours.grey, etype = typeof enabled;
+    if (!enabled) {
+      colour = colours.grey;
+    } else if (etype === 'string') {
+      colour = enabled;
+    } else if (enabled || etype === 'undefined') {
+      colour = colours.blue;
+    }
+    const classNames = [`iconButton-${colour}`, 'iconButton', classes.button];
+    if (className) classNames.push(className);
+    return (
+      <button onClick={onClick} className={classNames.join(' ')}>
+        {icons[icon] && icons[icon](colour)}
+        {Button || <div style={{ color: colour }} className="iconButtonText">{text}</div>}
+      </button>
+    );
   }
 }
 
