@@ -11,9 +11,9 @@
     "client-start": "yarn --cwd client start",
     "client-build": "NODE_ENV=production yarn --cwd client build",
     "build-prod": "NODE_ENV=production yarn run server",
-    "prepbuild-prod": "yarn run client-build",
+    "prepbuild-prod": "NODE_ENV=production yarn run client-build",
     "start": "concurrently --kill-others-on-fail \"yarn run server\" \"yarn run client-start\"",
-    "full-install": "concurrently --kill-others-on-fail \"yarn install\" \"yarn --cwd client install\"",
+    "full-install": "yarn install && yarn --cwd client install",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false yarn --cwd client install && yarn --cwd client run build"
   },
   "author": "daniel howe",
