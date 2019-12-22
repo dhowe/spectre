@@ -22,6 +22,17 @@ class SpectrePage extends React.Component {
   componentWillUnmount() {
     document.removeEventListener('keyup', this.navigate);
   }
+  // 
+  // logUserProperties() {
+  //   let s = '{ ';
+  //   Object.keys(this.context).forEach(p => {
+  //     if (this.context[p]) {
+  //       s += p + ':' + this.context[p] + ', ';
+  //     }
+  //   });
+  //   s = s.substring(0, s.length - 2) + ' }';
+  //   console.log(s);
+  // }
 
   navigate(event) {
     //console.log('touched', event.keyCode);
@@ -41,6 +52,11 @@ class SpectrePage extends React.Component {
   }
 
   next() {
+    // track the last page visited and time
+    if (typeof this.context.lastPageVisit !== 'undefined') {
+      this.context.lastPageVisit = { page: this.navigateTo, time: Date.now() }
+      //console.log('[Page]', this.context.lastPageVisit);
+    }
     this.props.history.push(this.navigateTo);
   }
 }

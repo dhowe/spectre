@@ -66,35 +66,6 @@ const theme = createMuiTheme({
 });
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      date: 'test',
-      virtue: 'default',
-      gender: 'default',
-      name: 'default',
-      selectedFollower: {
-        name: 'Remy',
-        gender: 'man',
-        image: 'https://material-ui.com/static/images/avatar/1.jpg'
-      },
-    };
-    
-    this.testState = this.testState.bind(this);
-    this.setKey = this.setKey.bind(this);
-  };
-
-  testState() {
-    this.setState({
-      date: 'test2',
-    });
-  }
-  setKey(key, value) {
-    this.setState({
-      [key]: value,
-    });
-  }
 
   render() {
     return (

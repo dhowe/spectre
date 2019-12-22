@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
-//import Webcam from "react-webcam";
+import Webcam from "react-webcam";
 import './SearchingFor.scss';
 import Styles from '../../Styles';
 import SpectrePage from '../SpectrePage';
@@ -42,7 +42,6 @@ const styles = {
 class SearchingFor extends SpectrePage {
   constructor(props) {
     super(props, 'data-is');
-
     this.setRef = this.setRef.bind(this);
   }
 
@@ -53,7 +52,8 @@ class SearchingFor extends SpectrePage {
   toImageFile(data, fname) {
     const arr = data.split(',');
     if (!data || data.length <= 6) {
-      throw Error('Bad image data');
+      data && console.error(data);
+      throw Error('Bad image data: '+data);
     }
     const mime = arr[0].match(/:(.*?);/)[1];
     const bstr = atob(arr[1]);
@@ -68,16 +68,17 @@ class SearchingFor extends SpectrePage {
   handleClick(virtue) {
     const user = this.context;
     user.virtue = virtue;
-    user.lastPageVisit = { page: '/SearchingFor', time: Date.now()};
 
-    ///////////////////// TMP: ///////////////////////
-    user._id = user._id || Math.random() * 100000000;
-    user.name = user.name || 'Barney';
-    user.loginType = user.loginType || 'email';
-    user.login = user.login || `Barney${+new Date()}@aol.com`;
+    // ///////////////////// TMP: ///////////////////////
+    // user._id = user._id || Math.random() * 100000000;
+    // user.name = user.name || 'Barney';
+    // user.loginType = user.loginType || 'email';
+    // user.login = user.login || `Barney${+new Date()}@aol.com`;
 
     // here we are doing the webcam capture, disabled for now
     if (false) {
+
+      // TODO: next work
       const data = this.webcam.getScreenshot();
       if (data && data.length) {
         const imgfile = this.toImageFile(data, user._id + '.jpg');
@@ -103,11 +104,11 @@ class SearchingFor extends SpectrePage {
 
   render() {
     const { classes } = this.props;
-    /*const videoConstraints = {
+    const videoConstraints = {
       width: styles.profileImage.width,
       height: styles.profileImage.height,
       facingMode: "user"
-    };*/
+    }
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" />
@@ -115,14 +116,14 @@ class SearchingFor extends SpectrePage {
           <Typography className="username" component="h3" variant="h3">{this.context.name || 'Barney'}</Typography>
           <Typography className="question" component="h3" variant="h3">What are you searching for today?</Typography>
           <div className="ImageCapture">
-            {/*<Webcam ref={this.setRef}
+            {<Webcam ref={this.setRef}
                   audio={false}
                   screenshotQuality={1}
                   screenshotFormat="image/jpeg"
                   width={styles.profileImage.width}
                   height={styles.profileImage.height}
                   style={{left: '-5000px', position: 'relative'}}
-                  videoConstraints={videoConstraints} />*/}
+                  videoConstraints={videoConstraints} />}
           </div>
           <div className="buttonWrapper">
             <Button className={classes.button} variant="contained" color="primary" onClick={() => this.handleClick('power')}>Power</Button>

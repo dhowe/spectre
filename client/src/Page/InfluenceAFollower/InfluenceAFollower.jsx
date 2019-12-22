@@ -29,6 +29,7 @@ const styles = {
 };
 
 class InfluenceAFollower extends SpectrePage {
+  
   constructor(props) {
     super(props, '/selected-avatar');
     this.handleSelect = this.handleSelect.bind(this);
@@ -41,7 +42,7 @@ class InfluenceAFollower extends SpectrePage {
       user.name = user.name || 'Barney';
       user.loginType = user.loginType || 'email';
       user.login = user.login || `Barney${+new Date()}@aol.com`;
-      //UserSession.createUser(user);
+      //UserSession.create(user);
     }
   }
 

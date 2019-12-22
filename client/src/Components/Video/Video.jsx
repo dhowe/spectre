@@ -39,7 +39,6 @@ class Video extends React.Component {
   }
 
   stop() {
-    console.log("STOP");
     this.videoPlayer.current.currentTime = Number.MAX_SAFE_INTEGER;
   }
 

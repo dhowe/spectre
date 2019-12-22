@@ -25,25 +25,32 @@ class DataIs extends SpectrePage {
     super(props, '/personalised-experience');
   }
 
+  componentDidMount() {
+    let user = this.context;
+    UserSession.update(this.context, json => {
+      Object.assign(user, json);
+      console.log('['+user.lastPageVisit.page.uc() +'] '
+        + user.name + ' / ' + user.login + ' / ' + user.gender + ' / ' +user.virtue);
+    });
+  }
+
   render() {
+    let user = this.context;
+    user.virtue = user.virtue || 'power';
+
     const { classes } = this.props;
-    this.context.virtue = this.context.virtue || 'power';
-    const virtue = this.context.virtue;
-    const virtueAs = this.context.virtueAsAdverb();
-    console.log('User:', this.context);
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" />
         <div className={`${classes.content} content`}>
           <Fade in={true} style={{ transitionDelay: '200ms' }}>
-            <Typography component="h6" variant="h6">DATA IS {virtue.toUpperCase()}</Typography>
+            <Typography component="h6" variant="h6">DATA IS {user.virtue.toUpperCase()}</Typography>
           </Fade>
           <Fade in={true} style={{ transitionDelay: '1200ms' }}>
-
-            <Typography component="h6" variant="h6">To become more {virtueAs} you need&nbsp;more&nbsp;data</Typography>
+            <Typography component="h6" variant="h6">To become more {user.virtueAsAdverb()} you need&nbsp;more&nbsp;data</Typography>
           </Fade>
           <Fade in={true} style={{ transitionDelay: '2000ms' }}>
-            <Typography component="h6" variant="h6">We can help you believe in the {virtue}&nbsp;of&nbsp;Dataism.</Typography>
+            <Typography component="h6" variant="h6">We can help you believe in the {user.virtue}&nbsp;of&nbsp;Dataism.</Typography>
           </Fade>
           <Countdown
             onComplete={this.next}

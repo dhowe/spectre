@@ -5,7 +5,6 @@ import FormData from 'form-data';
 
 // We store the current User in React context for easy access
 let UserSession = React.createContext(new User());
-console.log('User Session:', UserSession);
 
 UserSession.defaultUsers = function(onSuccess, onError) {
   fetch('/default-users.json').then(res => res.json())
@@ -64,33 +63,60 @@ let handleResponse = (res) => {
     });
 }
 
-UserSession.initialize = function(onSuccess, onError) {
+UserSession.get = function(ctx) {
+  if (!ctx) {
+    // && (idOptional || typeof ctx._id !== 'undefined')) return ctx;
+    let json = localStorage.getItem('spectre-user');
+    console.log('[WARN] Retrieving User from localstorage', json);
+    ctx = JSON.parse(json);
+  }
+  return ctx;
+}
+
+UserSession.sync = function(ctx) {
+  ctx && localStorage.setItem('spectre-user', JSON.stringify(ctx));
+}
+
+UserSession.clear = function() {
+  localStorage.clear();
+}
+
+//////////////////////////////////////////////////////////////////////
+
+UserSession.init = function(onSuccess, onError) {
 
   let { route, auth, mode } = doConfig();
   if (!onError) onError = (e) => console.error(e);
   if (!onSuccess) onSuccess = (json) => { } // no-op;
 
-  console.log('[' + mode + '] GET(Db.initialize): ' + route);
+  console.log('[GET] ' + mode + '.init: ' + route);
 
   fetch(route, {
     method: "get",
-    headers: {
-      "Authorization": 'Basic ' + btoa(auth)
-    },
+    headers: { "Authorization": 'Basic ' + btoa(auth) },
   })
     .then(handleResponse.bind(this))
     .then(onSuccess.bind(this))
     .catch(onError.bind(this));
 }
 
-UserSession.createUser = function(user, onSuccess, onError) {
+// Create a new database record: /login only
+UserSession.create = function(user, onSuccess, onError) {
 
   let { route, auth, cid, mode } = doConfig();
-  if (!onSuccess) onSuccess = (json) => Object.assign(user, json);
-  if (!onError) onError = (e) => console.error(e);
+  let internalSuccess = (json) => {
+    Object.assign(user, json);
+    UserSession.sync(user);
+    onSuccess && onSuccess(json);
+  }
+  if (!onError) onError = (e) => {
+    console.error('UserSession.create: '+e);
+    throw e;
+  }
+
   if (user.clientId < 0) user.clientId = cid;
 
-  console.log('[' + mode + '] POST(Db.CreateUser): ' + route, user);
+  console.log('[POST] ' + mode + '.create: ' + route);
 
   fetch(route, {
     method: "post",
@@ -101,21 +127,22 @@ UserSession.createUser = function(user, onSuccess, onError) {
     body: JSON.stringify(user)
   })
     .then(handleResponse.bind(this))
-    .then(onSuccess.bind(this))
+    .then(internalSuccess.bind(this))
     .catch(onError.bind(this));
 }
 
-UserSession.updateUser = function(user, onSuccess, onError) {
+UserSession.update = function(user, onSuccess, onError) {
 
-  if (typeof user._id === 'undefined') {
-    throw Error('user._id required');
-  }
+  UserSession.sync(user);
+  user = UserSession.get(user);
 
   let { route, auth, cid, mode } = doConfig();
   if (!onSuccess) onSuccess = json => Object.assign(user, json);
   if (!onError) onError = e => console.error(e);
 
-  console.log('[' + mode + '] PUT(Db.UpdateUser): ' + route);
+  if (typeof user._id === 'undefined') throw Error('user._id required');
+
+  console.log('[PUT] ' + mode + '.update: ' + route);
 
   if (user.clientId < 0) user.clientId = cid;
 
@@ -138,8 +165,7 @@ UserSession.postImage = function(user, image, onSuccess, onError) {
   if (!onSuccess) onSuccess = () => { };
   if (!onError) onError = (e) => console.error(e);
 
-  console.log('[' + mode + '] POST(Db.postImage): ' + route);
-
+  console.log('[POST] ' + mode + '.postImage: ' + route);
   //if (typeof image === 'string') image = toImageFile(image);
 
   let fdata = new FormData();

@@ -234,9 +234,9 @@ class SocialLogin extends React.Component {
         email: name + (+new Date()) + '@test.com',
         gender: ['male', 'female', 'other'][Math.floor(Math.random() * 3)]
       };
-      console.log('Created stubbed user', data);
+      console.log('[STUB] '+ data.name + " / " + data.email + " / " + data.gender);
       this.setState(data); // update form and submit
-      setTimeout(() => this.props.handleSubmit(0, this.state), 1000);
+      setTimeout(() => this.props.handleSubmit(0, this.state), 500);
     }
   }
 }

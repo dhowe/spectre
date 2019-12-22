@@ -28,7 +28,7 @@ app.use(bodyparser.urlencoded({ extended: true }));
 
 // minimal logging
 app.all('*', logger('[:date[clf]] :remote-addr :method :url :status', {
-  skip: () => dev
+  skip: () => !dev
 }));
 
 // static react files (no-auth)

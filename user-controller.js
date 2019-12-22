@@ -21,11 +21,12 @@ const current = function (req, res) { // not used at present
 };
 
 const create = function (req, res) {
+
   if (!(req.body.login && req.body.loginType)) return error(res,
-    "UserModel with no login/loginType:" + req.body);
+    "UserModel with no login/loginType:" + JSON.stringify(req.body));
 
   if (!req.body.clientId) return error(res,
-    "UserModel with no clientId:" + req.body);
+    "UserModel with no clientId:" + JSON.stringify(req.body));
 
   let user = new UserModel();
   Object.assign(user, req.body); // dangerous?

@@ -78,26 +78,26 @@ class LoginPage extends SpectrePage {
   }
 
   componentDidMount() {
-    UserSession.initialize(0, (e) => {
+    UserSession.init(() => { }, (e) => {
       console.error('[DB]', e);
       UserSession.nodb = true;
       UserSession.defaultUsers((users) => {
         this.context.similars = users;
-        console.log('Loaded default users', this.context.similars);
+        console.log('No DB: loaded default users', this.context.similars);
       });
     });
   }
 
-  handleSubmit(e, { name, email, clearEmail }) {
+  handleSubmit(e, { name, email, gender, clearEmail }) {
 
     e && e.preventDefault();
 
-    const user = this.context;
-    user.lastPageVisit = { page: '/Login', time: Date.now() };
+    const user = UserSession.get(this.context);
+    user.lastPageVisit = { page: 'login', time: Date.now() };
 
     const { emailErrorCount, nameErrorCount } = this.state;
     const emailIsValid = LoginPage.validEmail(email);
-    const nameIsValid = LoginPage.validName(name);
+    const nameIsValid = name.length;
 
     // see #343
     //const genderIsValid = typeof user.gender !== 'undefined';
@@ -107,25 +107,26 @@ class LoginPage extends SpectrePage {
       user.loginType = 'email'; // TMP:
       user.login = email;
       user.name = name.ucf();
+      user.gender = gender;
 
-      const handleSuccess = (json) => {
-        console.log('Created DB record: ', user);
-        Object.assign(user, json);
+      const handleSuccess = () => {
+        console.log('[' + user.lastPageVisit.page.uc() + '] '
+          + user.name + ' / ' + user.login + ' / ' + user.gender);
         this.showVideo();
       };
 
-      const handleError = () => {
+      const handleError = (e) => {
         if (e.error === 'EmailInUse') {
           this.modalTitle = 'Invalid email';
           this.modalContent = 'Email has already been used';
           this.setState({ modalOpen: true });
         } else {
-          console.error(e);
+          console.error('UserSession.create: ', e);
           this.showVideo();
         }
       };
 
-      UserSession.createUser(user, handleSuccess, handleError);
+      UserSession.create(user, handleSuccess, handleError);
 
     } else if (!nameIsValid && nameErrorCount < 3) {
 

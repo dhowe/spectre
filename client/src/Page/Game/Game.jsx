@@ -308,30 +308,28 @@ class Game extends SpectrePage {
 
   componentDidMount() {
 
-    user = this.context;
+    user = UserSession.get(this.context);
 
-    // ///////////////////// TMP: ///////////////////////
-    // if (typeof user._id === 'undefined') {
-    //   user.name = user.name || 'Barniel';
-    //   user.loginType = user.loginType || 'email';
-    //   user.login = user.login || 'Barniel' + (+new Date()) + '@aol.com';
-    //   UserSession.createUser(user);
-    // }
-    // //////////////////////////////////////////////////
+    ///////////////////// TMP: ///////////////////////
+    if (typeof user._id === 'undefined') {
+      user.name = user.name || 'Barniel';
+      user.loginType = user.loginType || 'email';
+      user.login = user.login || 'Barniel' + (+new Date()) + '@aol.com';
+      UserSession.sync(user);
+    }
+    //////////////////////////////////////////////////
 
     console.log('User:', this.context);
   }
 
   componentComplete() { // redirect called from p5
 
-    if (typeof this.context._id !== 'undefined') { // TMP: remove
+    let user = UserSession.get(this.context);
 
-      // update last page context
-      this.context.lastPageVisit = { page: '/Game', time: Date.now };
-
-      UserSession.updateUser(this.context,
+    if (typeof user._id !== 'undefined') { // TMP: remove
+      UserSession.update(user,
         (json) => {
-          Object.assign(this.context, json);
+          Object.assign(user, json);
           this.next();
         }, (err) => {
           console.error(err);
