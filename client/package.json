@@ -10,7 +10,7 @@
     "dotenv-extended": "^2.4.0",
     "json-loader": "^0.5.7",
     "node-sass": "^4.12.0",
-    "p5": "^0.8.0",
+    "p5": "^0.10.2",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
     "react-countdown-now": "^2.1.0",
@@ -20,7 +20,7 @@
     "react-router-dom": "^5.0.0",
     "react-scripts": "^3.3.0",
     "react-simple-keyboard": "^2.1.69",
-    "react-webcam": "^1.1.1",
+    "react-webcam": "^4.0.0",
     "typescript": "^3.7.4",
     "words-to-numbers": "^1.5.1"
   },

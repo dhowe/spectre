@@ -5,7 +5,7 @@ import FormData from 'form-data';
 
 // We store the current User in React context for easy access
 let UserSession = React.createContext(new User());
-console.log('Created User Session', UserSession);
+console.log('User Session:', UserSession);
 
 UserSession.defaultUsers = function(onSuccess, onError) {
   fetch('/default-users.json').then(res => res.json())

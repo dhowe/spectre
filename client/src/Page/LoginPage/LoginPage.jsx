@@ -107,7 +107,7 @@ class LoginPage extends QuickNav {
       user.name = name.ucf();
 
       const handleSuccess = (json) => {
-        console.log('Created User: ', user);
+        console.log('Created DB record: ', user);
         Object.assign(user, json);
         this.showVideo();
       };

@@ -225,7 +225,6 @@ class SocialLogin extends React.Component {
   stubbedSubmit(event) { // for dev-only
     if (event.keyCode === RIGHT_ARROW && !this.fakedUser) {
       this.fakedUser = true;
-      console.log('Creating stubbed user');
       let cons = "bcdfghjklmnprstvxz", vows = "aeiou";
       let name = cons[Math.floor(Math.random() * cons.length)]
         + vows[Math.floor(Math.random() * vows.length)]
@@ -235,6 +234,7 @@ class SocialLogin extends React.Component {
         email: name + (+new Date()) + '@test.com',
         gender: ['male', 'female', 'other'][Math.floor(Math.random() * 3)]
       };
+      console.log('Created stubbed user', data);
       this.setState(data); // update form and submit
       setTimeout(() => this.props.handleSubmit(0, this.state), 1000);
     }
