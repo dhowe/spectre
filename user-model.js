@@ -9,11 +9,11 @@ const { schema, functions } = toMongoose(userSchema);
 const UserSchema = mongoose.Schema(schema); // hack here
 Object.keys(functions).forEach(f => UserSchema.methods[f] = functions[f]);
 
-UserSchema.methods.findByOcean = function (limit, cb) { // cb=function(err,users)
+UserSchema.methods.findByOcean = function(limit, cb) { // cb=function(err,users)
 
   let user = this;
-  UserModel.find({'traits.openness':{ $gte: 0 }})
-    .exec(function (err, instances) {
+  UserModel.find({ 'traits.openness': { $gte: 0 } })
+    .exec(function(err, instances) {
       if (err) {
         console.error(err);
         throw err;
@@ -25,11 +25,11 @@ UserSchema.methods.findByOcean = function (limit, cb) { // cb=function(err,users
   return this;
 };
 
-UserSchema.statics.getAll = function (callback, limit) {
+UserSchema.statics.getAll = function(callback, limit) {
   UserModel.find(callback).limit(limit);
 }
 
-UserSchema.statics.Create = function (tmpl) {
+UserSchema.statics.Create = function(tmpl) {
 
   function randName() {
     return Math.random().toString(36).replace(/[^a-z]+/g, '').substring(0, 5);
@@ -53,21 +53,21 @@ function toMongoose(obj) {
       case 'array':
         type = Array;
         break;
-    case 'objectId':
-      type = Schema.ObjectId;
-      break;
-    case 'number':
-      type = Number;
-      break;
-    case 'string':
-      type = String;
-      break;
-    case 'date':
-      type = Date;
-      break;
-    case 'boolean':
-      type = Boolean;
-      break;
+      case 'objectId':
+        type = Schema.ObjectId;
+        break;
+      case 'number':
+        type = Number;
+        break;
+      case 'string':
+        type = String;
+        break;
+      case 'date':
+        type = Date;
+        break;
+      case 'boolean':
+        type = Boolean;
+        break;
     }
     return type;
   }
@@ -90,7 +90,7 @@ function toMongoose(obj) {
 
     // arrays and primitives
     type = (Array.isArray(ptype)) ?
-      [ toMongooseType(ptype[0]) ]
+      [toMongooseType(ptype[0])]
       : toMongooseType(ptype);
 
     // if we haven't gotten a type, recurse

@@ -298,11 +298,8 @@ class IconButton extends React.Component {
   render() {
     const { onClick, icon, text, className, Button, classes } = this.props;
     const { colour } = this.state;
-
     const classNames = [`iconButton-${colour}`, 'iconButton', classes.button];
-    if (className) {
-      classNames.push(className);
-    }
+    if (className) classNames.push(className);
     return (
       <button onClick={onClick} className={classNames.join(' ')}>
         {icons[icon] && icons[icon](colour)}

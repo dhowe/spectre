@@ -59,7 +59,10 @@ const styles = {
   },
 };
 
+const RIGHT_ARROW = 39;
+
 class SocialLogin extends React.Component {
+
   constructor(props) {
     super(props);
     this.onKeyPress = this.onKeyPress.bind(this);
@@ -71,21 +74,46 @@ class SocialLogin extends React.Component {
       emailValid: false,
       email: '',
       name: '',
+      gender: '',
       focus: 'name',
       layoutName: 'default',
       clearEmail: this.clearEmail,
     };
     this.unShiftNeeded = false;
     this.form = React.createRef();
+    this.fillAndGo = this.fillAndGo.bind(this);
   }
-
+  componentDidMount() {
+    document.addEventListener("keyup", this.fillAndgo, false);
+  }
+  componentWillUnmount() {
+    document.removeEventListener("keyup", this.escFunction, false);
+  }
+  fillAndGo(event) {
+    if (event.keyCode === RIGHT_ARROW) {
+      let cons = "bcdfghjklmnprstvxz", vows = "aeiou";
+      let name = cons[Math.floor(Math.random()*cons.length)]
+        + vows[Math.floor(Math.random()*vows.length)]
+        + cons[Math.floor(Math.random()*cons.length)];
+      let data = {
+        name: name,
+        email: name + (+new Date()) + '@test.com',
+        gender: ['male', 'female','other'][Math.floor(Math.random()*3)]
+      };
+      this.setState(data);
+      setTimeout(() => this.props.handleSubmit(0, this.state), 300);
+    }
+  }
   onKeyPress(button) {
+
     if (button === '{shift}') {
       this.handleShift();
       this.unShiftNeeded = !this.unShiftNeeded;
+
     } else if (button === '{lock}') {
       this.handleShift();
       this.unShiftNeeded = false;
+
     } else if (button === '{delete}') {
       const { focus } = this.state;
       const input = this.state[focus];
@@ -93,6 +121,7 @@ class SocialLogin extends React.Component {
       this.setState({
         [focus]: (input.substr(0, input.length - 1))
       });
+
     } else if (!(button.startsWith('{') || button.endsWith('}'))) {
       const { focus } = this.state;
       const text = this.state[focus];
@@ -135,12 +164,12 @@ class SocialLogin extends React.Component {
         <div className={`${classes.content} socialLogin-content`}>
           <form noValidate>
             {/* #267: SHIFT / CAPS, etc. dont work */}
-            <FormControl className={classes.margin}>
 
+            <FormControl className={classes.margin}>
               <Typography component="h6" variant="h6">Enter your name:</Typography>
               <Input
-                onClick={this.changeFocus('name')}
                 name="name"
+                onClick={this.changeFocus('name')}
                 id="custom-css-standard-name"
                 value={this.state.name}
                 classes={{
@@ -149,13 +178,12 @@ class SocialLogin extends React.Component {
                 }}
               />
             </FormControl>
+
             <FormControl className={classes.margin}>
-
               <Typography component="h6" variant="h6">Your email:</Typography>
-
               <Input
-                onClick={this.changeFocus('email')}
                 name="email"
+                onClick={this.changeFocus('email')}
                 id="custom-css-standard-email"
                 value={this.state.email}
                 classes={{
@@ -171,10 +199,9 @@ class SocialLogin extends React.Component {
               <RadioGroup
                 aria-label="Gender"
                 name="gender"
-                value={this.state.value}
+                value={this.state.gender}
                 onChange={this.handleRadioChange}
-                className={classes.radioGroup}
-              >
+                className={classes.radioGroup}>
                 <FormControlLabel className="radio" value="female" control={<Radio color="primary" />} label="Woman" />
                 <FormControlLabel className="radio" value="male" control={<Radio color="primary" />} label="Man" />
                 <FormControlLabel className="radio" value="other" control={<Radio color="primary" />} label="Other" />
@@ -210,7 +237,7 @@ class SocialLogin extends React.Component {
 
 SocialLogin.propTypes = {
   classes: PropTypes.object.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired
 };
 SocialLogin.contextType = UserSession;
 

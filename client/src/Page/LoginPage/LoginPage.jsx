@@ -76,23 +76,29 @@ class LoginPage extends QuickNav {
   }
 
   componentDidMount() {
-    UserSession.defaultUsers((users) => {
-      this.context.similars = users;
-      console.log('Loaded default users', this.context.similars);
+    UserSession.initialize(0, (e) => {
+      console.error('[DB]', e);
+      UserSession.nodb = true;
+      UserSession.defaultUsers((users) => {
+        this.context.similars = users;
+        console.log('Loaded default users', this.context.similars);
+      });
     });
   }
 
   handleSubmit(e, { name, email, clearEmail }) {
 
-    e.preventDefault();
+    e && e.preventDefault();
+
+    const user = this.context;
+    user.lastPageVisit = { page: '/Login', time: Date.now() };
 
     const { emailErrorCount, nameErrorCount } = this.state;
     const emailIsValid = LoginPage.validEmail(email);
     const nameIsValid = LoginPage.validName(name);
 
-    // get user from current context
-    const user = this.context;
-    user.lastPageVisit = { page: '/Login', time: Date.now() };
+    // see #343
+    //const genderIsValid = typeof user.gender !== 'undefined';
 
     if (nameIsValid && emailIsValid) {
 
@@ -117,12 +123,7 @@ class LoginPage extends QuickNav {
         }
       };
 
-      if (true) { // no db mode
-        this.showVideo();
-      }
-      else {
-        UserSession.createUser(user, handleSuccess, handleError);
-      }
+      UserSession.createUser(user, handleSuccess, handleError);
 
     } else if (!nameIsValid && nameErrorCount < 3) {
 

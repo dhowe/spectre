@@ -298,8 +298,7 @@ Brand.updateAll = () => { Brand.instances.forEach(b => b.update()) };
 
 ///////////////////// End p5.js sketch ////////////////////////////
 
-let user;
-let game;
+let user, game;
 
 class Game extends QuickNav {
   constructor(props) {
@@ -311,14 +310,14 @@ class Game extends QuickNav {
 
     user = this.context;
 
-    ///////////////////// TMP: ///////////////////////
-    if (typeof user._id === 'undefined') {
-      user.name = user.name || 'Barney';
-      user.loginType = user.loginType || 'email';
-      user.login = user.login || 'Barney' + (+new Date()) + '@aol.com';
-      UserSession.createUser(user);
-    }
-    //////////////////////////////////////////////////
+    // ///////////////////// TMP: ///////////////////////
+    // if (typeof user._id === 'undefined') {
+    //   user.name = user.name || 'Barniel';
+    //   user.loginType = user.loginType || 'email';
+    //   user.login = user.login || 'Barniel' + (+new Date()) + '@aol.com';
+    //   UserSession.createUser(user);
+    // }
+    // //////////////////////////////////////////////////
 
     console.log('User:', this.context);
   }
