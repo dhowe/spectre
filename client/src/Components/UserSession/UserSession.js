@@ -17,6 +17,7 @@ UserSession.defaultUsers = function(onSuccess, onError) {
     });
 }
 
+UserSession.storageKey = 'spectre-user';
 UserSession.profileDir = User.profileDir
 UserSession.imageDir = User.imageDir
 UserSession.defaults = [
@@ -66,7 +67,7 @@ let handleResponse = (res) => {
 UserSession.get = function(ctx) {
   if (!ctx) {
     // && (idOptional || typeof ctx._id !== 'undefined')) return ctx;
-    let json = localStorage.getItem('spectre-user');
+    let json = sessionStorage.getItem(UserSession.storageKey);
     console.log('[WARN] Retrieving User from localstorage', json);
     ctx = JSON.parse(json);
   }
@@ -74,11 +75,11 @@ UserSession.get = function(ctx) {
 }
 
 UserSession.sync = function(ctx) {
-  ctx && localStorage.setItem('spectre-user', JSON.stringify(ctx));
+  ctx && sessionStorage.setItem(UserSession.storageKey, JSON.stringify(ctx));
 }
 
 UserSession.clear = function() {
-  localStorage.clear();
+  sessionStorage.clear();
 }
 
 //////////////////////////////////////////////////////////////////////
