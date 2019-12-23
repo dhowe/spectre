@@ -1,63 +1,47 @@
 # SPECTRE
-Worship at the Altar of Dataism
+_Worship at the Altar_
 
 <br/>
 
-## Installation
-
-We use yarn
-
-### Dependencies and Versions
-
+## Dependencies
 ```
-Yarn version: v1.21
-```
-
-Test versions with:
-
-```
-yarn -v
-```
-
-NOTE: all instructions below assume you are within the /spectre folder:
-
-```
-cd spectre
-```
-
-### Installing Dependencies
-
-
-When you have the correct versions, install the required dependencies.
-
-```
-yarn run full-install
+We use react, express, node (v12.2), mongodb (v4.2) and yarn (v1.21)
 ```
 
 <br/>
 
-## Client+Server (production, requires mongodb)
+## Installation (OS X or Linux)
 
 ```
-yarn start
+$ git clone https://github.com/dhowe/spectre.git 
+$ cd spectre && yarn run full-install
+```
 
+_note: instructions below assume you are within the spectre folder_
+
+<br/>
+
+## Client+Server (requires mongodb)
+
+```
+$ yarn start
 ```
 
 <br/>
 
 ## Server-only (no client required)
 
-### Start (requires a local mongodb)
+### Start (requires mongodb)
 
 ```
-yarn run server
+$ yarn run server
 ```
 
 
 ### Test (without starting the server)
 
 ```
-yarn test
+$ yarn test
 ```
 
 <br/>
@@ -67,13 +51,13 @@ yarn test
 ### Start (for development)
 
 ```
-yarn run client-start
+$ yarn run client-start
 ```
 
 ### Build (for deployment)
 
 ```
-yarn run client-build
+$ yarn run client-build
 ```
 
 For more details on the client, see [these instructions](client/README.md)
