@@ -13,7 +13,7 @@ class IdleChecker extends React.Component {
       isIdle: false,
       //modal
       modalOpen: false,
-      idleTime : 10,
+      idleTime: 10,
     }
 
     //modal
@@ -37,25 +37,25 @@ class IdleChecker extends React.Component {
 
   handleIdle() {
 
-//    if (this.props.forceTerminate) {
-  //    console.log("cleared idle checker : " + this.props.forceTerminate);
-      //document.removeEventListener('click', this.detectClick);
-//      clearInterval(this.interval);
-//    }
+    //    if (this.props.forceTerminate) {
+    //    console.log("cleared idle checker : " + this.props.forceTerminate);
+    //document.removeEventListener('click', this.detectClick);
+    //      clearInterval(this.interval);
+    //    }
     let timer = this.state.idleTimer;
-    console.log(timer);
+    //    console.log(timer);
     var t = this.props.setIdleTime === undefined ? this.state.idleTime : this.props.setIdleTime;
-    if (timer >   t ) {
+    if (timer > t) {
       this.setState({
         isIdle: true
       });
     } else {
       if (!this.props.forceTerminate) {
-      let t = this.state.idleTimer + 1;
-      this.setState({
-        idleTimer: t
-      });
-    }
+        let t = this.state.idleTimer + 1;
+        this.setState({
+          idleTimer: t
+        });
+      }
     }
     if (this.state.isIdle) {
       this.modalTitle = this.state.resetTimer + '';
@@ -76,7 +76,7 @@ class IdleChecker extends React.Component {
 
   detectClick() {
 
-  //  if (!this.props.forceTerminate) {
+    //  if (!this.props.forceTerminate) {
 
     this.setState({
       idleTimer: 0
@@ -92,7 +92,7 @@ class IdleChecker extends React.Component {
       this.closeModal();
     }
     //  }
-  //  console.log(this.interval)
+    //  console.log(this.interval)
 
   }
 
@@ -104,14 +104,14 @@ class IdleChecker extends React.Component {
   }
 
   render() {
-    return ( <div >
+    return (<div >
       <Modal
         isOpen={this.state.modalOpen}
         title={this.modalTitle}
         content={this.modalContent}
         onClose={() => this.closeModal()}
       />
-      </div>
+    </div>
     )
   }
 };

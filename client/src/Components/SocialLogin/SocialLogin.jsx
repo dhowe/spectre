@@ -218,16 +218,14 @@ class SocialLogin extends React.Component {
 
             <FormControl component="fieldset" className={classes.formControl}>
               <Typography component="h6" variant="h6">Your gender:</Typography>
-
               <RadioGroup
                 aria-label="Gender"
                 name="gender"
-                value={this.state.gender}
                 onChange={this.handleRadioChange}
                 className={classes.radioGroup}>
-                <FormControlLabel className="radio" value="female" control={<Radio color="primary" />} label="Woman" />
-                <FormControlLabel className="radio" value="male" control={<Radio color="primary" />} label="Man" />
-                <FormControlLabel className="radio" value="other" control={<Radio color="primary" />} label="Other" />
+                <FormControlLabel className="radio" checked={this.state.gender === 'female'} value="female" control={<Radio color="primary" />} label="Woman" />
+                <FormControlLabel className="radio" checked={this.state.gender === 'male'} value="male" control={<Radio color="primary" />} label="Man" />
+                <FormControlLabel className="radio" checked={this.state.gender === 'other'} value="other" control={<Radio color="primary" />} label="Other" />
               </RadioGroup>
             </FormControl>
             <Keyboard
