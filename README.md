@@ -23,6 +23,7 @@ Note: all instructions below assume you are within the _spectre_ folder:
 yarn run full-install
 ```
 
+<br/>
 
 ## Client+Server (requires mongodb)
 
