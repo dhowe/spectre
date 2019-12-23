@@ -13,22 +13,19 @@ We use react, express, node (v12.2), mongodb (v4.2) and yarn (v1.21)
 ## Installation (OS X or Linux)
 
 ```
-git clone https://github.com/dhowe/spectre.git 
-cd spectre
+$ git clone https://github.com/dhowe/spectre.git 
+$ cd spectre
+$ yarn run full-install
 ```
 
-Note: all instructions below assume you are within the _spectre_ folder:
-
-```
-yarn run full-install
-```
+Note: instructions below assume you are within the _spectre_ folder:
 
 <br/>
 
 ## Client+Server (requires mongodb)
 
 ```
-yarn start
+$ yarn start
 ```
 
 <br/>
@@ -38,14 +35,14 @@ yarn start
 ### Start (requires mongodb)
 
 ```
-yarn run server
+$ yarn run server
 ```
 
 
 ### Test (without starting the server)
 
 ```
-yarn test
+$ yarn test
 ```
 
 <br/>
@@ -55,13 +52,13 @@ yarn test
 ### Start (for development)
 
 ```
-yarn run client-start
+$ yarn run client-start
 ```
 
 ### Build (for deployment)
 
 ```
-yarn run client-build
+$ yarn run client-build
 ```
 
 For more details on the client, see [these instructions](client/README.md)
