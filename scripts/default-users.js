@@ -1,8 +1,8 @@
 /*
- * RUN (from /spectre): $ NODE_ENV=test mocha scripts/default-users.js --exit
+ * RUN (from /spectre): $ mocha scripts/default-users.js --exit
  *   result will be in auto_generated_users.js
  */
-import mongoose from 'mongoose';
+//import mongoose from 'mongoose';
 import chai_http from 'chai-http';
 import server from '../server';
 import dotEnv from 'dotenv';
@@ -33,118 +33,118 @@ describe('User Routes', () => {
   });
 
   //describe('User Generator', () => {
-    it('should generate a set of default users', (done) => {
-      const defaults = [
-        {
-          _id: '111111111111111111111111',
-          login: 'remy@mail.com',
-          loginType: 'email',
-          name: 'Remy',
-          gender: 'male'
-        },
-        {
-          _id: '222222222222222222222222',
-          login: 'bailey@mail.com',
-          loginType: 'email',
-          name: 'Bailey',
-          gender: 'male'
-        },
-        {
-          _id: '333333333333333333333333',
-          login: 'devin@mail.com',
-          loginType: 'email',
-          name: 'Devin',
-          gender: 'female'
-        },
-        {
-          _id: '444444444444444444444444',
-          login: 'tyler@mail.com',
-          loginType: 'email',
-          name: 'Tyler',
-          gender: 'male'
-        },
-        {
-          _id: '555555555555555555555555',
-          login: 'fran@mail.com',
-          loginType: 'email',
-          name: 'Fran',
-          gender: 'female'
-        },
-        {
-          _id: '666666666666666666666666',
-          login: 'bernard@mail.com',
-          loginType: 'email',
-          name: 'Bernard',
-          gender: 'male'
-        },
-        {
-          _id: '777777777777777777777777',
-          login: 'sing@mail.com',
-          loginType: 'email',
-          name: 'Sing',
-          gender: 'male'
-        },
-        {
-          _id: '888888888888888888888888',
-          login: 'sally@mail.com',
-          loginType: 'email',
-          name: 'sally',
-          gender: 'female'
-        },
-        {
-          _id: '999999999999999999999999',
-          login: 'dick@mail.com',
-          loginType: 'email',
-          name: 'Dick',
-          gender: 'male'
-        }
-      ];
-
-      function saveAll(records, cb) {
-        let users = [];
-        records.forEach(r => users.push(User._randomData(new UserModel(r))));
-        let count = users.length;
-        let result = [];
-        users.forEach(user => {
-          chai.request(host)
-            .post('/api/users/')
-            .auth(env.API_USER, env.API_SECRET)
-            .send(user)
-            .end((err, res) => {
-              expect(res).to.have.status(200);
-              Object.assign(user, res);
-              result.push(user);
-              if (--count === 0) return cb(result);
-            });
-        });
+  it('should generate a set of default users', (done) => {
+    const defaults = [
+      {
+        _id: '111111111111111111111111',
+        login: 'remy@mail.com',
+        loginType: 'email',
+        name: 'Remy',
+        gender: 'male'
+      },
+      {
+        _id: '222222222222222222222222',
+        login: 'bailey@mail.com',
+        loginType: 'email',
+        name: 'Bailey',
+        gender: 'male'
+      },
+      {
+        _id: '333333333333333333333333',
+        login: 'devin@mail.com',
+        loginType: 'email',
+        name: 'Devin',
+        gender: 'female'
+      },
+      {
+        _id: '444444444444444444444444',
+        login: 'tyler@mail.com',
+        loginType: 'email',
+        name: 'Tyler',
+        gender: 'male'
+      },
+      {
+        _id: '555555555555555555555555',
+        login: 'fran@mail.com',
+        loginType: 'email',
+        name: 'Fran',
+        gender: 'female'
+      },
+      {
+        _id: '666666666666666666666666',
+        login: 'bernard@mail.com',
+        loginType: 'email',
+        name: 'Bernard',
+        gender: 'male'
+      },
+      {
+        _id: '777777777777777777777777',
+        login: 'sing@mail.com',
+        loginType: 'email',
+        name: 'Sing',
+        gender: 'male'
+      },
+      {
+        _id: '888888888888888888888888',
+        login: 'sally@mail.com',
+        loginType: 'email',
+        name: 'sally',
+        gender: 'female'
+      },
+      {
+        _id: '999999999999999999999999',
+        login: 'dick@mail.com',
+        loginType: 'email',
+        name: 'Dick',
+        gender: 'male'
       }
+    ];
 
-      function updateAll(users, cb) {
+    function saveAll(records, cb) {
+      let users = [];
+      records.forEach(r => users.push(User._randomData(new UserModel(r))));
+      let count = users.length;
+      let result = [];
+      users.forEach(user => {
+        chai.request(host)
+          .post('/api/users/')
+          .auth(env.API_USER, env.API_SECRET)
+          .send(user)
+          .end((err, res) => {
+            expect(res).to.have.status(200);
+            Object.assign(user, res);
+            result.push(user);
+            if (--count === 0) return cb(result);
+          });
+      });
+    }
 
-        let result = [];
-        let count = users.length;
-        users.forEach(user => {
-          chai.request(host)
-            .put('/api/users/' + user._id)
-            .auth(env.API_USER, env.API_SECRET)
-            .send(user)
-            .end((err, res) => {
-              expect(res).to.have.status(200);
-              Object.assign(user, res.body);
-              result.push(user);
-              if (--count === 0) return cb(result);
-            });
-        });
-      }
+    function updateAll(users, cb) {
 
-      saveAll(defaults, function (users) {
-        updateAll(users, function (results) {
-          // let header = '// ------------------------------ This file was auto-';
-          // header += 'generated ------------------------------\nlet users = [';
-          fs.writeFileSync('auto_generated_users.json', JSON.stringify(results));
-          done();
-        });
+      let result = [];
+      let count = users.length;
+      users.forEach(user => {
+        chai.request(host)
+          .put('/api/users/' + user._id)
+          .auth(env.API_USER, env.API_SECRET)
+          .send(user)
+          .end((err, res) => {
+            expect(res).to.have.status(200);
+            Object.assign(user, res.body);
+            result.push(user);
+            if (--count === 0) return cb(result);
+          });
+      });
+    }
+
+    saveAll(defaults, function(users) {
+      updateAll(users, function(results) {
+        // let header = '// ------------------------------ This file was auto-';
+        // header += 'generated ------------------------------\nlet users = [';
+        fs.writeFileSync('auto_generated_users.json', JSON.stringify(results));
+        done();
       });
     });
-//  });
+  });
+  //  });
 });

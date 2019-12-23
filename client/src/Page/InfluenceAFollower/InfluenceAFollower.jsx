@@ -10,8 +10,8 @@ import User from '../../Components/User/User';
 
 import './InfluenceAFollower.scss';
 import AvatarCircle from '../../Components/AvatarCircle/AvatarCircle';
-import NavigationHack from '../NavigationHack';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
+import SpectrePage from '../SpectrePage';
 
 const styles = {
   root: {
@@ -29,20 +29,21 @@ const styles = {
   }
 };
 
-class InfluenceAFollower extends NavigationHack {
+class InfluenceAFollower extends SpectrePage {
+
   constructor(props) {
     super(props, '/selected-avatar');
     this.handleSelect = this.handleSelect.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const user = this.context || new User();
     // eslint-disable-next-line no-underscore-dangle
     if (typeof user === 'undefined') { // TMP
       user.name = user.name || 'Barney';
       user.loginType = user.loginType || 'email';
       user.login = user.login || `Barney${+new Date()}@aol.com`;
-      //UserSession.createUser(user);
+      //UserSession.create(user);
     }
   }
 
@@ -63,7 +64,7 @@ class InfluenceAFollower extends NavigationHack {
     }
     this.shuffle(result);
     result = result.slice(0, 6);
-    console.log(result);
+    //console.log(result);
     return result;
   }
 

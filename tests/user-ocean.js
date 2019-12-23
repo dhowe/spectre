@@ -53,12 +53,13 @@ describe('OCEAN descriptions', function () {
 
       expect(lines).is.a('array');
       expect(lines.length).is.eq(5);
-
-      console.log();
-      for (var i = 0; i < lines.length; i++) {
-        console.log(lines[i]);
+      if (0) {
+        console.log();
+        for (var i = 0; i < lines.length; i++) {
+          console.log(lines[i]);
+        }
+        console.log();
       }
-      console.log();
     });
   });
 

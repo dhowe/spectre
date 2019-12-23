@@ -10,9 +10,8 @@ import UserSession from '../../Components/UserSession/UserSession';
 import { Link } from 'react-router-dom';
 import './LoginPage.scss';
 import Video from '../../Components/Video/Video';
-import NavigationHack from '../NavigationHack';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
-
+import SpectrePage from '../SpectrePage';
 
 window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true; // TMP: #138
 
@@ -63,15 +62,7 @@ const styles = {
 };
 
 
-class LoginPage extends NavigationHack {
-
-  static validEmail(email) {
-    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return email.length > 0 && re.test(email.toLowerCase());
-  }
-  static validName(name) {
-    return name.length > 0;
-  }
+class LoginPage extends SpectrePage {
 
   constructor(props) {
     super(props, '/pledge');
@@ -81,77 +72,90 @@ class LoginPage extends NavigationHack {
       modalOpen: false,
       clearEmail: true,
       idleCheckerIsDone: false,
+      videoStarted: false
     };
 
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.termsOfService = this.termsOfService.bind(this);
     //modal
+    this.skipVideo = this.skipVideo.bind(this);
     this.modalContent = '';
     this.modalTitle = '';
 
   }
 
 
-  componentWillMount() {
-    console.log(this.context);
-    UserSession.defaultUsers((users) => {
-      this.context.similars = users;
-      console.log('User:', this.context);
+  componentDidMount() {
+    UserSession.init(() => { }, (e) => {
+      console.error('[DB]', e);
+      UserSession.nodb = true;
+      UserSession.defaultUsers((users) => {
+        this.context.similars = users;
+        console.log('No DB: loaded default users', this.context.similars);
+      });
     });
   }
 
-  handleSubmit(e, { name, email, clearEmail }) {
-    e.preventDefault();
+  handleSubmit(e, { name, email, gender, clearEmail }) {
+
+    e && e.preventDefault();
+
+    const user = UserSession.get(this.context);
+    user.lastPageVisit = { page: 'login', time: Date.now() };
+
     const { emailErrorCount, nameErrorCount } = this.state;
-    const emailValid = LoginPage.validEmail(email);
-    const nameValid = LoginPage.validName(name);
+    const emailIsValid = LoginPage.validEmail(email);
+    const nameIsValid = name.length;
 
-    // get user from current context
-    const user = this.context;
-    user.lastPageVisit = { page: '/Login', time: Date.now() };
+    // see #343
+    //const genderIsValid = typeof user.gender !== 'undefined';
 
-
-    if (nameValid && emailValid) {
+    if (nameIsValid && emailIsValid) {
 
       user.loginType = 'email'; // TMP:
       user.login = email;
       user.name = name.ucf();
-      /*const handleSuccess = (json) => {
-        Object.assign(user, json);
+      user.gender = gender;
+
+      const handleSuccess = () => {
+        console.log('[' + user.lastPageVisit.page.uc() + '] '
+          + user.name + ' / ' + user.login + ' / ' + user.gender);
         this.showVideo();
       };
 
-      const handleError = () => {
-
+      const handleError = (e) => {
         if (e.error === 'EmailInUse') {
           this.modalTitle = 'Invalid email';
           this.modalContent = 'Email has already been used';
           this.setState({ modalOpen: true });
         } else {
-          console.error(e);
+          console.error('UserSession.create: ', e);
           this.showVideo();
         }
-      };*/
+      };
       console.log(user);
 
       this.showVideo();
-      //UserSession.createUser(user, handleSuccess, handleError);
-    } else if (!nameValid && nameErrorCount < 3) {
+
+      UserSession.create(user, handleSuccess, handleError);
+
+    } else if (!nameIsValid && nameErrorCount < 3) {
 
       this.modalTitle = 'Oops...';
       this.modalContent = 'You need to enter a name, please try again';
       this.setState({ modalOpen: true, nameErrorCount: nameErrorCount + 1 });
 
-    } else if (!emailValid && emailErrorCount < 3) {
+    } else if (!emailIsValid && emailErrorCount < 3) {
 
       this.modalTitle = 'Oops...';
       this.modalContent = 'That doesn\'t look like a valid email address, please try again';
       this.setState({ modalOpen: true, emailErrorCount: emailErrorCount + 1 });
       clearEmail();
+
     } else {
 
-      // TMP: should reject without successful User creation
+      // TODO: TMP: should reject without successful User creation
       this.context.login = email;
       this.context.name = name; // user-prop
       this.showVideo();
@@ -163,6 +167,7 @@ class LoginPage extends NavigationHack {
   }
 
   showVideo() {
+    this.setState({ videoStarted: true });
     this.video.play();
     this.setState({ idleCheckerIsDone: true });
   }
@@ -171,6 +176,10 @@ class LoginPage extends NavigationHack {
     this.modalTitle = 'Terms of Service';
     this.modalContent = 'Brungard told the court he -was drunk when the incident took placeBrungard told the court he -was drunk when the incident took placeBrungard told the court he -was drunk when the incident took placeBrungard told the court he -was drunk when the incident took placeBrungard told the court he -was drunk when the incident took placeBrungard told the court he -was drunk when the incident took place';
     this.setState({ modalOpen: true });
+  }
+
+  skipVideo() { // dev-only
+    this.state.videoStarted && this.next();
   }
 
   render() {
@@ -193,12 +202,22 @@ class LoginPage extends NavigationHack {
             movie="/video/SpectreIntro.mp4"
             autoPlay={false}
             onComplete={this.next}
+            onKeyUp={this.skipVideo}
           />
           <SocialLogin handleSubmit={this.handleSubmit} />
         </div>
           <div onClick={this.termsOfService}><Link className='tos' to='#here'>Terms of Service</Link></div>
       </div>
     );
+  }
+
+  static validEmail(email) {
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return email.length > 0 && re.test(email.toLowerCase());
+  }
+
+  static validName(name) {
+    return name.length > 0;
   }
 }
 

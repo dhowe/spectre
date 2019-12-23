@@ -10,8 +10,8 @@ import IconButton from '../../Components/IconButton/IconButton';
 import IconButtonToggle from '../../Components/IconButton/IconButtonToggle';
 
 import './PoliticalData.scss';
-import NavigationHack from '../NavigationHack';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
+import SpectrePage from '../SpectrePage';
 
 const styles = {
   root: {
@@ -52,7 +52,7 @@ const styles = {
   },
 };
 
-class PoliticalData extends NavigationHack {
+class PoliticalData extends SpectrePage {
   constructor(props) {
     super(props, '/home-data');
     this.state = { count: 0 };

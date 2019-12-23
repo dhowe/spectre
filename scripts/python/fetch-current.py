@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 
 route = '/api/users/current/';
 
-dotenv_path = join(dirname(__file__), '../../web-client/.env')
+dotenv_path = join(dirname(__file__), '../../client/.env')
 
 load_dotenv(dotenv_path)
 

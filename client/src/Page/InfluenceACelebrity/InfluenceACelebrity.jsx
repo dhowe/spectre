@@ -12,8 +12,8 @@ import AvatarComponent from '../../Components/AvatarComponent/AvatarComponent';
 import Video from '../../Components/Video/Video';
 
 import './InfluenceACelebrity.scss';
-import NavigationHack from '../NavigationHack';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
+import SpectrePage from '../SpectrePage';
 
 const styles = {
   root: {
@@ -26,7 +26,7 @@ const styles = {
   },
 };
 
-class InfluenceACelebrity extends NavigationHack {
+class InfluenceACelebrity extends SpectrePage {
   constructor(props) {
     super(props, '/OCEAN-reveal');
     this.play = this.play.bind(this);

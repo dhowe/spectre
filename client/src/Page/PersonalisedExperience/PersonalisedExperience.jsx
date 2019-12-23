@@ -6,7 +6,7 @@ import Countdown from 'react-countdown-now';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
-import NavigationHack from '../NavigationHack';
+import SpectrePage from '../SpectrePage';
 
 import './PersonalisedExperience.scss';
 
@@ -24,7 +24,7 @@ const styles = {
   },
 };
 
-class PersonalisedExperience extends NavigationHack {
+class PersonalisedExperience extends SpectrePage {
   constructor(props) {
     super(props, '/game');
   }

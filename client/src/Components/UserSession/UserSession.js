@@ -1,13 +1,13 @@
-//import fs from 'fs';
 import React from 'react';
-import User from '../User/user';
+import User from '../User/User';
 import DotEnv from 'dotenv';
 import FormData from 'form-data';
 
+// We store the current User in React context for easy access
 let UserSession = React.createContext(new User());
 
-UserSession.defaultUsers = function (onSuccess, onError) {
-  fetch('/gusers.json').then(res => res.json())
+UserSession.defaultUsers = function(onSuccess, onError) {
+  fetch('/default-users.json').then(res => res.json())
     .then(data => {
       if (!onSuccess) throw Error('Callback required');
       onSuccess(data);
@@ -17,6 +17,9 @@ UserSession.defaultUsers = function (onSuccess, onError) {
     });
 }
 
+UserSession.storageKey = 'spectre-user';
+UserSession.profileDir = User.profileDir
+UserSession.imageDir = User.imageDir
 UserSession.defaults = [
   { "_id": "111111111111111111111111", "name": "Remy", "traits": { "openness": 0.5818180970605207, "conscientiousness": 0.07645862267650672, "extraversion": 0.2607193320319028, "agreeableness": 0.012588228025398163, "neuroticism": 0.16712815071948772 } },
   { "_id": "222222222222222222222222", "name": "Bailey", "traits": { "openness": 0.10280703242247147, "conscientiousness": 0.6791763609042916, "extraversion": 0.6985730973994828, "agreeableness": 0.47335712795485274, "neuroticism": 0.32620076142720156 } },
@@ -29,9 +32,6 @@ UserSession.defaults = [
   { "_id": "999999999999999999999999", "name": "Terry", "traits": { "openness": 0.30426635874427355, "conscientiousness": 0.5341590821850326, "extraversion": 0.509056193557774, "agreeableness": 0.8109949037515642, "neuroticism": 0.4252958718086144 } }
 ];
 
-UserSession.profileDir = User.profileDir
-UserSession.imageDir = User.imageDir
-
 let doConfig = () => {
 
   // get auth from .env or heroku configs
@@ -39,13 +39,15 @@ let doConfig = () => {
 
   const env = process.env;
   const route = '/api/users/';
+  const mode = env.NODE_ENV !== 'production' ? 'DEV' : 'PROD';
+
   const cid = env.REACT_APP_CLIENT_ID || -1;
   const host = env.REACT_APP_API_HOST || 'http://localhost:8083';
   const auth = env.REACT_APP_API_USER + ':' + env.REACT_APP_API_SECRET;
 
   if (!auth || !auth.length) console.error("Auth required!");
 
-  return { auth: auth, route: host + route, clientId: cid };
+  return { auth: auth, route: host + route, clientId: cid, mode: mode };
 }
 
 let handleResponse = (res) => {
@@ -62,14 +64,109 @@ let handleResponse = (res) => {
     });
 }
 
-UserSession.postImage = function (user, image, onSuccess, onError) {
+UserSession.get = function(ctx) {
+  if (!ctx) {
+    // && (idOptional || typeof ctx._id !== 'undefined')) return ctx;
+    let json = sessionStorage.getItem(UserSession.storageKey);
+    console.log('[WARN] Retrieving User from localstorage', json);
+    ctx = JSON.parse(json);
+  }
+  return ctx;
+}
 
-  let { route, auth } = doConfig();
-  if (!onSuccess) onSuccess = () => {};
+UserSession.sync = function(ctx) {
+  ctx && sessionStorage.setItem(UserSession.storageKey, JSON.stringify(ctx));
+}
+
+UserSession.clear = function() {
+  sessionStorage.clear();
+}
+
+//////////////////////////////////////////////////////////////////////
+
+UserSession.init = function(onSuccess, onError) {
+
+  let { route, auth, mode } = doConfig();
+  if (!onError) onError = (e) => console.error(e);
+  if (!onSuccess) onSuccess = (json) => { } // no-op;
+
+  console.log('[GET] ' + mode + '.init: ' + route);
+
+  fetch(route, {
+    method: "get",
+    headers: { "Authorization": 'Basic ' + btoa(auth) },
+  })
+    .then(handleResponse.bind(this))
+    .then(onSuccess.bind(this))
+    .catch(onError.bind(this));
+}
+
+// Create a new database record: /login only
+UserSession.create = function(user, onSuccess, onError) {
+
+  let { route, auth, cid, mode } = doConfig();
+  let internalSuccess = (json) => {
+    Object.assign(user, json);
+    UserSession.sync(user);
+    onSuccess && onSuccess(json);
+  }
+  if (!onError) onError = (e) => {
+    console.error('UserSession.create: '+e);
+    throw e;
+  }
+
+  if (user.clientId < 0) user.clientId = cid;
+
+  console.log('[POST] ' + mode + '.create: ' + route);
+
+  fetch(route, {
+    method: "post",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": 'Basic ' + btoa(auth)
+    },
+    body: JSON.stringify(user)
+  })
+    .then(handleResponse.bind(this))
+    .then(internalSuccess.bind(this))
+    .catch(onError.bind(this));
+}
+
+UserSession.update = function(user, onSuccess, onError) {
+
+  UserSession.sync(user);
+  user = UserSession.get(user);
+
+  let { route, auth, cid, mode } = doConfig();
+  if (!onSuccess) onSuccess = json => Object.assign(user, json);
+  if (!onError) onError = e => console.error(e);
+
+  if (typeof user._id === 'undefined') throw Error('user._id required');
+
+  console.log('[PUT] ' + mode + '.update: ' + route);
+
+  if (user.clientId < 0) user.clientId = cid;
+
+  fetch(route + user._id, {
+    method: "put",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": 'Basic ' + btoa(auth)
+    },
+    body: JSON.stringify(user)
+  })
+    .then(handleResponse.bind(this))
+    .then(onSuccess.bind(this))
+    .catch(onError.bind(this));
+}
+
+UserSession.postImage = function(user, image, onSuccess, onError) {
+
+  let { route, auth, mode } = doConfig();
+  if (!onSuccess) onSuccess = () => { };
   if (!onError) onError = (e) => console.error(e);
 
-  console.log('POST(Db.postImage): ' + route);
-
+  console.log('[POST] ' + mode + '.postImage: ' + route);
   //if (typeof image === 'string') image = toImageFile(image);
 
   let fdata = new FormData();
@@ -78,98 +175,13 @@ UserSession.postImage = function (user, image, onSuccess, onError) {
   fdata.append('videoId', 2);
 
   fetch(route + 'photo/' + (user._id || 567), {
-      method: "post",
-      headers: { "Authorization": 'Basic ' + btoa(auth) },
-      body: fdata
-    })
-    .then(handleResponse.bind(this))
-    .then(onSuccess.bind(this))
-    .catch(onError.bind(this));
-}
-
-UserSession.createUser = function (user, onSuccess, onError) {
-
-  let { route, auth, cid } = doConfig();
-  if (!onSuccess) onSuccess = (json) => Object.assign(user, json);
-  if (!onError) onError = (e) => console.error(e);
-  if (user.clientId < 0) user.clientId = cid;
-
-  console.log('POST(Db.CreateUser): ' + route, user);
-
-  fetch(route, {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": 'Basic ' + btoa(auth)
-      },
-      body: JSON.stringify(user)
-    })
-    .then(handleResponse.bind(this))
-    .then(onSuccess.bind(this))
-    .catch(onError.bind(this));
-}
-
-UserSession.updateUser = function (user, onSuccess, onError) {
-
-  if (typeof user._id === 'undefined') {
-    throw Error('user._id required');
-  }
-
-  let { route, auth, cid } = doConfig();
-  if (!onSuccess) onSuccess = json => Object.assign(user, json);
-  if (!onError) onError = e => console.error(e);
-
-  console.log('PUT(Db.UpdateUser): ' + route);
-
-  if (user.clientId < 0) user.clientId = cid;
-
-  fetch(route + user._id, {
-      method: "put",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": 'Basic ' + btoa(auth)
-      },
-      body: JSON.stringify(user)
-    })
-    .then(handleResponse.bind(this))
-    .then(onSuccess.bind(this))
-    .catch(onError.bind(this));
-}
-
-/* TODO:
-const cachedFetch = (url, options) => {
-  // Use the URL as the cache key to sessionStorage
-  let cacheKey = url
-
-  // START new cache HIT code
-  let cached = sessionStorage.getItem(cacheKey)
-  if (cached !== null) {
-    // it was in sessionStorage! Yay!
-    let response = new Response(new Blob([cached]))
-    return Promise.resolve(response)
-  }
-  // END new cache HIT code
-
-  return fetch(url, options).then(response => {
-    // let's only store in cache if the content-type is
-    // JSON or something non-binary
-    if (response.status === 200) {
-      let ct = response.headers.get('Content-Type')
-      if (ct && (ct.match(/application\/json/i) || ct.match(/text\//i))) {
-        // There is a .json() instead of .text() but
-        // we're going to store it in sessionStorage as
-        // string anyway.
-        // If we don't clone the response, it will be
-        // consumed by the time it's returned. This
-        // way we're being un-intrusive.
-        response.clone().text().then(content => {
-          sessionStorage.setItem(cacheKey, content)
-        })
-      }
-    }
-    return response
+    method: "post",
+    headers: { "Authorization": 'Basic ' + btoa(auth) },
+    body: fdata
   })
-}*/
-
+    .then(handleResponse.bind(this))
+    .then(onSuccess.bind(this))
+    .catch(onError.bind(this));
+}
 
 export default UserSession;

@@ -66,6 +66,7 @@ const theme = createMuiTheme({
 });
 
 class App extends React.Component {
+  /* //TODO delete?
   constructor(props) {
     super(props);
     this.state = {
@@ -92,6 +93,8 @@ class App extends React.Component {
       [key]: value,
     });
   }
+
+  */
 
   render() {
     return (

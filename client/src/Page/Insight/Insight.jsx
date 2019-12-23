@@ -9,8 +9,8 @@ import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import TextSliderText from '../../Components/TextSliderText/TextSliderText';
 import AvatarComponent from '../../Components/AvatarComponent/AvatarComponent';
 import UserSession from '../../Components/UserSession/UserSession';
-import NavigationHack from '../NavigationHack';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
+import SpectrePage from '../SpectrePage';
 
 const styles = {
   root: {
@@ -20,7 +20,7 @@ const styles = {
   },
 };
 
-class Insight extends NavigationHack {
+class Insight extends SpectrePage {
   constructor(props) {
     super(props, props.next);
     this.state = { buttonEnabled: false };

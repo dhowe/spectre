@@ -8,8 +8,8 @@ import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import IconButton from '../../Components/IconButton/IconButton';
 import { ReactComponent as Trophy } from '../../Icons/trophy.svg';
-import NavigationHack from '../NavigationHack';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
+import SpectrePage from '../SpectrePage';
 
 const styles = {
   root: {
@@ -22,7 +22,7 @@ const styles = {
   },
 };
 
-class Win extends NavigationHack {
+class Win extends SpectrePage {
   constructor(props) {
     super(props, '/influence-a-celebrity');
   }

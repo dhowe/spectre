@@ -2,15 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import { Link } from 'react-router-dom';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
-//import IconButton from '../../Components/IconButton/IconButton';
-import './WeAreSorry.scss';
-import Video from '../../Components/Video/Video';
-import Fade from '@material-ui/core/Fade';
-import Countdown from 'react-countdown-now';
-import NavigationHack from '../NavigationHack';
+import IconButton from '../../Components/IconButton/IconButton';
 
 const styles = {
   root: {
@@ -23,54 +19,18 @@ const styles = {
   }
 };
 
-class WeAreSorry extends NavigationHack  {
-
-  constructor(props) {
-      super(props,'/Goodbye')
-      this.showVideo = this.showVideo.bind(this)
-
-      this.state = {
-        fadeOut: false
-      };
-    }
-
-  componentDidMount() {
-    setTimeout(function() { //Start the timer
-        this.setState({videoPlayback: true}) //After 1 second, set render to true
-    }.bind(this), 1000)
-
-  }
-
-  showVideo() {
-    this.video.play();
-  }
-  changeFade(){
-    this.state.fadeOut = !this.state.fadeOut;
-  }
+class WeAreSorry extends React.Component {
   render() {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
           <SpectreHeader colour="white" />
           <div className={classes.content + " content"}>
-          <Fade in={!this.state.fadeOut} timeout={1000} style={{transitionDelay: '1000ms'}}>
-          <Typography className="normaltext" component="h3" variant="h3" >We’re sorry <strong>{(this.context.name||'Remy')}</strong>,<br/>
-            we’re afraid you can’t do that.</Typography>
-            </Fade>
-
-              <Countdown
-                onComplete={this.next}
-                date={Date.now() + 5000}
-                renderer={() => null}
-              />
-
-              <Video
-                ref={(el) => { this.video = el; }}
-                movie="/video/SpectreIntro.mp4"
-                autoPlay={false}
-                onComplete={this.next}
-              />
-
+              <Typography component="h5" variant="h5" style={{ marginTop: '170px', marginLeft: '100px', marginRight: '100px'}}>We’re sorry {(this.context.name||'Remy')},
+                we’re afraid you can’t&nbsp;do&nbsp;that.</Typography>
+              <Link to="/goodbye" style={{ marginBottom: '270px'}}>
+                  <IconButton icon="tick" text="Next" />
+              </Link>
           </div >
           <FooterLogo />
       </div >

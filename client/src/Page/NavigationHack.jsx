@@ -4,13 +4,14 @@ import PropTypes from 'prop-types';
 const LEFT_ARROW = 37;
 const RIGHT_ARROW = 39;
 
-class NavigationHack extends React.Component {
+// Allows quick navigation via left-right arrows for dev
+class SpectrePage extends React.Component {
+
   constructor(props, next = '/') {
     super(props);
-
     this.navigateTo = next;
-    this.navigate = this.navigate.bind(this);
     this.next = this.next.bind(this);
+    this.navigate = this.navigate.bind(this);
     this.previous = this.previous.bind(this);
 
   }
@@ -26,33 +27,33 @@ class NavigationHack extends React.Component {
   navigate(event) {
     //console.log('touched', event.keyCode);
     switch (event.keyCode) {
-    case LEFT_ARROW:
-      this.previous();
-      break;
-    case RIGHT_ARROW:
-      this.next();
-      break;
-    default:
-      break;
+      case LEFT_ARROW:
+        this.previous();
+        break;
+      case RIGHT_ARROW:
+        this.next();
+        break;
+      default:
     }
   }
 
   previous() {
-    const { history } = this.props;
-
-    history.goBack();
+    this.props.history.goBack();
   }
 
   next() {
-    const { history } = this.props;
-
-    history.push(this.navigateTo);
+    // track the last page visited and time
+    if (typeof this.context.lastPageVisit !== 'undefined') {
+      this.context.lastPageVisit = { page: this.navigateTo, time: Date.now() }
+      //console.log('[Page]', this.context.lastPageVisit);
+    }
+    this.props.history.push(this.navigateTo);
   }
 }
 
-NavigationHack.propTypes = {
+SpectrePage.propTypes = {
   history: PropTypes.object.isRequired,
   next: PropTypes.string.isRequired,
 };
 
-export default NavigationHack;
+export default SpectrePage;

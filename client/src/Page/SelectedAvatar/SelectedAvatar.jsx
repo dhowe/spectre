@@ -11,8 +11,8 @@ import Styles from '../../Styles';
 import colours from '../../colors.scss';
 
 import './SelectedAvatar.scss';
-import NavigationHack from '../NavigationHack';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
+import SpectrePage from '../SpectrePage';
 
 const height = 53;
 const fontSize = 22;
@@ -38,7 +38,7 @@ const styles = {
   },
 };
 
-class SelectedAvatar extends NavigationHack {
+class SelectedAvatar extends SpectrePage {
   constructor(props) {
     super(props, '/insight-gender');
   }
@@ -57,7 +57,6 @@ class SelectedAvatar extends NavigationHack {
           <p className="title">You selected:</p>
           <div>
             <AvatarComponent target={ {name: tname, image: timage } } />
-            <p className="avatarName">{tname}</p>
           </div>
           <p className="copy">Let&apos;s start by verifying some of the basics to unlock insight into <strong>{tname}</strong>. </p>
           <p className="copy">Don’t worry, only you will see the results. </p>

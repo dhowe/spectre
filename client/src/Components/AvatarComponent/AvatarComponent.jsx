@@ -44,8 +44,8 @@ class AvatarComponent extends React.Component {
       <div onClick={handleClick}>
         <Grid container justify="center" alignItems="center">
           <Avatar
-            alt={target.name }
-            src={target.image }
+            alt={target.name}
+            src={target.image}
             className={(active || className !== 'active') ? 'avatar-image' : null}
             style={(active ? styles.active : null)}
             onError={() => { this.src = User.profileDir + 'default.jpg'; }}
@@ -59,14 +59,14 @@ class AvatarComponent extends React.Component {
 }
 
 const defaultTarget = {
-  image: User.profileDir +UserSession.defaults[0]._id + '.jpg',
+  image: User.profileDir + UserSession.defaults[0]._id + '.jpg',
   name: UserSession.defaults[0].name
 }
 AvatarComponent.defaultProps = {
   active: false,
   className: null,
   target: defaultTarget,
-  handleClick: () => {},
+  handleClick: () => { },
 };
 AvatarComponent.propTypes = {
   handleClick: PropTypes.func,

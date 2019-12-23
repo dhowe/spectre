@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import IconButton from '../../Components/IconButton/IconButton';
 import UserSession from '../../Components/UserSession/UserSession';
-import NavigationHack from '../NavigationHack';
+import SpectrePage from '../SpectrePage';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
@@ -70,7 +70,7 @@ const styles = {
   },
 };
 
-class DarkAd extends NavigationHack {
+class DarkAd extends SpectrePage {
   constructor(props) {
     super(props, '/target-ad');
     this.state = {

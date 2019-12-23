@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
+import { ReactComponent as ThumbUp } from '../../Icons/insightthankyou.svg';
 import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
-import NavigationHack from '../NavigationHack';
-import { ReactComponent as ThumbUp } from '../../Icons/insightthankyou.svg';
+import SpectrePage from '../SpectrePage';
 
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
@@ -29,7 +29,7 @@ const styles = {
 };
 
 // Interstitial
-class ThankYou extends NavigationHack {
+class ThankYou extends SpectrePage {
   constructor(props) {
     super(props, '/steps');
   }

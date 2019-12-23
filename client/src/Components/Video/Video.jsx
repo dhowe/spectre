@@ -18,21 +18,23 @@ const styles = {
 class Video extends React.Component {
   constructor(props) {
     super(props);
-
     this.errorRender = this.errorRender.bind(this);
     this.stop = this.stop.bind(this);
-
-    this.state = {
-      shouldShow: props.autoPlay,
-    };
-
+    this.state = { shouldShow: props.autoPlay };
     this.videoPlayer = React.createRef();
+  }
+
+  componentDidMount() {
+    document.addEventListener("keyup", this.props.onKeyUp, false);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("keyup", this.props.onKeyUp, false);
   }
 
   errorRender(error) {
     console.error(`Cannot open file ${error.currentTarget.currentSrc}`);
     console.error(`Playback error: ${error.currentTarget.error}`);
-
     this.props.onComplete(this);
   }
 
@@ -51,22 +53,20 @@ class Video extends React.Component {
   render() {
     const { onComplete, movie, className, style } = this.props;
     const { shouldShow } = this.state;
-
     const overlay = !(className || style);
-    const ended = () => {
-      onComplete(this);
-    };
+    const ended = () => onComplete(this);
 
     return (
       shouldShow && (
-        <div style={overlay ? styles.video : style} className={className} onTouchEnd={this.stop}>
-          <video
-            ref={this.videoPlayer}
-            onEnded={ended}
+        <div
+          style={overlay ? styles.video : style}
+          className={className}
+          onTouchEnd={this.stop}>
+          <video ref={this.videoPlayer}
             onError={this.errorRender}
+            onEnded={ended}
             width={'100%'}
-            autoPlay
-          >
+            autoPlay>
             <source src={movie} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
@@ -78,17 +78,18 @@ class Video extends React.Component {
 
 
 Video.defaultProps = {
-  onComplete: (video) => {
-    video.close();
-  },
+  onComplete: (video) => video.close(),
+  onKeyUp: (e) => console.log(e),
   autoPlay: true,
   className: null,
   style: null,
 };
+
 Video.propTypes = {
   // classes: PropTypes.object.isRequired,
   movie: PropTypes.node.isRequired,
   onComplete: PropTypes.func,
+  onKeyUp: PropTypes.func,
   autoPlay: PropTypes.bool,
   className: PropTypes.string,
   style: PropTypes.object,

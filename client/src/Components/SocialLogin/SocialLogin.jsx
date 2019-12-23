@@ -59,9 +59,26 @@ const styles = {
   },
 };
 
+const RIGHT_ARROW = 39;
+
+let stateObj = {
+  userStubbed: false,
+  emailValid: false,
+  email: '',
+  name: '',
+  gender: '',
+  focus: 'name',
+  layoutName: 'default'
+  //clearEmail: this.clearEmail,
+};
+
 class SocialLogin extends React.Component {
+
   constructor(props) {
     super(props);
+    this.state = stateObj;
+    this.fakedUser = false;
+    this.unShiftNeeded = false;
     this.onKeyPress = this.onKeyPress.bind(this);
     this.shiftCheck = this.shiftCheck.bind(this);
     this.handleShift = this.handleShift.bind(this);
@@ -78,16 +95,18 @@ class SocialLogin extends React.Component {
       clearEmail: this.clearEmail,
     };
     this.unShiftNeeded = true;
+    this.stubbedSubmit = this.stubbedSubmit.bind(this);
     this.form = React.createRef();
   }
 
   componentDidMount() {
+    document.addEventListener("keyup", this.stubbedSubmit, false);
     document.addEventListener('click', this.shiftCheck);
-
   }
 
-  componentWillMount() {
-    document.removeEventListener('click', this.shiftCheck);
+  componentWillUnmount() {
+        document.removeEventListener('click', this.shiftCheck);
+    document.removeEventListener("keyup", this.stubbedSubmit, false);
   }
 
   onKeyPress(button) {
@@ -99,15 +118,18 @@ class SocialLogin extends React.Component {
     if (button === '{shift}') {
       this.handleShift();
       this.unShiftNeeded = !this.unShiftNeeded;
+
     } else if (button === '{lock}') {
       this.handleShift();
       this.unShiftNeeded = false;
+
     } else if (button === '{delete}') {
       const { focus } = this.state;
       const input = this.state[focus];
       this.setState({
         [focus]: (input.substr(0, input.length - 1))
       });
+
     } else if (!(button.startsWith('{') || button.endsWith('}'))) {
       const { focus } = this.state;
       const text = this.state[focus];
@@ -168,12 +190,11 @@ class SocialLogin extends React.Component {
           <form noValidate>
             {/* #267: SHIFT / CAPS, etc. dont work */}
             <FormControl className={classes.margin}>
-
               <Typography component="h6" variant="h6">Enter your name:</Typography>
               <Input
-                onClick={this.changeFocus('name')}
                 name="name"
-                id="custom-css-standard-input"
+                onClick={this.changeFocus('name')}
+                id="custom-css-standard-name"
                 value={this.state.name}
                 classes={{
                   root: classes.textField,
@@ -182,13 +203,11 @@ class SocialLogin extends React.Component {
               />
             </FormControl>
             <FormControl className={classes.margin}>
-
               <Typography component="h6" variant="h6">Your email:</Typography>
-
               <Input
-                onClick={this.changeFocus('email')}
                 name="email"
-                id="custom-css-standard-input"
+                onClick={this.changeFocus('email')}
+                id="custom-css-standard-email"
                 value={this.state.email}
                 classes={{
                   root: classes.textField,
@@ -203,10 +222,9 @@ class SocialLogin extends React.Component {
               <RadioGroup
                 aria-label="Gender"
                 name="gender"
-                value={this.state.value}
+                value={this.state.gender}
                 onChange={this.handleRadioChange}
-                className={classes.radioGroup}
-              >
+                className={classes.radioGroup}>
                 <FormControlLabel className="radio" value="female" control={<Radio color="primary" />} label="Woman" />
                 <FormControlLabel className="radio" value="male" control={<Radio color="primary" />} label="Man" />
                 <FormControlLabel className="radio" value="other" control={<Radio color="primary" />} label="Other" />
@@ -238,11 +256,28 @@ class SocialLogin extends React.Component {
       </div>
     );
   }
+  stubbedSubmit(event) { // for dev-only
+    if (event.keyCode === RIGHT_ARROW && !this.fakedUser) {
+      this.fakedUser = true;
+      let cons = "bcdfghjklmnprstvxz", vows = "aeiou";
+      let name = cons[Math.floor(Math.random() * cons.length)]
+        + vows[Math.floor(Math.random() * vows.length)]
+        + cons[Math.floor(Math.random() * cons.length)];
+      let data = {
+        name: name.ucf(),
+        email: name + (+new Date()) + '@test.com',
+        gender: ['male', 'female', 'other'][Math.floor(Math.random() * 3)]
+      };
+      console.log('[STUB] '+ data.name + " / " + data.email + " / " + data.gender);
+      this.setState(data); // update form and submit
+      setTimeout(() => this.props.handleSubmit(0, this.state), 500);
+    }
+  }
 }
 
 SocialLogin.propTypes = {
   classes: PropTypes.object.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired
 };
 SocialLogin.contextType = UserSession;
 

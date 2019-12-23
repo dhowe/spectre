@@ -6,11 +6,11 @@ import Countdown from 'react-countdown-now';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import movie from './OCEAN Intro V1.mp4';
-import NavigationHack from '../NavigationHack';
+import SpectrePage from '../SpectrePage';
 
 const styles = {};
 
-class IntroOceanVideo extends NavigationHack {
+class IntroOceanVideo extends SpectrePage {
   constructor(props) {
     super(props, '/your-power');
   }

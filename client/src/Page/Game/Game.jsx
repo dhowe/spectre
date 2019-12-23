@@ -9,8 +9,8 @@ import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 
 import './Game.css';
-import NavigationHack from '../NavigationHack';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
+import SpectrePage from '../SpectrePage';
 
 const styles = {
   root: {
@@ -300,10 +300,9 @@ Brand.updateAll = () => { Brand.instances.forEach(b => b.update()) };
 
 ///////////////////// End p5.js sketch ////////////////////////////
 
-let user;
-let game;
+let user, game;
 
-class Game extends NavigationHack {
+class Game extends SpectrePage {
   constructor(props) {
     super(props, "/thank-you");
     game = this; // handle for p5js
@@ -311,45 +310,40 @@ class Game extends NavigationHack {
 
   }
 
-  componentWillMount() {
+  componentDidMount() {
 
-    user = this.context;
+    user = UserSession.get(this.context);
 
     ///////////////////// TMP: ///////////////////////
     if (typeof user._id === 'undefined') {
-      user.name = user.name || 'Barney';
+      user.name = user.name || 'Barniel';
       user.loginType = user.loginType || 'email';
-      user.login = user.login || 'Barney' + (+new Date()) + '@aol.com';
-      UserSession.createUser(user);
+      user.login = user.login || 'Barniel' + (+new Date()) + '@aol.com';
+      UserSession.sync(user);
     }
     //////////////////////////////////////////////////
 
     console.log('User:', this.context);
   }
 
-
-componentComplete() { // redirect called from p5
+  componentComplete() { // redirect called from p5
   clearInterval(this.interval);
-  if (typeof this.context._id !== 'undefined') { // TMP: remove
+    let user = UserSession.get(this.context);
 
-    // update last page context
-    this.context.lastPageVisit = {
-      page: '/Game',
-      time: Date.now
-    };
+    if (typeof user._id !== 'undefined') { // TMP: remove
+      UserSession.update(user,
+        (json) => {
+          Object.assign(user, json);
+          this.next();
+        }, (err) => {
+          console.error(err);
+          this.next();
+        });
 
-    UserSession.updateUser(this.context,
-      (json) => {
-        Object.assign(this.context, json);
-        this.next();
-      }, (err) => {
-        console.error(err);
-        this.next();
-      });
-
-  } else { // TMP: remove
-    console.warn('WARN: not updating Db with User info!');
-    this.next();
+    } else { // TMP: remove
+      console.warn('WARN: not updating Db with User info!');
+      this.next();
+    }
   }
 }
   render() {

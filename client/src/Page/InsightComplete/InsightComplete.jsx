@@ -9,7 +9,7 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import OceanProfile from '../../Components/OceanProfile/OceanProfile';
-import NavigationHack from '../NavigationHack';
+import SpectrePage from '../SpectrePage';
 import Video from '../../Components/Video/Video';
 import Styles from '../../Styles';
 import colours from '../../colors.scss';
@@ -29,7 +29,7 @@ const styles = {
   },
 };
 
-class InsightComplete extends NavigationHack {
+class InsightComplete extends SpectrePage {
   constructor(props) {
     super(props, '/your-power');
     this.state = {

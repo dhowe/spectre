@@ -92,7 +92,6 @@ export default class User {
 
   targetAdImages() {
     let pre = 'imgs/';
-    let ots = User.oceanTraits;
 
     if (typeof this.target === 'undefined') {
       throw Error('No target for adImages!', this);
@@ -105,7 +104,7 @@ export default class User {
 
       let cat = this.categorize(this.target);
       if (cat !== 0) {
-        //console.log('['+this.adIssue+']['+(cat > 0 ? 'high' : 'low')+']['+ots[Math.abs(cat)-1]+']');
+        //console.log('['+this.adIssue+']['+(cat > 0 ? 'high' : 'low')+']['+User.oceanTraits[Math.abs(cat)-1]+']');
         images = [
           pre + this.adIssue + '_' + cat + '.1.png',
           pre + this.adIssue + '_' + cat + '.2.png',
@@ -129,7 +128,7 @@ export default class User {
 
     let ots = User.oceanTraits;
     let influences = this.randomInfluences();
-    console.log("OT",this.hasOceanTraits(this.target), typeof this.target);
+    //console.log("OT",this.hasOceanTraits(this.target), typeof this.target);
     if (typeof this.target !== 'undefined' &&
       this.hasOceanTraits(this.target) &&
       typeof this.adIssue !== 'undefined') {
@@ -192,7 +191,7 @@ export default class User {
   randomInfluences() {
     let ots = User.oceanTraits;
     let idx = Math.floor(Math.random() * ots.length);
-    console.log(this.adIssue, this);
+    //console.log(this.adIssue, this);
     return User.adInfluences[this.adIssue]
       [(Math.random() < .5 ? 'high' : 'low')][ots[idx]];
   }

@@ -69,6 +69,7 @@ describe('Client User', function () {
     });
   });
 
+/* Commented for now
   describe('User.similarTargets()', function () {
     it('Should correctly set similars as strings', function () {
       let user = new User({
@@ -105,6 +106,7 @@ describe('Client User', function () {
       expect(user.getTarget().traits.openness).is.lt(1);
     });
   });
+*/
 
   describe('User.personalization()', function () {
 
@@ -125,7 +127,7 @@ describe('Client User', function () {
         }
       });
       infls = user.targetAdInfluences();
-      expect(infls).to.have.members(["freedom or expansive skies", "‘freedom’, ‘future’ or ‘potential’"]);
+      expect(infls).to.have.members(["expansive, open themes", "‘freedom’, ‘future’ or ‘potential’"]);
 
       user = new User({
         adIssue: 'leave',
@@ -141,7 +143,7 @@ describe('Client User', function () {
         }
       });
       infls = user.targetAdInfluences();
-      expect(infls).to.have.members(["less concern with cooperation or social harmony ", "‘borders’, ‘jobs’ or paying for other’s ‘mistakes’"]);
+      expect(infls).to.have.members(["struggle or strife", "‘borders’, ‘jobs’ or ‘mistakes’"]);
 
       user = new User({
         adIssue: 'remain',
@@ -173,7 +175,7 @@ describe('Client User', function () {
         }
       });
       infls = user.targetAdInfluences();
-      expect(infls).to.have.members(["laid back, relaxed scenes", "‘hassle’ or ‘worry’"]);
+      expect(infls).to.have.members(["scenes of relaxation", "‘hassle’ or ‘worry’"]);
     });
 
     it('Should pick correct images for target category', function () {

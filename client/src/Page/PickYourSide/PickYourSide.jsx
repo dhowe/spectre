@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
-import NavigationHack from '../NavigationHack';
+import SpectrePage from '../SpectrePage';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
@@ -20,7 +20,7 @@ const styles = {
   },
 };
 
-class PickYourSide extends NavigationHack {
+class PickYourSide extends SpectrePage {
   constructor(props) {
     super(props, '/campaign');
   }
