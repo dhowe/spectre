@@ -1,0 +1,17 @@
+@import '../../colors.scss';
+
+
+h3.username {
+
+  color:$blue;
+  font-weight: bold;
+  font-size: 44px;
+
+}
+
+h3.normaltext {
+    padding-top: 435px;
+  font-size: 44px;
+  font-weight: 300;
+  line-height: 88px;
+}
