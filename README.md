@@ -1,6 +1,7 @@
 # SPECTRE
 _Worship at the Altar_
 
+<br/>
 
 ## Dependencies
 ```
