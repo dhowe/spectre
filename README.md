@@ -1,7 +1,5 @@
 # SPECTRE
-Worship at the Altar
-
-<br/>
+### Worship at the Altar
 
 
 ## Dependencies
