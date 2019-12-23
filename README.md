@@ -14,11 +14,10 @@ We use react, express, node (v12.2), mongodb (v4.2) and yarn (v1.21)
 
 ```
 $ git clone https://github.com/dhowe/spectre.git 
-$ cd spectre
-$ yarn run full-install
+$ cd spectre && yarn run full-install
 ```
 
-Note: instructions below assume you are within the _spectre_ folder:
+_note: instructions below assume you are within the spectre folder_
 
 <br/>
 
