@@ -3,12 +3,13 @@ Worship at the Altar
 
 <br/>
 
-## Installation
 
+## Dependencies
 ```
 We use react, express, node (v12.2), mongodb (v4.2) and yarn (v1.21)
 ```
 
+## Installation
 ```
 git clone https://github.com/dhowe/spectre.git 
 cd spectre
