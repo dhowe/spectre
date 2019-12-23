@@ -12,10 +12,6 @@ We use react, express, node (v12.2), mongodb (v4.2) and yarn (v1.21)
 
 ## Installation (OS X or Linux)
 
-Install yarn[[OS X](https://yarnpkg.com/lang/en/docs/install/#mac-stable)] if needed
-
-Install mongodb[[OS X](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x)] if needed
-
 ```
 git clone https://github.com/dhowe/spectre.git 
 cd spectre
@@ -28,7 +24,7 @@ yarn run full-install
 ```
 
 
-## Client+Server (production, requires mongodb)
+## Client+Server (requires mongodb)
 
 ```
 yarn start
@@ -38,7 +34,7 @@ yarn start
 
 ## Server-only (no client required)
 
-### Start (requires a local mongodb)
+### Start (requires mongodb)
 
 ```
 yarn run server
