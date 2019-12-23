@@ -1,35 +1,20 @@
 # SPECTRE
-Worship at the Altar of Dataism
+Worship at the Altar
 
 <br/>
 
 ## Installation
 
+```
 We use react, express, node (v12.2), mongodb (v4.2) and yarn (v1.21)
-
-### Dependencies and Versions
-
-```
-Yarn version:
-Mongodb version: 4.2
 ```
 
-``` 
+```
 git clone https://github.com/dhowe/spectre.git 
-```
-
-
-
-NOTE: all instructions below assume you are within the /spectre folder:
-
-```
 cd spectre
 ```
 
-### Installing Dependencies
-
-
-When you have the correct versions, install the required dependencies.
+NOTE: all instructions below assume you are within the _spectre_ folder:
 
 ```
 yarn run full-install
