@@ -1,5 +1,5 @@
 # SPECTRE
-### Worship at the Altar
+_Worship at the Altar_
 
 
 ## Dependencies
@@ -19,13 +19,11 @@ NOTE: all instructions below assume you are within the _spectre_ folder:
 yarn run full-install
 ```
 
-<br/>
 
 ## Client+Server (production, requires mongodb)
 
 ```
 yarn start
-
 ```
 
 <br/>
