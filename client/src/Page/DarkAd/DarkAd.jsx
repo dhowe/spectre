@@ -9,6 +9,7 @@ import UserSession from '../../Components/UserSession/UserSession';
 import SpectrePage from '../SpectrePage';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
+import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
 const styles = {
   root: {
@@ -53,7 +54,7 @@ const styles = {
   },
   campaignImage: {
     position: 'absolute',
-    bottom: '10px',
+    bottom: '0px',
     right: '0',
     width: '150px',
   },
@@ -96,6 +97,7 @@ class DarkAd extends SpectrePage {
     return (
       <div className={classes.root + " darkAd"}>
         <SpectreHeader colour="white" progressActive progressNumber="one" />
+        <IdleChecker />
         <div className={`${classes.content} content`}>
           <Typography component="h6" variant="h6"><strong>Create Your Campaign</strong></Typography>
           <div className={classes.ad}>    { /* adIssue should never change after being selected '*/}

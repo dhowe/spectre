@@ -9,6 +9,8 @@ import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import SpectrePage from '../SpectrePage';
 
+import IdleChecker from '../../Components/IdleChecker/IdleChecker';
+
 const styles = {
   root: {
     flexGrow: 1,
@@ -38,6 +40,7 @@ class ThankYou extends SpectrePage {
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" />
+        <IdleChecker />
         <div className={`${classes.content} content`}>
           <div>
             <p className={classes.copy}>Thank you, <strong>{this.context.name}!</strong></p>
@@ -45,7 +48,7 @@ class ThankYou extends SpectrePage {
             <p className={classes.copy}>Your experience has been <strong>personalised.</strong></p>
           </div>
           <Link to="/steps">
-            <IconButton icon="next" text="Next" />
+            <IconButton icon="next" text="Next"/>
           </Link>
         </div>
         <FooterLogo />

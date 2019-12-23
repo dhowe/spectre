@@ -14,6 +14,8 @@ import './InsightThankYou.scss';
 import Styles from '../../Styles';
 import SpectrePage from '../SpectrePage';
 
+import IdleChecker from '../../Components/IdleChecker/IdleChecker';
+
 const styles = {
   root: {
     flexGrow: 1,
@@ -48,6 +50,7 @@ class InsightThankYou extends SpectrePage {
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive progressNumber="one" />
+        <IdleChecker />
         <div className={`${classes.content} content`}>
           <Typography className="title" component="h3" variant="h3">Great!</Typography>
           <ThumbUp className="insight-thank-you-icon" />

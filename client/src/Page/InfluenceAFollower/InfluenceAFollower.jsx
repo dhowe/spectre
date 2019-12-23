@@ -10,6 +10,7 @@ import User from '../../Components/User/User';
 
 import './InfluenceAFollower.scss';
 import AvatarCircle from '../../Components/AvatarCircle/AvatarCircle';
+import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 import SpectrePage from '../SpectrePage';
 
 const styles = {
@@ -29,7 +30,7 @@ const styles = {
 };
 
 class InfluenceAFollower extends SpectrePage {
-  
+
   constructor(props) {
     super(props, '/selected-avatar');
     this.handleSelect = this.handleSelect.bind(this);
@@ -76,8 +77,9 @@ class InfluenceAFollower extends SpectrePage {
   render() {
     const { classes } = this.props;
     return (
-      <div className={classes.root}>
+      <div className={classes.root} >
         <SpectreHeader colour="white" progressActive progressNumber="one" />
+        <IdleChecker />
         <div className={`${classes.content} content`}>
           <Typography component="h5" variant="h5" className="influence-a-follower"><strong>Influence a follower!</strong></Typography>
           <Typography component="p" variant="body1" className="community">Spectre has a global community of followers.</Typography>

@@ -8,6 +8,7 @@ import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
+import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 import SpectrePage from '../SpectrePage';
 
 const styles = {
@@ -31,6 +32,7 @@ class Steps extends SpectrePage {
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" />
+        <IdleChecker setIdleTime={14}/>
         <div className={classes.content + " content"}>
             <Fade in={true} >
                 <Typography component="h5" variant="h5">Find what you are looking for by following these three steps:</Typography>

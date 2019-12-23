@@ -7,9 +7,10 @@ import grey from '@material-ui/core/colors/grey';
 import SocialLogin from '../../Components/SocialLogin/SocialLogin';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import UserSession from '../../Components/UserSession/UserSession';
-
+import { Link } from 'react-router-dom';
 import './LoginPage.scss';
 import Video from '../../Components/Video/Video';
+import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 import SpectrePage from '../SpectrePage';
 
 window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true; // TMP: #138
@@ -60,6 +61,7 @@ const styles = {
   },
 };
 
+
 class LoginPage extends SpectrePage {
 
   constructor(props) {
@@ -69,13 +71,20 @@ class LoginPage extends SpectrePage {
       nameErrorCount: 0,
       modalOpen: false,
       clearEmail: true,
+      idleCheckerIsDone: false,
       videoStarted: false
     };
+
+
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.termsOfService = this.termsOfService.bind(this);
+    //modal
     this.skipVideo = this.skipVideo.bind(this);
     this.modalContent = '';
     this.modalTitle = '';
+
   }
+
 
   componentDidMount() {
     UserSession.init(() => { }, (e) => {
@@ -125,6 +134,9 @@ class LoginPage extends SpectrePage {
           this.showVideo();
         }
       };
+      console.log(user);
+
+      this.showVideo();
 
       UserSession.create(user, handleSuccess, handleError);
 
@@ -157,6 +169,13 @@ class LoginPage extends SpectrePage {
   showVideo() {
     this.setState({ videoStarted: true });
     this.video.play();
+    this.setState({ idleCheckerIsDone: true });
+  }
+
+  termsOfService(){
+    this.modalTitle = 'Terms of Service';
+    this.modalContent = 'Brungard told the court he -was drunk when the incident took placeBrungard told the court he -was drunk when the incident took placeBrungard told the court he -was drunk when the incident took placeBrungard told the court he -was drunk when the incident took placeBrungard told the court he -was drunk when the incident took placeBrungard told the court he -was drunk when the incident took place';
+    this.setState({ modalOpen: true });
   }
 
   skipVideo() { // dev-only
@@ -165,9 +184,11 @@ class LoginPage extends SpectrePage {
 
   render() {
     const { classes } = this.props;
+
     return (
       <div className={classes.root + ' LoginPage'}>
         <SpectreHeader />
+        <IdleChecker forceTerminate={this.state.idleCheckerIsDone}/>
         <div className={classes.content + ' LoginPage-content content'}>
           <Typography style={{ marginBottom: 70 }} component="h2" variant="h2">Let's Play!</Typography>
           <Modal
@@ -185,6 +206,7 @@ class LoginPage extends SpectrePage {
           />
           <SocialLogin handleSubmit={this.handleSubmit} />
         </div>
+          <div onClick={this.termsOfService}><Link className='tos' to='#here'>Terms of Service</Link></div>
       </div>
     );
   }

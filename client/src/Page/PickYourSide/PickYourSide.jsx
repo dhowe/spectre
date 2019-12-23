@@ -7,6 +7,7 @@ import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import SpectrePage from '../SpectrePage';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
+import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
 const styles = {
   root: {
@@ -31,8 +32,9 @@ class PickYourSide extends SpectrePage {
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive progressNumber="one"/>
+        <IdleChecker />
         <div className={`${classes.content} content`}>
-          <Typography component="h6" variant="h6" style={{ marginTop: '300px' }}>Persuade {tname} to:</Typography>
+          <Typography component="h6" variant="h6" style={{ marginTop: '300px' }}>Persuade <strong>{tname}</strong> to:</Typography>
           <Link to="/campaign">
             <img src="/imgs/vote_leave.png" width={420} alt="leave"
                  onClick={() => { this.context.adIssue = 'leave'; }}></img>

@@ -80,23 +80,41 @@ class SocialLogin extends React.Component {
     this.fakedUser = false;
     this.unShiftNeeded = false;
     this.onKeyPress = this.onKeyPress.bind(this);
+    this.shiftCheck = this.shiftCheck.bind(this);
     this.handleShift = this.handleShift.bind(this);
     this.changeFocus = this.changeFocus.bind(this);
     this.handleRadioChange = this.handleRadioChange.bind(this);
     this.clearEmail = this.clearEmail.bind(this);
+    this.state = {
+      emailValid: false,
+      email: '',
+      name: '',
+      focus: 'name',
+      layoutName: 'shift',
+      input: "",
+      clearEmail: this.clearEmail,
+    };
+    this.unShiftNeeded = true;
     this.stubbedSubmit = this.stubbedSubmit.bind(this);
     this.form = React.createRef();
   }
 
   componentDidMount() {
     document.addEventListener("keyup", this.stubbedSubmit, false);
+    document.addEventListener('click', this.shiftCheck);
   }
 
   componentWillUnmount() {
+        document.removeEventListener('click', this.shiftCheck);
     document.removeEventListener("keyup", this.stubbedSubmit, false);
   }
 
   onKeyPress(button) {
+
+
+
+
+
     if (button === '{shift}') {
       this.handleShift();
       this.unShiftNeeded = !this.unShiftNeeded;
@@ -108,7 +126,6 @@ class SocialLogin extends React.Component {
     } else if (button === '{delete}') {
       const { focus } = this.state;
       const input = this.state[focus];
-
       this.setState({
         [focus]: (input.substr(0, input.length - 1))
       });
@@ -124,6 +141,20 @@ class SocialLogin extends React.Component {
       if (this.unShiftNeeded) {
         this.handleShift();
         this.unShiftNeeded = false;
+      }
+    }
+  }
+
+  shiftCheck(){
+    if(this.state.focus === "name"){
+      if(this.state.name.length === 0){
+           const { layoutName } = this.state;
+          this.setState({
+            layoutName: layoutName === 'default' ? 'shift' : 'shift',
+          });
+      //  this.state.layoutName = 'shift'
+        this.unShiftNeeded = true;
+        //console.log("is empty, shift");
       }
     }
   }
@@ -150,6 +181,9 @@ class SocialLogin extends React.Component {
 
   render() {
     const { classes } = this.props;
+  //  console.log(this.state)
+    /*  For name field, first letter press SHIFT here*/
+
     return (
       <div className={`${classes.root} socialLogin`}>
         <div className={`${classes.content} socialLogin-content`}>

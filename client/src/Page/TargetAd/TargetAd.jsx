@@ -9,6 +9,7 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import SpectrePage from '../SpectrePage';
 import UserSession from '../../Components/UserSession/UserSession';
+import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
 const styles = {
   root: {
@@ -31,21 +32,26 @@ class TargetAd extends SpectrePage {
     return (
       <div className={classes.root}>
       <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
+      <IdleChecker />
       <div className={`${classes.content} content`}>
         <br/>
         <Typography component="h6" variant="h6">
-          Share your targeted ad with {tname}?
+          Share your targeted ad with <strong>{tname}</strong>?
         </Typography>
-        <Link to="/success-ad">
+
           <Grid container justify="center">
             <Grid item>
+              <Link to="/success-ad">
               <IconButton icon="tick" text="Yes"/>
+              </Link>
             </Grid>
             <Grid item>
+            <Link to="/we-are-sorry">
               <IconButton icon="next" text="No" />
+              </Link>
             </Grid>
           </Grid>
-        </Link>
+
         <br/>
       </div>
       <FooterLogo />

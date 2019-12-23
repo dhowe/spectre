@@ -66,6 +66,35 @@ const theme = createMuiTheme({
 });
 
 class App extends React.Component {
+  /* //TODO delete?
+  constructor(props) {
+    super(props);
+    this.state = {
+      date: 'test',
+      virtue: 'default',
+      gender: 'default',
+      name: 'default',
+      selectedFollower: {
+        name: 'Remy',
+        gender: 'man',
+        image: '/imgs/remy.jpg'
+      },
+    };
+    this.test_state = this.test_state.bind(this);
+    this.set_key = this.set_key.bind(this);
+  };
+  test_state() {
+    this.setState({
+      date: 'test2',
+    });
+  }
+  set_key(key, value) {
+    this.setState({
+      [key]: value,
+    });
+  }
+
+  */
 
   render() {
     return (

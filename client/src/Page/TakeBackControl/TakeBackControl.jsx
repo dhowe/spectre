@@ -12,6 +12,7 @@ import UserSession from '../../Components/UserSession/UserSession';
 import Styles from '../../Styles';
 import colours from '../../colors.scss';
 import './TakeBackControl.scss';
+import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 import SpectrePage from '../SpectrePage';
 
 const width = 180;
@@ -58,6 +59,7 @@ class TakeBackControl extends SpectrePage {
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" />
+        <IdleChecker />
         <div className={`${classes.content} content`}>
           <Typography component="h5" variant="h5">Take back control? </Typography>
           <Typography component="h6" variant="h6">Delete your data from Spectre’s system?</Typography>

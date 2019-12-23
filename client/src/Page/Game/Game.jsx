@@ -9,6 +9,7 @@ import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 
 import './Game.css';
+import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 import SpectrePage from '../SpectrePage';
 
 const styles = {
@@ -140,6 +141,7 @@ function sketch(p) {
   };
 
   p.mousePressed = () => {
+    document.getElementById("clickMe").click();
     Brand.active = false;
     Brand.instances.forEach(b => {
       if (b.contains(p.mouseX, p.mouseY)) {
@@ -304,6 +306,8 @@ class Game extends SpectrePage {
   constructor(props) {
     super(props, "/thank-you");
     game = this; // handle for p5js
+
+
   }
 
   componentDidMount() {
@@ -323,7 +327,7 @@ class Game extends SpectrePage {
   }
 
   componentComplete() { // redirect called from p5
-
+  clearInterval(this.interval);
     let user = UserSession.get(this.context);
 
     if (typeof user._id !== 'undefined') { // TMP: remove
@@ -341,13 +345,14 @@ class Game extends SpectrePage {
       this.next();
     }
   }
-
+}
   render() {
     const { classes } = this.props;
     return (
-      <div className={classes.root}>
+      <div className={classes.root} id='clickMe'>
         <SpectreHeader colour="white" />
         <P5Wrapper sketch={sketch} className="wrapper" />
+        <IdleChecker />
         <Link to="/thank-you">
           <IconButton icon="next" text="Next" />
         </Link>

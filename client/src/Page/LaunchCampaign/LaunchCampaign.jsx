@@ -7,6 +7,7 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import IconButton from '../../Components/IconButton/IconButton';
+import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 import SpectrePage from '../SpectrePage';
 
 const styles = {
@@ -31,6 +32,7 @@ class LaunchCampaign extends SpectrePage {
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" />
+        <IdleChecker />
         <div className={`${classes.content} content`}>
           <Typography component="h6" variant="h6" style={{ marginTop: '250px' }}>Launch Campaign!</Typography>
           <Link to="/referendum-results" style={{ marginBottom: '300px' }}>

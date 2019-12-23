@@ -8,6 +8,7 @@ import SpectrePage from '../SpectrePage';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import IconButton from '../../Components/IconButton/IconButton';
 import { Link } from 'react-router-dom';
+import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
 const styles = {
   root: {
@@ -38,12 +39,13 @@ class Campaign extends SpectrePage {
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive progressNumber="one" />
+        <IdleChecker />
         <div className={`${classes.content} content`}>
           <Typography component="h6" variant="h6" style={{ marginTop: '100px'}}>
             Now use a simple design tool to create a targeted Facebook ad.
           </Typography>
           <Typography component="h6" variant="h6">
-            {name}'s OCEAN profile shows that {pron} can be influenced by:
+            <strong>{name}</strong>'s OCEAN profile shows that {pron} can be influenced by:
           </Typography>
           <Typography component="h6" variant="h6">
             <strong>Images</strong> that contain {infls[0]}

@@ -12,6 +12,7 @@ import colours from '../../colors.scss';
 import Button from '@material-ui/core/Button';
 //import Fade from '@material-ui/core/Fade';
 import "./InfluenceANation.scss";
+import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 import SpectrePage from '../SpectrePage';
 
 const height = 53;
@@ -45,11 +46,12 @@ class InfluenceANation extends SpectrePage {
     return (
       <div className={`${classes.root} InfluenceANation`}>
           <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
+          <IdleChecker />
           <div className={`${classes.content} content`}>
-              <Typography class="top"><strong>Influence a Nation</strong></Typography>
-              <Typography class="middle">Let's amplify your campaign by convincing
+              <Typography className="top"><strong>Influence a Nation</strong></Typography>
+              <Typography className="middle">Let's amplify your campaign by convincing
               lots of others to vote {this.context.adIssue}.</Typography>
-              <Typography class="semi-bold">We can show you how, but first, you must...</Typography>
+              <Typography className="semi-bold">We can show you how, but first, you must...</Typography>
               <Link to="/consumer-data">
                 <Button className={classes.button}>Get more data!</Button>
               </Link>

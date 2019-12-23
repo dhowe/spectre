@@ -30,7 +30,8 @@ class YourPower extends SpectrePage {
 
     const { classes } = this.props;
     const name = this.context.name;
-    let heading = name ? (name+ ', your ') : 'Your ';
+    let nameForHeading = name ? (name) : '';
+    let heading = name ? (', your ') : 'Your ';
     heading += (this.context.virtue || 'Power') + ' is growing.';
 
     return (
@@ -38,7 +39,7 @@ class YourPower extends SpectrePage {
         <SpectreHeader colour="white" progressActive progressNumber="one" />
         <div className={`${classes.content} content`}>
           <Fade in style={{ transitionDelay: '200ms', marginTop: '300px' }}>
-            <Typography component="h6" variant="h6">{heading} </Typography>
+            <Typography component="h6" variant="h6"><strong>{nameForHeading}</strong>{heading} </Typography>
           </Fade>
           <Fade in style={{ transitionDelay: '2000ms', marginBottom: '200px' }}>
             <Typography component="h6" variant="h6">Let's put it into practice.</Typography>

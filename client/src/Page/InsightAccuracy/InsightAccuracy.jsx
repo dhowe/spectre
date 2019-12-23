@@ -25,7 +25,7 @@ function InsightAccuracy(props) {
             <Typography component="h5" variant="h5">Excellent! </Typography>
             <IconButton icon="trophy" />
             <Typography component="h6" variant="h6">Your accuracy level is high.
-            You are starting to see {this.context.targetName} as we see do.
+            You are starting to see <strong>{this.context.targetName}</strong> as we see do.
             </Typography>
             <Link to="/insight-financial">
                 <IconButton icon="next" text="Let's go deeper" />

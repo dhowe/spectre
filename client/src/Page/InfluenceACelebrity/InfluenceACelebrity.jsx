@@ -12,6 +12,7 @@ import AvatarComponent from '../../Components/AvatarComponent/AvatarComponent';
 import Video from '../../Components/Video/Video';
 
 import './InfluenceACelebrity.scss';
+import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 import SpectrePage from '../SpectrePage';
 
 const styles = {
@@ -31,7 +32,9 @@ class InfluenceACelebrity extends SpectrePage {
     this.play = this.play.bind(this);
     this.stop = this.stop.bind(this);
     this.save = this.save.bind(this);
-    this.state = { video: null };
+    this.state = { video: null,
+                  idleCheckerIsDone: false,
+     };
 
     // a random set, always with two femals
     let fcelebs = ['Kardashian', 'Abramovic'];
@@ -54,6 +57,7 @@ class InfluenceACelebrity extends SpectrePage {
 
   stop() {
     this.setState({ video: null });
+    this.setState({ idleCheckerIsDone: false });
   }
 
   play(name) {
@@ -62,6 +66,7 @@ class InfluenceACelebrity extends SpectrePage {
       celebrity: name,
       video: `/video/${this.context.virtue || 'power'}_${name}.mp4`,
     });
+    this.setState({ idleCheckerIsDone: true });
   }
 
   render() {
@@ -73,6 +78,7 @@ class InfluenceACelebrity extends SpectrePage {
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive progressNumber="three"/>
+        <IdleChecker forceTerminate={this.state.idleCheckerIsDone}/>
         <div className={`${classes.content} content`}>
           <Fade in style={{ transitionDelay: '200ms' }}>
             <Typography className="title" component="h4" variant="h4">Influence a celebrity!</Typography>

@@ -8,6 +8,7 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import IconButton from '../../Components/IconButton/IconButton';
 import IconButtonToggle from '../../Components/IconButton/IconButtonToggle';
+import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
 import './ConsumerData.scss';
 import SpectrePage from '../SpectrePage';
@@ -74,6 +75,7 @@ class ConsumerData extends SpectrePage {
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
+        <IdleChecker />
         <div className={`${classes.content} content`}>
           <Typography component="h6" variant="h6">
             <strong>Choose 3 types of consumer data:</strong>

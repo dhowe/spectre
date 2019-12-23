@@ -10,6 +10,7 @@ import IconButton from '../../Components/IconButton/IconButton';
 import IconButtonToggle from '../../Components/IconButton/IconButtonToggle';
 
 import './HomeData.scss';
+import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 import SpectrePage from '../SpectrePage';
 
 const styles = {
@@ -74,6 +75,7 @@ class HomeData extends SpectrePage {
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
+        <IdleChecker />
         <div className={classes.content + " content"}>
           <Typography component="h6" variant="h6">
             <strong>Choose 2 types of home data:</strong>
