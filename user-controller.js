@@ -2,6 +2,15 @@ import UserModel from './user-model';
 import multer from 'multer';
 import path from 'path';
 
+/*
+TODO: every call should return a uniform object:
+{
+  "status": "ok || error",
+  "message": "a user-readable message",
+  "data": "<payload object>"
+}
+*/
+
 const list = function (req, res) {
 
   UserModel.getAll(function (err, users) {
