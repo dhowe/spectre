@@ -5,7 +5,7 @@ _Worship at the Altar_
 
 ## Dependencies
 ```
-We use react, express, node (v12.2), mongodb (v4.2) and yarn (v1.21)
+We use react, express, node (v12.2), [mongodb](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/) (v4.2) and yarn (v1.21)
 ```
 
 <br/>
@@ -16,7 +16,7 @@ git clone https://github.com/dhowe/spectre.git
 cd spectre
 ```
 
-NOTE: all instructions below assume you are within the _spectre_ folder:
+Note: all instructions below assume you are within the _spectre_ folder:
 
 ```
 yarn run full-install
