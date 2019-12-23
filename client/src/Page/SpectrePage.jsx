@@ -22,17 +22,6 @@ class SpectrePage extends React.Component {
   componentWillUnmount() {
     document.removeEventListener('keyup', this.navigate);
   }
-  // 
-  // logUserProperties() {
-  //   let s = '{ ';
-  //   Object.keys(this.context).forEach(p => {
-  //     if (this.context[p]) {
-  //       s += p + ':' + this.context[p] + ', ';
-  //     }
-  //   });
-  //   s = s.substring(0, s.length - 2) + ' }';
-  //   console.log(s);
-  // }
 
   navigate(event) {
     //console.log('touched', event.keyCode);

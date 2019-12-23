@@ -76,7 +76,7 @@ class SearchingFor extends SpectrePage {
     // user.login = user.login || `Barney${+new Date()}@aol.com`;
 
     // here we are doing the webcam capture, disabled for now
-    if (false) {
+    if (1) {
 
       // TODO: next work
       const data = this.webcam.getScreenshot();
