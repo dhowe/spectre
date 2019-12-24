@@ -43,7 +43,7 @@ class IdleChecker extends React.Component {
 //      clearInterval(this.interval);
 //    }
     let timer = this.state.idleTimer;
-    console.log(timer);
+    //console.log(timer);
     var t = this.props.setIdleTime === undefined ? this.state.idleTime : this.props.setIdleTime;
     if (timer >   t ) {
       this.setState({

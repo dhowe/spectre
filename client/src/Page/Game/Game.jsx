@@ -345,7 +345,7 @@ class Game extends SpectrePage {
       this.next();
     }
   }
-}
+
   render() {
     const { classes } = this.props;
     return (
