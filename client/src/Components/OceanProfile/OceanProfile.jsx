@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Typography from "@material-ui/core/Typography/Typography";
 import Grid from "@material-ui/core/Grid/Grid";
-import Slider from "@material-ui/core/Slider";
+import Slider from "@material-ui/lab/Slider";
 import { ReactComponent as Openness } from "../../Icons/openness.svg";
 import { ReactComponent as Conscientiousness } from "../../Icons/conscientiousness.svg";
 import { ReactComponent as Extroversion } from "../../Icons/extroversion.svg";
