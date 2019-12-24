@@ -91,7 +91,7 @@ function sketch(p) {
     drawInfo(p, colors.sketchText);
 
     if (instructions) {
-      p.image(instruct, p.width/2, p.height/2-100);
+      p.image(instruct, p.width / 2, p.height / 2 - 100);
       return;
     }
 
@@ -198,8 +198,8 @@ function sketch(p) {
     p.textSize(40);
     p.fill(c);
     p.noStroke();
-    p.text('+ Love', p.width/2, 20);
-    p.text('- Hate', p.width/2, p.height-20)
+    p.text('+ Love', p.width / 2, 20);
+    p.text('- Hate', p.width / 2, p.height - 20)
   }
 
   function checkData() {
@@ -327,7 +327,7 @@ class Game extends SpectrePage {
   }
 
   componentComplete() { // redirect called from p5
-  clearInterval(this.interval);
+    clearInterval(this.interval);
     let user = UserSession.get(this.context);
 
     if (typeof user._id !== 'undefined') { // TMP: remove
@@ -361,7 +361,6 @@ class Game extends SpectrePage {
     );
   }
 }
-
 Game.propTypes = {
   classes: PropTypes.object.isRequired,
 };

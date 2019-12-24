@@ -41,8 +41,9 @@ function exitFull() {
 //goFull();
 
 document.addEventListener('keypress', (event) => {
-  if (event.keyCode === 99) {
-    if (window.innerWidth === window.screen.width && window.innerHeight === window.screen.height) {
+  if (event.keyCode === 99) { // what key is this?
+    if (window.innerWidth === window.screen.width
+      && window.innerHeight === window.screen.height) {
       exitFull();
     } else {
       goFull();
