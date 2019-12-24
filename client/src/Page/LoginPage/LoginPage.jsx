@@ -66,6 +66,7 @@ class LoginPage extends SpectrePage {
 
   constructor(props) {
     super(props, '/pledge');
+
     this.state = {
       emailErrorCount: 0,
       nameErrorCount: 0,
@@ -75,38 +76,37 @@ class LoginPage extends SpectrePage {
       videoStarted: false
     };
 
+    this.video = React.createRef();
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.termsOfService = this.termsOfService.bind(this);
-    //modal
+
     this.skipVideo = this.skipVideo.bind(this);
     this.modalContent = '';
     this.modalTitle = '';
-
   }
 
-
-  componentDidMount() {
-    UserSession.init(() => { }, (e) => {
-      console.error('[DB]', e);
-      UserSession.nodb = true;
-      UserSession.defaultUsers((users) => {
-        this.context.similars = users;
-        console.log('No DB: loaded default users', this.context.similars);
-      });
-    });
-  }
+  //componentDidMount() {
+  // UserSession.init(() => { }, (e) => {
+  //   console.error('[DB]', e);
+  //   UserSession.nodb = true;
+  //   UserSession.defaultUsers((users) => {
+  //     this.context.similars = users;
+  //     console.log('No DB: loaded default users', this.context.similars);
+  //   });
+  // });
+  //}
 
   handleSubmit(e, { name, email, gender, clearEmail }) {
 
     e && e.preventDefault();
 
-    const user = UserSession.get(this.context);
+    const user = this.context;
     user.lastPageVisit = { page: 'login', time: Date.now() };
 
     const { emailErrorCount, nameErrorCount } = this.state;
-    const emailIsValid = LoginPage.validEmail(email);
-    const nameIsValid = name.length;
+    const emailIsValid = this.validEmail(email);
+    const nameIsValid = (name.length > 0);
 
     // see #343
     //const genderIsValid = typeof user.gender !== 'undefined';
@@ -121,6 +121,7 @@ class LoginPage extends SpectrePage {
       const handleSuccess = () => {
         console.log('[' + user.lastPageVisit.page.uc() + '] '
           + user.name + ' / ' + user.login + ' / ' + user.gender);
+        console.log("PUBLIC_URL:"+process.env.PUBLIC_URL);
         this.showVideo();
       };
 
@@ -128,15 +129,13 @@ class LoginPage extends SpectrePage {
         if (e.error === 'EmailInUse') {
           this.modalTitle = 'Invalid email';
           this.modalContent = 'Email has already been used';
-          this.setState({ modalOpen: true });
+          //console.error('about to set-state');
+          //this.setState({ modalOpen: true });
         } else {
           console.error('UserSession.create: ', e);
           this.showVideo();
         }
       };
-      console.log(user);
-
-      this.showVideo();
 
       UserSession.create(user, handleSuccess, handleError);
 
@@ -167,12 +166,17 @@ class LoginPage extends SpectrePage {
   }
 
   showVideo() {
-    this.setState({ videoStarted: true });
-    this.video.play();
-    this.setState({ idleCheckerIsDone: true });
+    if (this.video) {
+      this.setState({ videoStarted: true });
+      this.video && this.video.play();
+      this.setState({ idleCheckerIsDone: true });
+    }
+    else {
+      console.error("Unable to load video component");
+    }
   }
 
-  termsOfService(){
+  termsOfService() {
     this.modalTitle = 'Terms of Service';
     this.modalContent = 'Brungard told the court he -was drunk when the incident took placeBrungard told the court he -was drunk when the incident took placeBrungard told the court he -was drunk when the incident took placeBrungard told the court he -was drunk when the incident took placeBrungard told the court he -was drunk when the incident took placeBrungard told the court he -was drunk when the incident took place';
     this.setState({ modalOpen: true });
@@ -188,7 +192,7 @@ class LoginPage extends SpectrePage {
     return (
       <div className={classes.root + ' LoginPage'}>
         <SpectreHeader />
-        <IdleChecker forceTerminate={this.state.idleCheckerIsDone}/>
+        <IdleChecker forceTerminate={this.state.idleCheckerIsDone} />
         <div className={classes.content + ' LoginPage-content content'}>
           <Typography style={{ marginBottom: 70 }} component="h2" variant="h2">Let's Play!</Typography>
           <Modal
@@ -198,26 +202,22 @@ class LoginPage extends SpectrePage {
             onClose={() => this.closeModal()}
           />
           <Video
-            ref={(el) => { this.video = el; }}
-            movie="/video/SpectreIntro.mp4"
+            ref={ ele => { this.video = ele }}
+            movie={process.env.PUBLIC_URL+"/video/SpectreIntro.mp4"}
             autoPlay={false}
             onComplete={this.next}
             onKeyUp={this.skipVideo}
           />
           <SocialLogin handleSubmit={this.handleSubmit} />
         </div>
-          <div onClick={this.termsOfService}><Link className='tos' to='#here'>Terms of Service</Link></div>
+        <div onClick={this.termsOfService}><Link className='tos' to='#here'>Terms of Service</Link></div>
       </div>
     );
   }
 
-  static validEmail(email) {
+  validEmail(email) {
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return email.length > 0 && re.test(email.toLowerCase());
-  }
-
-  static validName(name) {
-    return name.length > 0;
   }
 }
 

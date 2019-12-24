@@ -45,8 +45,6 @@ class SearchingFor extends SpectrePage {
     this.setRef = this.setRef.bind(this);
   }
 
-
-
   setRef(webcam) {
     this.webcam = webcam;
   }
@@ -55,7 +53,7 @@ class SearchingFor extends SpectrePage {
     const arr = data.split(',');
     if (!data || data.length <= 6) {
       data && console.error(data);
-      throw Error('Bad image data: '+data);
+      throw Error('Bad image data: ' + data);
     }
     const mime = arr[0].match(/:(.*?);/)[1];
     const bstr = atob(arr[1]);
@@ -66,7 +64,6 @@ class SearchingFor extends SpectrePage {
     }
     return new File([u8arr], fname, { type: mime });
   }
-
 
   handleClick(virtue) {
     const user = this.context;
@@ -79,7 +76,7 @@ class SearchingFor extends SpectrePage {
     // user.login = user.login || `Barney${+new Date()}@aol.com`;
 
     // here we are doing the webcam capture, disabled for now
-    if (1) {
+    if (false) {
 
       // TODO: next work
       const data = this.webcam.getScreenshot();
@@ -105,8 +102,6 @@ class SearchingFor extends SpectrePage {
     this.next();
   }
 
-
-
   render() {
     const { classes } = this.props;
     const videoConstraints = {
@@ -124,13 +119,14 @@ class SearchingFor extends SpectrePage {
 
           <div className="ImageCapture">
             {<Webcam ref={this.setRef}
-                  audio={false}
-                  screenshotQuality={1}
-                  screenshotFormat="image/jpeg"
-                  width={styles.profileImage.width}
-                  height={styles.profileImage.height}
-                  style={{left: '-5000px', position: 'relative'}}
-                  videoConstraints={videoConstraints} />}
+              audio={false}
+              screenshotQuality={1}
+              screenshotFormat="image/jpeg"
+              width={styles.profileImage.width}
+              height={styles.profileImage.height}
+              style={{ left: '-5000px', position: 'relative' }}
+              videoConstraints={videoConstraints}
+            />}
           </div>
 
           <div className="buttonWrapper">

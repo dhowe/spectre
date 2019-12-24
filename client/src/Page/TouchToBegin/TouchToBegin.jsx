@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import Logo from '../../Components/Logo/Logo';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import BeginBackground from '../../Images/1_Standby_Screen_1080px_by_1620px.jpg';
+import UserSession from '../../Components/UserSession/UserSession';
 
 import './TouchToBegin.scss';
 import SpectrePage from '../SpectrePage';
@@ -27,7 +28,9 @@ class TouchToBegin extends SpectrePage {
   constructor(props) {
     super(props, '/login');
   }
-
+  componentDidMount() {
+    console.log('componentDidMount', this.context);
+  }
   render() {
     const { classes } = this.props;
     return (
@@ -51,5 +54,7 @@ class TouchToBegin extends SpectrePage {
 TouchToBegin.propTypes = {
   classes: PropTypes.object.isRequired,
 };
+TouchToBegin.contextType = UserSession;
+
 
 export default withStyles(styles)(TouchToBegin);

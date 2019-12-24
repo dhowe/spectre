@@ -4,7 +4,7 @@ import DotEnv from 'dotenv';
 import FormData from 'form-data';
 
 // We store the current User in React context for easy access
-let UserSession = React.createContext(new User());
+let UserSession = React.createContext({});
 
 UserSession.defaultUsers = function(onSuccess, onError) {
   fetch('/default-users.json').then(res => res.json())
@@ -68,15 +68,15 @@ UserSession.get = function(ctx) {
   if (!ctx) {
     // && (idOptional || typeof ctx._id !== 'undefined')) return ctx;
     let json = sessionStorage.getItem(UserSession.storageKey);
-    console.log('[WARN] Retrieving User from localstorage', json);
+    console.warn('[WARN] Retrieving User from localstorage', json);
     ctx = JSON.parse(json);
   }
   return ctx;
 }
 
-UserSession.sync = function(ctx) {
-  ctx && sessionStorage.setItem(UserSession.storageKey, JSON.stringify(ctx));
-}
+// UserSession.sync = function(ctx) {
+//   ctx && sessionStorage.setItem(UserSession.storageKey, JSON.stringify(ctx));
+// }
 
 UserSession.clear = function() {
   sessionStorage.clear();
@@ -107,7 +107,7 @@ UserSession.create = function(user, onSuccess, onError) {
   let { route, auth, cid, mode } = doConfig();
   let internalSuccess = (json) => {
     Object.assign(user, json);
-    UserSession.sync(user);
+    //UserSession.sync(user);
     onSuccess && onSuccess(json);
   }
   if (!onError) onError = (e) => {
@@ -134,8 +134,8 @@ UserSession.create = function(user, onSuccess, onError) {
 
 UserSession.update = function(user, onSuccess, onError) {
 
-  UserSession.sync(user);
-  user = UserSession.get(user);
+//  UserSession.sync(user);
+//  user = UserSession.get(user);
 
   let { route, auth, cid, mode } = doConfig();
   if (!onSuccess) onSuccess = json => Object.assign(user, json);

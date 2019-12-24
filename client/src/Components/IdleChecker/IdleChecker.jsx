@@ -26,8 +26,10 @@ class IdleChecker extends React.Component {
   }
 
   componentDidMount() {
-    this.interval = setInterval(this.handleIdle, 1000);
-    document.addEventListener('click', this.detectClick);
+    if (process.env.NODE_ENV === 'production') { // DONT REMOVE
+      this.interval = setInterval(this.handleIdle, 1000);
+      document.addEventListener('click', this.detectClick);
+    }
   }
 
   componentWillUnmount() {
