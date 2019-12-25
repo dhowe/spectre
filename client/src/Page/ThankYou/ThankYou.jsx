@@ -36,7 +36,6 @@ class ThankYou extends SpectrePage {
 
   render() {
     const { classes } = this.props;
-    console.log("User:", this.context);
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" />

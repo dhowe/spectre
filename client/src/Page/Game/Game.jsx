@@ -328,19 +328,19 @@ class Game extends SpectrePage {
   componentComplete() { // redirect called from p5
 
     clearInterval(this.interval);
-    let user = UserSession.get(this.context);
+    let user = this.context;
 
     if (typeof user._id !== 'undefined') { // TMP: remove
       UserSession.update(user,
-        (json) => {
-          Object.assign(user, json);
+        () => {
           this.next();
         }, (err) => {
-          console.error(err);
+          console.error('[Game]', err);
           this.next();
         });
 
     } else { // TMP: remove
+
       console.warn('WARN: not updating Db with User info!');
       this.next();
     }

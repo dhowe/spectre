@@ -6,20 +6,6 @@ import FormData from 'form-data';
 // We store the current User in React context for easy access
 let UserSession = React.createContext({});
 
-UserSession.defaultUsers = function(onSuccess, onError) {
-  fetch('/default-users.json').then(res => res.json())
-    .then(data => {
-      if (!onSuccess) throw Error('Callback required');
-      onSuccess(data);
-    }).catch(e => {
-      console.error('UserSession.defaultUsers failed', e);
-      if (onError) onError(e);
-    });
-}
-
-UserSession.storageKey = 'spectre-user';
-UserSession.profileDir = User.profileDir
-UserSession.imageDir = User.imageDir
 UserSession.defaults = [
   { "_id": "111111111111111111111111", "name": "Remy", "traits": { "openness": 0.5818180970605207, "conscientiousness": 0.07645862267650672, "extraversion": 0.2607193320319028, "agreeableness": 0.012588228025398163, "neuroticism": 0.16712815071948772 } },
   { "_id": "222222222222222222222222", "name": "Bailey", "traits": { "openness": 0.10280703242247147, "conscientiousness": 0.6791763609042916, "extraversion": 0.6985730973994828, "agreeableness": 0.47335712795485274, "neuroticism": 0.32620076142720156 } },
@@ -32,37 +18,20 @@ UserSession.defaults = [
   { "_id": "999999999999999999999999", "name": "Terry", "traits": { "openness": 0.30426635874427355, "conscientiousness": 0.5341590821850326, "extraversion": 0.509056193557774, "agreeableness": 0.8109949037515642, "neuroticism": 0.4252958718086144 } }
 ];
 
-let doConfig = () => {
+// load full default set
+fetch('/default-users.json').then(res => res.json())
+  .then(data => {
+    UserSession.defaults = data;
+    console.log('[USER] New session created')
+  }).catch(e => {
+    console.error('UserSession.defaultUsers:', e);
+  });
 
-  // get auth from .env or heroku configs
-  DotEnv.config();
+UserSession.storageKey = 'spectre-user';
+UserSession.profileDir = User.profileDir
+UserSession.imageDir = User.imageDir
 
-  const env = process.env;
-  const route = '/api/users/';
-  const mode = env.NODE_ENV !== 'production' ? 'DEV' : 'PROD';
-
-  const cid = env.REACT_APP_CLIENT_ID || -1;
-  const host = env.REACT_APP_API_HOST || 'http://localhost:8083';
-  const auth = env.REACT_APP_API_USER + ':' + env.REACT_APP_API_SECRET;
-
-  if (!auth || !auth.length) console.error("Auth required!");
-
-  return { auth: auth, route: host + route, clientId: cid, mode: mode };
-}
-
-let handleResponse = (res) => {
-  return res.json()
-    .then((json) => {
-      if (!res.ok) {
-        const error = Object.assign({}, json, {
-          status: res.status,
-          statusText: res.statusText,
-        });
-        return Promise.reject(error);
-      }
-      return json;
-    });
-}
+//////////////////////// functions //////////////////////
 
 UserSession.get = function(ctx) {
   if (!ctx) {
@@ -101,6 +70,29 @@ UserSession.init = function(onSuccess, onError) {
     .catch(onError.bind(this));
 }
 */
+
+UserSession.validate = function(user, props) {
+  console.log('UserSession.validate', user.loginType);
+  if (typeof user === 'undefined') throw Error('Null User');
+  let missing = Array.isArray(props) ? props.filter(p => {
+    if (typeof user[p] === 'undefined') throw Error
+      ('Non-existing property: ' + p + ' user.' + p + '=' +
+      (typeof user[p]) + '\nProperties: ' + Object.keys(user));
+    return (typeof user[p] === 'undefined' ||
+      (Array.isArray(user[p]) && !user[p].length));
+  }) : [];
+
+  if (missing.length) {
+    console.warn('[' + user.lastPage().uc() + '] User invalid: ', user);
+    for (var i = 0; i < missing.length; i++) {
+      let prop = missing[i];
+      console.warn('  Missing property: ' + prop);
+      user[prop] = UserSession.defaults[0][prop];
+    }
+  }
+  return user;
+}
+
 // Create a new database record: /login only
 UserSession.create = function(user, onSuccess, onError) {
 
@@ -111,7 +103,7 @@ UserSession.create = function(user, onSuccess, onError) {
     onSuccess && onSuccess(json);
   }
   if (!onError) onError = (e) => {
-    console.error('UserSession.create: '+e);
+    console.error('UserSession.create: ' + e);
     throw e;
   }
 
@@ -134,8 +126,8 @@ UserSession.create = function(user, onSuccess, onError) {
 
 UserSession.update = function(user, onSuccess, onError) {
 
-//  UserSession.sync(user);
-//  user = UserSession.get(user);
+  //  UserSession.sync(user);
+  //  user = UserSession.get(user);
 
   let { route, auth, cid, mode } = doConfig();
   let internalSuccess = (json) => {
@@ -159,9 +151,9 @@ UserSession.update = function(user, onSuccess, onError) {
     },
     body: JSON.stringify(user)
   })
-  .then(handleResponse)
-  .then(internalSuccess)
-  .catch(onError);
+    .then(handleResponse)
+    .then(internalSuccess)
+    .catch(onError);
 }
 
 UserSession.postImage = function(user, image, onSuccess, onError) {
@@ -183,9 +175,51 @@ UserSession.postImage = function(user, image, onSuccess, onError) {
     headers: { "Authorization": 'Basic ' + btoa(auth) },
     body: fdata
   })
-  .then(handleResponse)
-  .then(onSuccess)
-  .catch(onError);
+    .then(handleResponse)
+    .then(onSuccess)
+    .catch(onError);
 }
+
+
+function doConfig() {
+
+  // get auth from .env or heroku configs
+  DotEnv.config();
+
+  const env = process.env;
+  const route = '/api/users/';
+  const mode = env.NODE_ENV !== 'production' ? 'DEV' : 'PROD';
+
+  const cid = env.REACT_APP_CLIENT_ID || -1;
+  const host = env.REACT_APP_API_HOST || 'http://localhost:8083';
+  const auth = env.REACT_APP_API_USER + ':' + env.REACT_APP_API_SECRET;
+
+  if (!auth || !auth.length) console.error("Auth required!");
+
+  return { auth: auth, route: host + route, clientId: cid, mode: mode };
+}
+
+function handleResponse(res) {
+  return res.json()
+    .then((json) => {
+      if (!res.ok) {
+        const error = Object.assign({}, json, {
+          status: res.status,
+          statusText: res.statusText,
+        });
+        return Promise.reject(error);
+      }
+      return json;
+    });
+}
+
+/*function methodNames(obj) {
+  let methods = new Set();
+  while (obj = Reflect.getPrototypeOf(obj)) {
+    let keys = Reflect.ownKeys(obj)
+    keys.forEach((k) => methods.add(k));
+  }
+  return methods;
+}*/
 
 export default UserSession;

@@ -65,15 +65,15 @@ class SearchingFor extends SpectrePage {
     return new File([u8arr], fname, { type: mime });
   }
 
-  handleClick(virtue) {
-    const user = this.context;
-    user.virtue = virtue;
+  componentDidMount() {
+    this.user = UserSession.validate(this.context,
+      ['loginType', 'login', 'gender', 'name']);
+  }
 
-    // ///////////////////// TMP: ///////////////////////
-    // user._id = user._id || Math.random() * 100000000;
-    // user.name = user.name || 'Barney';
-    // user.loginType = user.loginType || 'email';
-    // user.login = user.login || `Barney${+new Date()}@aol.com`;
+  handleClick(virtue) {
+
+    if (!this.user) throw Error('No user');
+    this.user.virtue = virtue;
 
     // here we are doing the webcam capture, disabled for now
     if (false) {
@@ -81,7 +81,7 @@ class SearchingFor extends SpectrePage {
       // TODO: next work
       const data = this.webcam.getScreenshot();
       if (data && data.length) {
-        const imgfile = this.toImageFile(data, user._id + '.jpg');
+        const imgfile = this.toImageFile(data, this.user._id + '.jpg');
         UserSession.postImage(this.context, imgfile,
           (json) => {
             console.log(`Upload: http://localhost:3000${json.url}`);

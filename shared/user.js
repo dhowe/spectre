@@ -209,11 +209,8 @@ export default class User {
   }
 
   setBrands(brandData) {
-    let traitObjs = predict(brandData);
     let traits = {};
-    traitObjs.forEach(tobj => {
-      traits[tobj.trait] = tobj.score;
-    });
+    predict(brandData).forEach(t => traits[t.trait] = t.score);
     return this.setTraits(traits);
   }
 
@@ -226,8 +223,7 @@ export default class User {
       return false;
     }
     let result = true;
-    let ots = User.oceanTraits;
-    User.oceanTraits.forEach((tname, i) => {
+    User.oceanTraits.forEach(tname => {
       if (typeof obj.traits[tname] === 'undefined') {
         //if (obj.traits.hasOwnProperty(tname)) {
         result = false;

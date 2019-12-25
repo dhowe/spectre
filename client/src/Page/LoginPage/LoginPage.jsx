@@ -69,7 +69,6 @@ class LoginPage extends SpectrePage {
 
     this.state = {
       emailErrorCount: 0,
-      nameErrorCount: 0,
       modalOpen: false,
       clearEmail: true,
       idleCheckerIsDone: false,
@@ -77,94 +76,66 @@ class LoginPage extends SpectrePage {
     };
 
     this.video = React.createRef();
-
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.termsOfService = this.termsOfService.bind(this);
-
-    this.skipVideo = this.skipVideo.bind(this);
     this.modalContent = '';
     this.modalTitle = '';
   }
 
-  //componentDidMount() {
-  // UserSession.init(() => { }, (e) => {
-  //   console.error('[DB]', e);
-  //   UserSession.nodb = true;
-  //   UserSession.defaultUsers((users) => {
-  //     this.context.similars = users;
-  //     console.log('No DB: loaded default users', this.context.similars);
-  //   });
-  // });
-  //}
-
-  handleSubmit(e, { name, email, gender, clearEmail }) {
+  handleSubmit = (e, { name, email, gender, clearEmail }) => {
 
     e && e.preventDefault();
 
-    const user = this.context;
+    const user = UserSession.validate(this.context);
     user.lastPageVisit = { page: 'login', time: Date.now() };
 
-    const { emailErrorCount, nameErrorCount } = this.state;
-    const emailIsValid = this.validEmail(email);
-    const nameIsValid = (name.length > 0);
+    if (!name.length || !gender.length) {
+      // see #343: email should be the only possible error case
+    }
 
-    // see #343
-    //const genderIsValid = typeof user.gender !== 'undefined';
-
-    if (nameIsValid && emailIsValid) {
-
-      user.loginType = 'email'; // TMP:
-      user.login = email;
-      user.name = name.ucf();
-      user.gender = gender;
-
-      const handleSuccess = () => {
-        console.log('[' + user.lastPageVisit.page.uc() + '] '
-          + user.name + ' / ' + user.login + ' / ' + user.gender);
-        this.showVideo();
-      };
-
-      const handleError = (e) => {
-        if (e.error === 'EmailInUse') {
-          this.modalTitle = 'Invalid email';
-          this.modalContent = 'Email has already been used';
-          //console.error('about to set-state');
-          //this.setState({ modalOpen: true });
-        } else {
-          console.error('UserSession.create: ', e);
-          this.showVideo();
-        }
-      };
-
-      UserSession.create(user, handleSuccess, handleError);
-
-    } else if (!nameIsValid && nameErrorCount < 3) {
-
-      this.modalTitle = 'Oops...';
-      this.modalContent = 'You need to enter a name, please try again';
-      this.setState({ modalOpen: true, nameErrorCount: nameErrorCount + 1 });
-
-    } else if (!emailIsValid && emailErrorCount < 3) {
-
-      this.modalTitle = 'Oops...';
-      this.modalContent = 'That doesn\'t look like a valid email address, please try again';
-      this.setState({ modalOpen: true, emailErrorCount: emailErrorCount + 1 });
-      clearEmail();
-
-    } else {
-
-      // TODO: TMP: should reject without successful User creation
-      this.context.login = email;
-      this.context.name = name; // user-prop
-      this.showVideo();
+    if (!this.validEmail(email)) {
+      if (this.state.emailErrorCount < 3) {
+        this.modalTitle = 'Oops...';
+        this.modalContent = 'That doesn\'t look like a valid email address, please try again';
+        this.setState({ modalOpen: true, emailErrorCount: this.state.emailErrorCount + 1 });
+        clearEmail();
+      }
+      else {
+        // TODO: else return to login page
+        this.props.history.push('/login');
+      }
+    }
+    else {
+      this.setState({ modalOpen: false });
+      this.saveUser(user);
     }
   }
 
-  closeModal() {
+  saveUser = (user) => {
+
+    const handleSuccess = () => {
+      console.log('[' + user.lastPageVisit.page.uc() + '] '
+        + user.name + ' / ' + user.login + ' / ' + user.gender);
+      this.showVideo();
+    };
+
+    const handleError = (e) => {
+      if (e.error === 'EmailInUse') {
+        this.modalTitle = 'Invalid email';
+        this.modalContent = 'Email has already been used';
+        //this.setState({ modalOpen: true });
+      } else {
+        console.error('UserSession.create: ', e);
+        this.showVideo();
+      }
+    };
+
+    UserSession.create(user, handleSuccess, handleError);
+  }
+
+  closeModal = () => {
     this.setState({ modalOpen: false });
   }
 
-  showVideo() {
+  showVideo = () => {
     if (this.video) {
       this.setState({ videoStarted: true });
       this.video && this.video.play();
@@ -175,13 +146,13 @@ class LoginPage extends SpectrePage {
     }
   }
 
-  termsOfService() {
+  termsOfService = () => {
     this.modalTitle = 'Terms of Service';
-    this.modalContent = 'Brungard told the court he -was drunk when the incident took placeBrungard told the court he -was drunk when the incident took placeBrungard told the court he -was drunk when the incident took placeBrungard told the court he -was drunk when the incident took placeBrungard told the court he -was drunk when the incident took placeBrungard told the court he -was drunk when the incident took place';
+    this.modalContent = 'Brungard told the court he was drunk when the incident took place. Brungard told the court he was drunk when the incident took place. Brungard told the court he was drunk when the incident took place. Brungard told the court he was drunk when the incident took place. Brungard told the court he was drunk when the incident took place. Brungard told the court he was drunk when the incident took place';
     this.setState({ modalOpen: true });
   }
 
-  skipVideo() { // dev-only
+  skipVideo = () => { // dev-only
     this.state.videoStarted && this.next();
   }
 
@@ -201,7 +172,7 @@ class LoginPage extends SpectrePage {
             onClose={() => this.closeModal()}
           />
           <Video
-            ref={ ele => { this.video = ele }}
+            ref={ele => { this.video = ele }}
             movie={"/video/SpectreIntro.mp4"}
             autoPlay={false}
             onComplete={this.next}
