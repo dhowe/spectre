@@ -21,6 +21,11 @@ export default class User {
     this.category = (tmpl && tmpl.category) || 0;
   }
 
+  lastPage() {
+    return typeof this.lastPageVisit === 'object'
+      ? this.lastPageVisit.page : 'unknown';
+  }
+
   generateSummary(numSentences) {
 
     return this.generateSentences(User.secondPersonTemplate, numSentences);

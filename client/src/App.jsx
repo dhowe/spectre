@@ -1,5 +1,5 @@
 import React from 'react';
-import Routes from './Components/Routes/Routes';
+import Routes from './Routes.jsx';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import UserSession from './Components/UserSession/UserSession';
 import User from './Components/User/User';

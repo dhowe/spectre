@@ -83,7 +83,7 @@ UserSession.clear = function() {
 }
 
 //////////////////////////////////////////////////////////////////////
-
+/*
 UserSession.init = function(onSuccess, onError) {
 
   let { route, auth, mode } = doConfig();
@@ -100,7 +100,7 @@ UserSession.init = function(onSuccess, onError) {
     .then(onSuccess.bind(this))
     .catch(onError.bind(this));
 }
-
+*/
 // Create a new database record: /login only
 UserSession.create = function(user, onSuccess, onError) {
 
@@ -127,9 +127,9 @@ UserSession.create = function(user, onSuccess, onError) {
     },
     body: JSON.stringify(user)
   })
-    .then(handleResponse.bind(this))
-    .then(internalSuccess.bind(this))
-    .catch(onError.bind(this));
+    .then(handleResponse)
+    .then(internalSuccess)
+    .catch(onError);
 }
 
 UserSession.update = function(user, onSuccess, onError) {
@@ -138,7 +138,11 @@ UserSession.update = function(user, onSuccess, onError) {
 //  user = UserSession.get(user);
 
   let { route, auth, cid, mode } = doConfig();
-  if (!onSuccess) onSuccess = json => Object.assign(user, json);
+  let internalSuccess = (json) => {
+    Object.assign(user, json);
+    //UserSession.sync(user);
+    onSuccess && onSuccess(json);
+  }
   if (!onError) onError = e => console.error(e);
 
   if (typeof user._id === 'undefined') throw Error('user._id required');
@@ -155,9 +159,9 @@ UserSession.update = function(user, onSuccess, onError) {
     },
     body: JSON.stringify(user)
   })
-    .then(handleResponse.bind(this))
-    .then(onSuccess.bind(this))
-    .catch(onError.bind(this));
+  .then(handleResponse)
+  .then(internalSuccess)
+  .catch(onError);
 }
 
 UserSession.postImage = function(user, image, onSuccess, onError) {
@@ -179,9 +183,9 @@ UserSession.postImage = function(user, image, onSuccess, onError) {
     headers: { "Authorization": 'Basic ' + btoa(auth) },
     body: fdata
   })
-    .then(handleResponse.bind(this))
-    .then(onSuccess.bind(this))
-    .catch(onError.bind(this));
+  .then(handleResponse)
+  .then(onSuccess)
+  .catch(onError);
 }
 
 export default UserSession;

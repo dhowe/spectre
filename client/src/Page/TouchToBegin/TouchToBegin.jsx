@@ -28,9 +28,7 @@ class TouchToBegin extends SpectrePage {
   constructor(props) {
     super(props, '/login');
   }
-  componentDidMount() {
-    console.log('componentDidMount', this.context);
-  }
+
   render() {
     const { classes } = this.props;
     return (

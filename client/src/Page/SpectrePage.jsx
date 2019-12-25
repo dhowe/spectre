@@ -13,7 +13,6 @@ class SpectrePage extends React.Component {
     this.next = this.next.bind(this);
     this.navigate = this.navigate.bind(this);
     this.previous = this.previous.bind(this);
-
   }
 
   componentDidMount() {
@@ -44,8 +43,9 @@ class SpectrePage extends React.Component {
   next() {
     // track the last page visited and time
     if (typeof this.context.lastPageVisit !== 'undefined') {
-      this.context.lastPageVisit = { page: this.navigateTo, time: Date.now() }
-      //console.log('[Page]', this.context.lastPageVisit);
+      let pageName = this.navigateTo.replace(/^\//,'');
+      this.context.lastPageVisit = { page: pageName, time: Date.now() }
+      //console.log('[Page]', pageName);
     }
     this.props.history.push(this.navigateTo);
   }

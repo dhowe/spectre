@@ -28,9 +28,8 @@ class DataIs extends SpectrePage {
   componentDidMount() {
     let user = this.context;
     UserSession.update(this.context, json => {
-      Object.assign(user, json);
-      console.log('['+user.lastPageVisit.page.uc() +'] '
-        + user.name + ' / ' + user.login + ' / ' + user.gender + ' / ' +user.virtue);
+      console.log('['+user.lastPage().uc() +'] '
+        + user.name + ' / ' + user.gender + ' / ' +user.virtue);
     });
   }
 

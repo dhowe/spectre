@@ -121,7 +121,6 @@ class LoginPage extends SpectrePage {
       const handleSuccess = () => {
         console.log('[' + user.lastPageVisit.page.uc() + '] '
           + user.name + ' / ' + user.login + ' / ' + user.gender);
-        console.log("PUBLIC_URL:"+process.env.PUBLIC_URL);
         this.showVideo();
       };
 
@@ -203,7 +202,7 @@ class LoginPage extends SpectrePage {
           />
           <Video
             ref={ ele => { this.video = ele }}
-            movie={process.env.PUBLIC_URL+"/video/SpectreIntro.mp4"}
+            movie={"/video/SpectreIntro.mp4"}
             autoPlay={false}
             onComplete={this.next}
             onKeyUp={this.skipVideo}

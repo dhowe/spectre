@@ -306,27 +306,27 @@ class Game extends SpectrePage {
   constructor(props) {
     super(props, "/thank-you");
     game = this; // handle for p5js
-
-
   }
 
   componentDidMount() {
 
-    user = UserSession.get(this.context);
+    user = this.context;
 
     ///////////////////// TMP: ///////////////////////
     if (typeof user._id === 'undefined') {
       user.name = user.name || 'Barniel';
       user.loginType = user.loginType || 'email';
       user.login = user.login || 'Barniel' + (+new Date()) + '@aol.com';
-      UserSession.sync(user);
+      //UserSession.sync(user);
     }
     //////////////////////////////////////////////////
 
-    console.log('User:', this.context);
+    console.log('['+user.lastPage().uc() +'] '
+      + user.name + ' / ' + user.gender + ' / ' +user.virtue);
   }
 
   componentComplete() { // redirect called from p5
+
     clearInterval(this.interval);
     let user = UserSession.get(this.context);
 
