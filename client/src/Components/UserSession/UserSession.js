@@ -72,12 +72,15 @@ UserSession.init = function(onSuccess, onError) {
 */
 
 UserSession.validate = function(user, props) {
-  console.log('UserSession.validate', user.loginType);
+
+  //console.log('UserSession.validate /'+ user.lastPageVisit.page);
+
   if (typeof user === 'undefined') throw Error('Null User');
+
   let missing = Array.isArray(props) ? props.filter(p => {
     if (typeof user[p] === 'undefined') throw Error
-      ('Non-existing property: ' + p + ' user.' + p + '=' +
-      (typeof user[p]) + '\nProperties: ' + Object.keys(user));
+      ('Required property undefined: ' + p + ', user.' + p + '='
+      + (typeof user[p]) + '\nProperties: ' + Object.keys(user));
     return (typeof user[p] === 'undefined' ||
       (Array.isArray(user[p]) && !user[p].length));
   }) : [];

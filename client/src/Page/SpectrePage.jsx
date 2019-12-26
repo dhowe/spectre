@@ -1,53 +1,45 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const LEFT_ARROW = 37;
-const RIGHT_ARROW = 39;
-
-// Allows quick navigation via left-right arrows for dev
+// Allows navigation via left/right arrows for dev
 class SpectrePage extends React.Component {
 
-  constructor(props, next = '/') {
+  constructor(props, next, onNext, onPrev) {
     super(props);
-    this.navigateTo = next;
-    this.next = this.next.bind(this);
-    this.navigate = this.navigate.bind(this);
-    this.previous = this.previous.bind(this);
-  }
-
-  componentDidMount() {
+    this.enabled = !!(next || onNext || onPrev);
+    this.onForward = (onNext || this.next).bind(this);
+    this.onBackward = (onPrev || this.last).bind(this);
+    this.nextPage = next;
     document.addEventListener('keyup', this.navigate);
   }
 
-  componentWillUnmount() {
-    document.removeEventListener('keyup', this.navigate);
-  }
-
-  navigate(event) {
-    //console.log('touched', event.keyCode);
+  navigate = (event) => {
     switch (event.keyCode) {
-      case LEFT_ARROW:
-        this.previous();
+      case 39: // RIGHT_ARROW
+        this.onForward();
         break;
-      case RIGHT_ARROW:
-        this.next();
+      case 37: // LEFT_ARROW
+        this.onBackward();
         break;
       default:
     }
   }
 
-  previous() {
+  last = () => {
     this.props.history.goBack();
   }
 
-  next() {
+  next = () => {
+
+    //console.log('next', this.props.location.pathname, this.context);
+
     // track the last page visited and time
     if (typeof this.context.lastPageVisit !== 'undefined') {
-      let pageName = this.navigateTo.replace(/^\//,'');
+      let pageName = this.nextPage.replace(/^\//,'');
       this.context.lastPageVisit = { page: pageName, time: Date.now() }
       //console.log('[Page]', pageName);
     }
-    this.props.history.push(this.navigateTo);
+    this.props.history.push(this.nextPage);
   }
 }
 

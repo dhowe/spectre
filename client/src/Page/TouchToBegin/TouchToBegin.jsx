@@ -24,7 +24,7 @@ const styles = {
   },
 };
 
-class TouchToBegin extends SpectrePage {
+class TouchToBegin extends SpectrePage { //React.Component  {//
   constructor(props) {
     super(props, '/login');
   }

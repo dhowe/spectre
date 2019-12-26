@@ -1,5 +1,6 @@
 import React from "react";
 import { Route, BrowserRouter as Router } from 'react-router-dom';
+
 import TouchToBegin from './Page/TouchToBegin/TouchToBegin';
 import LoginPage from './Page/LoginPage/LoginPage';
 import TakeSelfie from './Page/TakeSelfie/TakeSelfie';

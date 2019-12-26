@@ -11,7 +11,7 @@ ReactDOM.render(<App />, document.getElementById('root'));
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();
 
-function goFull() {
+function enterFullscreen() {
   const body = document.getElementsByTagName('body')[0];
   const fullScreen = body.webkitRequestFullscreen
     || body.mozRequestFullScreen
@@ -25,7 +25,7 @@ function goFull() {
   }
 }
 
-function exitFull() {
+function exitFullscreen() {
   const body = document.getElementsByTagName('body')[0];
   const smallScreen = body.exitFullscreen
     || body.mozCancelFullScreen
@@ -38,15 +38,28 @@ function exitFull() {
   }
 }
 
-//goFull();
-
 document.addEventListener('keypress', (event) => {
-  if (event.keyCode === 99) { // what key is this?
-    if (window.innerWidth === window.screen.width
-      && window.innerHeight === window.screen.height) {
-      exitFull();
-    } else {
-      goFull();
-    }
+  switch (event.keyCode) {
+    /*case 39: // RIGHT_ARROW
+      onForward();
+      break;
+    case 37: // LEFT_ARROW
+      onBackward();
+      break;*/
+    case 38: // UP_ARROW
+      enterFullscreen();
+      break;
+    case 40: // DOWN_ARROW
+      exitFullscreen();
+      break;
+    default:
   }
+  // if (event.keyCode === 99) { // what key is this?
+  //   if (window.innerWidth === window.screen.width
+  //     && window.innerHeight === window.screen.height) {
+  //     exitFullscreen();
+  //   } else {
+  //     enterFullscreen();
+  //   }
+  // }
 });

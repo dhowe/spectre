@@ -18,39 +18,37 @@ const styles = {
 class Video extends React.Component {
   constructor(props) {
     super(props);
-    this.errorRender = this.errorRender.bind(this);
-    this.stop = this.stop.bind(this);
     this.state = { shouldShow: props.autoPlay };
     this.videoPlayer = React.createRef();
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     document.addEventListener("keyup", this.props.onKeyUp, false);
   }
 
-  componentWillUnmount() {
+  componentWillUnmount = () => {
     document.removeEventListener("keyup", this.props.onKeyUp, false);
   }
 
-  errorRender(error) {
-    console.error(`Cannot open file ${error.currentTarget.currentSrc}`);
-    console.error(`Playback error: ${error.currentTarget.error}`);
+  errorRender = (e) => {
+    console.error(`Cannot open file ${e.currentTarget.currentSrc}`);
+    console.error(`Playback error: ${e.currentTarget.error}`);
     this.props.onComplete(this);
   }
 
-  stop() {
+  stop = () => {
     this.videoPlayer.current.currentTime = Number.MAX_SAFE_INTEGER;
   }
 
-  play() {
+  play = () => {
     this.setState({ shouldShow: true });
   }
 
-  close() {
+  close = () => {
     this.setState({ shouldShow: false });
   }
 
-  render() {
+  render = () => {
     const { onComplete, movie, className, style } = this.props;
     const { shouldShow } = this.state;
     const overlay = !(className || style);
@@ -86,7 +84,6 @@ Video.defaultProps = {
 };
 
 Video.propTypes = {
-  // classes: PropTypes.object.isRequired,
   movie: PropTypes.node.isRequired,
   onComplete: PropTypes.func,
   onKeyUp: PropTypes.func,

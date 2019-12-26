@@ -16,23 +16,35 @@ const theme = createMuiTheme({
     danger: 'orange',
   },
 });
-//import UserSession from './Components/UserSession/UserSession';
-//</UserSession.Provider>
-//<UserSession.Provider user={{name:"George"}}>
+
 const user = new User();
 class App extends React.Component {
+
+  componentDidMount() {
+    window.addEventListener("keydown", this.handleKeyPress);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("keydown", this.handleKeyPress);
+  }
+
+  handleKeyPress = event => {
+    this.setState({ lastPressedKey: event.key });
+  };
+
+
   render() {
     return (
       <UserSession.Provider value={user}>
-      <MuiThemeProvider theme={theme}>
-        <div className="App">
-          <header className="App-header">
-            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" />
-            <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-            <Routes/>
-          </header>
-        </div>
-      </MuiThemeProvider>
+        <MuiThemeProvider theme={theme}>
+          <div className="App">
+            <header className="App-header">
+              <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" />
+              <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+              <Routes />
+            </header>
+          </div>
+        </MuiThemeProvider>
       </UserSession.Provider>
     );
   }

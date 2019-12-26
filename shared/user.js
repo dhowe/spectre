@@ -19,6 +19,7 @@ export default class User {
     this.clientId = process.env.REACT_APP_CLIENT_ID || -1;
     this.isActive = (tmpl && tmpl.isActive) || false;
     this.category = (tmpl && tmpl.category) || 0;
+    this.loginType = this.loginType || 'email';
   }
 
   lastPage() {
