@@ -52,7 +52,7 @@ class PersonalisedExperience extends React.Component {
           </div>
             <div className="hidden">
               <Countdown
-                onComplete={this.next}
+                onComplete={() => this.props.history.push('/game')}
                 date={Date.now() + 5000}
                 renderer={() => null}
               />

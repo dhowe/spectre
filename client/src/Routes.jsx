@@ -57,25 +57,27 @@ import ImageTest from './Page/ImageTest/ImageTest'; // TMP
 export default function Routes() {
   return (
     <Router>
-      <Route exact path="/" component={TouchToBegin} />
+
+      <Route exact path="/" render={props => <TouchToBegin {...props} nextPage={this.advance} />} />
+
       <Route exact path="/login" component={LoginPage} />
-      <Route exact path="/take-selfie" component={TakeSelfie} />
       <Route exact path="/pledge" component={Pledge} />
       <Route exact path="/searching-for" component={SearchingFor} />
       <Route exact path="/data-is" component={DataIs} />
-      <Route exact path="/believe-in-dataism" component={BelieveInDataism} />
-      <Route exact path="/steps" component={Steps} />
       <Route exact path="/personalised-experience" component={PersonalisedExperience} />
       <Route exact path="/game" component={Game} />
       <Route exact path="/thank-you" component={ThankYou} />
+      <Route exact path="/steps" component={Steps} />
       <Route exact path="/influence-a-follower" component={InfluenceAFollower} />
       <Route exact path="/selected-avatar" component={SelectedAvatar} />
+
       <Route exact path="/insight-gender" render={props => <Insight {...props} progress="one" leftText="Male" middleText="Non-binary" rightText="Female" next="/insight-skin" question={name => `What’s ${name}’s gender?`} />} />
       <Route exact path="/insight-skin" render={props => <Insight {...props} progress="one" leftText="Light" rightText="Dark" next="/insight-financial" question={name => `What is ${name}'s skin colour?`} />} />
       <Route exact path="/insight-financial" render={props => <Insight {...props} progress="one" leftText="Poor" rightText="Rich" next="/insight-thank-you" question={name => `What’s ${name}’s financial status?`} />} />
-      <Route exact path="/insight-thank-you" component={InsightThankYou} />
       <Route exact path="/insight-sexuality" render={props => <Insight {...props} progress="one" leftText="Straight" middleText="Bi" rightText="Gay" next="/insight-political" question={name => `What is ${name}’s likely sexual orientation?`} />} />
       <Route exact path="/insight-political" render={props => <Insight {...props} progress="one" leftText="Left Wing" rightText="Right Wing" next="/insight-complete" question={name => `What is ${name}’s likely political preference?`} />} />
+
+      <Route exact path="/insight-thank-you" component={InsightThankYou} />
       <Route exact path="/insight-complete" component={InsightComplete} />
       <Route exact path="/your-power" component={YourPower} />
       <Route exact path="/pick-your-side" component={PickYourSide} />

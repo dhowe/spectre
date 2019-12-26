@@ -73,7 +73,7 @@ class SearchingFor extends React.Component {
   handleClick(virtue) {
 
     if (!this.user) throw Error('No user');
-    this.user.virtue = virtue;
+    this.user.virtue = virtue || 'power';
 
     // here we are doing the webcam capture, disabled for now
     if (false) {
@@ -99,7 +99,7 @@ class SearchingFor extends React.Component {
       }
     }
 
-    this.next();
+    this.props.history.push('/data-is');
   }
 
   render() {

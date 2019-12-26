@@ -6622,7 +6622,7 @@ jsx-ast-utils@^2.2.1:
     array-includes "^3.0.3"
     object.assign "^4.1.0"
 
-keyboardist@^1.1.0, keyboardist@^1.3.0:
+keyboardist@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/keyboardist/-/keyboardist-1.3.0.tgz#e86598742f3465469fa6969091eff2656416fdb9"
   integrity sha512-GvkpWoIbu8NlTHjA9OWZXe2Lu8o3MuJAloq4ZFJmv7guHOtF/qQdNVbV9IGG7pxMYoPFkl7tWkEk5m+2uoNjyw==
@@ -9140,13 +9140,6 @@ react-is@^16.6.0, react-is@^16.6.3, react-is@^16.7.0, react-is@^16.8.0, react-is
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.12.0.tgz#2cc0fe0fba742d97fd527c42a13bec4eeb06241c"
   integrity sha512-rPCkf/mWBtKc97aLL9/txD8DZdemK0vkA3JMLShjlJB3Pj3s+lpf1KaBzMfQrAmhMQB0n1cU/SUGgKKBCe837Q==
 
-react-keyboardist@^0.1.4:
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/react-keyboardist/-/react-keyboardist-0.1.4.tgz#547457e571a6e2c1b9dd8e1531b1c7a4464150b4"
-  integrity sha512-yojBxe8AClCut9elrdOcrYslfg16ivo8x9MFPtDN4ZYsASw0dxRXd0wtHlUeCO1CPV4m/8EDdx33QCc1x/pjBQ==
-  dependencies:
-    keyboardist "^1.1.0"
-
 react-keyboardist@^0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/react-keyboardist/-/react-keyboardist-0.2.1.tgz#ecf60fefeb5fc16a1446242e9d445b9827a4e04b"
@@ -9187,13 +9180,6 @@ react-router-dom@^5.0.0:
     react-router "5.1.2"
     tiny-invariant "^1.0.2"
     tiny-warning "^1.0.0"
-
-react-router-plus-keyboardist@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/react-router-plus-keyboardist/-/react-router-plus-keyboardist-0.0.1.tgz#839f7246f73b509a52007fa94612766f51f3d6ef"
-  integrity sha512-62gPIOdmqO79/X3uFNpj4Y5XTXese0XmwZe+6I4sTFf5DozUeldQYnuCJTfoaoxG2QHH8jGnQxDcEupzcAXe9g==
-  dependencies:
-    react-keyboardist "^0.1.4"
 
 react-router@5.1.2:
   version "5.1.2"

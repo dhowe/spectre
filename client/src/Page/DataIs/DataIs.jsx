@@ -26,27 +26,6 @@ class DataIs extends React.Component {
     this.countdown = React.createRef();
   }
 
-  // componentDidMount() { // override navigate from SpectrePage
-  //   document.removeEventListener('keyup', this.navigate);
-  //   document.addEventListener('keyup', this.onKeyUp);
-  // }
-  //
-  // componentWillUnmount() {
-  //   document.removeEventListener('keyup', this.onKeyUp);
-  //   document.addEventListener('keyup', this.navigate);
-  //   clearTimeout(this.timeout);
-  // }
-  //
-  //   onKeyUp = (e) => {  // override navigate from SpectrePage
-  // //    e && e.preventDefault();
-  //     console.log('DataIs.navigate', e);
-  //     //this.timeout = setTimeout(this.handleSubmit(0, this.state), 1500);
-  //   }
-
-  navigate = (e) => {
-    console.log('DataIs.navigate', e);
-  }
-
   render() {
     const user = this.context;
     user.virtue = user.virtue || 'power';
@@ -67,7 +46,7 @@ class DataIs extends React.Component {
           </Fade>
           <Countdown
             ref={e => this.countdown = e}
-            onComplete={this.next}
+            onComplete={() => this.props.history.push('/personalised-experience')}
             date={Date.now() + 5000}
             renderer={() => null}
           />

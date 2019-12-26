@@ -81,23 +81,6 @@ class LoginPage extends React.Component {
     this.modalTitle = '';
   }
 
-  componentDidMount() { // override navigate from SpectrePage
-    document.removeEventListener('keyup', this.navigate);
-    document.addEventListener('keyup', this.onKeyUp);
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('keyup', this.onKeyUp);
-    document.addEventListener('keyup', this.navigate);
-    clearTimeout(this.timeout);
-  }
-
-  onKeyUp = (e) => {  // override navigate from SpectrePage
-//    e && e.preventDefault();
-    console.log('Login.navigate', e);
-    this.stubbedSubmit();
-  }
-
   stubbedSubmit = () => { // for dev-only
     let cons = "bcdfghjklmnprstvxz", vows = "aeiou";
     let name = cons[Math.floor(Math.random() * cons.length)]
@@ -171,11 +154,12 @@ class LoginPage extends React.Component {
   showVideo = () => {
     if (this.video) {
       this.setState({ videoStarted: true });
-      this.video && this.video.play();
+      this.video.play();
       this.setState({ idleCheckerIsDone: true });
     }
     else {
       console.error("Unable to load video component");
+      this.props.history.push('/pledge');
     }
   }
 
@@ -185,8 +169,10 @@ class LoginPage extends React.Component {
     this.setState({ modalOpen: true });
   }
 
-  skipVideo = () => { // dev-only
-    this.state.videoStarted && this.next();
+  endVideo = () => { // dev-only
+    if (this.state.videoStarted) {
+      this.props.history.push('/pledge');
+    }
   }
 
   render() {
@@ -208,8 +194,8 @@ class LoginPage extends React.Component {
             ref={ele => { this.video = ele }}
             movie={"/video/SpectreIntro.mp4"}
             autoPlay={false}
-            onComplete={this.next}
-            onKeyUp={this.skipVideo}
+            onComplete={this.endVideo}
+            onKeyUp={this.endVideo}
           />
           <SocialLogin
             ref={ele => { this.social = ele }}

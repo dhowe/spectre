@@ -28,17 +28,15 @@ const styles = {
 class Pledge extends React.Component {
   constructor(props) {
     super(props, '/searching-for');
-    this.state = { timeout: null };
+    this.timeout = null;
   }
 
   componentDidMount() {
-    //if (!this.context.name) this.context.name = 'Barney'; // TMP: remove
-    const timeout = setTimeout(this.next, 7500);
-    this.setState({ timeout });
+    this.timeout = setTimeout(() => this.props.history.push('/searching-for'), 7500);
   }
 
   componentWillUnmount() {
-    clearTimeout(this.state.timeout);
+    clearTimeout(this.timeout);
   }
 
   render() {

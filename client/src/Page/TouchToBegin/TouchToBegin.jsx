@@ -10,7 +10,6 @@ import UserSession from '../../Components/UserSession/UserSession';
 
 import './TouchToBegin.scss';
 
-
 const styles = {
   root: {
     flexGrow: 1,
@@ -24,13 +23,17 @@ const styles = {
   },
 };
 
-class TouchToBegin extends React.Component { //React.Component  {//
+class TouchToBegin extends React.Component {
+
   constructor(props) {
     super(props, '/login');
   }
 
+  // goes to /login
   render() {
+    this.props.setNext('/login', this.props.history);
     const { classes } = this.props;
+    //console.log('TouchToBegin.render.next='+(typeof nextPage));
     return (
       <div className={classes.root + ' touchToBegin'}>
         <SpectreHeader />
@@ -51,6 +54,8 @@ class TouchToBegin extends React.Component { //React.Component  {//
 
 TouchToBegin.propTypes = {
   classes: PropTypes.object.isRequired,
+  setNext: PropTypes.func.isRequired,
+  //next: PropTypes.string.isRequired
 };
 TouchToBegin.contextType = UserSession;
 
