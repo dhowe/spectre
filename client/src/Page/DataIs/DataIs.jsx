@@ -7,7 +7,7 @@ import Countdown from 'react-countdown-now';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
-import SpectrePage from '../SpectrePage';
+
 
 const styles = {
   root: {
@@ -20,7 +20,7 @@ const styles = {
   },
 };
 
-class DataIs extends SpectrePage {
+class DataIs extends React.Component {
   constructor(props) {
     super(props, '/personalised-experience');
     this.countdown = React.createRef();

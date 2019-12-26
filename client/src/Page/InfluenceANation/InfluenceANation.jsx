@@ -13,7 +13,7 @@ import Button from '@material-ui/core/Button';
 //import Fade from '@material-ui/core/Fade';
 import "./InfluenceANation.scss";
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
-import SpectrePage from '../SpectrePage';
+
 
 const height = 53;
 const fontSize = 22;
@@ -36,7 +36,7 @@ const styles = {
   },
 };
 
-class InfluenceANation extends SpectrePage {
+class InfluenceANation extends React.Component {
   constructor(props) {
     super(props, '/consumer-data');
   }

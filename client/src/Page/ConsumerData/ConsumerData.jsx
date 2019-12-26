@@ -11,7 +11,7 @@ import IconButtonToggle from '../../Components/IconButton/IconButtonToggle';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
 import './ConsumerData.scss';
-import SpectrePage from '../SpectrePage';
+
 
 const styles = {
   root: {
@@ -52,7 +52,7 @@ const styles = {
   },
 };
 
-class ConsumerData extends SpectrePage {
+class ConsumerData extends React.Component {
   constructor(props) {
     super(props, '/political-data');
     this.state = { count: 0 };

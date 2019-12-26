@@ -13,7 +13,7 @@ import Video from '../../Components/Video/Video';
 
 import './InfluenceACelebrity.scss';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
-import SpectrePage from '../SpectrePage';
+
 
 const styles = {
   root: {
@@ -26,7 +26,7 @@ const styles = {
   },
 };
 
-class InfluenceACelebrity extends SpectrePage {
+class InfluenceACelebrity extends React.Component {
   constructor(props) {
     super(props, '/OCEAN-reveal');
     this.play = this.play.bind(this);

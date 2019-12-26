@@ -10,7 +10,7 @@ import UserSession from '../../Components/UserSession/UserSession';
 
 import './Game.css';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
-import SpectrePage from '../SpectrePage';
+
 
 const styles = {
   root: {
@@ -302,7 +302,7 @@ Brand.updateAll = () => { Brand.instances.forEach(b => b.update()) };
 
 let user, game;
 
-class Game extends SpectrePage {
+class Game extends React.Component {
   constructor(props) {
     super(props, "/thank-you");
     game = this; // handle for p5js

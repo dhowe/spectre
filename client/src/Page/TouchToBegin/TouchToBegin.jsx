@@ -9,7 +9,7 @@ import BeginBackground from '../../Images/1_Standby_Screen_1080px_by_1620px.jpg'
 import UserSession from '../../Components/UserSession/UserSession';
 
 import './TouchToBegin.scss';
-import SpectrePage from '../SpectrePage';
+
 
 const styles = {
   root: {
@@ -24,7 +24,7 @@ const styles = {
   },
 };
 
-class TouchToBegin extends SpectrePage { //React.Component  {//
+class TouchToBegin extends React.Component { //React.Component  {//
   constructor(props) {
     super(props, '/login');
   }

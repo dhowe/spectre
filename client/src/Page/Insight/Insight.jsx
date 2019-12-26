@@ -10,7 +10,7 @@ import TextSliderText from '../../Components/TextSliderText/TextSliderText';
 import AvatarComponent from '../../Components/AvatarComponent/AvatarComponent';
 import UserSession from '../../Components/UserSession/UserSession';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
-import SpectrePage from '../SpectrePage';
+
 
 const styles = {
   root: {
@@ -20,7 +20,7 @@ const styles = {
   },
 };
 
-class Insight extends SpectrePage {
+class Insight extends React.Component {
   constructor(props) {
     super(props, props.next);
     this.state = { buttonEnabled: false };

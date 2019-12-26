@@ -12,7 +12,7 @@ import { ReactComponent as ThumbUp } from '../../Icons/insightthankyou.svg';
 import colours from '../../colors.scss';
 import './InsightThankYou.scss';
 import Styles from '../../Styles';
-import SpectrePage from '../SpectrePage';
+
 
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
@@ -40,7 +40,7 @@ const styles = {
   },
 };
 
-class InsightThankYou extends SpectrePage {
+class InsightThankYou extends React.Component {
   constructor(props) {
     super(props, '/insight-sexuality');
   }

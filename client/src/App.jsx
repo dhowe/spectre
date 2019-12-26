@@ -3,6 +3,7 @@ import Routes from './Routes.jsx';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import UserSession from './Components/UserSession/UserSession';
 import User from './Components/User/User';
+import Keyboardist from 'react-keyboardist';
 import blue from '@material-ui/core/colors/blue';
 import './App.scss';
 
@@ -18,23 +19,26 @@ const theme = createMuiTheme({
 });
 
 const user = new User();
+
 class App extends React.Component {
 
-  componentDidMount() {
-    window.addEventListener("keydown", this.handleKeyPress);
+  next = () => {
+    console.log('next', this.props, this.context);
   }
 
-  componentWillUnmount() {
-    window.removeEventListener("keydown", this.handleKeyPress);
+  prev = () => {
+    console.log('prev');
   }
-
-  handleKeyPress = event => {
-    this.setState({ lastPressedKey: event.key });
-  };
-
 
   render() {
     return (
+      <React.Fragment>
+       <Keyboardist
+         bindings={{
+           Right: this.next,
+           Left: this.prev,
+         }}
+       />
       <UserSession.Provider value={user}>
         <MuiThemeProvider theme={theme}>
           <div className="App">
@@ -46,7 +50,9 @@ class App extends React.Component {
           </div>
         </MuiThemeProvider>
       </UserSession.Provider>
+      </React.Fragment>
     );
   }
 }
+
 export default App;

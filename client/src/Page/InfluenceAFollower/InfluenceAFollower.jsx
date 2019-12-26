@@ -11,7 +11,7 @@ import User from '../../Components/User/User';
 import './InfluenceAFollower.scss';
 import AvatarCircle from '../../Components/AvatarCircle/AvatarCircle';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
-import SpectrePage from '../SpectrePage';
+
 
 const styles = {
   root: {
@@ -29,7 +29,7 @@ const styles = {
   }
 };
 
-class InfluenceAFollower extends SpectrePage {
+class InfluenceAFollower extends React.Component {
 
   constructor(props) {
     super(props, '/selected-avatar');

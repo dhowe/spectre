@@ -9,7 +9,7 @@ import UserSession from '../../Components/UserSession/UserSession';
 import IconButton from '../../Components/IconButton/IconButton';
 import { ReactComponent as Trophy } from '../../Icons/trophy.svg';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
-import SpectrePage from '../SpectrePage';
+
 
 const styles = {
   root: {
@@ -22,7 +22,7 @@ const styles = {
   },
 };
 
-class Win extends SpectrePage {
+class Win extends React.Component {
   constructor(props) {
     super(props, '/influence-a-celebrity');
   }
