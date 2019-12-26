@@ -13,7 +13,7 @@ import Styles from '../../Styles';
 import colours from '../../colors.scss';
 import './TakeBackControl.scss';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
-import SpectrePage from '../SpectrePage';
+
 
 const width = 180;
 const height = 53;
@@ -49,7 +49,7 @@ const styles = {
   },
 };
 
-class TakeBackControl extends SpectrePage {
+class TakeBackControl extends React.Component {
   constructor(props) {
     super(props, '/goodbye');
   }

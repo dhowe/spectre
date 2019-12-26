@@ -9,7 +9,7 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
-import SpectrePage from '../SpectrePage';
+
 
 const styles = {
   root: {
@@ -22,7 +22,7 @@ const styles = {
   },
 };
 
-class Steps extends SpectrePage {
+class Steps extends React.Component {
   constructor(props) {
     super(props, '/influence-a-follower');
   }

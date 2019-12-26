@@ -10,7 +10,7 @@ import Webcam from "react-webcam";
 import './SearchingFor.scss';
 import Styles from '../../Styles';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
-import SpectrePage from '../SpectrePage';
+
 
 const styles = {
   root: {
@@ -39,7 +39,7 @@ const styles = {
   },
 };
 
-class SearchingFor extends SpectrePage {
+class SearchingFor extends React.Component {
   constructor(props) {
     super(props, 'data-is');
     this.setRef = this.setRef.bind(this);

@@ -12,7 +12,7 @@ import colours from '../../colors.scss';
 
 import './SelectedAvatar.scss';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
-import SpectrePage from '../SpectrePage';
+
 
 const height = 53;
 const fontSize = 22;
@@ -38,7 +38,7 @@ const styles = {
   },
 };
 
-class SelectedAvatar extends SpectrePage {
+class SelectedAvatar extends React.Component {
   constructor(props) {
     super(props, '/insight-gender');
   }

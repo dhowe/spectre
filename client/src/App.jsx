@@ -3,6 +3,7 @@ import Routes from './Routes.jsx';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import UserSession from './Components/UserSession/UserSession';
 import User from './Components/User/User';
+
 import blue from '@material-ui/core/colors/blue';
 import './App.scss';
 
@@ -17,27 +18,37 @@ const theme = createMuiTheme({
   },
 });
 
-const user = new User();
 class App extends React.Component {
 
   componentDidMount() {
-    window.addEventListener("keydown", this.handleKeyPress);
+    console.log('App.componentDidMount');
+    window.addEventListener("keyup", this.handleKeyPress);
   }
 
   componentWillUnmount() {
-    window.removeEventListener("keydown", this.handleKeyPress);
+    console.log('App.componentWillUnmount');
+    window.removeEventListener("keyup", this.handleKeyPress);
   }
 
   handleKeyPress = event => {
-    this.setState({ lastPressedKey: event.key });
+    console.log('App.handleKeyPress', event.key, this.props.history);
+    this.setState({ lastKey: event.key });
+    // switch (event.keyCode) {
+    //   case 39: // RIGHT_ARROW
+    //     console.log('RIGHT');
+    //     break;
+    //   case 37: // LEFT_ARROW
+    //     console.log('LEFT');
+    //     break;
+    //   default:
+    // }
   };
-
 
   render() {
     return (
-      <UserSession.Provider value={user}>
+      <UserSession.Provider value={new User()}>
         <MuiThemeProvider theme={theme}>
-          <div className="App">
+          <div className="App" >
             <header className="App-header">
               <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" />
               <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
@@ -49,4 +60,6 @@ class App extends React.Component {
     );
   }
 }
+
+
 export default App;

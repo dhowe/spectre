@@ -5,7 +5,7 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import Video from '../../Components/Video/Video';
-import SpectrePage from '../SpectrePage';
+
 
 const styles = {
   root: {
@@ -27,7 +27,7 @@ const styles = {
   },
 };
 
-class TargetsFound extends SpectrePage {
+class TargetsFound extends React.Component {
   constructor(props) {
     super(props, '/launch-campaign');
   }

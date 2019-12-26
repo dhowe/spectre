@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
-import SpectrePage from '../SpectrePage';
+
 import UserSession from '../../Components/UserSession/UserSession';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
@@ -19,7 +19,7 @@ const styles = {
   },
 };
 
-class TargetAd extends SpectrePage {
+class TargetAd extends React.Component {
   constructor(props) {
     super(props, '/success-ad');
   }

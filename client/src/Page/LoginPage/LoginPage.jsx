@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 import './LoginPage.scss';
 import Video from '../../Components/Video/Video';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
-import SpectrePage from '../SpectrePage';
+
 
 window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true; // TMP: #138
 
@@ -62,7 +62,7 @@ const styles = {
 };
 
 
-class LoginPage extends SpectrePage {
+class LoginPage extends React.Component {
 
   constructor(props) {
     super(props, '/pledge');

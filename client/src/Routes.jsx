@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, BrowserRouter as Router } from 'react-router-dom';
+import { Route, Router as Router } from 'react-router-dom';
 
 import TouchToBegin from './Page/TouchToBegin/TouchToBegin';
 import LoginPage from './Page/LoginPage/LoginPage';
@@ -50,12 +50,13 @@ import CustomerSurvey from './Page/CustomerSurvey/CustomerSurvey';
 import OutroVideo from './Page/OutroVideo/OutroVideo';
 import Goodbye from './Page/Goodbye/Goodbye';
 import Insight from './Page/Insight/Insight';
+import history from './history';
 
 import ImageTest from './Page/ImageTest/ImageTest'; // TMP
 
 export default function Routes() {
   return (
-    <Router>
+    <Router history={history}>
       <Route exact path="/" component={TouchToBegin} />
       <Route exact path="/login" component={LoginPage} />
       <Route exact path="/take-selfie" component={TakeSelfie} />

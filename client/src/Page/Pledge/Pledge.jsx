@@ -5,7 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
-import SpectrePage from '../SpectrePage';
+
 
 import colours from '../../colors.scss';
 import './Pledge.scss';
@@ -25,7 +25,7 @@ const styles = {
   },
 };
 
-class Pledge extends SpectrePage {
+class Pledge extends React.Component {
   constructor(props) {
     super(props, '/searching-for');
     this.state = { timeout: null };

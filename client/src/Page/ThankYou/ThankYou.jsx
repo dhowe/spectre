@@ -7,7 +7,7 @@ import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
-import SpectrePage from '../SpectrePage';
+
 
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
@@ -29,7 +29,7 @@ const styles = {
 };
 
 // Interstitial
-class ThankYou extends SpectrePage {
+class ThankYou extends React.Component {
   constructor(props) {
     super(props, '/steps');
   }

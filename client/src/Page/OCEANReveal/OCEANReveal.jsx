@@ -9,7 +9,7 @@ import UserSession from '../../Components/UserSession/UserSession';
 import Video from '../../Components/Video/Video';
 import Modal from '../../Components/Modal/Modal';
 import User from '../../Components/User/User';
-import SpectrePage from '../SpectrePage';
+
 
 import colours from '../../colors.scss';
 
@@ -23,7 +23,7 @@ const styles = {
   },
 };
 
-class OCEANReveal extends SpectrePage {
+class OCEANReveal extends React.Component {
   constructor(props) {
     super(props, '/take-back-control');
     this.durationMS = 500;

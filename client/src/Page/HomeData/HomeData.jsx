@@ -11,7 +11,7 @@ import IconButtonToggle from '../../Components/IconButton/IconButtonToggle';
 
 import './HomeData.scss';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
-import SpectrePage from '../SpectrePage';
+
 
 const styles = {
   root: {
@@ -52,7 +52,7 @@ const styles = {
   },
 };
 
-class HomeData extends SpectrePage {
+class HomeData extends React.Component {
   constructor(props) {
     super(props, '/find-citizens');
     this.state = { count: 0 };

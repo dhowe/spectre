@@ -6,7 +6,7 @@ import Fade from '@material-ui/core/Fade';
 import Countdown from 'react-countdown-now';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
-import SpectrePage from '../SpectrePage';
+
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 
 const styles = {
@@ -21,7 +21,7 @@ const styles = {
   },
 };
 
-class YourPower extends SpectrePage {
+class YourPower extends React.Component {
   constructor(props) {
     super(props, '/pick-your-side');
   }
