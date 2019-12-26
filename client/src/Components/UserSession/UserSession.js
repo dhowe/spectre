@@ -33,15 +33,29 @@ UserSession.imageDir = User.imageDir
 
 //////////////////////// functions //////////////////////
 
-UserSession.get = function(ctx) {
-  if (!ctx) {
-    // && (idOptional || typeof ctx._id !== 'undefined')) return ctx;
-    let json = sessionStorage.getItem(UserSession.storageKey);
-    console.warn('[WARN] Retrieving User from localstorage', json);
-    ctx = JSON.parse(json);
+UserSession.log = function(u) {
+  if (u._id) {
+    let s = '[' + u.lastPage().uc() + '] '+ u._id;
+    if (u.name) s += ', ' + u.name;
+    if (u.gender) s += ', ' + u.gender;
+    if (u.virtue) s += ', ' + u.virtue;
+    if (u.similars.length) s += ', ' + u.similars.length + ' similars';
+    console.log(s);
   }
-  return ctx;
+  else {
+    console.log('[USER] *** no id ***');
+  }
 }
+
+// UserSession.get = function(ctx) {
+//   if (!ctx) {
+//     // && (idOptional || typeof ctx._id !== 'undefined')) return ctx;
+//     let json = sessionStorage.getItem(UserSession.storageKey);
+//     console.warn('[WARN] Retrieving User from localstorage', json);
+//     ctx = JSON.parse(json);
+//   }
+//   return ctx;
+// }
 
 // UserSession.sync = function(ctx) {
 //   ctx && sessionStorage.setItem(UserSession.storageKey, JSON.stringify(ctx));

@@ -23,25 +23,39 @@ const styles = {
 class DataIs extends SpectrePage {
   constructor(props) {
     super(props, '/personalised-experience');
+    this.countdown = React.createRef();
   }
 
-  componentDidMount() {
-    let user = this.context;
-    UserSession.update(this.context, json => {
-      console.log('['+user.lastPage().uc() +'] '
-        + user.name + ' / ' + user.gender + ' / ' +user.virtue);
-    });
+  // componentDidMount() { // override navigate from SpectrePage
+  //   document.removeEventListener('keyup', this.navigate);
+  //   document.addEventListener('keyup', this.onKeyUp);
+  // }
+  //
+  // componentWillUnmount() {
+  //   document.removeEventListener('keyup', this.onKeyUp);
+  //   document.addEventListener('keyup', this.navigate);
+  //   clearTimeout(this.timeout);
+  // }
+  //
+  //   onKeyUp = (e) => {  // override navigate from SpectrePage
+  // //    e && e.preventDefault();
+  //     console.log('DataIs.navigate', e);
+  //     //this.timeout = setTimeout(this.handleSubmit(0, this.state), 1500);
+  //   }
+
+  navigate = (e) => {
+    console.log('DataIs.navigate', e);
   }
 
   render() {
-    let user = this.context;
+    const user = this.context;
     user.virtue = user.virtue || 'power';
+    UserSession.log(this.context);
 
-    const { classes } = this.props;
     return (
-      <div className={classes.root}>
+      <div className={this.props.root}>
         <SpectreHeader colour="white" />
-        <div className={`${classes.content} content`}>
+        <div className={`${this.props.content} content`}>
           <Fade in={true} style={{ transitionDelay: '200ms' }}>
             <Typography component="h6" variant="h6">DATA IS {user.virtue.toUpperCase()}</Typography>
           </Fade>
@@ -52,6 +66,7 @@ class DataIs extends SpectrePage {
             <Typography component="h6" variant="h6">We can help you believe in the {user.virtue}&nbsp;of&nbsp;Dataism.</Typography>
           </Fade>
           <Countdown
+            ref={e => this.countdown = e}
             onComplete={this.next}
             date={Date.now() + 5000}
             renderer={() => null}

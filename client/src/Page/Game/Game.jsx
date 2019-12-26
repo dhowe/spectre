@@ -321,8 +321,9 @@ class Game extends SpectrePage {
     }
     //////////////////////////////////////////////////
 
-    console.log('['+user.lastPage().uc() +'] '
-      + user.name + ' / ' + user.gender + ' / ' +user.virtue);
+    UserSession.log(user);
+    // console.log('['+user.lastPage().uc() +'] '
+    //   + user.name + ' / ' + user.gender + ' / ' +user.virtue);
   }
 
   componentComplete() { // redirect called from p5

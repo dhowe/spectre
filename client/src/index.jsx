@@ -39,6 +39,7 @@ function exitFullscreen() {
 }
 
 document.addEventListener('keypress', (event) => {
+  console.log('index.js->keypress');
   switch (event.keyCode) {
     /*case 39: // RIGHT_ARROW
       onForward();

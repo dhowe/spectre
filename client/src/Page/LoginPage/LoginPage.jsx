@@ -65,7 +65,7 @@ const styles = {
 class LoginPage extends SpectrePage {
 
   constructor(props) {
-    super(props, '/pledge', () => this.stubbedSubmit());
+    super(props, '/pledge');
 
     this.state = {
       emailErrorCount: 0,
@@ -79,26 +79,38 @@ class LoginPage extends SpectrePage {
     this.social = React.createRef();
     this.modalContent = '';
     this.modalTitle = '';
-    this.fakedUser = false;
   }
 
-  stubbedSubmit() { // for dev-only
-    if (!this.fakedUser) {
-      this.fakedUser = true;
-      let cons = "bcdfghjklmnprstvxz", vows = "aeiou";
-      let name = cons[Math.floor(Math.random() * cons.length)]
-        + vows[Math.floor(Math.random() * vows.length)]
-        + cons[Math.floor(Math.random() * cons.length)];
-      let data = {
-        name: name.ucf(),
-        email: name + (+new Date()) + '@test.com',
-        gender: ['male', 'female', 'other'][Math.floor(Math.random() * 3)]
-      };
-      console.log('[STUB] ' + data.name + " / " + data.email + " / " + data.gender);
-      this.setState(data); // update form and submit
+  componentDidMount() { // override navigate from SpectrePage
+    document.removeEventListener('keyup', this.navigate);
+    document.addEventListener('keyup', this.onKeyUp);
+  }
 
-      setTimeout(this.handleSubmit(0, this.state), 1500);
-    }
+  componentWillUnmount() {
+    document.removeEventListener('keyup', this.onKeyUp);
+    document.addEventListener('keyup', this.navigate);
+    clearTimeout(this.timeout);
+  }
+
+  onKeyUp = (e) => {  // override navigate from SpectrePage
+//    e && e.preventDefault();
+    console.log('Login.navigate', e);
+    this.stubbedSubmit();
+  }
+
+  stubbedSubmit = () => { // for dev-only
+    let cons = "bcdfghjklmnprstvxz", vows = "aeiou";
+    let name = cons[Math.floor(Math.random() * cons.length)]
+      + vows[Math.floor(Math.random() * vows.length)]
+      + cons[Math.floor(Math.random() * cons.length)];
+    let data = {
+      name: name.ucf(),
+      email: name + (+new Date()) + '@test.com',
+      gender: ['male', 'female', 'other'][Math.floor(Math.random() * 3)]
+    };
+    console.log('[STUB] ' + data.name + " / " + data.email + " / " + data.gender);
+    this.setState(data); // update form and submit
+    this.timeout = setTimeout(() => this.handleSubmit(0, this.state), 1500);
   }
 
   handleSubmit = (e, { name, email, gender, clearEmail }) => {
@@ -108,7 +120,7 @@ class LoginPage extends SpectrePage {
     if (!name.length || !gender.length) throw Error('invalid state')
     // see #343: incorrect email should be the only possible error case
 
-    this.social.setState({name, email, gender});
+    this.social.setState({ name, email, gender });
 
     if (!this.validEmail(email)) {
       if (this.state.emailErrorCount < 3) {
@@ -136,8 +148,7 @@ class LoginPage extends SpectrePage {
 
   saveUser = (user) => {
     const handleSuccess = () => {
-      console.log('[' + user.lastPageVisit.page.uc() + '] '
-        + user.name + ' / ' + user.login + ' / ' + user.gender);
+      UserSession.log(user);
       this.showVideo();
     };
     const handleError = (e) => {

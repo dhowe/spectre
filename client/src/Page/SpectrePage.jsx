@@ -4,22 +4,27 @@ import PropTypes from 'prop-types';
 // Allows navigation via left/right arrows for dev
 class SpectrePage extends React.Component {
 
-  constructor(props, next, onNext, onPrev) {
+  constructor(props, next) {
     super(props);
-    this.enabled = !!(next || onNext || onPrev);
-    this.onForward = (onNext || this.next).bind(this);
-    this.onBackward = (onPrev || this.last).bind(this);
     this.nextPage = next;
+  }
+
+  componentDidMount() {
     document.addEventListener('keyup', this.navigate);
   }
 
-  navigate = (event) => {
-    switch (event.keyCode) {
+  componentWillUnmount() {
+    document.removeEventListener('keyup', this.navigate);
+  }
+
+  navigate = (e) => {
+    console.log('SP.navigate', e);
+    switch (e.keyCode) {
       case 39: // RIGHT_ARROW
-        this.onForward();
+        this.next();
         break;
       case 37: // LEFT_ARROW
-        this.onBackward();
+        this.last();
         break;
       default:
     }
