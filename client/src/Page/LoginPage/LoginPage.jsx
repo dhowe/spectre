@@ -65,7 +65,7 @@ const styles = {
 class LoginPage extends SpectrePage {
 
   constructor(props) {
-    super(props, '/pledge');
+    super(props, '/pledge', () => this.stubbedSubmit());
 
     this.state = {
       emailErrorCount: 0,
@@ -76,20 +76,39 @@ class LoginPage extends SpectrePage {
     };
 
     this.video = React.createRef();
+    this.social = React.createRef();
     this.modalContent = '';
     this.modalTitle = '';
+    this.fakedUser = false;
+  }
+
+  stubbedSubmit() { // for dev-only
+    if (!this.fakedUser) {
+      this.fakedUser = true;
+      let cons = "bcdfghjklmnprstvxz", vows = "aeiou";
+      let name = cons[Math.floor(Math.random() * cons.length)]
+        + vows[Math.floor(Math.random() * vows.length)]
+        + cons[Math.floor(Math.random() * cons.length)];
+      let data = {
+        name: name.ucf(),
+        email: name + (+new Date()) + '@test.com',
+        gender: ['male', 'female', 'other'][Math.floor(Math.random() * 3)]
+      };
+      console.log('[STUB] ' + data.name + " / " + data.email + " / " + data.gender);
+      this.setState(data); // update form and submit
+
+      setTimeout(this.handleSubmit(0, this.state), 1500);
+    }
   }
 
   handleSubmit = (e, { name, email, gender, clearEmail }) => {
 
     e && e.preventDefault();
 
-    const user = UserSession.validate(this.context);
-    user.lastPageVisit = { page: 'login', time: Date.now() };
+    if (!name.length || !gender.length) throw Error('invalid state')
+    // see #343: incorrect email should be the only possible error case
 
-    if (!name.length || !gender.length) {
-      // see #343: email should be the only possible error case
-    }
+    this.social.setState({name, email, gender});
 
     if (!this.validEmail(email)) {
       if (this.state.emailErrorCount < 3) {
@@ -104,19 +123,23 @@ class LoginPage extends SpectrePage {
       }
     }
     else {
+      const user = this.context; // no validate needed
+      user.name = name;
+      user.login = email;
+      user.gender = gender;
+      user.lastPageVisit = { page: 'login', time: Date.now() };
+
       this.setState({ modalOpen: false });
       this.saveUser(user);
     }
   }
 
   saveUser = (user) => {
-
     const handleSuccess = () => {
       console.log('[' + user.lastPageVisit.page.uc() + '] '
         + user.name + ' / ' + user.login + ' / ' + user.gender);
       this.showVideo();
     };
-
     const handleError = (e) => {
       if (e.error === 'EmailInUse') {
         this.modalTitle = 'Invalid email';
@@ -127,7 +150,6 @@ class LoginPage extends SpectrePage {
         this.showVideo();
       }
     };
-
     UserSession.create(user, handleSuccess, handleError);
   }
 
@@ -178,7 +200,9 @@ class LoginPage extends SpectrePage {
             onComplete={this.next}
             onKeyUp={this.skipVideo}
           />
-          <SocialLogin handleSubmit={this.handleSubmit} />
+          <SocialLogin
+            ref={ele => { this.social = ele }}
+            handleSubmit={this.handleSubmit} />
         </div>
         <div onClick={this.termsOfService}><Link className='tos' to='#here'>Terms of Service</Link></div>
       </div>

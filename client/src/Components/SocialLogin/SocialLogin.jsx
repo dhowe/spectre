@@ -59,10 +59,7 @@ const styles = {
   },
 };
 
-const RIGHT_ARROW = 39;
-
 let stateObj = {
-  userStubbed: false,
   emailValid: false,
   email: '',
   name: '',
@@ -77,7 +74,6 @@ class SocialLogin extends React.Component {
   constructor(props) {
     super(props);
     this.state = stateObj;
-    this.fakedUser = false;
     this.unShiftNeeded = false;
     this.onKeyPress = this.onKeyPress.bind(this);
     this.shiftCheck = this.shiftCheck.bind(this);
@@ -95,7 +91,6 @@ class SocialLogin extends React.Component {
       clearEmail: this.clearEmail,
     };
     this.unShiftNeeded = true;
-    this.stubbedSubmit = this.stubbedSubmit.bind(this);
     this.form = React.createRef();
   }
 
@@ -105,15 +100,11 @@ class SocialLogin extends React.Component {
   }
 
   componentWillUnmount() {
-        document.removeEventListener('click', this.shiftCheck);
+    document.removeEventListener('click', this.shiftCheck);
     document.removeEventListener("keyup", this.stubbedSubmit, false);
   }
 
   onKeyPress(button) {
-
-
-
-
 
     if (button === '{shift}') {
       this.handleShift();
@@ -145,14 +136,14 @@ class SocialLogin extends React.Component {
     }
   }
 
-  shiftCheck(){
-    if(this.state.focus === "name"){
-      if(this.state.name.length === 0){
-           const { layoutName } = this.state;
-          this.setState({
-            layoutName: layoutName === 'default' ? 'shift' : 'shift',
-          });
-      //  this.state.layoutName = 'shift'
+  shiftCheck() {
+    if (this.state.focus === "name") {
+      if (this.state.name.length === 0) {
+        const { layoutName } = this.state;
+        this.setState({
+          layoutName: layoutName === 'default' ? 'shift' : 'shift',
+        });
+        //  this.state.layoutName = 'shift'
         this.unShiftNeeded = true;
         //console.log("is empty, shift");
       }
@@ -181,7 +172,7 @@ class SocialLogin extends React.Component {
 
   render() {
     const { classes } = this.props;
-  //  console.log(this.state)
+    //  console.log(this.state)
     /*  For name field, first letter press SHIFT here*/
 
     return (
@@ -248,28 +239,12 @@ class SocialLogin extends React.Component {
               onKeyPress={button => this.onKeyPress(button)}
               layoutName={this.state.layoutName}
             />
-            <IconButton onClick={e => this.props.handleSubmit(e, this.state)} enabled="white" colour="white" icon="next" text="Next" />
+            <IconButton onClick={e => this.props.handleSubmit(e, this.state)}
+              enabled="white" colour="white" icon="next" text="Next" />
           </form>
         </div>
       </div>
     );
-  }
-  stubbedSubmit(event) { // for dev-only
-    if (event.keyCode === RIGHT_ARROW && !this.fakedUser) {
-      this.fakedUser = true;
-      let cons = "bcdfghjklmnprstvxz", vows = "aeiou";
-      let name = cons[Math.floor(Math.random() * cons.length)]
-        + vows[Math.floor(Math.random() * vows.length)]
-        + cons[Math.floor(Math.random() * cons.length)];
-      let data = {
-        name: name.ucf(),
-        email: name + (+new Date()) + '@test.com',
-        gender: ['male', 'female', 'other'][Math.floor(Math.random() * 3)]
-      };
-      console.log('[STUB] '+ data.name + " / " + data.email + " / " + data.gender);
-      this.setState(data); // update form and submit
-      setTimeout(() => this.props.handleSubmit(0, this.state), 500);
-    }
   }
 }
 
