@@ -170,9 +170,14 @@ class SocialLogin extends React.Component {
     this.setState({ email: '' });
   }
 
+
   render() {
     const { classes } = this.props;
-    //  console.log(this.state)
+
+    const { email, name, gender } = this.state;
+    const enabled = (email.length > 0 && name.length > 0 && gender != undefined)? "white": false;
+    //console.log(enabled)
+
     /*  For name field, first letter press SHIFT here*/
 
     return (
@@ -239,8 +244,8 @@ class SocialLogin extends React.Component {
               onKeyPress={button => this.onKeyPress(button)}
               layoutName={this.state.layoutName}
             />
-            <IconButton onClick={e => this.props.handleSubmit(e, this.state)}
-              enabled="white" colour="white" icon="next" text="Next" />
+            <IconButton  onClick={e => this.props.handleSubmit(e, this.state)}
+              enabled={!enabled} colour="white" icon="next" text="Next" />
           </form>
         </div>
       </div>
