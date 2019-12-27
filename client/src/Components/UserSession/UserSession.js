@@ -31,14 +31,17 @@ UserSession.storageKey = 'spectre-user';
 UserSession.profileDir = User.profileDir
 UserSession.imageDir = User.imageDir
 
+const CONS = "bcdfghjklmnprstvxz", VOWS = "aeiou";
+
 //////////////////////// functions //////////////////////
 
 UserSession.log = function(u) {
   if (u._id) {
-    let s = '[' + u.lastPage().uc() + '] '+ u._id;
+    let s = '[' + u.lastPage().uc() + '] ' + u._id;
     if (u.name) s += ', ' + u.name;
     if (u.gender) s += ', ' + u.gender;
     if (u.virtue) s += ', ' + u.virtue;
+    if (u.login) s += ', ' + u.login;
     if (u.similars.length) s += ', ' + u.similars.length + ' similars';
     console.log(s);
   }
@@ -85,29 +88,51 @@ UserSession.init = function(onSuccess, onError) {
 }
 */
 
-UserSession.validate = function(user, props) {
+
+UserSession.validate = function(user, props, norepair) {
 
   //console.log('UserSession.validate /'+ user.lastPageVisit.page);
 
   if (typeof user === 'undefined') throw Error('Null User');
 
-  let missing = Array.isArray(props) ? props.filter(p => {
-    if (typeof user[p] === 'undefined') throw Error
-      ('Required property undefined: ' + p + ', user.' + p + '='
-      + (typeof user[p]) + '\nProperties: ' + Object.keys(user));
-    return (typeof user[p] === 'undefined' ||
-      (Array.isArray(user[p]) && !user[p].length));
-  }) : [];
+  if (!Array.isArray(props)) props = [props];
 
-  if (missing.length) {
-    console.warn('[' + user.lastPage().uc() + '] User invalid: ', user);
+  let getMissingProps = () => {
+    return Array.isArray(props) ? props.filter(p => {
+      if (norepair && typeof user[p] === 'undefined') console.warn
+        ('Required property undefined: ' + p + ', user.' + p + '='
+        + (typeof user[p]) + '\nProperties: ' + Object.keys(user));
+      return (typeof user[p] === 'undefined' ||
+        (Array.isArray(user[p]) && !user[p].length));
+    }) : [];
+  }
+
+  let name, missing = getMissingProps();
+  if (missing.length && props.length) {
+    //console.warn('[' + user.lastPage().uc() + '] User invalid: ', user);
     for (var i = 0; i < missing.length; i++) {
       let prop = missing[i];
-      console.warn('  Missing property: ' + prop);
+      //console.warn('  Missing property: ' + prop);
       user[prop] = UserSession.defaults[0][prop];
     }
+    if (!norepair) {
+      missing = missing.filter(x => props.includes(x));
+      if (missing.includes('name')) {
+        name = '[' + CONS.uc()[Math.floor(Math.random() * CONS.length)]
+          + VOWS[Math.floor(Math.random() * VOWS.length)]
+          + CONS[Math.floor(Math.random() * CONS.length)] + ']';
+        user.name = name;
+      }
+      if (missing.includes('email')) {
+        user.email = '[' + name + (+new Date()) + '@test.com]';
+      }
+      if (missing.includes('gender')) {
+        user.gender = '[' + rand(['male', 'female', 'other']) + ']';
+      }
+      if (getMissingProps().length === 0) return true;
+    }
   }
-  return user;
+  return false;
 }
 
 // Create a new database record: /login only
@@ -230,6 +255,22 @@ function handleResponse(res) {
     });
 }
 
+function rand() {
+  if (arguments.length === 1 && Array.isArray(arguments[0])) {
+    return arguments[0][irand(arguments[0].length)];
+  }
+  var randnum = Math.random();
+  if (!arguments.length) return randnum;
+  return (arguments.length === 1) ? randnum * arguments[0] :
+    randnum * (arguments[1] - arguments[0]) + arguments[0];
+}
+
+function irand() {
+  var randnum = Math.random();
+  if (!arguments.length) throw Error('requires args');
+  return (arguments.length === 1) ? Math.floor(randnum * arguments[0]) :
+    Math.floor(randnum * (arguments[1] - arguments[0]) + arguments[0]);
+}
 /*function methodNames(obj) {
   let methods = new Set();
   while (obj = Reflect.getPrototypeOf(obj)) {

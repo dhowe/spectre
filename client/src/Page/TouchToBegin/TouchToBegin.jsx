@@ -31,7 +31,7 @@ class TouchToBegin extends React.Component {
 
   // goes to /login
   render() {
-    this.props.setNext('/login', this.props.history);
+    //this.props.setNext('/login', this.props.history);
     const { classes } = this.props;
     //console.log('TouchToBegin.render.next='+(typeof nextPage));
     return (
@@ -54,7 +54,7 @@ class TouchToBegin extends React.Component {
 
 TouchToBegin.propTypes = {
   classes: PropTypes.object.isRequired,
-  setNext: PropTypes.func.isRequired,
+  //setNext: PropTypes.func.isRequired,
   //next: PropTypes.string.isRequired
 };
 TouchToBegin.contextType = UserSession;
