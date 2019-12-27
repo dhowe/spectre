@@ -81,7 +81,7 @@ class SearchingFor extends React.Component {
       // TODO: next work
       const data = this.webcam.getScreenshot();
       if (data && data.length) {
-        const imgfile = this.toImageFile(data, this.user._id + '.jpg');
+        const imgfile = this.toImageFile(data, user._id + '.jpg');
         UserSession.postImage(this.context, imgfile,
           (json) => {
             console.log(`Upload: http://localhost:3000${json.url}`);
