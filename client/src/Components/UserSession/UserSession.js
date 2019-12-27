@@ -109,30 +109,30 @@ UserSession.validate = function(user, props, norepair) {
 
   let name, missing = getMissingProps();
   if (missing.length && props.length) {
-    //console.warn('[' + user.lastPage().uc() + '] User invalid: ', user);
-    for (var i = 0; i < missing.length; i++) {
-      let prop = missing[i];
-      //console.warn('  Missing property: ' + prop);
-      user[prop] = UserSession.defaults[0][prop];
-    }
-    if (!norepair) {
+    let s = '[' + user.lastPage().uc() + '] ';
+    s += 'User(' + (user._id || 'NO_ID') + ") missing: ";
+    missing.reduce((acc, cur) => acc += cur + ', ', s);
+    console.warn(s);
+
+    if (!norepair) { // use defaults for missing fields
+
       missing = missing.filter(x => props.includes(x));
       if (missing.includes('name')) {
-        name = '[' + CONS.uc()[Math.floor(Math.random() * CONS.length)]
+        name = CONS.uc()[Math.floor(Math.random() * CONS.length)]
           + VOWS[Math.floor(Math.random() * VOWS.length)]
-          + CONS[Math.floor(Math.random() * CONS.length)] + ']';
-        user.name = name;
+          + CONS[Math.floor(Math.random() * CONS.length)];
+        user.name = '{' + name + '}';
       }
-      if (missing.includes('email')) {
-        user.email = '[' + name + (+new Date()) + '@test.com]';
+      if (missing.includes('login')) {
+        user.login = name + (+new Date()) + '@test.com';
       }
       if (missing.includes('gender')) {
-        user.gender = '[' + rand(['male', 'female', 'other']) + ']';
+        user.gender = rand(['male', 'female', 'other']);
       }
-      if (getMissingProps().length === 0) return true;
     }
   }
-  return false;
+
+  return getMissingProps().length === 0;
 }
 
 // Create a new database record: /login only
@@ -242,17 +242,16 @@ function doConfig() {
 }
 
 function handleResponse(res) {
-  return res.json()
-    .then((json) => {
-      if (!res.ok) {
-        const error = Object.assign({}, json, {
-          status: res.status,
-          statusText: res.statusText,
-        });
-        return Promise.reject(error);
-      }
-      return json;
-    });
+  return res.json().then((json) => {
+    if (!res.ok) {
+      const error = Object.assign({}, json, {
+        status: res.status,
+        statusText: res.statusText,
+      });
+      return Promise.reject(error);
+    }
+    return json;
+  });
 }
 
 function rand() {
@@ -271,13 +270,5 @@ function irand() {
   return (arguments.length === 1) ? Math.floor(randnum * arguments[0]) :
     Math.floor(randnum * (arguments[1] - arguments[0]) + arguments[0]);
 }
-/*function methodNames(obj) {
-  let methods = new Set();
-  while (obj = Reflect.getPrototypeOf(obj)) {
-    let keys = Reflect.ownKeys(obj)
-    keys.forEach((k) => methods.add(k));
-  }
-  return methods;
-}*/
 
 export default UserSession;

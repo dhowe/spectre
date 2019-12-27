@@ -89,17 +89,19 @@ class LoginPage extends React.Component {
 
     if (process.env.NODE_ENV !== 'production' &&
       (!(name.length && gender.length && email.length))) {
-        UserSession.validate(user, ['name', 'email', 'gender']);
+        UserSession.validate(user, ['name', 'login', 'gender']);
         name = user.name;
-        email = user.email;
+        email = user.login;
         gender = user.gender;
+        console.log("STUB", name, email, gender);
         //this.setState(data); // update form and submit
     }
+
     // see #343: incorrect email should be the only possible error case
 
     this.social.setState({ name, email, gender });
 
-    if (!UserSession.validate(user, 'email', true)) {
+    if (!this.emailIsValid(email)) {
       if (this.state.emailErrorCount < 3) {
         this.modalTitle = 'Oops...';
         this.modalContent = 'That doesn\'t look like a valid email address, please try again';
@@ -168,6 +170,10 @@ class LoginPage extends React.Component {
     if (this.state.videoStarted) {
       this.props.history.push('/pledge');
     }
+  }
+
+  emailIsValid = (addr) => {
+    return addr && /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(addr.toLowerCase());
   }
 
   render() {
