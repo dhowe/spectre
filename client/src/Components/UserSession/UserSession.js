@@ -31,14 +31,17 @@ UserSession.storageKey = 'spectre-user';
 UserSession.profileDir = User.profileDir
 UserSession.imageDir = User.imageDir
 
+const CONS = "bcdfghjklmnprstvxz", VOWS = "aeiou";
+
 //////////////////////// functions //////////////////////
 
 UserSession.log = function(u) {
   if (u._id) {
-    let s = '[' + u.lastPage().uc() + '] '+ u._id;
+    let s = '[' + u.lastPage().uc() + '] ' + u._id;
     if (u.name) s += ', ' + u.name;
     if (u.gender) s += ', ' + u.gender;
     if (u.virtue) s += ', ' + u.virtue;
+    if (u.login) s += ', ' + u.login;
     if (u.similars.length) s += ', ' + u.similars.length + ' similars';
     console.log(s);
   }
@@ -85,29 +88,55 @@ UserSession.init = function(onSuccess, onError) {
 }
 */
 
-UserSession.validate = function(user, props) {
+
+UserSession.validate = function(user, props, norepair) {
 
   //console.log('UserSession.validate /'+ user.lastPageVisit.page);
 
-  if (typeof user === 'undefined') throw Error('Null User');
+  if (typeof user === 'undefined' || typeof props === 'undefined') {
+    throw Error('Null User or props\nUser:' + user);
+  }
 
-  let missing = Array.isArray(props) ? props.filter(p => {
-    if (typeof user[p] === 'undefined') throw Error
-      ('Required property undefined: ' + p + ', user.' + p + '='
-      + (typeof user[p]) + '\nProperties: ' + Object.keys(user));
-    return (typeof user[p] === 'undefined' ||
-      (Array.isArray(user[p]) && !user[p].length));
-  }) : [];
+  if (!Array.isArray(props)) props = [props];
 
-  if (missing.length) {
-    console.warn('[' + user.lastPage().uc() + '] User invalid: ', user);
-    for (var i = 0; i < missing.length; i++) {
-      let prop = missing[i];
-      console.warn('  Missing property: ' + prop);
-      user[prop] = UserSession.defaults[0][prop];
+  /* gets list of specific props not set on user */
+  const getMissingProps = (notRepairing) => {
+    return props.filter(p => {
+      const pv = user[p];
+      if (typeof pv === 'undefined') {
+        if (notRepairing) console.warn('Required property'
+          + ' undefined: user.' + p + ' = ' + (typeof pv));
+        return true;
+      }
+      else if (Array.isArray(pv) && !pv.length) {
+        if (notRepairing) console.warn('Required array'
+          +' empty: user.' + p + ' = []');
+        return true;
+      }
+      return false;
+    });
+  }
+
+  let missing = getMissingProps(norepair);
+  if (missing.length && !norepair) {
+    // use defaults for missing fields
+    missing = missing.filter(x => props.includes(x));
+    let name;
+    if (missing.includes('name')) {
+      name = CONS.uc()[Math.floor(Math.random() * CONS.length)]
+        + VOWS[Math.floor(Math.random() * VOWS.length)]
+        + CONS[Math.floor(Math.random() * CONS.length)];
+      user.name = '{' + name + '}';
+    }
+    if (missing.includes('login')) {
+      user.login = name + (+new Date()) + '@test.com';
+    }
+    if (missing.includes('gender')) {
+      user.gender = rand(['male', 'female', 'other']);
     }
   }
-  return user;
+
+  return getMissingProps(!norepair).length === 0;
 }
 
 // Create a new database record: /login only
@@ -217,26 +246,33 @@ function doConfig() {
 }
 
 function handleResponse(res) {
-  return res.json()
-    .then((json) => {
-      if (!res.ok) {
-        const error = Object.assign({}, json, {
-          status: res.status,
-          statusText: res.statusText,
-        });
-        return Promise.reject(error);
-      }
-      return json;
-    });
+  return res.json().then((json) => {
+    if (!res.ok) {
+      const error = Object.assign({}, json, {
+        status: res.status,
+        statusText: res.statusText,
+      });
+      return Promise.reject(error);
+    }
+    return json;
+  });
 }
 
-/*function methodNames(obj) {
-  let methods = new Set();
-  while (obj = Reflect.getPrototypeOf(obj)) {
-    let keys = Reflect.ownKeys(obj)
-    keys.forEach((k) => methods.add(k));
+function rand() {
+  if (arguments.length === 1 && Array.isArray(arguments[0])) {
+    return arguments[0][irand(arguments[0].length)];
   }
-  return methods;
-}*/
+  var randnum = Math.random();
+  if (!arguments.length) return randnum;
+  return (arguments.length === 1) ? randnum * arguments[0] :
+    randnum * (arguments[1] - arguments[0]) + arguments[0];
+}
+
+function irand() {
+  var randnum = Math.random();
+  if (!arguments.length) throw Error('requires args');
+  return (arguments.length === 1) ? Math.floor(randnum * arguments[0]) :
+    Math.floor(randnum * (arguments[1] - arguments[0]) + arguments[0]);
+}
 
 export default UserSession;
