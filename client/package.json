@@ -20,6 +20,7 @@
     "react-mui-login-register": "^0.7.3",
     "react-p5-wrapper": "^2.0.0",
     "react-router-dom": "^5.0.0",
+    "react-screen-orientation": "^0.0.4",
     "react-scripts": "3.3.0",
     "react-simple-keyboard": "^2.1.75",
     "react-webcam": "^4.0.0",

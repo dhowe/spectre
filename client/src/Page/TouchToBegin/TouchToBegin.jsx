@@ -1,4 +1,5 @@
 import React from 'react';
+import DeviceOrientation, { Orientation } from 'react-screen-orientation';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -8,9 +9,10 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import BeginBackground from '../../Images/1_Standby_Screen_1080px_by_1620px.jpg';
 import UserSession from '../../Components/UserSession/UserSession';
 
+
 import './TouchToBegin.scss';
 
-const styles = {
+const styles_portrait = {
   root: {
     flexGrow: 1,
     width: '100%',
@@ -22,6 +24,24 @@ const styles = {
     margin: '20% 0',
   },
 };
+
+const styles = {
+  root: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundImage: `url(${BeginBackground})`,
+    backgroundSize: 'auto 100%',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center',
+
+  },
+  clickToContinue: {
+      fontSize: '0.5rem'
+  },
+
+};
+
 
 class TouchToBegin extends React.Component {
 
