@@ -125,9 +125,7 @@ class SocialLogin extends React.Component {
       const { focus } = this.state;
       const text = this.state[focus];
 
-      this.setState({
-        [focus]: text.concat(button),
-      });
+      this.setState({ [focus]: text.concat(button) });
 
       if (this.unShiftNeeded) {
         this.handleShift();
@@ -137,23 +135,16 @@ class SocialLogin extends React.Component {
   }
 
   shiftCheck() {
-    if (this.state.focus === "name") {
-      if (this.state.name.length === 0) {
-        const { layoutName } = this.state;
-        this.setState({
-          layoutName: layoutName === 'default' ? 'shift' : 'shift',
-        });
-        //  this.state.layoutName = 'shift'
-        this.unShiftNeeded = true;
-        //console.log("is empty, shift");
-      }
+    if (this.state.focus === "name" && !this.state.name.length) {
+      this.setState({ layoutName: 'shift' });
+      this.unShiftNeeded = true;
+
     }
   }
 
   handleShift() {
-    const { layoutName } = this.state;
     this.setState({
-      layoutName: layoutName === 'default' ? 'shift' : 'default',
+      layoutName: this.state.layoutName === 'default' ? 'shift' : 'default'
     });
   }
 
@@ -170,16 +161,10 @@ class SocialLogin extends React.Component {
     this.setState({ email: '' });
   }
 
-
   render() {
     const { classes } = this.props;
-
     const { email, name, gender } = this.state;
-    const enabled = (email.length > 0 && name.length > 0 && gender != undefined)? "white": false;
-    //console.log(enabled)
-
-    /*  For name field, first letter press SHIFT here*/
-
+    const enabled = email.length && name.length && gender !== 'undefined';
     return (
       <div className={`${classes.root} socialLogin`}>
         <div className={`${classes.content} socialLogin-content`}>
@@ -244,8 +229,8 @@ class SocialLogin extends React.Component {
               onKeyPress={button => this.onKeyPress(button)}
               layoutName={this.state.layoutName}
             />
-            <IconButton  onClick={e => this.props.handleSubmit(e, this.state)}
-              enabled={!enabled} colour="white" icon="next" text="Next" />
+            <IconButton onClick={e => this.props.handleSubmit(e, this.state)}
+              enabled={enabled ? "white" : false} colour="white" icon="next" text="Next" />
           </form>
         </div>
       </div>

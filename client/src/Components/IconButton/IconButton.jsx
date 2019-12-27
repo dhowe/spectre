@@ -13,6 +13,7 @@ const styles = {
     alignItems: 'center',
   },
 };
+
 const icons = {
   next: colour =>
     <svg
@@ -282,34 +283,11 @@ const icons = {
 };
 
 class IconButton extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = { colour: props.colour };
   }
-
-  /*componentDidMount() {
-    this.updateUserColor(this.props.enabled);
-  }
-  componentWillReceiveProps({ enabled }) {
-    this.updateUserColor(enabled);
-  }
-  updateUserColor(enabled) {
-    const etype = typeof enabled;
-    if (!enabled) {
-      this.setState({
-        colour: colours.grey,
-      });
-    } else if (etype === 'string') {
-      this.setState({
-        colour: enabled,
-      });
-    } else if (enabled || etype === 'undefined') {
-      this.setState({
-        colour: colours.blue,
-      });
-    }
-  }
-  */
 
   render() {
 
@@ -325,8 +303,10 @@ class IconButton extends React.Component {
     } else if (enabled || etype === 'undefined') {
       colour = colours.blue;
     }
-    const classNames = [`iconButton-${colour}`, 'iconButton', classes.button];
-    if (className) classNames.push(className);
+
+    const classNames = className ? [className] : [];
+    classNames.push(`iconButton-${colour}`, 'iconButton', classes.button);
+
     return (
       <button onClick={onClick} className={classNames.join(' ')}>
         {icons[icon] && icons[icon](colour)}

@@ -66,14 +66,14 @@ class SearchingFor extends React.Component {
   }
 
   componentDidMount() {
-    this.user = UserSession.validate(this.context,
+    UserSession.validate(this.context,
       ['loginType', 'login', 'gender', 'name']);
   }
 
   handleClick(virtue) {
 
-    if (!this.user) throw Error('No user');
-    this.user.virtue = virtue || 'power';
+    let user = this.context;
+    user.virtue = virtue || 'power';
 
     // here we are doing the webcam capture, disabled for now
     if (false) {
