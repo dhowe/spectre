@@ -93,46 +93,50 @@ UserSession.validate = function(user, props, norepair) {
 
   //console.log('UserSession.validate /'+ user.lastPageVisit.page);
 
-  if (typeof user === 'undefined') throw Error('Null User');
+  if (typeof user === 'undefined' || typeof props === 'undefined') {
+    throw Error('Null User or props\nUser:' + user);
+  }
 
   if (!Array.isArray(props)) props = [props];
 
-  let getMissingProps = () => {
-    return Array.isArray(props) ? props.filter(p => {
-      if (norepair && typeof user[p] === 'undefined') console.warn
-        ('Required property undefined: ' + p + ', user.' + p + '='
-        + (typeof user[p]) + '\nProperties: ' + Object.keys(user));
-      return (typeof user[p] === 'undefined' ||
-        (Array.isArray(user[p]) && !user[p].length));
-    }) : [];
+  /* gets list of specific props not set on user */
+  const getMissingProps = (notRepairing) => {
+    return props.filter(p => {
+      const pv = user[p];
+      if (typeof pv === 'undefined') {
+        if (notRepairing) console.warn('Required property'
+          + ' undefined: user.' + p + ' = ' + (typeof pv));
+        return true;
+      }
+      else if (Array.isArray(pv) && !pv.length) {
+        if (notRepairing) console.warn('Required array'
+          +' empty: user.' + p + ' = []');
+        return true;
+      }
+      return false;
+    });
   }
 
-  let name, missing = getMissingProps();
-  if (missing.length && props.length) {
-    let s = '[' + user.lastPage().uc() + '] ';
-    s += 'User(' + (user._id || 'NO_ID') + ") missing: ";
-    missing.reduce((acc, cur) => acc += cur + ', ', s);
-    console.warn(s);
-
-    if (!norepair) { // use defaults for missing fields
-
-      missing = missing.filter(x => props.includes(x));
-      if (missing.includes('name')) {
-        name = CONS.uc()[Math.floor(Math.random() * CONS.length)]
-          + VOWS[Math.floor(Math.random() * VOWS.length)]
-          + CONS[Math.floor(Math.random() * CONS.length)];
-        user.name = '{' + name + '}';
-      }
-      if (missing.includes('login')) {
-        user.login = name + (+new Date()) + '@test.com';
-      }
-      if (missing.includes('gender')) {
-        user.gender = rand(['male', 'female', 'other']);
-      }
+  let missing = getMissingProps(norepair);
+  if (missing.length && !norepair) {
+    // use defaults for missing fields
+    missing = missing.filter(x => props.includes(x));
+    let name;
+    if (missing.includes('name')) {
+      name = CONS.uc()[Math.floor(Math.random() * CONS.length)]
+        + VOWS[Math.floor(Math.random() * VOWS.length)]
+        + CONS[Math.floor(Math.random() * CONS.length)];
+      user.name = '{' + name + '}';
+    }
+    if (missing.includes('login')) {
+      user.login = name + (+new Date()) + '@test.com';
+    }
+    if (missing.includes('gender')) {
+      user.gender = rand(['male', 'female', 'other']);
     }
   }
 
-  return getMissingProps().length === 0;
+  return getMissingProps(!norepair).length === 0;
 }
 
 // Create a new database record: /login only
