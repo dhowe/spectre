@@ -16,8 +16,7 @@ port = os.getenv('REACT_APP_API_PORT') or '8083'
 clientid = os.getenv('REACT_APP_CLIENT_ID')
 
 endpoint = 'http://' +host + ':' + port + route + clientid
-
-print('URL: '+endpoint)
+print (endpoint)
 
 with request.urlopen(endpoint) as response:
   if response.getcode() == 200:
@@ -26,5 +25,3 @@ with request.urlopen(endpoint) as response:
     print(data)
   else:
     print('An error occurred')
-
-
