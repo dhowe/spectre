@@ -22,7 +22,7 @@ UserSession.defaults = [
 fetch('/default-users.json').then(res => res.json())
   .then(data => {
     UserSession.defaults = data;
-    console.log('[USER] New session created')
+    //console.log('[USER] New session created')
   }).catch(e => {
     console.error('UserSession.defaultUsers:', e);
   });
@@ -30,8 +30,8 @@ fetch('/default-users.json').then(res => res.json())
 UserSession.storageKey = 'spectre-user';
 UserSession.profileDir = User.profileDir
 UserSession.imageDir = User.imageDir
-
-const CONS = "bcdfghjklmnprstvxz", VOWS = "aeiou";
+UserSession.Cons = "bcdfghjklmnprstvxz";
+UserSession.Vows = "aeiou";
 
 //////////////////////// functions //////////////////////
 
@@ -42,101 +42,118 @@ UserSession.log = function(u) {
     if (u.gender) s += ', ' + u.gender;
     if (u.virtue) s += ', ' + u.virtue;
     if (u.login) s += ', ' + u.login;
-    if (u.similars.length) s += ', ' + u.similars.length + ' similars';
+    if (u.similars && u.similars.length) {
+      s += ', ' + u.similars.length + ' similars';
+    }
     console.log(s);
   }
   else {
-    console.log('[USER] *** no id ***');
+    console.error('[USER] *** no id ***');
   }
 }
 
-// UserSession.get = function(ctx) {
-//   if (!ctx) {
-//     // && (idOptional || typeof ctx._id !== 'undefined')) return ctx;
-//     let json = sessionStorage.getItem(UserSession.storageKey);
-//     console.warn('[WARN] Retrieving User from localstorage', json);
-//     ctx = JSON.parse(json);
-//   }
-//   return ctx;
-// }
-
-// UserSession.sync = function(ctx) {
-//   ctx && sessionStorage.setItem(UserSession.storageKey, JSON.stringify(ctx));
-// }
-
 UserSession.clear = function() {
   sessionStorage.clear();
+  console.log('[USER] Session initialized');
 }
 
-//////////////////////////////////////////////////////////////////////
 /*
-UserSession.init = function(onSuccess, onError) {
-
-  let { route, auth, mode } = doConfig();
-  if (!onError) onError = (e) => console.error(e);
-  if (!onSuccess) onSuccess = (json) => { } // no-op;
-
-  console.log('[GET] ' + mode + '.init: ' + route);
-
-  fetch(route, {
-    method: "get",
-    headers: { "Authorization": 'Basic ' + btoa(auth) },
-  })
-    .then(handleResponse.bind(this))
-    .then(onSuccess.bind(this))
-    .catch(onError.bind(this));
+ * Repairs a user (if needed) and returns it
+ */
+UserSession.validate = function(ctx, props, ignoreId) {
+  UserSession.isValid(ctx, props, false, ignoreId);
+  return ctx;
 }
-*/
 
-
-UserSession.validate = function(user, props, norepair) {
+/*
+ * Return true if supplied user is valid on props, else false
+ * Repairs the user if norepair is false or undefined
+ */
+UserSession.isValid = function(user, props, norepair, ignoreId) {
 
   //console.log('UserSession.validate /'+ user.lastPageVisit.page);
 
-  if (typeof user === 'undefined' || typeof props === 'undefined') {
-    throw Error('Null User or props\nUser:' + user);
+  if (typeof props === 'undefined') return true;
+  if (typeof user === 'undefined') throw Error('Null User');
+
+  /* Get list of specified props NOT defined for user */
+  const checkProps = () => {
+    return props.filter(p => typeof user[p] === 'undefined'
+      || (Array.isArray(user[p]) && !user[p].length));
+  }
+
+  /* Get list of specified props NOT defined for user */
+  const fillProps = (missing) => {
+
+    const logStub = p => {
+      if (!ignoreId) console.warn
+        ('[STUB] Setting user.' + p + ': ' + JSON.stringify(user[p]))
+    };
+    const remove = (a, v) => a.filter(i => i !== v);
+    const cons = UserSession.Cons, vows = UserSession.Vows;
+    let name, prop;
+
+    prop = 'name';
+    if (missing.includes(prop)) {
+      name = (cons[Math.floor(Math.random() * cons.length)]
+        + vows[Math.floor(Math.random() * vows.length)]
+        + cons[Math.floor(Math.random() * cons.length)]).ucf();
+      user[prop] = '{' + name + '}';
+      missing = remove(missing, prop);
+      logStub(prop);
+    }
+
+    prop = 'login';
+    if (missing.includes(prop)) {
+      user[prop] = name + (+new Date()) + '@test.com';
+      missing = remove(missing, prop);
+      logStub(prop);
+    }
+
+    prop = 'virtue';
+    if (missing.includes(prop)) {
+      user[prop] = rand(['wealth', 'influence', 'truth', 'power']);
+      missing = remove(missing, prop);
+      logStub(prop);
+    }
+
+    prop = 'gender';
+    if (missing.includes(prop)) {
+      user[prop] = rand(['male', 'female', 'other']);
+      missing = remove(missing, prop);
+      logStub(prop);
+    }
+
+    prop = 'similars';
+    if (missing.includes(prop)) {
+      user[prop] = UserSession.defaults;
+      missing = remove(missing, prop);
+      logStub(prop);
+    }
+
+    prop = 'traits';
+    if (missing.includes(prop)) {
+      user.traits = {};
+      ['openness', 'conscientiousness', 'extraversion', 'agreeableness', 'neuroticism'].forEach(t => user.traits[t] = Math.random());
+      missing = remove(missing, prop);
+      logStub(prop);
+    }
+
+    if (missing.length && !norepair) throw Error
+      ('Unable to stub user properties: ' + missing);
+  }
+
+  if (!ignoreId && typeof user._id === 'undefined') {
+    let sid = sessionStorage.getItem(UserSession.storageKey);
+    if (!sid) throw Error('Undefined user._id not in session', user);
+    user._id = JSON.parse(sid);
+    if (!sid) throw Error('*** Invalid user ***', user); // should not happen
   }
 
   if (!Array.isArray(props)) props = [props];
 
-  /* gets list of specific props not set on user */
-  const getMissingProps = (notRepairing) => {
-    return props.filter(p => {
-      const pv = user[p];
-      if (typeof pv === 'undefined') {
-        if (notRepairing) console.warn('Required property'
-          + ' undefined: user.' + p + ' = ' + (typeof pv));
-        return true;
-      }
-      else if (Array.isArray(pv) && !pv.length) {
-        if (notRepairing) console.warn('Required array'
-          +' empty: user.' + p + ' = []');
-        return true;
-      }
-      return false;
-    });
-  }
-
-  let missing = getMissingProps(norepair);
-  if (missing.length && !norepair) {
-    // use defaults for missing fields
-    missing = missing.filter(x => props.includes(x));
-    let name;
-    if (missing.includes('name')) {
-      name = CONS.uc()[Math.floor(Math.random() * CONS.length)]
-        + VOWS[Math.floor(Math.random() * VOWS.length)]
-        + CONS[Math.floor(Math.random() * CONS.length)];
-      user.name = '{' + name + '}';
-    }
-    if (missing.includes('login')) {
-      user.login = name + (+new Date()) + '@test.com';
-    }
-    if (missing.includes('gender')) {
-      user.gender = rand(['male', 'female', 'other']);
-    }
-  }
-
-  return getMissingProps(!norepair).length === 0;
+  let missing = checkProps();
+  if (missing.length && !norepair) fillProps(missing);
 }
 
 // Create a new database record: /login only
@@ -145,6 +162,7 @@ UserSession.create = function(user, onSuccess, onError) {
   let { route, auth, cid, mode } = doConfig();
   let internalSuccess = (json) => {
     Object.assign(user, json);
+    sessionStorage.setItem(UserSession.storageKey, JSON.stringify(user._id));
     //UserSession.sync(user);
     onSuccess && onSuccess(json);
   }

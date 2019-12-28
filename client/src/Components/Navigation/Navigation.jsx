@@ -10,21 +10,29 @@ const routes = [
 
 class Navigation extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.enabled = true;
+    this.ignores = ['/login'];
+  }
+
   next = (page) => {
+
     let current = window.location.pathname;
+    if (this.ignores.includes(current)) return;
     let idx = routes.indexOf(current);
     page = page || routes[++idx];
-    //console.log('Navigation:', current +' -> ' +page);
+    //console.log('nav: '+current+' -> '+page);
     this.props.history.push(page);
   }
 
-  last= () => {
-    this.props.history.goBack();
+  last = () => {
+    if (this.enabled) this.props.history.goBack();
   }
 
   onKey = (e) => {
-    if (e.keyCode === 39) this.next();
-    if (e.keyCode === 37) this.last();
+    if (this.enabled && e.keyCode === 39) this.next();
+    if (this.enabled && e.keyCode === 37) this.last();
   }
 
   componentDidMount() {
@@ -36,7 +44,10 @@ class Navigation extends React.Component {
   }
 
   render() {
-    this.context.lastPageVisit = { page: window.location.pathname.replace(/^\/(.*)/,'$1'), time: Date.now() };
+    this.context.lastPageVisit = {
+      page: window.location.pathname.replace(/^\/(.*)/,'$1'),
+      time: Date.now()
+    };
     return null;
   }
 }

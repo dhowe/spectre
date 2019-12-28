@@ -81,20 +81,26 @@ class LoginPage extends React.Component {
     this.modalTitle = '';
   }
 
+  componentDidMount() {
+    UserSession.clear();
+  }
+
   handleSubmit = (e, { name, email, gender, clearEmail }) => {
-    console.log('handleSubmit()', name, email, gender);
-    e && e.preventDefault();
 
-    const user = this.context; // no validate needed
+    if (e) e.preventDefault();
 
-    if (process.env.NODE_ENV !== 'production' &&
-      (!(name.length && gender.length && email.length))) {
-        UserSession.validate(user, ['name', 'login', 'gender']);
-        name = user.name;
-        email = user.login;
-        gender = user.gender;
-        console.log("STUB", name, email, gender);
-        //this.setState(data); // update form and submit
+    const user = this.context;
+
+    if (process.env.NODE_ENV !== 'production' && (!(name && name.length
+      && gender && gender.length && email && email.length))) {
+
+      UserSession.validate(this.context,
+        ['name', 'login', 'gender'], true);
+      name = user.name;
+      email = user.login;
+      gender = user.gender;
+      console.log("[STUB]", name, email, gender);
+      //this.setState(data); // update form and submit
     }
 
     // see #343: incorrect email should be the only possible error case
@@ -166,9 +172,11 @@ class LoginPage extends React.Component {
 
 
   endVideo = () => { // dev-only
-    console.log('LoginPage.endVideo');
     if (this.state.videoStarted) {
       this.props.history.push('/pledge');
+    }
+    else {
+      this.handleSubmit(false, {});
     }
   }
 
@@ -177,16 +185,13 @@ class LoginPage extends React.Component {
   }
 
   render() {
-    //this.props.setNext('/pledge', this.props.history);
 
-    const { classes } = this.props;
-        // <Delegate ></Delegate >
     return (
-      <div className={classes.root + ' LoginPage'}>
+      <div className={this.props.classes.root + ' LoginPage'}>
 
         <SpectreHeader />
         <IdleChecker forceTerminate={this.state.idleCheckerIsDone} />
-        <div className={classes.content + ' LoginPage-content content'}>
+        <div className={this.props.classes.content + ' LoginPage-content content'}>
           <Typography style={{ marginBottom: 70 }} component="h2" variant="h2">Let's Play!</Typography>
           <Modal
             isOpen={this.state.modalOpen}

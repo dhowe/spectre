@@ -7,8 +7,6 @@ import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
-
-
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
 const styles = {
@@ -35,6 +33,7 @@ class ThankYou extends React.Component {
   }
 
   render() {
+    UserSession.validate(this.context, ['name', 'login', 'gender']);//, 'similars']);
     const { classes } = this.props;
     return (
       <div className={classes.root}>

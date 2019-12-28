@@ -46,6 +46,7 @@ class SelectedAvatar extends React.Component {
   render() {
     const { classes } = this.props;
 
+    // TODO: working here next
     this.context.target = this.context.target || UserSession.defaults[0];
     const timage = this.context.targetImgUrl();
     const tname = this.context.target.name;

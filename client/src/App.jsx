@@ -50,14 +50,14 @@ import CustomerSurvey from './Page/CustomerSurvey/CustomerSurvey';
 import OutroVideo from './Page/OutroVideo/OutroVideo';
 import Goodbye from './Page/Goodbye/Goodbye';
 import Insight from './Page/Insight/Insight';
-
 import ImageTest from './Page/ImageTest/ImageTest'; // TMP
-//import Routes from './Routes.jsx';
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import UserSession from './Components/UserSession/UserSession';
 import User from './Components/User/User';
 import Navigation from './Components/Navigation/Navigation';
 import Keyboardist from 'react-keyboardist';
+
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+
 import blue from '@material-ui/core/colors/blue';
 import './App.scss';
 
@@ -73,36 +73,11 @@ const theme = createMuiTheme({
   },
 });
 
-const user = new User();
-
 class App extends React.Component {
-
-  //
-  // next = (e, page, hist)  => {
-  //   var currentLocation = window.location.pathname;
-  //   console.log('App.currentLocation=',currentLocation);
-  //   e && e.preventDefault();
-  //   page = page || this.nextPage;
-  //   hist = hist || this.history;
-  //   //console.log('next', page, this.context);
-  //
-  //   // TODO: not working
-  //   if (typeof this.context.lastPageVisit !== 'undefined') {
-  //     let pageName = this.nextPage.replace(/^\//,'');
-  //     this.context.lastPageVisit = { page: pageName, time: Date.now() }
-  //   }
-  //   hist.push(page);
-  // }
-  //
-  // setNext = (page, hist) => {
-  //   this.nextPage = page;
-  //   this.history = hist;
-  //   //console.log('App.setNext:', this.nextPage);
-  // }
 
   render() {
     return (
-      <UserSession.Provider value={user}>
+      <UserSession.Provider value={new User()}>
         <MuiThemeProvider theme={theme}>
           <div className="App">
             <header className="App-header">
@@ -110,16 +85,6 @@ class App extends React.Component {
               <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
               <Router>
                 {  // <Route exact path="/" render={p => <TouchToBegin {...p} setNext={this.setNext} next={this.next}/>} />
-                  // <Route exact path="/login" render={p => <LoginPage {...p} setNext={this.setNext} next={this.next} />} />
-                  // <Route exact path="/pledge" render={p => <Pledge {...p} setNext={this.setNext} next={this.next} />} />
-                  // <Route exact path="/searching-for" render={p => <SearchingFor {...p} setNext={this.setNext} next={this.next} />} />
-                  // <Route exact path="/data-is" render={p => <DataIs {...p} setNext={this.setNext} next={this.next} />} />
-                  // <Route exact path="/personalised-experience" render={p => <PersonalisedExperience {...p} setNext={this.setNext} next={this.next} />} />
-                  // <Route exact path="/game" render={p => <Game {...p} setNext={this.setNext} next={this.next} />} />
-                  // <Route exact path="/thank-you" render={p => <ThankYou {...p} setNext={this.setNext} next={this.next} />} />
-                  // <Route exact path="/steps" render={p => <Steps {...p} setNext={this.setNext} next={this.next} />} />
-                  // <Route exact path="/influence-a-follower" render={p => <InfluenceAFollower {...p} setNext={this.setNext} next={this.next} />} />
-                  // <Route exact path="/selected-avatar" render={p => <SelectedAvatar {...p} setNext={this.setNext} next={this.next} />} />
                 }
                 <React.Fragment>
                   <Keyboardist bindings={{ Right: this.next }} />
@@ -177,6 +142,7 @@ class App extends React.Component {
                 <Route exact path="/customer-survey" component={CustomerSurvey} />
                 <Route exact path="/outro-video" component={OutroVideo} />
                 <Route exact path="/goodbye" component={Goodbye} />
+
                 <Route exact path="/image-test" component={ImageTest} /> {/* TMP */}
                 </React.Fragment>
 

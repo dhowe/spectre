@@ -32,15 +32,16 @@ class InfluenceACelebrity extends React.Component {
     this.play = this.play.bind(this);
     this.stop = this.stop.bind(this);
     this.save = this.save.bind(this);
-    this.state = { video: null,
-                  idleCheckerIsDone: false,
-     };
+    this.state = {
+      video: null,
+      idleCheckerIsDone: false,
+    };
 
     // a random set, always with two femals
     let fcelebs = ['Kardashian', 'Abramovic'];
     let mcelebs = ['Freeman', 'Duchamp', 'Mercury', 'Trump', 'Zuckerberg'];
-    mcelebs = InfluenceACelebrity.shuffle(mcelebs).splice(0, 4);
-    this.celebs = InfluenceACelebrity.shuffle(mcelebs.concat(fcelebs));
+    mcelebs = this.shuffle(mcelebs).splice(0, 4);
+    this.celebs = this.shuffle(mcelebs.concat(fcelebs));
   }
 
   save() {
@@ -49,10 +50,17 @@ class InfluenceACelebrity extends React.Component {
     this.next();
   }
 
-  static shuffle(arr) {
-    if (!arr) arr = [];
-    arr.sort(() => Math.random() - 0.5);
-    return arr;
+  shuffle(arr) {
+    let newArray = arr.slice(),
+      len = newArray.length,
+      i = len;
+    while (i--) {
+      let p = parseInt(Math.random() * len),
+        t = newArray[i];
+      newArray[i] = newArray[p];
+      newArray[p] = t;
+    }
+    return newArray;
   }
 
   stop() {
@@ -77,8 +85,8 @@ class InfluenceACelebrity extends React.Component {
 
     return (
       <div className={classes.root}>
-        <SpectreHeader colour="white" progressActive progressNumber="three"/>
-        <IdleChecker forceTerminate={this.state.idleCheckerIsDone}/>
+        <SpectreHeader colour="white" progressActive progressNumber="three" />
+        <IdleChecker forceTerminate={this.state.idleCheckerIsDone} />
         <div className={`${classes.content} content`}>
           <Fade in style={{ transitionDelay: '200ms' }}>
             <Typography className="title" component="h4" variant="h4">Influence a celebrity!</Typography>
@@ -93,7 +101,7 @@ class InfluenceACelebrity extends React.Component {
               Listen to their confessions on&nbsp;{user.virtue}:
             </Typography>
           </Fade>
-          {video && <Video autoPlay onComplete={this.stop} movie={video}/>}
+          {video && <Video autoPlay onComplete={this.stop} movie={video} />}
           <AvatarCircle>
             {this.celebs
               .map((name, i) => (

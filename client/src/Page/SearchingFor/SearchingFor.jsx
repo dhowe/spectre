@@ -65,15 +65,9 @@ class SearchingFor extends React.Component {
     return new File([u8arr], fname, { type: mime });
   }
 
-  componentDidMount() {
-    UserSession.validate(this.context,
-      ['loginType', 'login', 'gender', 'name']);
-  }
-
   handleClick(virtue) {
 
-    let user = this.context;
-    user.virtue = virtue || 'power';
+    const user = this.context; // no validate
 
     // here we are doing the webcam capture, disabled for now
     if (false) {
@@ -86,49 +80,50 @@ class SearchingFor extends React.Component {
           (json) => {
             console.log(`Upload: http://localhost:3000${json.url}`);
             this.context.hasImage = true;
+
           },
           (e) => {
             console.error('Error', e);
             this.context.hasImage = false;
-          },
+          }
         );
-        this.setState(() => ({ toNext: true }));
+        this.props.history.push('/data-is');
       }
       else {
         console.error('no image capture');
       }
     }
 
-    this.props.history.push('/data-is');
   }
 
   render() {
     const { classes } = this.props;
-    const videoConstraints = {
-      width: styles.profileImage.width,
-      height: styles.profileImage.height,
-      facingMode: "user"
-    }
+    const user = UserSession.validate(this.context,
+      ['loginType', 'login', 'gender', 'name']);
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" />
         <IdleChecker />
         <div className={`${classes.content} content`}>
-          <Typography className="username" component="h3" variant="h3">{this.context.name || 'Barney'}</Typography>
+          <Typography className="username" component="h3" variant="h3">{user.name}</Typography>
           <Typography className="question" component="h3" variant="h3">What are you searching for today?</Typography>
 
-          <div className="ImageCapture">
-            {<Webcam ref={this.setRef}
+          {/*<div className="ImageCapture">
+            <Webcam ref={this.setRef}
               audio={false}
               screenshotQuality={1}
               screenshotFormat="image/jpeg"
               width={styles.profileImage.width}
               height={styles.profileImage.height}
               style={{ left: '-5000px', position: 'relative' }}
-              videoConstraints={videoConstraints}
-            />}
+              videoConstraints={{
+                width: styles.profileImage.width,
+                height: styles.profileImage.height,
+                facingMode: "user"
+              }}
+            />
           </div>
-
+          */}
           <div className="buttonWrapper">
             <Button className={classes.button} variant="contained" color="primary" onClick={() => this.handleClick('power')}>Power</Button>
             <Button className={classes.button} variant="contained" color="primary" onClick={() => this.handleClick('truth')}>Truth</Button>

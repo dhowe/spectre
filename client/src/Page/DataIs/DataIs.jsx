@@ -26,11 +26,14 @@ class DataIs extends React.Component {
     this.countdown = React.createRef();
   }
 
-  render() {
-    const user = this.context;
-    user.virtue = user.virtue || 'power';
-    UserSession.log(this.context);
+  componentWillUnmount() {
+    // TODO: see https://github.com/ndresx/react-countdown/issues/71
+    this.countdown.pause();
+  }
 
+  render() {
+    const user = UserSession.validate(this.context,
+      ['login', 'gender', 'name', 'virtue']);
     return (
       <div className={this.props.root}>
         <SpectreHeader colour="white" />

@@ -33,54 +33,39 @@ class InfluenceAFollower extends React.Component {
 
   constructor(props) {
     super(props, '/selected-avatar');
-    this.handleSelect = this.handleSelect.bind(this);
   }
 
-  componentDidMount() {
-    const user = this.context || new User();
-    // eslint-disable-next-line no-underscore-dangle
-    if (typeof user === 'undefined') { // TMP
-      user.name = user.name || 'Barney';
-      user.loginType = user.loginType || 'email';
-      user.login = user.login || `Barney${+new Date()}@aol.com`;
-      //UserSession.create(user);
-    }
-  }
-
-  handleSelect(target) {
+  handleSelect = (target) => {
     this.context.target = target;
     this.next();
   }
 
   renderSimilars() {
-    let result = UserSession.defaults;
-    const sims = this.context.similars;
-    if (sims && sims.length) {
-      console.log('using sims', sims);
-      result = sims;
-    }
-    else {
-      console.log('using defaults');
-    }
-    this.shuffle(result);
-    result = result.slice(0, 6);
-    //console.log(result);
-    return result;
+    // TODO: working here
+    const user = UserSession.validate
+      (this.context, ['name', 'login', 'gender', 'virtue', 'traits', 'similars']);
+    return this.shuffle(user.similars);
   }
 
-  shuffle(arr) { // TODO: duplicated
-    if (!arr) arr = [];
-    arr.sort(() => Math.random() - 0.5);
-    return arr;
+  shuffle(arr) {
+    let newArray = arr.slice(),
+      len = newArray.length,
+      i = len;
+    while (i--) {
+      let p = parseInt(Math.random() * len),
+        t = newArray[i];
+      newArray[i] = newArray[p];
+      newArray[p] = t;
+    }
+    return newArray;
   }
 
   render() {
-    const { classes } = this.props;
     return (
-      <div className={classes.root} >
+      <div className={this.props.root} >
         <SpectreHeader colour="white" progressActive progressNumber="one" />
         <IdleChecker />
-        <div className={`${classes.content} content`}>
+        <div className={`${this.props.content} content`}>
           <Typography component="h5" variant="h5" className="influence-a-follower"><strong>Influence a follower!</strong></Typography>
           <Typography component="p" variant="body1" className="community">Spectre has a global community of followers.</Typography>
           <Typography component="h5" variant="h5" className="choose-participant">Choose one:</Typography>
@@ -92,7 +77,7 @@ class InfluenceAFollower extends React.Component {
                 target={{ name: sim.name, image: `${User.profileDir}/${sim._id}.jpg` }}
               />
             ))}
-         </AvatarCircle>
+          </AvatarCircle>
         </div>
         <FooterLogo />
       </div>
