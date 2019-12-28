@@ -1,0 +1,15 @@
+{
+  "name": "spectre-scripts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "insert-default-users.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "btoa": "^1.2.1",
+    "node-fetch": "^2.6.0"
+  }
+}

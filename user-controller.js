@@ -11,15 +11,15 @@ TODO: every call should return a uniform object:
 }
 */
 
-const list = function (req, res) {
+const list = function(req, res) {
 
-  UserModel.getAll(function (err, users) {
+  UserModel.getAll(function(err, users) {
     if (err) return error(res, err);
     res.status(200).send(users);
   });
 };
 
-const current = function (req, res) { // not used at present
+const current = function(req, res) { // not used at present
 
   UserModel.findOne({ clientId: req.params.uid }, {}, {
     sort: { 'createdAt': -1 }
@@ -29,7 +29,25 @@ const current = function (req, res) { // not used at present
   });
 };
 
-const create = function (req, res) {
+const createBatch = function(req, res) {
+
+  //console.log('REQ',req);
+  let users = req.body;
+
+  if (!users || !Array.isArray(users)) return error
+    (res, 'No users in request body');
+
+  UserModel.insertMany(users, (err, result) => {
+    if (err) {
+      return error(res, err);
+    }
+    else {
+      res.status(200).send(result);
+    }
+  });
+};
+
+const create = function(req, res) {
 
   if (!(req.body.login && req.body.loginType)) return error(res,
     "UserModel with no login/loginType:" + JSON.stringify(req.body));
@@ -45,7 +63,7 @@ const create = function (req, res) {
     if (e || docs.length) return error(res, e || "Unique User Violation: " +
       req.body.login + '/' + req.body.loginType);
 
-    user.save(function (err) {
+    user.save(function(err) {
       if (err) return error(res, err);
       //console.log('User.created #' + user._id + ': ' + user.login + "/" + user.loginType);
       res.status(200).send(user);
@@ -53,9 +71,9 @@ const create = function (req, res) {
   });
 };
 
-const view = function (req, res) {
+const view = function(req, res) {
 
-  UserModel.findById(req.params.uid, function (err, user) {
+  UserModel.findById(req.params.uid, function(err, user) {
     if (err) return error(res, 'Unable to find user #' + req.params.uid);
     res.status(200).send(user);
   });
@@ -77,7 +95,7 @@ const view = function (req, res) {
 // 4. update the user OR ERROR
 // 5. return 200/OK
 
-const update = function (req, res) {
+const update = function(req, res) {
 
   // add missing properties that can be computed
   const computeProperties = (usr) => {
@@ -102,21 +120,21 @@ const update = function (req, res) {
       // if (typeof sims !== 'undefined' && sims.length) {
       //   usr.similars = sims;
       // }
-      console.log("ALMOST1....",usr._id, usr.similars.length);
+      console.log("ALMOST1....", usr._id, usr.similars.length);
 
       usr.save((err, u) => {
         if (err) {
           console.error('ERROR(22): ', err, u);
           return error(res, 'Unable to update user #' + u._id);
         }
-        console.log("ALMOST2....",u._id, u.similars.length);
+        console.log("ALMOST2....", u._id, u.similars.length);
         res.status(200).send(u);
       });
     }
   };
   //let headersSent = false;
 
-  UserModel.findByIdAndUpdate(req.params.uid, req.body, { new: true }, function (err, user) {
+  UserModel.findByIdAndUpdate(req.params.uid, req.body, { new: true }, function(err, user) {
 
     if (err) {
       console.log("ERROR", err, err.error);
@@ -141,19 +159,19 @@ const update = function (req, res) {
           // if so get their properties
           //let updated = [];
           user.similars = sims;
-          sims.forEach((s) => computeProperties(s) && console.log('saving '+s.name) && s.save(err));
-              // UserModel.findByIdAndUpdate(s._id, s, { new: true }, function (err, s) {
-              //   if (err) console.error(err + '\nUnable to update user #' + s._id);
-              //   console.log('updated '+s._id);
-              //   if (--count === 0) {
-              //     console.log('PASSING Sims',sims.length);
-              //     //saveAndRespond(user, sims);
-              //   }
-              // });
-              // s.save((err, s) => {
-              //   if (err) console.error(err + '\nUnable to update user #' + s._id);
-              // });
-            //}
+          sims.forEach((s) => computeProperties(s) && console.log('saving ' + s.name) && s.save(err));
+          // UserModel.findByIdAndUpdate(s._id, s, { new: true }, function (err, s) {
+          //   if (err) console.error(err + '\nUnable to update user #' + s._id);
+          //   console.log('updated '+s._id);
+          //   if (--count === 0) {
+          //     console.log('PASSING Sims',sims.length);
+          //     //saveAndRespond(user, sims);
+          //   }
+          // });
+          // s.save((err, s) => {
+          //   if (err) console.error(err + '\nUnable to update user #' + s._id);
+          // });
+          //}
           //});
 
         });
@@ -257,7 +275,7 @@ const update = function (req, res) {
 //   });
 // };
 
-const similar = function (req, res) {
+const similar = function(req, res) {
 
   if (!req.params.hasOwnProperty('uid')) {
     return error(res, 'UserId required');
@@ -269,7 +287,7 @@ const similar = function (req, res) {
   }
 
   let uid = req.params.uid;
-  UserModel.findById(uid, function (err, user) {
+  UserModel.findById(uid, function(err, user) {
     if (err) return error(res, 'Unable to find user #' + uid);
     user.findByOcean(limit, (users) => {
       res.status(200).send(users);
@@ -277,9 +295,8 @@ const similar = function (req, res) {
   });
 };
 
-const remove = function (req, res) {
-
-  UserModel.remove({ _id: req.params.uid }, function (err, user) {
+const remove = function(req, res) {
+  UserModel.remove({ _id: req.params.uid }, function(err, user) {
     if (err) return error(res, 'Unable to delete user #' + req.params.uid);
     res.status(200).send(req.params.uid);
   });
@@ -287,7 +304,7 @@ const remove = function (req, res) {
 
 const profiles = './client/public/profiles/';
 
-const photo = function (req, res) {
+const photo = function(req, res) {
 
   if (typeof req.params.uid === 'undefined' ||
     req.params.uid === 'undefined') {
@@ -316,7 +333,7 @@ const photo = function (req, res) {
   });
 };
 
-const photoset = function (req, res) {
+const photoset = function(req, res) {
 
   //console.log("Routes.photoSet");
 
@@ -347,8 +364,8 @@ const photoset = function (req, res) {
 };
 
 function error(res, err, code) {
-  //console.log("ERR:\n", JSON.stringify(err, null, 2));
+  console.log("ERR:\n", JSON.stringify(err, null, 2));
   res.status(code || 400).send({ error: err });
 }
 
-export default { list, similar, create, view, update, remove, photo, photoset, current }
+export default { list, similar, create, view, update, remove, photo, photoset, current, createBatch }

@@ -9,6 +9,9 @@ router.route('/users')
   .get(controller.list)
   .post(controller.create);
 
+router.route('/users/batch')
+  .post(controller.createBatch);
+
 router.route('/users/:uid')
   .get(controller.view)
   .put(controller.update)
