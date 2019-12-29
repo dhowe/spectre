@@ -4,13 +4,13 @@
  */
 //import mongoose from 'mongoose';
 import chai_http from 'chai-http';
-import server from '../server';
+import server from '../../server';
 import dotEnv from 'dotenv';
 import chai from 'chai';
 import fs from 'fs';
 
-import UserModel from '../user-model';
-import User from '../shared/user';
+import UserModel from '../../user-model';
+import User from '../../shared/user';
 
 const env = process.env;
 const expect = chai.expect;
@@ -20,8 +20,9 @@ dotEnv.config();
 chai.use(chai_http);
 
 let host = server;
-if (typeof env.API_HOST != 'undefined')
+if (typeof env.API_HOST !== 'undefined') {
   host = env.API_HOST + ':' + port;
+}
 
 describe('User Routes', () => {
 

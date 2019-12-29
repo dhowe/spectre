@@ -4,8 +4,10 @@
   "description": "Server component for the SPECTRE system",
   "main": "app.js",
   "scripts": {
-    "test": "mocha ./tests --recursive --exit -r esm",
-    "test-g": "mocha ./tests --recursive --exit -r esm -g",
+    "test": "mocha ./tests --exit -r esm",
+    "test-g": "mocha ./tests --exit -r esm -g",
+    "test-routes": "mocha ./tests/routes --exit -r esm",
+    "test-routes-g": "mocha ./tests/routes --exit -r esm -g",
     "server": "nodemon -r esm server.js",
     "client": "yarn --cwd client start",
     "client-start": "yarn --cwd client start",
@@ -13,8 +15,7 @@
     "build-prod": "NODE_ENV=production yarn run server",
     "prepbuild-prod": "NODE_ENV=production yarn run client-build",
     "start": "concurrently --kill-others-on-fail \"yarn run server\" \"yarn run client-start\"",
-    "full-install": "yarn install && yarn --cwd client install",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false yarn --cwd client install && yarn --cwd client run build"
+    "full-install": "yarn install && yarn --cwd client install"
   },
   "author": "daniel howe",
   "dependencies": {
@@ -49,6 +50,7 @@
     "chai-http": "^4.3.0",
     "concurrently": "^5.0.2",
     "mocha": "^6.1.4",
+    "node-fetch": "^2.6.0",
     "nodemon": "^2.0.2"
   }
 }

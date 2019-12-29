@@ -33,6 +33,14 @@ class InfluenceAFollower extends React.Component {
 
   constructor(props) {
     super(props, '/selected-avatar');
+    this.state = {similars: []};
+  }
+
+  componentDidMount() {
+    console.log('componentDidMount');
+    UserSession.ensure(this.context,
+        ['_id', 'name', 'login', 'gender', 'virtue', 'traits', 'similars'],
+        u => this.setState({similars: u.similars}));
   }
 
   handleSelect = (target) => {
@@ -42,9 +50,9 @@ class InfluenceAFollower extends React.Component {
 
   renderSimilars() {
     // TODO: working here
-    const user = UserSession.validate
-      (this.context, ['name', 'login', 'gender', 'virtue', 'traits', 'similars']);
-    return this.shuffle(user.similars);
+    // const user = UserSession.validate
+    //   (this.context, ['_id', 'name', 'login', 'gender', 'virtue', 'traits', 'similars']);
+    return this.shuffle(this.state.similars.slice(0,7));
   }
 
   shuffle(arr) {
@@ -72,8 +80,8 @@ class InfluenceAFollower extends React.Component {
           <AvatarCircle>
             {this.renderSimilars().map((sim, i) => (
               <AvatarComponent
-                handleClick={() => this.handleSelect(sim)}
                 key={AvatarComponent.generateKey(i)}
+                handleClick={() => this.handleSelect(sim)}
                 target={{ name: sim.name, image: `${User.profileDir}/${sim._id}.jpg` }}
               />
             ))}

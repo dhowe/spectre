@@ -44,7 +44,7 @@ class Insight extends React.Component {
       progress,
     } = this.props;
 
-    this.context.target = this.context.target || UserSession.defaults[0];
+    this.context.target = this.context.target || UserSession.defaultUsers[0];
     const tname = this.context.target.name;
     const timage = this.context.targetImgUrl();
     return (

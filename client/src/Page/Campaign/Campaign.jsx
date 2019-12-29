@@ -29,7 +29,7 @@ class Campaign extends React.Component {
   render() {
     const { classes } = this.props;
     this.context.adIssue = this.context.adIssue || 'leave';
-    this.context.target = this.context.target || UserSession.defaults[0];
+    this.context.target = this.context.target || UserSession.defaultUsers[0];
     const pron = this.context.target.gender === 'male' ? 'he' : 'she';
     //const poss = this.context.target.gender === 'male' ? 'him' : 'her';
     const infls = this.context.targetAdInfluences();

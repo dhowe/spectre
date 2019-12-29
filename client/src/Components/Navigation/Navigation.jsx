@@ -8,22 +8,24 @@ const routes = [
   "/influence-a-follower", "/selected-avatar"
 ];
 
+const disabled = ["/login"];
+
 class Navigation extends React.Component {
 
   constructor(props) {
     super(props);
     this.enabled = true;
-    this.ignores = ['/login'];
   }
 
   next = (page) => {
 
     let current = window.location.pathname;
-    if (this.ignores.includes(current)) return;
-    let idx = routes.indexOf(current);
-    page = page || routes[++idx];
-    //console.log('nav: '+current+' -> '+page);
-    this.props.history.push(page);
+    if (!disabled.includes(current)) {
+      let idx = routes.indexOf(current);
+      page = page || routes[++idx];
+      //console.log('nav: '+current+' -> '+page);
+      this.props.history.push(page);
+    }
   }
 
   last = () => {
@@ -40,12 +42,12 @@ class Navigation extends React.Component {
   }
 
   componentWillUnmount() {
-    document.removeEventListener('keyup',  this.onKey);
+    document.removeEventListener('keyup', this.onKey);
   }
 
   render() {
     this.context.lastPageVisit = {
-      page: window.location.pathname.replace(/^\/(.*)/,'$1'),
+      page: window.location.pathname.replace(/^\/(.*)/, '$1'),
       time: Date.now()
     };
     return null;

@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
-import Webcam from "react-webcam";
+//import Webcam from "react-webcam";
 import './SearchingFor.scss';
 import Styles from '../../Styles';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';

@@ -10,13 +10,14 @@ describe('Client User', function () {
       let fields = Object.keys(User.schema());
 
       // these are fields defined with a default
-      let ignores = ['clientId', 'isActive', 'category'];
+      let ignores = ['clientId', 'isActive', 'category', 'loginType'];
       fields.forEach(f => {
         if (ignores.indexOf(f) < 0) {
           expect(user[f]).eq(undefined);
           expect(user).has.property(f);
         }
       });
+
       expect(user.clientId).eq(-1);
       expect(user.category).eq(0);
       expect(user.isActive).eq(false);

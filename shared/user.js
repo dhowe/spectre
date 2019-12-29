@@ -119,7 +119,7 @@ export default class User {
         ];
       }
     } else {
-      console.error("[WARN] no target/traits/issue: "+
+      console.error("[WARN] no target/traits/issue: " +
         "using random images, issue=" + this.adIssue, this.target.traits);
     }
 
@@ -142,11 +142,11 @@ export default class User {
       let cat = this.categorize(this.target);
       if (cat !== 0) {
         influences = User.adInfluences[this.adIssue]
-          [(cat > 0 ? 'high' : 'low')][ots[Math.abs(cat) - 1]];
+        [(cat > 0 ? 'high' : 'low')][ots[Math.abs(cat) - 1]];
       }
     } else {
-      console.error("[WARN] no target/traits/issue: "+
-        "using random influences [issue=" + this.adIssue+"] target=", this.target);
+      console.error("[WARN] no target/traits/issue: " +
+        "using random influences [issue=" + this.adIssue + "] target=", this.target);
     }
     return influences;
   }
@@ -168,9 +168,9 @@ export default class User {
       if (cat !== 0) {
         //console.log('['+this.adIssue+']['+(cat > 0 ? 'high' : 'low')+']['+ots[Math.abs(cat)-1]+']');
         let good = User.adSlogans[this.adIssue]
-          [(cat > 0 ? 'high' : 'low')][ots[Math.abs(cat) - 1]];
+        [(cat > 0 ? 'high' : 'low')][ots[Math.abs(cat) - 1]];
         let bad = User.adSlogans[this.adIssue]
-          [(cat < 0 ? 'high' : 'low')][ots[Math.abs(cat) - 1]];
+        [(cat < 0 ? 'high' : 'low')][ots[Math.abs(cat) - 1]];
         slogans = good.concat(bad);
       }
     } else {
@@ -188,9 +188,9 @@ export default class User {
     let idx2 = Math.floor(Math.random() * ots.length)
     //console.log('['+this.adIssue+']['+(Math.random() < .5 ? 'high' : 'low')+']['+[ots[idx1]]+']');
     let set1 = User.adSlogans[issue]
-      [(Math.random() < .5 ? 'high' : 'low')][ots[idx1]];
+    [(Math.random() < .5 ? 'high' : 'low')][ots[idx1]];
     let set2 = User.adSlogans[issue]
-      [(Math.random() < .5 ? 'high' : 'low')][ots[idx2]];
+    [(Math.random() < .5 ? 'high' : 'low')][ots[idx2]];
     return set1.concat(set2);
   }
 
@@ -199,14 +199,14 @@ export default class User {
     let idx = Math.floor(Math.random() * ots.length);
     //console.log(this.adIssue, this);
     return User.adInfluences[this.adIssue]
-      [(Math.random() < .5 ? 'high' : 'low')][ots[idx]];
+    [(Math.random() < .5 ? 'high' : 'low')][ots[idx]];
   }
 
   targetImgUrl() {
     let tid = 'default';
     if (typeof this.target._id !== 'undefined' && this.target._id)
       tid = this.target._id;
-    return User.profileDir + tid+ '.jpg';
+    return User.profileDir + tid + '.jpg';
   }
 
   setBrands(brandData) {
@@ -304,21 +304,21 @@ export default class User {
 
   poss() {
     switch (this.gender) {
-    case 'male':
-      return 'his';
-    case 'other': //return 'their'; TODO:
-    case 'female':
-      return 'her';
+      case 'male':
+        return 'his';
+      case 'other': //return 'their'; TODO:
+      case 'female':
+        return 'her';
     }
   }
 
   pronoun() {
     switch (this.gender) {
-    case 'male':
-      return 'he';
-    case 'other': //return 'they'; TODO:
-    case 'female':
-      return 'she';
+      case 'male':
+        return 'he';
+      case 'other': //return 'they'; TODO:
+      case 'female':
+        return 'she';
     }
   }
 
@@ -332,7 +332,7 @@ export default class User {
   }
 
   setTraits(traits) {
-    if (typeof obj === 'string') throw Error('expecting traits object');
+    if (typeof traits === 'string') throw Error('expecting traits object');
 
     this.traits = traits;
     this.predictInfluences();
@@ -422,8 +422,8 @@ export default class User {
   }
 };
 
-User.profileDir = process.env.PUBLIC_URL+'/profiles/';
-User.imageDir = process.env.PUBLIC_URL+'/imgs/';
+User.profileDir = process.env.PUBLIC_URL + '/profiles/';
+User.imageDir = process.env.PUBLIC_URL + '/imgs/';
 
 /**
  * MongoDB database schema for the application
@@ -535,7 +535,7 @@ function irand() {
     Math.floor(randnum * (arguments[1] - arguments[0]) + arguments[0]);
 }
 
-User._randomData = function (tmpl) {
+User._randomData = function(tmpl) {
   if (!tmpl || typeof tmpl._id === 'undefined' || typeof tmpl.name === 'undefined') {
     console.log(tmpl);
     throw Error('id and login required' + tmpl);
@@ -559,7 +559,7 @@ User._randomData = function (tmpl) {
   return user;
 }
 
-User._randomTraits = function (tmpl) {
+User._randomTraits = function(tmpl) {
   let traits = {};
   User.oceanTraits.forEach(t => traits[t] = Math.random());
   return traits;
@@ -647,12 +647,12 @@ User.descriptionTemplate = {
     poles: ['Conservative and Traditional', 'Liberal and Artistic'],
     meta: 'People scoring high on this trait can be described as intellectually curious, sensitive to beauty, and unconventional, while people scoring low on this trait can be characterized as traditional and are more likely to prefer the familiar over the unusual.',
     text: [
-          '$user.name.ucf() $user.toBe() down-to-earth and prefers things to be simple and straightforward. $user.pronoun().ucf() finds life easier if things don’t change unnecessarily. The arts are of little practical use to $user.poss() as tradition $user.toBe() generally more important.',
-          '$user.name.ucf() dislikes needless complexity, and prefers the familiar over the unusual. $user.pronoun().ucf() is more conservative than many and values practical outcomes over flighty imagination.',
-          '$user.name.ucf() $user.toBe() aware of $user.poss() feelings but doesn’t get carried away with $user.poss() imagination. $user.pronoun().ucf() embraces change when it $user.toBe() necessary while still resisting it when $user.pronoun() thinks otherwise. Beauty $user.toBe() important to $user.poss(), but it’s not everything.',
-          '$user.name.ucf() $user.toBe() intellectually curious and appreciative of what $user.pronoun() considers beautiful, no matter what others think. $user.poss().ucf() imagination $user.toBe() vivid and makes $user.poss() more creative than many others.',
-          '$user.name.ucf() $user.toBe() far more intellectually curious and sensitive to beauty than most. $user.poss().ucf() beliefs are individualistic and frequently drift towards the unconventional. $user.pronoun().ucf() enjoys $user.poss() imagination and the exciting places it takes $user.poss().'
-        ]
+      '$user.name.ucf() $user.toBe() down-to-earth and prefers things to be simple and straightforward. $user.pronoun().ucf() finds life easier if things don’t change unnecessarily. The arts are of little practical use to $user.poss() as tradition $user.toBe() generally more important.',
+      '$user.name.ucf() dislikes needless complexity, and prefers the familiar over the unusual. $user.pronoun().ucf() is more conservative than many and values practical outcomes over flighty imagination.',
+      '$user.name.ucf() $user.toBe() aware of $user.poss() feelings but doesn’t get carried away with $user.poss() imagination. $user.pronoun().ucf() embraces change when it $user.toBe() necessary while still resisting it when $user.pronoun() thinks otherwise. Beauty $user.toBe() important to $user.poss(), but it’s not everything.',
+      '$user.name.ucf() $user.toBe() intellectually curious and appreciative of what $user.pronoun() considers beautiful, no matter what others think. $user.poss().ucf() imagination $user.toBe() vivid and makes $user.poss() more creative than many others.',
+      '$user.name.ucf() $user.toBe() far more intellectually curious and sensitive to beauty than most. $user.poss().ucf() beliefs are individualistic and frequently drift towards the unconventional. $user.pronoun().ucf() enjoys $user.poss() imagination and the exciting places it takes $user.poss().'
+    ]
   },
 
   conscientiousness: {
@@ -660,12 +660,12 @@ User.descriptionTemplate = {
     poles: ['Impulsive and Spontaneous', 'Organized and Hard-working'],
     meta: 'People scoring high on this trait can be described as organized, reliable, and efficient, while people scoring low on this trait are generally characterized as spontaneous and impulsive.',
     text: [
-          '$user.name.ucf() $user.toBe() impulsive and whimsical, and fine with it! $user.pronoun().ucf() would say that sometimes decisions need to be made quickly, and that $user.pronoun() makes them quicker than most. $user.pronoun().ucf() would say $user.pronoun() $user.toBe() zany, colourful, and just generally great fun to be with... as long as someone isn’t relying on $user.pronoun() to get some work done.',
-          '$user.name.ucf() $user.toBe() spontaneous and fun. $user.pronoun().ucf() likes to do unexpected things that make life that bit more interesting. $user.pronoun().ucf() $user.toBe()n’t completely unreliable, but $user.pronoun()’ve been known to slip up on occasion.',
-          '$user.name.ucf() $user.toBe() random and fun to be around but $user.pronoun() can plan and persist when life requires it. Depending on the situation, $user.pronoun() can make quick decisions or deliberate for longer if necessary.',
-          '$user.name.ucf() avoids foreseeable trouble through purposeful planning and achieves success through persistence. $user.pronoun().ucf() $user.toBe() reliable and prepared for life’s challenges.',
-          '$user.name.ucf() $user.toBe() a perfectionist. $user.pronoun().ucf() prefers to plan everything to the last detail, which has consequently led to $user.poss() being very successful and extremely reliable. $user.pronoun().ucf() enjoys seeing $user.poss() long-term plans come to fruition.'
-        ]
+      '$user.name.ucf() $user.toBe() impulsive and whimsical, and fine with it! $user.pronoun().ucf() would say that sometimes decisions need to be made quickly, and that $user.pronoun() makes them quicker than most. $user.pronoun().ucf() would say $user.pronoun() $user.toBe() zany, colourful, and just generally great fun to be with... as long as someone isn’t relying on $user.pronoun() to get some work done.',
+      '$user.name.ucf() $user.toBe() spontaneous and fun. $user.pronoun().ucf() likes to do unexpected things that make life that bit more interesting. $user.pronoun().ucf() $user.toBe()n’t completely unreliable, but $user.pronoun()’ve been known to slip up on occasion.',
+      '$user.name.ucf() $user.toBe() random and fun to be around but $user.pronoun() can plan and persist when life requires it. Depending on the situation, $user.pronoun() can make quick decisions or deliberate for longer if necessary.',
+      '$user.name.ucf() avoids foreseeable trouble through purposeful planning and achieves success through persistence. $user.pronoun().ucf() $user.toBe() reliable and prepared for life’s challenges.',
+      '$user.name.ucf() $user.toBe() a perfectionist. $user.pronoun().ucf() prefers to plan everything to the last detail, which has consequently led to $user.poss() being very successful and extremely reliable. $user.pronoun().ucf() enjoys seeing $user.poss() long-term plans come to fruition.'
+    ]
   },
 
   extraversion: {
@@ -673,12 +673,12 @@ User.descriptionTemplate = {
     poles: ['Contemplative', 'Engaged with Outside World'],
     meta: 'People scoring high on this trait can be described as energetic, talkative and sociable, while people scoring low on this trait tend to be more shy, reserved and comfortable in their own company.',
     text: [
-          '$user.name.ucf() $user.toBe() quiet and somewhat withdrawn. $user.pronoun().ucf() is someone who doesn’t need lots of other people around to have fun, and sometimes finds people tiring.',
-          '$user.name.ucf() prefers low-key social occasions, with a few close friends. It’s not that $user.pronoun() $user.toBe() afraid of large parties; they\'re just not that fun for $user.poss().',
-          '$user.name.ucf() enjoys and actively seeks out social occasions, but would say that they’re not everything. $user.pronoun().ucf() might say that sometimes it $user.toBe() nice to step back for a while and have a quiet night in.',
-          '$user.name.ucf() $user.toBe() energetic and active. $user.pronoun().ucf() is someone who enjoys and actively seeks out social occasions, and especially enjoys talking with a big group of people.',
-          '$user.name.ucf() $user.toBe() constantly energetic, exuberant and active. $user.pronoun().ucf() is someone who aims to be the centre of attention at social occasions, takes charge in groups, and usually says "Yes" to challenges.'
-        ]
+      '$user.name.ucf() $user.toBe() quiet and somewhat withdrawn. $user.pronoun().ucf() is someone who doesn’t need lots of other people around to have fun, and sometimes finds people tiring.',
+      '$user.name.ucf() prefers low-key social occasions, with a few close friends. It’s not that $user.pronoun() $user.toBe() afraid of large parties; they\'re just not that fun for $user.poss().',
+      '$user.name.ucf() enjoys and actively seeks out social occasions, but would say that they’re not everything. $user.pronoun().ucf() might say that sometimes it $user.toBe() nice to step back for a while and have a quiet night in.',
+      '$user.name.ucf() $user.toBe() energetic and active. $user.pronoun().ucf() is someone who enjoys and actively seeks out social occasions, and especially enjoys talking with a big group of people.',
+      '$user.name.ucf() $user.toBe() constantly energetic, exuberant and active. $user.pronoun().ucf() is someone who aims to be the centre of attention at social occasions, takes charge in groups, and usually says "Yes" to challenges.'
+    ]
   },
 
   agreeableness: {
@@ -686,12 +686,12 @@ User.descriptionTemplate = {
     poles: ['Competitive', 'Team-working and Trusting'],
     meta: 'People scoring high on this trait are generally considered soft-hearted, generous, and sympathetic, while people scoring low on this trait tend to be more driven, self-confident and competitive.',
     text: [
-          '$user.name.ucf() $user.toBe() willing to make (tough|difficult) decisions when necessary, and will point out when something $user.toBe() wrong no matter what other people might feel. (One|You) might say that $user.pronoun() is tough and uncompromising.',
-          '$user.name.ucf() often finds it difficult to get along with new people when they first meet, as $user.pronoun() can be suspicious of their motives. Over time though people warm to $user.poss(), and $user.pronoun() to them, although that doesn’t stop $user.poss() from telling them "how it $user.toBe()".',
-          '$user.name.ucf() gets along with people well, especially once they have proved themselves trustworthy to $user.pronoun(). $user.pronoun().ucf() do have a healthy scepticism about others’ motives, but that doesn’t stop $user.pronoun() from considering others to be basically honest and decent.',
-          '$user.name.ucf() is someone people get along with easily. $user.pronoun().ucf() $user.toBe() considerate and friendly, and expect others to be honest and decent.',
-          '$user.name.ucf() $user.toBe() extremely easy to get along with. $user.pronoun().ucf() $user.toBe() considerate, friendly, generous and helpful and $user.pronoun() considers most others to be decent and trustworthy.'
-        ]
+      '$user.name.ucf() $user.toBe() willing to make (tough|difficult) decisions when necessary, and will point out when something $user.toBe() wrong no matter what other people might feel. (One|You) might say that $user.pronoun() is tough and uncompromising.',
+      '$user.name.ucf() often finds it difficult to get along with new people when they first meet, as $user.pronoun() can be suspicious of their motives. Over time though people warm to $user.poss(), and $user.pronoun() to them, although that doesn’t stop $user.poss() from telling them "how it $user.toBe()".',
+      '$user.name.ucf() gets along with people well, especially once they have proved themselves trustworthy to $user.pronoun(). $user.pronoun().ucf() do have a healthy scepticism about others’ motives, but that doesn’t stop $user.pronoun() from considering others to be basically honest and decent.',
+      '$user.name.ucf() is someone people get along with easily. $user.pronoun().ucf() $user.toBe() considerate and friendly, and expect others to be honest and decent.',
+      '$user.name.ucf() $user.toBe() extremely easy to get along with. $user.pronoun().ucf() $user.toBe() considerate, friendly, generous and helpful and $user.pronoun() considers most others to be decent and trustworthy.'
+    ]
   },
 
   neuroticism: {
@@ -699,11 +699,11 @@ User.descriptionTemplate = {
     poles: ['Laid-back and Relaxed', 'Easily Stressed and Emotional'],
     meta: 'People scoring high on this trait generally worry more than most, and react poorly to stressful situations. However, they often show an emotional depth that others lack.',
     text: [
-          '$user.name.ucf() $user.toBe() extremely (hard|difficult) to upset or stress out, since $user.pronoun() rarely, if ever, react with negative emotions, and even when $user.pronoun() $user.toBe() anxious about something the feeling quickly passes. $user.pronoun().ucf() comes across as very calm and resilient.',
-          '$user.name.ucf() $user.toBe() calm and emotionally stable. $user.pronoun().ucf() comes across as someone who $user.toBe() rarely bothered by things, and when they do get $user.pronoun() down, the feeling does not persist for very long.',
-          '$user.name.ucf() $user.toBe() generally calm. $user.pronoun().ucf() comes across as someone who can feel emotional or stressed out by some experiences, but $user.poss() feelings tend to be warranted by the situation.',
-          '$user.name.ucf() tends to be more self-conscious than many. $user.pronoun().ucf() comes across as someone who can find it hard to not get caught up by anxious or stressful situations. $user.pronoun().ucf() $user.toBe() in touch with $user.poss() own feelings.',
-          '$user.name.ucf() reacts poorly to stressful situations, and consequently worries about them more than most. However $user.pronoun() has an emotional depth that others may lack.'
-        ]
+      '$user.name.ucf() $user.toBe() extremely (hard|difficult) to upset or stress out, since $user.pronoun() rarely, if ever, react with negative emotions, and even when $user.pronoun() $user.toBe() anxious about something the feeling quickly passes. $user.pronoun().ucf() comes across as very calm and resilient.',
+      '$user.name.ucf() $user.toBe() calm and emotionally stable. $user.pronoun().ucf() comes across as someone who $user.toBe() rarely bothered by things, and when they do get $user.pronoun() down, the feeling does not persist for very long.',
+      '$user.name.ucf() $user.toBe() generally calm. $user.pronoun().ucf() comes across as someone who can feel emotional or stressed out by some experiences, but $user.poss() feelings tend to be warranted by the situation.',
+      '$user.name.ucf() tends to be more self-conscious than many. $user.pronoun().ucf() comes across as someone who can find it hard to not get caught up by anxious or stressful situations. $user.pronoun().ucf() $user.toBe() in touch with $user.poss() own feelings.',
+      '$user.name.ucf() reacts poorly to stressful situations, and consequently worries about them more than most. However $user.pronoun() has an emotional depth that others may lack.'
+    ]
   }
 };

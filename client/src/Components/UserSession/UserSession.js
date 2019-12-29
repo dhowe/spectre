@@ -6,7 +6,7 @@ import FormData from 'form-data';
 // We store the current User in React context for easy access
 let UserSession = React.createContext({});
 
-UserSession.defaults = [
+UserSession.defaultUsers = [
   { "_id": "111111111111111111111111", "name": "Remy", "traits": { "openness": 0.5818180970605207, "conscientiousness": 0.07645862267650672, "extraversion": 0.2607193320319028, "agreeableness": 0.012588228025398163, "neuroticism": 0.16712815071948772 } },
   { "_id": "222222222222222222222222", "name": "Bailey", "traits": { "openness": 0.10280703242247147, "conscientiousness": 0.6791763609042916, "extraversion": 0.6985730973994828, "agreeableness": 0.47335712795485274, "neuroticism": 0.32620076142720156 } },
   { "_id": "333333333333333333333333", "name": "Devin", "traits": { "openness": 0.26472484195144963, "conscientiousness": 0.2892253599406023, "extraversion": 0.32397862254097665, "agreeableness": 0.8301260855442676, "neuroticism": 0.6126764672471925 } },
@@ -21,15 +21,15 @@ UserSession.defaults = [
 // load full default set
 fetch('/default-users.json').then(res => res.json())
   .then(data => {
-    UserSession.defaults = data;
+    UserSession.defaultUsers = data;
     //console.log('[USER] New session created')
   }).catch(e => {
     console.error('UserSession.defaultUsers:', e);
   });
 
 UserSession.storageKey = 'spectre-user';
-UserSession.profileDir = User.profileDir
-UserSession.imageDir = User.imageDir
+UserSession.profileDir = User.profileDir;
+UserSession.imageDir = User.imageDir;
 UserSession.Cons = "bcdfghjklmnprstvxz";
 UserSession.Vows = "aeiou";
 
@@ -52,24 +52,74 @@ UserSession.log = function(u) {
   }
 }
 
+
+/*
+ * Clears data from browser session storage
+ */
 UserSession.clear = function() {
   sessionStorage.clear();
   console.log('[USER] Session initialized');
+}
+//
+// function restore(user) {
+//   let sid = sessionStorage.getItem(UserSession.storageKey);
+//   if (!sid) throw Error('Undefined user._id not in session', user);
+//   user._id = JSON.parse(sid);
+//   UserSession.lookup(user);
+//   console.warn('[SESS] Reloaded user._id: ' + user._id);
+//   if (!user._id) throw Error('*** Invalid user ***', user); // should not happen
+// }
+
+UserSession.ensure = function(user, props, onSuccess, onError) {
+  let internalSuccess = (json) => {
+    Object.assign(user, json);
+    let fetchSimilars = false;
+    if (props.includes('similars')) {
+      fetchSimilars = true;
+      props = props.remove('similars');
+    }
+    UserSession.isValid(user, props, false);
+    if (!user.similars.length) {
+
+    }
+    else {
+      console.warn('Using default similars');
+      onSuccess && onSuccess();
+    }
+  }
+  if (!onError) onError = (e) => {
+    console.error('UserSession.ensure: ' + e);
+    throw e;
+  }
+  if (props.includes('_id') && typeof user._id === 'undefined') {
+    props = remove(props, '_id');
+    let sid = sessionStorage.getItem(UserSession.storageKey);
+    if (!sid) {
+      // redirect to /login ?
+      throw Error('Undefined user._id not in session:' + user);
+    }
+    user._id = JSON.parse(sid);
+    console.warn('[SESS] Reloaded user._id: ' + user._id);
+    UserSession.lookup(user, internalSuccess, onError);
+  }
 }
 
 /*
  * Repairs a user (if needed) and returns it
  */
-UserSession.validate = function(ctx, props, ignoreId) {
-  UserSession.isValid(ctx, props, false, ignoreId);
-  return ctx;
+UserSession.validate = function(user, props) {
+  //if (!ignoreId && typeof user._id === 'undefined') restore(user);
+  UserSession.isValid(user, props, false);
+  return user;
 }
+
+function remove(a, v) { return a.filter(i => i !== v) }
 
 /*
  * Return true if supplied user is valid on props, else false
  * Repairs the user if norepair is false or undefined
  */
-UserSession.isValid = function(user, props, norepair, ignoreId) {
+UserSession.isValid = function(user, props, norepair) {
 
   //console.log('UserSession.validate /'+ user.lastPageVisit.page);
 
@@ -86,10 +136,13 @@ UserSession.isValid = function(user, props, norepair, ignoreId) {
   const fillProps = (missing) => {
 
     const logStub = p => {
-      if (!ignoreId) console.warn
-        ('[STUB] Setting user.' + p + ': ' + JSON.stringify(user[p]))
+      let val = user[p];
+      if (Array.isArray(val)) val = user[p].length + ' users';
+      if (typeof val !== 'string') {
+        val = JSON.stringify(user[p]).substring(0, 75) + '...';
+      }
+      console.warn('[STUB] Setting user.' + p + ': ' + val)
     };
-    const remove = (a, v) => a.filter(i => i !== v);
     const cons = UserSession.Cons, vows = UserSession.Vows;
     let name, prop;
 
@@ -126,29 +179,34 @@ UserSession.isValid = function(user, props, norepair, ignoreId) {
 
     prop = 'similars';
     if (missing.includes(prop)) {
-      user[prop] = UserSession.defaults;
+      user[prop] = UserSession.defaultUsers;
       missing = remove(missing, prop);
       logStub(prop);
     }
 
     prop = 'traits';
     if (missing.includes(prop)) {
-      user.traits = {};
-      ['openness', 'conscientiousness', 'extraversion', 'agreeableness', 'neuroticism'].forEach(t => user.traits[t] = Math.random());
+      let traits = {};
+      ['openness', 'conscientiousness', 'extraversion', 'agreeableness', 'neuroticism']
+        .forEach(t => traits[t] = Math.random());
+      user.setTraits(traits);
       missing = remove(missing, prop);
       logStub(prop);
     }
 
+
+
     if (missing.length && !norepair) throw Error
       ('Unable to stub user properties: ' + missing);
   }
-
-  if (!ignoreId && typeof user._id === 'undefined') {
-    let sid = sessionStorage.getItem(UserSession.storageKey);
-    if (!sid) throw Error('Undefined user._id not in session', user);
-    user._id = JSON.parse(sid);
-    if (!sid) throw Error('*** Invalid user ***', user); // should not happen
-  }
+  //
+  // if (!ignoreId && typeof user._id === 'undefined') {
+  //   let sid = sessionStorage.getItem(UserSession.storageKey);
+  //   if (!sid) throw Error('Undefined user._id not in session', user);
+  //   user._id = JSON.parse(sid);
+  //   console.warn('[SESS] Reloaded user._id: ' + user._id);
+  //   if (!sid) throw Error('*** Invalid user ***', user); // should not happen
+  // }
 
   if (!Array.isArray(props)) props = [props];
 
@@ -182,6 +240,39 @@ UserSession.create = function(user, onSuccess, onError) {
       "Authorization": 'Basic ' + btoa(auth)
     },
     body: JSON.stringify(user)
+  })
+    .then(handleResponse)
+    .then(internalSuccess)
+    .catch(onError);
+}
+
+/*
+ * Loads users fields from database
+ */
+UserSession.lookup = function(user, onSuccess, onError) {
+
+  if (!user || !user._id) throw Error('Invalid arg', user);
+
+  let { route, auth, cid, mode } = doConfig();
+  let internalSuccess = (json) => {
+    Object.assign(user, json);
+    onSuccess && onSuccess(json);
+  }
+  if (!onError) onError = (e) => {
+    console.error('UserSession.lookup: ' + e);
+    throw e;
+  }
+
+  if (user.clientId < 0) user.clientId = cid;
+
+  console.log('[GET] ' + mode + '.lookup: ' + route);
+
+  fetch(route + user._id, {
+    method: "get",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": 'Basic ' + btoa(auth)
+    },
   })
     .then(handleResponse)
     .then(internalSuccess)

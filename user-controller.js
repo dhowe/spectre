@@ -289,7 +289,7 @@ const similar = function(req, res) {
   let uid = req.params.uid;
   UserModel.findById(uid, function(err, user) {
     if (err) return error(res, 'Unable to find user #' + uid);
-    user.findByOcean(limit, (users) => {
+    user.findByOcean(limit, (err, users) => {
       res.status(200).send(users);
     });
   });
