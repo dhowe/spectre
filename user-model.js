@@ -12,18 +12,18 @@ Object.keys(functions).forEach(f => UserSchema.methods[f] = functions[f]);
 // TODO: all callbacks should pass error first
 
 // find all users with traits
-UserSchema.methods.findByOcean = function(limit, cb) { // cb=function(err,users)
+UserSchema.methods.findByOcean = function(callback, limit) { // cb=function(err,users)
   let user = this;
   UserModel.find({ 'traits.openness': { $gte: 0 } })
     .exec((err, candidates) => {
       if (err) {
-        console.error(err);
+        console.error('findByOcean', err);
         throw err;
       }
       let sorted = oceanSort(user, candidates);
-      cb(err, sorted.slice(0, limit));
+      sorted = sorted.slice(0, limit);
+      callback(err, sorted); // ADDED: DCH
     });
-  return this;
 };
 
 UserSchema.statics.getAll = function(callback, limit) {

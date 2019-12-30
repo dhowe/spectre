@@ -81,47 +81,25 @@ const view = function(req, res) {
 
 const update = function(req, res) {
 
-  UserModel.findByIdAndUpdate(req.params.uid, req.body, { new: true }, (err, user) => {
+  let uid = req.params.uid;
+  let limit = req.query.hasOwnProperty('limit') ? parseInt(req.query.limit) : 6;
 
-    if (err) {
-      console.log("ERROR", err, err.error);
-      return error(res, 'Update fail #' + req.params.uid);
-    }
+  UserModel.findByIdAndUpdate(uid, req.body, { new: true }, (err, user) => {
+
+    if (err) return error(res, 'Update fail #' + req.params.uid);
 
     if (!user.hasOceanTraits()) {
       res.status(200).send(user);
       return;
     }
 
-    let limit = req.query.hasOwnProperty('limit')
-      ? parseInt(req.query.limit) : 6;
-
-    user.findByOcean(limit, (err, sims) => {
-      if (err) {
-        console.log("ERROR", err, err.error);
-        return error(res, 'Update fail #' + req.params.uid);
-      }
-      user.similars = sims;
+    user.findByOcean((err, sims) => {
+      if (err) return error(res, 'Unable to findByOcean for #' + req.params.uid);
+      user._doc.similars = sims; // why is _doc needed ?
       res.status(200).send(user);
-    });
+    }, limit);
   });
 }
-
-// TODO: update 1
-// 1. find the user by id OR ERROR
-// 2. do the update OR ERROR
-// 3. check for traits but not generated fields
-// 4. if not, return 200/OK;
-// 5. if so, generate the fields OR ERROR (ignore?)
-// 6. re-update the user OR ERROR
-// 7. return 200/OK
-
-// TODO: update 2
-// 1. find the user by id OR ERROR
-// 2. check for traits but not generated fields
-// 3. if so, generate fields  OR ERROR
-// 4. update the user OR ERROR
-// 5. return 200/OK
 
 const update2 = function(req, res) {
 
@@ -174,7 +152,7 @@ const update2 = function(req, res) {
         req.query.hasOwnProperty('limit') && (limit = parseInt(req.query.limit));
 
         console.log('limit: ' + limit);
-        user.findByOcean(limit, sims => {
+        user.findByOcean(sims => {
           if (err) return error(res, 'No similars for #' + req.params.uid);
 
           if (sims) {
@@ -198,7 +176,7 @@ const update2 = function(req, res) {
             //});
           }
 
-        });
+        }, limit);
         saveAndRespond(user);
 
       } else {
@@ -225,7 +203,7 @@ const update2 = function(req, res) {
 //         let limit = 6; // default limit
 //         req.query.hasOwnProperty('limit') && (limit = parseInt(req.query.limit));
 //
-//         user.findByOcean(limit, sims => {
+//         user.findByOcean(sims => limit,  {
 //           if (err) return error(res, 'No similars for #' + req.params.uid);
 //
 //           console.log('sims found: ', sims.length);
@@ -269,7 +247,7 @@ const update2 = function(req, res) {
 //         limit = parseInt(req.query.limit);
 //       }
 //
-//       user.findByOcean(limit, sims => {
+//       user.findByOcean(sims => limit,{
 //         //console.log('findByOcean',users.length, err);
 //         if (err) {
 //           console.error(res.statusCode, res.statusMessage,
@@ -299,7 +277,7 @@ const update2 = function(req, res) {
 //   });
 // };
 
-const similar = function(req, res) {
+const similars = function(req, res) {
 
   if (!req.params.hasOwnProperty('uid')) {
     return error(res, 'UserId required');
@@ -313,10 +291,10 @@ const similar = function(req, res) {
   let uid = req.params.uid;
   UserModel.findById(uid, (err, user) => {
     if (err) return error(res, 'Unable to find user #' + uid);
-    user.findByOcean(limit, (err, users) => {
+    user.findByOcean((err, sims) => {
       if (err) return error(res, 'Unable to findByOcean for #' + req.params.uid);
-      res.status(200).send(users);
-    });
+      res.status(200).send(sims);
+    }, limit);
   });
 };
 
@@ -393,4 +371,4 @@ function error(res, err, code) {
   res.status(code || 400).send({ error: err });
 }
 
-export default { list, similar, create, view, update, remove, photo, photoset, current, createBatch }
+export default { list, similars, create, view, update, remove, photo, photoset, current, createBatch }

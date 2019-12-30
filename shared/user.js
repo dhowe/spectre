@@ -559,7 +559,7 @@ User._randomData = function(tmpl) {
   return user;
 }
 
-User._randomTraits = function(tmpl) {
+User._randomTraits = function() {
   let traits = {};
   User.oceanTraits.forEach(t => traits[t] = Math.random());
   return traits;

@@ -306,21 +306,22 @@ class Game extends React.Component {
   }
 
   componentDidMount() {
-    user = UserSession.validate(this.context,
-      ['loginType', 'login', 'gender', 'name']);
-    UserSession.log(this.context);
+    UserSession.ensure(this.context,
+      ['_id', 'loginType', 'login', 'gender', 'name'],
+      () => UserSession.log);
   }
 
   componentComplete() { // redirect called from p5
     clearInterval(this.interval);
-    user = UserSession.validate(user,
-      ['loginType', 'login', 'gender', 'name', 'traits', 'descriptors', 'influences']);
-    UserSession.update(user,
+    UserSession.ensure(user, ['traits', 'descriptors', 'influences'],
       () => {
-        //console.log(user);
-      }, (err) => {
-        console.error('[Game]', err);
-        this.next();
+        UserSession.update(user,
+          (u) => {
+            console.log(user, u);
+          }, (err) => {
+            console.error('[Game]', err);
+            this.next();
+          });
       });
   }
 

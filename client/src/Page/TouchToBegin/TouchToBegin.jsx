@@ -50,8 +50,6 @@ class TouchToBegin extends React.Component {
 
 TouchToBegin.propTypes = {
   classes: PropTypes.object.isRequired,
-  //setNext: PropTypes.func.isRequired,
-  //next: PropTypes.string.isRequired
 };
 TouchToBegin.contextType = UserSession;
 

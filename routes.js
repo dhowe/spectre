@@ -21,8 +21,8 @@ router.route('/users/:uid')
 router.route('/users/current/:cid')
   .get(controller.current)
 
-router.route('/users/similar/:uid')
-  .get(controller.similar)
+router.route('/users/similars/:uid')
+  .get(controller.similars)
 
 router.route('/users/photo/:uid')
   .post(controller.photo)

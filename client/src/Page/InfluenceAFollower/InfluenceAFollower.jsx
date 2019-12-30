@@ -37,10 +37,9 @@ class InfluenceAFollower extends React.Component {
   }
 
   componentDidMount() {
-    console.log('componentDidMount');
     UserSession.ensure(this.context,
-        ['_id', 'name', 'login', 'gender', 'virtue', 'traits', 'similars'],
-        u => this.setState({similars: u.similars}));
+      ['_id', 'name', 'login', 'gender', 'virtue', 'similars'],
+      user => this.setState({similars: user.similars}));
   }
 
   handleSelect = (target) => {
@@ -49,10 +48,18 @@ class InfluenceAFollower extends React.Component {
   }
 
   renderSimilars() {
+    //console.log('InfluenceAFollower.renderSimilars', this.context, this.state);
+    return this.state.similars;
     // TODO: working here
     // const user = UserSession.validate
     //   (this.context, ['_id', 'name', 'login', 'gender', 'virtue', 'traits', 'similars']);
-    return this.shuffle(this.state.similars.slice(0,7));
+    //let sims = this.state.similars.map(JSON.parse);
+    // let sims = this.state.similars;
+    // //let sim0 = JSON.parse(sims[0]);
+    // //console.log('sims[0].parsed='+typeof sim0, sim0);
+    // if (sims.length) console.log('sims[0]='+typeof sims[0], sims[0]);
+    // sims = sims.length ? sims.map(JSON.parse) : [];
+    // return this.shuffle(sims.slice(0,6));
   }
 
   shuffle(arr) {

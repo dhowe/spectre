@@ -91,11 +91,10 @@ class LoginPage extends React.Component {
 
     const user = this.context;
 
-    if (process.env.NODE_ENV !== 'production' && (!(name && name.length
-      && gender && gender.length && email && email.length))) {
+    if (process.env.NODE_ENV !== 'production' && !(name && name.length
+       && gender && gender.length && email && email.length)) {
 
-      UserSession.validate(this.context,
-        ['name', 'login', 'gender'], true);
+      UserSession.validate(this.context, ['name', 'login', 'gender']);
       name = user.name;
       email = user.login;
       gender = user.gender;

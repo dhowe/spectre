@@ -17,24 +17,25 @@ UserSession.defaultUsers = [
   { "_id": "888888888888888888888888", "name": "Reed", "traits": { "openness": 0.2773518607894794, "conscientiousness": 0.8456532878428138, "extraversion": 0.4515471612661024, "agreeableness": 0.6249880747419794, "neuroticism": 0.6186244869965476 } },
   { "_id": "999999999999999999999999", "name": "Terry", "traits": { "openness": 0.30426635874427355, "conscientiousness": 0.5341590821850326, "extraversion": 0.509056193557774, "agreeableness": 0.8109949037515642, "neuroticism": 0.4252958718086144 } }
 ];
-
-// load full default set
-fetch('/default-users.json').then(res => res.json())
-  .then(data => {
-    UserSession.defaultUsers = data;
-    //console.log('[USER] New session created')
-  }).catch(e => {
-    console.error('UserSession.defaultUsers:', e);
-  });
-
 UserSession.storageKey = 'spectre-user';
 UserSession.profileDir = User.profileDir;
 UserSession.imageDir = User.imageDir;
 UserSession.Cons = "bcdfghjklmnprstvxz";
 UserSession.Vows = "aeiou";
 
+// load default set of users in case no db
+fetch('/default-users.json').then(res => res.json())
+  .then(users => {
+    UserSession.defaultUsers = users;
+  }).catch(e => {
+    console.error('UserSession.defaultUsers:', e);
+  });
+
 //////////////////////// functions //////////////////////
 
+/*
+ * Logs available fields to the console
+ */
 UserSession.log = function(u) {
   if (u._id) {
     let s = '[' + u.lastPage().uc() + '] ' + u._id;
@@ -52,7 +53,6 @@ UserSession.log = function(u) {
   }
 }
 
-
 /*
  * Clears data from browser session storage
  */
@@ -61,148 +61,136 @@ UserSession.clear = function() {
   console.log('[USER] Session initialized');
 }
 
+/*
+ * Repairs a user using sessionStorage and db if needed (async)
+ */
 UserSession.ensure = function(user, props, onSuccess, onError) {
-  let internalSuccess = (json) => {
-    Object.assign(user, json);
-    let fetchSimilars = false;
-    if (props.includes('similars')) {
-      fetchSimilars = true;
-      props = props.remove('similars');
-    }
-    UserSession.isValid(user, props, false);
-    if (!user.similars.length) {
 
+  onSuccess = onSuccess || (() => {});
+
+  onError = onError || (e => {
+    console.error('[ERROR] UserSession.ensure: ', e);
+    throw e;
+  });
+
+  const saveUser = (dirty) => {
+    if (dirty) {
+      UserSession.update(user, onSuccess, onError);
     }
     else {
-      console.warn('Using default similars');
-      onSuccess && onSuccess();
+      onSuccess(user);
     }
   }
-  if (!onError) onError = (e) => {
-    console.error('UserSession.ensure: ' + e);
-    throw e;
+
+  const validateAndSave = () => {
+    if (props.includes('similars')) {
+      props = arrayRemove(props, 'similars');
+      if (!user.hasOceanTraits()) user._randomizeTraits();
+      UserSession.update(user, () => {
+          saveUser(UserSession.fillMissingProperties(user, props));
+      }, onError);
+    }
+    else {
+      saveUser(UserSession.fillMissingProperties(user, props));
+    }
   }
+
+  // handle missing user id
   if (props.includes('_id') && typeof user._id === 'undefined') {
-    props = remove(props, '_id');
-    let sid = sessionStorage.getItem(UserSession.storageKey);
+    props = arrayRemove(props, '_id');
+    const sid = sessionStorage.getItem(UserSession.storageKey);
     if (!sid) {
       // redirect to /login ?
       throw Error('Undefined user._id not in session:' + user);
     }
     user._id = JSON.parse(sid);
     console.warn('[SESS] Reloaded user._id: ' + user._id);
-    UserSession.lookup(user, internalSuccess, onError);
+    UserSession.lookup(user, json => {
+      Object.assign(user, json);
+      validateAndSave();
+    }, onError);
+  }
+  else {
+    validateAndSave();
   }
 }
 
 /*
  * Repairs a user (if needed) and returns it
  */
-UserSession.validate = function(user, props) {
+UserSession.validate = function(user, props, log) {
   //if (!ignoreId && typeof user._id === 'undefined') restore(user);
-  UserSession.isValid(user, props, false);
+  UserSession.fillMissingProperties(user, props, log);
   return user;
 }
 
-function remove(a, v) { return a.filter(i => i !== v) }
-
 /*
- * Return true if supplied user is valid on props, else false
- * Repairs the user if norepair is false or undefined
+ * Attempts to stub any undefined properties specified in props
+ * Returns true if the user is modified, else false
  */
-UserSession.isValid = function(user, props, norepair) {
+UserSession.fillMissingProperties = function(user, props, log) {
 
-  //console.log('UserSession.validate /'+ user.lastPageVisit.page);
+  const onUpdatePropery = p => {
+    modified = true;
+    missing = arrayRemove(missing, p);
+    let val = user[p];
+    if (Array.isArray(val)) val = user[p].length + ' users';
+    if (typeof val !== 'string') {
+      val = JSON.stringify(user[p]).substring(0, 75) + '...';
+    }
+    console.warn('[STUB] Setting user.' + p + ': ' + val)
+  };
 
   if (typeof props === 'undefined') return true;
   if (typeof user === 'undefined') throw Error('Null User');
 
-  /* Get list of specified props NOT defined for user */
-  const checkProps = () => {
-    return props.filter(p => typeof user[p] === 'undefined'
-      || (Array.isArray(user[p]) && !user[p].length));
-  }
-
-  /* Get list of specified props NOT defined for user */
-  const fillProps = (missing) => {
-
-    const logStub = p => {
-      let val = user[p];
-      if (Array.isArray(val)) val = user[p].length + ' users';
-      if (typeof val !== 'string') {
-        val = JSON.stringify(user[p]).substring(0, 75) + '...';
-      }
-      console.warn('[STUB] Setting user.' + p + ': ' + val)
-    };
-    const cons = UserSession.Cons, vows = UserSession.Vows;
-    let name, prop;
-
-    prop = 'name';
-    if (missing.includes(prop)) {
-      name = (cons[Math.floor(Math.random() * cons.length)]
-        + vows[Math.floor(Math.random() * vows.length)]
-        + cons[Math.floor(Math.random() * cons.length)]).ucf();
-      user[prop] = '{' + name + '}';
-      missing = remove(missing, prop);
-      logStub(prop);
-    }
-
-    prop = 'login';
-    if (missing.includes(prop)) {
-      user[prop] = name + (+new Date()) + '@test.com';
-      missing = remove(missing, prop);
-      logStub(prop);
-    }
-
-    prop = 'virtue';
-    if (missing.includes(prop)) {
-      user[prop] = rand(['wealth', 'influence', 'truth', 'power']);
-      missing = remove(missing, prop);
-      logStub(prop);
-    }
-
-    prop = 'gender';
-    if (missing.includes(prop)) {
-      user[prop] = rand(['male', 'female', 'other']);
-      missing = remove(missing, prop);
-      logStub(prop);
-    }
-
-    prop = 'similars';
-    if (missing.includes(prop)) {
-      user[prop] = UserSession.defaultUsers;
-      missing = remove(missing, prop);
-      logStub(prop);
-    }
-
-    prop = 'traits';
-    if (missing.includes(prop)) {
-      let traits = {};
-      ['openness', 'conscientiousness', 'extraversion', 'agreeableness', 'neuroticism']
-        .forEach(t => traits[t] = Math.random());
-      user.setTraits(traits);
-      missing = remove(missing, prop);
-      logStub(prop);
-    }
-
-
-
-    if (missing.length && !norepair) throw Error
-      ('Unable to stub user properties: ' + missing);
-  }
-  //
-  // if (!ignoreId && typeof user._id === 'undefined') {
-  //   let sid = sessionStorage.getItem(UserSession.storageKey);
-  //   if (!sid) throw Error('Undefined user._id not in session', user);
-  //   user._id = JSON.parse(sid);
-  //   console.warn('[SESS] Reloaded user._id: ' + user._id);
-  //   if (!sid) throw Error('*** Invalid user ***', user); // should not happen
-  // }
-
   if (!Array.isArray(props)) props = [props];
 
-  let missing = checkProps();
-  if (missing.length && !norepair) fillProps(missing);
+  let missing = props.filter(p => typeof user[p] === 'undefined'
+    || (Array.isArray(user[p]) && !user[p].length));
+
+  if (!missing) return false; // all props are ok
+
+  let prop = 'name', modified = false;
+
+  if (missing.includes(prop)) {
+    const cons = UserSession.Cons, vows = UserSession.Vows;
+    user[prop] = (cons[Math.floor(Math.random() * cons.length)]
+      + vows[Math.floor(Math.random() * vows.length)]
+      + cons[Math.floor(Math.random() * cons.length)]).ucf();
+    onUpdatePropery(prop);
+  }
+
+  prop = 'login';
+  if (missing.includes(prop)) {
+    user[prop] = user.name + (+new Date()) + '@test.com';
+    onUpdatePropery(prop);
+  }
+
+  prop = 'virtue';
+  if (missing.includes(prop)) {
+    user[prop] = rand(['wealth', 'influence', 'truth', 'power']);
+    onUpdatePropery(prop);
+  }
+
+  prop = 'gender';
+  if (missing.includes(prop)) {
+    user[prop] = rand(['male', 'female', 'other']);
+    onUpdatePropery(prop);
+  }
+
+  prop = 'traits';
+  if (missing.includes(prop)) {
+    user._randomizeTraits();
+    onUpdatePropery(prop);
+  }
+
+  if (missing.length) throw Error
+    ('Unable to stub user properties: ' + missing);
+
+  if (log) UserSession.log(user);
+
+  return modified;
 }
 
 // Create a new database record: /login only
@@ -272,14 +260,15 @@ UserSession.lookup = function(user, onSuccess, onError) {
 
 UserSession.update = function(user, onSuccess, onError) {
 
-  //  UserSession.sync(user);
-  //  user = UserSession.get(user);
-
   let { route, auth, cid, mode } = doConfig();
   let internalSuccess = (json) => {
+    // if (Array.isArray(json.similars) && json.similars.length && typeof json.similars[0] === 'string') {
+    //   delete json.similars[0].similars;
+    //   console.log(json.similars[0]);
+    //   console.log(JSON.parse(json.similars[0]));//json.similars = json.similars.map(JSON.parse);
+    // }
     Object.assign(user, json);
-    //UserSession.sync(user);
-    onSuccess && onSuccess(json);
+    onSuccess && onSuccess(user);
   }
   if (!onError) onError = e => console.error(e);
 
@@ -319,8 +308,8 @@ UserSession.postImage = function(user, image, onSuccess, onError) {
   fetch(route + 'photo/' + (user._id || 567), {
     method: "post",
     headers: { "Authorization": 'Basic ' + btoa(auth) },
-    body: fdata
-  })
+    body: fdata // JSON.stringfy(fdata) ??
+   })
     .then(handleResponse)
     .then(onSuccess)
     .catch(onError);
@@ -344,6 +333,8 @@ function doConfig() {
 
   return { auth: auth, route: host + route, clientId: cid, mode: mode };
 }
+
+function arrayRemove(a, v) { return a.filter(i => i !== v) }
 
 function handleResponse(res) {
   return res.json().then((json) => {

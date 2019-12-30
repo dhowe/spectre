@@ -48,7 +48,10 @@ class SearchingFor extends React.Component {
   setRef(webcam) {
     this.webcam = webcam;
   }
-
+  componentDidMount() {
+    UserSession.ensure(this.context,
+      ['loginType', 'login', 'gender', 'name']);
+  }
   toImageFile(data, fname) {
     const arr = data.split(',');
     if (!data || data.length <= 6) {
@@ -68,6 +71,7 @@ class SearchingFor extends React.Component {
   handleClick(virtue) {
 
     const user = this.context; // no validate
+    user.virtue = virtue;
 
     // here we are doing the webcam capture, disabled for now
     if (false) {
@@ -93,13 +97,11 @@ class SearchingFor extends React.Component {
         console.error('no image capture');
       }
     }
-
   }
 
   render() {
+    const user = this.context;
     const { classes } = this.props;
-    const user = UserSession.validate(this.context,
-      ['loginType', 'login', 'gender', 'name']);
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" />

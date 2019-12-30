@@ -27,6 +27,7 @@ describe('User Routes', () => {
       fetch('http://localhost/spectre-pub/default-users.json')
         .then(res => res.json())
         .then(users => {
+          expect(users.length).eq(9);
           chai.request(host)
             .post('/api/users/batch/')
             .auth(env.API_USER, env.API_SECRET)
@@ -53,24 +54,28 @@ describe('User Routes', () => {
         expect(res).to.have.status(200);
         expect(res.body).to.be.a('object');
         expect(res.body._id).eq(id);
+        expect(res.body.similars).to.be.an('array');
+        expect(res.body.similars.length).eq(0);
         done();
       });
   });
 
-  it('should get similars for an existing user', done => {
+  it('should find similars for a user', done => {
     let id = '888888888888888888888888';
     let limit = 6;
     chai.request(host)
-      .get('/api/users/similar/' + id + '?limit=' + limit)
+      .get('/api/users/similars/' + id + '?limit=' + limit)
       .auth(env.API_USER, env.API_SECRET)
       .end((err, res) => {
         expect(err).to.be.null;
         expect(res).to.have.status(200);
-        expect(res.body).to.be.a('array');
+        expect(res.body).to.be.an('array');
         let similars = res.body;
         expect(similars.length).eq(6);
         expect(similars[0]).to.be.a('object');
         expect(similars[0]._id).to.be.a('string');
+        expect(similars[0].similars).to.be.an('array');
+        expect(similars[0].similars.length).eq(0);
         done();
       });
   });
@@ -82,7 +87,7 @@ describe('User Routes', () => {
       .end((err, res) => {
         expect(err).to.be.null;
         expect(res).to.have.status(200);
-        expect(res.body).to.be.a('array');
+        expect(res.body).to.be.an('array');
         done();
       });
   });
@@ -113,7 +118,7 @@ describe('User Routes', () => {
 
         expect(user._id).to.be.a('string');
         chai.request(host)
-          .get('/api/users/'+user._id)
+          .get('/api/users/' + user._id)
           .auth(env.API_USER, env.API_SECRET)
           .end((err, res) => {
             expect(err).to.be.null;
@@ -124,6 +129,7 @@ describe('User Routes', () => {
           });
       });
   });
+
   it('should insert, then update a user', done => {
     let user = new User();
     user.name = "Dave";
@@ -156,7 +162,7 @@ describe('User Routes', () => {
             expect(res).to.have.status(200);
             expect(res.body).to.be.a('object')
             expect(res.body._id).to.be.a('string');
-            expect(res.body.similars).to.be.a('array');
+            expect(res.body.similars).to.be.an('array');
             expect(res.body.similars.length).eq(0);
             done();
           });
@@ -179,6 +185,7 @@ describe('User Routes', () => {
         expect(res.body).to.be.a('object')
         expect(res.body._id).to.be.a('string');
         expect(res.body.similars.length).eq(0);
+
         Object.assign(user, res.body);
 
         //console.log(user);
@@ -196,8 +203,11 @@ describe('User Routes', () => {
             expect(res).to.have.status(200);
             expect(res.body).to.be.a('object')
             expect(res.body._id).to.be.a('string');
-            expect(res.body.similars).to.be.a('array');
+            expect(res.body.similars).to.be.an('array');
             expect(res.body.similars.length).eq(6);
+            expect(res.body.similars[0]).to.be.an('object');
+            expect(res.body.similars[0].similars).to.be.an('array');
+            expect(res.body.similars[0].similars.length).eq(0);
             done();
           });
       });
