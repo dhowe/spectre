@@ -73,11 +73,39 @@ const create = function(req, res) {
 
 const view = function(req, res) {
 
-  UserModel.findById(req.params.uid, function(err, user) {
+  UserModel.findById(req.params.uid, (err, user) => {
     if (err) return error(res, 'Unable to find user #' + req.params.uid);
     res.status(200).send(user);
   });
 };
+
+const update = function(req, res) {
+
+  UserModel.findByIdAndUpdate(req.params.uid, req.body, { new: true }, (err, user) => {
+
+    if (err) {
+      console.log("ERROR", err, err.error);
+      return error(res, 'Update fail #' + req.params.uid);
+    }
+
+    if (!user.hasOceanTraits()) {
+      res.status(200).send(user);
+      return;
+    }
+
+    let limit = req.query.hasOwnProperty('limit')
+      ? parseInt(req.query.limit) : 6;
+
+    user.findByOcean(limit, (err, sims) => {
+      if (err) {
+        console.log("ERROR", err, err.error);
+        return error(res, 'Update fail #' + req.params.uid);
+      }
+      user.similars = sims;
+      res.status(200).send(user);
+    });
+  });
+}
 
 // TODO: update 1
 // 1. find the user by id OR ERROR
@@ -95,34 +123,28 @@ const view = function(req, res) {
 // 4. update the user OR ERROR
 // 5. return 200/OK
 
-const update = function(req, res) {
+const update2 = function(req, res) {
 
   // add missing properties that can be computed
-  const computeProperties = (usr) => {
-    //console.log('computeProperties', usr.name);
+  const computeProperties = (user) => {
+    //console.log('computeProperties', user.name);
     let mods = false;
-    if (typeof usr.descriptors === 'undefined' || !usr.descriptors.length) {
-      usr.predictDescriptors();
+    if (typeof user.descriptors === 'undefined' || !user.descriptors.length) {
+      user.predictDescriptors();
       mods = true;
     }
-    if (typeof usr.influences === 'undefined' || !usr.influences.length) {
-      usr.predictInfluences();
+    if (typeof user.influences === 'undefined' || !user.influences.length) {
+      user.predictInfluences();
       mods = true;
     }
     return mods;
   };
-  //
-  let headersSent = false;
-  const saveAndRespond = (usr, sims) => {
+
+  const saveAndRespond = (user, sims) => {
     if (!headersSent) {
       headersSent = true;
-      //console.log(sims);
-      // if (typeof sims !== 'undefined' && sims.length) {
-      //   usr.similars = sims;
-      // }
-      console.log("ALMOST1....", usr._id, usr.similars.length);
-
-      usr.save((err, u) => {
+      console.log("ALMOST1....", user._id, user.similars.length);
+      user.save((err, u) => {
         if (err) {
           console.error('ERROR(22): ', err, u);
           return error(res, 'Unable to update user #' + u._id);
@@ -132,9 +154,9 @@ const update = function(req, res) {
       });
     }
   };
-  //let headersSent = false;
 
-  UserModel.findByIdAndUpdate(req.params.uid, req.body, { new: true }, function(err, user) {
+  let headersSent = false;
+  UserModel.findByIdAndUpdate(req.params.uid, req.body, { new: true }, (err, user) => {
 
     if (err) {
       console.log("ERROR", err, err.error);
@@ -142,37 +164,39 @@ const update = function(req, res) {
     }
 
     if (user.hasOceanTraits()) {
-
+      console.log('has traits');
       computeProperties(user); // can happen multiple times
 
       // do they have similars ?
-      if (false && typeof user.similars === 'undefined' || !user.similars.length) {
+      if (false && typeof user.similars === 'undefined' || user.similars.length === 0) {
 
         let limit = 6; // default limit
         req.query.hasOwnProperty('limit') && (limit = parseInt(req.query.limit));
 
+        console.log('limit: ' + limit);
         user.findByOcean(limit, sims => {
           if (err) return error(res, 'No similars for #' + req.params.uid);
 
-          console.log('sims found: ', sims.length);
-
-          // if so get their properties
-          //let updated = [];
-          user.similars = sims;
-          sims.forEach((s) => computeProperties(s) && console.log('saving ' + s.name) && s.save(err));
-          // UserModel.findByIdAndUpdate(s._id, s, { new: true }, function (err, s) {
-          //   if (err) console.error(err + '\nUnable to update user #' + s._id);
-          //   console.log('updated '+s._id);
-          //   if (--count === 0) {
-          //     console.log('PASSING Sims',sims.length);
-          //     //saveAndRespond(user, sims);
-          //   }
-          // });
-          // s.save((err, s) => {
-          //   if (err) console.error(err + '\nUnable to update user #' + s._id);
-          // });
-          //}
-          //});
+          if (sims) {
+            console.log('sims found: ', sims.length);
+            // if so get their properties
+            //let updated = [];
+            user.similars = sims;
+            sims.forEach((s) => computeProperties(s) && console.log('saving ' + s.name) && s.save(err));
+            // UserModel.findByIdAndUpdate(s._id, s, { new: true }, function (err, s) {
+            //   if (err) console.error(err + '\nUnable to update user #' + s._id);
+            //   console.log('updated '+s._id);
+            //   if (--count === 0) {
+            //     console.log('PASSING Sims',sims.length);
+            //     //saveAndRespond(user, sims);
+            //   }
+            // });
+            // s.save((err, s) => {
+            //   if (err) console.error(err + '\nUnable to update user #' + s._id);
+            // });
+            //}
+            //});
+          }
 
         });
         saveAndRespond(user);
@@ -287,16 +311,17 @@ const similar = function(req, res) {
   }
 
   let uid = req.params.uid;
-  UserModel.findById(uid, function(err, user) {
+  UserModel.findById(uid, (err, user) => {
     if (err) return error(res, 'Unable to find user #' + uid);
     user.findByOcean(limit, (err, users) => {
+      if (err) return error(res, 'Unable to findByOcean for #' + req.params.uid);
       res.status(200).send(users);
     });
   });
 };
 
 const remove = function(req, res) {
-  UserModel.remove({ _id: req.params.uid }, function(err, user) {
+  UserModel.remove({ _id: req.params.uid }, (err, user) => {
     if (err) return error(res, 'Unable to delete user #' + req.params.uid);
     res.status(200).send(req.params.uid);
   });

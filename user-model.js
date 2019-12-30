@@ -11,18 +11,17 @@ Object.keys(functions).forEach(f => UserSchema.methods[f] = functions[f]);
 
 // TODO: all callbacks should pass error first
 
+// find all users with traits
 UserSchema.methods.findByOcean = function(limit, cb) { // cb=function(err,users)
-
   let user = this;
   UserModel.find({ 'traits.openness': { $gte: 0 } })
-    .exec((err, instances) => {
+    .exec((err, candidates) => {
       if (err) {
         console.error(err);
         throw err;
       }
-      let sorted = oceanSort(user, instances);
-      sorted = sorted.slice(0, limit);
-      cb(err, sorted);
+      let sorted = oceanSort(user, candidates);
+      cb(err, sorted.slice(0, limit));
     });
   return this;
 };
@@ -33,9 +32,8 @@ UserSchema.statics.getAll = function(callback, limit) {
 
 UserSchema.statics.Create = function(tmpl) {
 
-  function randName() {
-    return Math.random().toString(36).replace(/[^a-z]+/g, '').substring(0, 5);
-  }
+  let randName = () => Math.random().toString(36)
+    .replace(/[^a-z]+/g, '').substring(0, 5);
 
   let user = new UserModel();
   user.name = tmpl && tmpl.name ? tmpl.name : randName();

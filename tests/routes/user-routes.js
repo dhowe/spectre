@@ -1,7 +1,7 @@
 import chai_http from 'chai-http';
 import server from '../../server';
-import dotEnv from 'dotenv';
 import fetch from 'node-fetch';
+import dotEnv from 'dotenv';
 import chai from 'chai';
 
 import UserModel from '../../user-model';
@@ -19,21 +19,9 @@ if (typeof env.API_HOST !== 'undefined') {
   host = env.API_HOST + ':' + port;
 }
 
-const defaultsIds = [
-  "111111111111111111111111",
-  "333333333333333333333333",
-  "222222222222222222222222",
-  "444444444444444444444444",
-  "666666666666666666666666",
-  "555555555555555555555555",
-  "888888888888888888888888",
-  "777777777777777777777777",
-  "999999999999999999999999"
-];
-
 describe('User Routes', () => {
 
-  let refreshDb = (done) => {
+  let refreshDb = done => {
     UserModel.deleteMany({}, (err) => {
       err && console.error('ERROR', err);
       fetch('http://localhost/spectre-pub/default-users.json')
@@ -51,37 +39,55 @@ describe('User Routes', () => {
             });
         });
     });
-  }
+  };
 
   beforeEach(refreshDb);
 
-  it('should list all users', (done) => {
+  it('should fetch a single user', done => {
     let id = '888888888888888888888888';
     chai.request(host)
-      .get('/api/users/'+id)
+      .get('/api/users/' + id)
       .auth(env.API_USER, env.API_SECRET)
       .end((err, res) => {
         expect(err).to.be.null;
         expect(res).to.have.status(200);
-        expect(res.body).to.be.a('object')
+        expect(res.body).to.be.a('object');
         expect(res.body._id).eq(id);
         done();
       });
   });
 
-  it('should fetch a single user', (done) => {
+  it('should get similars for an existing user', done => {
+    let id = '888888888888888888888888';
+    let limit = 6;
+    chai.request(host)
+      .get('/api/users/similar/' + id + '?limit=' + limit)
+      .auth(env.API_USER, env.API_SECRET)
+      .end((err, res) => {
+        expect(err).to.be.null;
+        expect(res).to.have.status(200);
+        expect(res.body).to.be.a('array');
+        let similars = res.body;
+        expect(similars.length).eq(6);
+        expect(similars[0]).to.be.a('object');
+        expect(similars[0]._id).to.be.a('string');
+        done();
+      });
+  });
+
+  it('should list all users', done => {
     chai.request(host)
       .get('/api/users/')
       .auth(env.API_USER, env.API_SECRET)
       .end((err, res) => {
         expect(err).to.be.null;
         expect(res).to.have.status(200);
-        expect(res.body).to.be.a('array')
+        expect(res.body).to.be.a('array');
         done();
       });
   });
 
-  it('should fetch users from model', (done) => {
+  it('should fetch users from model', done => {
     UserModel.getAll((err, users) => {
       expect(err).to.be.null;
       expect(users.length).eq(9);
@@ -89,79 +95,117 @@ describe('User Routes', () => {
     });
   });
 
+  it('should insert a new user, then fetch it', done => {
+    let user = new User();
+    user.name = "Dave";
+    user.login = "Dave@aol.com";
+    user.gender = "male";
+    chai.request(host)
+      .post('/api/users/')
+      .auth(env.API_USER, env.API_SECRET)
+      .send(user)
+      .end((err, res) => {
+        expect(err).to.be.null;
+        expect(res).to.have.status(200);
+        expect(res.body).to.be.a('object')
+        expect(res.body._id).to.be.a('string');
+        Object.assign(user, res.body);
 
+        expect(user._id).to.be.a('string');
+        chai.request(host)
+          .get('/api/users/'+user._id)
+          .auth(env.API_USER, env.API_SECRET)
+          .end((err, res) => {
+            expect(err).to.be.null;
+            expect(res).to.have.status(200);
+            expect(res.body).to.be.a('object');
+            expect(res.body._id).eq(user._id);
+            done();
+          });
+      });
+  });
+  it('should insert, then update a user', done => {
+    let user = new User();
+    user.name = "Dave";
+    user.login = "Dave@aol.com";
+    user.gender = "male";
+
+    chai.request(host)
+      .post('/api/users/')
+      .auth(env.API_USER, env.API_SECRET)
+      .send(user)
+      .end((err, res) => {
+        expect(err).to.be.null;
+        expect(res).to.have.status(200);
+        expect(res.body).to.be.a('object')
+        expect(res.body._id).to.be.a('string');
+        expect(res.body.similars.length).eq(0);
+        Object.assign(user, res.body);
+
+        //console.log(user);
+        expect(user._id).to.be.a('string');
+        expect(user.traits).to.be.undefined;
+        //expect(user.traits.openness).to.be.undefined;
+
+        chai.request(host)
+          .put('/api/users/' + user._id)
+          .auth(env.API_USER, env.API_SECRET)
+          .send(user)
+          .end((err, res) => {
+            expect(err).to.be.null;
+            expect(res).to.have.status(200);
+            expect(res.body).to.be.a('object')
+            expect(res.body._id).to.be.a('string');
+            expect(res.body.similars).to.be.a('array');
+            expect(res.body.similars.length).eq(0);
+            done();
+          });
+      });
+  });
+
+  it('should insert, then update a user with traits', done => {
+    let user = new User();
+    user.name = "Dave";
+    user.login = "Dave@aol.com";
+    user.gender = "male";
+
+    chai.request(host)
+      .post('/api/users/')
+      .auth(env.API_USER, env.API_SECRET)
+      .send(user)
+      .end((err, res) => {
+        expect(err).to.be.null;
+        expect(res).to.have.status(200);
+        expect(res.body).to.be.a('object')
+        expect(res.body._id).to.be.a('string');
+        expect(res.body.similars.length).eq(0);
+        Object.assign(user, res.body);
+
+        //console.log(user);
+        expect(user._id).to.be.a('string');
+        user.traits = User._randomTraits();
+        expect(user.traits).to.be.a('object');
+        expect(user.traits.openness).to.be.gte(0);
+
+        chai.request(host)
+          .put('/api/users/' + user._id)
+          .auth(env.API_USER, env.API_SECRET)
+          .send(user)
+          .end((err, res) => {
+            expect(err).to.be.null;
+            expect(res).to.have.status(200);
+            expect(res.body).to.be.a('object')
+            expect(res.body._id).to.be.a('string');
+            expect(res.body.similars).to.be.a('array');
+            expect(res.body.similars.length).eq(6);
+            done();
+          });
+      });
+  });
 
   after(refreshDb);
 });
-  // it('should generate a set of default users', (done) => {
-  // //describe('User Generator', () => {
-  // it('should generate a set of default users', (done) => {
-  //   const defaults = [
-  //     {
-  //       _id: '111111111111111111111111',
-  //       login: 'remy@mail.com',
-  //       loginType: 'email',
-  //       name: 'Remy',
-  //       gender: 'male'
-  //     },
-  //     {
-  //       _id: '222222222222222222222222',
-  //       login: 'bailey@mail.com',
-  //       loginType: 'email',
-  //       name: 'Bailey',
-  //       gender: 'male'
-  //     },
-  //     {
-  //       _id: '333333333333333333333333',
-  //       login: 'devin@mail.com',
-  //       loginType: 'email',
-  //       name: 'Devin',
-  //       gender: 'female'
-  //     },
-  //     {
-  //       _id: '444444444444444444444444',
-  //       login: 'tyler@mail.com',
-  //       loginType: 'email',
-  //       name: 'Tyler',
-  //       gender: 'male'
-  //     },
-  //     {
-  //       _id: '555555555555555555555555',
-  //       login: 'fran@mail.com',
-  //       loginType: 'email',
-  //       name: 'Fran',
-  //       gender: 'female'
-  //     },
-  //     {
-  //       _id: '666666666666666666666666',
-  //       login: 'bernard@mail.com',
-  //       loginType: 'email',
-  //       name: 'Bernard',
-  //       gender: 'male'
-  //     },
-  //     {
-  //       _id: '777777777777777777777777',
-  //       login: 'sing@mail.com',
-  //       loginType: 'email',
-  //       name: 'Sing',
-  //       gender: 'male'
-  //     },
-  //     {
-  //       _id: '888888888888888888888888',
-  //       login: 'sally@mail.com',
-  //       loginType: 'email',
-  //       name: 'sally',
-  //       gender: 'female'
-  //     },
-  //     {
-  //       _id: '999999999999999999999999',
-  //       login: 'dick@mail.com',
-  //       loginType: 'email',
-  //       name: 'Dick',
-  //       gender: 'male'
-  //     }
-  //   ];
-  //
+
   // function saveAll(records, cb) {
   //   let users = [];
   //   records.forEach(r => users.push(User._randomData(new UserModel(r))));
@@ -209,4 +253,3 @@ describe('User Routes', () => {
   //     });
   //   });
   // });
-  // //  });

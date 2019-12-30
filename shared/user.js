@@ -8,7 +8,7 @@ DotEnv.config();
 /*
  * Lifecycle:
  *    - created [ id, createdAt ]  {1}
- *    - updated with brand data [ traits, influences, similars ]  {1}
+ *    - updated with brand data -> [ traits, influences, similars ]  {1}
  *    - updated with lastPageVisit{url, time} [] {*}
  */
 export default class User {

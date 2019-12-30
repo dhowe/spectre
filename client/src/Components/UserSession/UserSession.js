@@ -60,15 +60,6 @@ UserSession.clear = function() {
   sessionStorage.clear();
   console.log('[USER] Session initialized');
 }
-//
-// function restore(user) {
-//   let sid = sessionStorage.getItem(UserSession.storageKey);
-//   if (!sid) throw Error('Undefined user._id not in session', user);
-//   user._id = JSON.parse(sid);
-//   UserSession.lookup(user);
-//   console.warn('[SESS] Reloaded user._id: ' + user._id);
-//   if (!user._id) throw Error('*** Invalid user ***', user); // should not happen
-// }
 
 UserSession.ensure = function(user, props, onSuccess, onError) {
   let internalSuccess = (json) => {
