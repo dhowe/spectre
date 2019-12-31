@@ -35,7 +35,7 @@ describe('User Routes', () => {
             .end((err, res) => {
               expect(err).to.be.null;
               expect(res).to.have.status(200);
-              expect(res.body.length).eq(9);
+              expect(res.body.data.length).eq(9);
               done();
             });
         });
@@ -52,10 +52,10 @@ describe('User Routes', () => {
       .end((err, res) => {
         expect(err).to.be.null;
         expect(res).to.have.status(200);
-        expect(res.body).to.be.a('object');
-        expect(res.body._id).eq(id);
-        expect(res.body.similars).to.be.an('array');
-        expect(res.body.similars.length).eq(0);
+        expect(res.body.data).to.be.a('object');
+        expect(res.body.data._id).eq(id);
+        expect(res.body.data.similars).to.be.an('array');
+        expect(res.body.data.similars.length).eq(0);
         done();
       });
   });
@@ -69,8 +69,8 @@ describe('User Routes', () => {
       .end((err, res) => {
         expect(err).to.be.null;
         expect(res).to.have.status(200);
-        expect(res.body).to.be.an('array');
-        let similars = res.body;
+        expect(res.body.data).to.be.an('array');
+        let similars = res.body.data;
         expect(similars.length).eq(6);
         expect(similars[0]).to.be.a('object');
         expect(similars[0]._id).to.be.a('string');
@@ -87,7 +87,7 @@ describe('User Routes', () => {
       .end((err, res) => {
         expect(err).to.be.null;
         expect(res).to.have.status(200);
-        expect(res.body).to.be.an('array');
+        expect(res.body.data).to.be.an('array');
         done();
       });
   });
@@ -112,9 +112,9 @@ describe('User Routes', () => {
       .end((err, res) => {
         expect(err).to.be.null;
         expect(res).to.have.status(200);
-        expect(res.body).to.be.a('object')
-        expect(res.body._id).to.be.a('string');
-        Object.assign(user, res.body);
+        expect(res.body.data).to.be.a('object')
+        expect(res.body.data._id).to.be.a('string');
+        Object.assign(user, res.body.data);
 
         expect(user._id).to.be.a('string');
         chai.request(host)
@@ -123,8 +123,8 @@ describe('User Routes', () => {
           .end((err, res) => {
             expect(err).to.be.null;
             expect(res).to.have.status(200);
-            expect(res.body).to.be.a('object');
-            expect(res.body._id).eq(user._id);
+            expect(res.body.data).to.be.a('object');
+            expect(res.body.data._id).eq(user._id);
             done();
           });
       });
@@ -143,10 +143,10 @@ describe('User Routes', () => {
       .end((err, res) => {
         expect(err).to.be.null;
         expect(res).to.have.status(200);
-        expect(res.body).to.be.a('object')
-        expect(res.body._id).to.be.a('string');
-        expect(res.body.similars.length).eq(0);
-        Object.assign(user, res.body);
+        expect(res.body.data).to.be.a('object')
+        expect(res.body.data._id).to.be.a('string');
+        expect(res.body.data.similars.length).eq(0);
+        Object.assign(user, res.body.data);
 
         //console.log(user);
         expect(user._id).to.be.a('string');
@@ -160,10 +160,10 @@ describe('User Routes', () => {
           .end((err, res) => {
             expect(err).to.be.null;
             expect(res).to.have.status(200);
-            expect(res.body).to.be.a('object')
-            expect(res.body._id).to.be.a('string');
-            expect(res.body.similars).to.be.an('array');
-            expect(res.body.similars.length).eq(0);
+            expect(res.body.data).to.be.a('object')
+            expect(res.body.data._id).to.be.a('string');
+            expect(res.body.data.similars).to.be.an('array');
+            expect(res.body.data.similars.length).eq(0);
             done();
           });
       });
@@ -182,11 +182,11 @@ describe('User Routes', () => {
       .end((err, res) => {
         expect(err).to.be.null;
         expect(res).to.have.status(200);
-        expect(res.body).to.be.a('object')
-        expect(res.body._id).to.be.a('string');
-        expect(res.body.similars.length).eq(0);
+        expect(res.body.data).to.be.a('object')
+        expect(res.body.data._id).to.be.a('string');
+        expect(res.body.data.similars.length).eq(0);
 
-        Object.assign(user, res.body);
+        Object.assign(user, res.body.data);
 
         //console.log(user);
         expect(user._id).to.be.a('string');
@@ -201,13 +201,13 @@ describe('User Routes', () => {
           .end((err, res) => {
             expect(err).to.be.null;
             expect(res).to.have.status(200);
-            expect(res.body).to.be.a('object')
-            expect(res.body._id).to.be.a('string');
-            expect(res.body.similars).to.be.an('array');
-            expect(res.body.similars.length).eq(6);
-            expect(res.body.similars[0]).to.be.an('object');
-            expect(res.body.similars[0].similars).to.be.an('array');
-            expect(res.body.similars[0].similars.length).eq(0);
+            expect(res.body.data).to.be.a('object')
+            expect(res.body.data._id).to.be.a('string');
+            expect(res.body.data.similars).to.be.an('array');
+            expect(res.body.data.similars.length).eq(6);
+            expect(res.body.data.similars[0]).to.be.an('object');
+            expect(res.body.data.similars[0].similars).to.be.an('array');
+            expect(res.body.data.similars[0].similars.length).eq(0);
             done();
           });
       });
@@ -247,7 +247,7 @@ describe('User Routes', () => {
   //         .send(user)
   //         .end((err, res) => {
   //           expect(res).to.have.status(200);
-  //           Object.assign(user, res.body);
+  //           Object.assign(user, res.body.data);
   //           result.push(user);
   //           if (--count === 0) return cb(result);
   //         });

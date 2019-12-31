@@ -464,11 +464,10 @@ User.schema = () => {
       default: false
     },
     target: { // JSON-stringified User
-      type: 'string'
-      //type: { type: 'objectId', ref: 'User' }
+      type: 'string' // user stores object
     },
-    similars: { // JSON-stringified Users
-      type: ['string']
+    similars: { // not in db
+      type: ['string'] // user stores [object]
     },
     descriptors: {
       type: ['string']

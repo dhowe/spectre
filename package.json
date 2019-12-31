@@ -6,8 +6,8 @@
   "scripts": {
     "test": "mocha ./tests --exit -r esm",
     "test-g": "mocha ./tests --exit -r esm -g",
-    "test-routes": "mocha ./tests/routes --exit -r esm",
-    "test-routes-g": "mocha ./tests/routes --exit -r esm -g",
+    "test-routes": "NODE_ENV=test mocha ./tests/routes --exit -r esm",
+    "test-routes-g": "NODE_ENV=test mocha ./tests/routes --exit -r esm -g",
     "server": "nodemon -r esm server.js",
     "client": "yarn --cwd client start",
     "client-start": "yarn --cwd client start",
@@ -24,6 +24,7 @@
     "body-parser": "^1.19.0",
     "chai-fs": "^2.0.0",
     "chai-string": "^1.5.0",
+    "clf-date": "^0.1.0",
     "cors": "^2.8.5",
     "debug": "4.1.1",
     "depd": "~2.0.0",
@@ -47,7 +48,9 @@
   "license": "UNLICENSED",
   "nodemonConfig": {
     "ext": "js",
-    "ignore": ["src/*"]
+    "ignore": [
+      "src/*"
+    ]
   },
   "devDependencies": {
     "chai": "^4.2.0",

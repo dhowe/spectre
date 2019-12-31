@@ -39,7 +39,9 @@ class InfluenceAFollower extends React.Component {
   componentDidMount() {
     UserSession.ensure(this.context,
       ['_id', 'name', 'login', 'gender', 'virtue', 'similars'],
-      user => this.setState({similars: user.similars}));
+      user => {
+        this.setState({similars: user.similars})
+      });
   }
 
   handleSelect = (target) => {

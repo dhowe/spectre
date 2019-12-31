@@ -24,10 +24,13 @@ class DataIs extends React.Component {
     super(props, '/personalised-experience');
     this.countdown = React.createRef();
   }
-
+  // componentDidMount() {
+  //
+  // }
   render() {
     const user = UserSession.validate(this.context,
-      ['login', 'gender', 'name', 'virtue'], true);
+      ['login', 'gender', 'name', 'virtue']);
+    UserSession.log(user);
     return (
       <div className={this.props.root}>
         <SpectreHeader colour="white" />

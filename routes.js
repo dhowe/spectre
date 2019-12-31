@@ -13,7 +13,7 @@ router.route('/users/batch')
   .post(controller.createBatch);
 
 router.route('/users/:uid')
-  .get(controller.view)
+  .get(controller.fetch)
   .put(controller.update)
   .patch(controller.update)
   .delete(controller.remove);

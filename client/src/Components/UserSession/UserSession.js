@@ -116,7 +116,7 @@ UserSession.ensure = function(user, props, onSuccess, onError) {
     user._id = JSON.parse(sid);
     console.warn('[SESS] Reloaded user._id: ' + user._id);
     UserSession.lookup(user, json => {
-      Object.assign(user, json);
+      Object.assign(user, json.data);
       validateAndSave();
     }, onError);
   }
@@ -202,6 +202,20 @@ UserSession.fillMissingProperties = function(user, props, log) {
   return modified;
 }
 
+function handleResponse(res) {
+  return res.json().then(json => {
+    if (!res.ok || !json.status === 200) {
+      return Promise.reject({
+        status: json.status,
+        statusText: json.message
+      });
+    }
+    return json.data;
+  }).catch(e => {
+    return Promise.reject(e);
+  });
+}
+
 // Create a new database record: /login only
 UserSession.create = function(user, onSuccess, onError) {
 
@@ -213,7 +227,7 @@ UserSession.create = function(user, onSuccess, onError) {
     onSuccess && onSuccess(json);
   }
   if (!onError) onError = (e) => {
-    console.error('UserSession.create: ' + e);
+    console.error('UserSession.create: ', e);
     throw e;
   }
 
@@ -243,11 +257,12 @@ UserSession.lookup = function(user, onSuccess, onError) {
 
   let { route, auth, cid, mode } = doConfig();
   let internalSuccess = (json) => {
+    //console.log('UserSession.lookup',json);
     Object.assign(user, json);
     onSuccess && onSuccess(json);
   }
   if (!onError) onError = (e) => {
-    console.error('UserSession.lookup: ' + e);
+    console.error('UserSession.lookup: ', e);
     throw e;
   }
 
@@ -338,19 +353,6 @@ function doConfig() {
 }
 
 function arrayRemove(a, v) { return a.filter(i => i !== v) }
-
-function handleResponse(res) {
-  return res.json().then((json) => {
-    if (!res.ok) {
-      const error = Object.assign({}, json, {
-        status: res.status,
-        statusText: res.statusText,
-      });
-      return Promise.reject(error);
-    }
-    return json;
-  });
-}
 
 function rand() {
   if (arguments.length === 1 && Array.isArray(arguments[0])) {

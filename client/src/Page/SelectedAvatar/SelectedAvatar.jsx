@@ -43,6 +43,12 @@ class SelectedAvatar extends React.Component {
     super(props, '/insight-gender');
   }
 
+  componentDidMount() {
+    UserSession.ensure(this.context,
+      ['_id', 'name', 'login', 'gender', 'virtue', 'similars', 'target'],
+      user => this.setState({targetName: user.target.name, targetImg: user.target.image}));
+  }
+
   render() {
     const { classes } = this.props;
 

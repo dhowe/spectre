@@ -11,7 +11,7 @@ import controller from './user-controller';
 
 const base = '/api/';
 const port = process.env.PORT || 8083;
-const test = process.env.NODE_ENV !== 'test';
+const test = process.env.NODE_ENV === 'test';
 const dev = process.env.NODE_ENV !== 'production';
 
 const auth = basicAuth({

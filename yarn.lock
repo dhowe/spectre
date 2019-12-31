@@ -424,6 +424,11 @@ ci-info@^1.5.0:
   resolved "https://registry.yarnpkg.com/ci-info/-/ci-info-1.6.0.tgz#2ca20dbb9ceb32d4524a683303313f0304b1e497"
   integrity sha512-vsGdkwSCDpWmP80ncATX7iea5DWQemg1UgCW5J8tqjU3lYw4FBYuj89J0CTVomA7BEfvSZd84GmHko+MxFQU2A==
 
+clf-date@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/clf-date/-/clf-date-0.1.0.tgz#443c8ffb04efdf131ab20a8e61fe314570ce749d"
+  integrity sha512-CeuGmzCyLl/mYcLrBJO7B+NF3LieKWYSdnVPAfgqeEz8NfOnA4B/+0My5ZYEhsI2hlIMiGYvu7QhvVL+LaA8/w==
+
 cli-boxes@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/cli-boxes/-/cli-boxes-1.0.0.tgz#4fa917c3e59c94a004cd61f8ee509da651687143"
