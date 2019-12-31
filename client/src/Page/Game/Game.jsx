@@ -308,7 +308,7 @@ class Game extends React.Component {
   componentDidMount() {
     UserSession.ensure(this.context,
       ['_id', 'loginType', 'login', 'gender', 'name'],
-      () => UserSession.log);
+      UserSession.log);
   }
 
   componentComplete() { // redirect called from p5

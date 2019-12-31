@@ -36,22 +36,7 @@ fetch('/default-users.json').then(res => res.json())
 /*
  * Logs available fields to the console
  */
-UserSession.log = function(u) {
-  if (u._id) {
-    let s = '[' + u.lastPage().uc() + '] ' + u._id;
-    if (u.name) s += ', ' + u.name;
-    if (u.gender) s += ', ' + u.gender;
-    if (u.virtue) s += ', ' + u.virtue;
-    if (u.login) s += ', ' + u.login;
-    if (u.similars && u.similars.length) {
-      s += ', ' + u.similars.length + ' similars';
-    }
-    console.log(s);
-  }
-  else {
-    console.error('[USER] *** no id ***');
-  }
-}
+UserSession.log = u => u.toString();
 
 /*
  * Clears data from browser session storage
@@ -96,6 +81,7 @@ UserSession.ensure = function(user, props, onSuccess, onError) {
         props = arrayRemove(props, 'traits');
         UserSession.update(user, () => {
           if (!user.similars.length) onError('Unable to stub user.similars');
+          if (typeof user.similars[0] !== 'object') onError('user.similars does not contain objects: '+user.similars[0]);
           console.warn('[STUB] Setting similars: [' + user.similars.length + ']');
           saveUser(UserSession.fillMissingProperties(user, props));
         }, onError);
@@ -110,13 +96,13 @@ UserSession.ensure = function(user, props, onSuccess, onError) {
     props = arrayRemove(props, '_id');
     const sid = sessionStorage.getItem(UserSession.storageKey);
 
-    // redirect to /login here ?
+    // redirect to /login here ? or stub a new user from scratch?
     if (!sid) throw Error('Undefined user._id not in session:' + user);
 
     user._id = JSON.parse(sid);
-    console.warn('[SESS] Reloaded user._id: ' + user._id);
+    console.warn('[SESS] Reloaded user._id: ' + user._id+' doing lookup');
     UserSession.lookup(user, json => {
-      Object.assign(user, json.data);
+      Object.assign(user, json);
       validateAndSave();
     }, onError);
   }
@@ -128,9 +114,8 @@ UserSession.ensure = function(user, props, onSuccess, onError) {
 /*
  * Repairs a user (if needed) and returns it
  */
-UserSession.validate = function(user, props, log) {
-  //if (!ignoreId && typeof user._id === 'undefined') restore(user);
-  UserSession.fillMissingProperties(user, props, log);
+UserSession.validate = function(user, props) {
+  UserSession.fillMissingProperties(user, props);
   return user;
 }
 
@@ -138,7 +123,7 @@ UserSession.validate = function(user, props, log) {
  * Attempts to stub any undefined properties specified in props
  * Returns true if the user is modified, else false
  */
-UserSession.fillMissingProperties = function(user, props, log) {
+UserSession.fillMissingProperties = function(user, props) {
 
   const onUpdateProperty = (p) => {
     modified = true;
@@ -188,6 +173,14 @@ UserSession.fillMissingProperties = function(user, props, log) {
     onUpdateProperty(prop);
   }
 
+  prop = 'target';
+  if (missing.includes(prop)) {
+    if (!user.similars.length) throw Error('no similars');
+    user[prop] = rand(user.similars);
+    console.log('UserSession.fillMissingProperties.target', typeof user[prop]);
+    onUpdateProperty(prop);
+  }
+
   prop = 'traits';
   if (missing.includes(prop)) {
     user._randomizeTraits();
@@ -196,8 +189,6 @@ UserSession.fillMissingProperties = function(user, props, log) {
 
   if (missing.length) throw Error
     ('Unable to stub user properties: ' + missing);
-
-  if (log) UserSession.log(user);
 
   return modified;
 }
@@ -257,12 +248,12 @@ UserSession.lookup = function(user, onSuccess, onError) {
 
   let { route, auth, cid, mode } = doConfig();
   let internalSuccess = (json) => {
-    //console.log('UserSession.lookup',json);
+    console.log('UserSession.lookup: typeof sims[0]=',typeof json.similars[0]);
     Object.assign(user, json);
     onSuccess && onSuccess(json);
   }
   if (!onError) onError = (e) => {
-    console.error('UserSession.lookup: ', e);
+    console.error('UserSession.lookup:', e);
     throw e;
   }
 

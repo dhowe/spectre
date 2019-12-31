@@ -32,7 +32,6 @@ class Pledge extends React.Component {
   }
 
   componentDidMount() {
-    UserSession.log(this.context);
     this.timeout = setTimeout(() =>
       this.props.history.push('/searching-for'), 7500);
   }

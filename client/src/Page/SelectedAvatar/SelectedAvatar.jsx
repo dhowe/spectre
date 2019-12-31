@@ -41,21 +41,21 @@ const styles = {
 class SelectedAvatar extends React.Component {
   constructor(props) {
     super(props, '/insight-gender');
+    this.state = {target: {name: '', imageUrl: () => ''}};
   }
 
   componentDidMount() {
     UserSession.ensure(this.context,
       ['_id', 'name', 'login', 'gender', 'virtue', 'similars', 'target'],
-      user => this.setState({targetName: user.target.name, targetImg: user.target.image}));
+      user => {
+        console.log('componentDidMount',user.target);
+        this.setState({ target: user.target })
+      });
   }
 
   render() {
     const { classes } = this.props;
-
-    // TODO: WORKING HERE next
-    this.context.target = this.context.target || UserSession.defaultUsers[0];
-    const timage = this.context.targetImgUrl();
-    const tname = this.context.target.name;
+    const { target } = this.state;
     return (
       <div className={`${classes.root} SelectedAvatar`}>
         <SpectreHeader colour="white" progressActive={true} progressNumber="one" />
@@ -63,9 +63,10 @@ class SelectedAvatar extends React.Component {
         <div className={`${classes.content} content`}>
           <p className="title">You selected:</p>
           <div>
-            <AvatarComponent target={ {name: tname, image: timage } } />
+            <AvatarComponent target={{ name: target.name, image: target.imageUrl() }} />
           </div>
-          <p className="copy">Let&apos;s start by verifying some of the basics to unlock insight into <strong>{tname}</strong>. </p>
+          <p className="copy">Let&apos;s start by verifying some of the basics to
+            unlock insight into <strong>{target.name}</strong>. </p>
           <p className="copy">Don’t worry, only you will see the results. </p>
           <Link to="/insight-gender">
             <Button className={classes.button}>Dive in</Button>

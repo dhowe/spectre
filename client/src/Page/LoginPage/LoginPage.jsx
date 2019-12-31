@@ -129,9 +129,10 @@ class LoginPage extends React.Component {
     }
   }
 
+  // save user then start video
   saveUser = (user) => {
     const handleSuccess = () => {
-      UserSession.log(user);
+      console.log('[/LOGIN] '+user.toString());
       this.showVideo();
     };
     const handleError = (e) => {

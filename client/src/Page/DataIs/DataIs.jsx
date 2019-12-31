@@ -30,7 +30,6 @@ class DataIs extends React.Component {
   render() {
     const user = UserSession.validate(this.context,
       ['login', 'gender', 'name', 'virtue']);
-    UserSession.log(user);
     return (
       <div className={this.props.root}>
         <SpectreHeader colour="white" />

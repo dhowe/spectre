@@ -43,15 +43,21 @@ class SearchingFor extends React.Component {
   constructor(props) {
     super(props, 'data-is');
     this.setRef = this.setRef.bind(this);
+    this.state = { name: '' };
   }
 
   setRef(webcam) {
     this.webcam = webcam;
   }
+
   componentDidMount() {
     UserSession.ensure(this.context,
-      ['loginType', 'login', 'gender', 'name']);
+      ['_id', 'login', 'gender', 'name'],
+      user => {
+        this.setState({name: user.name})
+    });
   }
+
   toImageFile(data, fname) {
     const arr = data.split(',');
     if (!data || data.length <= 6) {
@@ -100,14 +106,14 @@ class SearchingFor extends React.Component {
   }
 
   render() {
-    const user = this.context;
     const { classes } = this.props;
+    const { name } = this.state;
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" />
         <IdleChecker />
         <div className={`${classes.content} content`}>
-          <Typography className="username" component="h3" variant="h3">{user.name}</Typography>
+          <Typography className="username" component="h3" variant="h3">{name}</Typography>
           <Typography className="question" component="h3" variant="h3">What are you searching for today?</Typography>
 
           {/*<div className="ImageCapture">

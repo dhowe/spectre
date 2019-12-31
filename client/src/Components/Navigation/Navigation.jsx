@@ -46,10 +46,15 @@ class Navigation extends React.Component {
   }
 
   render() {
+
     this.context.lastPageVisit = {
       page: window.location.pathname.replace(/^\/(.*)/, '$1'),
       time: Date.now()
     };
+    if (typeof this.context._id !== 'undefined') {
+      console.log(('[' + window.location.pathname.substring(0, 7)
+        + '] ').toUpperCase() + this.context.toString());
+    }
     return null;
   }
 }

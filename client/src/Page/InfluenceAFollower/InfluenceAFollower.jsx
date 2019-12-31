@@ -40,13 +40,23 @@ class InfluenceAFollower extends React.Component {
     UserSession.ensure(this.context,
       ['_id', 'name', 'login', 'gender', 'virtue', 'similars'],
       user => {
+        console.log(user.similars);
+        /*
+          WORKING HERE:
+            in normal progression ((UserSession.update)) similars are objects
+            on refresh (UserSession.lookup) similars are string-ids
+
+            NEXT: problem is data-type for similars, try saving as strings (no similars.similars)
+                  update default-users.json first
+                  then update expects in user-routes.js
+        */
         this.setState({similars: user.similars})
       });
   }
 
   handleSelect = (target) => {
     this.context.target = target;
-    this.next();
+    this.props.history.push('/selected-avatar');
   }
 
   renderSimilars() {

@@ -22,8 +22,22 @@ export default class User {
     this.loginType = this.loginType || 'email';
   }
 
+  toString() {
+    let u = this;
+    let s = u._id;
+    if (u.name) s += ', ' + u.name;
+    if (u.gender) s += ', ' + u.gender;
+    if (u.virtue) s += ', ' + u.virtue;
+    if (u.login) s += ', ' + u.login;
+    if (u.similars && u.similars.length) {
+      s += ', ' + u.similars.length + ' similars';
+    }
+    if (u.target) s += ', ' + u.target._id+'/'+u.target.name;
+    return s;
+  }
+
   lastPage() {
-    return typeof this.lastPageVisit === 'object'
+    return typeof this.lastPageVisit === 'object' && this.lastPageVisit.page.length
       ? this.lastPageVisit.page : 'unknown';
   }
 
@@ -203,9 +217,8 @@ export default class User {
   }
 
   targetImgUrl() {
-    let tid = 'default';
-    if (typeof this.target._id !== 'undefined' && this.target._id)
-      tid = this.target._id;
+    let tid = (typeof this.target._id !== 'undefined'
+      && this.target._id.length) ? this.target._id : 'default';
     return User.profileDir + tid + '.jpg';
   }
 
@@ -463,11 +476,11 @@ User.schema = () => {
       type: 'boolean',
       default: false
     },
-    target: { // JSON-stringified User
-      type: 'string' // user stores object
+    target: {
+      type: 'string' // a json string
     },
-    similars: { // not in db
-      type: ['string'] // user stores [object]
+    similars: { // in db or no?
+      type: ['string'] // array of json strings
     },
     descriptors: {
       type: ['string']
