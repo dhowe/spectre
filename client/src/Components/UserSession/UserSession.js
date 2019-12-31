@@ -70,7 +70,7 @@ UserSession.ensure = function(user, props, onSuccess, onError) {
 
   onError = onError || (e => {
     console.error('[ERROR] UserSession.ensure: ', e);
-    throw e;
+    if (process.env.NODE_ENV !== 'production') throw e;
   });
 
   const saveUser = (dirty) => {
@@ -83,26 +83,36 @@ UserSession.ensure = function(user, props, onSuccess, onError) {
   }
 
   const validateAndSave = () => {
+
+    // handle traits/similars separately if specified
     if (props.includes('similars')) {
-      props = arrayRemove(props, 'similars');
-      if (!user.hasOceanTraits()) user._randomizeTraits();
-      UserSession.update(user, () => {
+      if (!user.similars.length) {
+        if (!user.hasOceanTraits()) {
+          user._randomizeTraits();
+          console.warn('[STUB] Setting user.traits: '
+            + JSON.stringify(user.traits).substring(0, 75) + '...');
+        }
+        props = arrayRemove(props, 'similars');
+        props = arrayRemove(props, 'traits');
+        UserSession.update(user, () => {
+          if (!user.similars.length) onError('Unable to stub user.similars');
+          console.warn('[STUB] Setting similars: [' + user.similars.length + ']');
           saveUser(UserSession.fillMissingProperties(user, props));
-      }, onError);
+        }, onError);
+        return;
+      }
     }
-    else {
-      saveUser(UserSession.fillMissingProperties(user, props));
-    }
+    saveUser(UserSession.fillMissingProperties(user, props));
   }
 
   // handle missing user id
   if (props.includes('_id') && typeof user._id === 'undefined') {
     props = arrayRemove(props, '_id');
     const sid = sessionStorage.getItem(UserSession.storageKey);
-    if (!sid) {
-      // redirect to /login ?
-      throw Error('Undefined user._id not in session:' + user);
-    }
+
+    // redirect to /login here ?
+    if (!sid) throw Error('Undefined user._id not in session:' + user);
+
     user._id = JSON.parse(sid);
     console.warn('[SESS] Reloaded user._id: ' + user._id);
     UserSession.lookup(user, json => {
@@ -130,15 +140,14 @@ UserSession.validate = function(user, props, log) {
  */
 UserSession.fillMissingProperties = function(user, props, log) {
 
-  const onUpdatePropery = p => {
+  const onUpdateProperty = (p) => {
     modified = true;
     missing = arrayRemove(missing, p);
     let val = user[p];
     if (Array.isArray(val)) val = user[p].length + ' users';
-    if (typeof val !== 'string') {
-      val = JSON.stringify(user[p]).substring(0, 75) + '...';
-    }
-    console.warn('[STUB] Setting user.' + p + ': ' + val)
+    if (typeof val !== 'string') val = JSON.stringify
+      (user[p]).substring(0, 75) + '...';
+    console.warn('[STUB] Setting user.' + p + ': ' + val);
   };
 
   if (typeof props === 'undefined') return true;
@@ -158,31 +167,31 @@ UserSession.fillMissingProperties = function(user, props, log) {
     user[prop] = (cons[Math.floor(Math.random() * cons.length)]
       + vows[Math.floor(Math.random() * vows.length)]
       + cons[Math.floor(Math.random() * cons.length)]).ucf();
-    onUpdatePropery(prop);
+    onUpdateProperty(prop);
   }
 
   prop = 'login';
   if (missing.includes(prop)) {
     user[prop] = user.name + (+new Date()) + '@test.com';
-    onUpdatePropery(prop);
+    onUpdateProperty(prop);
   }
 
   prop = 'virtue';
   if (missing.includes(prop)) {
     user[prop] = rand(['wealth', 'influence', 'truth', 'power']);
-    onUpdatePropery(prop);
+    onUpdateProperty(prop);
   }
 
   prop = 'gender';
   if (missing.includes(prop)) {
     user[prop] = rand(['male', 'female', 'other']);
-    onUpdatePropery(prop);
+    onUpdateProperty(prop);
   }
 
   prop = 'traits';
   if (missing.includes(prop)) {
     user._randomizeTraits();
-    onUpdatePropery(prop);
+    onUpdateProperty(prop);
   }
 
   if (missing.length) throw Error
@@ -259,14 +268,8 @@ UserSession.lookup = function(user, onSuccess, onError) {
 }
 
 UserSession.update = function(user, onSuccess, onError) {
-
   let { route, auth, cid, mode } = doConfig();
   let internalSuccess = (json) => {
-    // if (Array.isArray(json.similars) && json.similars.length && typeof json.similars[0] === 'string') {
-    //   delete json.similars[0].similars;
-    //   console.log(json.similars[0]);
-    //   console.log(JSON.parse(json.similars[0]));//json.similars = json.similars.map(JSON.parse);
-    // }
     Object.assign(user, json);
     onSuccess && onSuccess(user);
   }

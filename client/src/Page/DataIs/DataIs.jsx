@@ -25,10 +25,6 @@ class DataIs extends React.Component {
     this.countdown = React.createRef();
   }
 
-  // componentDidMount() {
-  //   this.setState(
-  // }
-
   render() {
     const user = UserSession.validate(this.context,
       ['login', 'gender', 'name', 'virtue'], true);

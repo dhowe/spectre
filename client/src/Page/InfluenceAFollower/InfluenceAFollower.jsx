@@ -48,18 +48,7 @@ class InfluenceAFollower extends React.Component {
   }
 
   renderSimilars() {
-    //console.log('InfluenceAFollower.renderSimilars', this.context, this.state);
-    return this.state.similars;
-    // TODO: working here
-    // const user = UserSession.validate
-    //   (this.context, ['_id', 'name', 'login', 'gender', 'virtue', 'traits', 'similars']);
-    //let sims = this.state.similars.map(JSON.parse);
-    // let sims = this.state.similars;
-    // //let sim0 = JSON.parse(sims[0]);
-    // //console.log('sims[0].parsed='+typeof sim0, sim0);
-    // if (sims.length) console.log('sims[0]='+typeof sims[0], sims[0]);
-    // sims = sims.length ? sims.map(JSON.parse) : [];
-    // return this.shuffle(sims.slice(0,6));
+    return this.state.similars.slice(0,6);
   }
 
   shuffle(arr) {
@@ -85,7 +74,7 @@ class InfluenceAFollower extends React.Component {
           <Typography component="p" variant="body1" className="community">Spectre has a global community of followers.</Typography>
           <Typography component="h5" variant="h5" className="choose-participant">Choose one:</Typography>
           <AvatarCircle>
-            {this.renderSimilars().map((sim, i) => (
+            {this.state.similars.slice(0,6).map((sim, i) => (
               <AvatarComponent
                 key={AvatarComponent.generateKey(i)}
                 handleClick={() => this.handleSelect(sim)}
