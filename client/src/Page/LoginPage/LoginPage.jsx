@@ -71,7 +71,7 @@ class LoginPage extends React.Component {
       emailErrorCount: 0,
       modalOpen: false,
       clearEmail: true,
-      idleCheckerIsDone: false,
+      idleCheckerDone: false,
       videoStarted: false
     };
 
@@ -156,7 +156,7 @@ class LoginPage extends React.Component {
     if (this.video) {
       this.setState({ videoStarted: true });
       this.video.play();
-      this.setState({ idleCheckerIsDone: true });
+      this.setState({ idleCheckerDone: true });
     }
     else {
       console.error("Unable to load video component");
@@ -190,7 +190,7 @@ class LoginPage extends React.Component {
       <div className={this.props.classes.root + ' LoginPage'}>
 
         <SpectreHeader />
-        <IdleChecker forceTerminate={this.state.idleCheckerIsDone} />
+        <IdleChecker forceTerminate={this.state.idleCheckerDone} />
         <div className={this.props.classes.content + ' LoginPage-content content'}>
           <Typography style={{ marginBottom: 70 }} component="h2" variant="h2">Let's Play!</Typography>
           <Modal

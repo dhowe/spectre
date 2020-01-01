@@ -44,7 +44,9 @@ class InsightThankYou extends React.Component {
   constructor(props) {
     super(props, '/insight-sexuality');
   }
-
+  nextPage = () => {
+    this.props.history.push('/insight-sexuality');
+  }
   render() {
     const { classes } = this.props;
     return (
@@ -56,7 +58,7 @@ class InsightThankYou extends React.Component {
           <ThumbUp className="insight-thank-you-icon" />
           <Typography style={styles.beginningToThink} component="h6" variant="h6">Now you are beginning to think like an algorithm.</Typography>
           <Typography style={styles.twoMore} component="h6" variant="h6">Just two more to go</Typography>
-          <Button className={classes.button} variant="contained" color="primary" onClick={this.next}>Lets go deeper!</Button>
+          <Button className={classes.button} variant="contained" color="primary" onClick={this.nextPage}>Lets go deeper!</Button>
         </div>
         <FooterLogo />
       </div>

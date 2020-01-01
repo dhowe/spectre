@@ -8,7 +8,7 @@ import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 
 
-import './PersonalisedExperience.scss';
+import './Personalised.scss';
 
 const styles = {
   root: {
@@ -24,7 +24,7 @@ const styles = {
   },
 };
 
-class PersonalisedExperience extends React.Component {
+class Personalised extends React.Component {
   constructor(props) {
     super(props, '/game');
   }
@@ -32,7 +32,7 @@ class PersonalisedExperience extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <div className={classes.root + ' PersonalisedExperience'}>
+      <div className={classes.root + ' Personalised'}>
         <SpectreHeader colour="white" />
         <div className={`${classes.content} content`}>
           <div>
@@ -64,10 +64,10 @@ class PersonalisedExperience extends React.Component {
   }
 }
 
-PersonalisedExperience.propTypes = {
+Personalised.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-PersonalisedExperience.contextType = UserSession;
+Personalised.contextType = UserSession;
 
-export default withStyles(styles)(PersonalisedExperience);
+export default withStyles(styles)(Personalised);

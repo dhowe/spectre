@@ -25,6 +25,8 @@ class PickYourSide extends React.Component {
     super(props, '/campaign');
   }
 
+  // WORKING HERE
+
   render() {
     const { classes } = this.props;
     this.context.target = this.context.target || UserSession.defaultUsers[0];

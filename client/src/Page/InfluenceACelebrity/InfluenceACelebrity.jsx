@@ -34,7 +34,7 @@ class InfluenceACelebrity extends React.Component {
     this.save = this.save.bind(this);
     this.state = {
       video: null,
-      idleCheckerIsDone: false,
+      idleCheckerDone: false,
     };
 
     // a random set, always with two femals
@@ -65,7 +65,7 @@ class InfluenceACelebrity extends React.Component {
 
   stop() {
     this.setState({ video: null });
-    this.setState({ idleCheckerIsDone: false });
+    this.setState({ idleCheckerDone: false });
   }
 
   play(name) {
@@ -74,7 +74,7 @@ class InfluenceACelebrity extends React.Component {
       celebrity: name,
       video: `/video/${this.context.virtue || 'power'}_${name}.mp4`,
     });
-    this.setState({ idleCheckerIsDone: true });
+    this.setState({ idleCheckerDone: true });
   }
 
   render() {
@@ -86,7 +86,7 @@ class InfluenceACelebrity extends React.Component {
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive progressNumber="three" />
-        <IdleChecker forceTerminate={this.state.idleCheckerIsDone} />
+        <IdleChecker forceTerminate={this.state.idleCheckerDone} />
         <div className={`${classes.content} content`}>
           <Fade in style={{ transitionDelay: '200ms' }}>
             <Typography className="title" component="h4" variant="h4">Influence a celebrity!</Typography>

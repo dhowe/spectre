@@ -32,7 +32,7 @@ const styles = {
 class InfluenceAFollower extends React.Component {
 
   constructor(props) {
-    super(props, '/selected-avatar');
+    super(props, '/selected');
     this.state = { similars: [] };
   }
 
@@ -46,7 +46,7 @@ class InfluenceAFollower extends React.Component {
   handleSelect = (target) => {
     this.context.target = target;
     this.context.targetId = target._id;
-    this.props.history.push('/selected-avatar');
+    this.props.history.push('/selected');
   }
 
   renderSimilars() {

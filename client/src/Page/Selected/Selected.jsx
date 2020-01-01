@@ -10,7 +10,7 @@ import AvatarComponent from '../../Components/AvatarComponent/AvatarComponent';
 import Styles from '../../Styles';
 import colours from '../../colors.scss';
 
-import './SelectedAvatar.scss';
+import './Selected.scss';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
 
@@ -38,7 +38,7 @@ const styles = {
   },
 };
 
-class SelectedAvatar extends React.Component {
+class Selected extends React.Component {
   constructor(props) {
     super(props, '/insight-gender');
     this.state = { targetName: '',
@@ -58,7 +58,7 @@ class SelectedAvatar extends React.Component {
     const { classes } = this.props;
     const { targetName, targetImage } = this.state;
     return (
-      <div className={`${classes.root} SelectedAvatar`}>
+      <div className={`${classes.root} Selected`}>
         <SpectreHeader colour="white" progressActive={true} progressNumber="one" />
         <IdleChecker />
         <div className={`${classes.content} content`}>
@@ -79,10 +79,10 @@ class SelectedAvatar extends React.Component {
   }
 }
 
-SelectedAvatar.propTypes = {
+Selected.propTypes = {
   classes: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
 };
-SelectedAvatar.contextType = UserSession;
+Selected.contextType = UserSession;
 
-export default withStyles(styles)(SelectedAvatar);
+export default withStyles(styles)(Selected);

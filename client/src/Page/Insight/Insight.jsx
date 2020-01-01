@@ -21,16 +21,28 @@ const styles = {
 };
 
 class Insight extends React.Component {
+
   constructor(props) {
     super(props, props.next);
-    this.state = { buttonEnabled: false };
+    this.state = { buttonEnabled: false, targetName: '',
+      targetImage: UserSession.profileDir + 'default.jpg' };
     this.EnableButton = this.EnableButton.bind(this);
   }
+
   EnableButton() {
     this.setState({
       buttonEnabled: true,
     });
     document.getElementById("clickMe").click();
+  }
+
+  componentDidMount() {
+    UserSession.ensure(this.context,
+      ['_id', 'name', 'login', 'gender', 'virtue', 'target'],
+      user => {
+        this.setState({ targetName: user.target.name,
+          targetImage: user.targetImageUrl() })
+      });
   }
 
   render() {
@@ -43,17 +55,14 @@ class Insight extends React.Component {
       next,
       progress,
     } = this.props;
-
-    this.context.target = this.context.target || UserSession.defaultUsers[0];
-    const tname = this.context.target.name;
-    const timage = this.context.targetImageUrl();
+    const { targetName, targetImage } = this.state;
     return (
       <div className={classes.root} id='clickMe'>
         <SpectreHeader colour="white" progressActive progressNumber={progress} />
         <IdleChecker />
         <div className={`${classes.content} content insightPage`}>
-          <Typography component="h6" variant="h6">{question(tname)}</Typography>
-          <AvatarComponent target= {{name: tname, image: timage }} />
+          <Typography component="h6" variant="h6">{question(targetName)}</Typography>
+          <AvatarComponent target= {{name: targetName, image: targetImage }} />
           <div onTouchEnd={this.EnableButton}>
             <TextSliderText leftText={leftText} rightText={rightText} middleText={middleText} />
           </div>

@@ -3,12 +3,20 @@ import UserSession from '../../Components/UserSession/UserSession';
 import { withRouter } from 'react-router-dom';
 
 const routes = [
-  "/", "/login", "/pledge", "/searching-for", "/data-is",
-  "/personalised-experience", "/game", "/thank-you", "/steps",
-  "/influence-a-follower", "/selected-avatar"
+  '/', '/login', '/pledge', '/searching', '/data-is', '/personalised',
+  '/game', '/thank-you', '/steps', '/follower', '/selected',
+  '/insight-gender','/insight-skin', '/insight-financial',
+  //'insight',
+  '/insight-thank-you',
+  '/insight-sexuality', '/insight-political', '/insight-complete',
+  '/your-power', '/pick-your-side', '/campaign', '/dark-ad', '/target-ad',
+  '/success-ad', '/influence-a-nation', '/consumer-data', '/political-data',
+  '/home-data', '/find-citizens', '/targets-found', '/launch-campaign',
+  '/referendum-results', '/win', '/influence-a-celebrity', '/OCEAN-reveal',
+  '/take-back-control', '/goodbye'
 ];
 
-const disabled = ["/login"];
+const disabled = [ '/login' ];
 
 class Navigation extends React.Component {
 
@@ -18,11 +26,10 @@ class Navigation extends React.Component {
   }
 
   next = (page) => {
-
     let current = window.location.pathname;
     if (!disabled.includes(current)) {
       let idx = routes.indexOf(current);
-      page = page || routes[++idx];
+      page = page || routes[++idx % routes.length];
       //console.log('nav: '+current+' -> '+page);
       this.props.history.push(page);
     }

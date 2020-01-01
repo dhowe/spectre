@@ -22,7 +22,7 @@ const styles = {
 class DataIs extends React.Component {
 
   constructor(props) {
-    super(props, '/personalised-experience');
+    super(props, '/personalised');
     this.countdown = React.createRef();
     this.state = {virtue: '', virtueAdverb: ''};
   }
@@ -49,7 +49,7 @@ class DataIs extends React.Component {
           </Fade>
           <Countdown
             ref={e => this.countdown = e}
-            onComplete={() => this.props.history.push('/personalised-experience')}
+            onComplete={() => this.props.history.push('/personalised')}
             date={Date.now() + 5000}
             renderer={() => null}
           />

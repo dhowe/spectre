@@ -27,13 +27,13 @@ const styles = {
 
 class Pledge extends React.Component {
   constructor(props) {
-    super(props, '/searching-for');
+    super(props, '/searching');
     this.timeout = -1;
   }
 
   componentDidMount() {
     this.timeout = setTimeout(() =>
-      this.props.history.push('/searching-for'), 7500);
+      this.props.history.push('/searching'), 7500);
   }
 
   componentWillUnmount() {
