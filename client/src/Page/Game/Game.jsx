@@ -305,19 +305,13 @@ class Game extends React.Component {
     game = this; // handle for p5js
   }
 
-  componentDidMount() {
-    UserSession.ensure(this.context,
-      ['_id', 'loginType', 'login', 'gender', 'name'],
-      UserSession.log);
-  }
-
   componentComplete() { // redirect called from p5
     clearInterval(this.interval);
     UserSession.ensure(user, ['traits', 'descriptors', 'influences'],
       () => {
-        UserSession.update(user,
-          (u) => {
-            console.log(user, u);
+        UserSession.update(user, // [Game].2
+          () => {
+            console.log('[Game]', user);
           }, (err) => {
             console.error('[Game]', err);
             this.next();

@@ -16,8 +16,9 @@ export default class User {
   constructor(tmpl) {
     Object.keys(User.schema()).forEach(k => this[k] = undefined);
     Object.assign(this, tmpl);
+    this.similars = [];
     this.clientId = process.env.REACT_APP_CLIENT_ID || -1;
-    this.isActive = (tmpl && tmpl.isActive) || false;
+    //this.isActive = (tmpl && tmpl.isActive) || false;
     this.category = (tmpl && tmpl.category) || 0;
     this.loginType = this.loginType || 'email';
   }
@@ -29,10 +30,12 @@ export default class User {
     if (u.gender) s += ', ' + u.gender;
     if (u.virtue) s += ', ' + u.virtue;
     if (u.login) s += ', ' + u.login;
+    if (u.descriptors.length) s += ', ' + u.descriptors;
+    if (u.influences.length) s += ', ' + u.influences;
     if (u.similars && u.similars.length) {
       s += ', ' + u.similars.length + ' similars';
     }
-    if (u.target) s += ', ' + u.target._id+'/'+u.target.name;
+    if (u.target) s += ', ' + u.target._id + '/' + u.target.name;
     return s;
   }
 
@@ -216,9 +219,10 @@ export default class User {
     [(Math.random() < .5 ? 'high' : 'low')][ots[idx]];
   }
 
-  targetImgUrl() {
-    let tid = (typeof this.target._id !== 'undefined'
-      && this.target._id.length) ? this.target._id : 'default';
+  targetImageUrl() {
+    let tid = (typeof this.target && typeof this.target._id
+      !== 'undefined' && this.target._id.length)
+      ? this.target._id : 'default';
     return User.profileDir + tid + '.jpg';
   }
 
@@ -453,7 +457,7 @@ User.schema = () => {
       type: ['string']
     },
 
-    /* In this case, the Monolith id from client's .env file */
+    /* monolith-id from client's .env file */
     clientId: {
       type: 'number',
       default: -1
@@ -464,24 +468,24 @@ User.schema = () => {
      * Positive numbers mean 'high', negative numbers mean 'low',
      * 0 means the user is neutral and gets random assignments
      */
-    category: {
-      type: 'number',
-      default: 0,
-    },
+    // category: {
+    //   type: 'number',
+    //   default: 0,
+    // },
     hasImage: {
       type: 'boolean',
       default: false
     },
-    isActive: {
-      type: 'boolean',
-      default: false
+    // isActive: {
+    //   type: 'boolean',
+    //   default: false
+    // },
+    targetId: {
+      type: 'string'
     },
-    target: {
-      type: 'string' // a json string
-    },
-    similars: { // in db or no?
-      type: ['string'] // array of json strings
-    },
+    // similars: { // in db or no?
+    //   type: ['string'] // array of json strings
+    // },
     descriptors: {
       type: ['string']
     },

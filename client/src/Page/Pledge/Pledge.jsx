@@ -28,7 +28,7 @@ const styles = {
 class Pledge extends React.Component {
   constructor(props) {
     super(props, '/searching-for');
-    this.timeout = null;
+    this.timeout = -1;
   }
 
   componentDidMount() {

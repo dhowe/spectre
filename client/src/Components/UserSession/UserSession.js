@@ -67,30 +67,6 @@ UserSession.ensure = function(user, props, onSuccess, onError) {
     }
   }
 
-  const validateAndSave = () => {
-
-    // handle traits/similars separately if specified
-    if (props.includes('similars')) {
-      if (!user.similars.length) {
-        if (!user.hasOceanTraits()) {
-          user._randomizeTraits();
-          console.warn('[STUB] Setting user.traits: '
-            + JSON.stringify(user.traits).substring(0, 75) + '...');
-        }
-        props = arrayRemove(props, 'similars');
-        props = arrayRemove(props, 'traits');
-        UserSession.update(user, () => {
-          if (!user.similars.length) onError('Unable to stub user.similars');
-          if (typeof user.similars[0] !== 'object') onError('user.similars does not contain objects: '+user.similars[0]);
-          console.warn('[STUB] Setting similars: [' + user.similars.length + ']');
-          saveUser(UserSession.fillMissingProperties(user, props));
-        }, onError);
-        return;
-      }
-    }
-    saveUser(UserSession.fillMissingProperties(user, props));
-  }
-
   // handle missing user id
   if (props.includes('_id') && typeof user._id === 'undefined') {
     props = arrayRemove(props, '_id');
@@ -103,11 +79,11 @@ UserSession.ensure = function(user, props, onSuccess, onError) {
     console.warn('[SESS] Reloaded user._id: ' + user._id+' doing lookup');
     UserSession.lookup(user, json => {
       Object.assign(user, json);
-      validateAndSave();
+      saveUser(UserSession.fillMissingProperties(user, props));
     }, onError);
   }
   else {
-    validateAndSave();
+    saveUser(UserSession.fillMissingProperties(user, props));
   }
 }
 
@@ -177,7 +153,8 @@ UserSession.fillMissingProperties = function(user, props) {
   if (missing.includes(prop)) {
     if (!user.similars.length) throw Error('no similars');
     user[prop] = rand(user.similars);
-    console.log('UserSession.fillMissingProperties.target', typeof user[prop]);
+    if (typeof user.target !== 'object') throw Error
+      ('user.target != object', typeof user.target, user.target);
     onUpdateProperty(prop);
   }
 
@@ -246,9 +223,8 @@ UserSession.lookup = function(user, onSuccess, onError) {
 
   if (!user || !user._id) throw Error('Invalid arg', user);
 
-  let { route, auth, cid, mode } = doConfig();
-  let internalSuccess = (json) => {
-    console.log('UserSession.lookup: typeof sims[0]=',typeof json.similars[0]);
+  const { route, auth, cid, mode } = doConfig();
+  const internalSuccess = (json) => {
     Object.assign(user, json);
     onSuccess && onSuccess(json);
   }
@@ -259,9 +235,10 @@ UserSession.lookup = function(user, onSuccess, onError) {
 
   if (user.clientId < 0) user.clientId = cid;
 
-  console.log('[GET] ' + mode + '.lookup: ' + route);
+  const endpoint = route + user._id;
+  console.log('[GET] ' + mode + '.lookup: ' + endpoint);
 
-  fetch(route + user._id, {
+  fetch(endpoint, {
     method: "get",
     headers: {
       "Content-Type": "application/json",
@@ -274,8 +251,8 @@ UserSession.lookup = function(user, onSuccess, onError) {
 }
 
 UserSession.update = function(user, onSuccess, onError) {
-  let { route, auth, cid, mode } = doConfig();
-  let internalSuccess = (json) => {
+  const { route, auth, cid, mode } = doConfig();
+  const internalSuccess = (json) => {
     Object.assign(user, json);
     onSuccess && onSuccess(user);
   }
@@ -283,11 +260,13 @@ UserSession.update = function(user, onSuccess, onError) {
 
   if (typeof user._id === 'undefined') throw Error('user._id required');
 
-  console.log('[PUT] ' + mode + '.update: ' + route);
+  const endpoint = route + user._id;
+
+  console.log('[PUT] ' + mode + '.update: ' + endpoint);
 
   if (user.clientId < 0) user.clientId = cid;
 
-  fetch(route + user._id, {
+  fetch(endpoint, {
     method: "put",
     headers: {
       "Content-Type": "application/json",
@@ -300,13 +279,41 @@ UserSession.update = function(user, onSuccess, onError) {
     .catch(onError);
 }
 
+UserSession.similars = function(user, onSuccess, onError) {
+  const { route, auth, cid, mode } = doConfig();
+  const internalSuccess = (json) => {
+    user.similars = json;
+    onSuccess && onSuccess(user);
+  }
+  if (!onError) onError = e => console.error(e);
+
+  if (typeof user._id === 'undefined') throw Error('user._id required');
+
+  const endpoint = route + 'similars/' + user._id;
+
+  console.log('[GET] ' + mode + '.similars: ' + endpoint);
+
+  if (user.clientId < 0) user.clientId = cid;
+
+  fetch(endpoint, {
+    method: "get",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": 'Basic ' + btoa(auth)
+    },
+  })
+    .then(handleResponse)
+    .then(internalSuccess)
+    .catch(onError);
+}
+
 UserSession.postImage = function(user, image, onSuccess, onError) {
 
   let { route, auth, mode } = doConfig();
   if (!onSuccess) onSuccess = () => { };
   if (!onError) onError = (e) => console.error(e);
 
-  console.log('[POST] ' + mode + '.postImage: ' + route);
+
   //if (typeof image === 'string') image = toImageFile(image);
 
   let fdata = new FormData();
@@ -314,7 +321,11 @@ UserSession.postImage = function(user, image, onSuccess, onError) {
   fdata.append('clientId', process.env.CLIENT_ID);
   fdata.append('videoId', 2);
 
-  fetch(route + 'photo/' + (user._id || 567), {
+  const endpoint = route + 'photo/' + user._id;
+
+  console.log('[POST] ' + mode + '.postImage: ' + endpoint);
+
+  fetch(endpoint, {
     method: "post",
     headers: { "Authorization": 'Basic ' + btoa(auth) },
     body: fdata // JSON.stringfy(fdata) ??

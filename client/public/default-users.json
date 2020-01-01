@@ -12,10 +12,8 @@
       "Images of large crowds",
       "Short, punchy slogans"
     ],
-    "category": 0,
     "hasImage": true,
-    "isActive": false,
-    "similars": [],
+    "targetId": -1,
     "descriptors": [
       "Bernard is impulsive and whimsical, and fine with it!",
       "He would say that sometimes decisions need to be made quickly, and that he makes them quicker than most.",
@@ -45,10 +43,8 @@
       "Images of large crowds",
       "Short, punchy slogans"
     ],
-    "category": 0,
     "hasImage": true,
-    "isActive": false,
-    "similars": [],
+    "targetId": -1,
     "descriptors": [
       "Tyler is quiet and somewhat withdrawn.",
       "He is someone who doesn’t need lots of other people around to have fun, and sometimes finds people tiring.",
@@ -78,10 +74,8 @@
       "Images of large crowds",
       "Short, punchy slogans"
     ],
-    "category": 0,
     "hasImage": true,
-    "isActive": false,
-    "similars": [],
+    "targetId": -1,
     "descriptors": [
       "Fran is extremely difficult to upset or stress out, since she rarely, if ever, react with negative emotions, and even when she is anxious about something the feeling quickly passes.",
       "She comes across as very calm and resilient.",
@@ -111,10 +105,8 @@
       "Images of large crowds",
       "Short, punchy slogans"
     ],
-    "category": 0,
     "hasImage": true,
-    "isActive": false,
-    "similars": [],
+    "targetId": -1,
     "descriptors": [
       "Devin is down-to-earth and prefers things to be simple and straightforward.",
       "She finds life easier if things don’t change unnecessarily.",
@@ -144,10 +136,8 @@
       "Images of large crowds",
       "Short, punchy slogans"
     ],
-    "category": 0,
     "hasImage": true,
-    "isActive": false,
-    "similars": [],
+    "targetId": -1,
     "descriptors": [
       "Remy is a perfectionist.",
       "He prefers to plan everything to the last detail, which has consequently led to his being very successful and extremely reliable.",
@@ -177,10 +167,8 @@
       "Images of large crowds",
       "Short, punchy slogans"
     ],
-    "category": 0,
     "hasImage": true,
-    "isActive": false,
-    "similars": [],
+    "targetId": -1,
     "descriptors": [
       "Dick reacts poorly to stressful situations, and consequently worries about them more than most.",
       "However he has an emotional depth that others may lack.",
@@ -210,10 +198,8 @@
       "Images of large crowds",
       "Short, punchy slogans"
     ],
-    "category": 0,
     "hasImage": true,
-    "isActive": false,
-    "similars": [],
+    "targetId": -1,
     "descriptors": [
       "Sally is a perfectionist.",
       "She prefers to plan everything to the last detail, which has consequently led to her being very successful and extremely reliable.",
@@ -243,10 +229,8 @@
       "Images of large crowds",
       "Short, punchy slogans"
     ],
-    "category": 0,
     "hasImage": true,
-    "isActive": false,
-    "similars": [],
+    "targetId": -1,
     "descriptors": [
       "Sing is down-to-earth and prefers things to be simple and straightforward.",
       "He finds life easier if things don’t change unnecessarily.",
@@ -276,10 +260,8 @@
       "Images of large crowds",
       "Short, punchy slogans"
     ],
-    "category": 0,
     "hasImage": true,
-    "isActive": false,
-    "similars": [],
+    "targetId": -1,
     "descriptors": [
       "Bailey is impulsive and whimsical, and fine with it!",
       "He would say that sometimes decisions need to be made quickly, and that he makes them quicker than most.",

@@ -33,34 +33,24 @@ class InfluenceAFollower extends React.Component {
 
   constructor(props) {
     super(props, '/selected-avatar');
-    this.state = {similars: []};
+    this.state = { similars: [] };
   }
 
   componentDidMount() {
     UserSession.ensure(this.context,
-      ['_id', 'name', 'login', 'gender', 'virtue', 'similars'],
-      user => {
-        console.log(user.similars);
-        /*
-          WORKING HERE:
-            in normal progression ((UserSession.update)) similars are objects
-            on refresh (UserSession.lookup) similars are string-ids
-
-            NEXT: problem is data-type for similars, try saving as strings (no similars.similars)
-                  update default-users.json first
-                  then update expects in user-routes.js
-        */
-        this.setState({similars: user.similars})
-      });
+      ['_id', 'name', 'login', 'gender', 'virtue', 'traits'],
+      user => UserSession.similars(user,
+          u => this.setState({ similars: u.similars })));
   }
 
   handleSelect = (target) => {
     this.context.target = target;
+    this.context.targetId = target._id;
     this.props.history.push('/selected-avatar');
   }
 
   renderSimilars() {
-    return this.state.similars.slice(0,6);
+    return this.state.similars.slice(0, 6);
   }
 
   shuffle(arr) {
@@ -86,7 +76,7 @@ class InfluenceAFollower extends React.Component {
           <Typography component="p" variant="body1" className="community">Spectre has a global community of followers.</Typography>
           <Typography component="h5" variant="h5" className="choose-participant">Choose one:</Typography>
           <AvatarCircle>
-            {this.state.similars.slice(0,6).map((sim, i) => (
+            {this.state.similars.slice(0, 6).map((sim, i) => (
               <AvatarComponent
                 key={AvatarComponent.generateKey(i)}
                 handleClick={() => this.handleSelect(sim)}

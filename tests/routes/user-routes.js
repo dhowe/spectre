@@ -54,8 +54,7 @@ describe('User Routes', () => {
         expect(res).to.have.status(200);
         expect(res.body.data).to.be.a('object');
         expect(res.body.data._id).eq(id);
-        expect(res.body.data.similars).to.be.an('array');
-        expect(res.body.data.similars.length).eq(0);
+        expect(res.body.data.similars).to.be.undefined;
         done();
       });
   });
@@ -74,8 +73,6 @@ describe('User Routes', () => {
         expect(similars.length).eq(6);
         expect(similars[0]).to.be.a('object');
         expect(similars[0]._id).to.be.a('string');
-        expect(similars[0].similars).to.be.an('array');
-        expect(similars[0].similars.length).eq(0);
         done();
       });
   });
@@ -125,6 +122,7 @@ describe('User Routes', () => {
             expect(res).to.have.status(200);
             expect(res.body.data).to.be.a('object');
             expect(res.body.data._id).eq(user._id);
+            expect(res.body.data.similars).to.be.an('array');
             done();
           });
       });
@@ -206,8 +204,9 @@ describe('User Routes', () => {
             expect(res.body.data.similars).to.be.an('array');
             expect(res.body.data.similars.length).eq(6);
             expect(res.body.data.similars[0]).to.be.an('object');
-            expect(res.body.data.similars[0].similars).to.be.an('array');
-            expect(res.body.data.similars[0].similars.length).eq(0);
+            expect(res.body.data.similars[0]._id).to.be.an('string');
+            expect(res.body.data.similars[0].similars).to.be.undefined;
+            //expect(res.body.data.similars[0].similars.length).eq(0);
             done();
           });
       });

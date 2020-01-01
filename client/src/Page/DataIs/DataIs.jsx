@@ -20,28 +20,32 @@ const styles = {
 };
 
 class DataIs extends React.Component {
+
   constructor(props) {
     super(props, '/personalised-experience');
     this.countdown = React.createRef();
+    this.state = {virtue: '', virtueAdverb: ''};
   }
-  // componentDidMount() {
-  //
-  // }
+
+  componentDidMount() {
+    const user = UserSession.validate(this.context, ['virtue']);
+    this.setState( {virtue: user.virtue, virtueAdverb: user.virtueAsAdverb()} );
+  }
+
   render() {
-    const user = UserSession.validate(this.context,
-      ['login', 'gender', 'name', 'virtue']);
+
     return (
       <div className={this.props.root}>
         <SpectreHeader colour="white" />
         <div className={`${this.props.content} content`}>
           <Fade in={true} style={{ transitionDelay: '200ms' }}>
-            <Typography component="h6" variant="h6">DATA IS {user.virtue.toUpperCase()}</Typography>
+            <Typography component="h6" variant="h6">DATA IS {this.state.virtue.toUpperCase()}</Typography>
           </Fade>
           <Fade in={true} style={{ transitionDelay: '1200ms' }}>
-            <Typography component="h6" variant="h6">To become more {user.virtueAsAdverb()} you need&nbsp;more&nbsp;data</Typography>
+            <Typography component="h6" variant="h6">To become more {this.state.virtueAdverb} you need&nbsp;more&nbsp;data</Typography>
           </Fade>
           <Fade in={true} style={{ transitionDelay: '2000ms' }}>
-            <Typography component="h6" variant="h6">We can help you believe in the {user.virtue}&nbsp;of&nbsp;Dataism.</Typography>
+            <Typography component="h6" variant="h6">We can help you believe in the {this.state.virtue}&nbsp;of&nbsp;Dataism.</Typography>
           </Fade>
           <Countdown
             ref={e => this.countdown = e}

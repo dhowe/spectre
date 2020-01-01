@@ -53,9 +53,8 @@ class SearchingFor extends React.Component {
   componentDidMount() {
     UserSession.ensure(this.context,
       ['_id', 'login', 'gender', 'name'],
-      user => {
-        this.setState({name: user.name})
-    });
+      user => this.setState({name: user.name})
+    );
   }
 
   toImageFile(data, fname) {
@@ -76,7 +75,7 @@ class SearchingFor extends React.Component {
 
   handleClick(virtue) {
 
-    const user = this.context; // no validate
+    const user = this.context;
     user.virtue = virtue;
 
     // here we are doing the webcam capture, disabled for now

@@ -46,7 +46,7 @@ class Insight extends React.Component {
 
     this.context.target = this.context.target || UserSession.defaultUsers[0];
     const tname = this.context.target.name;
-    const timage = this.context.targetImgUrl();
+    const timage = this.context.targetImageUrl();
     return (
       <div className={classes.root} id='clickMe'>
         <SpectreHeader colour="white" progressActive progressNumber={progress} />

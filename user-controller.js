@@ -12,6 +12,7 @@ TODO: every call should return a uniform object:
 }
 */
 const USER_NOT_FOUND = 452;
+const NUM_SIMILARS = 6;
 
 const list = function(req, res) {
 
@@ -112,7 +113,7 @@ const update = function(req, res) {
 
     user.findByOcean((err, sims) => {
       if (err) return sendError(res, 'Unable to findByOcean for #' + req.params.uid, err);
-      user._doc.similars = sims; // why is _doc needed ?
+      user._doc.similars = sims.slice(0, NUM_SIMILARS); // why is _doc needed ?
       sendResponse(res, user);
     }, limit);
   });
@@ -124,7 +125,7 @@ const similars = function(req, res) {
     return sendError(res, 'UserId required');
   }
 
-  let limit = 10; // default limit
+  let limit = NUM_SIMILARS; // default limit
   if (req.query.hasOwnProperty('limit')) {
     limit = parseInt(req.query.limit);
   }
