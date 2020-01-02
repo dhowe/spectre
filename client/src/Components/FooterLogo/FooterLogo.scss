@@ -1,3 +1,23 @@
+@media screen and (orientation:landscape) {
+
+
+  .FooterLogo {
+      background-color: #ffffff;
+      padding: 20px;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  }
+
+}
+
+@media screen and (orientation:portrait) {
+
+
 .FooterLogo {
     background-color: #ffffff;
     padding: 20px;
@@ -8,4 +28,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
 }

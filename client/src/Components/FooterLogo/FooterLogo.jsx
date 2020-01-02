@@ -9,6 +9,8 @@ const styles = {
     flexGrow: 1,
     width: '100%',
     backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center center'
   },
 };
 const imageCount = 10;

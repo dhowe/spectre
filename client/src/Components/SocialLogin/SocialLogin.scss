@@ -1,7 +1,35 @@
-.simple-keyboard {
-  min-width: 800px;
+
+
+@media screen and (orientation:landscape) {
+  .simple-keyboard {
+    margin: auto;
+    min-width: 800px;
+  }
+
+  .radio span {
+    color: white;
+    font-size: 25px;
+  }
+
+  button{
+    position:fixed;
+    right: 15%;
+    top: 38%;
+  }
+  .socialLogin{
+    position: absolute;
+    top: 25%;
+    left: 29%;
+
+  }
+
 }
 
-.radio span {
-  color: white;
+@media screen and (orientation:portrait) {
+  .radio span {
+    color: white;
+  }
+  .simple-keyboard {
+    min-width: 800px;
+  }
 }

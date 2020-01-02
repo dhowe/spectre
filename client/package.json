@@ -20,10 +20,10 @@
     "react-mui-login-register": "^0.7.3",
     "react-p5-wrapper": "^2.0.0",
     "react-router-dom": "^5.0.0",
-    "react-screen-orientation": "^0.0.4",
     "react-scripts": "3.3.0",
     "react-simple-keyboard": "^2.1.75",
     "react-webcam": "^4.0.0",
+    "styled-components": "^4.4.1",
     "words-to-numbers": "^1.5.1"
   },
   "scripts": {

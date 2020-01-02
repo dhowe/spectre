@@ -15,7 +15,25 @@ import 'react-simple-keyboard/build/css/index.css';
 import IconButton from '../../Components/IconButton/IconButton';
 import './SocialLogin.scss';
 
+const landscapeStyles = {
+    fontSize: '1rem',
+    fontWeight: 400
+};
+
+const portraitStyles = {
+    fontSize: '1.25rem',
+};
+
 const styles = {
+  formControlLandscape: {
+    marginBottom: 15,
+  },
+
+  marginLandscape: {
+    display: 'block',
+    marginBottom: 15,
+  },
+
   formControl: {
     marginBottom: 75,
   },
@@ -170,8 +188,8 @@ class SocialLogin extends React.Component {
         <div className={`${classes.content} socialLogin-content`}>
           <form noValidate>
             {/* #267: SHIFT / CAPS, etc. dont work */}
-            <FormControl className={classes.margin}>
-              <Typography component="h6" variant="h6">Enter your name:</Typography>
+            <FormControl className={classes.marginLandscape}>
+              <Typography style={landscapeStyles} component="h6" variant="h6">Enter your name:</Typography>
               <Input
                 name="name"
                 onClick={this.changeFocus('name')}
@@ -183,8 +201,8 @@ class SocialLogin extends React.Component {
                 }}
               />
             </FormControl>
-            <FormControl className={classes.margin}>
-              <Typography component="h6" variant="h6">Your email:</Typography>
+            <FormControl className={classes.marginLandscape}>
+              <Typography style={landscapeStyles} component="h6" variant="h6">Your email:</Typography>
               <Input
                 name="email"
                 onClick={this.changeFocus('email')}
@@ -197,8 +215,8 @@ class SocialLogin extends React.Component {
               />
             </FormControl>
 
-            <FormControl component="fieldset" className={classes.formControl}>
-              <Typography component="h6" variant="h6">Your gender:</Typography>
+            <FormControl component="fieldset" className={classes.formControlLandscape}>
+              <Typography  style={landscapeStyles} component="h6" variant="h6">Your gender:</Typography>
               <RadioGroup
                 aria-label="Gender"
                 name="gender"
