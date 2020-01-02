@@ -1,4 +1,4 @@
-import React from 'react';
+ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
@@ -161,10 +161,11 @@ class SocialLogin extends React.Component {
     this.setState({ email: '' });
   }
 
+
   render() {
     const { classes } = this.props;
     const { email, name, gender } = this.state;
-    const enabled = email.length && name.length && gender !== 'undefined';
+    const btnEnabled = email.length && name.length && gender !== undefined;
     return (
       <div className={`${classes.root} socialLogin`}>
         <div className={`${classes.content} socialLogin-content`}>
@@ -229,8 +230,8 @@ class SocialLogin extends React.Component {
               onKeyPress={button => this.onKeyPress(button)}
               layoutName={this.state.layoutName}
             />
-            <IconButton onClick={e => this.props.handleSubmit(e, this.state)}
-              enabled={enabled ? "white" : false} colour="white" icon="next" text="Next" />
+            <IconButton ref={btn => { this.btn = btn; }} onClick={e => this.props.handleSubmit(e, this.state)}
+              enabled={btnEnabled ? "white" : false} colour="white" icon="next" text="Next" />
           </form>
         </div>
       </div>
