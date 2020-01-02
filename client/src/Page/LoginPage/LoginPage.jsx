@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
-import { createMuiTheme, responsiveFontSizes } from '@material-ui/core/styles';
 import Modal from '../../Components/Modal/Modal';
 import SocialLogin from '../../Components/SocialLogin/SocialLogin';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
