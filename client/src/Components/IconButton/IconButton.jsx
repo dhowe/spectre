@@ -296,21 +296,25 @@ class IconButton extends React.Component {
     // this code replaces deprecated componentWillReceiveProps()
     // and componentDidMount()) above, TODO: needs checking
     let colour = colours.grey, etype = typeof enabled;
+    let ptEvents = '';
     if (!enabled) {
       colour = colours.grey;
+      ptEvents = 'none'
     } else if (etype === 'string') {
       colour = enabled;
+      ptEvents = 'auto'
     } else if (enabled || etype === 'undefined') {
       colour = colours.blue;
+      ptEvents = 'auto'
     }
 
     const classNames = className ? [className] : [];
     classNames.push(`iconButton-${colour}`, 'iconButton', classes.button);
 
     return (
-      <button onClick={onClick} className={classNames.join(' ')}>
+      <button onClick={onClick} disabled={!enabled} className={classNames.join(' ')}>
         {icons[icon] && icons[icon](colour)}
-        {Button || <div style={{ color: colour }} className="iconButtonText">{text}</div>}
+        {Button || <div style={{ color: colour,  pointerEvents: ptEvents}} className="iconButtonText">{text}</div>}
       </button>
     );
   }
