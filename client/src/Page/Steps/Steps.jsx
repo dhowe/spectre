@@ -24,7 +24,13 @@ const styles = {
 
 class Steps extends React.Component {
   constructor(props) {
-    super(props, '/influence-a-follower');
+    super(props, '/follower');
+    this.state = {virtue: ''};
+  }
+
+  componentDidMount() {
+    const user = UserSession.validate(this.context, ['virtue']);
+    this.setState( { virtue: user.virtue } );
   }
 
   render() {
@@ -47,12 +53,12 @@ class Steps extends React.Component {
                 <Typography component="h6" variant="h6"><strong>Step 3</strong> - influence a celebrity</Typography>
             </Fade>
             <Fade in={true} style={{transitionDelay: '4000ms'}}>
-                <Typography component="h5" variant="h5">Get the data. Get the {this.context.virtue}.</Typography>
+                <Typography component="h5" variant="h5">Get the data. Get the {this.state.virtue}.</Typography>
             </Fade>
             <Fade in={true} style={{transitionDelay: '5000ms'}}>
                 <Typography component="h6" variant="h6">Ready?</Typography>
             </Fade>
-            <Link to="/influence-a-follower">
+            <Link to="/follower">
                 <IconButton icon="tick" text="Yes" />
             </Link>
         </div>

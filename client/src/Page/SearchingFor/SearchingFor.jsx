@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
-import Webcam from "react-webcam";
+//import Webcam from "react-webcam";
 import './SearchingFor.scss';
 import Styles from '../../Styles';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
@@ -43,10 +43,18 @@ class SearchingFor extends React.Component {
   constructor(props) {
     super(props, 'data-is');
     this.setRef = this.setRef.bind(this);
+    this.state = { name: '' };
   }
 
   setRef(webcam) {
     this.webcam = webcam;
+  }
+
+  componentDidMount() {
+    UserSession.ensure(this.context,
+      ['_id', 'login', 'gender', 'name'],
+      user => this.setState({name: user.name})
+    );
   }
 
   toImageFile(data, fname) {
@@ -65,15 +73,10 @@ class SearchingFor extends React.Component {
     return new File([u8arr], fname, { type: mime });
   }
 
-  componentDidMount() {
-    this.user = UserSession.validate(this.context,
-      ['loginType', 'login', 'gender', 'name']);
-  }
-
   handleClick(virtue) {
 
-    if (!this.user) throw Error('No user');
-    this.user.virtue = virtue || 'power';
+    const user = this.context;
+    user.virtue = virtue;
 
     // here we are doing the webcam capture, disabled for now
     if (false) {
@@ -81,54 +84,53 @@ class SearchingFor extends React.Component {
       // TODO: next work
       const data = this.webcam.getScreenshot();
       if (data && data.length) {
-        const imgfile = this.toImageFile(data, this.user._id + '.jpg');
+        const imgfile = this.toImageFile(data, user._id + '.jpg');
         UserSession.postImage(this.context, imgfile,
           (json) => {
             console.log(`Upload: http://localhost:3000${json.url}`);
             this.context.hasImage = true;
+
           },
           (e) => {
             console.error('Error', e);
             this.context.hasImage = false;
-          },
+          }
         );
-        this.setState(() => ({ toNext: true }));
+        this.props.history.push('/data-is');
       }
       else {
         console.error('no image capture');
       }
     }
-
-    this.props.history.push('/data-is');
   }
 
   render() {
     const { classes } = this.props;
-    const videoConstraints = {
-      width: styles.profileImage.width,
-      height: styles.profileImage.height,
-      facingMode: "user"
-    }
+    const { name } = this.state;
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" />
         <IdleChecker />
         <div className={`${classes.content} content`}>
-          <Typography className="username" component="h3" variant="h3">{this.context.name || 'Barney'}</Typography>
+          <Typography className="username" component="h3" variant="h3">{name}</Typography>
           <Typography className="question" component="h3" variant="h3">What are you searching for today?</Typography>
 
-          <div className="ImageCapture">
-            {<Webcam ref={this.setRef}
+          {/*<div className="ImageCapture">
+            <Webcam ref={this.setRef}
               audio={false}
               screenshotQuality={1}
               screenshotFormat="image/jpeg"
               width={styles.profileImage.width}
               height={styles.profileImage.height}
               style={{ left: '-5000px', position: 'relative' }}
-              videoConstraints={videoConstraints}
-            />}
+              videoConstraints={{
+                width: styles.profileImage.width,
+                height: styles.profileImage.height,
+                facingMode: "user"
+              }}
+            />
           </div>
-
+          */}
           <div className="buttonWrapper">
             <Button className={classes.button} variant="contained" color="primary" onClick={() => this.handleClick('power')}>Power</Button>
             <Button className={classes.button} variant="contained" color="primary" onClick={() => this.handleClick('truth')}>Truth</Button>

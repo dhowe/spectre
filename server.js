@@ -11,6 +11,7 @@ import controller from './user-controller';
 
 const base = '/api/';
 const port = process.env.PORT || 8083;
+const test = process.env.NODE_ENV === 'test';
 const dev = process.env.NODE_ENV !== 'production';
 
 const auth = basicAuth({
@@ -28,7 +29,7 @@ app.use(bodyparser.urlencoded({ extended: true }));
 
 // minimal logging
 app.all('*', logger('[:date[clf]] :remote-addr :method :url :status', {
-  skip: () => !dev
+  skip: () => test
 }));
 
 // static react files (no-auth)

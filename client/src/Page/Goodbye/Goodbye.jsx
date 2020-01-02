@@ -23,6 +23,11 @@ class Goodbye extends React.Component {
     super(props, '/');
   }
 
+  componentWillUnmount() {
+    console.log('Clearing user session');
+    UserSession.clear();
+  }
+
   render() {
     const { movie } = { movie: `video/goodbye_${this.context.celebrity || 'Freeman'}.mp4` };
     const { classes } = this.props;

@@ -12,24 +12,15 @@
       "Images of large crowds",
       "Short, punchy slogans"
     ],
-    "category": 0,
     "hasImage": true,
-    "isActive": false,
-    "similars": [
-      "{\"_id\":\"444444444444444444444444\",\"name\":\"Tyler\",\"influences\":[\"Immigration issues\",\"Images of large crowds\",\"Short, punchy slogans\"],\"descriptors\":[\"Tyler is quiet and somewhat withdrawn.\",\"He is someone who doesn’t need lots of other people around to have fun, and sometimes finds people tiring.\",\"He is calm and emotionally stable.\"]}",
-      "{\"_id\":\"555555555555555555555555\",\"name\":\"Fran\",\"influences\":[\"Immigration issues\",\"Images of large crowds\",\"Short, punchy slogans\"],\"descriptors\":[\"Fran is extremely difficult to upset or stress out, since she rarely, if ever, react with negative emotions, and even when she is anxious about something the feeling quickly passes.\",\"She comes across as very calm and resilient.\",\"She is impulsive and whimsical, and fine with it!\"]}",
-      "{\"_id\":\"999999999999999999999999\",\"name\":\"Dick\",\"influences\":[\"Immigration issues\",\"Images of large crowds\",\"Short, punchy slogans\"],\"descriptors\":[\"Dick reacts poorly to stressful situations, and consequently worries about them more than most.\",\"However he has an emotional depth that others may lack.\",\"He is down-to-earth and prefers things to be simple and straightforward.\"]}",
-      "{\"_id\":\"222222222222222222222222\",\"name\":\"Bailey\",\"influences\":[\"Immigration issues\",\"Images of large crowds\",\"Short, punchy slogans\"],\"descriptors\":[\"Bailey is impulsive and whimsical, and fine with it!\",\"He would say that sometimes decisions need to be made quickly, and that he makes them quicker than most.\",\"He is down-to-earth and prefers things to be simple and straightforward.\"]}",
-      "{\"_id\":\"777777777777777777777777\",\"name\":\"Sing\",\"influences\":[\"Immigration issues\",\"Images of large crowds\",\"Short, punchy slogans\"],\"descriptors\":[\"Sing is down-to-earth and prefers things to be simple and straightforward.\",\"He finds life easier if things don’t change unnecessarily.\",\"He is extremely difficult to upset or stress out, since he rarely, if ever, react with negative emotions, and even when he is anxious about something the feeling quickly passes.\"]}",
-      "{\"_id\":\"111111111111111111111111\",\"name\":\"Remy\",\"influences\":[\"Immigration issues\",\"Images of large crowds\",\"Short, punchy slogans\"],\"descriptors\":[\"Remy is a perfectionist.\",\"He prefers to plan everything to the last detail, which has consequently led to his being very successful and extremely reliable.\",\"He is down-to-earth and prefers things to be simple and straightforward.\"]}"
-    ],
+    "targetId": -1,
     "descriptors": [
       "Bernard is impulsive and whimsical, and fine with it!",
       "He would say that sometimes decisions need to be made quickly, and that he makes them quicker than most.",
       "He is someone people get along with easily."
     ],
     "_id": "666666666666666666666666",
-    "login": "bernard@mail.com",
+    "login": "bernard30987235489@mail.com",
     "loginType": "email",
     "name": "Bernard",
     "gender": "male",
@@ -52,24 +43,15 @@
       "Images of large crowds",
       "Short, punchy slogans"
     ],
-    "category": 0,
     "hasImage": true,
-    "isActive": false,
-    "similars": [
-      "{\"_id\":\"666666666666666666666666\",\"name\":\"Bernard\",\"influences\":[\"Immigration issues\",\"Images of large crowds\",\"Short, punchy slogans\"],\"descriptors\":[\"Bernard is impulsive and whimsical, and fine with it!\",\"He would say that sometimes decisions need to be made quickly, and that he makes them quicker than most.\",\"He is someone people get along with easily.\"]}",
-      "{\"_id\":\"555555555555555555555555\",\"name\":\"Fran\",\"influences\":[\"Immigration issues\",\"Images of large crowds\",\"Short, punchy slogans\"],\"descriptors\":[\"Fran is extremely difficult to upset or stress out, since she rarely, if ever, react with negative emotions, and even when she is anxious about something the feeling quickly passes.\",\"She comes across as very calm and resilient.\",\"She is impulsive and whimsical, and fine with it!\"]}",
-      "{\"_id\":\"777777777777777777777777\",\"name\":\"Sing\",\"influences\":[\"Immigration issues\",\"Images of large crowds\",\"Short, punchy slogans\"],\"descriptors\":[\"Sing is down-to-earth and prefers things to be simple and straightforward.\",\"He finds life easier if things don’t change unnecessarily.\",\"He is extremely difficult to upset or stress out, since he rarely, if ever, react with negative emotions, and even when he is anxious about something the feeling quickly passes.\"]}",
-      "{\"_id\":\"222222222222222222222222\",\"name\":\"Bailey\",\"influences\":[\"Immigration issues\",\"Images of large crowds\",\"Short, punchy slogans\"],\"descriptors\":[\"Bailey is impulsive and whimsical, and fine with it!\",\"He would say that sometimes decisions need to be made quickly, and that he makes them quicker than most.\",\"He is down-to-earth and prefers things to be simple and straightforward.\"]}",
-      "{\"_id\":\"999999999999999999999999\",\"name\":\"Dick\",\"influences\":[\"Immigration issues\",\"Images of large crowds\",\"Short, punchy slogans\"],\"descriptors\":[\"Dick reacts poorly to stressful situations, and consequently worries about them more than most.\",\"However he has an emotional depth that others may lack.\",\"He is down-to-earth and prefers things to be simple and straightforward.\"]}",
-      "{\"_id\":\"888888888888888888888888\",\"name\":\"sally\",\"influences\":[\"Immigration issues\",\"Images of large crowds\",\"Short, punchy slogans\"],\"descriptors\":[\"Sally is a perfectionist.\",\"She prefers to plan everything to the last detail, which has consequently led to her being very successful and extremely reliable.\",\"Sally is far more intellectually curious and sensitive to beauty than most.\"]}"
-    ],
+    "targetId": -1,
     "descriptors": [
       "Tyler is quiet and somewhat withdrawn.",
       "He is someone who doesn’t need lots of other people around to have fun, and sometimes finds people tiring.",
       "He is calm and emotionally stable."
     ],
     "_id": "444444444444444444444444",
-    "login": "tyler@mail.com",
+    "login": "tyler8927340597@mail.com",
     "loginType": "email",
     "name": "Tyler",
     "gender": "male",
@@ -92,24 +74,15 @@
       "Images of large crowds",
       "Short, punchy slogans"
     ],
-    "category": 0,
     "hasImage": true,
-    "isActive": false,
-    "similars": [
-      "{\"_id\":\"444444444444444444444444\",\"name\":\"Tyler\",\"influences\":[\"Immigration issues\",\"Images of large crowds\",\"Short, punchy slogans\"],\"descriptors\":[\"Tyler is quiet and somewhat withdrawn.\",\"He is someone who doesn’t need lots of other people around to have fun, and sometimes finds people tiring.\",\"He is calm and emotionally stable.\"]}",
-      "{\"_id\":\"666666666666666666666666\",\"name\":\"Bernard\",\"influences\":[\"Immigration issues\",\"Images of large crowds\",\"Short, punchy slogans\"],\"descriptors\":[\"Bernard is impulsive and whimsical, and fine with it!\",\"He would say that sometimes decisions need to be made quickly, and that he makes them quicker than most.\",\"He is someone people get along with easily.\"]}",
-      "{\"_id\":\"777777777777777777777777\",\"name\":\"Sing\",\"influences\":[\"Immigration issues\",\"Images of large crowds\",\"Short, punchy slogans\"],\"descriptors\":[\"Sing is down-to-earth and prefers things to be simple and straightforward.\",\"He finds life easier if things don’t change unnecessarily.\",\"He is extremely difficult to upset or stress out, since he rarely, if ever, react with negative emotions, and even when he is anxious about something the feeling quickly passes.\"]}",
-      "{\"_id\":\"888888888888888888888888\",\"name\":\"sally\",\"influences\":[\"Immigration issues\",\"Images of large crowds\",\"Short, punchy slogans\"],\"descriptors\":[\"Sally is a perfectionist.\",\"She prefers to plan everything to the last detail, which has consequently led to her being very successful and extremely reliable.\",\"Sally is far more intellectually curious and sensitive to beauty than most.\"]}",
-      "{\"_id\":\"222222222222222222222222\",\"name\":\"Bailey\",\"influences\":[\"Immigration issues\",\"Images of large crowds\",\"Short, punchy slogans\"],\"descriptors\":[\"Bailey is impulsive and whimsical, and fine with it!\",\"He would say that sometimes decisions need to be made quickly, and that he makes them quicker than most.\",\"He is down-to-earth and prefers things to be simple and straightforward.\"]}",
-      "{\"_id\":\"999999999999999999999999\",\"name\":\"Dick\",\"influences\":[\"Immigration issues\",\"Images of large crowds\",\"Short, punchy slogans\"],\"descriptors\":[\"Dick reacts poorly to stressful situations, and consequently worries about them more than most.\",\"However he has an emotional depth that others may lack.\",\"He is down-to-earth and prefers things to be simple and straightforward.\"]}"
-    ],
+    "targetId": -1,
     "descriptors": [
       "Fran is extremely difficult to upset or stress out, since she rarely, if ever, react with negative emotions, and even when she is anxious about something the feeling quickly passes.",
       "She comes across as very calm and resilient.",
       "She is impulsive and whimsical, and fine with it!"
     ],
     "_id": "555555555555555555555555",
-    "login": "fran@mail.com",
+    "login": "fran987302457@mail.com",
     "loginType": "email",
     "name": "Fran",
     "gender": "female",
@@ -132,24 +105,15 @@
       "Images of large crowds",
       "Short, punchy slogans"
     ],
-    "category": 0,
     "hasImage": true,
-    "isActive": false,
-    "similars": [
-      "{\"_id\":\"222222222222222222222222\",\"name\":\"Bailey\",\"influences\":[\"Immigration issues\",\"Images of large crowds\",\"Short, punchy slogans\"],\"descriptors\":[\"Bailey is impulsive and whimsical, and fine with it!\",\"He would say that sometimes decisions need to be made quickly, and that he makes them quicker than most.\",\"He is down-to-earth and prefers things to be simple and straightforward.\"]}",
-      "{\"_id\":\"999999999999999999999999\",\"name\":\"Dick\",\"influences\":[\"Immigration issues\",\"Images of large crowds\",\"Short, punchy slogans\"],\"descriptors\":[\"Dick reacts poorly to stressful situations, and consequently worries about them more than most.\",\"However he has an emotional depth that others may lack.\",\"He is down-to-earth and prefers things to be simple and straightforward.\"]}",
-      "{\"_id\":\"777777777777777777777777\",\"name\":\"Sing\",\"influences\":[\"Immigration issues\",\"Images of large crowds\",\"Short, punchy slogans\"],\"descriptors\":[\"Sing is down-to-earth and prefers things to be simple and straightforward.\",\"He finds life easier if things don’t change unnecessarily.\",\"He is extremely difficult to upset or stress out, since he rarely, if ever, react with negative emotions, and even when he is anxious about something the feeling quickly passes.\"]}",
-      "{\"_id\":\"666666666666666666666666\",\"name\":\"Bernard\",\"influences\":[\"Immigration issues\",\"Images of large crowds\",\"Short, punchy slogans\"],\"descriptors\":[\"Bernard is impulsive and whimsical, and fine with it!\",\"He would say that sometimes decisions need to be made quickly, and that he makes them quicker than most.\",\"He is someone people get along with easily.\"]}",
-      "{\"_id\":\"111111111111111111111111\",\"name\":\"Remy\",\"influences\":[\"Immigration issues\",\"Images of large crowds\",\"Short, punchy slogans\"],\"descriptors\":[\"Remy is a perfectionist.\",\"He prefers to plan everything to the last detail, which has consequently led to his being very successful and extremely reliable.\",\"He is down-to-earth and prefers things to be simple and straightforward.\"]}",
-      "{\"_id\":\"444444444444444444444444\",\"name\":\"Tyler\",\"influences\":[\"Immigration issues\",\"Images of large crowds\",\"Short, punchy slogans\"],\"descriptors\":[\"Tyler is quiet and somewhat withdrawn.\",\"He is someone who doesn’t need lots of other people around to have fun, and sometimes finds people tiring.\",\"He is calm and emotionally stable.\"]}"
-    ],
+    "targetId": -1,
     "descriptors": [
       "Devin is down-to-earth and prefers things to be simple and straightforward.",
       "She finds life easier if things don’t change unnecessarily.",
       "She is willing to make difficult decisions when necessary, and will point out when something is wrong no matter what other people might feel."
     ],
     "_id": "333333333333333333333333",
-    "login": "devin@mail.com",
+    "login": "devin908417684@mail.com",
     "loginType": "email",
     "name": "Devin",
     "gender": "female",
@@ -172,24 +136,15 @@
       "Images of large crowds",
       "Short, punchy slogans"
     ],
-    "category": 0,
     "hasImage": true,
-    "isActive": false,
-    "similars": [
-      "{\"_id\":\"777777777777777777777777\",\"name\":\"Sing\",\"influences\":[\"Immigration issues\",\"Images of large crowds\",\"Short, punchy slogans\"],\"descriptors\":[\"Sing is down-to-earth and prefers things to be simple and straightforward.\",\"He finds life easier if things don’t change unnecessarily.\",\"He is extremely difficult to upset or stress out, since he rarely, if ever, react with negative emotions, and even when he is anxious about something the feeling quickly passes.\"]}",
-      "{\"_id\":\"999999999999999999999999\",\"name\":\"Dick\",\"influences\":[\"Immigration issues\",\"Images of large crowds\",\"Short, punchy slogans\"],\"descriptors\":[\"Dick reacts poorly to stressful situations, and consequently worries about them more than most.\",\"However he has an emotional depth that others may lack.\",\"He is down-to-earth and prefers things to be simple and straightforward.\"]}",
-      "{\"_id\":\"888888888888888888888888\",\"name\":\"sally\",\"influences\":[\"Immigration issues\",\"Images of large crowds\",\"Short, punchy slogans\"],\"descriptors\":[\"Sally is a perfectionist.\",\"She prefers to plan everything to the last detail, which has consequently led to her being very successful and extremely reliable.\",\"Sally is far more intellectually curious and sensitive to beauty than most.\"]}",
-      "{\"_id\":\"666666666666666666666666\",\"name\":\"Bernard\",\"influences\":[\"Immigration issues\",\"Images of large crowds\",\"Short, punchy slogans\"],\"descriptors\":[\"Bernard is impulsive and whimsical, and fine with it!\",\"He would say that sometimes decisions need to be made quickly, and that he makes them quicker than most.\",\"He is someone people get along with easily.\"]}",
-      "{\"_id\":\"333333333333333333333333\",\"name\":\"Devin\",\"influences\":[\"Immigration issues\",\"Images of large crowds\",\"Short, punchy slogans\"],\"descriptors\":[\"Devin is down-to-earth and prefers things to be simple and straightforward.\",\"She finds life easier if things don’t change unnecessarily.\",\"She is willing to make difficult decisions when necessary, and will point out when something is wrong no matter what other people might feel.\"]}",
-      "{\"_id\":\"444444444444444444444444\",\"name\":\"Tyler\",\"influences\":[\"Immigration issues\",\"Images of large crowds\",\"Short, punchy slogans\"],\"descriptors\":[\"Tyler is quiet and somewhat withdrawn.\",\"He is someone who doesn’t need lots of other people around to have fun, and sometimes finds people tiring.\",\"He is calm and emotionally stable.\"]}"
-    ],
+    "targetId": -1,
     "descriptors": [
       "Remy is a perfectionist.",
       "He prefers to plan everything to the last detail, which has consequently led to his being very successful and extremely reliable.",
       "He is down-to-earth and prefers things to be simple and straightforward."
     ],
     "_id": "111111111111111111111111",
-    "login": "remy@mail.com",
+    "login": "remy3458909234@mail.com",
     "loginType": "email",
     "name": "Remy",
     "gender": "male",
@@ -212,24 +167,15 @@
       "Images of large crowds",
       "Short, punchy slogans"
     ],
-    "category": 0,
     "hasImage": true,
-    "isActive": false,
-    "similars": [
-      "{\"_id\":\"666666666666666666666666\",\"name\":\"Bernard\",\"influences\":[\"Immigration issues\",\"Images of large crowds\",\"Short, punchy slogans\"],\"descriptors\":[\"Bernard is impulsive and whimsical, and fine with it!\",\"He would say that sometimes decisions need to be made quickly, and that he makes them quicker than most.\",\"He is someone people get along with easily.\"]}",
-      "{\"_id\":\"222222222222222222222222\",\"name\":\"Bailey\",\"influences\":[\"Immigration issues\",\"Images of large crowds\",\"Short, punchy slogans\"],\"descriptors\":[\"Bailey is impulsive and whimsical, and fine with it!\",\"He would say that sometimes decisions need to be made quickly, and that he makes them quicker than most.\",\"He is down-to-earth and prefers things to be simple and straightforward.\"]}",
-      "{\"_id\":\"333333333333333333333333\",\"name\":\"Devin\",\"influences\":[\"Immigration issues\",\"Images of large crowds\",\"Short, punchy slogans\"],\"descriptors\":[\"Devin is down-to-earth and prefers things to be simple and straightforward.\",\"She finds life easier if things don’t change unnecessarily.\",\"She is willing to make difficult decisions when necessary, and will point out when something is wrong no matter what other people might feel.\"]}",
-      "{\"_id\":\"111111111111111111111111\",\"name\":\"Remy\",\"influences\":[\"Immigration issues\",\"Images of large crowds\",\"Short, punchy slogans\"],\"descriptors\":[\"Remy is a perfectionist.\",\"He prefers to plan everything to the last detail, which has consequently led to his being very successful and extremely reliable.\",\"He is down-to-earth and prefers things to be simple and straightforward.\"]}",
-      "{\"_id\":\"777777777777777777777777\",\"name\":\"Sing\",\"influences\":[\"Immigration issues\",\"Images of large crowds\",\"Short, punchy slogans\"],\"descriptors\":[\"Sing is down-to-earth and prefers things to be simple and straightforward.\",\"He finds life easier if things don’t change unnecessarily.\",\"He is extremely difficult to upset or stress out, since he rarely, if ever, react with negative emotions, and even when he is anxious about something the feeling quickly passes.\"]}",
-      "{\"_id\":\"444444444444444444444444\",\"name\":\"Tyler\",\"influences\":[\"Immigration issues\",\"Images of large crowds\",\"Short, punchy slogans\"],\"descriptors\":[\"Tyler is quiet and somewhat withdrawn.\",\"He is someone who doesn’t need lots of other people around to have fun, and sometimes finds people tiring.\",\"He is calm and emotionally stable.\"]}"
-    ],
+    "targetId": -1,
     "descriptors": [
       "Dick reacts poorly to stressful situations, and consequently worries about them more than most.",
       "However he has an emotional depth that others may lack.",
       "He is down-to-earth and prefers things to be simple and straightforward."
     ],
     "_id": "999999999999999999999999",
-    "login": "dick@mail.com",
+    "login": "dick9875789937849@mail.com",
     "loginType": "email",
     "name": "Dick",
     "gender": "male",
@@ -252,26 +198,17 @@
       "Images of large crowds",
       "Short, punchy slogans"
     ],
-    "category": 0,
     "hasImage": true,
-    "isActive": false,
-    "similars": [
-      "{\"_id\":\"111111111111111111111111\",\"name\":\"Remy\",\"influences\":[\"Immigration issues\",\"Images of large crowds\",\"Short, punchy slogans\"],\"descriptors\":[\"Remy is a perfectionist.\",\"He prefers to plan everything to the last detail, which has consequently led to his being very successful and extremely reliable.\",\"He is down-to-earth and prefers things to be simple and straightforward.\"]}",
-      "{\"_id\":\"777777777777777777777777\",\"name\":\"Sing\",\"influences\":[\"Immigration issues\",\"Images of large crowds\",\"Short, punchy slogans\"],\"descriptors\":[\"Sing is down-to-earth and prefers things to be simple and straightforward.\",\"He finds life easier if things don’t change unnecessarily.\",\"He is extremely difficult to upset or stress out, since he rarely, if ever, react with negative emotions, and even when he is anxious about something the feeling quickly passes.\"]}",
-      "{\"_id\":\"666666666666666666666666\",\"name\":\"Bernard\",\"influences\":[\"Immigration issues\",\"Images of large crowds\",\"Short, punchy slogans\"],\"descriptors\":[\"Bernard is impulsive and whimsical, and fine with it!\",\"He would say that sometimes decisions need to be made quickly, and that he makes them quicker than most.\",\"He is someone people get along with easily.\"]}",
-      "{\"_id\":\"444444444444444444444444\",\"name\":\"Tyler\",\"influences\":[\"Immigration issues\",\"Images of large crowds\",\"Short, punchy slogans\"],\"descriptors\":[\"Tyler is quiet and somewhat withdrawn.\",\"He is someone who doesn’t need lots of other people around to have fun, and sometimes finds people tiring.\",\"He is calm and emotionally stable.\"]}",
-      "{\"_id\":\"555555555555555555555555\",\"name\":\"Fran\",\"influences\":[\"Immigration issues\",\"Images of large crowds\",\"Short, punchy slogans\"],\"descriptors\":[\"Fran is extremely difficult to upset or stress out, since she rarely, if ever, react with negative emotions, and even when she is anxious about something the feeling quickly passes.\",\"She comes across as very calm and resilient.\",\"She is impulsive and whimsical, and fine with it!\"]}",
-      "{\"_id\":\"333333333333333333333333\",\"name\":\"Devin\",\"influences\":[\"Immigration issues\",\"Images of large crowds\",\"Short, punchy slogans\"],\"descriptors\":[\"Devin is down-to-earth and prefers things to be simple and straightforward.\",\"She finds life easier if things don’t change unnecessarily.\",\"She is willing to make difficult decisions when necessary, and will point out when something is wrong no matter what other people might feel.\"]}"
-    ],
+    "targetId": -1,
     "descriptors": [
       "Sally is a perfectionist.",
       "She prefers to plan everything to the last detail, which has consequently led to her being very successful and extremely reliable.",
       "Sally is far more intellectually curious and sensitive to beauty than most."
     ],
     "_id": "888888888888888888888888",
-    "login": "sally@mail.com",
+    "login": "sally4983578918989@mail.com",
     "loginType": "email",
-    "name": "sally",
+    "name": "Sally",
     "gender": "female",
     "createdAt": "2019-06-03T00:12:07.599Z",
     "adIssue": "leave",
@@ -292,24 +229,15 @@
       "Images of large crowds",
       "Short, punchy slogans"
     ],
-    "category": 0,
     "hasImage": true,
-    "isActive": false,
-    "similars": [
-      "{\"_id\":\"111111111111111111111111\",\"name\":\"Remy\",\"influences\":[\"Immigration issues\",\"Images of large crowds\",\"Short, punchy slogans\"],\"descriptors\":[\"Remy is a perfectionist.\",\"He prefers to plan everything to the last detail, which has consequently led to his being very successful and extremely reliable.\",\"He is down-to-earth and prefers things to be simple and straightforward.\"]}",
-      "{\"_id\":\"666666666666666666666666\",\"name\":\"Bernard\",\"influences\":[\"Immigration issues\",\"Images of large crowds\",\"Short, punchy slogans\"],\"descriptors\":[\"Bernard is impulsive and whimsical, and fine with it!\",\"He would say that sometimes decisions need to be made quickly, and that he makes them quicker than most.\",\"He is someone people get along with easily.\"]}",
-      "{\"_id\":\"444444444444444444444444\",\"name\":\"Tyler\",\"influences\":[\"Immigration issues\",\"Images of large crowds\",\"Short, punchy slogans\"],\"descriptors\":[\"Tyler is quiet and somewhat withdrawn.\",\"He is someone who doesn’t need lots of other people around to have fun, and sometimes finds people tiring.\",\"He is calm and emotionally stable.\"]}",
-      "{\"_id\":\"999999999999999999999999\",\"name\":\"Dick\",\"influences\":[\"Immigration issues\",\"Images of large crowds\",\"Short, punchy slogans\"],\"descriptors\":[\"Dick reacts poorly to stressful situations, and consequently worries about them more than most.\",\"However he has an emotional depth that others may lack.\",\"He is down-to-earth and prefers things to be simple and straightforward.\"]}",
-      "{\"_id\":\"333333333333333333333333\",\"name\":\"Devin\",\"influences\":[\"Immigration issues\",\"Images of large crowds\",\"Short, punchy slogans\"],\"descriptors\":[\"Devin is down-to-earth and prefers things to be simple and straightforward.\",\"She finds life easier if things don’t change unnecessarily.\",\"She is willing to make difficult decisions when necessary, and will point out when something is wrong no matter what other people might feel.\"]}",
-      "{\"_id\":\"888888888888888888888888\",\"name\":\"sally\",\"influences\":[\"Immigration issues\",\"Images of large crowds\",\"Short, punchy slogans\"],\"descriptors\":[\"Sally is a perfectionist.\",\"She prefers to plan everything to the last detail, which has consequently led to her being very successful and extremely reliable.\",\"Sally is far more intellectually curious and sensitive to beauty than most.\"]}"
-    ],
+    "targetId": -1,
     "descriptors": [
       "Sing is down-to-earth and prefers things to be simple and straightforward.",
       "He finds life easier if things don’t change unnecessarily.",
       "He is extremely difficult to upset or stress out, since he rarely, if ever, react with negative emotions, and even when he is anxious about something the feeling quickly passes."
     ],
     "_id": "777777777777777777777777",
-    "login": "sing@mail.com",
+    "login": "sing987435029837@mail.com",
     "loginType": "email",
     "name": "Sing",
     "gender": "male",
@@ -332,24 +260,15 @@
       "Images of large crowds",
       "Short, punchy slogans"
     ],
-    "category": 0,
     "hasImage": true,
-    "isActive": false,
-    "similars": [
-      "{\"_id\":\"333333333333333333333333\",\"name\":\"Devin\",\"influences\":[\"Immigration issues\",\"Images of large crowds\",\"Short, punchy slogans\"],\"descriptors\":[\"Devin is down-to-earth and prefers things to be simple and straightforward.\",\"She finds life easier if things don’t change unnecessarily.\",\"She is willing to make difficult decisions when necessary, and will point out when something is wrong no matter what other people might feel.\"]}",
-      "{\"_id\":\"666666666666666666666666\",\"name\":\"Bernard\",\"influences\":[\"Immigration issues\",\"Images of large crowds\",\"Short, punchy slogans\"],\"descriptors\":[\"Bernard is impulsive and whimsical, and fine with it!\",\"He would say that sometimes decisions need to be made quickly, and that he makes them quicker than most.\",\"He is someone people get along with easily.\"]}",
-      "{\"_id\":\"999999999999999999999999\",\"name\":\"Dick\",\"influences\":[\"Immigration issues\",\"Images of large crowds\",\"Short, punchy slogans\"],\"descriptors\":[\"Dick reacts poorly to stressful situations, and consequently worries about them more than most.\",\"However he has an emotional depth that others may lack.\",\"He is down-to-earth and prefers things to be simple and straightforward.\"]}",
-      "{\"_id\":\"444444444444444444444444\",\"name\":\"Tyler\",\"influences\":[\"Immigration issues\",\"Images of large crowds\",\"Short, punchy slogans\"],\"descriptors\":[\"Tyler is quiet and somewhat withdrawn.\",\"He is someone who doesn’t need lots of other people around to have fun, and sometimes finds people tiring.\",\"He is calm and emotionally stable.\"]}",
-      "{\"_id\":\"777777777777777777777777\",\"name\":\"Sing\",\"influences\":[\"Immigration issues\",\"Images of large crowds\",\"Short, punchy slogans\"],\"descriptors\":[\"Sing is down-to-earth and prefers things to be simple and straightforward.\",\"He finds life easier if things don’t change unnecessarily.\",\"He is extremely difficult to upset or stress out, since he rarely, if ever, react with negative emotions, and even when he is anxious about something the feeling quickly passes.\"]}",
-      "{\"_id\":\"555555555555555555555555\",\"name\":\"Fran\",\"influences\":[\"Immigration issues\",\"Images of large crowds\",\"Short, punchy slogans\"],\"descriptors\":[\"Fran is extremely difficult to upset or stress out, since she rarely, if ever, react with negative emotions, and even when she is anxious about something the feeling quickly passes.\",\"She comes across as very calm and resilient.\",\"She is impulsive and whimsical, and fine with it!\"]}"
-    ],
+    "targetId": -1,
     "descriptors": [
       "Bailey is impulsive and whimsical, and fine with it!",
       "He would say that sometimes decisions need to be made quickly, and that he makes them quicker than most.",
       "He is down-to-earth and prefers things to be simple and straightforward."
     ],
     "_id": "222222222222222222222222",
-    "login": "bailey@mail.com",
+    "login": "bailey987045982734@mail.com",
     "loginType": "email",
     "name": "Bailey",
     "gender": "male",

@@ -10,7 +10,7 @@ import AvatarComponent from '../../Components/AvatarComponent/AvatarComponent';
 import Styles from '../../Styles';
 import colours from '../../colors.scss';
 
-import './SelectedAvatar.scss';
+import './Selected.scss';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
 
@@ -38,27 +38,36 @@ const styles = {
   },
 };
 
-class SelectedAvatar extends React.Component {
+class Selected extends React.Component {
   constructor(props) {
     super(props, '/insight-gender');
+    this.state = { targetName: '',
+      targetImage: UserSession.profileDir + 'default.jpg' };
+  }
+
+  componentDidMount() {
+    UserSession.ensure(this.context,
+      ['_id', 'name', 'login', 'gender', 'virtue', 'target'],
+      user => {
+        this.setState({ targetName: user.target.name,
+          targetImage: user.targetImageUrl() })
+      });
   }
 
   render() {
     const { classes } = this.props;
-
-    this.context.target = this.context.target || UserSession.defaults[0];
-    const timage = this.context.targetImgUrl();
-    const tname = this.context.target.name;
+    const { targetName, targetImage } = this.state;
     return (
-      <div className={`${classes.root} SelectedAvatar`}>
+      <div className={`${classes.root} Selected`}>
         <SpectreHeader colour="white" progressActive={true} progressNumber="one" />
         <IdleChecker />
         <div className={`${classes.content} content`}>
           <p className="title">You selected:</p>
           <div>
-            <AvatarComponent target={ {name: tname, image: timage } } />
+            <AvatarComponent target={{ name: targetName, image: targetImage }} />
           </div>
-          <p className="copy">Let&apos;s start by verifying some of the basics to unlock insight into <strong>{tname}</strong>. </p>
+          <p className="copy">Let&apos;s start by verifying some of the basics to
+            unlock insight into <strong>{targetName}</strong>. </p>
           <p className="copy">Don’t worry, only you will see the results. </p>
           <Link to="/insight-gender">
             <Button className={classes.button}>Dive in</Button>
@@ -70,10 +79,10 @@ class SelectedAvatar extends React.Component {
   }
 }
 
-SelectedAvatar.propTypes = {
+Selected.propTypes = {
   classes: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
 };
-SelectedAvatar.contextType = UserSession;
+Selected.contextType = UserSession;
 
-export default withStyles(styles)(SelectedAvatar);
+export default withStyles(styles)(Selected);

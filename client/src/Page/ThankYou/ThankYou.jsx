@@ -7,8 +7,6 @@ import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
-
-
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
 const styles = {
@@ -35,6 +33,7 @@ class ThankYou extends React.Component {
   }
 
   render() {
+    const user = UserSession.validate(this.context, ['name', 'login', 'gender']);
     const { classes } = this.props;
     return (
       <div className={classes.root}>
@@ -42,7 +41,7 @@ class ThankYou extends React.Component {
         <IdleChecker />
         <div className={`${classes.content} content`}>
           <div>
-            <p className={classes.copy}>Thank you, <strong>{this.context.name}!</strong></p>
+            <p className={classes.copy}>Thank you, <strong>{user.name}!</strong></p>
             <ThumbUp className="insight-thank-you-icon" />
             <p className={classes.copy}>Your experience has been <strong>personalised.</strong></p>
           </div>

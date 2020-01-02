@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Fade from '@material-ui/core/Fade';
-import Countdown from 'react-countdown-now';
+import Countdown from 'react-countdown';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 
 
-import './PersonalisedExperience.scss';
+import './Personalised.scss';
 
 const styles = {
   root: {
@@ -24,7 +24,7 @@ const styles = {
   },
 };
 
-class PersonalisedExperience extends React.Component {
+class Personalised extends React.Component {
   constructor(props) {
     super(props, '/game');
   }
@@ -32,7 +32,7 @@ class PersonalisedExperience extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <div className={classes.root + ' PersonalisedExperience'}>
+      <div className={classes.root + ' Personalised'}>
         <SpectreHeader colour="white" />
         <div className={`${classes.content} content`}>
           <div>
@@ -64,10 +64,10 @@ class PersonalisedExperience extends React.Component {
   }
 }
 
-PersonalisedExperience.propTypes = {
+Personalised.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-PersonalisedExperience.contextType = UserSession;
+Personalised.contextType = UserSession;
 
-export default withStyles(styles)(PersonalisedExperience);
+export default withStyles(styles)(Personalised);

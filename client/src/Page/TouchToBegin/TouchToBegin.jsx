@@ -49,17 +49,13 @@ class TouchToBegin extends React.Component {
     super(props, '/login');
   }
 
-  // goes to /login
   render() {
-    this.props.setNext('/login', this.props.history);
-    const { classes } = this.props;
-    //console.log('TouchToBegin.render.next='+(typeof nextPage));
     return (
-      <div className={classes.root + ' touchToBegin'}>
+      <div className={this.props.classes.root + ' touchToBegin'}>
         <SpectreHeader />
-        <div className={`${classes.content} content`}>
+        <div className={`${this.props.classes.content} content`}>
           <Link className="touchToBegin-beginButton" to="/login">
-            <div className={classes.clickToContinue}>
+            <div className={this.props.classes.clickToContinue}>
               <div className="beginLogo">
                 <Logo />
               </div>
@@ -74,8 +70,6 @@ class TouchToBegin extends React.Component {
 
 TouchToBegin.propTypes = {
   classes: PropTypes.object.isRequired,
-  setNext: PropTypes.func.isRequired,
-  //next: PropTypes.string.isRequired
 };
 TouchToBegin.contextType = UserSession;
 

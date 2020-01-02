@@ -36,8 +36,8 @@ class OCEANReveal extends React.Component {
 
     let user = this.context;
     if (typeof user === 'undefined') {
-      let idx = Math.floor(Math.random() * UserSession.defaults.length);
-      user = new User(UserSession.defaults[idx]);
+      let idx = Math.floor(Math.random() * UserSession.defaultUsers.length);
+      user = new User(UserSession.defaultUsers[idx]);
     }
     if (user && !user.hasOceanTraits()) {
       user._randomizeTraits();

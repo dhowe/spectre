@@ -6,7 +6,7 @@ import Fade from '@material-ui/core/Fade';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
-import Countdown from 'react-countdown-now';
+import Countdown from 'react-countdown';
 
 
 const styles = {

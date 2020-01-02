@@ -9,20 +9,21 @@ const { schema, functions } = toMongoose(userSchema);
 const UserSchema = mongoose.Schema(schema); // hack here
 Object.keys(functions).forEach(f => UserSchema.methods[f] = functions[f]);
 
-UserSchema.methods.findByOcean = function(limit, cb) { // cb=function(err,users)
+// TODO: all callbacks should pass error first
 
+// find all users with traits
+UserSchema.methods.findByOcean = function(callback, limit) { // cb=function(err,users)
   let user = this;
   UserModel.find({ 'traits.openness': { $gte: 0 } })
-    .exec(function(err, instances) {
+    .exec((err, candidates) => {
       if (err) {
-        console.error(err);
+        console.error('findByOcean', err);
         throw err;
       }
-      let sorted = oceanSort(user, instances);
+      let sorted = oceanSort(user, candidates);
       sorted = sorted.slice(0, limit);
-      cb(sorted);
+      callback(err, sorted); // ADDED: DCH
     });
-  return this;
 };
 
 UserSchema.statics.getAll = function(callback, limit) {
@@ -31,9 +32,8 @@ UserSchema.statics.getAll = function(callback, limit) {
 
 UserSchema.statics.Create = function(tmpl) {
 
-  function randName() {
-    return Math.random().toString(36).replace(/[^a-z]+/g, '').substring(0, 5);
-  }
+  let randName = () => Math.random().toString(36)
+    .replace(/[^a-z]+/g, '').substring(0, 5);
 
   let user = new UserModel();
   user.name = tmpl && tmpl.name ? tmpl.name : randName();

@@ -24,7 +24,7 @@ GET: checks the value of each sent property for user with id
 
 <br/>
 
-### /spectre/users/similar/:id?limit=K
+### /spectre/users/similars/:id?limit=K
 
 GET: returns the K closest users (by OCEAN score) to the user with id
 

@@ -27,7 +27,7 @@ class TargetAd extends React.Component {
   render() {
     const { classes } = this.props;
     this.context.adIssue = this.context.adIssue || 'leave';
-    this.context.target = this.context.target || UserSession.defaults[0];
+    this.context.target = this.context.target || UserSession.defaultUsers[0];
     const tname = this.context.target.name;
     return (
       <div className={classes.root}>

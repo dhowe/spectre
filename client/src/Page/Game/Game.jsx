@@ -165,8 +165,6 @@ function sketch(p) {
     checkData();
     let data = Brand.instances.map(b => ({ item: b.item, rating: b.rating }));
     user.setBrands(data);
-    //.forEach(p => user.traits[p.trait] = p.score);
-    //user.influences = user.predictInfluences(3);
     game.componentComplete();
     //displayAsHtml(user);
   }
@@ -194,6 +192,14 @@ function sketch(p) {
     });
   }
 
+  function checkData() {
+    let nodata = true;
+    Brand.instances.forEach(b => {
+      if (b.rating !== 0) nodata = false;
+    });
+    if (nodata) randomizeData();
+  }
+
   function drawInfo(p, c) {
     p.textSize(40);
     p.fill(c);
@@ -202,13 +208,6 @@ function sketch(p) {
     p.text('- Hate', p.width / 2, p.height - 20)
   }
 
-  function checkData() {
-    let nodata = true;
-    Brand.instances.forEach(b => {
-      if (b.rating !== 0) nodata = false;
-    });
-    if (nodata) randomizeData();
-  }
 
   function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -228,12 +227,10 @@ class Brand {
     this.ty = y;
     this.t = 1;
     this.sz = sz;
-    this.item = item;
     this.rating = 0;
-    this.strokeWeight = colors.sketchStrokeMinWeight;
-    // HERE
-    //this.logo = this.p.loadImage('/imgs/' + this.item.replace(/ /g, '_') + '.png');
+    this.item = item;
     this.logo = logos[item];
+    this.strokeWeight = colors.sketchStrokeMinWeight;;
   }
   draw() {
     if (this.x > -this.sz) this.render();
@@ -273,7 +270,7 @@ class Brand {
 
     p.textAlign(p.CENTER, p.CENTER);
   }
-  textHeight(str) {
+  textHeight() {
     return this.p.textAscent() + this.p.textDescent();
   }
   contains(mx, my) {
@@ -308,49 +305,24 @@ class Game extends React.Component {
     game = this; // handle for p5js
   }
 
-  componentDidMount() {
-
-    user = this.context;
-
-    ///////////////////// TMP: ///////////////////////
-    if (typeof user._id === 'undefined') {
-      user.name = user.name || 'Barniel';
-      user.loginType = user.loginType || 'email';
-      user.login = user.login || 'Barniel' + (+new Date()) + '@aol.com';
-      //UserSession.sync(user);
-    }
-    //////////////////////////////////////////////////
-
-    UserSession.log(user);
-    // console.log('['+user.lastPage().uc() +'] '
-    //   + user.name + ' / ' + user.gender + ' / ' +user.virtue);
-  }
-
   componentComplete() { // redirect called from p5
-
     clearInterval(this.interval);
-    let user = this.context;
-
-    if (typeof user._id !== 'undefined') { // TMP: remove
-      UserSession.update(user,
-        () => {
-          this.next();
-        }, (err) => {
-          console.error('[Game]', err);
-          this.next();
-        });
-
-    } else { // TMP: remove
-
-      console.warn('WARN: not updating Db with User info!');
-      this.next();
-    }
+    UserSession.ensure(user, ['traits', 'descriptors', 'influences'],
+      () => {
+        UserSession.update(user, // [Game].2
+          () => {
+            console.log('[Game]', user);
+          }, (err) => {
+            console.error('[Game]', err);
+            this.next();
+          });
+      });
   }
 
   render() {
-    const { classes } = this.props;
+
     return (
-      <div className={classes.root} id='clickMe'>
+      <div className={this.props.classes.root} id='clickMe'>
         <SpectreHeader colour="white" />
         <P5Wrapper sketch={sketch} className="wrapper" />
         <IdleChecker />

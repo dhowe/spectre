@@ -32,67 +32,58 @@ const styles = {
 class InfluenceAFollower extends React.Component {
 
   constructor(props) {
-    super(props, '/selected-avatar');
-    this.handleSelect = this.handleSelect.bind(this);
+    super(props, '/selected');
+    this.state = { similars: [] };
   }
 
   componentDidMount() {
-    const user = this.context || new User();
-    // eslint-disable-next-line no-underscore-dangle
-    if (typeof user === 'undefined') { // TMP
-      user.name = user.name || 'Barney';
-      user.loginType = user.loginType || 'email';
-      user.login = user.login || `Barney${+new Date()}@aol.com`;
-      //UserSession.create(user);
-    }
+    UserSession.ensure(this.context,
+      ['_id', 'name', 'login', 'gender', 'virtue', 'traits'],
+      user => UserSession.similars(user,
+          u => this.setState({ similars: u.similars })));
   }
 
-  handleSelect(target) {
+  handleSelect = (target) => {
     this.context.target = target;
-    this.next();
+    this.context.targetId = target._id;
+    this.props.history.push('/selected');
   }
 
   renderSimilars() {
-    let result = UserSession.defaults;
-    const sims = this.context.similars;
-    if (sims && sims.length) {
-      console.log('using sims', sims);
-      result = sims;
-    }
-    else {
-      console.log('using defaults');
-    }
-    this.shuffle(result);
-    result = result.slice(0, 6);
-    //console.log(result);
-    return result;
+    return this.state.similars.slice(0, 6);
   }
 
-  shuffle(arr) { // TODO: duplicated
-    if (!arr) arr = [];
-    arr.sort(() => Math.random() - 0.5);
-    return arr;
+  shuffle(arr) {
+    let newArray = arr.slice(),
+      len = newArray.length,
+      i = len;
+    while (i--) {
+      let p = parseInt(Math.random() * len),
+        t = newArray[i];
+      newArray[i] = newArray[p];
+      newArray[p] = t;
+    }
+    return newArray;
   }
 
   render() {
-    const { classes } = this.props;
     return (
-      <div className={classes.root} >
+      <div className={this.props.root} >
         <SpectreHeader colour="white" progressActive progressNumber="one" />
         <IdleChecker />
-        <div className={`${classes.content} content`}>
+        <div className={`${this.props.content} content`}>
           <Typography component="h5" variant="h5" className="influence-a-follower"><strong>Influence a follower!</strong></Typography>
           <Typography component="p" variant="body1" className="community">Spectre has a global community of followers.</Typography>
           <Typography component="h5" variant="h5" className="choose-participant">Choose one:</Typography>
           <AvatarCircle>
-            {this.renderSimilars().map((sim, i) => (
+            {this.state.similars.slice(0, 6).map((sim, i) => (
               <AvatarComponent
-                handleClick={() => this.handleSelect(sim)}
                 key={AvatarComponent.generateKey(i)}
+                handleClick={() => this.handleSelect(sim)}
                 target={{ name: sim.name, image: `${User.profileDir}/${sim._id}.jpg` }}
               />
             ))}
-         </AvatarCircle>
+          </AvatarCircle>
         </div>
         <FooterLogo />
       </div>

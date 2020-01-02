@@ -1,17 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Modal from '../../Components/Modal/Modal';
-import grey from '@material-ui/core/colors/grey';
 import SocialLogin from '../../Components/SocialLogin/SocialLogin';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import UserSession from '../../Components/UserSession/UserSession';
 import { Link } from 'react-router-dom';
-import './LoginPage.scss';
 import Video from '../../Components/Video/Video';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
+import grey from '@material-ui/core/colors/grey';
+import { withStyles } from '@material-ui/core/styles';
+import './LoginPage.scss';
 
 window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true; // TMP: #138
 
@@ -71,7 +71,7 @@ class LoginPage extends React.Component {
       emailErrorCount: 0,
       modalOpen: false,
       clearEmail: true,
-      idleCheckerIsDone: false,
+      idleCheckerDone: false,
       videoStarted: false
     };
 
@@ -81,31 +81,32 @@ class LoginPage extends React.Component {
     this.modalTitle = '';
   }
 
-  stubbedSubmit = () => { // for dev-only
-    let cons = "bcdfghjklmnprstvxz", vows = "aeiou";
-    let name = cons[Math.floor(Math.random() * cons.length)]
-      + vows[Math.floor(Math.random() * vows.length)]
-      + cons[Math.floor(Math.random() * cons.length)];
-    let data = {
-      name: name.ucf(),
-      email: name + (+new Date()) + '@test.com',
-      gender: ['male', 'female', 'other'][Math.floor(Math.random() * 3)]
-    };
-    console.log('[STUB] ' + data.name + " / " + data.email + " / " + data.gender);
-    this.setState(data); // update form and submit
-    this.timeout = setTimeout(() => this.handleSubmit(0, this.state), 1500);
+  componentDidMount() {
+    UserSession.clear();
   }
 
   handleSubmit = (e, { name, email, gender, clearEmail }) => {
 
-    e && e.preventDefault();
+    if (e) e.preventDefault();
 
-    if (!name.length || !gender.length) throw Error('invalid state')
+    const user = this.context;
+
+    if (process.env.NODE_ENV !== 'production' && !(name && name.length
+       && gender && gender.length && email && email.length)) {
+
+      UserSession.validate(this.context, ['name', 'login', 'gender']);
+      name = user.name;
+      email = user.login;
+      gender = user.gender;
+      console.log("[STUB]", name, email, gender);
+      //this.setState(data); // update form and submit
+    }
+
     // see #343: incorrect email should be the only possible error case
 
     this.social.setState({ name, email, gender });
 
-    if (!this.validEmail(email)) {
+    if (!this.emailIsValid(email)) {
       if (this.state.emailErrorCount < 3) {
         this.modalTitle = 'Oops...';
         this.modalContent = 'That doesn\'t look like a valid email address, please try again';
@@ -118,7 +119,6 @@ class LoginPage extends React.Component {
       }
     }
     else {
-      const user = this.context; // no validate needed
       user.name = name;
       user.login = email;
       user.gender = gender;
@@ -129,9 +129,10 @@ class LoginPage extends React.Component {
     }
   }
 
+  // save user then start video
   saveUser = (user) => {
     const handleSuccess = () => {
-      UserSession.log(user);
+      console.log('[/LOGIN] '+user.toString());
       this.showVideo();
     };
     const handleError = (e) => {
@@ -155,7 +156,7 @@ class LoginPage extends React.Component {
     if (this.video) {
       this.setState({ videoStarted: true });
       this.video.play();
-      this.setState({ idleCheckerIsDone: true });
+      this.setState({ idleCheckerDone: true });
     }
     else {
       console.error("Unable to load video component");
@@ -169,20 +170,28 @@ class LoginPage extends React.Component {
     this.setState({ modalOpen: true });
   }
 
+
   endVideo = () => { // dev-only
     if (this.state.videoStarted) {
       this.props.history.push('/pledge');
     }
+    else {
+      this.handleSubmit(false, {});
+    }
+  }
+
+  emailIsValid = (addr) => {
+    return addr && /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(addr.toLowerCase());
   }
 
   render() {
-    const { classes } = this.props;
 
     return (
-      <div className={classes.root + ' LoginPage'}>
+      <div className={this.props.classes.root + ' LoginPage'}>
+
         <SpectreHeader />
-        <IdleChecker forceTerminate={this.state.idleCheckerIsDone} />
-        <div className={classes.content + ' LoginPage-content content'}>
+        <IdleChecker forceTerminate={this.state.idleCheckerDone} />
+        <div className={this.props.classes.content + ' LoginPage-content content'}>
           <Typography style={{ marginBottom: 70 }} component="h2" variant="h2">Let's Play!</Typography>
           <Modal
             isOpen={this.state.modalOpen}
@@ -202,13 +211,9 @@ class LoginPage extends React.Component {
             handleSubmit={this.handleSubmit} />
         </div>
         <div onClick={this.termsOfService}><Link className='tos' to='#here'>Terms of Service</Link></div>
+
       </div>
     );
-  }
-
-  validEmail(email) {
-    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return email.length > 0 && re.test(email.toLowerCase());
   }
 }
 

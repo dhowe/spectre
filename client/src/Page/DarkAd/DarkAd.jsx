@@ -84,7 +84,7 @@ class DarkAd extends React.Component {
     const { classes } = this.props;
 
     if (!this.context.hasOceanTraits()) this.context._randomizeTraits();
-    this.context.target = this.context.target || UserSession.defaults[0];
+    this.context.target = this.context.target || UserSession.defaultUsers[0];
     this.context.adIssue = this.context.adIssue || 'leave';
 
     const issue = this.context.adIssue;

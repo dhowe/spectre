@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Fade from '@material-ui/core/Fade';
-import Countdown from 'react-countdown-now';
+import Countdown from 'react-countdown';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 
@@ -24,28 +24,34 @@ const styles = {
 class YourPower extends React.Component {
   constructor(props) {
     super(props, '/pick-your-side');
+    this.state = { name: '', virtue: '' }
   }
 
+  componentDidMount() {
+    UserSession.ensure(this.context,
+      ['_id', 'name', 'login', 'gender', 'virtue' ],
+      user => this.setState({ name: user.name, virtue: user.virtue }));
+  }
+  nextPage = () => {
+    this.props.history.push('/pick-your-side');
+  }
   render() {
 
     const { classes } = this.props;
-    const name = this.context.name;
-    let nameForHeading = name ? (name) : '';
-    let heading = name ? (', your ') : 'Your ';
-    heading += (this.context.virtue || 'Power') + ' is growing.';
+    const { name, virtue } = this.state;
 
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive progressNumber="one" />
         <div className={`${classes.content} content`}>
           <Fade in style={{ transitionDelay: '200ms', marginTop: '300px' }}>
-            <Typography component="h6" variant="h6"><strong>{nameForHeading}</strong>{heading} </Typography>
+            <Typography component="h6" variant="h6"><strong>{name}</strong>, your {virtue} is growing </Typography>
           </Fade>
           <Fade in style={{ transitionDelay: '2000ms', marginBottom: '200px' }}>
             <Typography component="h6" variant="h6">Let's put it into practice.</Typography>
           </Fade>
           <Countdown
-            onComplete={this.next}
+            onComplete={this.nextPage}
             date={Date.now() + 5000}
             renderer={() => null}
           />
