@@ -72,9 +72,9 @@ class LoginPage extends React.Component {
       modalOpen: false,
       clearEmail: true,
       idleCheckerDone: false,
-      videoStarted: false
     };
 
+    this.videoStarted = false;
     this.video = React.createRef();
     this.social = React.createRef();
     this.modalContent = '';
@@ -92,14 +92,13 @@ class LoginPage extends React.Component {
     const user = this.context;
 
     if (process.env.NODE_ENV !== 'production' && !(name && name.length
-       && gender && gender.length && email && email.length)) {
+      && gender && gender.length && email && email.length)) {
 
       UserSession.validate(this.context, ['name', 'login', 'gender']);
       name = user.name;
       email = user.login;
       gender = user.gender;
       console.log("[STUB]", name, email, gender);
-      //this.setState(data); // update form and submit
     }
 
     // see #343: incorrect email should be the only possible error case
@@ -132,7 +131,7 @@ class LoginPage extends React.Component {
   // save user then start video
   saveUser = (user) => {
     const handleSuccess = () => {
-      console.log('[/LOGIN] '+user.toString());
+      console.log('[LOGIN] ' + user.toString());
       this.showVideo();
     };
     const handleError = (e) => {
@@ -154,7 +153,7 @@ class LoginPage extends React.Component {
 
   showVideo = () => {
     if (this.video) {
-      this.setState({ videoStarted: true });
+      this.videoStarted = true;
       this.video.play();
       this.setState({ idleCheckerDone: true });
     }
@@ -170,14 +169,19 @@ class LoginPage extends React.Component {
     this.setState({ modalOpen: true });
   }
 
+  onKeyPress = (e) => {
+    if (e.keyCode === 39) {
+      if (this.videoStarted) { // next-page
+        this.props.history.push('/pledge');
+      }
+      else {
+        this.handleSubmit(false, {}); // dev only
+      }
+    }
+  }
 
-  endVideo = () => { // dev-only
-    if (this.state.videoStarted) {
-      this.props.history.push('/pledge');
-    }
-    else {
-      this.handleSubmit(false, {});
-    }
+  endVideo = () => { // to next page
+    if (this.videoStarted) this.props.history.push('/pledge');
   }
 
   emailIsValid = (addr) => {
@@ -188,7 +192,6 @@ class LoginPage extends React.Component {
 
     return (
       <div className={this.props.classes.root + ' LoginPage'}>
-
         <SpectreHeader />
         <IdleChecker forceTerminate={this.state.idleCheckerDone} />
         <div className={this.props.classes.content + ' LoginPage-content content'}>
@@ -204,7 +207,7 @@ class LoginPage extends React.Component {
             movie={"/video/SpectreIntro.mp4"}
             autoPlay={false}
             onComplete={this.endVideo}
-            onKeyUp={this.endVideo}
+            onKeyUp={this.onKeyPress}
           />
           <SocialLogin
             ref={ele => { this.social = ele }}

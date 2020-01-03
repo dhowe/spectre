@@ -46,6 +46,8 @@ UserSession.clear = function() {
   console.log('[USER] Session initialized');
 }
 
+// TODO: Should all be rewritten with async/await *****************************
+
 /*
  * Repairs a user using sessionStorage and db if needed (async)
  */
@@ -58,7 +60,9 @@ UserSession.ensure = function(user, props, onSuccess, onError) {
     if (process.env.NODE_ENV !== 'production') throw e;
   });
 
-  const saveUser = (dirty) => {
+  const saveUser = (dirty, success, fail) => {
+    success = success || onSuccess;
+    fail = fail || onError;
     if (dirty) {
       UserSession.update(user, onSuccess, onError);
     }
@@ -69,11 +73,27 @@ UserSession.ensure = function(user, props, onSuccess, onError) {
 
   // handle missing user id
   if (props.includes('_id') && typeof user._id === 'undefined') {
+
     props = arrayRemove(props, '_id');
     const sid = sessionStorage.getItem(UserSession.storageKey);
 
     // redirect to /login here ? or stub a new user from scratch?
-    if (!sid) throw Error('Undefined user._id not in session:' + user);
+    if (!sid) {
+      console.log('[STUB] No user._id, creating new user');
+      UserSession.fillMissingProperties(user, ['login', 'name', 'gender']);
+      UserSession.create(user, (u) => {
+        if (props.includes('target') && !u.similars.length) {
+          UserSession.similars(user, user => {
+              console.log('[STUB] Inserted new user/similars:', user.toString());
+              UserSession.ensure(user, props, onSuccess, onError);
+          }, onError);
+          return;
+        }
+        console.log('[STUB] Inserted new user:', user.toString());
+        UserSession.ensure(user, props, onSuccess, onError);
+      }, e=> console.error(e));
+      return;
+    }
 
     user._id = JSON.parse(sid);
     console.warn('[SESS] Reloaded user._id: ' + user._id+' doing lookup');
@@ -104,10 +124,14 @@ UserSession.fillMissingProperties = function(user, props) {
   const onUpdateProperty = (p) => {
     modified = true;
     missing = arrayRemove(missing, p);
+    if (typeof user[p] === 'undefined') {
+      throw Error('Could not stub user.'+p, user);
+    }
     let val = user[p];
-    if (Array.isArray(val)) val = user[p].length + ' users';
-    if (typeof val !== 'string') val = JSON.stringify
-      (user[p]).substring(0, 75) + '...';
+    if (Array.isArray(val)) val = '[' + val.length + ']';
+    if (typeof val !== 'string') {
+      val = JSON.stringify(val).substring(0, 75) + '...';
+    }
     console.warn('[STUB] Setting user.' + p + ': ' + val);
   };
 
@@ -164,6 +188,19 @@ UserSession.fillMissingProperties = function(user, props) {
     onUpdateProperty(prop);
   }
 
+  prop = 'adIssue';
+  if (missing.includes(prop)) {
+    user[prop] = rand(['remain', 'leave']);
+    onUpdateProperty(prop);
+  }
+
+  prop = 'influences';
+  if (missing.includes(prop)) {
+    user[prop] = user.targetAdInfluences();
+    //console.log('influences: '+user[prop] );
+    onUpdateProperty(prop);
+  }
+
   if (missing.length) throw Error
     ('Unable to stub user properties: ' + missing);
 
@@ -186,12 +223,11 @@ function handleResponse(res) {
 
 // Create a new database record: /login only
 UserSession.create = function(user, onSuccess, onError) {
-
   let { route, auth, cid, mode } = doConfig();
   let internalSuccess = (json) => {
     Object.assign(user, json);
-    sessionStorage.setItem(UserSession.storageKey, JSON.stringify(user._id));
-    //UserSession.sync(user);
+    sessionStorage.setItem
+      (UserSession.storageKey, JSON.stringify(user._id));
     onSuccess && onSuccess(json);
   }
   if (!onError) onError = (e) => {
@@ -312,7 +348,6 @@ UserSession.postImage = function(user, image, onSuccess, onError) {
   let { route, auth, mode } = doConfig();
   if (!onSuccess) onSuccess = () => { };
   if (!onError) onError = (e) => console.error(e);
-
 
   //if (typeof image === 'string') image = toImageFile(image);
 

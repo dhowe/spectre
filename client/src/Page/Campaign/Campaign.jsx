@@ -24,37 +24,46 @@ const styles = {
 class Campaign extends React.Component {
   constructor(props) {
     super(props, '/dark-ad');
+    this.state = {
+      targetName: '',
+      influences: [],
+      targetPronoun: ''
+
+    };
+  }
+
+  componentDidMount() {
+    UserSession.ensure(this.context,
+      ['_id', 'name', 'adIssue', 'influences', 'target' ],
+      user => this.setState({
+        influences: user.influences,
+        targetName: user.target.name.ucf(),
+        targetPronoun: (user.target.gender === 'male' ? 'he' : 'she')
+      }));
   }
 
   render() {
     const { classes } = this.props;
-    this.context.adIssue = this.context.adIssue || 'leave';
-    this.context.target = this.context.target || UserSession.defaultUsers[0];
-    const pron = this.context.target.gender === 'male' ? 'he' : 'she';
-    //const poss = this.context.target.gender === 'male' ? 'him' : 'her';
-    const infls = this.context.targetAdInfluences();
-    const tname = this.context.target.name;
-    const name = tname.ucf();
-
+    let { influences, targetPronoun, targetName } = this.state;
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive progressNumber="one" />
         <IdleChecker />
         <div className={`${classes.content} content`}>
-          <Typography component="h6" variant="h6" style={{ marginTop: '100px'}}>
+          <Typography component="h6" variant="h6" style={{ marginTop: '100px' }}>
             Now use a simple design tool to create a targeted Facebook ad.
           </Typography>
           <Typography component="h6" variant="h6">
-            <strong>{name}</strong>'s OCEAN profile shows that {pron} can be influenced by:
+            <strong>{targetName}</strong>'s OCEAN profile shows that {targetPronoun} can be influenced by:
           </Typography>
           <Typography component="h6" variant="h6">
-            <strong>Images</strong> that contain {infls[0]}
+            <strong>Images</strong> that contain {influences[0]}
           </Typography>
-          <Typography component="h6" variant="h6" style={{ marginBottom: '100px'}}>
-            <strong>Slogans</strong> that contain {infls[1]}
+          <Typography component="h6" variant="h6" style={{ marginBottom: '100px' }}>
+            <strong>Slogans</strong> that contain {influences[1]}
           </Typography>
           <Link to="/dark-ad">
-              <IconButton icon="next" text="Next" />
+            <IconButton icon="next" text="Next" />
           </Link>
         </div>
         <FooterLogo />

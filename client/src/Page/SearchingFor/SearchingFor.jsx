@@ -89,19 +89,24 @@ class SearchingFor extends React.Component {
           (json) => {
             console.log(`Upload: http://localhost:3000${json.url}`);
             this.context.hasImage = true;
-
+            this.props.history.push('/data-is');
+            return;
           },
           (e) => {
             console.error('Error', e);
             this.context.hasImage = false;
+            this.props.history.push('/data-is');
+            return;
           }
         );
-        this.props.history.push('/data-is');
       }
       else {
         console.error('no image capture');
+        this.context.hasImage = false;
+        return;
       }
     }
+    this.props.history.push('/data-is');
   }
 
   render() {

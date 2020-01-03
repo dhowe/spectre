@@ -20,11 +20,6 @@ const disabled = [ '/login' ];
 
 class Navigation extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.enabled = true;
-  }
-
   next = (page) => {
     let current = window.location.pathname;
     if (!disabled.includes(current)) {
@@ -40,8 +35,9 @@ class Navigation extends React.Component {
   }
 
   onKey = (e) => {
-    if (this.enabled && e.keyCode === 39) this.next();
-    if (this.enabled && e.keyCode === 37) this.last();
+    //console.log('onKey:'+e.keyCode);
+    if (e.keyCode === 39) this.next();
+    if (e.keyCode === 37) this.last();
   }
 
   componentDidMount() {

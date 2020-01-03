@@ -27,14 +27,12 @@ export default class User {
     let u = this;
     let s = u._id;
     if (u.name) s += ', ' + u.name;
+    if (u.login) s += ', ' + u.login;
     if (u.gender) s += ', ' + u.gender;
     if (u.virtue) s += ', ' + u.virtue;
-    if (u.login) s += ', ' + u.login;
-    if (u.descriptors.length) s += ', ' + u.descriptors;
-    if (u.influences.length) s += ', ' + u.influences;
-    if (u.similars && u.similars.length) {
-      s += ', ' + u.similars.length + ' similars';
-    }
+    if (u.descriptors && u.descriptors.length) s += ', ' + u.descriptors.length + ' descriptors';
+    if (u.influences && u.influences.length) s += ', ' + u.influences.length + ' influences';
+    if (u.similars && u.similars.length) s += ', ' + u.similars.length + ' similars';
     if (u.target) s += ', ' + u.target._id + '/' + u.target.name;
     return s;
   }
@@ -215,8 +213,8 @@ export default class User {
     let ots = User.oceanTraits;
     let idx = Math.floor(Math.random() * ots.length);
     //console.log(this.adIssue, this);
-    return User.adInfluences[this.adIssue]
-    [(Math.random() < .5 ? 'high' : 'low')][ots[idx]];
+    return User.adInfluences
+      [this.adIssue][(Math.random() < .5 ? 'high' : 'low')][ots[idx]];
   }
 
   targetImageUrl() {
