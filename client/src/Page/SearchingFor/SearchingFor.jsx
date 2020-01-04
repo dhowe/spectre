@@ -50,11 +50,10 @@ class SearchingFor extends React.Component {
     this.webcam = webcam;
   }
 
-  componentDidMount() {
-    UserSession.ensure(this.context,
-      ['_id', 'login', 'gender', 'name'],
-      user => this.setState({name: user.name})
-    );
+  async componentDidMount() {
+    let user = await UserSession.ensure(this.context,
+      ['_id', 'login', 'gender', 'name']);
+    this.setState({name: user.name})
   }
 
   toImageFile(data, fname) {
