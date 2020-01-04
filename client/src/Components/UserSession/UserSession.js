@@ -17,7 +17,7 @@ UserSession.defaultUsers = [
   { "_id": "888888888888888888888888", "name": "Reed", "traits": { "openness": 0.2773518607894794, "conscientiousness": 0.8456532878428138, "extraversion": 0.4515471612661024, "agreeableness": 0.6249880747419794, "neuroticism": 0.6186244869965476 } },
   { "_id": "999999999999999999999999", "name": "Terry", "traits": { "openness": 0.30426635874427355, "conscientiousness": 0.5341590821850326, "extraversion": 0.509056193557774, "agreeableness": 0.8109949037515642, "neuroticism": 0.4252958718086144 } }
 ];
-UserSession.browserStorage = true;
+UserSession.browserStorage = false;
 UserSession.storageKey = 'spectre-user';
 UserSession.profileDir = User.profileDir;
 UserSession.imageDir = User.imageDir;
@@ -61,16 +61,17 @@ UserSession.ensure = async (user, props) => {
     // do we have an id in session
     const sid = sessionStorage.getItem(UserSession.storageKey);
     if (!sid) {
-      console.log('[STUB] No user._id, creating new user');
+      console.warn('[STUB] No user._id, creating new user');
       UserSession.fillMissingProperties(user, ['login', 'name', 'gender']);
       await UserSession.create(user);
-      // if (props.includes('target') && !u.similars.length) { // need similars
-      //   user = await UserSession.similars(user);
-      //   console.log('[STUB] Inserted new user/similars:', user.toString());
-      // }
-      // else { // no similars needed
-      //   console.log('[STUB] Inserted new user:', user.toString());
-      // }
+      console.warn('[STUB] Setting user._id: ' + user._id);
+      if (props.includes('target') && !user.similars.length) { // need similars
+        user = await UserSession.similars(user);
+        console.log('[STUB] Inserted new user/similars:', user.toString());
+      }
+      else { // no similars needed
+        console.log('[STUB] Inserted new user:', user.toString());
+      }
     }
     else {
       user._id = JSON.parse(sid);
@@ -149,12 +150,26 @@ UserSession.validate = function(user, props) {
   UserSession.fillMissingProperties(user, props);
   return user;
 }
-
 /*
  * Attempts to stub any undefined properties specified in props
  * Returns true if the user is modified, else false
  */
 UserSession.fillMissingProperties = function(user, props) {
+
+  const checkTargetAdData = (missing) => {
+    //if (!user.target._id || !user.adIssue)
+    if (user.adIssue && user.adIssue.length && user.target && user.target._id.length) {
+      if (!(user.targetImages && user.targetImages.length &&
+        user.targetSlogans && user.targetSlogans.length &&
+        user.targetInfluences && user.targetInfluences.length)) {
+        user.computeTargetAdData();
+        missing = arrayRemove(missing,
+          ['targetImages', 'targetSlogans', 'targetInfluences']);
+        modified = true;
+      }
+    }
+    return missing;
+  }
 
   const onUpdateProperty = (p) => {
     modified = true;
@@ -206,15 +221,6 @@ UserSession.fillMissingProperties = function(user, props) {
     onUpdateProperty(prop);
   }
 
-  prop = 'target';
-  if (missing.includes(prop)) {
-    if (!user.similars.length) throw Error('no similars');
-    user[prop] = rand(user.similars);
-    if (typeof user.target !== 'object') throw Error
-      ('user.target != object', typeof user.target, user.target);
-    onUpdateProperty(prop);
-  }
-
   prop = 'traits';
   if (missing.includes(prop)) {
     user._randomizeTraits();
@@ -227,12 +233,16 @@ UserSession.fillMissingProperties = function(user, props) {
     onUpdateProperty(prop);
   }
 
-  // prop = 'influences';
-  // if (missing.includes(prop)) {
-  //   user[prop] = user.targetAdInfluences();
-  //   //console.log('influences: '+user[prop] );
-  //   onUpdateProperty(prop);
-  // }
+  prop = 'target';
+  if (missing.includes(prop)) {
+    if (!user.similars.length) throw Error('no similars');
+    user[prop] = rand(user.similars);
+    if (typeof user.target !== 'object') throw Error
+      ('user.target != object', typeof user.target, user.target);
+    onUpdateProperty(prop);
+  }
+
+  missing = checkTargetAdData(missing);
 
   if (missing.length) throw Error
     ('Unable to stub user properties: ' + missing);
@@ -271,7 +281,7 @@ UserSession.create = async (user) => {
     assignJsonResp(user, await response.json());
     UserSession.browserStorage && sessionStorage.setItem
       (UserSession.storageKey, JSON.stringify(user._id));
-      // TODO: remove? stringify
+    // TODO: remove? stringify
     return user;
   }
   catch (e) {
@@ -405,7 +415,7 @@ function doConfig() {
 
 function arrayRemove(a, v) {
   return Array.isArray(v) ?
-    a.filter(i => v.includes(i)) : a.filter(i => i !== v)
+    a.filter(i => !v.includes(i)) : a.filter(i => i !== v)
 }
 
 function rand() {

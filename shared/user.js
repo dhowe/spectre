@@ -117,6 +117,46 @@ export default class User {
     return images;
   }
 
+
+  computeTargetAdData() { // requires adIssue & target with traits
+
+    if (typeof this.target === 'undefined') {
+      throw Error('No target for targetAdData', this);
+    }
+    if (typeof this.adIssue === 'undefined') {
+      throw Error('No adIssue for targetAdData', this);
+    }
+    if (!this.hasOceanTraits(this.target)) {
+      throw Error('No target.traits for targetAdData', this);
+    }
+
+    const pre = 'imgs/', cat = this.categorize(this.target);
+
+    let images = this.randomImages(pre);
+    let slogans = this.randomSlogans();
+    let influences = this.randomInfluences();
+
+    if (cat !== 0) {
+      console.log('CAT: '+cat);
+      images = [
+        pre + this.adIssue + '_' + cat + '.1.png',
+        pre + this.adIssue + '_' + cat + '.2.png',
+        pre + this.adIssue + '_' + -cat + '.1.png',
+        pre + this.adIssue + '_' + -cat + '.2.png'
+      ];
+      influences = User.adInfluences[this.adIssue][(cat > 0 ? 'high' : 'low')][User.oceanTraits[Math.abs(cat) - 1]];
+      let slogans = User.adSlogans[this.adIssue][(cat > 0 ? 'high' : 'low')][User.oceanTraits[Math.abs(cat) - 1]];
+      slogans = slogans.concat(User.adSlogans[this.adIssue][(cat < 0 ? 'high' : 'low')][User.oceanTraits[Math.abs(cat) - 1]]);
+    }
+    else {
+      console.warn('[TARG] Using random target data: ',
+        cat, images, influences, slogans);
+    }
+    this.targetImages = images;
+    this.targetSlogans = slogans;
+    this.targetInfluences = influences;
+  }
+
   targetAdImages() {
     let pre = 'imgs/';
 

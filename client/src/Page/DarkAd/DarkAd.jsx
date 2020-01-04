@@ -85,7 +85,8 @@ class DarkAd extends React.Component {
 
   async componentDidMount() {
     const user = await UserSession.ensure(this.context,
-      ['_id', 'adIssue', 'targetImages', 'targetSlogans']);
+      ['_id', 'adIssue', 'target', 'targetImages', 'targetSlogans']);
+    console.log('CDM',user.adIssue, user.targetImages, user.targetSlogans);
     this.setState({
       issue: user.adIssue,
       images: user.targetImages,
@@ -142,6 +143,7 @@ class DarkAd extends React.Component {
     const { issue, images, slogans } = this.state;
     const redimg = UserSession.imageDir + 'darkadred.png';
     const cimage = UserSession.imageDir + 'vote-' + issue + '.png';
+
     return (
       <div className={classes.root + " darkAd"}>
         <SpectreHeader colour="white" progressActive progressNumber="one" />
@@ -161,7 +163,7 @@ class DarkAd extends React.Component {
           </div>
           <div>
             {slogans.map((slogan, i) => (
-              <Button className={classes.button} variant="contained" color="primary"
+              <Button className={classes.button} variant="contained" color="primary" key={i}
                 onClick={() => {
                   this.state.defaultImageSelected && this.setState({ image: redimg });
                   this.setState({ text: slogan, defaultImageSelected: false })
