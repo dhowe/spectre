@@ -14,21 +14,21 @@ TODO: every call should return a uniform object:
 const USER_NOT_FOUND = 452;
 const NUM_SIMILARS = 6;
 
-const list = async (req, res) => {
+const list = function(req, res) {
 
-  await UserModel.getAll(function(err, users) {
+  UserModel.getAll(function(err, users) {
     if (err) return sendError(res, 'UserModel.getAll', err);
     sendResponse(res, users);
   });
 };
 
-const current = async (req, res) => { // not used at present
+const current = function(req, res) { // not used at present
 
   if (!req.params.hasOwnProperty('cid')) {
     return sendError(res, 'ClientId(cid) required');
   }
 
-  await UserModel.findOne({ clientId: req.params.cid }, {}, {
+  UserModel.findOne({ clientId: req.params.cid }, {}, {
     sort: { 'createdAt': -1 }
   }, (err, user) => {
     if (err) return sendError(res, 'UserModel.findOne', err);
@@ -37,7 +37,7 @@ const current = async (req, res) => { // not used at present
   });
 };
 
-const createBatch = async (req, res) => {
+const createBatch = function(req, res) {
 
   //console.log('REQ',req);
   const users = req.body;
@@ -45,7 +45,7 @@ const createBatch = async (req, res) => {
     return sendError(res, 'No users in request body');
   }
 
-  await UserModel.insertMany(users, (err, result) => {
+  UserModel.insertMany(users, (err, result) => {
     if (err) {
       return sendError(res, 'UserModel.insertMany', err);
     }
@@ -55,7 +55,7 @@ const createBatch = async (req, res) => {
   });
 };
 
-const create = async (req, res) => {
+const create = function(req, res) {
 
   if (!(req.body.login && req.body.loginType)) return sendError(res,
     "UserModel with no login/loginType:" + JSON.stringify(req.body));
@@ -66,7 +66,7 @@ const create = async (req, res) => {
   let user = new UserModel();
   Object.assign(user, req.body); // dangerous?
 
-  await UserModel.find({ login: req.body.login, loginType: req.body.loginType }, (e, docs) => {
+  UserModel.find({ login: req.body.login, loginType: req.body.loginType }, (e, docs) => {
 
     if (e || docs.length) return sendError(res, e || "Unique User Violation: " +
       req.body.login + '/' + req.body.loginType);
@@ -79,20 +79,20 @@ const create = async (req, res) => {
   });
 };
 
-const fetch = async (req, res) => {
+const fetch = function(req, res) {
 
   if (!req.params.hasOwnProperty('uid')) {
     return sendError(res, 'UserId required');
   }
 
-  await UserModel.findById(req.params.uid, (err, user) => {
+  UserModel.findById(req.params.uid, (err, user) => {
     if (err) return sendError(res, 'Error (findById) for #' + req.params.uid, err);
     if (!user) return sendError(res, 'No user #' + req.params.uid, 0, USER_NOT_FOUND);
     sendResponse(res, user);
   });
 };
 
-const update = async (req, res) => {
+const update = function(req, res) {
 
   if (!req.params.hasOwnProperty('uid')) {
     return sendError(res, 'UserId required');
@@ -101,7 +101,7 @@ const update = async (req, res) => {
   let uid = req.params.uid;
   let limit = req.query.hasOwnProperty('limit') ? parseInt(req.query.limit) : 6;
 
-  await UserModel.findByIdAndUpdate(uid, req.body, { new: true }, (err, user) => {
+  UserModel.findByIdAndUpdate(uid, req.body, { new: true }, (err, user) => {
 
     if (err) return sendError(res, 'Update fail #' + req.params.uid);
     if (!user) return sendError(res, 'No user #' + req.params.uid, 0, USER_NOT_FOUND);
@@ -119,7 +119,7 @@ const update = async (req, res) => {
   });
 }
 
-const similars = async (req, res) => {
+const similars = function(req, res) {
 
   if (!req.params.hasOwnProperty('uid')) {
     return sendError(res, 'UserId required');
@@ -131,7 +131,7 @@ const similars = async (req, res) => {
   }
 
   let uid = req.params.uid;
-  await UserModel.findById(uid, (err, user) => {
+  UserModel.findById(uid, (err, user) => {
     if (err) return sendError(res, 'Unable to find user #' + uid, err);
     if (!user) return sendError(res, 'No user #' + uid, 0, USER_NOT_FOUND);
     user.findByOcean((err, sims) => {
@@ -141,8 +141,8 @@ const similars = async (req, res) => {
   });
 };
 
-const remove = async (req, res) => {
-  await UserModel.remove({ _id: req.params.uid }, (err) => {
+const remove = function(req, res) {
+  UserModel.remove({ _id: req.params.uid }, (err) => {
     if (err) return sendError(res, 'Unable to delete user #' + req.params.uid, err);
     sendResponse(res, req.params.uid);
   });
@@ -150,7 +150,7 @@ const remove = async (req, res) => {
 
 const profiles = './client/public/profiles/';
 
-const photo = async (req, res) => {
+const photo = function(req, res) {
 
   if (typeof req.params.uid === 'undefined' ||
     req.params.uid === 'undefined') {
@@ -169,7 +169,7 @@ const photo = async (req, res) => {
     })
   }).single('profileImage');
 
-  await upload(req, res, e => {
+  upload(req, res, e => {
     if (e) return sendError(res, 'photo.upload', e);
     if (!req.file) return sendError(res, 'photo.upload: null req. file');
     //let url = req.protocol + "://" +  req.hostname + '/' + req.file.path;
@@ -179,7 +179,7 @@ const photo = async (req, res) => {
   });
 };
 
-const photoset = async (req, res) => {
+const photoset = function(req, res) {
 
   //console.log("Routes.photoSet");
 
@@ -201,7 +201,7 @@ const photoset = async (req, res) => {
     })
   }).array('photoSet', 10);
 
-  await upload(req, res, e => {
+  upload(req, res, e => {
     if (e) return res.status(400).send({ error: e });
     console.log("FILES: ", req.files);
     //let url = req.file.path.replace(/.*\/profiles/,'/profiles')});
