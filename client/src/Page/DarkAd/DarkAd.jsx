@@ -74,34 +74,74 @@ class DarkAd extends React.Component {
   constructor(props) {
     super(props, '/target-ad');
     this.state = {
-      image: '/imgs/darkad-default.png',
-      defaultImageSelected: true,
       text: '',
+      issue: '',
+      images: [],
+      slogans: [],
+      defaultImageSelected: true,
+      image: '/imgs/darkad-default.png'
     };
   }
 
-
   async componentDidMount() {
-    let user = await UserSession.ensure(this.context,
-      ['_id', 'name', 'login', 'gender', 'virtue', 'traits']);
-    user = await UserSession.similars(user);
-    console.log('got sims:', user.similars);
-    this.setState({ similars: user.similars });
+    const user = await UserSession.ensure(this.context,
+      ['_id', 'adIssue', 'targetImages', 'targetSlogans']);
+    this.setState({
+      issue: user.adIssue,
+      images: user.targetImages,
+      slogans: user.targetSlogans
+    });
   }
 
+  // {this.celebs
+  //   .map((name, i) => (
+  //     <AvatarComponent
+  //       active={name === celebrity}
+  //       handleClick={() => this.play(name)}
+  //       key={AvatarComponent.generateKey(i)}
+  //       target={{ name, image: `/imgs/${name}.png` }}
+  //     />
+  //   ))}
+
+
+  // <img className={classes.image} src={images[0]} alt="leave"
+  //   onClick={() => { this.setState({ image: images[0], defaultImageSelected: false }); }}></img>
+  // <img className={classes.image} src={images[1]} alt="leave"
+  //   onClick={() => { this.setState({ image: images[1], defaultImageSelected: false }); }}></img>
+  // <img className={classes.image} src={images[2]} alt="leave"
+  //   onClick={() => { this.setState({ image: images[2], defaultImageSelected: false }); }}></img>
+  // <img className={classes.image} src={images[3]} alt="leave"
+  //   onClick={() => { this.setState({ image: images[3], defaultImageSelected: false }); }}></img>
+
+  // <div>
+  //   <Button className={classes.button} variant="contained" color="primary"
+  //     onClick={() => { this.state.defaultImageSelected && this.setState({ image: redimg });
+  //       this.setState({ text: slogans[0], defaultImageSelected: false }) }}>
+  //     {slogans[0].split(' ').slice(0, 2).join(' ') + '...'}
+  //   </Button>
+  //   <Button className={classes.button} variant="contained" color="primary"
+  //     onClick={() => { this.state.defaultImageSelected && this.setState({ image: redimg });
+  //       this.setState({ text: slogans[1], defaultImageSelected: false }) }}>
+  //     {slogans[1].split(' ').slice(0, 2).join(' ') + '...'}
+  //   </Button>
+  //   <div>
+  //     <Button className={classes.button} variant="contained" color="primary"
+  //       onClick={() => { this.state.defaultImageSelected && this.setState({ image: redimg });
+  //         this.setState({ text: slogans[2], defaultImageSelected: false }) }}>
+  //       {slogans[2].split(' ').slice(0, 2).join(' ') + '...'}
+  //     </Button>
+  //     <Button className={classes.button} variant="contained" color="primary"
+  //       onClick={() => { this.state.defaultImageSelected && this.setState({ image: redimg });
+  //         this.setState({ text: slogans[3], defaultImageSelected: false }) }}>
+  //       {slogans[3].split(' ').slice(0, 2).join(' ') + '...'}
+  //     </Button>
+  //   </div>
+  // </div>
   render() {
     const { classes } = this.props;
-
-    if (!this.context.hasOceanTraits()) this.context._randomizeTraits();
-    this.context.target = this.context.target || UserSession.defaultUsers[0];
-    this.context.adIssue = this.context.adIssue || 'leave';
-
-    const issue = this.context.adIssue;
-    const slogans = this.context.targetAdSlogans();
-    const images = this.context.targetAdImages();
+    const { issue, images, slogans } = this.state;
     const redimg = UserSession.imageDir + 'darkadred.png';
     const cimage = UserSession.imageDir + 'vote-' + issue + '.png';
-
     return (
       <div className={classes.root + " darkAd"}>
         <SpectreHeader colour="white" progressActive progressNumber="one" />
@@ -114,27 +154,23 @@ class DarkAd extends React.Component {
             {!this.state.defaultImageSelected ? <img className={classes.campaignImage} src={cimage} alt="leave"></img> : ''}
           </div>
           <div>
-            <img className={classes.image} src={images[0]} alt="leave" onClick={() => { this.setState({ image: images[0], defaultImageSelected: false }); }}></img>
-            <img className={classes.image} src={images[1]} alt="leave" onClick={() => { this.setState({ image: images[1], defaultImageSelected: false }); }}></img>
-            <img className={classes.image} src={images[2]} alt="leave" onClick={() => { this.setState({ image: images[2], defaultImageSelected: false }); }}></img>
-            <img className={classes.image} src={images[3]} alt="leave" onClick={() => { this.setState({ image: images[3], defaultImageSelected: false }); }}></img>
+            {images.map((image, i) => (
+              <img className={classes.image} src={image} alt="leave" key={i}
+                onClick={() => { this.setState({ image: image, defaultImageSelected: false })}}></img>
+            ))}
           </div>
           <div>
-            <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.state.defaultImageSelected && this.setState({ image: redimg }); this.setState({ text: slogans[0], defaultImageSelected: false }) }}>
-              {slogans[0].split(' ').slice(0, 2).join(' ') + '...'}
-            </Button>
-            <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.state.defaultImageSelected && this.setState({ image: redimg }); this.setState({ text: slogans[1], defaultImageSelected: false }) }}>
-              {slogans[1].split(' ').slice(0, 2).join(' ') + '...'}
-            </Button>
-            <div>
-              <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.state.defaultImageSelected && this.setState({ image: redimg }); this.setState({ text: slogans[2], defaultImageSelected: false }) }}>
-                {slogans[2].split(' ').slice(0, 2).join(' ') + '...'}
+            {slogans.map((slogan, i) => (
+              <Button className={classes.button} variant="contained" color="primary"
+                onClick={() => {
+                  this.state.defaultImageSelected && this.setState({ image: redimg });
+                  this.setState({ text: slogan, defaultImageSelected: false })
+                }}>
+                {slogan.split(' ').slice(0, 2).join(' ') + '...'}
               </Button>
-              <Button className={classes.button} variant="contained" color="primary" onClick={() => { this.state.defaultImageSelected && this.setState({ image: redimg }); this.setState({ text: slogans[3], defaultImageSelected: false }) }}>
-                {slogans[3].split(' ').slice(0, 2).join(' ') + '...'}
-              </Button>
-            </div>
+            ))}
           </div>
+
           <Link to="/target-ad">
             <IconButton icon="next" text="Next" />
           </Link>

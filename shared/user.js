@@ -30,10 +30,16 @@ export default class User {
     if (u.login) s += ', ' + u.login;
     if (u.gender) s += ', ' + u.gender;
     if (u.virtue) s += ', ' + u.virtue;
-    if (u.descriptors && u.descriptors.length) s += ', ' + u.descriptors.length + ' descriptors';
-    if (u.influences && u.influences.length) s += ', ' + u.influences.length + ' influences';
-    if (u.similars && u.similars.length) s += ', ' + u.similars.length + ' similars';
-    if (u.target) s += ', ' + u.target._id + '/' + u.target.name;
+    if (u.target) s += ', ' + 'target='+u.target.name;
+    if (u.descriptors && u.descriptors.length) {
+      s += ', ' + u.descriptors.length + ' descriptors';
+    }
+    if (u.influences && u.influences.length) {
+      s += ', ' + u.influences.length + ' influences';
+    }
+    if (u.similars && u.similars.length) {
+      s += ', ' + u.similars.length + ' similars';
+    }
     return s;
   }
 
