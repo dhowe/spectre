@@ -6,14 +6,12 @@ import Fade from '@material-ui/core/Fade';
 import Countdown from 'react-countdown';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
-
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 
 const styles = {
   root: {
     flexGrow: 1,
     width: '100%',
-
     color: 'black',
   },
   clickToContinue: {
@@ -22,19 +20,22 @@ const styles = {
 };
 
 class YourPower extends React.Component {
+
   constructor(props) {
     super(props, '/pick-your-side');
     this.state = { name: '', virtue: '' }
   }
 
-  componentDidMount() {
-    UserSession.ensure(this.context,
-      ['_id', 'name', 'login', 'gender', 'virtue' ],
-      user => this.setState({ name: user.name, virtue: user.virtue }));
+  async componentDidMount() {
+    const user = await UserSession.ensure(this.context,
+      ['_id', 'name', 'login', 'gender', 'virtue' ]);
+    this.setState({ name: user.name, virtue: user.virtue });
   }
+
   nextPage = () => {
     this.props.history.push('/pick-your-side');
   }
+
   render() {
 
     const { classes } = this.props;

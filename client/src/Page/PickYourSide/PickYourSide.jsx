@@ -26,9 +26,9 @@ class PickYourSide extends React.Component {
     this.state = { targetName: '' };
   }
 
-  componentDidMount() {
-    UserSession.ensure(this.context, ['_id', 'name', 'target'],
-      user => this.setState({ targetName: user.target.name }));
+  async componentDidMount() {
+    const user = await UserSession.ensure(this.context, ['_id', 'name', 'target']);
+    this.setState({ targetName: user.target.name });
   }
 
   render() {

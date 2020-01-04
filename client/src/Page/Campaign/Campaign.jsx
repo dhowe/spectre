@@ -32,14 +32,14 @@ class Campaign extends React.Component {
     };
   }
 
-  componentDidMount() {
-    UserSession.ensure(this.context,
-      ['_id', 'name', 'adIssue', 'influences', 'target' ],
-      user => this.setState({
+  async componentDidMount() {
+    const user = await UserSession.ensure(this.context,
+      ['_id', 'name', 'adIssue', 'influences', 'target' ]);
+    this.setState({
         influences: user.influences,
         targetName: user.target.name.ucf(),
         targetPronoun: (user.target.gender === 'male' ? 'he' : 'she')
-      }));
+      });
   }
 
   render() {

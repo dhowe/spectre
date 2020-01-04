@@ -129,22 +129,21 @@ class LoginPage extends React.Component {
   }
 
   // save user then start video
-  saveUser = (user) => {
-    const handleSuccess = () => {
+  saveUser = async (user) => {
+    try {
+      await UserSession.create(user);
       console.log('[LOGIN] ' + user.toString());
-      this.showVideo();
-    };
-    const handleError = (e) => {
+    }
+    catch (e) {
       if (e.error === 'EmailInUse') {
         this.modalTitle = 'Invalid email';
         this.modalContent = 'Email has already been used';
         //this.setState({ modalOpen: true });
       } else {
         console.error('UserSession.create: ', e);
-        this.showVideo();
       }
-    };
-    UserSession.create(user, handleSuccess, handleError);
+    }
+    this.showVideo();
   }
 
   closeModal = () => {

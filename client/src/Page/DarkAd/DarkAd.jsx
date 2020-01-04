@@ -80,6 +80,15 @@ class DarkAd extends React.Component {
     };
   }
 
+
+  async componentDidMount() {
+    let user = await UserSession.ensure(this.context,
+      ['_id', 'name', 'login', 'gender', 'virtue', 'traits']);
+    user = await UserSession.similars(user);
+    console.log('got sims:', user.similars);
+    this.setState({ similars: user.similars });
+  }
+
   render() {
     const { classes } = this.props;
 
@@ -92,7 +101,6 @@ class DarkAd extends React.Component {
     const images = this.context.targetAdImages();
     const redimg = UserSession.imageDir + 'darkadred.png';
     const cimage = UserSession.imageDir + 'vote-' + issue + '.png';
-    console.log('CLASS:'+classes.cimage, cimage, classes);
 
     return (
       <div className={classes.root + " darkAd"}>

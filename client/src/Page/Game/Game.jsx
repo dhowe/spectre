@@ -163,7 +163,7 @@ function sketch(p) {
     done = true;
     checkData();
     let data = Brand.instances.map(b => ({ item: b.item, rating: b.rating }));
-    game.context.setBrands(data);
+    user.setBrands(data);
     game.componentComplete();
     //displayAsHtml(user);
   }
@@ -304,28 +304,19 @@ class Game extends React.Component {
     game = this; // handle for p5js
   }
 
-  componentDidMount() {
-    UserSession.ensure(this.context, ['_id', 'login', 'gender', 'name']);
+  async componentDidMount() {
+    user = await UserSession.ensure
+      (this.context, ['_id', 'login', 'gender', 'name']);
   }
 
-  componentComplete() { // redirect called from p5
-    clearInterval(this.interval);
-    user = this.context;
-    UserSession.ensure(user, ['_id', 'login', 'gender',
-      'name', 'traits', 'descriptors', 'influences'],
-      () => {
-        UserSession.update(user,
-          () => {
-            console.log('[Game]', user);
-          }, (err) => {
-            console.error('[Game]', err);
-            this.next();
-          });
-      });
+  async componentComplete() { // redirect called from p5
+    const user = await UserSession.ensure(this.context,
+      ['_id', 'login', 'gender', 'name', 'traits', 'descriptors', 'influences']);
+    await UserSession.update(user);
+    this.props.history.push("/thank-you");
   }
 
   render() {
-    console.log(this.props.classes.root);
     return (
       <div className={this.props.classes.root} id='clickMe'>
         <SpectreHeader colour="white" />

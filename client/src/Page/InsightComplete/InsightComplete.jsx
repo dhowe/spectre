@@ -35,10 +35,10 @@ class InsightComplete extends React.Component {
     this.state = { idleCheckerDone: false, target: {name: '', traits:''} };
   }
 
-  componentDidMount() {
-    UserSession.ensure(this.context,
-      ['_id', 'name', 'login', 'gender', 'virtue', 'target'],
-      user => this.setState({ target: user.target }));
+  async componentDidMount() {
+    const user = await UserSession.ensure(this.context,
+      ['_id', 'name', 'login', 'gender', 'virtue', 'target']);
+    this.setState({ target: user.target });
   }
 
   showVideo = () => {
@@ -51,7 +51,7 @@ class InsightComplete extends React.Component {
   }
 
   render() {
-    console.log('page',window.location.pathname);
+    //console.log('page',window.location.pathname);
     const { classes } = this.props;
     const { target, idleCheckerDone } = this.state;
     return (

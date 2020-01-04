@@ -17,6 +17,7 @@ UserSession.defaultUsers = [
   { "_id": "888888888888888888888888", "name": "Reed", "traits": { "openness": 0.2773518607894794, "conscientiousness": 0.8456532878428138, "extraversion": 0.4515471612661024, "agreeableness": 0.6249880747419794, "neuroticism": 0.6186244869965476 } },
   { "_id": "999999999999999999999999", "name": "Terry", "traits": { "openness": 0.30426635874427355, "conscientiousness": 0.5341590821850326, "extraversion": 0.509056193557774, "agreeableness": 0.8109949037515642, "neuroticism": 0.4252958718086144 } }
 ];
+UserSession.browserStorage = true;
 UserSession.storageKey = 'spectre-user';
 UserSession.profileDir = User.profileDir;
 UserSession.imageDir = User.imageDir;
@@ -51,9 +52,43 @@ UserSession.clear = function() {
 /*
  * Repairs a user using sessionStorage and db if needed (async)
  */
-UserSession.ensure = function(user, props, onSuccess, onError) {
+UserSession.ensure = async (user, props) => {
 
-  onSuccess = onSuccess || (() => {});
+  // do we have an id, if not repair it
+  if (props.includes('_id') && typeof user._id === 'undefined') {
+    props = arrayRemove(props, '_id');
+
+    // do we have an id in session
+    const sid = sessionStorage.getItem(UserSession.storageKey);
+    if (!sid) {
+      console.log('[STUB] No user._id, creating new user');
+      UserSession.fillMissingProperties(user, ['login', 'name', 'gender']);
+      await UserSession.create(user);
+      // if (props.includes('target') && !u.similars.length) { // need similars
+      //   user = await UserSession.similars(user);
+      //   console.log('[STUB] Inserted new user/similars:', user.toString());
+      // }
+      // else { // no similars needed
+      //   console.log('[STUB] Inserted new user:', user.toString());
+      // }
+    }
+    else {
+      user._id = JSON.parse(sid);
+      console.warn('[SESS] Reloaded user._id: ' + user._id + ' doing lookup');
+      await UserSession.lookup(user);
+    }
+  }
+  // should have user with id here, now check properties
+  if (!user || !user._id) throw Error('INVALID STATE');
+  let modified = UserSession.fillMissingProperties(user, props);
+  if (modified) await UserSession.update(user);
+
+  return user;
+}
+
+UserSession.ensureOLD = function(user, props, onSuccess, onError) {
+
+  onSuccess = onSuccess || (() => { });
 
   onError = onError || (e => {
     console.error('[ERROR] UserSession.ensure: ', e);
@@ -84,19 +119,19 @@ UserSession.ensure = function(user, props, onSuccess, onError) {
       UserSession.create(user, (u) => {
         if (props.includes('target') && !u.similars.length) {
           UserSession.similars(user, user => {
-              console.log('[STUB] Inserted new user/similars:', user.toString());
-              UserSession.ensure(user, props, onSuccess, onError);
+            console.log('[STUB] Inserted new user/similars:', user.toString());
+            UserSession.ensure(user, props, onSuccess, onError);
           }, onError);
           return;
         }
         console.log('[STUB] Inserted new user:', user.toString());
         UserSession.ensure(user, props, onSuccess, onError);
-      }, e=> console.error(e));
+      }, e => console.error(e));
       return;
     }
 
     user._id = JSON.parse(sid);
-    console.warn('[SESS] Reloaded user._id: ' + user._id+' doing lookup');
+    console.warn('[SESS] Reloaded user._id: ' + user._id + ' doing lookup');
     UserSession.lookup(user, json => {
       Object.assign(user, json);
       saveUser(UserSession.fillMissingProperties(user, props));
@@ -125,7 +160,7 @@ UserSession.fillMissingProperties = function(user, props) {
     modified = true;
     missing = arrayRemove(missing, p);
     if (typeof user[p] === 'undefined') {
-      throw Error('Could not stub user.'+p, user);
+      throw Error('Could not stub user.' + p, user);
     }
     let val = user[p];
     if (Array.isArray(val)) val = '[' + val.length + ']';
@@ -139,14 +174,12 @@ UserSession.fillMissingProperties = function(user, props) {
   if (typeof user === 'undefined') throw Error('Null User');
 
   if (!Array.isArray(props)) props = [props];
-
   let missing = props.filter(p => typeof user[p] === 'undefined'
     || (Array.isArray(user[p]) && !user[p].length));
-
   if (!missing) return false; // all props are ok
+  let prop, modified = false;
 
-  let prop = 'name', modified = false;
-
+  prop = 'name';
   if (missing.includes(prop)) {
     const cons = UserSession.Cons, vows = UserSession.Vows;
     user[prop] = (cons[Math.floor(Math.random() * cons.length)]
@@ -194,182 +227,163 @@ UserSession.fillMissingProperties = function(user, props) {
     onUpdateProperty(prop);
   }
 
-  prop = 'influences';
-  if (missing.includes(prop)) {
-    user[prop] = user.targetAdInfluences();
-    //console.log('influences: '+user[prop] );
-    onUpdateProperty(prop);
-  }
+  // prop = 'influences';
+  // if (missing.includes(prop)) {
+  //   user[prop] = user.targetAdInfluences();
+  //   //console.log('influences: '+user[prop] );
+  //   onUpdateProperty(prop);
+  // }
 
   if (missing.length) throw Error
     ('Unable to stub user properties: ' + missing);
 
   return modified;
 }
-
-function handleResponse(res) {
-  return res.json().then(json => {
-    if (!res.ok || !json.status === 200) {
-      return Promise.reject({
-        status: json.status,
-        statusText: json.message
-      });
-    }
-    return json.data;
-  }).catch(e => {
-    return Promise.reject(e);
-  });
-}
+//
+// function handleResponse(res) {
+//   return res.json().then(json => {
+//     if (!res.ok || !json.status === 200) {
+//       return Promise.reject({
+//         status: json.status,
+//         statusText: json.message
+//       });
+//     }
+//     return json.data;
+//   }).catch(e => {
+//     return Promise.reject(e);
+//   });
+// }
 
 // Create a new database record: /login only
-UserSession.create = function(user, onSuccess, onError) {
+UserSession.create = async (user) => {
   let { route, auth, cid, mode } = doConfig();
-  let internalSuccess = (json) => {
-    Object.assign(user, json);
-    sessionStorage.setItem
+  if (user.clientId < 0) user.clientId = cid;
+  try {
+    console.log('[POST] ' + mode + '.create: ' + route);
+    let response = await fetch(route, {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": 'Basic ' + btoa(auth)
+      },
+      body: JSON.stringify(user)
+    })
+    assignJsonResp(user, await response.json());
+    UserSession.browserStorage && sessionStorage.setItem
       (UserSession.storageKey, JSON.stringify(user._id));
-    onSuccess && onSuccess(json);
+      // TODO: remove? stringify
+    return user;
   }
-  if (!onError) onError = (e) => {
-    console.error('UserSession.create: ', e);
+  catch (e) {
+    console.error('UserSession.create');
     throw e;
   }
-
-  if (user.clientId < 0) user.clientId = cid;
-
-  console.log('[POST] ' + mode + '.create: ' + route);
-
-  fetch(route, {
-    method: "post",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": 'Basic ' + btoa(auth)
-    },
-    body: JSON.stringify(user)
-  })
-    .then(handleResponse)
-    .then(internalSuccess)
-    .catch(onError);
 }
 
 /*
  * Loads users fields from database
  */
-UserSession.lookup = function(user, onSuccess, onError) {
-
+UserSession.lookup = async (user) => {
   if (!user || !user._id) throw Error('Invalid arg', user);
-
   const { route, auth, cid, mode } = doConfig();
-  const internalSuccess = (json) => {
-    Object.assign(user, json);
-    onSuccess && onSuccess(json);
+  if (user.clientId < 0) user.clientId = cid;
+  const endpoint = route + user._id;
+  try {
+    console.log('[GET] ' + mode + '.lookup: ' + endpoint);
+    let response = await fetch(endpoint, {
+      method: "get",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": 'Basic ' + btoa(auth)
+      },
+    })
+    return assignJsonResp(user, await response.json());
   }
-  if (!onError) onError = (e) => {
-    console.error('UserSession.lookup:', e);
+  catch (e) {
+    console.error('UserSession.create');
     throw e;
   }
-
-  if (user.clientId < 0) user.clientId = cid;
-
-  const endpoint = route + user._id;
-  console.log('[GET] ' + mode + '.lookup: ' + endpoint);
-
-  fetch(endpoint, {
-    method: "get",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": 'Basic ' + btoa(auth)
-    },
-  })
-    .then(handleResponse)
-    .then(internalSuccess)
-    .catch(onError);
 }
 
-UserSession.update = function(user, onSuccess, onError) {
+UserSession.update = async (user) => {
+  if (!user || !user._id) throw Error('Invalid arg', user);
   const { route, auth, cid, mode } = doConfig();
-  const internalSuccess = (json) => {
-    Object.assign(user, json);
-    onSuccess && onSuccess(user);
-  }
-  if (!onError) onError = e => console.error(e);
-
-  if (typeof user._id === 'undefined') throw Error('user._id required');
-
   const endpoint = route + user._id;
 
-  console.log('[PUT] ' + mode + '.update: ' + endpoint);
-
   if (user.clientId < 0) user.clientId = cid;
-
-  fetch(endpoint, {
-    method: "put",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": 'Basic ' + btoa(auth)
-    },
-    body: JSON.stringify(user)
-  })
-    .then(handleResponse)
-    .then(internalSuccess)
-    .catch(onError);
+  try {
+    console.log('[PUT] ' + mode + '.update: ' + endpoint);
+    let response = await fetch(endpoint, {
+      method: "put",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": 'Basic ' + btoa(auth)
+      },
+      body: JSON.stringify(user)
+    })
+    return assignJsonResp(user, await response.json());
+  }
+  catch (e) {
+    console.error('UserSession.create');
+    throw e;
+  }
 }
 
-UserSession.similars = function(user, onSuccess, onError) {
+UserSession.similars = async (user) => {
+  if (!user || !user._id) throw Error('Invalid arg', user);
   const { route, auth, cid, mode } = doConfig();
-  const internalSuccess = (json) => {
-    user.similars = json;
-    onSuccess && onSuccess(user);
-  }
-  if (!onError) onError = e => console.error(e);
-
-  if (typeof user._id === 'undefined') throw Error('user._id required');
-
   const endpoint = route + 'similars/' + user._id;
-
-  console.log('[GET] ' + mode + '.similars: ' + endpoint);
-
   if (user.clientId < 0) user.clientId = cid;
-
-  fetch(endpoint, {
-    method: "get",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": 'Basic ' + btoa(auth)
-    },
-  })
-    .then(handleResponse)
-    .then(internalSuccess)
-    .catch(onError);
+  try {
+    console.log('[GET] ' + mode + '.similars: ' + endpoint);
+    let response = await fetch(endpoint, {
+      method: "get",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": 'Basic ' + btoa(auth)
+      },
+    });
+    const json = await response.json();
+    if (json.status !== 200) throw Error(JSON.stringify(json));
+    user.similars = json.data;
+    return user;
+  }
+  catch (e) {
+    console.error('UserSession.create');
+    throw e;
+  }
 }
 
-UserSession.postImage = function(user, image, onSuccess, onError) {
+UserSession.postImage = async (user, image) => { // TODO: test
 
   let { route, auth, mode } = doConfig();
-  if (!onSuccess) onSuccess = () => { };
-  if (!onError) onError = (e) => console.error(e);
-
   //if (typeof image === 'string') image = toImageFile(image);
-
   let fdata = new FormData();
   fdata.append('profileImage', image);
   fdata.append('clientId', process.env.CLIENT_ID);
   fdata.append('videoId', 2);
 
   const endpoint = route + 'photo/' + user._id;
-
-  console.log('[POST] ' + mode + '.postImage: ' + endpoint);
-
-  fetch(endpoint, {
-    method: "post",
-    headers: { "Authorization": 'Basic ' + btoa(auth) },
-    body: fdata // JSON.stringfy(fdata) ??
-   })
-    .then(handleResponse)
-    .then(onSuccess)
-    .catch(onError);
+  try {
+    console.log('[POST] ' + mode + '.postImage: ' + endpoint);
+    let response = await fetch(endpoint, {
+      method: "post",
+      headers: { "Authorization": 'Basic ' + btoa(auth) },
+      body: fdata // JSON.stringfy(fdata) ??
+    })
+    return response.json(); // what to do here?
+  }
+  catch (e) {
+    console.error('UserSession.create');
+    throw e;
+  }
 }
 
+function assignJsonResp(user, json) {
+  if (json.status !== 200) throw Error(JSON.stringify(json));
+  Object.assign(user, json.data);
+  return user;
+}
 
 function doConfig() {
 
@@ -389,7 +403,10 @@ function doConfig() {
   return { auth: auth, route: host + route, clientId: cid, mode: mode };
 }
 
-function arrayRemove(a, v) { return a.filter(i => i !== v) }
+function arrayRemove(a, v) {
+  return Array.isArray(v) ?
+    a.filter(i => v.includes(i)) : a.filter(i => i !== v)
+}
 
 function rand() {
   if (arguments.length === 1 && Array.isArray(arguments[0])) {

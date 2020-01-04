@@ -36,11 +36,12 @@ class InfluenceAFollower extends React.Component {
     this.state = { similars: [] };
   }
 
-  componentDidMount() {
-    UserSession.ensure(this.context,
-      ['_id', 'name', 'login', 'gender', 'virtue', 'traits'],
-      user => UserSession.similars(user,
-          u => this.setState({ similars: u.similars })));
+  async componentDidMount() {
+    let user = await UserSession.ensure(this.context,
+      ['_id', 'name', 'login', 'gender', 'virtue', 'traits']);
+    user = await UserSession.similars(user);
+    console.log('got sims:', user.similars);
+    this.setState({ similars: user.similars });
   }
 
   handleSelect = (target) => {
@@ -67,6 +68,8 @@ class InfluenceAFollower extends React.Component {
   }
 
   render() {
+    let { similars } = this.state;
+    console.log('render', similars);
     return (
       <div className={this.props.root} >
         <SpectreHeader colour="white" progressActive progressNumber="one" />
@@ -76,7 +79,7 @@ class InfluenceAFollower extends React.Component {
           <Typography component="p" variant="body1" className="community">Spectre has a global community of followers.</Typography>
           <Typography component="h5" variant="h5" className="choose-participant">Choose one:</Typography>
           <AvatarCircle>
-            {this.state.similars.slice(0, 6).map((sim, i) => (
+            {similars.slice(0, 6).map((sim, i) => (
               <AvatarComponent
                 key={AvatarComponent.generateKey(i)}
                 handleClick={() => this.handleSelect(sim)}
