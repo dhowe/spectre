@@ -86,7 +86,7 @@ class DarkAd extends React.Component {
   async componentDidMount() {
     const user = await UserSession.ensure(this.context,
       ['_id', 'adIssue', 'target', 'targetImages', 'targetSlogans']);
-    console.log('CDM',user.adIssue, user.targetImages, user.targetSlogans);
+    //console.log('CDM',user.adIssue, user.targetImages, user.targetSlogans);
     this.setState({
       issue: user.adIssue,
       images: user.targetImages,

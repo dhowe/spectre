@@ -17,7 +17,7 @@ UserSession.defaultUsers = [
   { "_id": "888888888888888888888888", "name": "Reed", "traits": { "openness": 0.2773518607894794, "conscientiousness": 0.8456532878428138, "extraversion": 0.4515471612661024, "agreeableness": 0.6249880747419794, "neuroticism": 0.6186244869965476 } },
   { "_id": "999999999999999999999999", "name": "Terry", "traits": { "openness": 0.30426635874427355, "conscientiousness": 0.5341590821850326, "extraversion": 0.509056193557774, "agreeableness": 0.8109949037515642, "neuroticism": 0.4252958718086144 } }
 ];
-UserSession.browserStorage = false;
+UserSession.browserStorage = true;
 UserSession.storageKey = 'spectre-user';
 UserSession.profileDir = User.profileDir;
 UserSession.imageDir = User.imageDir;
@@ -46,8 +46,6 @@ UserSession.clear = function() {
   sessionStorage.clear();
   console.log('[USER] Session initialized');
 }
-
-// TODO: Should all be rewritten with async/await *****************************
 
 /*
  * Repairs a user using sessionStorage and db if needed (async)

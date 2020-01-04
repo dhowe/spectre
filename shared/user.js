@@ -137,7 +137,6 @@ export default class User {
     let influences = this.randomInfluences();
 
     if (cat !== 0) {
-      console.log('CAT: '+cat);
       images = [
         pre + this.adIssue + '_' + cat + '.1.png',
         pre + this.adIssue + '_' + cat + '.2.png',
