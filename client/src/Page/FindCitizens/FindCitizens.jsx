@@ -6,12 +6,10 @@ import { Link } from 'react-router-dom';
 import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
-
 import UserSession from '../../Components/UserSession/UserSession';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
 const styles = {
-
   root: {
     flexGrow: 1,
     width: '100%',
@@ -20,20 +18,20 @@ const styles = {
 };
 
 class FindCitizens extends React.Component {
+
   constructor(props) {
     super(props, '/targets-found');
+    this.state = { targetName: '' };
+  }
+
+  async componentDidMount() {
+    const user = await UserSession.ensure(this.context, ['_id', 'target']);
+    this.setState({ targetName: user.target.name });
   }
 
   render() {
     const { classes } = this.props;
-    let targetName = 'Remy';
-    const user = this.context;
-    if (user && user.getTarget) {
-      const target = user.getTarget();
-      if (target && target.name) {
-        targetName = target.name;
-      }
-    }
+    const { targetName } = this.state;
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive={true} progressNumber="two" />

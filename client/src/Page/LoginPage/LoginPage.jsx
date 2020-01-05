@@ -13,7 +13,20 @@ import grey from '@material-ui/core/colors/grey';
 import { withStyles } from '@material-ui/core/styles';
 import './LoginPage.scss';
 
+
 window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true; // TMP: #138
+
+const landscapeStyles = {
+  marginBottom: 20,
+  fontSize: '2rem',
+  fontWeight: 400
+};
+
+/*const portraitStyles = {
+    marginBottom: 70,
+    fontSize: '3.75rem',
+};*/
+
 
 const styles = {
   root: {
@@ -68,6 +81,7 @@ class LoginPage extends React.Component {
     super(props, '/pledge');
 
     this.state = {
+      height: props.height,
       emailErrorCount: 0,
       modalOpen: false,
       clearEmail: true,
@@ -83,6 +97,7 @@ class LoginPage extends React.Component {
 
   componentDidMount() {
     UserSession.clear();
+    this.setState({ height: window.innerHeight + 'px' });
   }
 
   handleSubmit = (e, { name, email, gender, clearEmail }) => {
@@ -194,7 +209,7 @@ class LoginPage extends React.Component {
         <SpectreHeader />
         <IdleChecker forceTerminate={this.state.idleCheckerDone} />
         <div className={this.props.classes.content + ' LoginPage-content content'}>
-          <Typography style={{ marginBottom: 70 }} component="h2" variant="h2">Let's Play!</Typography>
+          <Typography style={landscapeStyles} component="h2" variant="h2">Let's Play!</Typography>
           <Modal
             isOpen={this.state.modalOpen}
             title={this.modalTitle}
@@ -221,8 +236,13 @@ class LoginPage extends React.Component {
 
 LoginPage.propTypes = {
   classes: PropTypes.object.isRequired,
+  height: PropTypes.string
 };
 
 LoginPage.contextType = UserSession;
+
+LoginPage.defaultProps = {
+  height: '500px'
+};
 
 export default withStyles(styles)(LoginPage);

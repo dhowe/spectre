@@ -10,7 +10,7 @@ import UserSession from '../../Components/UserSession/UserSession';
 
 import './TouchToBegin.scss';
 
-const styles = {
+/*const styles_portrait = {
   root: {
     flexGrow: 1,
     width: '100%',
@@ -21,7 +21,25 @@ const styles = {
   clickToContinue: {
     margin: '20% 0',
   },
+};*/
+
+const styles = {
+  root: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundImage: `url(${BeginBackground})`,
+    backgroundSize: 'auto 100%',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center',
+
+  },
+  clickToContinue: {
+      fontSize: '0.5rem'
+  },
+
 };
+
 
 class TouchToBegin extends React.Component {
 

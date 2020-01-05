@@ -24,12 +24,12 @@ class DataIs extends React.Component {
   constructor(props) {
     super(props, '/personalised');
     this.countdown = React.createRef();
-    this.state = {virtue: '', virtueAdverb: ''};
+    this.state = { virtue: '', virtueAdverb: '' };
   }
 
-  componentDidMount() {
-    const user = UserSession.validate(this.context, ['virtue']);
-    this.setState( {virtue: user.virtue, virtueAdverb: user.virtueAsAdverb()} );
+  async componentDidMount() {
+    const user = await UserSession.ensure(this.context, ['virtue']);
+    this.setState({ virtue: user.virtue, virtueAdverb: user.virtueAsAdverb() });
   }
 
   render() {
@@ -42,7 +42,7 @@ class DataIs extends React.Component {
             <Typography component="h6" variant="h6">DATA IS {this.state.virtue.toUpperCase()}</Typography>
           </Fade>
           <Fade in={true} style={{ transitionDelay: '1200ms' }}>
-            <Typography component="h6" variant="h6">To become more {this.state.virtueAdverb} you need&nbsp;more&nbsp;data</Typography>
+            <Typography component="h6" variant="h6">To become more <strong>{this.state.virtueAdverb}</strong> you need&nbsp;more&nbsp;data</Typography>
           </Fade>
           <Fade in={true} style={{ transitionDelay: '2000ms' }}>
             <Typography component="h6" variant="h6">We can help you believe in the {this.state.virtue}&nbsp;of&nbsp;Dataism.</Typography>

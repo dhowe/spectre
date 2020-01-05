@@ -1,25 +1,49 @@
 .LoginPage {
-    background-color: #21c0fb;
-    color: #ffffff;
+  background-color: #21c0fb;
+  color: #ffffff;
 }
-
-.LoginPage-content {
-
+@media screen and (orientation:landscape) {
+  .LoginPage-content {
+    width: 70%;
+    margin: auto;
     height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    h1, h2, h3, h4, h5, h6 {
-        color: #ffffff;
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      color: #ffffff;
     }
+  }
+}
+@media screen and (orientation:portrait) {
+  .LoginPage-content {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      color: #ffffff;
+    }
+  }
 }
 
-.tos{
-  position:fixed;
+.tos {
+  position: fixed;
   margin: auto;
   color: white;
   text-align: left;
   bottom: 3%;
   left: 38%;
-
 }

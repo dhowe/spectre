@@ -50,16 +50,9 @@ UserSession.ensure = async (user, props) => {
     if (!sid) {
       console.warn('[STUB] No user._id, creating new user');
       UserSession.fillMissingProperties(user,
-          ['login', 'name', 'gender',  'virtue', 'adIssue','traits']);
+          ['login', 'name', 'gender',  'virtue', 'adIssue', 'traits']);
       await UserSession.create(user);
       console.warn('[STUB] Setting user._id: ' + user._id);
-      if (props.includes('target') && !user.similars.length) { // need similars
-        user = await UserSession.similars(user);
-        console.warn('[STUB] Inserted(similars):', user.toString());
-      }
-      else { // no similars needed
-        console.warn('[STUB] Inserted:', user.toString());
-      }
     }
     else {
       user._id = JSON.parse(sid);
@@ -69,6 +62,12 @@ UserSession.ensure = async (user, props) => {
   }
   // should have user with id here, now check properties
   if (!user || !user._id) throw Error('INVALID STATE');
+
+  if (props.includes('target') && !user.similars.length) {
+    user = await UserSession.similars(user);
+    console.warn('[STUB] Fetched similars:', user.toString());
+  }
+
   let modified = UserSession.fillMissingProperties(user, props);
   if (modified) await UserSession.update(user);
 
@@ -107,12 +106,12 @@ UserSession.fillMissingProperties = function(user, props) {
   const onUpdateProperty = (p) => {
     modified = true;
     missing = arrayRemove(missing, p);
-    if (typeof user[p] === 'undefined') {
-      throw Error('Could not stub user.' + p, user);
-    }
+    if (typeof user[p] === 'undefined') throw Error
+      ('Could not stub user.' + p, user);
     let val = user[p];
     if (Array.isArray(val)) val = '[' + val.length + ']';
     if (p === 'target') val = val.name + '/#' + val._id;
+    if (typeof val === 'object') val = JSON.stringify(val).substring(0,60);
     console.warn('[STUB] Setting user.' + p + ': ' + val);
   };
 

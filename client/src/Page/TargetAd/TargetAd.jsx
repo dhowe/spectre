@@ -28,6 +28,7 @@ class TargetAd extends React.Component {
   async componentDidMount() {
     const user = await UserSession.ensure(this.context, ['_id', 'target']);
     this.setState({ targetName: user.target.name });
+    console.log(user);
   }
 
   render() {
@@ -41,8 +42,7 @@ class TargetAd extends React.Component {
           <br />
           <Typography component="h6" variant="h6">
             Share your targeted ad with <strong>{targetName}</strong>?
-        </Typography>
-
+          </Typography>
           <Grid container justify="center">
             <Grid item>
               <Link to="/success-ad">
@@ -50,7 +50,7 @@ class TargetAd extends React.Component {
               </Link>
             </Grid>
             <Grid item>
-              <Link to="/we-are-sorry">
+              <Link to="/success-ad"> {/* see issue #262 */}
                 <IconButton icon="next" text="No" />
               </Link>
             </Grid>

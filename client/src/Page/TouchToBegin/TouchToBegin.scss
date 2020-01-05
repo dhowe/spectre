@@ -1,13 +1,48 @@
 @import '../../colors.scss';
-
-.touchToBegin {
+@media screen and (orientation:landscape) {
+  .touchToBegin {
+    margin: 0;
+    height: 100%;
+    overflow: hidden;
+    height: 100vh;
     background-color: $blue;
+    width: 100%;
+  }
+
+  .touchToBegin-beginButton {
+    text-decoration: none;
+    position: absolute;
+    top: 80px;
+    left: 30%;
+    text-align: center;
+
+  }
+  .MuiTypography-body1{
+    font-size: 0.5rem;
+    color: #ffffff;
+  }
+
+
+  .TouchToBegin-clickToContinue-2 {
+padding-top: 270px;
+padding-left: 245px;
+  }
+  .TouchToBegin-clickToContinue-2 p{
+font-size: 1.8em;
+  }
+}
+@media screen and (orientation:portrait) {
+  .touchToBegin {
+    background-color: $blue;
+
     .touchToBegin-beginButton {
-        text-decoration: none;
-        margin-top: 300px;
-        p {
-            font-size: 2rem;
-            color: #ffffff;
-        }
+      text-decoration: none;
+      margin-top: 300px;
+
+      p {
+        font-size: 2rem;
+        color: #ffffff;
+      }
     }
+  }
 }

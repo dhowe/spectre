@@ -1,11 +1,41 @@
-.SpectreHeader {
-    text-align: left;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    padding: 70px 50px;
+
+@media screen and (orientation:landscape){
+
+    .SpectreHeader {
+        text-align: center;
+        position: fixed;
+        top: 0px;
+        width: 100%;
+        margin: 0 0;
+    }
+
+    .SpectreHeader img {
+        width: 20%;
+    }
+
+    .SpectreHeader-white {
+        background-color: #ffffff;
+    }
 }
 
-.SpectreHeader-white {
-    background-color: #ffffff;
+
+
+@media screen and (orientation:portrait){
+
+  .SpectreHeader {
+      text-align: left;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 70px 50px;
+  }
+
+  .SpectreHeader img {
+      width: 30%;
+
+  }
+
+  .SpectreHeader-white {
+      background-color: #ffffff;
+  }
 }

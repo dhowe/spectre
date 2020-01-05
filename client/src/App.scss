@@ -78,17 +78,37 @@ a {
   }
 }
 
-.content {
-  padding: 350px 100px;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  color: $grey;
-  h1, h2, h3, h4, h5, h6 {
+@media screen and (orientation:landscape){
+
+  .content {
+    padding-top: 150px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     color: $grey;
+    h1, h2, h3, h4, h5, h6 {
+      color: $grey;
+    }
   }
 }
+
+@media screen and (orientation:portrait){
+
+  .content {
+    padding: 350px 100px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: $grey;
+    h1, h2, h3, h4, h5, h6 {
+      color: $grey;
+    }
+  }
+}
+
+
 
 a.disabled {
   pointer-events: none;

@@ -86,7 +86,6 @@ class DarkAd extends React.Component {
   async componentDidMount() {
     const user = await UserSession.ensure(this.context,
       ['_id', 'adIssue', 'target', 'targetImages', 'targetSlogans']);
-    //console.log('CDM',user.adIssue, user.targetImages, user.targetSlogans);
     this.setState({
       issue: user.adIssue,
       images: user.targetImages,
@@ -94,50 +93,6 @@ class DarkAd extends React.Component {
     });
   }
 
-  // {this.celebs
-  //   .map((name, i) => (
-  //     <AvatarComponent
-  //       active={name === celebrity}
-  //       handleClick={() => this.play(name)}
-  //       key={AvatarComponent.generateKey(i)}
-  //       target={{ name, image: `/imgs/${name}.png` }}
-  //     />
-  //   ))}
-
-
-  // <img className={classes.image} src={images[0]} alt="leave"
-  //   onClick={() => { this.setState({ image: images[0], defaultImageSelected: false }); }}></img>
-  // <img className={classes.image} src={images[1]} alt="leave"
-  //   onClick={() => { this.setState({ image: images[1], defaultImageSelected: false }); }}></img>
-  // <img className={classes.image} src={images[2]} alt="leave"
-  //   onClick={() => { this.setState({ image: images[2], defaultImageSelected: false }); }}></img>
-  // <img className={classes.image} src={images[3]} alt="leave"
-  //   onClick={() => { this.setState({ image: images[3], defaultImageSelected: false }); }}></img>
-
-  // <div>
-  //   <Button className={classes.button} variant="contained" color="primary"
-  //     onClick={() => { this.state.defaultImageSelected && this.setState({ image: redimg });
-  //       this.setState({ text: slogans[0], defaultImageSelected: false }) }}>
-  //     {slogans[0].split(' ').slice(0, 2).join(' ') + '...'}
-  //   </Button>
-  //   <Button className={classes.button} variant="contained" color="primary"
-  //     onClick={() => { this.state.defaultImageSelected && this.setState({ image: redimg });
-  //       this.setState({ text: slogans[1], defaultImageSelected: false }) }}>
-  //     {slogans[1].split(' ').slice(0, 2).join(' ') + '...'}
-  //   </Button>
-  //   <div>
-  //     <Button className={classes.button} variant="contained" color="primary"
-  //       onClick={() => { this.state.defaultImageSelected && this.setState({ image: redimg });
-  //         this.setState({ text: slogans[2], defaultImageSelected: false }) }}>
-  //       {slogans[2].split(' ').slice(0, 2).join(' ') + '...'}
-  //     </Button>
-  //     <Button className={classes.button} variant="contained" color="primary"
-  //       onClick={() => { this.state.defaultImageSelected && this.setState({ image: redimg });
-  //         this.setState({ text: slogans[3], defaultImageSelected: false }) }}>
-  //       {slogans[3].split(' ').slice(0, 2).join(' ') + '...'}
-  //     </Button>
-  //   </div>
-  // </div>
   render() {
     const { classes } = this.props;
     const { issue, images, slogans } = this.state;
@@ -158,14 +113,14 @@ class DarkAd extends React.Component {
           <div>
             {images.map((image, i) => (
               <img className={classes.image} src={image} alt="leave" key={i}
-                onClick={() => { this.setState({ image: image, defaultImageSelected: false })}}></img>
+                onClick={() => { this.setState({ image: image, defaultImageSelected: false }) }}></img>
             ))}
           </div>
           <div>
             {slogans.map((slogan, i) => (
               <Button className={classes.button} variant="contained" color="primary" key={i}
                 onClick={() => {
-                  this.state.defaultImageSelected && this.setState({ image: redimg });
+                  if (this.state.defaultImageSelected) this.setState({ image: redimg });
                   this.setState({ text: slogan, defaultImageSelected: false })
                 }}>
                 {slogan.split(' ').slice(0, 2).join(' ') + '...'}
@@ -173,7 +128,8 @@ class DarkAd extends React.Component {
             ))}
           </div>
 
-          <Link to="/target-ad">
+          <Link to="/target-ad" onClick={() => this.context.targetAd =
+            { image: this.state.image, text: this.state.text }}>
             <IconButton icon="next" text="Next" />
           </Link>
         </div>

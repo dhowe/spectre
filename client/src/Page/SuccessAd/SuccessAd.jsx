@@ -29,9 +29,9 @@ class SuccessAd extends React.Component {
   }
 
   async componentDidMount() {
-    const timeout = setTimeout(this.next, 6500);
+    const timeout = setTimeout(this.nextPage, 6000);
     const user = await UserSession.ensure(this.context,
-      ['_id', 'adIssue', 'target' ]);
+      ['_id', 'adIssue', 'traits', 'target' ]);
     this.setState({
       timeout: timeout,
       adIssue: user.adIssue,
@@ -43,6 +43,10 @@ class SuccessAd extends React.Component {
     clearTimeout(this.state.timeout);
   }
 
+  nextPage = () => {
+    this.props.history.push('/influence-a-nation');
+  }
+
   render() {
     const { classes } = this.props;
     const { adIssue, targetName } = this.state;
@@ -52,20 +56,11 @@ class SuccessAd extends React.Component {
         <div className={`${classes.content} content`}>
           <Fade in timeout={1000}>
             <div>
-              <p className="copy bold">
-                Your targeted ad was successful!
-              </p>
-
-              <p className="icon">
-                <Trophy />
-              </p>
-
+              <p className="copy bold">Your targeted ad was successful!</p>
+              <p className="icon"><Trophy /></p>
               <p className="copy" component="h6" variant="h6">
                 <strong>{targetName}</strong> is now more likely to vote <strong>{adIssue}</strong> in the referendum.
               </p>
-              {/* <Link to="/influence-a-nation">
-                <IconButton icon="next" text="Next" />
-              </Link> */}
             </div>
           </Fade>
         </div>
