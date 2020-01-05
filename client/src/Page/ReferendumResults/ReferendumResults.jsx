@@ -6,7 +6,6 @@ import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import Video from '../../Components/Video/Video';
 
-
 const styles = {
   root: {
     flexGrow: 1,
@@ -30,20 +29,33 @@ const styles = {
 class ReferendumResults extends React.Component {
   constructor(props) {
     super(props, '/win');
+    this.state = { adIssue: '' };
   }
+
+  async componentDidMount() {
+    const user = await UserSession.ensure(this.context, ['_id', 'adIssue']);
+    this.setState({ adIssue: user.adIssue });
+  }
+  
+  componentWillUnmount() {
+    clearTimeout(this.timeout);
+  }
+
   render() {
-    let issue = this.context.adIssue;
     const { classes } = this.props;
+    const { adIssue } = this.state;
+
+    let videoPlaceholder = adIssue.length ? (
+      <Video className={classes.video}
+        movie={'/video/ReferendumResults_'+adIssue+'.mp4'}
+        onComplete={() => this.timeout = setTimeout(() => this.props.history.push('/win'), 1000)}
+      />) : <br />;
+
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" />
         <div className={classes.content + ' content'}>
-          <Video
-            className={classes.video}
-            autoPlay
-            movie={'/video/ReferendumResults_'+issue+'.mp4'}
-            onComplete={() => setTimeout(this.next, 1000)}
-          />
+          {videoPlaceholder}
         </div>
         <FooterLogo />
       </div>
@@ -53,7 +65,7 @@ class ReferendumResults extends React.Component {
 
 ReferendumResults.propTypes = {
   classes: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired
 };
 ReferendumResults.contextType = UserSession;
 

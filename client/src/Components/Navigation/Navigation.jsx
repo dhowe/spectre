@@ -5,9 +5,7 @@ import { withRouter } from 'react-router-dom';
 const routes = [
   '/', '/login', '/pledge', '/searching', '/data-is', '/personalised',
   '/game', '/thank-you', '/steps', '/follower', '/selected',
-  '/insight-gender','/insight-skin', '/insight-financial',
-  //'insight',
-  '/insight-thank-you',
+  '/insight-gender','/insight-skin', '/insight-financial', '/insight-thank-you',
   '/insight-sexuality', '/insight-political', '/insight-complete',
   '/your-power', '/pick-your-side', '/campaign', '/dark-ad', '/target-ad',
   '/success-ad', '/influence-a-nation', '/consumer-data', '/political-data',
@@ -49,7 +47,8 @@ class Navigation extends React.Component {
   }
 
   render() {
-    let page = window.location.pathname.replace(/^\//, '');
+    let page = window.location.pathname;
+    if (page.length > 1) page = page.replace(/^\//, '');
     this.context.lastPageVisit = {
       page: page,
       time: Date.now()

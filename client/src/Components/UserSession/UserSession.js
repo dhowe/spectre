@@ -3,6 +3,13 @@ import User from '../User/User';
 import DotEnv from 'dotenv';
 import FormData from 'form-data';
 
+const AdIssues = ['remain', 'leave'];
+const Genders = ['male', 'female', 'other'];
+const Virtues = ['wealth', 'influence', 'truth', 'power'];
+const FemaleCelebs = ['Kardashian', 'Abramovic'];
+const MaleCelebs = ['Freeman', 'Duchamp', 'Mercury', 'Trump', 'Zuckerberg'];
+const Celebrities = FemaleCelebs.concat(MaleCelebs);
+
 // We store the current User in React context for easy access
 let UserSession = React.createContext({});
 
@@ -127,13 +134,14 @@ UserSession.fillMissingProperties = function(user, props) {
   let modified = false; // check known props, 1-by-1
 
   let propStubber = {
-    adIssue: () => rand(['remain', 'leave']),
-    gender: () => rand(['male', 'female', 'other']),
-    virtue: () => rand(['wealth', 'influence', 'truth', 'power']),
+    gender: () => rand(Genders),
+    virtue: () => rand(Virtues),
+    adIssue: () => rand(AdIssues),
     traits: () => User._randomTraits(),
     name: () => (rand(UserSession.Cons) +
       rand(UserSession.Vows) + rand(UserSession.Cons)).ucf(),
     login: () => user.name + (+new Date()) + '@test.com',
+    celebrity: () => rand(Celebrities),
     target: () => {
       if (!user.similars.length) throw Error('no similars');
       return rand(user.similars);
@@ -143,6 +151,7 @@ UserSession.fillMissingProperties = function(user, props) {
   Object.keys(propStubber).forEach(p => {
     if (missing.includes(p)) {
       user[p] = propStubber[p]();
+      if (p === 'target') user.targetId = user.target._id;
       onUpdateProperty(p);
     }
   });
@@ -264,10 +273,12 @@ UserSession.lookup = async (user) => {
 
 UserSession.update = async (user) => {
   if (!user || !user._id) throw Error('Invalid arg', user);
+
   const { route, auth, cid, mode } = doConfig();
   const endpoint = route + user._id;
 
   if (user.clientId < 0) user.clientId = cid;
+
   try {
     console.log('[PUT] ' + mode + '.update: ' + endpoint);
     let response = await fetch(endpoint, {
@@ -288,7 +299,14 @@ UserSession.update = async (user) => {
 
 function toNetworkString(user) {
   let safe = {};
-  Object.keys(User.schema()).forEach(p => safe[p] = user[p]);
+  Object.keys(User.schema()).forEach(p => {
+    let val = user[p];
+    if (typeof val === 'undefined') return;
+    if (Array.isArray(val) && !val.length) return;
+    // TODO: deal with objects here
+    safe[p] = user[p];
+  });
+
   return JSON.stringify(safe);
 }
 
@@ -347,6 +365,10 @@ UserSession.postImage = async (user, image) => { // TODO: test
   }
 }
 
+UserSession.randomCelebrities = () => {
+  return shuffle(shuffle(MaleCelebs).splice(0, 4).concat(FemaleCelebs));
+}
+
 function assignJsonResp(user, json) {
   if (json.status !== 200) throw Error(JSON.stringify(json));
   Object.assign(user, json.data);
@@ -391,6 +413,19 @@ function irand() {
   if (!arguments.length) throw Error('requires args');
   return (arguments.length === 1) ? Math.floor(randnum * arguments[0]) :
     Math.floor(randnum * (arguments[1] - arguments[0]) + arguments[0]);
+}
+
+function shuffle(arr) {
+  let newArray = arr.slice(),
+    len = newArray.length,
+    i = len;
+  while (i--) {
+    let p = parseInt(Math.random() * len),
+      t = newArray[i];
+    newArray[i] = newArray[p];
+    newArray[p] = t;
+  }
+  return newArray;
 }
 
 export default UserSession;

@@ -33,15 +33,17 @@ class InfluenceACelebrity extends React.Component {
     this.stop = this.stop.bind(this);
     this.save = this.save.bind(this);
     this.state = {
+      virtue: '',
       video: null,
-      idleCheckerDone: false,
+      idleCheckerDone: false
     };
+    // a random set, always with two females
+    this.celebs = UserSession.randomCelebrities();
+  }
 
-    // a random set, always with two femals
-    let fcelebs = ['Kardashian', 'Abramovic'];
-    let mcelebs = ['Freeman', 'Duchamp', 'Mercury', 'Trump', 'Zuckerberg'];
-    mcelebs = this.shuffle(mcelebs).splice(0, 4);
-    this.celebs = this.shuffle(mcelebs.concat(fcelebs));
+  async componentDidMount() {
+    const user = await UserSession.ensure(this.context, ['_id', 'virtue']);
+    this.setState({ virtue: user.virtue });
   }
 
   save() {
@@ -50,38 +52,25 @@ class InfluenceACelebrity extends React.Component {
     this.next();
   }
 
-  shuffle(arr) {
-    let newArray = arr.slice(),
-      len = newArray.length,
-      i = len;
-    while (i--) {
-      let p = parseInt(Math.random() * len),
-        t = newArray[i];
-      newArray[i] = newArray[p];
-      newArray[p] = t;
-    }
-    return newArray;
-  }
-
   stop() {
     this.setState({ video: null });
     this.setState({ idleCheckerDone: false });
   }
 
-  play(name) {
-    this.context.celebrity = name;
+  play(name, virtue) {
+    const user = this.context;
+    user.celebrity = name;
     this.setState({
       celebrity: name,
-      video: `/video/${this.context.virtue || 'power'}_${name}.mp4`,
+      video: `/video/${virtue}_${name}.mp4`,
     });
     this.setState({ idleCheckerDone: true });
+    UserSession.update(user);
   }
 
   render() {
     const { classes, celebrity } = this.props;
-    const { video } = this.state;
-    const user = this.context;
-    user.virtue = user.virtue || 'power';
+    const { video, virtue } = this.state;
 
     return (
       <div className={classes.root}>
@@ -98,7 +87,7 @@ class InfluenceACelebrity extends React.Component {
           </Fade>
           <Fade in style={{ transitionDelay: '200ms' }}>
             <Typography component="h6" variant="h6">
-              Listen to their confessions on&nbsp;{user.virtue}:
+              Listen to their confessions on&nbsp;{virtue}:
             </Typography>
           </Fade>
           {video && <Video autoPlay onComplete={this.stop} movie={video} />}
@@ -107,13 +96,12 @@ class InfluenceACelebrity extends React.Component {
               .map((name, i) => (
                 <AvatarComponent
                   active={name === celebrity}
-                  handleClick={() => this.play(name)}
                   key={AvatarComponent.generateKey(i)}
+                  handleClick={() => this.play(name, virtue)}
                   target={{ name, image: `/imgs/${name}.png` }}
                 />
               ))}
           </AvatarCircle>
-
           <IconButton onClick={this.save} icon="next" text="Next" />
         </div>
         <FooterLogo />

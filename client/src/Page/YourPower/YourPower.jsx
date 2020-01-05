@@ -28,12 +28,8 @@ class YourPower extends React.Component {
 
   async componentDidMount() {
     const user = await UserSession.ensure(this.context,
-      ['_id', 'name', 'login', 'gender', 'virtue' ]);
+      ['_id', 'name', 'login', 'gender', 'virtue']);
     this.setState({ name: user.name, virtue: user.virtue });
-  }
-
-  nextPage = () => {
-    this.props.history.push('/pick-your-side');
   }
 
   render() {
@@ -52,12 +48,12 @@ class YourPower extends React.Component {
             <Typography component="h6" variant="h6">Let's put it into practice.</Typography>
           </Fade>
           <Countdown
-            onComplete={this.nextPage}
+            onComplete={() => this.props.history.push('/pick-your-side')}
             date={Date.now() + 5000}
             renderer={() => null}
           />
         </div>
-        <FooterLogo />
+        <FooterLogo/>
       </div>
     );
   }

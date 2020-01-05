@@ -21,30 +21,28 @@ const styles = {
 class SuccessAd extends React.Component {
   constructor(props) {
     super(props, '/influence-a-nation');
+    this.timeout = -1;
     this.state = {
-      timeout: null,
       adIssue: '',
       targetName: ''
     };
   }
 
   async componentDidMount() {
-    const timeout = setTimeout(this.nextPage, 6000);
     const user = await UserSession.ensure(this.context,
-      ['_id', 'adIssue', 'traits', 'target' ]);
+      ['_id', 'adIssue', 'traits', 'target']);
+
+    this.timeout = setTimeout(() =>
+      this.props.history.push('/influence-a-nation'), 6000);
+
     this.setState({
-      timeout: timeout,
       adIssue: user.adIssue,
       targetName: user.target.name
     });
   }
 
   componentWillUnmount() {
-    clearTimeout(this.state.timeout);
-  }
-
-  nextPage = () => {
-    this.props.history.push('/influence-a-nation');
+    clearTimeout(this.timeout);
   }
 
   render() {
@@ -75,4 +73,5 @@ SuccessAd.propTypes = {
   history: PropTypes.object.isRequired,
 };
 SuccessAd.contextType = UserSession;
+
 export default withStyles(styles)(SuccessAd);

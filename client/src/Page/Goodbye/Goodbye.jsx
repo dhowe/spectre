@@ -21,20 +21,34 @@ const styles = {
 class Goodbye extends React.Component {
   constructor(props) {
     super(props, '/');
+    this.state = { celebrity: '' };
+  }
+
+  async componentDidMount() {
+    const user = await UserSession.ensure(this.context, ['_id', 'celebrity']);
+    this.setState({ celebrity: user.celebrity });
   }
 
   componentWillUnmount() {
-    console.log('Clearing user session');
     UserSession.clear();
   }
 
   render() {
-    const { movie } = { movie: `video/goodbye_${this.context.celebrity || 'Freeman'}.mp4` };
     const { classes } = this.props;
+    const { celebrity } = this.state;
+
+    let videoPlaceholder = celebrity.length ? (
+      <Video className={classes.video}
+        movie={`/video/goodbye_${celebrity}.mp4`} key="34345871"
+        onComplete={() => this.props.history.push('/')}
+      />) : <br />;
+
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" />
-        <Video ref={this.video} movie={movie} autoPlay onComplete={this.next} />
+        <div className={classes.content + ' content'}>
+          {videoPlaceholder}
+        </div>
         <FooterLogo />
       </div>
     );

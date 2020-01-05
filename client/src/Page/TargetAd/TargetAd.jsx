@@ -28,7 +28,6 @@ class TargetAd extends React.Component {
   async componentDidMount() {
     const user = await UserSession.ensure(this.context, ['_id', 'target']);
     this.setState({ targetName: user.target.name });
-    console.log(user);
   }
 
   render() {

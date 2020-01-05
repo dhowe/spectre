@@ -398,7 +398,6 @@ function compile (format) {
  * @param {number} interval
  * @public
  */
-
 function createBufferStream (stream, interval) {
   var buf = []
   var timer = null
@@ -412,10 +411,7 @@ function createBufferStream (stream, interval) {
 
   // write function
   function write (str) {
-    if (timer === null) {
-      timer = setTimeout(flush, interval)
-    }
-
+    if (timer === null) timer = setTimeout(flush, interval)
     buf.push(str)
   }
 

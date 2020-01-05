@@ -1,15 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Fade from '@material-ui/core/Fade';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-//import Fade from '@material-ui/core/es/Fade/Fade';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import Video from '../../Components/Video/Video';
 import Modal from '../../Components/Modal/Modal';
-import User from '../../Components/User/User';
-
 
 import colours from '../../colors.scss';
 
@@ -26,55 +24,43 @@ const styles = {
 class OCEANReveal extends React.Component {
   constructor(props) {
     super(props, '/take-back-control');
-    this.durationMS = 500;
-    this.showMS = 2000;
-    this.showVideo = this.showVideo.bind(this);
-    this.state = { modalOpen: false };
-    this.modalContent = '';
+    this.timeout = -1;
     this.modalTitle = '';
+    this.modalContent = '';
+    this.video = React.createRef();
+    this.state = { modalOpen: false, celebrity: '', sentences: [], readyForVideo: false };
+  }
 
+  async componentDidMount() {
+    const user = await UserSession.ensure(this.context,
+      ['_id', 'name', 'login', 'gender', 'traits', 'celebrity']);
 
-    let user = this.context;
-    if (typeof user === 'undefined') {
-      let idx = Math.floor(Math.random() * UserSession.defaultUsers.length);
-      user = new User(UserSession.defaultUsers[idx]);
-    }
-    if (user && !user.hasOceanTraits()) {
-      user._randomizeTraits();
-    }
-    this.sentences = [
+    let sentences = [
       'A little data and a little tech goes a long way.',
       'We haven\'t known you for very long, but already we know…',
-    ];
-    let summary = user.generateSummary();
-    console.log(summary);
-    this.sentences = this.sentences.concat(summary);
+    ].concat(user.generateSummary());
 
-    for (let i = 0; i < this.sentences.length; i++) {
-      const fadeKey = `fade-${i}`;
-      this.state = {
-        ...this.state,
-        [fadeKey]: true,
-      };
-    }
-    setTimeout(this.showVideo, ((this.durationMS * 2) + this.showMS) * this.sentences.length);
+    this.setState({ sentences: sentences, celebrity: user.celebrity });
+    this.timeout = setTimeout(() => this.setState({ readyForVideo: true }), sentences.length * 1000);
   }
 
-  closeModal() {
+  componentWillUnmount() {
+    clearTimeout(this.timeout);
+  }
+
+  closeModal = () => {
     this.setState({ modalOpen: false });
-  }
-
-  showVideo() {
-    this.video.play();
   }
 
   render() {
     const { classes } = this.props;
+    const { celebrity, sentences, modalOpen, readyForVideo } = this.state;
 
-    const user = this.context || {};
-    user.name = user.name || 'Pat';
-    user.gender = user.gender || 'female';
-    user.celebrity = user.celebrity || 'Trump';
+    let videoPlaceholder = readyForVideo ? (
+      <Video ref={e => { this.video = e }} className={classes.video}
+        movie={`/video/wrapup_${celebrity}.mp4`} key="349587"
+        onComplete={() => this.props.history.push('/take-back-control')}
+      />) : <br />;
 
     return (
       <div className={classes.root}>
@@ -85,34 +71,27 @@ class OCEANReveal extends React.Component {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          justifyContent: 'center' }}
-        >
-          {this.sentences.map((sent, i) => {
-            const fadeKey = `fade-${i}`;
+          justifyContent: 'center'
+        }}>
+          {sentences.map((sent, i) => {
             return (
-              <Typography
-                variant="h6"
-                component="h6"
-                key={fadeKey}
-                style={{ color: colours.grey, width: '80%', margin: '50px 0', marginTop: '50px' }}
-              >
-                {sent}
-              </Typography>
+              <Fade key={i} in={true}
+                style={{ transitionDelay: (i * 1000) + 'ms' }}>
+                <Typography variant="h6" component="h6" key={`fade-${i}`}
+                  style={{ color: colours.grey, width: '80%', margin: '50px 0', marginTop: '50px' }}>
+                  {sent}
+                </Typography>
+              </Fade>
             );
           })}
         </div>
         <Modal
-          isOpen={this.state.modalOpen}
+          isOpen={modalOpen}
           title={this.modalTitle}
           content={this.modalContent}
-          onClose={() => this.closeModal()}
+          onClose={this.closeModal}
         />
-        <Video
-          ref={(el) => { this.video = el; }}
-          movie={`/video/wrapup_${user.celebrity}.mp4`}
-          autoPlay={false}
-          onComplete={this.next}
-        />
+        {videoPlaceholder}
         <br />
         <FooterLogo />
       </div>
