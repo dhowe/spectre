@@ -6,23 +6,12 @@ import FormData from 'form-data';
 // We store the current User in React context for easy access
 let UserSession = React.createContext({});
 
-UserSession.defaultUsers = [
-  { "_id": "111111111111111111111111", "name": "Remy", "traits": { "openness": 0.5818180970605207, "conscientiousness": 0.07645862267650672, "extraversion": 0.2607193320319028, "agreeableness": 0.012588228025398163, "neuroticism": 0.16712815071948772 } },
-  { "_id": "222222222222222222222222", "name": "Bailey", "traits": { "openness": 0.10280703242247147, "conscientiousness": 0.6791763609042916, "extraversion": 0.6985730973994828, "agreeableness": 0.47335712795485274, "neuroticism": 0.32620076142720156 } },
-  { "_id": "333333333333333333333333", "name": "Devin", "traits": { "openness": 0.26472484195144963, "conscientiousness": 0.2892253599406023, "extraversion": 0.32397862254097665, "agreeableness": 0.8301260855442676, "neuroticism": 0.6126764672471925 } },
-  { "_id": "444444444444444444444444", "name": "Tyler", "traits": { "openness": 0.261833848989681, "conscientiousness": 0.19995491789138597, "extraversion": 0.6466838313828751, "agreeableness": 0.15648014141226163, "neuroticism": 0.37933032099722275 } },
-  { "_id": "555555555555555555555555", "name": "Fran", "traits": { "openness": 0.42866686430348433, "conscientiousness": 0.4582048165214141, "extraversion": 0.37864167613148236, "agreeableness": 0.40931183419981254, "neuroticism": 0.46558790819496987 } },
-  { "_id": "666666666666666666666666", "name": "Pat", "traits": { "openness": 0.7254487613475398, "conscientiousness": 0.3476980731832755, "extraversion": 0.9655087407390435, "agreeableness": 0.17024963297245255, "neuroticism": 0.6609212676018463 } },
-  { "_id": "777777777777777777777777", "name": "Sam", "traits": { "openness": 0.9725230338248465, "conscientiousness": 0.27205052534770147, "extraversion": 0.07632586533756269, "agreeableness": 0.15602596134535318, "neuroticism": 0.4848698832786795 } },
-  { "_id": "888888888888888888888888", "name": "Reed", "traits": { "openness": 0.2773518607894794, "conscientiousness": 0.8456532878428138, "extraversion": 0.4515471612661024, "agreeableness": 0.6249880747419794, "neuroticism": 0.6186244869965476 } },
-  { "_id": "999999999999999999999999", "name": "Terry", "traits": { "openness": 0.30426635874427355, "conscientiousness": 0.5341590821850326, "extraversion": 0.509056193557774, "agreeableness": 0.8109949037515642, "neuroticism": 0.4252958718086144 } }
-];
-UserSession.browserStorage = true;
+UserSession.useBrowserStorage = true;
 UserSession.storageKey = 'spectre-user';
 UserSession.profileDir = User.profileDir;
 UserSession.imageDir = User.imageDir;
-UserSession.Cons = "bcdfghjklmnprstvxz";
-UserSession.Vows = "aeiou";
+UserSession.Cons = "bcdfghjklmnprstvxz".split('');
+UserSession.Vows = "aeiou".split('');
 
 // load default set of users in case no db
 fetch('/default-users.json').then(res => res.json())
@@ -60,15 +49,16 @@ UserSession.ensure = async (user, props) => {
     const sid = sessionStorage.getItem(UserSession.storageKey);
     if (!sid) {
       console.warn('[STUB] No user._id, creating new user');
-      UserSession.fillMissingProperties(user, ['login', 'name', 'gender']);
+      UserSession.fillMissingProperties(user,
+          ['login', 'name', 'gender',  'virtue', 'adIssue','traits']);
       await UserSession.create(user);
       console.warn('[STUB] Setting user._id: ' + user._id);
       if (props.includes('target') && !user.similars.length) { // need similars
         user = await UserSession.similars(user);
-        console.log('[STUB] Inserted new user/similars:', user.toString());
+        console.warn('[STUB] Inserted(similars):', user.toString());
       }
       else { // no similars needed
-        console.log('[STUB] Inserted new user:', user.toString());
+        console.warn('[STUB] Inserted:', user.toString());
       }
     }
     else {
@@ -85,62 +75,6 @@ UserSession.ensure = async (user, props) => {
   return user;
 }
 
-UserSession.ensureOLD = function(user, props, onSuccess, onError) {
-
-  onSuccess = onSuccess || (() => { });
-
-  onError = onError || (e => {
-    console.error('[ERROR] UserSession.ensure: ', e);
-    if (process.env.NODE_ENV !== 'production') throw e;
-  });
-
-  const saveUser = (dirty, success, fail) => {
-    success = success || onSuccess;
-    fail = fail || onError;
-    if (dirty) {
-      UserSession.update(user, onSuccess, onError);
-    }
-    else {
-      onSuccess(user);
-    }
-  }
-
-  // handle missing user id
-  if (props.includes('_id') && typeof user._id === 'undefined') {
-
-    props = arrayRemove(props, '_id');
-    const sid = sessionStorage.getItem(UserSession.storageKey);
-
-    // redirect to /login here ? or stub a new user from scratch?
-    if (!sid) {
-      console.log('[STUB] No user._id, creating new user');
-      UserSession.fillMissingProperties(user, ['login', 'name', 'gender']);
-      UserSession.create(user, (u) => {
-        if (props.includes('target') && !u.similars.length) {
-          UserSession.similars(user, user => {
-            console.log('[STUB] Inserted new user/similars:', user.toString());
-            UserSession.ensure(user, props, onSuccess, onError);
-          }, onError);
-          return;
-        }
-        console.log('[STUB] Inserted new user:', user.toString());
-        UserSession.ensure(user, props, onSuccess, onError);
-      }, e => console.error(e));
-      return;
-    }
-
-    user._id = JSON.parse(sid);
-    console.warn('[SESS] Reloaded user._id: ' + user._id + ' doing lookup');
-    UserSession.lookup(user, json => {
-      Object.assign(user, json);
-      saveUser(UserSession.fillMissingProperties(user, props));
-    }, onError);
-  }
-  else {
-    saveUser(UserSession.fillMissingProperties(user, props));
-  }
-}
-
 /*
  * Repairs a user (if needed) and returns it
  */
@@ -148,6 +82,7 @@ UserSession.validate = function(user, props) {
   UserSession.fillMissingProperties(user, props);
   return user;
 }
+
 /*
  * Attempts to stub any undefined properties specified in props
  * Returns true if the user is modified, else false
@@ -155,8 +90,8 @@ UserSession.validate = function(user, props) {
 UserSession.fillMissingProperties = function(user, props) {
 
   const checkTargetAdData = (missing) => {
-    //if (!user.target._id || !user.adIssue)
-    if (user.adIssue && user.adIssue.length && user.target && user.target._id.length) {
+    if (user.adIssue && user.adIssue.length &&
+      user.target && user.target._id.length) {
       if (!(user.targetImages && user.targetImages.length &&
         user.targetSlogans && user.targetSlogans.length &&
         user.targetInfluences && user.targetInfluences.length)) {
@@ -177,9 +112,7 @@ UserSession.fillMissingProperties = function(user, props) {
     }
     let val = user[p];
     if (Array.isArray(val)) val = '[' + val.length + ']';
-    if (typeof val !== 'string') {
-      val = JSON.stringify(val).substring(0, 75) + '...';
-    }
+    if (p === 'target') val = val.name + '/#' + val._id;
     console.warn('[STUB] Setting user.' + p + ': ' + val);
   };
 
@@ -189,56 +122,73 @@ UserSession.fillMissingProperties = function(user, props) {
   if (!Array.isArray(props)) props = [props];
   let missing = props.filter(p => typeof user[p] === 'undefined'
     || (Array.isArray(user[p]) && !user[p].length));
+
   if (!missing) return false; // all props are ok
-  let prop, modified = false;
 
-  prop = 'name';
-  if (missing.includes(prop)) {
-    const cons = UserSession.Cons, vows = UserSession.Vows;
-    user[prop] = (cons[Math.floor(Math.random() * cons.length)]
-      + vows[Math.floor(Math.random() * vows.length)]
-      + cons[Math.floor(Math.random() * cons.length)]).ucf();
-    onUpdateProperty(prop);
-  }
+  let modified = false; // check known props, 1-by-1
 
-  prop = 'login';
-  if (missing.includes(prop)) {
-    user[prop] = user.name + (+new Date()) + '@test.com';
-    onUpdateProperty(prop);
-  }
+  let propStubber = {
+    adIssue: () => rand(['remain', 'leave']),
+    gender: () => rand(['male', 'female', 'other']),
+    virtue: () => rand(['wealth', 'influence', 'truth', 'power']),
+    traits: () => User._randomTraits(),
+    name: () => (rand(UserSession.Cons) +
+      rand(UserSession.Vows) + rand(UserSession.Cons)).ucf(),
+    login: () => user.name + (+new Date()) + '@test.com',
+    target: () => {
+      if (!user.similars.length) throw Error('no similars');
+      return rand(user.similars);
+    }
+  };
 
-  prop = 'virtue';
-  if (missing.includes(prop)) {
-    user[prop] = rand(['wealth', 'influence', 'truth', 'power']);
-    onUpdateProperty(prop);
-  }
+  Object.keys(propStubber).forEach(p => {
+    if (missing.includes(p)) {
+      user[p] = propStubber[p]();
+      onUpdateProperty(p);
+    }
+  });
+  //
+  // prop = 'name';
+  // if (missing.includes(prop)) {
+  //   const cons = UserSession.Cons, vows = UserSession.Vows;
+  //   user[prop] = (cons[Math.floor(Math.random() * cons.length)]
+  //     + vows[Math.floor(Math.random() * vows.length)]
+  //     + cons[Math.floor(Math.random() * cons.length)]).ucf();
+  //   onUpdateProperty(prop);
+  // }
 
-  prop = 'gender';
-  if (missing.includes(prop)) {
-    user[prop] = rand(['male', 'female', 'other']);
-    onUpdateProperty(prop);
-  }
+  // prop = 'login';
+  // if (missing.includes(prop)) {
+  //   user[prop] = user.name + (+new Date()) + '@test.com';
+  //   onUpdateProperty(prop);
 
-  prop = 'traits';
-  if (missing.includes(prop)) {
-    user._randomizeTraits();
-    onUpdateProperty(prop);
-  }
+  //
+  // prop = 'gender';
+  // if (missing.includes(prop)) {
+  //   user[prop] = rand(['male', 'female', 'other']);
+  //   onUpdateProperty(prop);
+  // }
 
-  prop = 'adIssue';
-  if (missing.includes(prop)) {
-    user[prop] = rand(['remain', 'leave']);
-    onUpdateProperty(prop);
-  }
-
-  prop = 'target';
-  if (missing.includes(prop)) {
-    if (!user.similars.length) throw Error('no similars');
-    user[prop] = rand(user.similars);
-    if (typeof user.target !== 'object') throw Error
-      ('user.target != object', typeof user.target, user.target);
-    onUpdateProperty(prop);
-  }
+  // prop = 'traits';
+  // if (missing.includes(prop)) {
+  //   user._randomizeTraits();
+  //   onUpdateProperty(prop);
+  // }
+  //
+  // prop = 'adIssue';
+  // if (missing.includes(prop)) {
+  //   user[prop] = rand(['remain', 'leave']);
+  //   onUpdateProperty(prop);
+  // }
+  //
+  // prop = 'target';
+  // if (missing.includes(prop)) {
+  //   if (!user.similars.length) throw Error('no similars');
+  //   user[prop] = rand(user.similars);
+  //   if (typeof user.target !== 'object') throw Error
+  //     ('user.target != object', typeof user.target, user.target);
+  //   onUpdateProperty(prop);
+  // }
 
   missing = checkTargetAdData(missing);
 
@@ -274,10 +224,10 @@ UserSession.create = async (user) => {
         "Content-Type": "application/json",
         "Authorization": 'Basic ' + btoa(auth)
       },
-      body: JSON.stringify(user)
+      body: toNetworkString(user)
     })
     assignJsonResp(user, await response.json());
-    UserSession.browserStorage && sessionStorage.setItem
+    UserSession.useBrowserStorage && sessionStorage.setItem
       (UserSession.storageKey, JSON.stringify(user._id));
     // TODO: remove? stringify
     return user;
@@ -327,7 +277,7 @@ UserSession.update = async (user) => {
         "Content-Type": "application/json",
         "Authorization": 'Basic ' + btoa(auth)
       },
-      body: JSON.stringify(user)
+      body: toNetworkString(user)
     })
     return assignJsonResp(user, await response.json());
   }
@@ -337,8 +287,19 @@ UserSession.update = async (user) => {
   }
 }
 
+function toNetworkString(user) {
+  let safe = {};
+  Object.keys(User.schema()).forEach(p => safe[p] = user[p]);
+  return JSON.stringify(safe);
+}
+
 UserSession.similars = async (user) => {
-  if (!user || !user._id) throw Error('Invalid arg', user);
+  if (!user || !user._id.length) {
+    throw Error('Invalid user\n' + user);
+  }
+  if (!user.traits || typeof user.traits.openness === 'undefined') {
+    throw Error('No traits for user #' + user._id);
+  }
   const { route, auth, cid, mode } = doConfig();
   const endpoint = route + 'similars/' + user._id;
   if (user.clientId < 0) user.clientId = cid;
@@ -417,7 +378,7 @@ function arrayRemove(a, v) {
 }
 
 function rand() {
-  if (arguments.length === 1 && Array.isArray(arguments[0])) {
+  if (arguments.length === 1 && arguments[0].length) {
     return arguments[0][irand(arguments[0].length)];
   }
   var randnum = Math.random();

@@ -3,7 +3,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import UserSession from '../../Components/UserSession/UserSession';
-import User from '../../Components/User/User';
 import PropTypes from 'prop-types';
 
 import './AvatarComponent.scss';
@@ -25,10 +24,11 @@ const styles = {
     color: '#378685',
   },
 };
+const defaultImage = UserSession.profileDir + 'default.jpg';
 
 class AvatarComponent extends React.Component {
   static generateKey(index) {
-    return (7 * index);
+    return (7 * index); // why?
   }
 
   constructor(props) {
@@ -48,7 +48,7 @@ class AvatarComponent extends React.Component {
             src={target.image}
             className={(active || className !== 'active') ? 'avatar-image' : null}
             style={(active ? styles.active : null)}
-            onError={() => { this.src = User.profileDir + 'default.jpg'; }}
+            onError={() => { this.src = defaultImage }}
           />
         </Grid>
         <Typography className="avatar-name" style={className === 'targeted' ?
@@ -58,14 +58,10 @@ class AvatarComponent extends React.Component {
   }
 }
 
-const defaultTarget = {
-  image: User.profileDir + UserSession.defaultUsers[0]._id + '.jpg',
-  name: UserSession.defaultUsers[0].name
-}
 AvatarComponent.defaultProps = {
   active: false,
   className: null,
-  target: defaultTarget,
+  target: { image: defaultImage, name: '' },
   handleClick: () => { },
 };
 AvatarComponent.propTypes = {

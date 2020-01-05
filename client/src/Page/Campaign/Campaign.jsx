@@ -26,25 +26,24 @@ class Campaign extends React.Component {
     super(props, '/dark-ad');
     this.state = {
       targetName: '',
-      influences: [],
+      targetInfluences: [],
       targetPronoun: ''
-
     };
   }
 
   async componentDidMount() {
     const user = await UserSession.ensure(this.context,
-      ['_id', 'name', 'adIssue', 'influences', 'target' ]);
+      ['_id', 'name', 'adIssue', 'target', 'targetInfluences' ]);
     this.setState({
-        influences: user.influences,
         targetName: user.target.name.ucf(),
+        targetInfluences: user.targetInfluences,
         targetPronoun: (user.target.gender === 'male' ? 'he' : 'she')
       });
   }
 
   render() {
     const { classes } = this.props;
-    let { influences, targetPronoun, targetName } = this.state;
+    let { targetInfluences, targetPronoun, targetName } = this.state;
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive progressNumber="one" />
@@ -57,10 +56,10 @@ class Campaign extends React.Component {
             <strong>{targetName}</strong>'s OCEAN profile shows that {targetPronoun} can be influenced by:
           </Typography>
           <Typography component="h6" variant="h6">
-            <strong>Images</strong> that contain {influences[0]}
+            <strong>Images</strong> that contain {targetInfluences[0]}
           </Typography>
           <Typography component="h6" variant="h6" style={{ marginBottom: '100px' }}>
-            <strong>Slogans</strong> that contain {influences[1]}
+            <strong>Slogans</strong> that contain {targetInfluences[1]}
           </Typography>
           <Link to="/dark-ad">
             <IconButton icon="next" text="Next" />

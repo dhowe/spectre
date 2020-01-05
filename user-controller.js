@@ -12,6 +12,7 @@ TODO: every call should return a uniform object:
 }
 */
 const USER_NOT_FOUND = 452;
+const USER_WO_TRAITS = 453;
 const NUM_SIMILARS = 6;
 
 const list = async (req, res) => {
@@ -71,11 +72,12 @@ const create = async (req, res) => {
     if (e || docs.length) return sendError(res, e || "Unique User Violation: " +
       req.body.login + '/' + req.body.loginType);
 
-    user.save(function(err) {
+    user.save(err => {
       if (err) return sendError(res, err);
-      //console.log('User.created #' + user._id + ': ' + user.login + "/" + user.loginType);
+      // TODO: check for ocean-traits and return user with similars
       sendResponse(res, user);
     });
+
   });
 };
 
@@ -134,6 +136,8 @@ const similars = async (req, res) => {
   await UserModel.findById(uid, (err, user) => {
     if (err) return sendError(res, 'Unable to find user #' + uid, err);
     if (!user) return sendError(res, 'No user #' + uid, 0, USER_NOT_FOUND);
+    if (!user.traits || !user.traits.openness) return sendError
+      (res, 'No traits for user #' + uid, 0, USER_WO_TRAITS);
     user.findByOcean((err, sims) => {
       if (err) return sendError(res, 'Unable to findByOcean for #' + req.params.uid, err);
       sendResponse(res, sims);

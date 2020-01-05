@@ -21,12 +21,22 @@ const styles = {
 class SuccessAd extends React.Component {
   constructor(props) {
     super(props, '/influence-a-nation');
-    this.state = { timeout: null };
+    this.state = {
+      timeout: null,
+      adIssue: '',
+      targetName: ''
+    };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     const timeout = setTimeout(this.next, 6500);
-    this.setState({ timeout });
+    const user = await UserSession.ensure(this.context,
+      ['_id', 'adIssue', 'target' ]);
+    this.setState({
+      timeout: timeout,
+      adIssue: user.adIssue,
+      targetName: user.target.name
+    });
   }
 
   componentWillUnmount() {
@@ -35,10 +45,7 @@ class SuccessAd extends React.Component {
 
   render() {
     const { classes } = this.props;
-    this.context.adIssue = this.context.adIssue || 'leave';
-    this.context.target = this.context.target || UserSession.defaultUsers[0];
-    const tname = this.context.target.name;
-    const issue = this.context.adIssue;
+    const { adIssue, targetName } = this.state;
     return (
       <div className={`${classes.root} successAd`}>
         <SpectreHeader colour="white" progressActive progressNumber="two" />
@@ -54,7 +61,7 @@ class SuccessAd extends React.Component {
               </p>
 
               <p className="copy" component="h6" variant="h6">
-                <strong>{tname}</strong> is now more likely to vote {issue} in the referendum.
+                <strong>{targetName}</strong> is now more likely to vote <strong>{adIssue}</strong> in the referendum.
               </p>
               {/* <Link to="/influence-a-nation">
                 <IconButton icon="next" text="Next" />

@@ -30,7 +30,7 @@ export default class User {
     if (u.login) s += ', ' + u.login;
     if (u.gender) s += ', ' + u.gender;
     if (u.virtue) s += ', ' + u.virtue;
-    if (u.target) s += ', ' + 'target='+u.target.name;
+    if (u.target) s += ', target='+u.target.name;
     if (u.descriptors && u.descriptors.length) {
       s += ', ' + u.descriptors.length + ' descriptors';
     }
