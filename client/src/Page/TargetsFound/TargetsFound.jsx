@@ -28,6 +28,7 @@ const styles = {
 };
 
 class TargetsFound extends React.Component {
+  
   constructor(props) {
     super(props, '/launch-campaign');
   }
