@@ -22,6 +22,7 @@ if (typeof env.API_HOST !== 'undefined') {
 describe('REST API', () => {
 describe('User Routes', () => {
 
+  console.log('jost',host);
   let refreshDb = done => {
     UserModel.deleteMany({}, (err) => {
       err && console.error('ERROR', err);
