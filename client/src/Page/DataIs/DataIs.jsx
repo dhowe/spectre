@@ -28,24 +28,25 @@ class DataIs extends React.Component {
   }
 
   async componentDidMount() {
-    const user = await UserSession.ensure(this.context, ['virtue']);
+    const user = await UserSession.ensure(this.context, ['_id', 'virtue']);
     this.setState({ virtue: user.virtue, virtueAdverb: user.virtueAsAdverb() });
   }
 
   render() {
+    const { virtue, virtueAdverb } = this.state;
 
     return (
       <div className={this.props.root}>
         <SpectreHeader colour="white" />
         <div className={`${this.props.content} content`}>
           <Fade in={true} style={{ transitionDelay: '200ms' }}>
-            <Typography component="h6" variant="h6">DATA IS {this.state.virtue.toUpperCase()}</Typography>
+            <Typography component="h6" variant="h6">DATA IS {virtue.toUpperCase()}</Typography>
           </Fade>
           <Fade in={true} style={{ transitionDelay: '1200ms' }}>
-            <Typography component="h6" variant="h6">To become more <strong>{this.state.virtueAdverb}</strong> you need&nbsp;more&nbsp;data</Typography>
+            <Typography component="h6" variant="h6">To become more <strong>{virtueAdverb}</strong> you need&nbsp;more&nbsp;data</Typography>
           </Fade>
           <Fade in={true} style={{ transitionDelay: '2000ms' }}>
-            <Typography component="h6" variant="h6">We can help you believe in the {this.state.virtue}&nbsp;of&nbsp;Dataism.</Typography>
+            <Typography component="h6" variant="h6">We can help you believe in the {virtue}&nbsp;of&nbsp;Dataism.</Typography>
           </Fade>
           <Countdown
             ref={e => this.countdown = e}
