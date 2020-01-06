@@ -1,16 +1,16 @@
 .LoginPage {
   background-color: #21c0fb;
   color: #ffffff;
+  flex-grow: 1;
+  width: 100%;
+  background-size: 'cover';
 }
-@media screen and (orientation:landscape) {
-  .LoginPage-content {
-    width: 70%;
-    margin: auto;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
 
+
+
+@media screen and (orientation:landscape) {
+
+  .LoginPage-content {
     h1,
     h2,
     h3,
@@ -19,6 +19,15 @@
     h6 {
       color: #ffffff;
     }
+  }
+
+  .tos {
+    position: fixed;
+    margin: auto;
+    color: white;
+    text-align: left;
+    bottom: 2%;
+    left: 43%;
   }
 }
 @media screen and (orientation:portrait) {
@@ -37,13 +46,13 @@
       color: #ffffff;
     }
   }
-}
+  .tos {
+    position: fixed;
+    margin: auto;
+    color: white;
+    text-align: left;
+    bottom: 3%;
+    left: 38%;
+  }
 
-.tos {
-  position: fixed;
-  margin: auto;
-  color: white;
-  text-align: left;
-  bottom: 3%;
-  left: 38%;
 }

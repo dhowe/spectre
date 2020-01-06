@@ -2,12 +2,12 @@
 
 .ImageCapture {
   border: 10px solid $red;
-  display: none
+  display: none;
 }
 
 h3.username {
-  color:$blue;
-  margin:0;
+  color: $blue;
+  margin: 0;
   font-size: 44px;
 }
 
@@ -17,24 +17,28 @@ h3.question {
   font-size: 44px;
   line-height: 115px;
   vertical-align: baseline;
-  margin:0;
+  margin: 0;
 }
 
-.buttonWrapper {
-  padding-left: -40px;
-  margin-top: 85px;
-}
-
-.buttonWrapper button{
+.buttonWrapper button {
   display: inline-block;
-  width:180px;
-  height:53px;
-  font-size: 30px;
-  line-height: 32px;
-  font-weight: 500;
+  width: 180px;
+  height: 53px;
   margin-left: 40px;
-  margin-top:0;
-  text-transform: capitalize;
-  letter-spacing: 0;
-  border-width:2px;
+  margin-top: 0;
+}
+@media screen and (orientation:landscape) {
+  .buttonWrapper {
+    margin: 80px auto;
+    align-items: center;
+    width: 100%;
+  }
+
+}
+@media screen and (orientation:portrait) {
+  .buttonWrapper {
+    padding-left: -40px;
+    margin: 80px auto;
+    align-items: center;
+  }
 }

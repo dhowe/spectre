@@ -50,7 +50,7 @@ class DataIs extends React.Component {
           <Countdown
             ref={e => this.countdown = e}
             onComplete={() => this.props.history.push('/personalised')}
-            date={Date.now() + 5000}
+            date={Date.now() + 500000}
             renderer={() => null}
           />
         </div>

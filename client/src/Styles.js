@@ -9,5 +9,10 @@ export default {
     display: 'block',
     marginLeft: 'auto',
     marginRight: 'auto',
+    fontWeight: '500',
+    textTransform: 'capitalize',
+    letterSpacing: '0',
+    fontSize: '30',
+    lineHeight: '32px',
   },
 };
