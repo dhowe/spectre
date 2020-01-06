@@ -19,6 +19,8 @@ UserSession.profileDir = User.profileDir;
 UserSession.imageDir = User.imageDir;
 UserSession.Cons = "bcdfghjklmnprstvxz".split('');
 UserSession.Vows = "aeiou".split('');
+UserSession.serverDisabled = false;
+UserSession.serverErrors = 0;
 
 // load default set of users in case no db
 fetch('/default-users.json').then(res => res.json())
@@ -28,7 +30,7 @@ fetch('/default-users.json').then(res => res.json())
     console.error('UserSession.defaultUsers:', e);
   });
 
-//////////////////////// functions //////////////////////
+///////////////////////////// functions ///////////////////////////////
 
 /*
  * Logs available fields to the console
@@ -39,6 +41,8 @@ UserSession.log = u => u.toString();
  * Clears data from browser session storage
  */
 UserSession.clear = function() {
+  UserSession.serverErrors = 0;
+  UserSession.serverDisabled = false;
   sessionStorage.clear();
   console.log('[USER] Session initialized');
 }
@@ -57,7 +61,7 @@ UserSession.ensure = async (user, props) => {
     if (!sid) {
       console.warn('[STUB] No user._id, creating new user');
       UserSession.fillMissingProperties(user,
-          ['login', 'name', 'gender',  'virtue', 'adIssue', 'traits']);
+        ['login', 'name', 'gender', 'virtue', 'adIssue', 'traits']);
       await UserSession.create(user);
       console.warn('[STUB] Setting user._id: ' + user._id);
     }
@@ -67,8 +71,11 @@ UserSession.ensure = async (user, props) => {
       await UserSession.lookup(user);
     }
   }
-  // should have user with id here, now check properties
-  if (!user || !user._id) throw Error('INVALID STATE');
+  // should have user with id here, if not, then probably no server
+  if (!user || !user._id) {
+    user._id = -1;
+    console.warn('[STUB] Unable to set user._id, using' + user._id);
+  }
 
   if (props.includes('target') && !user.similars.length) {
     user = await UserSession.similars(user);
@@ -118,12 +125,12 @@ UserSession.fillMissingProperties = function(user, props) {
     let val = user[p];
     if (Array.isArray(val)) val = '[' + val.length + ']';
     if (p === 'target') val = val.name + '/#' + val._id;
-    if (typeof val === 'object') val = JSON.stringify(val).substring(0,60);
+    if (typeof val === 'object') val = JSON.stringify(val).substring(0, 60);
     console.warn('[STUB] Setting user.' + p + ': ' + val);
   };
 
   if (typeof props === 'undefined') return true;
-  if (typeof user === 'undefined') throw Error('Null User');
+  if (typeof user === 'undefined') throw Error('Null user');
 
   if (!Array.isArray(props)) props = [props];
   let missing = props.filter(p => typeof user[p] === 'undefined'
@@ -155,48 +162,6 @@ UserSession.fillMissingProperties = function(user, props) {
       onUpdateProperty(p);
     }
   });
-  //
-  // prop = 'name';
-  // if (missing.includes(prop)) {
-  //   const cons = UserSession.Cons, vows = UserSession.Vows;
-  //   user[prop] = (cons[Math.floor(Math.random() * cons.length)]
-  //     + vows[Math.floor(Math.random() * vows.length)]
-  //     + cons[Math.floor(Math.random() * cons.length)]).ucf();
-  //   onUpdateProperty(prop);
-  // }
-
-  // prop = 'login';
-  // if (missing.includes(prop)) {
-  //   user[prop] = user.name + (+new Date()) + '@test.com';
-  //   onUpdateProperty(prop);
-
-  //
-  // prop = 'gender';
-  // if (missing.includes(prop)) {
-  //   user[prop] = rand(['male', 'female', 'other']);
-  //   onUpdateProperty(prop);
-  // }
-
-  // prop = 'traits';
-  // if (missing.includes(prop)) {
-  //   user._randomizeTraits();
-  //   onUpdateProperty(prop);
-  // }
-  //
-  // prop = 'adIssue';
-  // if (missing.includes(prop)) {
-  //   user[prop] = rand(['remain', 'leave']);
-  //   onUpdateProperty(prop);
-  // }
-  //
-  // prop = 'target';
-  // if (missing.includes(prop)) {
-  //   if (!user.similars.length) throw Error('no similars');
-  //   user[prop] = rand(user.similars);
-  //   if (typeof user.target !== 'object') throw Error
-  //     ('user.target != object', typeof user.target, user.target);
-  //   onUpdateProperty(prop);
-  // }
 
   missing = checkTargetAdData(missing);
 
@@ -205,28 +170,17 @@ UserSession.fillMissingProperties = function(user, props) {
 
   return modified;
 }
-//
-// function handleResponse(res) {
-//   return res.json().then(json => {
-//     if (!res.ok || !json.status === 200) {
-//       return Promise.reject({
-//         status: json.status,
-//         statusText: json.message
-//       });
-//     }
-//     return json.data;
-//   }).catch(e => {
-//     return Promise.reject(e);
-//   });
-// }
 
 // Create a new database record: /login only
 UserSession.create = async (user) => {
-  let { route, auth, cid, mode } = doConfig();
+
+  if (UserSession.serverDisabled) return;
+
+  const { route, auth, cid, mode } = doConfig();
   if (user.clientId < 0) user.clientId = cid;
   try {
     console.log('[POST] ' + mode + '.create: ' + route);
-    let response = await fetch(route, {
+    const response = await fetch(route, {
       method: "post",
       headers: {
         "Content-Type": "application/json",
@@ -234,15 +188,14 @@ UserSession.create = async (user) => {
       },
       body: toNetworkString(user)
     })
+    console.log(response);
     assignJsonResp(user, await response.json());
     UserSession.useBrowserStorage && sessionStorage.setItem
       (UserSession.storageKey, JSON.stringify(user._id));
-    // TODO: remove? stringify
     return user;
   }
   catch (e) {
-    console.error('UserSession.create');
-    throw e;
+    handleError(e, route);
   }
 }
 
@@ -250,6 +203,9 @@ UserSession.create = async (user) => {
  * Loads users fields from database
  */
 UserSession.lookup = async (user) => {
+
+  if (UserSession.serverDisabled) return;
+
   if (!user || !user._id) throw Error('Invalid arg', user);
   const { route, auth, cid, mode } = doConfig();
   if (user.clientId < 0) user.clientId = cid;
@@ -266,12 +222,14 @@ UserSession.lookup = async (user) => {
     return assignJsonResp(user, await response.json());
   }
   catch (e) {
-    console.error('UserSession.create');
-    throw e;
+    handleError(e, endpoint);
   }
 }
 
 UserSession.update = async (user) => {
+
+  if (UserSession.serverDisabled) return;
+
   if (!user || !user._id) throw Error('Invalid arg', user);
 
   const { route, auth, cid, mode } = doConfig();
@@ -292,32 +250,25 @@ UserSession.update = async (user) => {
     return assignJsonResp(user, await response.json());
   }
   catch (e) {
-    console.error('UserSession.create');
-    throw e;
+    handleError(e, endpoint);
   }
-}
-
-function toNetworkString(user) {
-  let safe = {};
-  Object.keys(User.schema()).forEach(p => {
-    let val = user[p];
-    if (typeof val === 'undefined') return;
-    if (Array.isArray(val) && !val.length) return;
-    // TODO: deal with objects here
-    safe[p] = user[p];
-  });
-
-  return JSON.stringify(safe);
 }
 
 UserSession.similars = async (user) => {
-  if (!user || !user._id.length) {
-    throw Error('Invalid user\n' + user);
+
+  if (!user) throw Error('Null user in UserSession.similars');
+
+  const { route, auth, cid, mode } = doConfig();
+
+  if (UserSession.serverDisabled || user._id === -1) {
+    logServerError(route);
+    user.similars = defaultSimilars();
+    return user;
   }
+
   if (!user.traits || typeof user.traits.openness === 'undefined') {
     throw Error('No traits for user #' + user._id);
   }
-  const { route, auth, cid, mode } = doConfig();
   const endpoint = route + 'similars/' + user._id;
   if (user.clientId < 0) user.clientId = cid;
   try {
@@ -335,16 +286,17 @@ UserSession.similars = async (user) => {
     return user;
   }
   catch (e) {
-    console.error('UserSession.create');
-    throw e;
+    handleError(e, endpoint);
   }
 }
 
 UserSession.postImage = async (user, image) => { // TODO: test
 
-  let { route, auth, mode } = doConfig();
+  if (UserSession.serverDisabled) return;
+
+  const { route, auth, mode } = doConfig();
   //if (typeof image === 'string') image = toImageFile(image);
-  let fdata = new FormData();
+  const fdata = new FormData();
   fdata.append('profileImage', image);
   fdata.append('clientId', process.env.CLIENT_ID);
   fdata.append('videoId', 2);
@@ -360,8 +312,7 @@ UserSession.postImage = async (user, image) => { // TODO: test
     return response.json(); // what to do here?
   }
   catch (e) {
-    console.error('UserSession.create');
-    throw e;
+    handleError(e, endpoint);
   }
 }
 
@@ -369,10 +320,45 @@ UserSession.randomCelebrities = () => {
   return shuffle(shuffle(MaleCelebs).splice(0, 4).concat(FemaleCelebs));
 }
 
+/////////////////////////////// Helpers //////////////////////////////////////
+
+function toNetworkString(user) {
+  let safe = {};
+  Object.keys(User.schema()).forEach(p => {
+    let val = user[p];
+    if (typeof val === 'undefined') return;
+    if (Array.isArray(val) && !val.length) return;
+    // TODO: deal with objects here
+    safe[p] = user[p];
+  });
+
+  return JSON.stringify(safe);
+}
+
 function assignJsonResp(user, json) {
   if (json.status !== 200) throw Error(JSON.stringify(json));
   Object.assign(user, json.data);
   return user;
+}
+
+function logServerError(route) {
+  if (++UserSession.serverErrors >= 3) {
+    console.error("Disabling all server calls after ["
+      + UserSession.serverErrors + '] errors');
+    UserSession.serverDisabled = true;
+  }
+  else {
+    console.error("Unable to connect to server at "
+      + route + ' [' + UserSession.serverErrors + ']');
+  }
+}
+
+function handleError(e, route) {
+  if (e.toString() === 'TypeError: Failed to fetch') {
+    return logServerError(route);
+  }
+  console.error('[ERROR] UserSession:', e);
+  if (process.env.NODE_ENV !== 'production') throw e;
 }
 
 function doConfig() {
@@ -391,6 +377,20 @@ function doConfig() {
   if (!auth || !auth.length) console.error("Auth required!");
 
   return { auth: auth, route: host + route, clientId: cid, mode: mode };
+}
+
+function defaultSimilars() {
+  return [
+    { "_id": "111111111111111111111111", "name": "Remy", "traits": { "openness": 0.5818180970605207, "conscientiousness": 0.07645862267650672, "extraversion": 0.2607193320319028, "agreeableness": 0.012588228025398163, "neuroticism": 0.16712815071948772 } },
+    { "_id": "222222222222222222222222", "name": "Bailey", "traits": { "openness": 0.10280703242247147, "conscientiousness": 0.6791763609042916, "extraversion": 0.6985730973994828, "agreeableness": 0.47335712795485274, "neuroticism": 0.32620076142720156 } },
+    { "_id": "333333333333333333333333", "name": "Devin", "traits": { "openness": 0.26472484195144963, "conscientiousness": 0.2892253599406023, "extraversion": 0.32397862254097665, "agreeableness": 0.8301260855442676, "neuroticism": 0.6126764672471925 } },
+    { "_id": "444444444444444444444444", "name": "Tyler", "traits": { "openness": 0.261833848989681, "conscientiousness": 0.19995491789138597, "extraversion": 0.6466838313828751, "agreeableness": 0.15648014141226163, "neuroticism": 0.37933032099722275 } },
+    { "_id": "555555555555555555555555", "name": "Fran", "traits": { "openness": 0.42866686430348433, "conscientiousness": 0.4582048165214141, "extraversion": 0.37864167613148236, "agreeableness": 0.40931183419981254, "neuroticism": 0.46558790819496987 } },
+    { "_id": "666666666666666666666666", "name": "Pat", "traits": { "openness": 0.7254487613475398, "conscientiousness": 0.3476980731832755, "extraversion": 0.9655087407390435, "agreeableness": 0.17024963297245255, "neuroticism": 0.6609212676018463 } },
+    { "_id": "777777777777777777777777", "name": "Sam", "traits": { "openness": 0.9725230338248465, "conscientiousness": 0.27205052534770147, "extraversion": 0.07632586533756269, "agreeableness": 0.15602596134535318, "neuroticism": 0.4848698832786795 } },
+    { "_id": "888888888888888888888888", "name": "Reed", "traits": { "openness": 0.2773518607894794, "conscientiousness": 0.8456532878428138, "extraversion": 0.4515471612661024, "agreeableness": 0.6249880747419794, "neuroticism": 0.6186244869965476 } },
+    { "_id": "999999999999999999999999", "name": "Terry", "traits": { "openness": 0.30426635874427355, "conscientiousness": 0.5341590821850326, "extraversion": 0.509056193557774, "agreeableness": 0.8109949037515642, "neuroticism": 0.4252958718086144 } }
+  ];
 }
 
 function arrayRemove(a, v) {
