@@ -19,6 +19,7 @@ if (typeof env.API_HOST !== 'undefined') {
   host = env.API_HOST + ':' + port;
 }
 
+describe('REST API', () => {
 describe('User Routes', () => {
 
   let refreshDb = done => {
@@ -213,6 +214,7 @@ describe('User Routes', () => {
   });
 
   after(refreshDb);
+});
 });
 
   // function saveAll(records, cb) {

@@ -23,19 +23,28 @@ const styles = {
 };
 
 class Win extends React.Component {
+
   constructor(props) {
     super(props, '/influence-a-celebrity');
+    this.state = { adIssue: '' };
+  }
+
+  async componentDidMount() {
+    const user = await UserSession.ensure(this.context, ['_id', 'adIssue']);
+    this.setState({ adIssue: user.adIssue });
   }
 
   render() {
     const { classes } = this.props;
+    const { adIssue } = this.state;
+
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive progressNumber="two" />
         <IdleChecker />
         <div className={`${classes.content} content`}>
           <Typography component="h4" variant="h4" style={{ marginTop:'100px' }}>
-            <strong>{this.context.adIssue === 'remain' ? 'Believe!' : 'BeLeave!'}</strong>
+            <strong>{adIssue === 'remain' ? 'Believe!' : 'BeLeave!'}</strong>
           </Typography>
           <Typography component="h5" variant="h5" style={{ marginTop:'100px' }}>
             &nbsp;Your campaign was successful...</Typography>

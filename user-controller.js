@@ -12,23 +12,24 @@ TODO: every call should return a uniform object:
 }
 */
 const USER_NOT_FOUND = 452;
+const USER_WO_TRAITS = 453;
 const NUM_SIMILARS = 6;
 
-const list = function(req, res) {
+const list = async (req, res) => {
 
-  UserModel.getAll(function(err, users) {
+  await UserModel.getAll(function(err, users) {
     if (err) return sendError(res, 'UserModel.getAll', err);
     sendResponse(res, users);
   });
 };
 
-const current = function(req, res) { // not used at present
+const current = async (req, res) => { // not used at present
 
   if (!req.params.hasOwnProperty('cid')) {
     return sendError(res, 'ClientId(cid) required');
   }
 
-  UserModel.findOne({ clientId: req.params.cid }, {}, {
+  await UserModel.findOne({ clientId: req.params.cid }, {}, {
     sort: { 'createdAt': -1 }
   }, (err, user) => {
     if (err) return sendError(res, 'UserModel.findOne', err);
@@ -37,7 +38,7 @@ const current = function(req, res) { // not used at present
   });
 };
 
-const createBatch = function(req, res) {
+const createBatch = async (req, res) => {
 
   //console.log('REQ',req);
   const users = req.body;
@@ -45,7 +46,7 @@ const createBatch = function(req, res) {
     return sendError(res, 'No users in request body');
   }
 
-  UserModel.insertMany(users, (err, result) => {
+  await UserModel.insertMany(users, (err, result) => {
     if (err) {
       return sendError(res, 'UserModel.insertMany', err);
     }
@@ -55,7 +56,7 @@ const createBatch = function(req, res) {
   });
 };
 
-const create = function(req, res) {
+const create = async (req, res) => {
 
   if (!(req.body.login && req.body.loginType)) return sendError(res,
     "UserModel with no login/loginType:" + JSON.stringify(req.body));
@@ -66,33 +67,34 @@ const create = function(req, res) {
   let user = new UserModel();
   Object.assign(user, req.body); // dangerous?
 
-  UserModel.find({ login: req.body.login, loginType: req.body.loginType }, (e, docs) => {
+  await UserModel.find({ login: req.body.login, loginType: req.body.loginType }, (e, docs) => {
 
     if (e || docs.length) return sendError(res, e || "Unique User Violation: " +
       req.body.login + '/' + req.body.loginType);
 
-    user.save(function(err) {
+    user.save(err => {
       if (err) return sendError(res, err);
-      //console.log('User.created #' + user._id + ': ' + user.login + "/" + user.loginType);
+      // TODO: check for ocean-traits and return user with similars
       sendResponse(res, user);
     });
+
   });
 };
 
-const fetch = function(req, res) {
+const fetch = async (req, res) => {
 
   if (!req.params.hasOwnProperty('uid')) {
     return sendError(res, 'UserId required');
   }
 
-  UserModel.findById(req.params.uid, (err, user) => {
+  await UserModel.findById(req.params.uid, (err, user) => {
     if (err) return sendError(res, 'Error (findById) for #' + req.params.uid, err);
     if (!user) return sendError(res, 'No user #' + req.params.uid, 0, USER_NOT_FOUND);
     sendResponse(res, user);
   });
 };
 
-const update = function(req, res) {
+const update = async (req, res) => {
 
   if (!req.params.hasOwnProperty('uid')) {
     return sendError(res, 'UserId required');
@@ -101,7 +103,7 @@ const update = function(req, res) {
   let uid = req.params.uid;
   let limit = req.query.hasOwnProperty('limit') ? parseInt(req.query.limit) : 6;
 
-  UserModel.findByIdAndUpdate(uid, req.body, { new: true }, (err, user) => {
+  await UserModel.findByIdAndUpdate(uid, req.body, { new: true }, (err, user) => {
 
     if (err) return sendError(res, 'Update fail #' + req.params.uid);
     if (!user) return sendError(res, 'No user #' + req.params.uid, 0, USER_NOT_FOUND);
@@ -119,7 +121,7 @@ const update = function(req, res) {
   });
 }
 
-const similars = function(req, res) {
+const similars = async (req, res) => {
 
   if (!req.params.hasOwnProperty('uid')) {
     return sendError(res, 'UserId required');
@@ -131,9 +133,11 @@ const similars = function(req, res) {
   }
 
   let uid = req.params.uid;
-  UserModel.findById(uid, (err, user) => {
+  await UserModel.findById(uid, (err, user) => {
     if (err) return sendError(res, 'Unable to find user #' + uid, err);
     if (!user) return sendError(res, 'No user #' + uid, 0, USER_NOT_FOUND);
+    if (!user.traits || !user.traits.openness) return sendError
+      (res, 'No traits for user #' + uid, 0, USER_WO_TRAITS);
     user.findByOcean((err, sims) => {
       if (err) return sendError(res, 'Unable to findByOcean for #' + req.params.uid, err);
       sendResponse(res, sims);
@@ -141,8 +145,8 @@ const similars = function(req, res) {
   });
 };
 
-const remove = function(req, res) {
-  UserModel.remove({ _id: req.params.uid }, (err) => {
+const remove = async (req, res) => {
+  await UserModel.remove({ _id: req.params.uid }, (err) => {
     if (err) return sendError(res, 'Unable to delete user #' + req.params.uid, err);
     sendResponse(res, req.params.uid);
   });
@@ -150,7 +154,7 @@ const remove = function(req, res) {
 
 const profiles = './client/public/profiles/';
 
-const photo = function(req, res) {
+const photo = async (req, res) => {
 
   if (typeof req.params.uid === 'undefined' ||
     req.params.uid === 'undefined') {
@@ -169,7 +173,7 @@ const photo = function(req, res) {
     })
   }).single('profileImage');
 
-  upload(req, res, e => {
+  await upload(req, res, e => {
     if (e) return sendError(res, 'photo.upload', e);
     if (!req.file) return sendError(res, 'photo.upload: null req. file');
     //let url = req.protocol + "://" +  req.hostname + '/' + req.file.path;
@@ -179,7 +183,7 @@ const photo = function(req, res) {
   });
 };
 
-const photoset = function(req, res) {
+const photoset = async (req, res) => {
 
   //console.log("Routes.photoSet");
 
@@ -201,7 +205,7 @@ const photoset = function(req, res) {
     })
   }).array('photoSet', 10);
 
-  upload(req, res, e => {
+  await upload(req, res, e => {
     if (e) return res.status(400).send({ error: e });
     console.log("FILES: ", req.files);
     //let url = req.file.path.replace(/.*\/profiles/,'/profiles')});

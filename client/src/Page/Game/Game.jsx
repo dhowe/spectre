@@ -115,7 +115,6 @@ function sketch(p) {
   };
 
   p.keyReleased = () => {
-    if (p.key === ' ') finished();
     if (p.key === 'f') showFps = !showFps;
   };
 
@@ -141,7 +140,7 @@ function sketch(p) {
   };
 
   p.mousePressed = () => {
-    document.getElementById("clickMe").click();
+    //document.getElementById("clickMe").click();
     Brand.active = false;
     Brand.instances.forEach(b => {
       if (b.contains(p.mouseX, p.mouseY)) {
@@ -305,22 +304,19 @@ class Game extends React.Component {
     game = this; // handle for p5js
   }
 
-  componentComplete() { // redirect called from p5
-    clearInterval(this.interval);
-    UserSession.ensure(user, ['traits', 'descriptors', 'influences'],
-      () => {
-        UserSession.update(user, // [Game].2
-          () => {
-            console.log('[Game]', user);
-          }, (err) => {
-            console.error('[Game]', err);
-            this.next();
-          });
-      });
+  async componentDidMount() {
+    user = await UserSession.ensure
+      (this.context, ['_id', 'login', 'gender', 'name']);
+  }
+
+  async componentComplete() { // redirect called from p5
+    const user = await UserSession.ensure(this.context,
+      ['_id', 'login', 'gender', 'name', 'traits', 'descriptors', 'influences']);
+    await UserSession.update(user);
+    this.props.history.push("/thank-you");
   }
 
   render() {
-
     return (
       <div className={this.props.classes.root} id='clickMe'>
         <SpectreHeader colour="white" />

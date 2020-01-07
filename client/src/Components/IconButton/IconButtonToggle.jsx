@@ -10,14 +10,13 @@ const styles = {};
 class IconButtonToggle extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { condition: false };
-
-    this.handleClick = this.handleClick.bind(this);
+    this.state = { isEnabled: false };
   }
 
-  handleClick() {
+  handleClick = () => {
+    console.log('handleClick -> '+(!this.state.isEnabled));
     this.setState({
-      condition: !this.state.condition,
+      isEnabled: !this.state.isEnabled,
     });
   }
 
@@ -25,8 +24,8 @@ class IconButtonToggle extends React.Component {
     return (
       <IconButton
         onClick={this.handleClick}
-        className={this.state.condition ? 'iconEnabled' : 'iconDisabled'}
-        enabled={this.state.condition}
+        className={this.state.isEnabled ? 'iconEnabled' : 'iconDisabled'}
+        enabled={this.state.isEnabled}
         icon={this.props.icon}
         text={this.props.text}
       />

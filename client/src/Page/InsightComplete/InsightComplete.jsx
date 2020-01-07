@@ -35,10 +35,10 @@ class InsightComplete extends React.Component {
     this.state = { idleCheckerDone: false, target: {name: '', traits:''} };
   }
 
-  componentDidMount() {
-    UserSession.ensure(this.context,
-      ['_id', 'name', 'login', 'gender', 'virtue', 'target'],
-      user => this.setState({ target: user.target }));
+  async componentDidMount() {
+    const user = await UserSession.ensure(this.context,
+      ['_id', 'name', 'login', 'gender', 'virtue', 'target']);
+    this.setState({ target: user.target });
   }
 
   showVideo = () => {
@@ -46,12 +46,8 @@ class InsightComplete extends React.Component {
     this.setState({ idleCheckerDone: true });
   }
 
-  nextPage = () => {
-    this.props.history.push('/your-power');
-  }
-
   render() {
-    console.log('page',window.location.pathname);
+    //console.log('page',window.location.pathname);
     const { classes } = this.props;
     const { target, idleCheckerDone } = this.state;
     return (
@@ -68,7 +64,9 @@ class InsightComplete extends React.Component {
           </Typography>
           <IconButton icon="play" text="Next" onClick={this.showVideo} Button={<Button style={{ marginTop: 20, }}
             className={classes.button} variant="contained" color="primary">WTF is OCEAN?</Button>} />
-          <Video ref={(el) => { this.video = el; }} onComplete={this.nextPage}
+          <Video
+            ref={(el) => { this.video = el; }}
+            onComplete={()=>this.props.history.push('/your-power')}
             autoPlay={false} movie="/video/OceanIntro.mp4" />
         </div>
         <FooterLogo />

@@ -56,8 +56,6 @@ class HomeData extends React.Component {
   constructor(props) {
     super(props, '/find-citizens');
     this.state = { count: 0 };
-
-    this.countAdd = this.countAdd.bind(this);
   }
 
   componentDidUpdate() {
@@ -66,7 +64,7 @@ class HomeData extends React.Component {
     }
   }
 
-  countAdd() {
+  countAdd = () => {
     this.setState({ count: document.getElementsByClassName("iconEnabled").length });
   }
 

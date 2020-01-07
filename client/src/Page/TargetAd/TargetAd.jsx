@@ -22,40 +22,42 @@ const styles = {
 class TargetAd extends React.Component {
   constructor(props) {
     super(props, '/success-ad');
+    this.state = { targetName: '' };
+  }
+
+  async componentDidMount() {
+    const user = await UserSession.ensure(this.context, ['_id', 'target']);
+    this.setState({ targetName: user.target.name });
   }
 
   render() {
     const { classes } = this.props;
-    this.context.adIssue = this.context.adIssue || 'leave';
-    this.context.target = this.context.target || UserSession.defaultUsers[0];
-    const tname = this.context.target.name;
+    const { targetName } = this.state;
     return (
       <div className={classes.root}>
-      <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
-      <IdleChecker />
-      <div className={`${classes.content} content`}>
-        <br/>
-        <Typography component="h6" variant="h6">
-          Share your targeted ad with <strong>{tname}</strong>?
-        </Typography>
-
+        <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
+        <IdleChecker />
+        <div className={`${classes.content} content`}>
+          <br />
+          <Typography component="h6" variant="h6">
+            Share your targeted ad with <strong>{targetName}</strong>?
+          </Typography>
           <Grid container justify="center">
             <Grid item>
               <Link to="/success-ad">
-              <IconButton icon="tick" text="Yes"/>
+                <IconButton icon="tick" text="Yes" />
               </Link>
             </Grid>
             <Grid item>
-            <Link to="/we-are-sorry">
-              <IconButton icon="next" text="No" />
+              <Link to="/success-ad"> {/* see issue #262 */}
+                <IconButton icon="next" text="No" />
               </Link>
             </Grid>
           </Grid>
-
-        <br/>
+          <br />
+        </div>
+        <FooterLogo />
       </div>
-      <FooterLogo />
-    </div>
     );
   }
 }

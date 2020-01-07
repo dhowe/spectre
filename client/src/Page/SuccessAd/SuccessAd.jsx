@@ -21,44 +21,44 @@ const styles = {
 class SuccessAd extends React.Component {
   constructor(props) {
     super(props, '/influence-a-nation');
-    this.state = { timeout: null };
+    this.timeout = -1;
+    this.state = {
+      adIssue: '',
+      targetName: ''
+    };
   }
 
-  componentDidMount() {
-    const timeout = setTimeout(this.next, 6500);
-    this.setState({ timeout });
+  async componentDidMount() {
+    const user = await UserSession.ensure(this.context,
+      ['_id', 'adIssue', 'traits', 'target']);
+
+    this.timeout = setTimeout(() =>
+      this.props.history.push('/influence-a-nation'), 6000);
+
+    this.setState({
+      adIssue: user.adIssue,
+      targetName: user.target.name
+    });
   }
 
   componentWillUnmount() {
-    clearTimeout(this.state.timeout);
+    clearTimeout(this.timeout);
   }
 
   render() {
     const { classes } = this.props;
-    this.context.adIssue = this.context.adIssue || 'leave';
-    this.context.target = this.context.target || UserSession.defaultUsers[0];
-    const tname = this.context.target.name;
-    const issue = this.context.adIssue;
+    const { adIssue, targetName } = this.state;
     return (
       <div className={`${classes.root} successAd`}>
         <SpectreHeader colour="white" progressActive progressNumber="two" />
         <div className={`${classes.content} content`}>
           <Fade in timeout={1000}>
             <div>
-              <p className="copy bold">
-                Your targeted ad was successful!
-              </p>
-
-              <p className="icon">
-                <Trophy />
-              </p>
-
+              <p className="copy bold">Your targeted ad was successful!</p>
+              <p className="icon"><Trophy /></p>
               <p className="copy" component="h6" variant="h6">
-                <strong>{tname}</strong> is now more likely to vote {issue} in the referendum.
+                <strong>{targetName}</strong> is now more likely to vote <strong>{adIssue}</strong> in the referendum.
               </p>
-              {/* <Link to="/influence-a-nation">
-                <IconButton icon="next" text="Next" />
-              </Link> */}
             </div>
           </Fade>
         </div>
@@ -73,4 +73,5 @@ SuccessAd.propTypes = {
   history: PropTypes.object.isRequired,
 };
 SuccessAd.contextType = UserSession;
+
 export default withStyles(styles)(SuccessAd);

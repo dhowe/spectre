@@ -28,6 +28,7 @@ const styles = {
 };
 
 class TargetsFound extends React.Component {
+
   constructor(props) {
     super(props, '/launch-campaign');
   }
@@ -38,7 +39,10 @@ class TargetsFound extends React.Component {
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive progressNumber="two" />
         <div className={`${classes.content} content`}>
-          <Video autoPlay style={{ width: '100%' }} movie="/video/TargetsFound_Animation.mp4" onComplete={this.next} />
+          <Video autoPlay
+            style={{ width: '100%' }}
+            movie="/video/TargetsFound_Animation.mp4"
+            onComplete={() => this.props.history.push('/launch-campaign')} />
         </div>
         <FooterLogo />
       </div>

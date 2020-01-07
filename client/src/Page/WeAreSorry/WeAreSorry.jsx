@@ -20,19 +20,32 @@ const styles = {
 };
 
 class WeAreSorry extends React.Component {
+  constructor(props) {
+    super(props, '/goodbye');
+    this.state = { name: '' };
+  }
+
+  async componentDidMount() {
+    const user = await UserSession.ensure(this.context, ['_id', 'name']);
+    this.setState({ name: user.name });
+  }
+
   render() {
     const { classes } = this.props;
+    const { name } = this.state;
     return (
       <div className={classes.root}>
-          <SpectreHeader colour="white" />
-          <div className={classes.content + " content"}>
-              <Typography component="h5" variant="h5" style={{ marginTop: '170px', marginLeft: '100px', marginRight: '100px'}}>We’re sorry {(this.context.name||'Remy')},
-                we’re afraid you can’t&nbsp;do&nbsp;that.</Typography>
-              <Link to="/goodbye" style={{ marginBottom: '270px'}}>
-                  <IconButton icon="tick" text="Next" />
-              </Link>
-          </div >
-          <FooterLogo />
+        <SpectreHeader colour="white" />
+        <div className={classes.content + " content"}>
+          <Typography component="h5" variant="h5"
+            style={{ marginTop: '170px', marginLeft: '100px', marginRight: '100px' }}>
+            We’re sorry <strong>{name}</strong>, we’re afraid you can’t&nbsp;do&nbsp;that.
+          </Typography>
+          <Link to="/goodbye" style={{ marginBottom: '270px' }}>
+            <IconButton icon="tick" text="Next" />
+          </Link>
+        </div >
+        <FooterLogo />
       </div >
     );
   }

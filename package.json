@@ -4,10 +4,9 @@
   "description": "Server component for the SPECTRE system",
   "main": "app.js",
   "scripts": {
-    "test": "mocha ./tests --exit -r esm",
-    "test-g": "mocha ./tests --exit -r esm -g",
+    "test": "NODE_ENV=test mocha ./tests --recursive --exit -r esm",
+    "test-g": "NODE_ENV=test mocha ./tests --recursive --exit -r esm -g",
     "test-routes": "NODE_ENV=test mocha ./tests/routes --exit -r esm",
-    "test-routes-g": "NODE_ENV=test mocha ./tests/routes --exit -r esm -g",
     "server": "nodemon -r esm server.js",
     "client": "yarn --cwd client start",
     "client-start": "yarn --cwd client start",

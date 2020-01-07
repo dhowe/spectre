@@ -56,7 +56,6 @@ class PoliticalData extends React.Component {
   constructor(props) {
     super(props, '/home-data');
     this.state = { count: 0 };
-    this.countAdd = this.countAdd.bind(this);
   }
 
   componentDidUpdate() {
@@ -65,7 +64,7 @@ class PoliticalData extends React.Component {
     }
   }
 
-  countAdd() {
+  countAdd = () => {
     this.setState({ count: document.getElementsByClassName("iconEnabled").length });
   }
 

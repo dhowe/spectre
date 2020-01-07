@@ -9,7 +9,6 @@ import UserSession from '../../Components/UserSession/UserSession';
 import IconButton from '../../Components/IconButton/IconButton';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
-
 const styles = {
   root: {
     flexGrow: 1,

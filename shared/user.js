@@ -27,15 +27,19 @@ export default class User {
     let u = this;
     let s = u._id;
     if (u.name) s += ', ' + u.name;
+    if (u.login) s += ', ' + u.login;
     if (u.gender) s += ', ' + u.gender;
     if (u.virtue) s += ', ' + u.virtue;
-    if (u.login) s += ', ' + u.login;
-    if (u.descriptors.length) s += ', ' + u.descriptors;
-    if (u.influences.length) s += ', ' + u.influences;
+    if (u.target) s += ', target='+u.target.name;
+    if (u.descriptors && u.descriptors.length) {
+      s += ', ' + u.descriptors.length + ' descriptors';
+    }
+    if (u.influences && u.influences.length) {
+      s += ', ' + u.influences.length + ' influences';
+    }
     if (u.similars && u.similars.length) {
       s += ', ' + u.similars.length + ' similars';
     }
-    if (u.target) s += ', ' + u.target._id + '/' + u.target.name;
     return s;
   }
 
@@ -111,6 +115,45 @@ export default class User {
       if (images.indexOf(imgName) < 0) images.push(imgName);
     }
     return images;
+  }
+
+
+  computeTargetAdData() { // requires adIssue & target with traits
+
+    if (typeof this.target === 'undefined') {
+      throw Error('No target for targetAdData', this);
+    }
+    if (typeof this.adIssue === 'undefined') {
+      throw Error('No adIssue for targetAdData', this);
+    }
+    if (!this.hasOceanTraits(this.target)) {
+      throw Error('No target.traits for targetAdData', this);
+    }
+
+    const pre = 'imgs/', cat = this.categorize(this.target);
+
+    let images = this.randomImages(pre);
+    let slogans = this.randomSlogans();
+    let influences = this.randomInfluences();
+
+    if (cat !== 0) {
+      images = [
+        pre + this.adIssue + '_' + cat + '.1.png',
+        pre + this.adIssue + '_' + cat + '.2.png',
+        pre + this.adIssue + '_' + -cat + '.1.png',
+        pre + this.adIssue + '_' + -cat + '.2.png'
+      ];
+      influences = User.adInfluences[this.adIssue][(cat > 0 ? 'high' : 'low')][User.oceanTraits[Math.abs(cat) - 1]];
+      let slogans = User.adSlogans[this.adIssue][(cat > 0 ? 'high' : 'low')][User.oceanTraits[Math.abs(cat) - 1]];
+      slogans = slogans.concat(User.adSlogans[this.adIssue][(cat < 0 ? 'high' : 'low')][User.oceanTraits[Math.abs(cat) - 1]]);
+    }
+    else {
+      console.warn('[TARG] Using random target data: ',
+        cat, images, influences, slogans);
+    }
+    this.targetImages = images;
+    this.targetSlogans = slogans;
+    this.targetInfluences = influences;
   }
 
   targetAdImages() {
@@ -215,8 +258,8 @@ export default class User {
     let ots = User.oceanTraits;
     let idx = Math.floor(Math.random() * ots.length);
     //console.log(this.adIssue, this);
-    return User.adInfluences[this.adIssue]
-    [(Math.random() < .5 ? 'high' : 'low')][ots[idx]];
+    return User.adInfluences
+      [this.adIssue][(Math.random() < .5 ? 'high' : 'low')][ots[idx]];
   }
 
   targetImageUrl() {

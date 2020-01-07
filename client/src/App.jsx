@@ -89,61 +89,60 @@ class App extends React.Component {
                 <React.Fragment>
                   <Keyboardist bindings={{ Right: this.next }} />
                   <Navigation />
-                <Route exact path="/" component={TouchToBegin} />
-                <Route exact path="/login" component={LoginPage} />
-                <Route exact path="/pledge" component={Pledge} />
-                <Route exact path="/searching" component={SearchingFor} />
-                <Route exact path="/data-is" component={DataIs} />
-                <Route exact path="/personalised" component={Personalised} />
-                <Route exact path="/game" component={Game} />
-                <Route exact path="/thank-you" component={ThankYou} />
-                <Route exact path="/steps" component={Steps} />
-                <Route exact path="/follower" component={InfluenceAFollower} />
-                <Route exact path="/selected" component={Selected} />
+                  <Route exact path="/" component={TouchToBegin} />
+                  <Route exact path="/login" component={LoginPage} />
+                  <Route exact path="/pledge" component={Pledge} />
+                  <Route exact path="/searching" component={SearchingFor} />
+                  <Route exact path="/data-is" component={DataIs} />
+                  <Route exact path="/personalised" component={Personalised} />
+                  <Route exact path="/game" component={Game} />
+                  <Route exact path="/thank-you" component={ThankYou} />
+                  <Route exact path="/steps" component={Steps} />
+                  <Route exact path="/follower" component={InfluenceAFollower} />
+                  <Route exact path="/selected" component={Selected} />
 
-                <Route exact path="/insight-gender" render={props => <Insight {...props} progress="one" leftText="Male" middleText="Non-binary" rightText="Female" next="/insight-skin" question={name => `What’s ${name}’s gender?`} />} />
-                <Route exact path="/insight-skin" render={props => <Insight {...props} progress="one" leftText="Light" rightText="Dark" next="/insight-financial" question={name => `What is ${name}'s skin colour?`} />} />
-                <Route exact path="/insight-financial" render={props => <Insight {...props} progress="one" leftText="Poor" rightText="Rich" next="/insight-thank-you" question={name => `What’s ${name}’s financial status?`} />} />
-                <Route exact path="/insight-thank-you" component={InsightThankYou} />
-                <Route exact path="/insight-sexuality" render={props => <Insight {...props} progress="one" leftText="Straight" middleText="Bi" rightText="Gay" next="/insight-political" question={name => `What is ${name}’s likely sexual orientation?`} />} />
-                <Route exact path="/insight-political" render={props => <Insight {...props} progress="one" leftText="Left Wing" rightText="Right Wing" next="/insight-complete" question={name => `What is ${name}’s likely political preference?`} />} />
+                  <Route exact path="/insight-gender" render={props => <Insight {...props} progress="one" leftText="Male" middleText="Non-binary" rightText="Female" next="/insight-skin" question={name => `What’s ${name}’s gender?`} />} />
+                  <Route exact path="/insight-skin" render={props => <Insight {...props} progress="one" leftText="Light" rightText="Dark" next="/insight-financial" question={name => `What is ${name}'s skin colour?`} />} />
+                  <Route exact path="/insight-financial" render={props => <Insight {...props} progress="one" leftText="Poor" rightText="Rich" next="/insight-thank-you" question={name => `What’s ${name}’s financial status?`} />} />
+                  <Route exact path="/insight-thank-you" component={InsightThankYou} />
+                  <Route exact path="/insight-sexuality" render={props => <Insight {...props} progress="one" leftText="Straight" middleText="Bi" rightText="Gay" next="/insight-political" question={name => `What is ${name}’s likely sexual orientation?`} />} />
+                  <Route exact path="/insight-political" render={props => <Insight {...props} progress="one" leftText="Left Wing" rightText="Right Wing" next="/insight-complete" question={name => `What is ${name}’s likely political preference?`} />} />
 
-                <Route exact path="/insight-complete" component={InsightComplete} />
-                <Route exact path="/your-power" component={YourPower} />
-                <Route exact path="/pick-your-side" component={PickYourSide} />
-                <Route exact path="/campaign" component={Campaign} />
-                <Route exact path="/influenced-by" component={InfluencedBy} />
-                <Route exact path="/dark-ad" component={DarkAd} />
-                <Route exact path="/target-ad" component={TargetAd} />
-                <Route exact path="/success-ad" component={SuccessAd} />
-                <Route exact path="/influence-a-nation" component={InfluenceANation} />
-                <Route exact path="/consumer-data" component={ConsumerData} />
-                <Route exact path="/political-data" component={PoliticalData} />
-                <Route exact path="/home-data" component={HomeData} />
-                <Route exact path="/find-citizens" component={FindCitizens} />
-                <Route exact path="/targets-found" component={TargetsFound} />
-                <Route exact path="/launch-campaign" component={LaunchCampaign} />
-                <Route exact path="/referendum-results" component={ReferendumResults} />
-                <Route exact path="/win" component={Win} />
-                <Route exact path="/influence-a-celebrity" component={InfluenceACelebrity} />
-                <Route exact path="/FRMask" component={FRMask} />
-                <Route exact path="/generating-video" component={GeneratingVideo} />
-                <Route exact path="/pick-a-statement" component={PickAStatement} />
-                <Route exact path="/feels-good" component={FeelsGood} />
-                <Route exact path="/look-at-you" component={LookAtYou} />
-                <Route exact path="/OCEAN-reveal" component={OCEANReveal} />
-                <Route exact path="/shallow-fake" component={ShallowFake} />
-                <Route exact path="/our-algorithms" component={OurAlgorithms} />
-                <Route exact path="/share-on-social-choice" component={ShareOnSocialChoice} />
-                <Route exact path="/sharing-on-social-media" component={SharingOnSocialMedia} />
-                <Route exact path="/wrap-up" component={WrapUp} />
-                <Route exact path="/take-back-control" component={TakeBackControl} />
-                <Route exact path="/we-are-sorry" component={WeAreSorry} />
-                <Route exact path="/customer-survey" component={CustomerSurvey} />
-                <Route exact path="/outro-video" component={OutroVideo} />
-                <Route exact path="/goodbye" component={Goodbye} />
-
-                <Route exact path="/image-test" component={ImageTest} /> {/* TMP */}
+                  <Route exact path="/insight-complete" component={InsightComplete} />
+                  <Route exact path="/your-power" component={YourPower} />
+                  <Route exact path="/pick-your-side" component={PickYourSide} />
+                  <Route exact path="/campaign" component={Campaign} />
+                  <Route exact path="/influenced-by" component={InfluencedBy} />
+                  <Route exact path="/dark-ad" component={DarkAd} />
+                  <Route exact path="/target-ad" component={TargetAd} />
+                  <Route exact path="/success-ad" component={SuccessAd} />
+                  <Route exact path="/influence-a-nation" component={InfluenceANation} />
+                  <Route exact path="/consumer-data" component={ConsumerData} />
+                  <Route exact path="/political-data" component={PoliticalData} />
+                  <Route exact path="/home-data" component={HomeData} />
+                  <Route exact path="/find-citizens" component={FindCitizens} />
+                  <Route exact path="/targets-found" component={TargetsFound} />
+                  <Route exact path="/launch-campaign" component={LaunchCampaign} />
+                  <Route exact path="/referendum-results" component={ReferendumResults} />
+                  <Route exact path="/win" component={Win} />
+                  <Route exact path="/influence-a-celebrity" component={InfluenceACelebrity} />
+                  <Route exact path="/FRMask" component={FRMask} />
+                  <Route exact path="/generating-video" component={GeneratingVideo} />
+                  <Route exact path="/pick-a-statement" component={PickAStatement} />
+                  <Route exact path="/feels-good" component={FeelsGood} />
+                  <Route exact path="/look-at-you" component={LookAtYou} />
+                  <Route exact path="/OCEAN-reveal" component={OCEANReveal} />
+                  <Route exact path="/shallow-fake" component={ShallowFake} />
+                  <Route exact path="/our-algorithms" component={OurAlgorithms} />
+                  <Route exact path="/share-on-social-choice" component={ShareOnSocialChoice} />
+                  <Route exact path="/sharing-on-social-media" component={SharingOnSocialMedia} />
+                  <Route exact path="/wrap-up" component={WrapUp} />
+                  <Route exact path="/take-back-control" component={TakeBackControl} />
+                  <Route exact path="/we-are-sorry" component={WeAreSorry} />
+                  <Route exact path="/customer-survey" component={CustomerSurvey} />
+                  <Route exact path="/outro-video" component={OutroVideo} />
+                  <Route exact path="/goodbye" component={Goodbye} />
+                  <Route exact path="/image-test" component={ImageTest} /> {/* TMP */}
                 </React.Fragment>
 
               </Router>

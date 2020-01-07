@@ -45,13 +45,11 @@ class Selected extends React.Component {
       targetImage: UserSession.profileDir + 'default.jpg' };
   }
 
-  componentDidMount() {
-    UserSession.ensure(this.context,
-      ['_id', 'name', 'login', 'gender', 'virtue', 'target'],
-      user => {
-        this.setState({ targetName: user.target.name,
-          targetImage: user.targetImageUrl() })
-      });
+  async componentDidMount() {
+    const user = await UserSession.ensure(this.context,
+      ['_id', 'name', 'login', 'gender', 'virtue', 'target']);
+    this.setState({ targetName: user.target.name,
+      targetImage: user.targetImageUrl() })
   }
 
   render() {

@@ -286,31 +286,37 @@ class IconButton extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { colour: props.colour };
+    this.state = { colour: props.colour, ptEvents: 'none' };
   }
 
   render() {
 
     const { onClick, icon, text, className, Button, classes, enabled } = this.props;
-    //const { colour } = this.state;
-    // this code replaces deprecated componentWillReceiveProps()
-    // and componentDidMount()) above, TODO: needs checking
-    let colour = colours.grey, etype = typeof enabled;
-    if (!enabled) {
-      colour = colours.grey;
-    } else if (etype === 'string') {
-      colour = enabled;
-    } else if (enabled || etype === 'undefined') {
-      colour = colours.blue;
-    }
+    const { colour, ptEvents } = this.state;
+
+    // code below was in the now deprecated componentWillReceiveProps()
+    // TODO: see #366
+
+    // let colour = colours.grey, etype = typeof enabled;
+    // let ptEvents = '';
+    // if (!enabled) {
+    //   colour = colours.grey;
+    //   ptEvents = 'none'
+    // } else if (etype === 'string') {
+    //   colour = enabled;
+    //   ptEvents = 'auto'
+    // } else if (enabled || etype === 'undefined') {
+    //   colour = colours.blue;
+    //   ptEvents = 'auto'
+    // }
 
     const classNames = className ? [className] : [];
     classNames.push(`iconButton-${colour}`, 'iconButton', classes.button);
 
     return (
-      <button onClick={onClick} className={classNames.join(' ')}>
+      <button onClick={onClick} disabled={!enabled} className={classNames.join(' ')}>
         {icons[icon] && icons[icon](colour)}
-        {Button || <div style={{ color: colour }} className="iconButtonText">{text}</div>}
+        {Button || <div style={{ color: colour, pointerEvents: ptEvents }} className="iconButtonText">{text}</div>}
       </button>
     );
   }
@@ -319,7 +325,7 @@ class IconButton extends React.Component {
 IconButton.defaultProps = {
   onClick: () => { },
   classes: {},
-  className: {},
+  className: null,
   enabled: true,
   colour: colours.blue,
   Button: null,
@@ -327,7 +333,7 @@ IconButton.defaultProps = {
 IconButton.propTypes = {
   onClick: PropTypes.func,
   classes: PropTypes.object,
-  className: PropTypes.object,
+  className: PropTypes.string,
   enabled: PropTypes.any,
   colour: PropTypes.string,
   Button: PropTypes.element,
