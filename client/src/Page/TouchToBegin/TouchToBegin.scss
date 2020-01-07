@@ -11,9 +11,10 @@
 
   .touchToBegin-beginButton {
     text-decoration: none;
-    position: absolute;
-    top: 80px;
-    left: 30%;
+    position: relative;
+    width: 100%;
+    top: -120px;
+    left: -30px;
     text-align: center;
 
   }
@@ -24,8 +25,7 @@
 
 
   .TouchToBegin-clickToContinue-2 {
-padding-top: 270px;
-padding-left: 245px;
+
   }
   .TouchToBegin-clickToContinue-2 p{
 font-size: 1.8em;

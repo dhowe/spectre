@@ -9,73 +9,36 @@ import Keyboard from 'react-simple-keyboard';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import grey from '@material-ui/core/colors/grey';
 import 'react-simple-keyboard/build/css/index.css';
 
 import IconButton from '../../Components/IconButton/IconButton';
 import './SocialLogin.scss';
 
-const landscapeStyles = {
+const styles_landscape = {
     fontSize: '1rem',
-    fontWeight: 400
+    fontWeight: 400,
+    formControl: {
+      marginBottom: 15,
+    },
+    margin: {
+      display: 'block',
+      marginBottom: 15,
+    },
+
 };
 
-/*const portraitStyles = {
+const styles_portrait = {
     fontSize: '1.25rem',
-};*/
-
-const styles = {
-  formControlLandscape: {
-    marginBottom: 15,
-  },
-
-  marginLandscape: {
-    display: 'block',
-    marginBottom: 15,
-  },
-
-  formControl: {
-    marginBottom: 75,
-  },
-  textField: {
-    position: 'static',
-    width: '100%',
-    color: grey[50],
-    '&:before': {
-      borderColor: grey[50],
+        fontWeight: 400,
+    formControl: {
+      marginBottom: 75,
     },
-  },
-  cssLabel: {
-    transform: 'translate(0,1.5rem)',
-    color: grey[50],
-    '&$cssFocused': {
-      color: grey[50],
+    margin: {
+      display: 'block',
+      marginBottom: 75,
     },
-  },
-  cssFocused: {
-    '&:after': {
-      borderBottomColor: grey[50],
-    },
-  },
-  cssUnderline: {
-    '&:after': {
-      borderBottomColor: grey[50],
-    },
-  },
-  margin: {
-    display: 'block',
-    marginBottom: 75,
-  },
-  radioGroup: {
-    alignItems: 'center',
-  },
-  cssOutlinedInput: {
-    // TMP: removed to silence warning in console
-    // '&$cssFocused $notchedOutline': {
-    //   borderColor: grey[50],
-    // }
-  },
 };
+
 
 let stateObj = {
   emailValid: false,
@@ -189,8 +152,8 @@ class SocialLogin extends React.Component {
         <div className={`${classes.content} socialLogin-content`}>
           <form noValidate>
             {/* #267: SHIFT / CAPS, etc. dont work */}
-            <FormControl className={classes.marginLandscape}>
-              <Typography style={landscapeStyles} component="h6" variant="h6">Enter your name:</Typography>
+            <FormControl className={classes.margin}>
+              <Typography style={window.innerWidth === 1920 ? styles_landscape : styles_portrait} component="h6" variant="h6">Enter your name:</Typography>
               <Input
                 name="name"
                 onClick={this.changeFocus('name')}
@@ -202,8 +165,8 @@ class SocialLogin extends React.Component {
                 }}
               />
             </FormControl>
-            <FormControl className={classes.marginLandscape}>
-              <Typography style={landscapeStyles} component="h6" variant="h6">Your email:</Typography>
+            <FormControl className={classes.margin}>
+              <Typography style={window.innerWidth === 1920 ? styles_landscape : styles_portrait} component="h6" variant="h6">Your email:</Typography>
               <Input
                 name="email"
                 onClick={this.changeFocus('email')}
@@ -216,8 +179,8 @@ class SocialLogin extends React.Component {
               />
             </FormControl>
 
-            <FormControl component="fieldset" className={classes.formControlLandscape}>
-              <Typography  style={landscapeStyles} component="h6" variant="h6">Your gender:</Typography>
+            <FormControl component="fieldset" className={classes.formControl}>
+              <Typography style={window.innerWidth === 1920 ? styles_landscape : styles_portrait} component="h6" variant="h6">Your gender:</Typography>
               <RadioGroup
                 aria-label="Gender"
                 name="gender"
@@ -263,4 +226,4 @@ SocialLogin.propTypes = {
 };
 SocialLogin.contextType = UserSession;
 
-export default withStyles(styles)(SocialLogin);
+export default withStyles(window.innerWidth === 1920 ? styles_landscape : styles_portrait)(SocialLogin);

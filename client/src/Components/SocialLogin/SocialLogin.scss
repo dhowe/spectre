@@ -1,4 +1,27 @@
 
+input[type="text"] {
+  position: static;
+  width: 100%;
+  color: rgb(155,155,155);
+}
+
+input[type="text"]::before {
+  border-color: rgb(155,155,155);
+}
+
+
+.MuiInputBase-root{
+  width: 100%;
+}
+
+.MuiFormControl-root{
+    width: 100%;
+}
+
+
+.MuiFormGroup-root{
+  align-items: center;
+}
 
 @media screen and (orientation:landscape) {
   .simple-keyboard {
@@ -11,7 +34,7 @@
     font-size: 25px;
   }
 
-  button{
+  .iconButton{
     position:fixed;
     right: 15%;
     top: 38%;
@@ -21,6 +44,10 @@
     top: 25%;
     left: 29%;
 
+  }
+
+  .MuiFormControl-root h6{
+      text-align: center;
   }
 
 }

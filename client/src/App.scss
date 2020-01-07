@@ -1,26 +1,22 @@
 @import 'colors.scss';
-
 @font-face {
   font-family: 'Montserrat';
-  src: url(Fonts/Montserrat/Montserrat-Regular.ttf) format('truetype');
+  src: url("Fonts/Montserrat/Montserrat-Regular.ttf") format('truetype');
 }
-
 @font-face {
   font-family: "Montserrat";
-  src: url(Fonts/Montserrat/Montserrat-Bold.ttf);
+  src: url("Fonts/Montserrat/Montserrat-Bold.ttf");
   font-weight: bold;
 }
-
 @font-face {
   font-family: "Montserrat";
-  src: url(Fonts/Montserrat/Montserrat-SemiBold.ttf);
-  font-weight:500;
+  src: url("Fonts/Montserrat/Montserrat-SemiBold.ttf");
+  font-weight: 500;
 }
-
 @font-face {
   font-family: "Montserrat";
-  src: url(Fonts/Montserrat/Montserrat-Light.ttf);
-  font-weight:300;
+  src: url("Fonts/Montserrat/Montserrat-Light.ttf");
+  font-weight: 300;
 }
 
 * {
@@ -29,7 +25,8 @@
   font-family: 'Montserrat' !important;
 }
 
-html, body {
+body,
+html {
   font-size: 2em;
   font-family: 'Montserrat' !important;
 }
@@ -61,11 +58,11 @@ html, body {
 .App-link {
   color: #61dafb;
 }
-
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -73,42 +70,53 @@ html, body {
 
 a {
   text-decoration: none;
-  &:active, &:hover, &:focus {
-    outline: -webkit-focus-ring-color auto 0px;
+
+  &:active,
+  &:focus,
+  &:hover {
+    outline: -webkit-focus-ring-color auto 0;
   }
 }
-
-@media screen and (orientation:landscape){
-
+@media screen and (orientation:landscape) {
   .content {
-    padding-top: 150px;
+    position: absolute;
+    width: 100%;
     height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
     color: $grey;
-    h1, h2, h3, h4, h5, h6 {
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
       color: $grey;
     }
   }
 }
-
-@media screen and (orientation:portrait){
-
+@media screen and (orientation:portrait) {
   .content {
     padding: 350px 100px;
     height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    /*justify-content: space-between;*/
+    justify-content: center;
     color: $grey;
-    h1, h2, h3, h4, h5, h6 {
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
       color: $grey;
     }
   }
 }
-
-
 
 a.disabled {
   pointer-events: none;
@@ -121,13 +129,13 @@ strong {
 .hidden {
   visibility: hidden;
 }
-
 @-webkit-keyframes rotating {
-  from{
-      -webkit-transform: rotate(0deg);
+  from {
+    -webkit-transform: rotate(0deg);
   }
-  to{
-      -webkit-transform: rotate(360deg);
+
+  to {
+    -webkit-transform: rotate(360deg);
   }
 }
 
