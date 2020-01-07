@@ -7,22 +7,10 @@ import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 
 
-import colours from '../../colors.scss';
+//import colours from '../../colors.scss';
 import './Pledge.scss';
 
 const styles = {
-  root: {
-    flexGrow: 1,
-    width: '100%',
-    color: 'black',
-  },
-  clickToContinue: {
-    margin: '20% 0',
-  },
-  strong: {
-    color: colours.lightGrey,
-    fontWeight: 500,
-  },
 };
 
 class Pledge extends React.Component {
@@ -50,7 +38,7 @@ class Pledge extends React.Component {
             <Fade in timeout={1000}>
               <p className="copy">
                 Welcome to the altar of&nbsp;
-                <strong className={classes.strong}>Dataism.</strong>
+                <strong>Dataism.</strong>
               </p>
             </Fade>
             <Fade in timeout={1000} style={{ transitionDelay: '2500ms' }}>

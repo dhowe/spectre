@@ -17,16 +17,7 @@ import './InsightComplete.scss';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
 const styles = {
-  root: {
-    flexGrow: 1,
-    width: '100%',
-    color: 'black',
-  },
-  button: {
-    ...Styles.button,
-    color: colours.blue,
-    borderColor: colours.blue,
-  },
+
 };
 
 class InsightComplete extends React.Component {

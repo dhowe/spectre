@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
+//import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 import Fade from '@material-ui/core/Fade';
 import IconButton from '../../Components/IconButton/IconButton';
@@ -41,22 +41,22 @@ class Steps extends React.Component {
         <IdleChecker setIdleTime={14}/>
         <div className={classes.content + " content"}>
             <Fade in={true} >
-                <Typography component="h5" variant="h5">Find what you are looking for by following these three steps:</Typography>
+                <p>Find what you are looking for by following these three steps:</p>
             </Fade>
             <Fade in={true} style={{transitionDelay: '1000ms'}}>
-                <Typography component="h6" variant="h6"><strong>Step 1</strong> - influence a follower</Typography>
+                <p><strong>Step 1</strong> - influence a follower</p>
             </Fade>
             <Fade in={true} style={{transitionDelay: '2000ms'}}>
-                <Typography component="h6" variant="h6"><strong>Step 2</strong> - influence a nation</Typography>
+                <p><strong>Step 2</strong> - influence a nation</p>
             </Fade>
             <Fade in={true} style={{transitionDelay: '3000ms'}}>
-                <Typography component="h6" variant="h6"><strong>Step 3</strong> - influence a celebrity</Typography>
+                <p><strong>Step 3</strong> - influence a celebrity</p>
             </Fade>
             <Fade in={true} style={{transitionDelay: '4000ms'}}>
-                <Typography component="h5" variant="h5">Get the data. Get the {this.state.virtue}.</Typography>
+                <p>Get the data. Get the {this.state.virtue}.</p>
             </Fade>
             <Fade in={true} style={{transitionDelay: '5000ms'}}>
-                <Typography component="h6" variant="h6">Ready?</Typography>
+                <p>Ready?</p>
             </Fade>
             <Link to="/follower">
                 <IconButton icon="tick" text="Yes" />

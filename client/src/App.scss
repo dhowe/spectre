@@ -1,26 +1,25 @@
+/*
+Overall
+*/
 @import 'colors.scss';
-
 @font-face {
   font-family: 'Montserrat';
-  src: url(Fonts/Montserrat/Montserrat-Regular.ttf) format('truetype');
+  src: url("Fonts/Montserrat/Montserrat-Regular.ttf") format('truetype');
 }
-
 @font-face {
   font-family: "Montserrat";
-  src: url(Fonts/Montserrat/Montserrat-Bold.ttf);
+  src: url("Fonts/Montserrat/Montserrat-Bold.ttf");
   font-weight: bold;
 }
-
 @font-face {
   font-family: "Montserrat";
-  src: url(Fonts/Montserrat/Montserrat-SemiBold.ttf);
-  font-weight:500;
+  src: url("Fonts/Montserrat/Montserrat-SemiBold.ttf");
+  font-weight: 500;
 }
-
 @font-face {
   font-family: "Montserrat";
-  src: url(Fonts/Montserrat/Montserrat-Light.ttf);
-  font-weight:300;
+  src: url("Fonts/Montserrat/Montserrat-Light.ttf");
+  font-weight: 300;
 }
 
 * {
@@ -29,7 +28,8 @@
   font-family: 'Montserrat' !important;
 }
 
-html, body {
+body,
+html {
   font-size: 2em;
   font-family: 'Montserrat' !important;
 }
@@ -50,22 +50,23 @@ html, body {
 
 .App-header {
   min-height: 100vh;
-  display: flex;
+  display: block;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
+  background-color: white;
   color: white;
 }
 
 .App-link {
   color: #61dafb;
 }
-
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -73,62 +74,119 @@ html, body {
 
 a {
   text-decoration: none;
-  &:active, &:hover, &:focus {
-    outline: -webkit-focus-ring-color auto 0px;
+
+  &:active,
+  &:focus,
+  &:hover {
+    outline: -webkit-focus-ring-color auto 0;
   }
-}
-
-@media screen and (orientation:landscape){
-
-  .content {
-    padding-top: 150px;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    color: $grey;
-    h1, h2, h3, h4, h5, h6 {
-      color: $grey;
-    }
-  }
-}
-
-@media screen and (orientation:portrait){
-
-  .content {
-    padding: 350px 100px;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    color: $grey;
-    h1, h2, h3, h4, h5, h6 {
-      color: $grey;
-    }
-  }
-}
-
-
-
-a.disabled {
-  pointer-events: none;
 }
 
 strong {
   color: $blue;
 }
 
-.hidden {
-  visibility: hidden;
+.copy {
+  font-size: 48px;
+}
+@media screen and (orientation:landscape) {
+  .content {
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: $grey;
+    display: -webkit-flex;
+    -webkit-justify-content: center;
+    margin: 0;
+    padding: 0;
+  }
+
+  .buttonWrapper {
+    margin: 80px auto;
+    align-items: center;
+    width: 100%;
+  }
+
+  .split-half {
+    display: -webkit-flex;
+    -webkit-justify-content: center;
+    display: flex;
+    justify-content: center;
+  }
+
+  .split-left {
+    -webkit-flex: 1;
+    flex: 1;
+    width: 50%;
+  }
+
+  .split-right {
+    -webkit-flex: 1;
+    flex: 1;
+    width: 50%;
+  }
+}
+@media screen and (orientation:portrait) {
+  .content {
+    padding: 350px 100px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    /*justify-content: space-between;*/
+    justify-content: center;
+    color: $grey;
+  }
+
+  .buttonWrapper {
+    padding-left: -40px;
+    margin: 80px auto;
+    align-items: center;
+  }
 }
 
-@-webkit-keyframes rotating {
-  from{
-      -webkit-transform: rotate(0deg);
-  }
-  to{
-      -webkit-transform: rotate(360deg);
-  }
+.buttonWrapper button {
+  display: inline-block;
+  width: 180px;
+  height: 53px;
+  margin: 16px;
+  border: solid 3px #929391;
+  border-radius: 28px;
+  background-color: #ffffff;
+  box-shadow: none;
+  color: #929391;
+  font-weight: 500;
+  text-transform: capitalize;
+  letter-spacing: 0;
+  font-size: 30;
+  line-height: 32px;
+}
+
+.blueBtn{
+  display: inline-block;
+  width: auto;
+  height: 53px;
+  margin: 16px;
+  border: solid 3px #21c0fc;
+  border-radius: 28px;
+  background-color: #ffffff;
+  box-shadow: none;
+  color: #21c0fc;
+  font-weight: 500;
+  text-transform: capitalize;
+  letter-spacing: 0;
+  font-size: 30;
+  line-height: 32px;
+}
+
+a.disabled {
+  pointer-events: none;
+}
+
+.hidden {
+  visibility: hidden;
 }
 
 .beginLogo {

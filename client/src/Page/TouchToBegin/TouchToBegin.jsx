@@ -10,7 +10,7 @@ import UserSession from '../../Components/UserSession/UserSession';
 
 import './TouchToBegin.scss';
 
-/*const styles_portrait = {
+const styles_portrait = {
   root: {
     flexGrow: 1,
     width: '100%',
@@ -21,9 +21,9 @@ import './TouchToBegin.scss';
   clickToContinue: {
     margin: '20% 0',
   },
-};*/
+};
 
-const styles = {
+const styles_landscape = {
   root: {
     flexGrow: 1,
     justifyContent: 'center',
@@ -40,13 +40,11 @@ const styles = {
 
 };
 
-
 class TouchToBegin extends React.Component {
 
   constructor(props) {
     super(props, '/login');
   }
-
   render() {
     return (
       <div className={this.props.classes.root + ' touchToBegin'}>
@@ -72,4 +70,4 @@ TouchToBegin.propTypes = {
 TouchToBegin.contextType = UserSession;
 
 
-export default withStyles(styles)(TouchToBegin);
+export default withStyles(window.innerWidth === 1920 ? styles_landscape : styles_portrait)(TouchToBegin);
