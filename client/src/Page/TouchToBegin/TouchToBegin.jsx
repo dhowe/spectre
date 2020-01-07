@@ -10,7 +10,7 @@ import UserSession from '../../Components/UserSession/UserSession';
 
 import './TouchToBegin.scss';
 
-/*const styles_portrait = {
+const styles_portrait = {
   root: {
     flexGrow: 1,
     width: '100%',
@@ -21,7 +21,7 @@ import './TouchToBegin.scss';
   clickToContinue: {
     margin: '20% 0',
   },
-};*/
+};
 
 const styles_landscape = {
   root: {
