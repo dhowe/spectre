@@ -108,7 +108,7 @@ class SearchingFor extends React.Component {
         <IdleChecker />
         <div className={`${classes.content} content`}>
           <Typography className="username" component="h3" variant="h3">{name}</Typography>
-          <Typography className="question" component="h3" variant="h3">What are you searching for today?</Typography>
+          <p>What are you searching for today?</p>
 
           {/*<div className="ImageCapture">
             <Webcam ref={this.setRef}
