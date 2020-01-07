@@ -21,9 +21,6 @@ const styles = {
   glow: {
     color: '#ffd700',
   },
-  copy: {
-    fontSize: '48px',
-  }
 };
 
 // Interstitial
@@ -41,9 +38,9 @@ class ThankYou extends React.Component {
         <IdleChecker />
         <div className={`${classes.content} content`}>
           <div>
-            <p className={classes.copy}>Thank you, <strong>{user.name}!</strong></p>
+            <p className="copy">Thank you, <strong>{user.name}!</strong></p>
             <ThumbUp className="insight-thank-you-icon" />
-            <p className={classes.copy}>Your experience has been <strong>personalised.</strong></p>
+            <p className="copy">Your experience has been <strong>personalised.</strong></p>
           </div>
           <Link to="/steps">
             <IconButton icon="next" text="Next"/>

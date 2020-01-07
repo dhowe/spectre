@@ -27,22 +27,7 @@ const styles = {
   clickToContinue: {
     margin: '20% 0',
   },
-  keepButton: {
-    ...Styles.button,
-    color: colours.blue,
-    borderColor: colours.blue,
-    marginRight: 20,
-    fontSize,
-    width,
-    height,
-  },
-  deleteButton: {
-    ...Styles.button,
-    marginLeft: 20,
-    fontSize,
-    width,
-    height,
-  },
+
   content: {
     justifyContent: 'center',
   },

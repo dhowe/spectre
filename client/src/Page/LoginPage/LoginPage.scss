@@ -4,13 +4,21 @@
   flex-grow: 1;
   width: 100%;
   background-size: 'cover';
-
 }
 
+.LoginPage-content h2 {
+  font-size: 55px;
+  font-weight: 400;
+    color: #fff;
+}
 
-
+.LoginPage-content h6 {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 400;
+  color: #fff;
+}
 @media screen and (orientation:landscape) {
-
   .LoginPage-content {
     h1,
     h2,
@@ -20,7 +28,16 @@
     h6 {
       color: #ffffff;
     }
-      background-color: #21c0fc;
+    background-color: #21c0fc;
+  }
+
+  .LoginPage-content h2 {
+    margin-top: -600px;
+
+  }
+
+  .LoginPage-content h6 {
+      padding-top: 20px;
   }
 
   .tos {
@@ -38,16 +55,12 @@
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-      color: #ffffff;
-    }
   }
+
+  .LoginPage-content h2 {}
+
+  .LoginPage-content h6 {}
+
   .tos {
     position: fixed;
     margin: auto;
@@ -56,5 +69,4 @@
     bottom: 3%;
     left: 38%;
   }
-
 }

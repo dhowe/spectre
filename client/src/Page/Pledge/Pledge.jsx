@@ -7,7 +7,7 @@ import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 
 
-import colours from '../../colors.scss';
+//import colours from '../../colors.scss';
 import './Pledge.scss';
 
 const styles = {

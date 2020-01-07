@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Typography from '@material-ui/core/Typography';
+//import Typography from '@material-ui/core/Typography';
 import Modal from '../../Components/Modal/Modal';
 import SocialLogin from '../../Components/SocialLogin/SocialLogin';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
@@ -18,17 +18,10 @@ window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true; // TMP: #138
 
 const styles_landscape = {
     marginBottom: 20,
-    fontSize: '2rem',
-    fontWeight: 400,
-    position: 'absolute',
-    top: '150px',
-    left: '42%'
-
 };
 
 const styles_portrait = {
     marginBottom: 70,
-    fontSize: '3.75rem',
 };
 
 
@@ -166,7 +159,7 @@ class LoginPage extends React.Component {
         <SpectreHeader />
         <IdleChecker forceTerminate={this.state.idleCheckerDone} />
         <div className={this.props.classes.content + ' LoginPage-content content'}>
-          <Typography style={window.innerWidth === 1920 ? styles_landscape : styles_portrait} component="h2" variant="h2">Let's Play!</Typography>
+          <h2>Let's Play!</h2>
           <Modal
             isOpen={this.state.modalOpen}
             title={this.modalTitle}

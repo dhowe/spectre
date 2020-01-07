@@ -18,24 +18,8 @@ const height = 53;
 const fontSize = 22;
 
 const styles = {
-  root: {
-    flexGrow: 1,
-    width: '100%',
-    color: 'black',
-  },
-  content: {
-    display: 'block',
-  },
-  button: {
-    ...Styles.button,
-    color: colours.blue,
-    borderColor: colours.blue,
-    marginRight: 20,
-    fontSize,
-    height,
-    display: 'inline-block',
-    marginTop: '0',
-  },
+
+
 };
 
 class Selected extends React.Component {
