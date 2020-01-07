@@ -8,7 +8,6 @@ import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 //import Webcam from "react-webcam";
 import './SearchingFor.scss';
-import Styles from '../../Styles';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
 
@@ -20,9 +19,6 @@ const styles = {
   },
   clickToContinue: {
     margin: '20% 0',
-  },
-  button: {
-    ...Styles.button,
   },
   link: {
     display: 'block',

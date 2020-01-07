@@ -1,4 +1,5 @@
 export default {
+  /*
   button: {
     borderRadius: '28px',
     margin: '16px',
@@ -15,4 +16,5 @@ export default {
     fontSize: '30',
     lineHeight: '32px',
   },
+  */
 };

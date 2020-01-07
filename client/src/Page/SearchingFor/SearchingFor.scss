@@ -19,26 +19,3 @@ h3.question {
   vertical-align: baseline;
   margin: 0;
 }
-
-.buttonWrapper button {
-  display: inline-block;
-  width: 180px;
-  height: 53px;
-  margin-left: 40px;
-  margin-top: 0;
-}
-@media screen and (orientation:landscape) {
-  .buttonWrapper {
-    margin: 80px auto;
-    align-items: center;
-    width: 100%;
-  }
-
-}
-@media screen and (orientation:portrait) {
-  .buttonWrapper {
-    padding-left: -40px;
-    margin: 80px auto;
-    align-items: center;
-  }
-}

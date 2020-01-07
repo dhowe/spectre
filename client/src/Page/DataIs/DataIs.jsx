@@ -8,7 +8,19 @@ import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 
-const styles = {
+const styles_landscape = {
+  /*
+  root: {
+    flexGrow: 1,
+    width: '100%',
+    color: 'black',
+  },
+  clickToContinue: {
+    margin: '20% 0',
+  },
+  */
+};
+const styles_portrait = {
   root: {
     flexGrow: 1,
     width: '100%',
@@ -40,18 +52,18 @@ class DataIs extends React.Component {
         <SpectreHeader colour="white" />
         <div className={`${this.props.content} content`}>
           <Fade in={true} style={{ transitionDelay: '200ms' }}>
-            <Typography component="h6" variant="h6">DATA IS {virtue.toUpperCase()}</Typography>
+            <p className="copy">DATA IS {virtue.toUpperCase()}</p>
           </Fade>
           <Fade in={true} style={{ transitionDelay: '1200ms' }}>
-            <Typography component="h6" variant="h6">To become more <strong>{virtueAdverb}</strong> you need&nbsp;more&nbsp;data</Typography>
+            <p className="copy">To become more <strong>{virtueAdverb}</strong> you need&nbsp;more&nbsp;data</p>
           </Fade>
           <Fade in={true} style={{ transitionDelay: '2000ms' }}>
-            <Typography component="h6" variant="h6">We can help you believe in the {virtue}&nbsp;of&nbsp;Dataism.</Typography>
+            <p className="copy">We can help you believe in the {virtue}&nbsp;of&nbsp;Dataism.</p>
           </Fade>
           <Countdown
             ref={e => this.countdown = e}
             onComplete={() => this.props.history.push('/personalised')}
-            date={Date.now() + 500000}
+            date={Date.now() + 5000}
             renderer={() => null}
           />
         </div>
@@ -66,4 +78,4 @@ DataIs.propTypes = {
 };
 DataIs.contextType = UserSession;
 
-export default withStyles(styles)(DataIs);
+export default withStyles(window.innerWidth === 1920 ? styles_landscape : styles_portrait)(DataIs);

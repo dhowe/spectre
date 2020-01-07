@@ -8,7 +8,7 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 
-import './Game.css';
+import './Game.scss';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
 
@@ -323,7 +323,7 @@ class Game extends React.Component {
         <P5Wrapper sketch={sketch} className="wrapper" />
         <IdleChecker />
         <Link to="/thank-you">
-          <IconButton icon="next" text="Next" />
+          
         </Link>
         <FooterLogo />
       </div>
