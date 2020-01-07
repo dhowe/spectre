@@ -2,7 +2,7 @@
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
-import Typography from '@material-ui/core/Typography';
+//import Typography from '@material-ui/core/Typography';
 import FormControl from '@material-ui/core/FormControl';
 import UserSession from '../../Components/UserSession/UserSession';
 import Keyboard from 'react-simple-keyboard';
@@ -10,7 +10,6 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import 'react-simple-keyboard/build/css/index.css';
-
 import IconButton from '../../Components/IconButton/IconButton';
 import './SocialLogin.scss';
 
@@ -153,7 +152,7 @@ class SocialLogin extends React.Component {
           <form noValidate>
             {/* #267: SHIFT / CAPS, etc. dont work */}
             <FormControl className={classes.margin}>
-              <Typography style={window.innerWidth === 1920 ? styles_landscape : styles_portrait} component="h6" variant="h6">Enter your name:</Typography>
+              <h6>Enter your name:</h6>
               <Input
                 name="name"
                 onClick={this.changeFocus('name')}
@@ -166,7 +165,7 @@ class SocialLogin extends React.Component {
               />
             </FormControl>
             <FormControl className={classes.margin}>
-              <Typography style={window.innerWidth === 1920 ? styles_landscape : styles_portrait} component="h6" variant="h6">Your email:</Typography>
+              <h6>Your email:</h6>
               <Input
                 name="email"
                 onClick={this.changeFocus('email')}
@@ -180,7 +179,7 @@ class SocialLogin extends React.Component {
             </FormControl>
 
             <FormControl component="fieldset" className={classes.formControl}>
-              <Typography style={window.innerWidth === 1920 ? styles_landscape : styles_portrait} component="h6" variant="h6">Your gender:</Typography>
+              <h6>Your gender:</h6>
               <RadioGroup
                 aria-label="Gender"
                 name="gender"

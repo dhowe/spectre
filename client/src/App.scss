@@ -1,3 +1,6 @@
+/*
+Overall
+*/
 @import 'colors.scss';
 @font-face {
   font-family: 'Montserrat';
@@ -47,11 +50,12 @@ html {
 
 .App-header {
   min-height: 100vh;
-  display: flex;
+  display: block;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
+  background-color: white;
   color: white;
 }
 
@@ -77,6 +81,14 @@ a {
     outline: -webkit-focus-ring-color auto 0;
   }
 }
+
+strong {
+  color: $blue;
+}
+
+.copy {
+  font-size: 48px;
+}
 @media screen and (orientation:landscape) {
   .content {
     position: absolute;
@@ -86,15 +98,35 @@ a {
     flex-direction: column;
     justify-content: center;
     color: $grey;
+    display: -webkit-flex;
+    -webkit-justify-content: center;
+    margin: 0;
+    padding: 0;
+  }
 
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-      color: $grey;
-    }
+  .buttonWrapper {
+    margin: 80px auto;
+    align-items: center;
+    width: 100%;
+  }
+
+  .split-half {
+    display: -webkit-flex;
+    -webkit-justify-content: center;
+    display: flex;
+    justify-content: center;
+  }
+
+  .split-left {
+    -webkit-flex: 1;
+    flex: 1;
+    width: 50%;
+  }
+
+  .split-right {
+    -webkit-flex: 1;
+    flex: 1;
+    width: 50%;
   }
 }
 @media screen and (orientation:portrait) {
@@ -106,37 +138,55 @@ a {
     /*justify-content: space-between;*/
     justify-content: center;
     color: $grey;
-
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-      color: $grey;
-    }
   }
+
+  .buttonWrapper {
+    padding-left: -40px;
+    margin: 80px auto;
+    align-items: center;
+  }
+}
+
+.buttonWrapper button {
+  display: inline-block;
+  width: 180px;
+  height: 53px;
+  margin: 16px;
+  border: solid 3px #929391;
+  border-radius: 28px;
+  background-color: #ffffff;
+  box-shadow: none;
+  color: #929391;
+  font-weight: 500;
+  text-transform: capitalize;
+  letter-spacing: 0;
+  font-size: 30;
+  line-height: 32px;
+}
+
+.blueBtn{
+  display: inline-block;
+  width: auto;
+  height: 53px;
+  margin: 16px;
+  border: solid 3px #21c0fc;
+  border-radius: 28px;
+  background-color: #ffffff;
+  box-shadow: none;
+  color: #21c0fc;
+  font-weight: 500;
+  text-transform: capitalize;
+  letter-spacing: 0;
+  font-size: 30;
+  line-height: 32px;
 }
 
 a.disabled {
   pointer-events: none;
 }
 
-strong {
-  color: $blue;
-}
-
 .hidden {
   visibility: hidden;
-}
-@-webkit-keyframes rotating {
-  from {
-    -webkit-transform: rotate(0deg);
-  }
-
-  to {
-    -webkit-transform: rotate(360deg);
-  }
 }
 
 .beginLogo {

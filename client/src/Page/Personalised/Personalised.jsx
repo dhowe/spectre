@@ -37,7 +37,7 @@ class Personalised extends React.Component {
         <div className={`${classes.content} content`}>
           <div>
           <Fade in>
-            <p className="copy" style={{marginTop: '200px'}}>
+            <p className="copy">
               In order to create a&nbsp;
               <br/ >
               <strong>personalised experience</strong>

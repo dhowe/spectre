@@ -8,7 +8,6 @@ import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 //import Webcam from "react-webcam";
 import './SearchingFor.scss';
-import Styles from '../../Styles';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
 
@@ -20,9 +19,6 @@ const styles = {
   },
   clickToContinue: {
     margin: '20% 0',
-  },
-  button: {
-    ...Styles.button,
   },
   link: {
     display: 'block',
@@ -112,7 +108,7 @@ class SearchingFor extends React.Component {
         <IdleChecker />
         <div className={`${classes.content} content`}>
           <Typography className="username" component="h3" variant="h3">{name}</Typography>
-          <Typography className="question" component="h3" variant="h3">What are you searching for today?</Typography>
+          <p>What are you searching for today?</p>
 
           {/*<div className="ImageCapture">
             <Webcam ref={this.setRef}

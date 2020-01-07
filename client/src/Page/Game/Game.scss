@@ -1,0 +1,34 @@
+
+
+@media screen and (orientation:landscape) {
+
+  canvas {
+    margin-top: 250px;
+
+  }
+
+}
+
+
+@media screen and (orientation:portrait) {
+  canvas {
+    position: fixed;
+    z-index: 1;
+    display: block;
+    left: 0px;
+    top: 600px;
+    width:100%;
+  }
+
+  #content {
+    position: fixed;
+    z-index: 2;
+    top: 10%;
+    left: 25%;
+    display: none;
+    width: 50%;
+    max-height: 300px;
+  }
+
+
+}

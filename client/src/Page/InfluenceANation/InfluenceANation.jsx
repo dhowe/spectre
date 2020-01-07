@@ -17,21 +17,7 @@ const height = 53;
 const fontSize = 22;
 
 const styles = {
-  root: {
-    flexGrow: 1,
-    width: "100%",
-    color: 'black'
-  },
-  button: {
-    ...Styles.button,
-    color: colours.blue,
-    borderColor: colours.blue,
-    marginRight: 20,
-    fontSize,
-    height,
-    display: 'inline-block',
-    marginTop: '150px'
-  },
+
 };
 
 class InfluenceANation extends React.Component {
@@ -57,7 +43,7 @@ class InfluenceANation extends React.Component {
               lots of others to vote <strong>{this.state.adIssue}</strong>.</Typography>
           <Typography className="semi-bold">We can show you how, but first, you must...</Typography>
           <Link to="/consumer-data">
-            <Button className={classes.button}>Get more data!</Button>
+            <Button className="blueBtn">Get more data!</Button>
           </Link>
         </div>
         <FooterLogo />

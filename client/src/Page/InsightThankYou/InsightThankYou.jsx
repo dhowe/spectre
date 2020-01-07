@@ -28,12 +28,7 @@ const styles = {
   beginningToThink: {
     margin: 0,
   },
-  button: {
-    ...Styles.button,
-    border: `solid 3px ${colours.blue}`,
-    color: colours.blue,
-    fontSize: 18,
-  },
+
   title: {
     color: colours.blue,
   }
