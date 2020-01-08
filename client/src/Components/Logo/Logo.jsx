@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import image from './logo.svg';
+import "./Logo.scss";
 
 const styles_portrait = {
     Logo: {

@@ -13,13 +13,14 @@
     text-decoration: none;
     position: relative;
     width: 100%;
-    top: -120px;
-    left: -30px;
+    top: -140px;
+    left: -15px;
     text-align: center;
   }
 
   .MuiTypography-body1 {
     font-size: 0.5rem;
+    padding-top: 80px;
     color: #ffffff;
   }
 
@@ -33,15 +34,21 @@
   .touchToBegin {
     background-color: $blue;
 
-    .touchToBegin-beginButton {
-      text-decoration: none;
-      margin-top: -40px;
-      margin-right: 60px;
+  }
 
-      p {
-        font-size: 2rem;
-        color: #ffffff;
-      }
-    }
+  .touchToBegin-beginButton {
+    position: relative;
+    text-decoration: none;
+    margin-top: -220px;
+    margin-right: 140px;
+  }
+
+  .MuiTypography-body1 {
+
+    padding-top: 280px;
+    color: #ffffff;
+  }
+  .TouchToBegin-clickToContinue-2 p {
+    font-size: 1.5em;
   }
 }
