@@ -6,15 +6,10 @@ import { Link } from 'react-router-dom';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
-import Styles from '../../Styles';
 import Button from '@material-ui/core/Button';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
 import "./InfluenceANation.scss";
-import colours from '../../colors.scss';
-
-const height = 53;
-const fontSize = 22;
 
 const styles = {
 

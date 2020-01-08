@@ -1,4 +1,5 @@
 @import '../../colors.scss';
+
 @media screen and (orientation:landscape) {
   .touchToBegin {
     margin: 0;
@@ -17,7 +18,7 @@
     left: -15px;
     text-align: center;
   }
-  
+
   .TouchToBegin-clickToContinue-2 p {
     font-size: 0.5rem;
     padding-top: 80px;
