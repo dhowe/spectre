@@ -17,23 +17,17 @@
     left: -15px;
     text-align: center;
   }
-
-  .MuiTypography-body1 {
+  
+  .TouchToBegin-clickToContinue-2 p {
     font-size: 0.5rem;
     padding-top: 80px;
     color: #ffffff;
-  }
-
-  .TouchToBegin-clickToContinue-2 {}
-
-  .TouchToBegin-clickToContinue-2 p {
     font-size: 1.8em;
   }
 }
 @media screen and (orientation:portrait) {
   .touchToBegin {
     background-color: $blue;
-
   }
 
   .touchToBegin-beginButton {
@@ -43,12 +37,9 @@
     margin-right: 140px;
   }
 
-  .MuiTypography-body1 {
-
-    padding-top: 280px;
-    color: #ffffff;
-  }
   .TouchToBegin-clickToContinue-2 p {
     font-size: 1.5em;
+    padding-top: 280px;
+    color: #ffffff;
   }
 }

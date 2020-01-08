@@ -55,7 +55,7 @@ class TouchToBegin extends React.Component {
               <div className="beginLogo">
                 <Logo />
               </div>
-              <Typography>Touch to Begin!</Typography>
+              <p>Touch to Begin!</p>
             </div>
           </Link>
         </div>
