@@ -48,6 +48,7 @@ function SimpleModal(props) {
 
     >
       <div style={modalStyle} className={classes.paper} id="modal-title-div">
+      <div id="modal-title-div-content">
         <Typography variant="h6" className={classes.title} id="modal-title">
           {props.title}
         </Typography>
@@ -59,6 +60,7 @@ function SimpleModal(props) {
           {props.content}
         </Typography>
         <Button onClick={props.onClose} id="simple-modal-button">Close</Button>
+      </div>
       </div>
     </Modal>
   );
