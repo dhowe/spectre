@@ -11,9 +11,6 @@ import { ReactComponent as ThumbUp } from '../../Icons/insightthankyou.svg';
 
 import colours from '../../colors.scss';
 import './InsightThankYou.scss';
-import Styles from '../../Styles';
-
-
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
 const styles = {

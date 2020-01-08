@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
+//import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 import Logo from '../../Components/Logo/Logo';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
@@ -9,6 +9,7 @@ import BeginBackground from '../../Images/1_Standby_Screen_1080px_by_1620px.jpg'
 import UserSession from '../../Components/UserSession/UserSession';
 
 import './TouchToBegin.scss';
+import styles from '../../App.module.css';
 
 const styles_portrait = {
   root: {
@@ -52,10 +53,10 @@ class TouchToBegin extends React.Component {
         <div className={`${this.props.classes.content} content`}>
           <Link className="touchToBegin-beginButton" to="/login">
             <div className={this.props.classes.clickToContinue}>
-              <div className="beginLogo">
+              <div className={styles.beginLogo}>
                 <Logo />
               </div>
-              <Typography>Touch to Begin!</Typography>
+              <p>Touch to Begin!</p>
             </div>
           </Link>
         </div>

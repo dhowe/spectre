@@ -61,7 +61,7 @@ class InfluenceAFollower extends React.Component {
         <div className={`${this.props.content} content`}>
         <div className="split-half">
           <div className="split-left">
-            <h2><strong>Influence a follower!</strong></h2>
+            <p><strong>Influence a follower!</strong></p>
             <p className="copy">Spectre has a global community of followers.</p>
           </div>
           <div className="split-right">

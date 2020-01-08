@@ -1,4 +1,5 @@
 @import '../../colors.scss';
+
 @media screen and (orientation:landscape) {
   .touchToBegin {
     margin: 0;
@@ -13,36 +14,33 @@
     text-decoration: none;
     position: relative;
     width: 100%;
-    top: -120px;
-    left: -30px;
+    top: -140px;
+    left: -15px;
     text-align: center;
-
   }
-  .MuiTypography-body1{
+
+  .TouchToBegin-clickToContinue-2 p {
     font-size: 0.5rem;
+    padding-top: 80px;
     color: #ffffff;
-  }
-
-
-  .TouchToBegin-clickToContinue-2 {
-
-  }
-  .TouchToBegin-clickToContinue-2 p{
-font-size: 1.8em;
+    font-size: 1.8em;
   }
 }
 @media screen and (orientation:portrait) {
   .touchToBegin {
     background-color: $blue;
+  }
 
-    .touchToBegin-beginButton {
-      text-decoration: none;
-      margin-top: 300px;
+  .touchToBegin-beginButton {
+    position: relative;
+    text-decoration: none;
+    margin-top: -220px;
+    margin-right: 140px;
+  }
 
-      p {
-        font-size: 2rem;
-        color: #ffffff;
-      }
-    }
+  .TouchToBegin-clickToContinue-2 p {
+    font-size: 1.5em;
+    padding-top: 280px;
+    color: #ffffff;
   }
 }

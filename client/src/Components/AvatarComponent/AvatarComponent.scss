@@ -1,18 +1,46 @@
 @import '../../colors.scss';
 
-div.avatar-image {
-  margin: 10px;
-  width: 150px;
-  height: 150px;
-  border: solid $grey 5px;
 
-  &:hover {
-      border-color: $blue;
+
+@media screen and (orientation:landscape) {
+  div.avatar-image {
+    margin: 10px;
+    width: 100px;
+    height: 100px;
+    border: solid $grey 3px;
+
+    &:hover {
+        border-color: $blue;
+    }
   }
+
+  .content p.avatar-name {
+    font-size: 20px;
+
+    color: $lightGrey;
+  }
+
+
 }
 
-.content p.avatar-name {
-  font-size: 24px;
-  font-weight: 500;
-  color: $lightGrey;
+
+@media screen and (orientation:portrait) {
+  div.avatar-image {
+    margin: 10px;
+    width: 150px;
+    height: 150px;
+    border: solid $grey 5px;
+
+    &:hover {
+        border-color: $blue;
+    }
+  }
+
+  .content p.avatar-name {
+    font-size: 24px;
+    font-weight: 500;
+    color: $lightGrey;
+  }
+
+
 }
