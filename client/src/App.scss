@@ -54,7 +54,7 @@ html {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  /*font-size: calc(10px + 2vmin);*/
   background-color: white;
   color: white;
 }
@@ -86,10 +86,15 @@ strong {
   color: $blue;
 }
 
-.copy {
-  font-size: 48px;
-}
+
 @media screen and (orientation:landscape) {
+  body,
+  html {
+    font-size: 35px;
+  }
+  p, .copy {
+    font-size: 35px;
+  }
   .content {
     position: absolute;
     width: 100%;
@@ -111,25 +116,33 @@ strong {
   }
 
   .split-half {
-    display: -webkit-flex;
+
     -webkit-justify-content: center;
-    display: flex;
+    display: table;
     justify-content: center;
   }
 
   .split-left {
-    -webkit-flex: 1;
-    flex: 1;
+    vertical-align: middle;
+    display: table-cell;
     width: 50%;
   }
 
   .split-right {
-    -webkit-flex: 1;
-    flex: 1;
+    vertical-align: middle;
+    display: table-cell;
     width: 50%;
   }
 }
 @media screen and (orientation:portrait) {
+  body,
+  html {
+    font-size: 48px;
+  }
+  p, .copy {
+    font-size: 48px;
+  }
+
   .content {
     padding: 350px 100px;
     height: 100vh;
@@ -164,7 +177,7 @@ strong {
   line-height: 32px;
 }
 
-.blueBtn{
+.blueBtn {
   display: inline-block;
   width: auto;
   height: 53px;
