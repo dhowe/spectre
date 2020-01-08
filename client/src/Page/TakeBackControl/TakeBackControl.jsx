@@ -1,5 +1,4 @@
 import React from 'react';
-import Styles from '../../Styles';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -11,12 +10,8 @@ import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
-import colours from '../../colors.scss';
+//import colours from '../../colors.scss';
 import './TakeBackControl.scss';
-
-const width = 180;
-const height = 53;
-const fontSize = 22;
 
 const styles = {
   root: {

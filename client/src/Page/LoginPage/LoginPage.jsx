@@ -8,10 +8,12 @@ import UserSession from '../../Components/UserSession/UserSession';
 import { Link } from 'react-router-dom';
 import Video from '../../Components/Video/Video';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
+import  TosContent from './termsOfService'
 
 
 import { withStyles } from '@material-ui/core/styles';
 import './LoginPage.scss';
+
 
 
 window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true; // TMP: #138
@@ -129,7 +131,7 @@ class LoginPage extends React.Component {
 
   termsOfService = () => {
     this.modalTitle = 'Terms of Service';
-    this.modalContent = 'Brungard told the court he was drunk when the incident took place. Brungard told the court he was drunk when the incident took place. Brungard told the court he was drunk when the incident took place. Brungard told the court he was drunk when the incident took place. Brungard told the court he was drunk when the incident took place. Brungard told the court he was drunk when the incident took place';
+    this.modalContent = TosContent.text;
     this.setState({ modalOpen: true });
   }
 

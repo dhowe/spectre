@@ -21,7 +21,7 @@ const styles_landscape = {
     },
     margin: {
       display: 'block',
-      marginBottom: 15,
+
     },
 
 };

@@ -11,8 +11,6 @@ import UserSession from '../../Components/UserSession/UserSession';
 import OceanProfile from '../../Components/OceanProfile/OceanProfile';
 
 import Video from '../../Components/Video/Video';
-import Styles from '../../Styles';
-import colours from '../../colors.scss';
 import './InsightComplete.scss';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 

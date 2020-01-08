@@ -7,15 +7,11 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import AvatarComponent from '../../Components/AvatarComponent/AvatarComponent';
-import Styles from '../../Styles';
-import colours from '../../colors.scss';
+//import colours from '../../colors.scss';
 
 import './Selected.scss';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
-
-const height = 53;
-const fontSize = 22;
 
 const styles = {
 
@@ -52,7 +48,7 @@ class Selected extends React.Component {
             unlock insight into <strong>{targetName}</strong>. </p>
           <p className="copy">Don’t worry, only you will see the results. </p>
           <Link to="/insight-gender">
-            <Button className={classes.button}>Dive in</Button>
+            <Button className="blueBtn">Dive in</Button>
           </Link>
         </div>
         <FooterLogo />
