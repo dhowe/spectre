@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
-//import Webcam from "react-webcam";
+import Webcam from "react-webcam";
 import './SearchingFor.scss';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
@@ -25,29 +25,35 @@ const styles = {
     marginBottom: '30px',
   },
   profileImage: {
-    width: 800,
-    height: 1000,
+    width: 640,
+    height: 480,
   },
 };
 
 class SearchingFor extends React.Component {
   constructor(props) {
     super(props, 'data-is');
-    this.setRef = this.setRef.bind(this);
+    this.state = {};
     this.state = { name: '' };
   }
 
-  setRef(webcam) {
+  setRef = (webcam) => {
     this.webcam = webcam;
   }
+
+  // capture = () => {
+  //   const image = this.webcam.getScreenshot();
+  //   this.setState({ screenshot: image });
+  // }
 
   async componentDidMount() {
     let user = await UserSession.ensure(this.context,
       ['_id', 'login', 'gender', 'name']);
-    this.setState({name: user.name})
+    this.setState({ name: user.name })
   }
 
   toImageFile(data, fname) {
+    console.log('toImageFile', data);
     const arr = data.split(',');
     if (!data || data.length <= 6) {
       data && console.error(data);
@@ -69,35 +75,43 @@ class SearchingFor extends React.Component {
     user.virtue = virtue;
 
     // here we are doing the webcam capture, disabled for now
-    if (false) {
-
+    if (1) {
       // TODO: next work
-      const data = this.webcam.getScreenshot();
-      if (data && data.length) {
-        const imgfile = this.toImageFile(data, user._id + '.jpg');
-        UserSession.postImage(this.context, imgfile,
-          (json) => {
-            console.log(`Upload: http://localhost:3000${json.url}`);
-            this.context.hasImage = true;
-            this.props.history.push('/data-is');
-            return;
-          },
-          (e) => {
-            console.error('Error', e);
-            this.context.hasImage = false;
-            this.props.history.push('/data-is');
-            return;
-          }
-        );
+      try {
+
+        const data = this.webcam.getScreenshot();
+        if (data && data.length) {
+          const imgfile = this.toImageFile(data, user._id + '.jpg');
+          UserSession.postImage(this.context, imgfile,
+            (json) => {
+              console.log(`Upload: http://localhost:3000${json.url}`);
+              console.log(json);
+              this.context.hasImage = true;
+              this.props.history.push('/data-is');
+              return;
+            },
+            (e) => {
+              console.error('Error', e);
+              this.context.hasImage = false;
+              this.props.history.push('/data-is');
+              return;
+            }
+          );
+        }
+        else {
+          console.error('no image capture');
+          this.context.hasImage = false;
+          return;
+        }
       }
-      else {
-        console.error('no image capture');
-        this.context.hasImage = false;
-        return;
+      catch (e) {
+        console.error('Error on Screenshot: ', e);
       }
     }
     this.props.history.push('/data-is');
   }
+
+
 
   render() {
     const { classes } = this.props;
@@ -109,10 +123,10 @@ class SearchingFor extends React.Component {
         <div className={`${classes.content} content`}>
           <Typography className="username" component="h3" variant="h3">{name}</Typography>
           <p>What are you searching for today?</p>
-
-          {/*<div className="ImageCapture">
-            <Webcam ref={this.setRef}
+          {<div className="ImageCapture">
+            <Webcam
               audio={false}
+              ref={this.setRef}
               screenshotQuality={1}
               screenshotFormat="image/jpeg"
               width={styles.profileImage.width}
@@ -125,13 +139,14 @@ class SearchingFor extends React.Component {
               }}
             />
           </div>
-          */}
+          }
           <div className="buttonWrapper">
             <Button className={classes.button} variant="contained" color="primary" onClick={() => this.handleClick('power')}>Power</Button>
             <Button className={classes.button} variant="contained" color="primary" onClick={() => this.handleClick('truth')}>Truth</Button>
             <Button className={classes.button} variant="contained" color="primary" onClick={() => this.handleClick('influence')}>Influence</Button>
             <Button className={classes.button} variant="contained" color="primary" onClick={() => this.handleClick('wealth')}>Wealth</Button>
           </div>
+          {/*<this.state.screenshot ? <img src={this.state.screenshot} /> : null*/}
         </div>
         <FooterLogo />
       </div>

@@ -188,7 +188,6 @@ UserSession.create = async (user) => {
       },
       body: toNetworkString(user)
     })
-    console.log(response);
     assignJsonResp(user, await response.json());
     UserSession.useBrowserStorage && sessionStorage.setItem
       (UserSession.storageKey, JSON.stringify(user._id));
