@@ -1,14 +1,19 @@
 @import "../../colors";
 @import "../../fonts";
 
-.insight-thank-you {
-  color: $blue;
+@media screen and (orientation:landscape) {
+  .insight-thank-you-icon {
+    margin: 0 auto 0;
+  }
+
+
+
 }
 
-.insight-thank-you-icon {
-  margin: 50px auto 60px;
-}
+@media screen and (orientation:portrait) {
 
-.InsightThankYou-root-1 .title {
-  @extend %title;
+  .insight-thank-you-icon {
+    margin: 50px auto 60px;
+  }
+
 }

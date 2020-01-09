@@ -11,7 +11,7 @@ import AvatarComponent from '../../Components/AvatarComponent/AvatarComponent';
 
 import './Selected.scss';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
-
+import ComponentsStyles from '../../App.module.css';
 
 const styles = {
 
@@ -48,7 +48,7 @@ class Selected extends React.Component {
             unlock insight into <strong>{targetName}</strong>. </p>
           <p className="copy">Don’t worry, only you will see the results. </p>
           <Link to="/insight-gender">
-            <Button className="blueBtn">Dive in</Button>
+            <Button className={ComponentsStyles.blueBtn}>Dive in</Button>
           </Link>
         </div>
         <FooterLogo />

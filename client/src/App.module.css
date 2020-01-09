@@ -1,168 +1,25 @@
+@import './colors.scss';
+
+:root {
+  --red: #e03c31;
+  --grey: #929391;
+  --lightGrey: #a5a6a8;
+  --blue: #21c0fc;
+}
+
 /*
-Overall
+Button
 */
-@import 'colors.scss';
-@font-face {
-  font-family: 'Montserrat';
-  src: url("Fonts/Montserrat/Montserrat-Regular.ttf") format('truetype');
-}
-@font-face {
-  font-family: "Montserrat";
-  src: url("Fonts/Montserrat/Montserrat-Bold.ttf");
-  font-weight: bold;
-}
-@font-face {
-  font-family: "Montserrat";
-  src: url("Fonts/Montserrat/Montserrat-SemiBold.ttf");
-  font-weight: 500;
-}
-@font-face {
-  font-family: "Montserrat";
-  src: url("Fonts/Montserrat/Montserrat-Light.ttf");
-  font-weight: 300;
-}
-
-* {
-  -webkit-tap-highlight-color: rgba(0,0,0,0);
-  -webkit-tap-highlight-color: transparent;
-  font-family: 'Montserrat' !important;
-}
-
-body,
-html {
-  font-size: 2em;
-  font-family: 'Montserrat' !important;
-}
-
-.App {
-  text-align: center;
-}
-
-.App * {
-  box-sizing: border-box;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
-}
-
-.App-header {
-  min-height: 100vh;
-  display: block;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  /*font-size: calc(10px + 2vmin);*/
-  background-color: white;
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-a {
-  text-decoration: none;
-
-  &:active,
-  &:focus,
-  &:hover {
-    outline: -webkit-focus-ring-color auto 0;
-  }
-}
-
-strong {
-  color: $blue;
-}
-
-
-@media screen and (orientation:landscape) {
-  body,
-  html {
-    font-size: 35px;
-  }
-  p, .copy {
-    font-size: 35px;
-  }
-  .content {
-    position: absolute;
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    color: $grey;
-    display: -webkit-flex;
-    -webkit-justify-content: center;
-    margin: 0;
-    padding: 0;
-  }
-
-  .buttonWrapper {
-    margin: 80px auto;
-    align-items: center;
-    width: 100%;
-  }
-
-  .split-half {
-
-    -webkit-justify-content: center;
-    display: table;
-    justify-content: center;
-  }
-
-  .split-left {
-    vertical-align: middle;
-    display: table-cell;
-    width: 50%;
-  }
-
-  .split-right {
-    vertical-align: middle;
-    display: table-cell;
-    width: 50%;
-  }
-}
-@media screen and (orientation:portrait) {
-  body,
-  html {
-    font-size: 48px;
-  }
-  p, .copy {
-    font-size: 48px;
-  }
-
-  .content {
-    padding: 350px 100px;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    /*justify-content: space-between;*/
-    justify-content: center;
-    color: $grey;
-  }
-
-  .buttonWrapper {
-    padding-left: -40px;
-    margin: 80px auto;
-    align-items: center;
-  }
+.blueBtn span:first-child {
+  border: solid 3px var(--blue);
+  border-radius: 50px;
+  padding: 0 30px;
+  color: var(--blue);
+  width: auto;
 }
 
 .buttonWrapper button {
   display: inline-block;
-  width: 180px;
   height: 53px;
   margin: 16px;
   border: solid 3px #929391;
@@ -173,31 +30,47 @@ strong {
   font-weight: 500;
   text-transform: capitalize;
   letter-spacing: 0;
-  font-size: 30;
   line-height: 32px;
 }
 
-.blueBtn {
-  display: inline-block;
-  width: auto;
-  height: 53px;
-  margin: 16px;
-  border: solid 3px #21c0fc;
-  border-radius: 28px;
-  background-color: #ffffff;
-  box-shadow: none;
-  color: #21c0fc;
-  font-weight: 500;
-  text-transform: capitalize;
-  letter-spacing: 0;
-  font-size: 30;
-  line-height: 32px;
+@media screen and (orientation:landscape) {
+  .buttonWrapper {
+    margin: 80px auto;
+    align-items: center;
+    width: 100%;
+  }
+
+  .buttonWrapper button {
+    width: 180px;
+    font-size: 25px;
+  }
+
+  .iconButtonStyle1 {
+    position: fixed;
+    right: 10%;
+    top: 45%;
+  }
+
+  .iconButtonStyle2 {
+    position: fixed;
+    right: 10%;
+    top: 40%;
+  }
 }
 
-a.disabled {
-  pointer-events: none;
-}
+@media screen and (orientation:portrait) {
+  .buttonWrapper {
+    padding-left: -40px;
+    margin: 80px auto;
+    align-items: center;
+  }
 
-.hidden {
-  visibility: hidden;
+  .buttonWrapper button {
+    width: 180px;
+    font-size: 30px;
+  }
+
+  .iconButtonStyle1 {}
+
+  .iconButtonStyle2 {}
 }

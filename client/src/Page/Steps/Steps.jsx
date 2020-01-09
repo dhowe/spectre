@@ -41,22 +41,22 @@ class Steps extends React.Component {
         <IdleChecker setIdleTime={14}/>
         <div className={classes.content + " content"}>
             <Fade in={true} >
-                <p>Find what you are looking for by following these three steps:</p>
+                <p className="copy">Find what you are looking for by following these three steps:</p>
             </Fade>
             <Fade in={true} style={{transitionDelay: '1000ms'}}>
-                <p><strong>Step 1</strong> - influence a follower</p>
+                <p className="copy-nextline"><strong>Step 1</strong> - influence a follower</p>
             </Fade>
             <Fade in={true} style={{transitionDelay: '2000ms'}}>
-                <p><strong>Step 2</strong> - influence a nation</p>
+                <p className="copy-nextline"><strong>Step 2</strong> - influence a nation</p>
             </Fade>
             <Fade in={true} style={{transitionDelay: '3000ms'}}>
-                <p><strong>Step 3</strong> - influence a celebrity</p>
+                <p className="copy"><strong>Step 3</strong> - influence a celebrity</p>
             </Fade>
             <Fade in={true} style={{transitionDelay: '4000ms'}}>
-                <p>Get the data. Get the {this.state.virtue}.</p>
+                <p className="copy-nextline">Get the data. Get the {this.state.virtue}.</p>
             </Fade>
             <Fade in={true} style={{transitionDelay: '5000ms'}}>
-                <p>Ready?</p>
+                <p className="copy">Ready?</p>
             </Fade>
             <Link to="/follower">
                 <IconButton icon="tick" text="Yes" />

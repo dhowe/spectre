@@ -12,6 +12,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import 'react-simple-keyboard/build/css/index.css';
 import IconButton from '../../Components/IconButton/IconButton';
 import './SocialLogin.scss';
+import ComponentsStyles from '../../App.module.css';
 
 const styles_landscape = {
     fontSize: '1rem',
@@ -210,7 +211,7 @@ class SocialLogin extends React.Component {
               onKeyPress={button => this.onKeyPress(button)}
               layoutName={this.state.layoutName}
             />
-            <IconButton ref={btn => { this.btn = btn; }} onClick={e => this.props.handleSubmit(e, this.state)}
+            <IconButton className={ComponentsStyles.iconButtonStyle1} ref={btn => { this.btn = btn; }} onClick={e => this.props.handleSubmit(e, this.state)}
               enabled={btnEnabled ? "white" : false} colour="white" icon="next" text="Next" />
           </form>
         </div>

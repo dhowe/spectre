@@ -28,11 +28,15 @@ Overall
   font-family: 'Montserrat' !important;
 }
 
+p,
 body,
 html {
-  font-size: 2em;
   font-family: 'Montserrat' !important;
+  margin: 0;
+  padding: 0;
 }
+
+
 
 .App {
   text-align: center;
@@ -82,6 +86,37 @@ a {
   }
 }
 
+/*
+Text
+*/
+/*
+h1 {
+  font-size: 200px;
+}
+
+h2 {
+  font-size: 200px;
+}
+
+h3 {
+  font-size: 200px;
+}
+
+h4 {
+  font-size: 200px;
+}
+
+h5 {
+  font-size: 200px;
+}
+
+h6 {
+  font-size: 200px;
+}
+*/
+
+
+
 strong {
   color: $blue;
 }
@@ -92,8 +127,15 @@ strong {
   html {
     font-size: 35px;
   }
-  p, .copy {
+  p.copy {
     font-size: 35px;
+
+    padding-bottom: 40px;
+  }
+  p.copy-nextline {
+    font-size: 35px;
+
+    padding-bottom: 10px;
   }
   .content {
     position: absolute;
@@ -107,12 +149,6 @@ strong {
     -webkit-justify-content: center;
     margin: 0;
     padding: 0;
-  }
-
-  .buttonWrapper {
-    margin: 80px auto;
-    align-items: center;
-    width: 100%;
   }
 
   .split-half {
@@ -153,46 +189,9 @@ strong {
     color: $grey;
   }
 
-  .buttonWrapper {
-    padding-left: -40px;
-    margin: 80px auto;
-    align-items: center;
-  }
+
 }
 
-.buttonWrapper button {
-  display: inline-block;
-  width: 180px;
-  height: 53px;
-  margin: 16px;
-  border: solid 3px #929391;
-  border-radius: 28px;
-  background-color: #ffffff;
-  box-shadow: none;
-  color: #929391;
-  font-weight: 500;
-  text-transform: capitalize;
-  letter-spacing: 0;
-  font-size: 30;
-  line-height: 32px;
-}
-
-.blueBtn {
-  display: inline-block;
-  width: auto;
-  height: 53px;
-  margin: 16px;
-  border: solid 3px #21c0fc;
-  border-radius: 28px;
-  background-color: #ffffff;
-  box-shadow: none;
-  color: #21c0fc;
-  font-weight: 500;
-  text-transform: capitalize;
-  letter-spacing: 0;
-  font-size: 30;
-  line-height: 32px;
-}
 
 a.disabled {
   pointer-events: none;
@@ -200,4 +199,9 @@ a.disabled {
 
 .hidden {
   visibility: hidden;
+}
+
+
+.iconButton{
+
 }

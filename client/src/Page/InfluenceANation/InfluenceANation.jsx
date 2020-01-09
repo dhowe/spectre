@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
+//import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
@@ -10,6 +10,7 @@ import Button from '@material-ui/core/Button';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
 import "./InfluenceANation.scss";
+import ComponentsStyles from '../../App.module.css';
 
 const styles = {
 
@@ -33,12 +34,12 @@ class InfluenceANation extends React.Component {
         <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
         <IdleChecker />
         <div className={`${classes.content} content`}>
-          <Typography className="top"><strong>Influence a Nation</strong></Typography>
-          <Typography className="middle">Let's amplify your campaign by convincing
-              lots of others to vote <strong>{this.state.adIssue}</strong>.</Typography>
-          <Typography className="semi-bold">We can show you how, but first, you must...</Typography>
+          <p><strong>Influence a Nation</strong></p>
+          <p>Let's amplify your campaign by convincing
+              lots of others to vote <strong>{this.state.adIssue}</strong>.</p>
+          <p>We can show you how, but first, you must...</p>
           <Link to="/consumer-data">
-            <Button className="blueBtn">Get more data!</Button>
+          <Button className={ComponentsStyles.blueBtn}>Get more data!</Button>
           </Link>
         </div>
         <FooterLogo />
