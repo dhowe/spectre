@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
+//import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
@@ -12,14 +12,7 @@ import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
 
 const styles = {
-  root: {
-    flexGrow: 1,
-    width: '100%',
-    color: 'black',
-  },
-  clickToContinue: {
-    margin: '20% 0',
-  },
+
 };
 
 class Win extends React.Component {
@@ -43,15 +36,15 @@ class Win extends React.Component {
         <SpectreHeader colour="white" progressActive progressNumber="two" />
         <IdleChecker />
         <div className={`${classes.content} content`}>
-          <Typography component="h4" variant="h4" style={{ marginTop:'100px' }}>
+          <p>
             <strong>{adIssue === 'remain' ? 'Believe!' : 'BeLeave!'}</strong>
-          </Typography>
-          <Typography component="h5" variant="h5" style={{ marginTop:'100px' }}>
-            &nbsp;Your campaign was successful...</Typography>
+          </p>
+          <p>
+            &nbsp;Your campaign was successful...</p>
           <p className="icon">
             <Trophy />
           </p>
-          <Typography component="h5" variant="h5">Your silent army swung the vote!</Typography>
+          <p>Your silent army swung the vote!</p>
           <Link to="/influence-a-celebrity">
             <IconButton icon="next" text="Next" />
           </Link>

@@ -26,8 +26,8 @@ class WeHopeYouEnjoyed extends React.Component {
       <div className={classes.root}>
           <SpectreHeader colour="white" />
           <div className={classes.content + " content"}>
-              <Typography component="h6" variant="h6">We hope you enjoyed your personalised experience.
-               Please answer the following 3 questions truthfully:</Typography>
+              <p>We hope you enjoyed your personalised experience.
+               Please answer the following 3 questions truthfully:</p>
                {/* Add three questions here, only show one at a time */}
               <Link to="/customer-survey">
                   <IconButton icon="tick" text="Next" />

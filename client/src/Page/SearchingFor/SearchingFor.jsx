@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
+//import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
@@ -9,21 +9,10 @@ import UserSession from '../../Components/UserSession/UserSession';
 import Webcam from "react-webcam";
 import './SearchingFor.scss';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
-
+import ComponentsStyles from '../../App.module.css';
 
 const styles = {
-  root: {
-    flexGrow: 1,
-    width: '100%',
-    color: 'black',
-  },
-  clickToContinue: {
-    margin: '20% 0',
-  },
-  link: {
-    display: 'block',
-    marginBottom: '30px',
-  },
+
   profileImage: {
     width: 640,
     height: 480,
@@ -121,7 +110,7 @@ class SearchingFor extends React.Component {
         <SpectreHeader colour="white" />
         <IdleChecker />
         <div className={`${classes.content} content`}>
-          <Typography className="username" component="h3" variant="h3">{name}</Typography>
+          <p><strong>{name}</strong></p>
           <p>What are you searching for today?</p>
           {<div className="ImageCapture">
             <Webcam
@@ -138,13 +127,13 @@ class SearchingFor extends React.Component {
                 facingMode: "user"
               }}
             />
-          </div>
-          }
-          <div className="buttonWrapper">
-            <Button className={classes.button} variant="contained" color="primary" onClick={() => this.handleClick('power')}>Power</Button>
-            <Button className={classes.button} variant="contained" color="primary" onClick={() => this.handleClick('truth')}>Truth</Button>
-            <Button className={classes.button} variant="contained" color="primary" onClick={() => this.handleClick('influence')}>Influence</Button>
-            <Button className={classes.button} variant="contained" color="primary" onClick={() => this.handleClick('wealth')}>Wealth</Button>
+          </div>}
+          <div className={ComponentsStyles.buttonWrapper}>
+            <Button className={ComponentsStyles.button} variant="contained" color="primary" onClick={() => this.handleClick('power')}>Power</Button>
+            <Button className={ComponentsStyles.button} variant="contained" color="primary" onClick={() => this.handleClick('truth')}>Truth</Button>
+            <Button className={ComponentsStyles.button} variant="contained" color="primary" onClick={() => this.handleClick('influence')}>Influence</Button>
+            <Button className={ComponentsStyles.button} variant="contained" color="primary" onClick={() => this.handleClick('wealth')}>Wealth</Button>
+
           </div>
           {/*<this.state.screenshot ? <img src={this.state.screenshot} /> : null*/}
         </div>

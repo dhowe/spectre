@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
+//import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import { Link } from 'react-router-dom';
 import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
-
 import UserSession from '../../Components/UserSession/UserSession';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
@@ -39,9 +38,9 @@ class TargetAd extends React.Component {
         <IdleChecker />
         <div className={`${classes.content} content`}>
           <br />
-          <Typography component="h6" variant="h6">
+          <p>
             Share your targeted ad with <strong>{targetName}</strong>?
-          </Typography>
+          </p>
           <Grid container justify="center">
             <Grid item>
               <Link to="/success-ad">

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
+//import Typography from '@material-ui/core/Typography';
 import Fade from '@material-ui/core/Fade';
 import Countdown from 'react-countdown';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
@@ -9,14 +9,7 @@ import UserSession from '../../Components/UserSession/UserSession';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 
 const styles = {
-  root: {
-    flexGrow: 1,
-    width: '100%',
-    color: 'black',
-  },
-  clickToContinue: {
-    margin: '20% 0',
-  },
+
 };
 
 class YourPower extends React.Component {
@@ -42,10 +35,10 @@ class YourPower extends React.Component {
         <SpectreHeader colour="white" progressActive progressNumber="one" />
         <div className={`${classes.content} content`}>
           <Fade in style={{ transitionDelay: '200ms', marginTop: '300px' }}>
-            <Typography component="h6" variant="h6"><strong>{name}</strong>, your {virtue} is growing </Typography>
+            <p><strong>{name}</strong>, your {virtue} is growing </p>
           </Fade>
           <Fade in style={{ transitionDelay: '2000ms', marginBottom: '200px' }}>
-            <Typography component="h6" variant="h6">Let's put it into practice.</Typography>
+            <p>Let's put it into practice.</p>
           </Fade>
           <Countdown
             onComplete={() => this.props.history.push('/pick-your-side')}
