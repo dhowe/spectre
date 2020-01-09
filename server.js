@@ -4,10 +4,13 @@ import express from 'express';
 import logger from './logger';
 import routes from './routes';
 import mongoose from 'mongoose';
+import chokidar from 'chokidar';
 import bodyparser from 'body-parser';
 import basicAuth from 'express-basic-auth';
 import { dbUrl, apiUser } from './config';
 import controller from './user-controller';
+
+
 
 const base = '/api/';
 const port = process.env.PORT || 8083;
@@ -46,16 +49,28 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname + '/client/build/index.html'));
 });
 
+chokidar.watch('client/public/profiles', { ignored: /^\./, persistent: true })
+  .on('add', function(path) { console.log('File', path, 'has been added'); })
+
 /////////////////////////// DbConnect ///////////////////////////////
 
 const opts = { useNewUrlParser: true, useFindAndModify: false };
 const dbstr = dev ? dbUrl + '-dev' : dbUrl;
 
-mongoose.connect(dbstr, opts);
+let server; // try the DB
+mongoose.connect(dbstr, opts)
+  .then(() => {
+    server = app.listen(port, () => {
+      console.log('Spectre API at localhost:' + port + base +
+        ' [' + dbstr.substring(dbstr.lastIndexOf('/') + 1) + ']\n');
+    });
+  })
+  .catch(e => { // bail on error
+    console.error('\n[DB] ' + e.name + '...');
+    console.error('[DB] Unable to connect to ' + dbstr + '\n');
+  });
+
+export default server;
+
 
 //////////////////////////// Startup ////////////////////////////////
-
-export default app.listen(port, () => {
-  console.log('Spectre API at localhost:' + port + base +
-    ' [' + dbstr.substring(dbstr.lastIndexOf('/') + 1) + ']\n');
-});

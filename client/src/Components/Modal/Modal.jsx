@@ -21,7 +21,6 @@ const styles = theme => ({
     backgroundColor: "white",
     boxShadow: theme.shadows[5],
     outline: "none",
-
     padding: "12px"
 
   },
@@ -52,13 +51,10 @@ function SimpleModal(props) {
         <Typography variant="h6" className={classes.title} id="modal-title">
           {props.title}
         </Typography>
-        <Typography
-          variant="subtitle1"
-          className={classes.content}
-          id="simple-modal-description"
-        >
-          {props.content}
-        </Typography>
+        {props.content.length > 500 ?  <p id="tos-content">{props.content}</p> : <p
+            variant="subtitle1"
+            className={classes.content}
+            id="simple-modal-description">{props.content}</p>}
         <Button onClick={props.onClose} id="simple-modal-button">Close</Button>
       </div>
       </div>

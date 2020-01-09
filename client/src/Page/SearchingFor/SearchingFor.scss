@@ -1,6 +1,6 @@
 @import '../../colors.scss';
 
 .ImageCapture {
-  border: 10px solid $red;
-  display: none;
+  left:-10000px;
+  position: 'relative'
 }
