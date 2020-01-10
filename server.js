@@ -4,18 +4,17 @@ import express from 'express';
 import logger from './logger';
 import routes from './routes';
 import mongoose from 'mongoose';
-import chokidar from 'chokidar';
 import bodyparser from 'body-parser';
 import basicAuth from 'express-basic-auth';
 import { dbUrl, apiUser } from './config';
 import controller from './user-controller';
-
-
+import profileMaker from './profile-maker';
 
 const base = '/api/';
 const port = process.env.PORT || 8083;
 const test = process.env.NODE_ENV === 'test';
 const dev = process.env.NODE_ENV !== 'production';
+const client = path.join(__dirname, '/client');
 
 const auth = basicAuth({
   users: apiUser,
@@ -36,7 +35,7 @@ app.all('*', logger('[:date[clf]] :remote-addr :method :url :status', {
 }));
 
 // static react files (no-auth)
-app.use(express.static(path.join(__dirname, 'client/build')));
+app.use(express.static(client+'/build'));
 
 // current user route (no-auth)
 app.get(base + 'users/current/:cid', controller.current);
@@ -46,11 +45,10 @@ app.use(base, auth, routes);
 
 // for all react pages (no-auth)
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname + '/client/build/index.html'));
+  res.sendFile(client+'/build/index.html');
 });
 
-chokidar.watch('client/public/profiles', { ignored: /^\./, persistent: true })
-  .on('add', function(path) { console.log('File', path, 'has been added'); })
+profileMaker.watch(client+'/public/profiles');
 
 /////////////////////////// DbConnect ///////////////////////////////
 
