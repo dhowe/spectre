@@ -35,7 +35,7 @@ app.all('*', logger('[:date[clf]] :remote-addr :method :url :status', {
 }));
 
 // static react files (no-auth)
-app.use(express.static(client+'/build'));
+app.use(express.static(client + '/build'));
 
 // current user route (no-auth)
 app.get(base + 'users/current/:cid', controller.current);
@@ -45,30 +45,31 @@ app.use(base, auth, routes);
 
 // for all react pages (no-auth)
 app.get('*', (req, res) => {
-  res.sendFile(client+'/build/index.html');
+  res.sendFile(client + '/build/index.html');
 });
 
-profileMaker.watch(client+'/public/profiles');
+profileMaker.watch(client + '/public/profiles');
 
 /////////////////////////// DbConnect ///////////////////////////////
 
 const opts = { useNewUrlParser: true, useFindAndModify: false };
 const dbstr = dev ? dbUrl + '-dev' : dbUrl;
-
-let server; // try the DB
-mongoose.connect(dbstr, opts)
-  .then(() => {
-    server = app.listen(port, () => {
-      console.log('Spectre API at localhost:' + port + base +
-        ' [' + dbstr.substring(dbstr.lastIndexOf('/') + 1) + ']\n');
-    });
-  })
-  .catch(e => { // bail on error
+(async () => {
+  try {
+    await mongoose.connect(dbstr, opts);
+    mongoose.connection.on('error', console.error);
+  } catch (error) {
     console.error('\n[DB] ' + e.name + '...');
-    console.error('[DB] Unable to connect to ' + dbstr + '\n');
-  });
+    console.error('[DB] Unable to connect to ' + dbstr + '\n')
+  }
+})();
 
-export default server;
+export default app.listen(port, () => {
+  console.log('Spectre API at localhost:' + port + base +
+    ' [' + dbstr.substring(dbstr.lastIndexOf('/') + 1) + ']\n');
+});
+
+
 
 
 //////////////////////////// Startup ////////////////////////////////
