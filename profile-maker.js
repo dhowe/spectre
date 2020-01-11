@@ -105,8 +105,16 @@ class ProfileMaker {
     await sharp(infile).metadata().then(md => {
       this.dimensions = { w: md.width, h: md.height };
     });;
+
     this.detection = await faceapi.detectSingleFace
-      (this.image, detectorOpts(this.detectionNet))
+      (this.image, detectorOpts(this.detectionNet));
+
+    let info = await faceapi
+      .detectSingleFace(input)
+      .withFaceLandmarks()
+      .withAgeAndGender()
+    console.log(info);
+
     this.crop = this.detection.box;
 
     return this;

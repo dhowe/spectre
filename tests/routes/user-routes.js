@@ -147,10 +147,8 @@ describe('User Routes', () => {
         expect(res.body.data.similars.length).eq(0);
         Object.assign(user, res.body.data);
 
-        //console.log(user);
         expect(user._id).to.be.a('string');
         expect(user.traits).to.be.undefined;
-        //expect(user.traits.openness).to.be.undefined;
 
         chai.request(host)
           .put('/api/users/' + user._id)

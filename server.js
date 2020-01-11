@@ -48,12 +48,13 @@ app.get('*', (req, res) => {
   res.sendFile(client + '/build/index.html');
 });
 
-profileMaker.watch(client + '/public/profiles');
+test || profileMaker.watch(client + '/public/profiles');
 
 /////////////////////////// DbConnect ///////////////////////////////
 
 const opts = { useNewUrlParser: true, useFindAndModify: false };
 const dbstr = dev ? dbUrl + '-dev' : dbUrl;
+
 (async () => {
   try {
     await mongoose.connect(dbstr, opts);
