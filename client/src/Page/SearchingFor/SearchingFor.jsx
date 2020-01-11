@@ -42,7 +42,6 @@ class SearchingFor extends React.Component {
   }
 
   toImageFile(data, fname) {
-    console.log('toImageFile', data);
     const arr = data.split(',');
     if (!data || data.length <= 6) {
       data && console.error(data);
@@ -88,13 +87,14 @@ class SearchingFor extends React.Component {
           );
         }
         else {
-          console.error('no image capture');
+          console.error('Webcam not available');
           this.context.hasImage = false;
+          this.props.history.push('/data-is');
           return;
         }
       }
       catch (e) {
-        console.error('Error on Screenshot: ', e);
+        console.error('Webcam Error: ', e);
       }
     }
     this.props.history.push('/data-is');

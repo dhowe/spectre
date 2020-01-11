@@ -74,7 +74,7 @@ UserSession.ensure = async (user, props) => {
   // should have user with id here, if not, then probably no server
   if (!user || !user._id) {
     user._id = -1;
-    console.warn('[STUB] Unable to set user._id, using' + user._id);
+    console.warn('[STUB] Unable to set user._id, using ' + user._id);
   }
 
   if (props.includes('target') && !user.similars.length) {
@@ -294,11 +294,11 @@ UserSession.postImage = async (user, image) => { // TODO: test
   if (UserSession.serverDisabled) return;
 
   const { route, auth, mode } = doConfig();
-  //if (typeof image === 'string') image = toImageFile(image);
+
   const fdata = new FormData();
   fdata.append('profileImage', image);
   fdata.append('clientId', process.env.CLIENT_ID);
-  fdata.append('videoId', 2);
+  //fdata.append('videoId', 2);
 
   const endpoint = route + 'photo/' + user._id;
   try {

@@ -167,7 +167,7 @@ const photo = async (req, res) => {
         cb(null, path.join(profiles))
       },
       filename: (req, file, cb) => {
-        cb(null, req.params.uid + //'-' + Date.now() +
+        cb(null, req.params.uid + '_raw' +
           path.extname(file.originalname))
       }
     })
