@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
+//import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
@@ -59,7 +59,7 @@ class Insight extends React.Component {
         <SpectreHeader colour="white" progressActive progressNumber={progress} />
         <IdleChecker />
         <div className={`${classes.content} content insightPage`}>
-          <Typography component="h6" variant="h6">{question(targetName)}</Typography>
+          <p className="copy">{question(targetName)}</p>
           <AvatarComponent target= {{name: targetName, image: targetImage }} />
           <div onTouchEnd={this.EnableButton}>
             <TextSliderText leftText={leftText} rightText={rightText} middleText={middleText} />

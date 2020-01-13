@@ -5,26 +5,10 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import Video from '../../Components/Video/Video';
-
+import ComponentsStyles from '../../App.module.css';
 
 const styles = {
-  root: {
-    flexGrow: 1,
-    width: '100%',
-    color: 'black',
-  },
-  image: {
-    height: '500px',
-    width: '440px',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-  },
-  content: {
-    display: 'flex',
-    width: '100%',
-    justifyContent: 'center',
-    alignContent: 'center',
-  },
+
 };
 
 class TargetsFound extends React.Component {
@@ -39,8 +23,7 @@ class TargetsFound extends React.Component {
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive progressNumber="two" />
         <div className={`${classes.content} content`}>
-          <Video autoPlay
-            style={{ width: '100%' }}
+          <Video className={ComponentsStyles.inPageVideo} autoPlay
             movie="/video/TargetsFound_Animation.mp4"
             onComplete={() => this.props.history.push('/launch-campaign')} />
         </div>

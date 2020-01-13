@@ -12,14 +12,6 @@ import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
 
 const styles = {
-  root: {
-    flexGrow: 1,
-    width: '100%',
-    color: 'black',
-  },
-  clickToContinue: {
-    margin: '20% 0',
-  },
 };
 
 class Steps extends React.Component {

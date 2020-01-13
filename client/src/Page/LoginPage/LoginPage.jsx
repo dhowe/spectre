@@ -8,7 +8,7 @@ import UserSession from '../../Components/UserSession/UserSession';
 import { Link } from 'react-router-dom';
 import Video from '../../Components/Video/Video';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
-import  TosContent from './termsOfService'
+import TosContent from './termsOfService'
 
 
 import { withStyles } from '@material-ui/core/styles';

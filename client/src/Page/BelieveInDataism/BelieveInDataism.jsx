@@ -10,14 +10,7 @@ import Countdown from 'react-countdown';
 
 
 const styles = {
-  root: {
-    flexGrow: 1,
-    width: "100%",
-    color: 'black'
-  },
-  clickToContinue: {
-    margin: "20% 0",
-  }
+
 };
 
 function toAdjPhrase(virtue) {

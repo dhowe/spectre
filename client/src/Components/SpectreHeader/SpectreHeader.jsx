@@ -17,7 +17,7 @@ function SpectreHeader(props) {
     <div className="SpectreHeader SpectreHeader-white">
       <img height="150" alt='header' src={HeaderLogoColour} />
       <Progress active={props.progressActive} progressNumber={props.progressNumber}/>
-      <Divider light style={{marginTop: '50px'}}/>
+      <Divider light/>
     </div>
     ) : (
     <div className="SpectreHeader">

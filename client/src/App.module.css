@@ -56,6 +56,11 @@ Button
     right: 10%;
     top: 40%;
   }
+
+  .inPageVideo {
+    margin: auto;
+    width:40%;
+  }
 }
 
 @media screen and (orientation:portrait) {
@@ -73,4 +78,8 @@ Button
   .iconButtonStyle1 {}
 
   .iconButtonStyle2 {}
+
+  .inPageVideo {
+    width: 100%;
+  }
 }

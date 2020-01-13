@@ -44,7 +44,7 @@ class Personalised extends React.Component {
             </p>
           </Fade>
           <Fade in style={{transitionDelay: '1000ms'}}>
-            <p className="copy" style={{ marginBottom: '200px', fontWeight:'light', }}>
+            <p className="copy">
               Tell us what you love,
               tell us what <br/> you hate...
             </p>
