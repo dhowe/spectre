@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
+//import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/es/Button/Button';
 
 import IconButton from '../../Components/IconButton/IconButton';
@@ -11,22 +11,12 @@ import UserSession from '../../Components/UserSession/UserSession';
 import OceanProfile from '../../Components/OceanProfile/OceanProfile';
 
 import Video from '../../Components/Video/Video';
-import Styles from '../../Styles';
-import colours from '../../colors.scss';
 import './InsightComplete.scss';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
+import ComponentsStyles from '../../App.module.css';
 
 const styles = {
-  root: {
-    flexGrow: 1,
-    width: '100%',
-    color: 'black',
-  },
-  button: {
-    ...Styles.button,
-    color: colours.blue,
-    borderColor: colours.blue,
-  },
+
 };
 
 class InsightComplete extends React.Component {
@@ -55,14 +45,12 @@ class InsightComplete extends React.Component {
         <SpectreHeader colour="white" />
         <IdleChecker forceTerminate={idleCheckerDone}/>
         <div className={`${classes.content} content`}>
-          <Typography className="title" component="h3" variant="h3">Excellent.</Typography>
-          <Typography component="h6" variant="h6">Verification complete!</Typography>
-          <Typography component="h6" variant="h6">You've unlocked OCEAN profiling!</Typography>
+          <h3>Excellent.</h3>
+          <p>Verification complete!</p>
+          <p>You've unlocked OCEAN profiling!</p>
           <OceanProfile subject={target} classes={classes}></OceanProfile>
-          <Typography component="h6" variant="h6">You now have the <strong>power</strong> to
-           influence&nbsp;<strong>{target.name}</strong>.
-          </Typography>
-          <IconButton icon="play" text="Next" onClick={this.showVideo} Button={<Button style={{ marginTop: 20, }}
+          <p>You now have the <strong>power</strong> to influence&nbsp;<strong>{target.name}</strong>.</p>
+          <IconButton className={ComponentsStyles.iconButtonStyle2} icon="play" text="Next" onClick={this.showVideo} Button={<Button style={{ marginTop: 20, }}
             className={classes.button} variant="contained" color="primary">WTF is OCEAN?</Button>} />
           <Video
             ref={(el) => { this.video = el; }}

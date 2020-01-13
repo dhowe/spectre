@@ -1,26 +1,25 @@
+/*
+Overall
+*/
 @import 'colors.scss';
-
 @font-face {
   font-family: 'Montserrat';
-  src: url(Fonts/Montserrat/Montserrat-Regular.ttf) format('truetype');
+  src: url("Fonts/Montserrat/Montserrat-Regular.ttf") format('truetype');
 }
-
 @font-face {
   font-family: "Montserrat";
-  src: url(Fonts/Montserrat/Montserrat-Bold.ttf);
+  src: url("Fonts/Montserrat/Montserrat-Bold.ttf");
   font-weight: bold;
 }
-
 @font-face {
   font-family: "Montserrat";
-  src: url(Fonts/Montserrat/Montserrat-SemiBold.ttf);
-  font-weight:500;
+  src: url("Fonts/Montserrat/Montserrat-SemiBold.ttf");
+  font-weight: 500;
 }
-
 @font-face {
   font-family: "Montserrat";
-  src: url(Fonts/Montserrat/Montserrat-Light.ttf);
-  font-weight:300;
+  src: url("Fonts/Montserrat/Montserrat-Light.ttf");
+  font-weight: 300;
 }
 
 * {
@@ -29,10 +28,15 @@
   font-family: 'Montserrat' !important;
 }
 
-html, body {
-  font-size: 2em;
+p,
+body,
+html {
   font-family: 'Montserrat' !important;
+  margin: 0;
+  padding: 0;
 }
+
+
 
 .App {
   text-align: center;
@@ -50,22 +54,23 @@ html, body {
 
 .App-header {
   min-height: 100vh;
-  display: flex;
+  display: block;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  /*font-size: calc(10px + 2vmin);*/
+  background-color: white;
   color: white;
 }
 
 .App-link {
   color: #61dafb;
 }
-
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -73,65 +78,130 @@ html, body {
 
 a {
   text-decoration: none;
-  &:active, &:hover, &:focus {
-    outline: -webkit-focus-ring-color auto 0px;
+
+  &:active,
+  &:focus,
+  &:hover {
+    outline: -webkit-focus-ring-color auto 0;
   }
 }
 
-@media screen and (orientation:landscape){
+/*
+Text
+*/
+/*
+h1 {
+  font-size: 200px;
+}
 
+h2 {
+  font-size: 200px;
+}
+
+h3 {
+  font-size: 200px;
+}
+
+h4 {
+  font-size: 200px;
+}
+
+h5 {
+  font-size: 200px;
+}
+
+h6 {
+  font-size: 200px;
+}
+*/
+
+
+
+strong {
+  color: $blue;
+}
+
+
+@media screen and (orientation:landscape) {
+  body,
+  html {
+    font-size: 35px;
+  }
+  p.copy {
+    font-size: 35px;
+
+    padding-bottom: 40px;
+  }
+  p.copy-nextline {
+    font-size: 35px;
+
+    padding-bottom: 10px;
+  }
   .content {
-    padding-top: 150px;
+    position: absolute;
+    width: 100%;
     height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
     color: $grey;
-    h1, h2, h3, h4, h5, h6 {
-      color: $grey;
-    }
+    display: -webkit-flex;
+    -webkit-justify-content: center;
+    margin: 0;
+    padding: 0;
+  }
+
+  .split-half {
+
+    -webkit-justify-content: center;
+    display: table;
+    justify-content: center;
+  }
+
+  .split-left {
+    vertical-align: middle;
+    display: table-cell;
+    width: 50%;
+  }
+
+  .split-right {
+    vertical-align: middle;
+    display: table-cell;
+    width: 50%;
   }
 }
-
-@media screen and (orientation:portrait){
+@media screen and (orientation:portrait) {
+  body,
+  html {
+    font-size: 48px;
+  }
+  p, .copy {
+    font-size: 48px;
+  }
 
   .content {
     padding: 350px 100px;
     height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    /*justify-content: space-between;*/
+    justify-content: center;
     color: $grey;
-    h1, h2, h3, h4, h5, h6 {
-      color: $grey;
-    }
   }
-}
 
+
+}
 
 
 a.disabled {
   pointer-events: none;
 }
 
-strong {
-  color: $blue;
-}
-
 .hidden {
   visibility: hidden;
 }
 
-@-webkit-keyframes rotating {
-  from{
-      -webkit-transform: rotate(0deg);
-  }
-  to{
-      -webkit-transform: rotate(360deg);
-  }
-}
 
-.beginLogo {
-  -webkit-animation: rotating 8s linear infinite;
-  display: inline-block;
+.iconButton{
+
 }

@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
 import P5Wrapper from 'react-p5-wrapper';
-import IconButton from '../../Components/IconButton/IconButton';
+//import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 
-import './Game.css';
+import './Game.scss';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
 
@@ -76,7 +75,6 @@ function sketch(p) {
   };
 
   p.draw = () => {
-
     p.background(colors.sketchBg);
     p.stroke(colors.sketchStroke);
 
@@ -322,9 +320,6 @@ class Game extends React.Component {
         <SpectreHeader colour="white" />
         <P5Wrapper sketch={sketch} className="wrapper" />
         <IdleChecker />
-        <Link to="/thank-you">
-          <IconButton icon="next" text="Next" />
-        </Link>
         <FooterLogo />
       </div>
     );

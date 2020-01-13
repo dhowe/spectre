@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
+//import Typography from '@material-ui/core/Typography';
 import AvatarComponent from '../../Components/AvatarComponent/AvatarComponent';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
@@ -12,19 +12,7 @@ import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 import './InfluenceAFollower.scss';
 
 const styles = {
-  root: {
-    width: '100%',
-    color: 'black',
-  },
-  clickToContinue: {
-    margin: '20% 0',
-  },
-  glow: {
-    color: '#ffd700',
-  },
-  content: {
-    display: 'block',
-  }
+
 };
 
 class InfluenceAFollower extends React.Component {
@@ -71,18 +59,24 @@ class InfluenceAFollower extends React.Component {
         <SpectreHeader colour="white" progressActive progressNumber="one" />
         <IdleChecker />
         <div className={`${this.props.content} content`}>
-          <Typography component="h5" variant="h5" className="influence-a-follower"><strong>Influence a follower!</strong></Typography>
-          <Typography component="p" variant="body1" className="community">Spectre has a global community of followers.</Typography>
-          <Typography component="h5" variant="h5" className="choose-participant">Choose one:</Typography>
-          <AvatarCircle>
-            {similars.slice(0, 6).map((sim, i) => (
-              <AvatarComponent
-                key={AvatarComponent.generateKey(i)}
-                handleClick={() => this.handleSelect(sim)}
-                target={{ name: sim.name, image: `${UserSession.profileDir}/${sim._id}.jpg` }}
-              />
-            ))}
-          </AvatarCircle>
+        <div className="split-half">
+          <div className="split-left">
+            <p><strong>Influence a follower!</strong></p>
+            <p className="copy">Spectre has a global community of followers.</p>
+          </div>
+          <div className="split-right">
+            <p className="copy">Choose one:</p>
+            <AvatarCircle>
+              {similars.slice(0, 6).map((sim, i) => (
+                <AvatarComponent
+                  key={AvatarComponent.generateKey(i)}
+                  handleClick={() => this.handleSelect(sim)}
+                  target={{ name: sim.name, image: `${UserSession.profileDir}/${sim._id}.jpg` }}
+                />
+              ))}
+            </AvatarCircle>
+          </div>
+          </div>
         </div>
         <FooterLogo />
       </div>

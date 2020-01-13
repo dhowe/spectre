@@ -104,34 +104,46 @@ class DarkAd extends React.Component {
         <SpectreHeader colour="white" progressActive progressNumber="one" />
         <IdleChecker />
         <div className={`${classes.content} content`}>
-          <Typography component="h6" variant="h6"><strong>Create Your Campaign</strong></Typography>
-          <div className={classes.ad}>    { /* adIssue should never change after being selected '*/}
-            <img className={classes.adImage} src={this.state.image} alt="leave"></img>
-            <p className={classes.adText}>{this.state.text}</p>
-            {!this.state.defaultImageSelected ? <img className={classes.campaignImage} src={cimage} alt="leave"></img> : ''}
-          </div>
-          <div>
-            {images.map((image, i) => (
-              <img className={classes.image} src={image} alt="leave" key={i}
-                onClick={() => { this.setState({ image: image, defaultImageSelected: false }) }}></img>
-            ))}
-          </div>
-          <div>
-            {slogans.map((slogan, i) => (
-              <Button className={classes.button} variant="contained" color="primary" key={i}
-                onClick={() => {
-                  if (this.state.defaultImageSelected) this.setState({ image: redimg });
-                  this.setState({ text: slogan, defaultImageSelected: false })
-                }}>
-                {slogan.split(' ').slice(0, 2).join(' ') + '...'}
-              </Button>
-            ))}
+          <div className="split-half">
+            <div className="split-left">
+              <Typography component="h6" variant="h6"><strong>Create Your Campaign</strong></Typography>
+              <div className={classes.ad}>    { /* adIssue should never change after being selected '*/}
+                <img className={classes.adImage} src={this.state.image} alt="leave"></img>
+                <p className={classes.adText}>{this.state.text}</p>
+                {!this.state.defaultImageSelected ? <img className={classes.campaignImage} src={cimage} alt="leave"></img> : ''}
+              </div>
+            </div>
+
+            <div className="split-right">
+              <div>
+                {images.map((image, i) => (
+                  <img className={classes.image} src={image} alt="leave" key={i}
+                    onClick={() => { this.setState({ image: image, defaultImageSelected: false }) }}></img>
+                ))}
+              </div>
+              <div>
+                {slogans.map((slogan, i) => (
+                  <Button className={classes.button} variant="contained" color="primary" key={i}
+                    onClick={() => {
+                      if (this.state.defaultImageSelected) this.setState({ image: redimg });
+                      this.setState({ text: slogan, defaultImageSelected: false })
+                    }}>
+                    {slogan.split(' ').slice(0, 2).join(' ') + '...'}
+                  </Button>
+                ))}
+              </div>
+              <div>
+                <Link to="/target-ad" onClick={() => this.context.targetAd =
+                  { image: this.state.image, text: this.state.text }}>
+                  <IconButton icon="next" text="Next" />
+                </Link>
+              </div>
+
+
+            </div>
           </div>
 
-          <Link to="/target-ad" onClick={() => this.context.targetAd =
-            { image: this.state.image, text: this.state.text }}>
-            <IconButton icon="next" text="Next" />
-          </Link>
+
         </div>
         <FooterLogo />
       </div>

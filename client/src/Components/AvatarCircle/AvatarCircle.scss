@@ -36,11 +36,25 @@
     }
   }
 }
-.circle-section {
-  padding: 50px;
 
-  .avatar-circle {
-    @include on-circle($item-count: 6, $circle-size: 480px, $item-size: 180px);
-    width:100%;
+
+@media screen and (orientation:landscape) {
+  .circle-section {
+    padding: 10px;
+
+    .avatar-circle {
+      @include on-circle($item-count: 6, $circle-size: 300px, $item-size: 100px);
+      width:100%;
+    }
+  }
+}
+@media screen and (orientation:portrait) {
+  .circle-section {
+    padding: 50px;
+
+    .avatar-circle {
+      @include on-circle($item-count: 6, $circle-size: 480px, $item-size: 180px);
+      width:100%;
+    }
   }
 }

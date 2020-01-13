@@ -1,16 +1,28 @@
 .LoginPage {
-  background-color: #21c0fb;
+  background-color: #21c0fc;
   color: #ffffff;
+  flex-grow: 1;
+  width: 100%;
+  background-size: 'cover';
+}
+
+.LoginPage-content h2 {
+  font-size: 55px;
+  font-weight: 400;
+    color: #fff;
+}
+
+.LoginPage-content h6 {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 400;
+  color: #fff;
+}
+.react-simple-keyboard span{
+  font-size: 30px;
 }
 @media screen and (orientation:landscape) {
   .LoginPage-content {
-    width: 70%;
-    margin: auto;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-
     h1,
     h2,
     h3,
@@ -19,6 +31,25 @@
     h6 {
       color: #ffffff;
     }
+    background-color: #21c0fc;
+  }
+
+  .LoginPage-content h2 {
+    margin-top: -600px;
+
+  }
+
+  .LoginPage-content h6 {
+      padding-top: 20px;
+  }
+
+  .tos {
+    position: fixed;
+    margin: auto;
+    color: white;
+    text-align: left;
+    bottom: 2%;
+    left: 43%;
   }
 }
 @media screen and (orientation:portrait) {
@@ -27,23 +58,18 @@
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-      color: #ffffff;
-    }
   }
-}
 
-.tos {
-  position: fixed;
-  margin: auto;
-  color: white;
-  text-align: left;
-  bottom: 3%;
-  left: 38%;
+  .LoginPage-content h2 {}
+
+  .LoginPage-content h6 {}
+
+  .tos {
+    position: fixed;
+    margin: auto;
+    color: white;
+    text-align: left;
+    bottom: 3%;
+    left: 38%;
+  }
 }

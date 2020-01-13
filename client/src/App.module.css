@@ -1,0 +1,76 @@
+@import './colors.scss';
+
+:root {
+  --red: #e03c31;
+  --grey: #929391;
+  --lightGrey: #a5a6a8;
+  --blue: #21c0fc;
+}
+
+/*
+Button
+*/
+.blueBtn span:first-child {
+  border: solid 3px var(--blue);
+  border-radius: 50px;
+  padding: 0 30px;
+  color: var(--blue);
+  width: auto;
+}
+
+.buttonWrapper button {
+  display: inline-block;
+  height: 53px;
+  margin: 16px;
+  border: solid 3px #929391;
+  border-radius: 28px;
+  background-color: #ffffff;
+  box-shadow: none;
+  color: #929391;
+  font-weight: 500;
+  text-transform: capitalize;
+  letter-spacing: 0;
+  line-height: 32px;
+}
+
+@media screen and (orientation:landscape) {
+  .buttonWrapper {
+    margin: 80px auto;
+    align-items: center;
+    width: 100%;
+  }
+
+  .buttonWrapper button {
+    width: 180px;
+    font-size: 25px;
+  }
+
+  .iconButtonStyle1 {
+    position: fixed;
+    right: 10%;
+    top: 45%;
+  }
+
+  .iconButtonStyle2 {
+    position: fixed;
+    right: 10%;
+    top: 40%;
+  }
+}
+
+@media screen and (orientation:portrait) {
+  .buttonWrapper {
+    padding-left: -40px;
+    margin: 80px auto;
+    align-items: center;
+  }
+
+  .buttonWrapper button {
+    width: 180px;
+    font-size: 30px;
+  }
+
+  .iconButtonStyle1 {}
+
+  .iconButtonStyle2 {}
+}

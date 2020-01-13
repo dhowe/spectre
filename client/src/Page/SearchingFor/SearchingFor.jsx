@@ -1,59 +1,44 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
+//import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
-//import Webcam from "react-webcam";
+import Webcam from "react-webcam";
 import './SearchingFor.scss';
-import Styles from '../../Styles';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
-
+import ComponentsStyles from '../../App.module.css';
 
 const styles = {
-  root: {
-    flexGrow: 1,
-    width: '100%',
-    color: 'black',
-  },
-  content: {
-    paddingTop: '100px',
-    display: 'flex',
-    justifyContent: 'center',
-  },
-  clickToContinue: {
-    margin: '20% 0',
-  },
-  button: {
-    ...Styles.button,
-  },
-  link: {
-    display: 'block',
-    marginBottom: '30px',
-  },
+
   profileImage: {
-    width: 800,
-    height: 1000,
+    width: 640,
+    height: 480,
   },
 };
 
 class SearchingFor extends React.Component {
   constructor(props) {
     super(props, 'data-is');
-    this.setRef = this.setRef.bind(this);
+    this.state = {};
     this.state = { name: '' };
   }
 
-  setRef(webcam) {
+  setRef = (webcam) => {
     this.webcam = webcam;
   }
+
+  // capture = () => {
+  //   const image = this.webcam.getScreenshot();
+  //   this.setState({ screenshot: image });
+  // }
 
   async componentDidMount() {
     let user = await UserSession.ensure(this.context,
       ['_id', 'login', 'gender', 'name']);
-    this.setState({name: user.name})
+    this.setState({ name: user.name })
   }
 
   toImageFile(data, fname) {
@@ -78,35 +63,44 @@ class SearchingFor extends React.Component {
     user.virtue = virtue;
 
     // here we are doing the webcam capture, disabled for now
-    if (false) {
-
+    if (1) {
       // TODO: next work
-      const data = this.webcam.getScreenshot();
-      if (data && data.length) {
-        const imgfile = this.toImageFile(data, user._id + '.jpg');
-        UserSession.postImage(this.context, imgfile,
-          (json) => {
-            console.log(`Upload: http://localhost:3000${json.url}`);
-            this.context.hasImage = true;
-            this.props.history.push('/data-is');
-            return;
-          },
-          (e) => {
-            console.error('Error', e);
-            this.context.hasImage = false;
-            this.props.history.push('/data-is');
-            return;
-          }
-        );
+      try {
+
+        const data = this.webcam.getScreenshot();
+        if (data && data.length) {
+          const imgfile = this.toImageFile(data, user._id + '.jpg');
+          UserSession.postImage(this.context, imgfile,
+            (json) => {
+              console.log(`Upload: http://localhost:3000${json.url}`);
+              console.log(json);
+              this.context.hasImage = true;
+              this.props.history.push('/data-is');
+              return;
+            },
+            (e) => {
+              console.error('Error', e);
+              this.context.hasImage = false;
+              this.props.history.push('/data-is');
+              return;
+            }
+          );
+        }
+        else {
+          console.error('Webcam not available');
+          this.context.hasImage = false;
+          this.props.history.push('/data-is');
+          return;
+        }
       }
-      else {
-        console.error('no image capture');
-        this.context.hasImage = false;
-        return;
+      catch (e) {
+        console.error('Webcam Error: ', e);
       }
     }
     this.props.history.push('/data-is');
   }
+
+
 
   render() {
     const { classes } = this.props;
@@ -116,12 +110,12 @@ class SearchingFor extends React.Component {
         <SpectreHeader colour="white" />
         <IdleChecker />
         <div className={`${classes.content} content`}>
-          <Typography className="username" component="h3" variant="h3">{name}</Typography>
-          <Typography className="question" component="h3" variant="h3">What are you searching for today?</Typography>
-
-          {/*<div className="ImageCapture">
-            <Webcam ref={this.setRef}
+          <p><strong>{name}</strong></p>
+          <p>What are you searching for today?</p>
+          {<div className="ImageCapture">
+            <Webcam
               audio={false}
+              ref={this.setRef}
               screenshotQuality={1}
               screenshotFormat="image/jpeg"
               width={styles.profileImage.width}
@@ -133,14 +127,15 @@ class SearchingFor extends React.Component {
                 facingMode: "user"
               }}
             />
+          </div>}
+          <div className={ComponentsStyles.buttonWrapper}>
+            <Button className={ComponentsStyles.button} variant="contained" color="primary" onClick={() => this.handleClick('power')}>Power</Button>
+            <Button className={ComponentsStyles.button} variant="contained" color="primary" onClick={() => this.handleClick('truth')}>Truth</Button>
+            <Button className={ComponentsStyles.button} variant="contained" color="primary" onClick={() => this.handleClick('influence')}>Influence</Button>
+            <Button className={ComponentsStyles.button} variant="contained" color="primary" onClick={() => this.handleClick('wealth')}>Wealth</Button>
+
           </div>
-          */}
-          <div className="buttonWrapper">
-            <Button className={classes.button} variant="contained" color="primary" onClick={() => this.handleClick('power')}>Power</Button>
-            <Button className={classes.button} variant="contained" color="primary" onClick={() => this.handleClick('truth')}>Truth</Button>
-            <Button className={classes.button} variant="contained" color="primary" onClick={() => this.handleClick('influence')}>Influence</Button>
-            <Button className={classes.button} variant="contained" color="primary" onClick={() => this.handleClick('wealth')}>Wealth</Button>
-          </div>
+          {/*<this.state.screenshot ? <img src={this.state.screenshot} /> : null*/}
         </div>
         <FooterLogo />
       </div>

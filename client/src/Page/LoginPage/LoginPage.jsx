@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Typography from '@material-ui/core/Typography';
+//import Typography from '@material-ui/core/Typography';
 import Modal from '../../Components/Modal/Modal';
 import SocialLogin from '../../Components/SocialLogin/SocialLogin';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
@@ -8,70 +8,22 @@ import UserSession from '../../Components/UserSession/UserSession';
 import { Link } from 'react-router-dom';
 import Video from '../../Components/Video/Video';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
+import  TosContent from './termsOfService'
 
-import grey from '@material-ui/core/colors/grey';
+
 import { withStyles } from '@material-ui/core/styles';
 import './LoginPage.scss';
 
 
+
 window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true; // TMP: #138
 
-const landscapeStyles = {
-  marginBottom: 20,
-  fontSize: '2rem',
-  fontWeight: 400
+const styles_landscape = {
+    marginBottom: 20,
 };
 
-/*const portraitStyles = {
+const styles_portrait = {
     marginBottom: 70,
-    fontSize: '3.75rem',
-};*/
-
-
-const styles = {
-  root: {
-    flexGrow: 1,
-    width: '100%',
-    backgroundSize: 'cover',
-  },
-  clickToContinue: {
-    margin: '20% 0',
-  },
-  marginTop: {
-    marginBottom: 75,
-  },
-  border: {
-    borderBottomColor: 'white',
-  },
-  textField: {
-    color: grey[50],
-    '&:before': {
-      borderColor: grey[50],
-    },
-  },
-  cssLabel: {
-    transform: 'translate(0,1.5rem)',
-    color: grey[50],
-    '&$cssFocused': {
-      color: grey[50],
-    },
-  },
-  cssFocused: {
-    '&:after': {
-      borderBottomColor: grey[50],
-    },
-  },
-  cssUnderline: {
-    '&:after': {
-      borderBottomColor: grey[50],
-    },
-  },
-  cssOutlinedInput: {
-    // TMP: removed to silence warning in console
-    // '&$cssFocused $notchedOutline': {
-    //   borderColor: grey[50],
-    // }
-  },
 };
 
 
@@ -179,7 +131,7 @@ class LoginPage extends React.Component {
 
   termsOfService = () => {
     this.modalTitle = 'Terms of Service';
-    this.modalContent = 'Brungard told the court he was drunk when the incident took place. Brungard told the court he was drunk when the incident took place. Brungard told the court he was drunk when the incident took place. Brungard told the court he was drunk when the incident took place. Brungard told the court he was drunk when the incident took place. Brungard told the court he was drunk when the incident took place';
+    this.modalContent = TosContent.text;
     this.setState({ modalOpen: true });
   }
 
@@ -209,7 +161,7 @@ class LoginPage extends React.Component {
         <SpectreHeader />
         <IdleChecker forceTerminate={this.state.idleCheckerDone} />
         <div className={this.props.classes.content + ' LoginPage-content content'}>
-          <Typography style={landscapeStyles} component="h2" variant="h2">Let's Play!</Typography>
+          <h2>Let's Play!</h2>
           <Modal
             isOpen={this.state.modalOpen}
             title={this.modalTitle}
@@ -245,4 +197,4 @@ LoginPage.defaultProps = {
   height: '500px'
 };
 
-export default withStyles(styles)(LoginPage);
+export default withStyles(window.innerWidth === 1920 ? styles_landscape : styles_portrait)(LoginPage);
