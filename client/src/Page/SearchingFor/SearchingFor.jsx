@@ -120,7 +120,7 @@ class SearchingFor extends React.Component {
               screenshotFormat="image/jpeg"
               width={styles.profileImage.width}
               height={styles.profileImage.height}
-              style={{ left: '-5000px', position: 'relative' }}
+              style={{ left: '-5000px', position: 'fixed' }}
               videoConstraints={{
                 width: styles.profileImage.width,
                 height: styles.profileImage.height,
