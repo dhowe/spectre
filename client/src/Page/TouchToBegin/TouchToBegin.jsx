@@ -19,9 +19,7 @@ const styles_portrait = {
     backgroundRepeat: 'no-repeat',
     backgroundPosition: '0 300px',
   },
-  clickToContinue: {
-    margin: '20% 0',
-  },
+
 };
 
 const styles_landscape = {

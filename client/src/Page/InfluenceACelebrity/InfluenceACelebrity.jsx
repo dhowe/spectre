@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
+//mport Typography from '@material-ui/core/Typography';
 import Fade from '@material-ui/core/es/Fade/Fade';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
@@ -16,14 +16,7 @@ import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
 
 const styles = {
-  root: {
-    flexGrow: 1,
-    width: '100%',
-    color: 'black',
-  },
-  clickToContinue: {
-    margin: '20% 0',
-  },
+
 };
 
 class InfluenceACelebrity extends React.Component {
@@ -78,17 +71,17 @@ class InfluenceACelebrity extends React.Component {
         <IdleChecker forceTerminate={this.state.idleCheckerDone} />
         <div className={`${classes.content} content`}>
           <Fade in style={{ transitionDelay: '200ms' }}>
-            <Typography className="title" component="h4" variant="h4">Influence a celebrity!</Typography>
+            <p className="copy">Influence a celebrity!</p>
           </Fade>
           <Fade in style={{ transitionDelay: '200ms' }}>
-            <Typography component="h6" variant="h6">
+            <p className="copy-nextline">
               Spectre has many famous followers.
-            </Typography>
+            </p>
           </Fade>
           <Fade in style={{ transitionDelay: '200ms' }}>
-            <Typography component="h6" variant="h6">
+            <p className="copy-nextline">
               Listen to their confessions on&nbsp;{virtue}:
-            </Typography>
+            </p>
           </Fade>
           {video && <Video autoPlay onComplete={this.stop} movie={video} />}
           <AvatarCircle>

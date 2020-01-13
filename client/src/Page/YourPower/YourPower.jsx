@@ -34,10 +34,10 @@ class YourPower extends React.Component {
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive progressNumber="one" />
         <div className={`${classes.content} content`}>
-          <Fade in style={{ transitionDelay: '200ms', marginTop: '300px' }}>
+          <Fade in style={{ transitionDelay: '200ms'}}>
             <p><strong>{name}</strong>, your {virtue} is growing </p>
           </Fade>
-          <Fade in style={{ transitionDelay: '2000ms', marginBottom: '200px' }}>
+          <Fade in style={{ transitionDelay: '2000ms'}}>
             <p>Let's put it into practice.</p>
           </Fade>
           <Countdown

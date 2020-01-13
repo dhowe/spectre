@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
+//import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
@@ -10,14 +10,7 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
 const styles = {
-  root: {
-    flexGrow: 1,
-    width: '100%',
-    color: 'black',
-  },
-  clickToContinue: {
-    margin: '20% 0',
-  },
+
 };
 
 class PickYourSide extends React.Component {
@@ -39,9 +32,9 @@ class PickYourSide extends React.Component {
         <SpectreHeader colour="white" progressActive progressNumber="one" />
         <IdleChecker />
         <div className={`${classes.content} content`}>
-          <Typography component="h6" variant="h6" style={{ marginTop: '300px' }}>
+          <p>
             Persuade <strong>{targetName}</strong> to:
-          </Typography>
+          </p>
           <Link to="/campaign">
             <img src="/imgs/vote_leave.png" width={420} alt="leave"
               onClick={() => { this.context.adIssue = 'leave'; }}></img>

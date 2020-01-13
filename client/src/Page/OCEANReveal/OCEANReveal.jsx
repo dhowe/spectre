@@ -2,23 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Fade from '@material-ui/core/Fade';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
+//import Typography from '@material-ui/core/Typography';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import Video from '../../Components/Video/Video';
 import Modal from '../../Components/Modal/Modal';
 
-import colours from '../../colors.scss';
+//import colours from '../../colors.scss';
 
 const styles = {
-  root: {
-    flexGrow: 1,
-    width: '100%',
-  },
-  clickToContinue: {
-    margin: '20% 0',
-  },
+
 };
 
 class OCEANReveal extends React.Component {
@@ -65,22 +59,15 @@ class OCEANReveal extends React.Component {
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive progressNumber="three" />
-        <div style={{
-          height: 600,
-          marginTop: 400,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center'
-        }}>
+        <div className={`${classes.content} content`}>
           {sentences.map((sent, i) => {
             return (
               <Fade key={i} in={true}
                 style={{ transitionDelay: (i * 1000) + 'ms' }}>
-                <Typography variant="h6" component="h6" key={`fade-${i}`}
-                  style={{ color: colours.grey, width: '80%', margin: '50px 0', marginTop: '50px' }}>
+                <p className="copy-nextline" key={`fade-${i}`}
+                  >
                   {sent}
-                </Typography>
+                </p>
               </Fade>
             );
           })}

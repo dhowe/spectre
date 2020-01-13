@@ -22,7 +22,7 @@ const styles = {
 class InsightComplete extends React.Component {
   constructor(props) {
     super(props, '/your-power');
-    this.state = { idleCheckerDone: false, target: {name: '', traits:''} };
+    this.state = { idleCheckerDone: false, target: { name: '', traits: '' } };
   }
 
   async componentDidMount() {
@@ -43,7 +43,7 @@ class InsightComplete extends React.Component {
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" />
-        <IdleChecker forceTerminate={idleCheckerDone}/>
+        <IdleChecker forceTerminate={idleCheckerDone} />
         <div className={`${classes.content} content`}>
           <h3>Excellent.</h3>
           <p>Verification complete!</p>
@@ -54,7 +54,7 @@ class InsightComplete extends React.Component {
             className={classes.button} variant="contained" color="primary">WTF is OCEAN?</Button>} />
           <Video
             ref={(el) => { this.video = el; }}
-            onComplete={()=>this.props.history.push('/your-power')}
+            onComplete={() => this.props.history.push('/your-power')}
             autoPlay={false} movie="/video/OceanIntro.mp4" />
         </div>
         <FooterLogo />

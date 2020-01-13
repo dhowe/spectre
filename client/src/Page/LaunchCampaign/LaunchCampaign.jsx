@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
+//import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
@@ -33,8 +33,8 @@ class LaunchCampaign extends React.Component {
         <SpectreHeader colour="white" />
         <IdleChecker />
         <div className={`${classes.content} content`}>
-          <Typography component="h6" variant="h6" style={{ marginTop: '250px' }}>Launch Campaign!</Typography>
-          <Link to="/referendum-results" style={{ marginBottom: '300px' }}>
+          <p className="copy">Launch Campaign!</p>
+          <Link to="/referendum-results">
             <img
               className={classes.image}
               src={launchImg}
