@@ -34,7 +34,6 @@ class Insight extends React.Component {
       buttonEnabled: true,
     });
     document.getElementById("clickMe").click();
-
   }
 
   async componentDidMount() {
@@ -55,7 +54,6 @@ class Insight extends React.Component {
       progress,
     } = this.props;
     const { targetName, targetImage } = this.state;
-    console.log(this.state.buttonEnabled)
     return (
       <div className={classes.root} id='clickMe'>
         <SpectreHeader colour="white" progressActive progressNumber={progress} />

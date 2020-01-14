@@ -309,22 +309,11 @@ class IconButton extends React.Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    console.log(nextProps)
-    console.log(prevState)
-    console.log("nextProps.enabled !== prevState.enabled")
-    console.log(nextProps.enabled !== prevState.enabled)
-
     if (nextProps.enabled !== prevState.enabled) {
       //let c =
       return { enabled: nextProps.enabled ? true : false, colour: nextProps.enabled ? colours.blue : colours.grey };
     }
     else return null;
-    /*
-    if(nextProps.someValue!==prevState.someValue){
-         return { someState: nextProps.someValue};
-      }
-      else return null;
-      */
   }
 
 
