@@ -1,4 +1,4 @@
- import React from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
@@ -15,30 +15,27 @@ import './SocialLogin.scss';
 import ComponentsStyles from '../../App.module.css';
 
 const styles_landscape = {
-    fontSize: '1rem',
-    fontWeight: 400,
-    formControl: {
-      marginBottom: 15,
-    },
-    margin: {
-      display: 'block',
-
-    },
-
+  fontSize: '1rem',
+  fontWeight: 400,
+  formControl: {
+    marginBottom: 15,
+  },
+  margin: {
+    display: 'block',
+  },
 };
 
 const styles_portrait = {
-    fontSize: '1.25rem',
-        fontWeight: 400,
-    formControl: {
-      marginBottom: 75,
-    },
-    margin: {
-      display: 'block',
-      marginBottom: 75,
-    },
+  fontSize: '1.25rem',
+  fontWeight: 400,
+  formControl: {
+    marginBottom: 75,
+  },
+  margin: {
+    display: 'block',
+    marginBottom: 75,
+  },
 };
-
 
 let stateObj = {
   emailValid: false,

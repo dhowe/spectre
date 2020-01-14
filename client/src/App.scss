@@ -26,6 +26,7 @@ Overall
   -webkit-tap-highlight-color: rgba(0,0,0,0);
   -webkit-tap-highlight-color: transparent;
   font-family: 'Montserrat' !important;
+  cursor: none !important;
 }
 
 p,
@@ -34,6 +35,7 @@ html {
   font-family: 'Montserrat' !important;
   margin: 0;
   padding: 0;
+
 }
 
 
@@ -151,6 +153,7 @@ strong {
     -webkit-justify-content: center;
     margin: 0;
     padding: 0;
+
   }
 
   .split-half {

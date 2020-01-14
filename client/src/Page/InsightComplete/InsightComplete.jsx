@@ -49,9 +49,10 @@ class InsightComplete extends React.Component {
           <p>Verification complete!</p>
           <p>You've unlocked OCEAN profiling!</p>
           <OceanProfile subject={target} classes={classes}></OceanProfile>
+
           <p>You now have the <strong>power</strong> to influence&nbsp;<strong>{target.name}</strong>.</p>
-          <IconButton className={ComponentsStyles.iconButtonStyle2} icon="play" text="Next" onClick={this.showVideo} Button={<Button style={{ marginTop: 20, }}
-            className={classes.button} variant="contained" color="primary">WTF is OCEAN?</Button>} />
+          <IconButton enabled={true} className={ComponentsStyles.iconButtonStyle2} icon="play" text="Next" onClick={this.showVideo} Button={<Button
+            style={{marginTop:'20px',color:'#ffffff',boxShadow:'none',backgroundColor:'#ffffff'}} className='wft-btn' variant="contained" color="primary">WTF is OCEAN?</Button>} />
           <Video
             ref={(el) => { this.video = el; }}
             onComplete={() => this.props.history.push('/your-power')}

@@ -51,7 +51,7 @@ class Steps extends React.Component {
                 <p className="copy">Ready?</p>
             </Fade>
             <Link to="/follower">
-                <IconButton icon="tick" text="Yes" />
+                <IconButton enabled={true} icon="tick" text="Yes" />
             </Link>
         </div>
         <FooterLogo />
