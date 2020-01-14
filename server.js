@@ -16,6 +16,11 @@ const test = process.env.NODE_ENV === 'test';
 const dev = process.env.NODE_ENV !== 'production';
 const client = path.join(__dirname, '/client');
 
+if (!apiUser[process.env.API_USER]) {
+  throw Error('Attempt to start server without ' +
+    'authentication; are you missing a .env file?');
+}
+
 const auth = basicAuth({
   users: apiUser,
   challenge: true,

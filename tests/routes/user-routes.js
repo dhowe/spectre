@@ -1,10 +1,10 @@
 import chai_http from 'chai-http';
 import server from '../../server';
-import fetch from 'node-fetch';
+//import fetch from 'node-fetch';
 import dotEnv from 'dotenv';
 import chai from 'chai';
 
-import DefaultUsers from '../../client/public/default-users';
+import DefaultUsers from '../../client/src/Components/UserSession/default-users';
 import UserModel from '../../user-model';
 import User from '../../shared/user';
 
