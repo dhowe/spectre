@@ -29,11 +29,6 @@ UserSession.serverErrors = 0;
 /////////////////////////// API functions /////////////////////////////
 
 /*
- * Logs available fields to the console
- */
-UserSession.log = u => u.toString();
-
-/*
  * Clears data from browser session storage
  */
 UserSession.clear = function() {
@@ -311,6 +306,14 @@ UserSession.postImage = async (user, image) => { // TODO: test
   }
 }
 
+/*
+ * Logs available fields to the console
+ */
+UserSession.log = u => u.toString();
+
+/*
+ * Randomizes set of celebrities
+ */
 UserSession.randomCelebrities = () => {
   return shuffle(shuffle(MaleCelebs).splice(0, 4).concat(FemaleCelebs));
 }
