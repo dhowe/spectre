@@ -211,8 +211,8 @@ class SocialLogin extends React.Component {
               onKeyPress={button => this.onKeyPress(button)}
               layoutName={this.state.layoutName}
             />
-            <IconButton className={ComponentsStyles.iconButtonStyle1} ref={btn => { this.btn = btn; }} onClick={e => this.props.handleSubmit(e, this.state)}
-              enabled={btnEnabled ? "white" : false} colour="white" icon="next" text="Next" />
+            <IconButton className={ComponentsStyles.iconButtonStyle1 + ' iconButton-white'} ref={btn => { this.btn = btn; }} onClick={e => this.props.handleSubmit(e, this.state)}
+              enabled={btnEnabled ? "white" : false} color="white" icon="nextWhite" text="Next" />
           </form>
         </div>
       </div>

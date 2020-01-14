@@ -34,6 +34,7 @@ class Insight extends React.Component {
       buttonEnabled: true,
     });
     document.getElementById("clickMe").click();
+
   }
 
   async componentDidMount() {
@@ -54,6 +55,7 @@ class Insight extends React.Component {
       progress,
     } = this.props;
     const { targetName, targetImage } = this.state;
+    console.log(this.state.buttonEnabled)
     return (
       <div className={classes.root} id='clickMe'>
         <SpectreHeader colour="white" progressActive progressNumber={progress} />
@@ -65,7 +67,7 @@ class Insight extends React.Component {
             <TextSliderText leftText={leftText} rightText={rightText} middleText={middleText} />
           </div>
           <Link to={next}>
-            <IconButton enabled={true} icon="next" text="Next" />
+            <IconButton enabled={this.state.buttonEnabled} icon="next" text="Next" />
           </Link>
         </div>
         <FooterLogo />

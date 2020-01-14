@@ -7,14 +7,19 @@
     font-size: 45px;
 }
 
-.iconButton-white {
-    .iconButtonText {
-        color: #ffffff;
-    }
+.iconButton:disabled *{
+  pointer-events: none;
+  color: $grey;
 }
 
-.disabled .iconButtonText {
-    color: $grey;
+.iconButton *{
+  pointer-events: auto;
+  color: $blue;
+}
+
+.iconButton-white *{
+  pointer-events: auto;
+  color: $white;
 }
 
 .iconButton {

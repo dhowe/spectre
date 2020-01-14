@@ -34,6 +34,25 @@ const icons = {
         strokeLinecap="round"
       />
     </svg>,
+  nextWhite: colour =>
+    <svg
+      width="150"
+      height="150"
+      viewBox="0 0 5 5"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M3.18932 2.49515C3.18932 2.47573 3.17961 2.45631 3.16505 2.4466L2.60194 2.03398C2.59223 2.02427 2.57767 2.02427 2.56311 2.02427C2.55825 2.02427 2.5534 2.02427 2.54854 2.02427C2.54369 2.02427 2.53884 2.02427 2.53398 2.02913C2.51456 2.03884 2.5 2.06311 2.5 2.08253V2.34952H1.9466C1.86893 2.34952 1.80097 2.41262 1.80097 2.49515C1.80097 2.57282 1.86408 2.64078 1.9466 2.64078H2.5V2.90777C2.5 2.91262 2.5 2.91748 2.5 2.92233V2.92719C2.5 2.93204 2.50486 2.9369 2.50486 2.9369C2.50486 2.9369 2.50486 2.9369 2.50486 2.94175C2.50486 2.9466 2.50971 2.95146 2.51456 2.95146C2.51942 2.95631 2.52427 2.96117 2.52913 2.96117C2.54854 2.97088 2.57282 2.97088 2.59223 2.95631L3.15534 2.54369C3.1699 2.53398 3.17961 2.51457 3.17961 2.49515H3.18932Z"
+        fill={colour = (colour == colours.blue? colours.white : colours.grey)}
+      />
+      <path
+        d="M2.5 4C3.3301 4 4 3.32524 4 2.5C4 1.6699 3.32524 1 2.5 1C1.6699 1 1 1.67476 1 2.5C1 3.3301 1.67476 4 2.5 4Z"
+        stroke={colour}
+        strokeWidth="0.1"
+        strokeLinecap="round"
+      />
+    </svg>,
   tick: colour =>
     <svg width="150" height="150" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M50 80C66.602 80 80 66.5048 80 50C80 33.398 66.5048 20 50 20C33.398 20 20 33.4952 20 50C20 66.602 33.4952 80 50 80Z" stroke={colour} strokeWidth="2" strokeLinecap="round" />
@@ -289,6 +308,26 @@ class IconButton extends React.Component {
     this.state = { colour: props.colour, ptEvents: 'none' };
   }
 
+  static getDerivedStateFromProps(nextProps, prevState) {
+    console.log(nextProps)
+    console.log(prevState)
+    console.log("nextProps.enabled !== prevState.enabled")
+    console.log(nextProps.enabled !== prevState.enabled)
+
+    if (nextProps.enabled !== prevState.enabled) {
+      //let c =
+      return { enabled: nextProps.enabled ? true : false, colour: nextProps.enabled ? colours.blue : colours.grey };
+    }
+    else return null;
+    /*
+    if(nextProps.someValue!==prevState.someValue){
+         return { someState: nextProps.someValue};
+      }
+      else return null;
+      */
+  }
+
+
   render() {
 
     const { onClick, icon, text, className, Button, classes, enabled } = this.props;
@@ -297,26 +336,25 @@ class IconButton extends React.Component {
     // code below was in the now deprecated componentWillReceiveProps()
     // TODO: see #366
 
-    // let colour = colours.grey, etype = typeof enabled;
+    // let colour = colours.grey,
+    //  let etype = typeof enabled;
     // let ptEvents = '';
-    // if (!enabled) {
-    //   colour = colours.grey;
-    //   ptEvents = 'none'
-    // } else if (etype === 'string') {
-    //   colour = enabled;
-    //   ptEvents = 'auto'
-    // } else if (enabled || etype === 'undefined') {
-    //   colour = colours.blue;
-    //   ptEvents = 'auto'
-    // }
+    //   if (!enabled) {
+    //     ptEvents.setState = 'none'
+    //   } else if (etype === 'string') {
+    //     ptEvents = 'auto'
+    //   } else if (enabled || etype === 'undefined') {
+    //     ptEvents = 'auto'
+    //   }
+
+
 
     const classNames = className ? [className] : [];
     classNames.push(`iconButton-${colour}`, 'iconButton', classes.button);
-
     return (
       <button onClick={onClick} disabled={!enabled} className={classNames.join(' ')}>
         {icons[icon] && icons[icon](colour)}
-        {Button || <div style={{ color: colour, pointerEvents: ptEvents }} className="iconButtonText">{text}</div>}
+        {Button || <div className="iconButtonText">{text}</div>}
       </button>
     );
   }
@@ -326,8 +364,8 @@ IconButton.defaultProps = {
   onClick: () => { },
   classes: {},
   className: null,
-  enabled: true,
-  colour: colours.blue,
+  enabled: false,
+  colour: colours.grey,
   Button: null,
 };
 IconButton.propTypes = {
