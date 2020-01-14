@@ -34,7 +34,7 @@ class ProfileMaker {
   }
 
   onImage = (path) => {
-    //console.log('[IMAGE] ' + path);
+    console.log('[IMAGE] ' + path);
     if (/^.*\/[a-f\d]{24}_raw\.jpg$/i.test(path)) {
       try {
         const outf = path.replace(/_raw\.jpg/, '.jpg');
@@ -49,7 +49,7 @@ class ProfileMaker {
           });
       }
       catch (e) {
-        console.error('ProfileMaker: ' + e);
+        console.error('ProfileMaker::52: ' + path + '\n' + e);
       }
     }
   }
@@ -129,8 +129,6 @@ class ProfileMaker {
       this.crop = this.result.box;
     }
 
-    //console.log(this.result);
-    
     return this;
   }
 }
