@@ -5,6 +5,7 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import Video from '../../Components/Video/Video';
+import ComponentsStyles from '../../App.module.css';
 
 const styles = {
   root: {
@@ -36,7 +37,7 @@ class ReferendumResults extends React.Component {
     const user = await UserSession.ensure(this.context, ['_id', 'adIssue']);
     this.setState({ adIssue: user.adIssue });
   }
-  
+
   componentWillUnmount() {
     clearTimeout(this.timeout);
   }
@@ -46,7 +47,7 @@ class ReferendumResults extends React.Component {
     const { adIssue } = this.state;
 
     let videoPlaceholder = adIssue.length ? (
-      <Video className={classes.video}
+      <Video className={ComponentsStyles.inPageVideo}
         movie={'/video/ReferendumResults_'+adIssue+'.mp4'}
         onComplete={() => this.timeout = setTimeout(() => this.props.history.push('/win'), 1000)}
       />) : <br />;

@@ -9,14 +9,7 @@ import UserSession from '../../Components/UserSession/UserSession';
 import IconButton from '../../Components/IconButton/IconButton';
 
 const styles = {
-  root: {
-    flexGrow: 1,
-    width: "100%",
-    color: 'black',
-  },
-  clickToContinue: {
-    margin: "20% 0",
-  }
+
 };
 
 class WeAreSorry extends React.Component {

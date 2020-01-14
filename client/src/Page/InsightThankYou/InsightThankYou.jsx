@@ -6,9 +6,7 @@ import Button from '@material-ui/core/Button';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
-
 import { ReactComponent as ThumbUp } from '../../Icons/insightthankyou.svg';
-
 //import colours from '../../colors.scss';
 import './InsightThankYou.scss';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
