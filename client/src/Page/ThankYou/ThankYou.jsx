@@ -34,7 +34,7 @@ class ThankYou extends React.Component {
             <p className="copy">Your experience has been <strong>personalised.</strong></p>
           </div>
           <Link to="/steps">
-            <IconButton icon="next" text="Next"/>
+            <IconButton enabled={true} icon="next" text="Next"/>
           </Link>
         </div>
         <FooterLogo />

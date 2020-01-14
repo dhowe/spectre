@@ -14,42 +14,7 @@ import './ConsumerData.scss';
 
 
 const styles = {
-  root: {
-    flexGrow: 1,
-    width: '100%',
-    color: 'black',
-  },
-  clickToContinue: {
-    margin: '20% 0',
-  },
-  button: {
-    borderRadius: '28px',
-    border: 'solid 3px #929391',
-    backgroundColor: '#ffffff',
-    boxShadow: 'none',
-    color: '#929391',
-  },
-  link: {
-    display: 'block',
-    marginBottom: '30px',
-  },
-  row: {
-    flexDirection: 'row',
-    display: 'flex',
-    padding: '0 30% 25% 25%', //tmp
-  },
-  column: {
-    flexDirection: 'column',
-    display: 'flex',
-  },
-  item: {
-    flexDirection: 'column',
-    display: 'flex',
-    padding: '30px',
-  },
-  icons: {
-    marginBottom: '30px',
-  },
+
 };
 
 class ConsumerData extends React.Component {
