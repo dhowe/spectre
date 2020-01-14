@@ -1,7 +1,9 @@
+import fs from 'fs';
 import React from 'react';
 import User from '../User/User';
 import DotEnv from 'dotenv';
 import FormData from 'form-data';
+//import DefaultUsers from '../../../client/public/default-users';
 
 const AdIssues = ['remain', 'leave'];
 const Genders = ['male', 'female', 'other'];
@@ -9,10 +11,12 @@ const Virtues = ['wealth', 'influence', 'truth', 'power'];
 const FemaleCelebs = ['Kardashian', 'Abramovic'];
 const MaleCelebs = ['Freeman', 'Duchamp', 'Mercury', 'Trump', 'Zuckerberg'];
 const Celebrities = FemaleCelebs.concat(MaleCelebs);
+const DefaultsPath = '../../../client/public/default-users';
 
 // We store the current User in React context for easy access
 let UserSession = React.createContext({});
 
+UserSession.defaultUsers = fs.readFileSync(DefaultsPath, 'utf8');
 UserSession.useBrowserStorage = true;
 UserSession.storageKey = 'spectre-user';
 UserSession.profileDir = User.profileDir;
@@ -22,15 +26,7 @@ UserSession.Vows = "aeiou".split('');
 UserSession.serverDisabled = false;
 UserSession.serverErrors = 0;
 
-// load default set of users in case no db
-fetch('/default-users.json').then(res => res.json())
-  .then(users => {
-    UserSession.defaultUsers = users;
-  }).catch(e => {
-    console.error('UserSession.defaultUsers:', e);
-  });
-
-///////////////////////////// functions ///////////////////////////////
+/////////////////////////// API functions /////////////////////////////
 
 /*
  * Logs available fields to the console
