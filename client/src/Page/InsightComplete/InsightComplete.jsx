@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 //import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/es/Button/Button';
-
 import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
@@ -16,7 +14,6 @@ import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 import ComponentsStyles from '../../App.module.css';
 
 const styles = {
-
 };
 
 class InsightComplete extends React.Component {
@@ -46,13 +43,11 @@ class InsightComplete extends React.Component {
         <IdleChecker forceTerminate={idleCheckerDone} />
         <div className={`${classes.content} content`}>
           <h3>Excellent.</h3>
-          <p>Verification complete!</p>
-          <p>You've unlocked OCEAN profiling!</p>
+          <p className="copy-nextline">Verification complete!</p>
+          <p className="copy-nextline">You've unlocked OCEAN profiling!</p>
           <OceanProfile subject={target} classes={classes}></OceanProfile>
-
-          <p>You now have the <strong>power</strong> to influence&nbsp;<strong>{target.name}</strong>.</p>
-          <IconButton enabled={true} className={ComponentsStyles.iconButtonStyle2} icon="play" text="Next" onClick={this.showVideo} Button={<Button
-            style={{marginTop:'20px',color:'#ffffff',boxShadow:'none',backgroundColor:'#ffffff'}} className='wft-btn' variant="contained" color="primary">WTF is OCEAN?</Button>} />
+          <p className="copy-nextline">You now have the <strong>power</strong> to influence&nbsp;<strong>{target.name}</strong>.</p>
+          <IconButton enabled={true} className={ComponentsStyles.iconButtonStyle2} icon="play" text="WTF is OCEAN?" onClick={this.showVideo}/>
           <Video
             ref={(el) => { this.video = el; }}
             onComplete={() => this.props.history.push('/your-power')}

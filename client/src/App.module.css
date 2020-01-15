@@ -57,10 +57,20 @@ Button
     top: 40%;
   }
 
+  .iconButtonStyle2 div {
+    margin-top: 10px;
+    font-size: 30px;
+  }
+
+  padding-bottom: 50px;
+  margin-bottom: 50px;
+
   .inPageVideo {
     margin: auto;
-    width:40%;
+    width: 40%;
   }
+
+
 }
 
 @media screen and (orientation:portrait) {

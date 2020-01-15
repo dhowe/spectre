@@ -210,3 +210,22 @@ a.disabled {
 .iconButton{
 
 }
+
+
+.DataIcons {
+  .iconButtonText {
+    font-size: 20px;
+    margin-top: 3px;
+  }
+
+  button.iconEnabled * {
+    width: 150px;
+    height: 80px;
+  }
+
+  button.iconDisabled * {
+    filter: grayscale(80%);
+    width: 150px;
+    height: 80px;
+  }
+}

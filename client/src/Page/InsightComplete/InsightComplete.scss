@@ -4,16 +4,13 @@
   @extend %title;
 }
 
-.wtf-btn{
-  margin-top: 20px;
-  box-shadow: none;
+#wtf-btn {
+    color: #21c0fc;
+    text-decoration: none;
+    margin-top: 55px;
+    font-size: 45px;
 }
 
-.wtf-btn span{
-  color: #ffffff;
-  background: #ffffff;
-  box-shadow: 0px 0px 0px 0px rgba(0,0,0,0), 0px 0px 0px 0px rgba(0,0,0,0), 0px 0px 0px 0px rgba(0,0,0,0);
-}
 
 .OceanProfile{
   margin: 20px auto;
