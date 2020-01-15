@@ -374,7 +374,12 @@ function doConfig() {
   }
 
   const cid = env.REACT_APP_CLIENT_ID || -1;
-  const host = env.REACT_APP_API_HOST || 'http://localhost:8083';
+
+  // Here we construct server host from window.location,
+  // assuming server/db is on the same host as the web-app)
+  const host = 'http://' + window.location.host.replace(/:[0-9]{4}$/, ':8083');
+
+  //const host = env.REACT_APP_API_HOST || 'http://localhost:8083';
   const auth = env.REACT_APP_API_USER + ':' + env.REACT_APP_API_SECRET;
 
   if (!auth || !auth.length) console.error("Auth required!");
