@@ -9,12 +9,9 @@ import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import IconButton from '../../Components/IconButton/IconButton';
 import IconButtonToggle from '../../Components/IconButton/IconButtonToggle';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
-
 import './ConsumerData.scss';
 
-
 const styles = {
-
 };
 
 class ConsumerData extends React.Component {
@@ -44,7 +41,7 @@ class ConsumerData extends React.Component {
             <strong>Choose 3 types of consumer data:</strong>
           </Typography>
 
-          <div onClick={this.countAdd} className="ConsumerDataIcons">
+          <div onClick={this.countAdd} className="DataIcons">
             <Grid className={classes.icons} container>
               <Grid item sm={4}>
                 <IconButtonToggle enabled={true} icon="health" text="Health" />
