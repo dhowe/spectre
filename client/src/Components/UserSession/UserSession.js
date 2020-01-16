@@ -364,8 +364,9 @@ function doConfig() {
   DotEnv.config();
 
   const port = 8083;
-  const route = '/api/users/';
   const env = process.env;
+  const path = '/api/users/';
+  const host = window.location.host.replace(/:[0-9]{4}$/, '');
   const mode = env.NODE_ENV !== 'production' ? 'DEV' : 'PROD';
 
   if (!env.REACT_APP_API_USER || !env.REACT_APP_API_SECRET) {
@@ -378,14 +379,14 @@ function doConfig() {
 
   // Here we construct server host from window.location,
   // assuming server/db is on the same host as the web-app)
-  const host = 'http://' + window.location.host.replace(/:[0-9]{4}$/, ':' + port);
+  const route = 'http://' + host + ':' + port + path;
 
   //const host = env.REACT_APP_API_HOST || 'http://localhost:8083';
   const auth = env.REACT_APP_API_USER + ':' + env.REACT_APP_API_SECRET;
 
   if (!auth || !auth.length) console.error("Auth required!");
-
-  return { auth: auth, route: host + route, clientId: cid, mode: mode };
+console.log('UserSession.route: '+route);
+  return { auth: auth, route: route, clientId: cid, mode: mode };
 }
 
 function defaultSimilars() {

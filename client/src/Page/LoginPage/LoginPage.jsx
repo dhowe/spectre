@@ -58,8 +58,8 @@ class LoginPage extends React.Component {
 
     const user = this.context;
 
-    if (process.env.NODE_ENV !== 'production' && !(name && name.length
-      && gender && gender.length && email && email.length)) {
+    if (!(name && name.length && gender &&
+      gender.length && email && email.length)) {
 
       UserSession.validate(this.context, ['name', 'login', 'gender']);
       name = user.name;
@@ -77,7 +77,7 @@ class LoginPage extends React.Component {
         this.modalTitle = 'Oops...';
         this.modalContent = 'That doesn\'t look like a valid email address, please try again';
         this.setState({ modalOpen: true, emailErrorCount: this.state.emailErrorCount + 1 });
-        clearEmail();
+        //clearEmail();
       }
       else {
         // TODO: else return to login page
@@ -136,7 +136,7 @@ class LoginPage extends React.Component {
   }
 
   onKeyPress = (e) => {
-    if (e.keyCode === 39) {
+    if (e.keyCode === 39 && process.env.NODE_ENV !== 'production') {
       if (this.videoStarted) { // next-page
         this.props.history.push('/pledge');
       }

@@ -8,13 +8,15 @@
     "test-g": "NODE_ENV=test mocha ./tests --recursive --exit -r esm -g",
     "test-routes": "NODE_ENV=test mocha ./tests/routes --exit -r esm",
     "test-no-routes": "NODE_ENV=test mocha ./tests/ --exit -r esm",
+
+    "start": "concurrently --kill-others-on-fail \"yarn run server\" \"yarn run client-start\"",
     "server": "nodemon -r esm server.js",
     "client": "yarn --cwd client start",
-    "client-start": "yarn --cwd client start",
-    "client-build": "NODE_ENV=production yarn --cwd client build",
+
+    "build-client": "NODE_ENV=production yarn --cwd client build",
     "production": "NODE_ENV=production yarn run server",
     "preproduction": "NODE_ENV=production yarn --cwd client build",
-    "start": "concurrently --kill-others-on-fail \"yarn run server\" \"yarn run client-start\"",
+    
     "install-all": "yarn install && yarn --cwd client install",
     "uninstall-client": "rimraf \"./client/yarn-lock.json\" \"./client/node_modules\"",
     "uninstall-server": "rimraf \"./yarn-lock.json\" \"./node_modules\"",

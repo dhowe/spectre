@@ -143,7 +143,8 @@ class SocialLogin extends React.Component {
   render() {
     const { classes } = this.props;
     const { email, name, gender } = this.state;
-    const btnEnabled = email.length && name.length && gender !== undefined;
+    const btnEnabled = email && email.length &&
+      name && name.length && gender !== undefined;
     return (
       <div className={`${classes.root} socialLogin`}>
         <div className={`${classes.content} socialLogin-content`}>
