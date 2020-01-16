@@ -6,18 +6,12 @@ import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import IconButton from '../../Components/IconButton/IconButton';
 import UserSession from '../../Components/UserSession/UserSession';
-
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
 const styles = {
-  root: {
-    flexGrow: 1,
-    width: '100%',
-    color: 'black',
-  },
-  content: {},
+
   image: {
     width: '160px',
     height: '130px',
@@ -98,7 +92,7 @@ class DarkAd extends React.Component {
     const { issue, images, slogans } = this.state;
     const redimg = UserSession.imageDir + 'darkadred.png';
     const cimage = UserSession.imageDir + 'vote-' + issue + '.png';
-
+    console.log(slogans)
     return (
       <div className={classes.root + " darkAd"}>
         <SpectreHeader colour="white" progressActive progressNumber="one" />
@@ -106,7 +100,7 @@ class DarkAd extends React.Component {
         <div className={`${classes.content} content`}>
           <div className="split-half">
             <div className="split-left">
-              <Typography component="h6" variant="h6"><strong>Create Your Campaign</strong></Typography>
+              <p className="copy-nextline"><strong>Create Your Campaign</strong></p>
               <div className={classes.ad}>    { /* adIssue should never change after being selected '*/}
                 <img className={classes.adImage} src={this.state.image} alt="leave"></img>
                 <p className={classes.adText}>{this.state.text}</p>
@@ -135,7 +129,7 @@ class DarkAd extends React.Component {
               <div>
                 <Link to="/target-ad" onClick={() => this.context.targetAd =
                   { image: this.state.image, text: this.state.text }}>
-                  <IconButton icon="next" text="Next" />
+                  <IconButton enabled={!this.state.defaultImageSelected && this.state.text !== ''} icon="next" text="Next" />
                 </Link>
               </div>
 
