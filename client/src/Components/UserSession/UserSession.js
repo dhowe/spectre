@@ -363,8 +363,9 @@ function doConfig() {
   // get auth from .env or heroku configs
   DotEnv.config();
 
-  const env = process.env;
+  const port = 8083;
   const route = '/api/users/';
+  const env = process.env;
   const mode = env.NODE_ENV !== 'production' ? 'DEV' : 'PROD';
 
   if (!env.REACT_APP_API_USER || !env.REACT_APP_API_SECRET) {
@@ -377,7 +378,7 @@ function doConfig() {
 
   // Here we construct server host from window.location,
   // assuming server/db is on the same host as the web-app)
-  const host = 'http://' + window.location.host.replace(/:[0-9]{4}$/, ':8083');
+  const host = 'http://' + window.location.host.replace(/:[0-9]{4}$/, ':' + port);
 
   //const host = env.REACT_APP_API_HOST || 'http://localhost:8083';
   const auth = env.REACT_APP_API_USER + ':' + env.REACT_APP_API_SECRET;
