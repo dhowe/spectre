@@ -9,7 +9,7 @@
     "test-routes": "NODE_ENV=test mocha ./tests/routes --exit -r esm",
     "test-no-routes": "NODE_ENV=test mocha ./tests/ --exit -r esm",
 
-    "start": "concurrently --kill-others-on-fail \"yarn run server\" \"yarn run client-start\"",
+    "start": "concurrently --kill-others-on-fail \"yarn run server\" \"yarn run client\"",
     "server": "nodemon -r esm server.js",
     "client": "yarn --cwd client start",
 
