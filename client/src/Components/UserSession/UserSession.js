@@ -385,7 +385,7 @@ function doConfig() {
   const auth = env.REACT_APP_API_USER + ':' + env.REACT_APP_API_SECRET;
 
   if (!auth || !auth.length) console.error("Auth required!");
-console.log('UserSession.route: '+route);
+  //console.log('UserSession.route: '+route);
   return { auth: auth, route: route, clientId: cid, mode: mode };
 }
 
