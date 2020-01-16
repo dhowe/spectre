@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import image from './logo.svg';
 import "./Logo.scss";
+import ComponentsStyles from '../../App.module.css';
 
 const styles_portrait = {
     Logo: {
@@ -19,10 +20,10 @@ const styles_landscape = {
 }
 
 function Logo(props) {
-    const { classes } = props;
+  
     return (
         <div>
-            <img className={classes.Logo} alt="logo" src={image}></img>
+            <img className={ComponentsStyles.logo} alt="logo" src={image}></img>
         </div>
     );
 }

@@ -9,22 +9,25 @@ import BeginBackground from '../../Images/1_Standby_Screen_1080px_by_1620px.jpg'
 import UserSession from '../../Components/UserSession/UserSession';
 
 import './TouchToBegin.scss';
-import styles from '../../App.module.css';
+import ComponentsStyles from '../../App.module.css';
 
 const styles_portrait = {
   root: {
-    flexGrow: 1,
+
     width: '100%',
     backgroundImage: `url(${BeginBackground})`,
     backgroundRepeat: 'no-repeat',
     backgroundPosition: '0 300px',
+  },
+  clickToContinue: {
+      fontSize: '0.5rem'
   },
 
 };
 
 const styles_landscape = {
   root: {
-    flexGrow: 1,
+
     justifyContent: 'center',
     alignItems: 'center',
     backgroundImage: `url(${BeginBackground})`,
@@ -50,8 +53,8 @@ class TouchToBegin extends React.Component {
         <SpectreHeader />
         <div className={`${this.props.classes.content} content`}>
           <Link className="touchToBegin-beginButton" to="/login">
-            <div className={this.props.classes.clickToContinue}>
-              <div className={styles.beginLogo}>
+            <div className={ComponentsStyles.clickToContinue}>
+              <div className={ComponentsStyles.beginLogo}>
                 <Logo />
               </div>
               <p>Touch to Begin!</p>
