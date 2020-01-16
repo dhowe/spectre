@@ -50,16 +50,6 @@ or to watch the CSS:
 yarn watch-css
 ```
 
-## Testing
-Install watchman to watch the tests:
-```
-brew install watchman
-```
-run tests:
-```
-yarn test
-```
-
 ## Builds
 
 To verify builds work in different contexts, we use environment variables.
