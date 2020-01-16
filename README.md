@@ -51,13 +51,13 @@ $ yarn test
 ### Start (for development)
 
 ```
-$ yarn run client-start
+$ yarn run start-client
 ```
 
 ### Build (for deployment)
 
 ```
-$ yarn run client-build
+$ yarn run build-client
 ```
 
 For more details on the client, see [these instructions](client/README.md)
