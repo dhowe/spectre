@@ -7,7 +7,7 @@ We use yarn
 ### Dependencies and Versions
 
 ```
-Yarn version: v1.16
+Yarn version: v1.21
 ```
 
 Test versions with:
