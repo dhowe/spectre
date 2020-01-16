@@ -49,11 +49,10 @@ app.get(base + 'users/current/:cid', controller.current);
 app.use(base, auth, routes);
 
 // for all react pages (no-auth)
-app.get('*', (req, res) => {
-  res.sendFile(client + '/build/index.html');
-});
+app.get('*', (req, res) => res.sendFile(client + '/build/index.html'));
 
-test || profileMaker.watch(client + '/public/profiles');
+// watch for new profile images to process
+if (!test) profileMaker.watch(client + '/public/profiles');
 
 /////////////////////////// DbConnect ///////////////////////////////
 
