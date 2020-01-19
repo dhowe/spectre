@@ -18,17 +18,32 @@ class SpectreHeader extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      userName: 'Test',
-      userImage: UserSession.profileDir + 'default.jpg'
-    };
+    this.state = {userName: 'Test'};
   }
 
+  async componentDidMount() { // tmp for testing webcam
+    if (/(personalised|game)$/.test(window.location.pathname)) {
+      let user = await UserSession.ensure(this.context, ['_id', 'name']);
+      if (user) this.setState({
+        userName: user.name,
+        userImage: UserSession.profileDir + user._id + '.jpg'
+      });
+    }
+  }
+
+  // WORKING HERE ON 399 - needs css fix (or move to game dialog)
+
   render() {
-    const { userImage, userName } = this.state;
+    const { userName, userImage} = this.state;
+
+    // tmp for testing webcam
+    const avatar = userImage ? <AvatarComponent
+      target={{ name: userName, image: userImage }} /> : '';
+
     return this.props.colour === "white" ?
       (
         <div className="SpectreHeader SpectreHeader-white">
+          {avatar}
           <img height="150" alt='header' src={HeaderLogoColour} />
           <Progress active={this.props.progressActive} progressNumber={this.props.progressNumber} />
           <Divider light />
@@ -36,7 +51,6 @@ class SpectreHeader extends React.Component {
       ) : (
         <div className="SpectreHeader">
           <img height="150" alt='logo' src={HeaderLogo} />
-          <AvatarComponent target={{ name: userName, image: userImage }} />
         </div>
       );
   }
@@ -45,5 +59,6 @@ class SpectreHeader extends React.Component {
 SpectreHeader.propTypes = {
   classes: PropTypes.object.isRequired,
 };
+SpectreHeader.contextType = UserSession;
 
 export default withStyles(styles)(SpectreHeader);

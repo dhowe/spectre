@@ -11,10 +11,6 @@ class ProfileMaker {
 
     this.border = 100;
     this.loaded = false;
-    this.crop = undefined;
-    this.image = undefined;
-    this.watchPath = undefined;
-    this.outputDir = './out';
     this.detectAgeGender = false;
     this.modelDir = modelDir || './model-weights';
     //this.detectionNet = faceapi.nets.tintFaceDetector
@@ -25,54 +21,55 @@ class ProfileMaker {
   }
 
   watch = (path) => {
+
     observer.watch(path, {
       ignored: /^\./,
       persistent: true,
       ignoreInitial: true,
       awaitWriteFinish: true
-    }).on('add', this.onImage);
+    })
+      .on('add', this.onImage)
+      .on('change', this.onImage);
   }
 
   onImage = (path) => {
-    console.log('[IMAGE] ' + path);
+
+    console.log('[' + clfDate() + '] ::* IMAGE ' + pathify(path));
+
     if (/^.*\/[a-f\d]{24}_raw\.jpg$/i.test(path)) {
       try {
         const outf = path.replace(/_raw\.jpg/, '.jpg');
-        this.writeThumbnail(path, outf)
+        this.makeThumbnail(path, outf)
           .then(res => {
             if (res.status !== 'ok') {
-              console.error('ProfileMaker: ' + res.data);
+              console.error('[ERROR] ProfileMaker.1:: ' + res.data);
               return;
             }
-            console.log('[' + clfDate() + '] ::* THUMB', outf ?
-              outf.replace(/.*\/public/, '/public') : '_unknown_');
+            console.log('[' + clfDate() + '] ::* THUMB', pathify(outf));
           });
       }
       catch (e) {
-        console.error('ProfileMaker::52: ' + path + '\n' + e);
+        console.error('[ERROR] ProfileMaker.2:: ' + path + '\n' + e);
       }
     }
   }
 
-  writeThumbnail = async (infile, outfile, width, height) => {
-    width = width || 128;
-    height = height || 128;
+  makeThumbnail = async (infile, outfile, width, height) => {
 
-    if (!this.crop) await this.detect(infile);
-    let imgw = this.dimensions.w, imgh = this.dimensions.h;
-
-    const bounds = (b, imgw, imgh) => {
+    const bounds = (b, iw, ih) => {
       const left = Math.max(0, Math.round(b.x) - this.border);
       const top = Math.max(0, Math.round(b.y) - this.border);
-      const width = Math.min(imgw - left, Math.round(b.width + this.border * 2));
-      const height = Math.min(imgh - top, Math.round(b.height + this.border * 2));
-      return { width: width, height: height, top: top, left: left };
+      const w = Math.min(iw - left, Math.round(b.width + this.border * 2));
+      const h = Math.min(ih - top, Math.round(b.height + this.border * 2));
+      return { width: w, height: h, top: top, left: left };
     }
 
     try {
-      const f = await sharp(this.infile)
-        .extract(bounds(this.crop, imgw, imgh))
-        .resize(width, height)
+      const result = await this.detect(infile);
+      const dims = result.dimensions;
+      const f = await sharp(infile)
+        .extract(bounds(result.box, dims.w, dims.h))
+        .resize(width || 128, height || 128)
         .normalise()
         .toFile(outfile);
       return { status: 'ok', data: f };
@@ -84,9 +81,9 @@ class ProfileMaker {
 
   drawCrop = async (infile, outfile, width, height) => {
 
-    if (!this.crop) this.detect(infile);
-    const out = faceapi.createCanvasFromMedia(this.image);
-    faceapi.draw.drawDetections(out, this.detection);
+    let result = await this.detect(infile);
+    const out = faceapi.createCanvasFromMedia(result.image);
+    faceapi.draw.drawDetections(out, result); // untested
     await sharp(out)
       .resize(width, height)
       .normalise()
@@ -95,6 +92,7 @@ class ProfileMaker {
 
   detect = async (infile) => {
 
+    console.log('[' + clfDate() + '] ::* DETECT ' + pathify(infile));
     const detectorOpts = (net) => {
       return net === faceapi.nets.ssdMobilenetv1
         ? new faceapi.SsdMobilenetv1Options({ minConfidence: 0.5 })
@@ -109,28 +107,40 @@ class ProfileMaker {
       }
       console.log('[' + clfDate() + '] ::* THUMB Loaded face training models');
     }
-    this.infile = infile;
-    this.image = await canvas.loadImage(infile);
+    let dims, image = await canvas.loadImage(infile);
     await sharp(infile).metadata().then(md => {
-      this.dimensions = { w: md.width, h: md.height };
-    });;
+      dims = { w: md.width, h: md.height };
+    });
 
+    let result;
     if (this.detectAgeGender) {
-      this.result = await faceapi.detectSingleFace
-        (this.image, detectorOpts(this.detectionNet)).withAgeAndGender();
-      this.crop = this.result.detection.box;
-      this.age = this.result.age;
-      this.gender = this.result.gender;
-      this.genderProb = this.result.genderProbability;
+      let detection = await faceapi.detectSingleFace(image,
+        detectorOpts(this.detectionNet)).withAgeAndGender();
+      result = {
+        age: detection.age,
+        gender: detection.gender,
+        genderProb: detection.genderProbability,
+        box: detection.detection.box,
+        dimensions: dims,
+        image: image
+      }
     }
     else {
-      this.result = await faceapi.detectSingleFace
-        (this.image, detectorOpts(this.detectionNet));
-      this.crop = this.result.box;
+      let detection = await faceapi.detectSingleFace(image,
+        detectorOpts(this.detectionNet));
+      result = {
+        box: detection.box,
+        dimensions: dims,
+        image: image
+      };
     }
-
-    return this;
+    console.log('result',result);
+    return result;
   }
+}
+
+function pathify(p) {
+  return p ? p.replace(/.*\/public/, '/public') : '__unknown__';
 }
 
 export default new ProfileMaker();
