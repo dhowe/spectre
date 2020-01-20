@@ -6,8 +6,6 @@ import './FooterLogo.scss';
 
 const styles = {
   root: {
-    flexGrow: 1,
-    width: '100%',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
     backgroundPosition: 'center center'

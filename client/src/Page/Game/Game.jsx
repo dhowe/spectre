@@ -12,11 +12,6 @@ import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
 
 const styles = {
-  root: {
-    flexGrow: 1,
-    width: '100%',
-    color: 'black',
-  },
 
   // configurable parameters
   allowedTimeMs: 35000,
@@ -54,7 +49,7 @@ function sketch(p) {
 
   p.setup = () => {
 
-    p.createCanvas(1080, 750);
+    p.createCanvas(1920, 660);
     colors.sketchBg = p.color(styles.sketchBg);
     colors.sketchText = p.color(styles.sketchText);
     colors.sketchStroke = p.color(styles.sketchStroke);

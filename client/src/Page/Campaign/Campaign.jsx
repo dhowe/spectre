@@ -45,10 +45,10 @@ class Campaign extends React.Component {
           <p className="copy">
             Now use a simple design tool to create a targeted Facebook ad.
           </p>
-          <p className="copy">
+          <p className="copy-nextline">
             <strong>{targetName}</strong>'s OCEAN profile shows that {targetPronoun} can be influenced by:
           </p>
-          <p className="copy">
+          <p className="copy-nextline">
             <strong>Images</strong> that contain {targetInfluences[0]}
           </p>
           <p className="copy">

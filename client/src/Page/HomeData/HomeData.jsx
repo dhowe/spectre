@@ -39,9 +39,9 @@ class HomeData extends React.Component {
         <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
         <IdleChecker />
         <div className={classes.content + " content"}>
-          <Typography component="h6" variant="h6">
+          <p className="copy">
             <strong>Choose 2 types of home data:</strong>
-          </Typography>
+          </p>
 
           <div onClick={this.countAdd} className="DataIcons">
               <Grid className={classes.icons} container>

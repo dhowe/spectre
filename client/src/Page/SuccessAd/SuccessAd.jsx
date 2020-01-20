@@ -11,11 +11,7 @@ import './SuccessAd.scss';
 
 
 const styles = {
-  root: {
-    flexGrow: 1,
-    width: '100%',
-    color: 'black',
-  },
+
 };
 
 class SuccessAd extends React.Component {
@@ -55,8 +51,8 @@ class SuccessAd extends React.Component {
           <Fade in timeout={1000}>
             <div>
               <p className="copy bold">Your targeted ad was successful!</p>
-              <p className="icon"><Trophy /></p>
-              <p className="copy" component="h6" variant="h6">
+              <p className="thankyou-icon"><Trophy/></p>
+              <p className="copy">
                 <strong>{targetName}</strong> is now more likely to vote <strong>{adIssue}</strong> in the referendum.
               </p>
             </div>
