@@ -42,7 +42,7 @@ class InsightComplete extends React.Component {
         <SpectreHeader colour="white" />
         <IdleChecker forceTerminate={idleCheckerDone} />
         <div className={`${classes.content} content`}>
-          <h3>Excellent.</h3>
+          <p className="copy"><strong>Excellent.</strong></p>
           <p className="copy-nextline">Verification complete!</p>
           <p className="copy-nextline">You've unlocked OCEAN profiling!</p>
           <OceanProfile subject={target} classes={classes}></OceanProfile>
