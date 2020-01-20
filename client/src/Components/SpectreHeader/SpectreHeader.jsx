@@ -44,13 +44,13 @@ class SpectreHeader extends React.Component {
       (
         <div className="SpectreHeader SpectreHeader-white">
           {avatar}
-          <img height="150" alt='header' src={HeaderLogoColour} />
+          <img height="150" alt='header' className="logo-img" src={HeaderLogoColour} />
           <Progress active={this.props.progressActive} progressNumber={this.props.progressNumber} />
           <Divider light />
         </div>
       ) : (
         <div className="SpectreHeader">
-          <img height="150" alt='logo' src={HeaderLogo} />
+          <img height="150" alt='logo'  className="logo-img" src={HeaderLogo} />
         </div>
       );
   }
