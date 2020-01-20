@@ -126,15 +126,24 @@ class ProfileMaker {
       }
     }
     else {
-      let detection = await faceapi.detectSingleFace(image,
-        detectorOpts(this.detectionNet));
+      let detection;
+      try {
+        detection = await faceapi.detectSingleFace(image,
+          detectorOpts(this.detectionNet));
+      }
+      catch (e) {
+        throw Error('Detection failed: '+e);
+      }
+      if (!detection || !detection.box) {
+        throw Error('Detection failed');
+      }
       result = {
         box: detection.box,
         dimensions: dims,
         image: image
       };
     }
-    console.log('result',result);
+    console.log('result', result);
     return result;
   }
 }

@@ -14,8 +14,8 @@ import ComponentsStyles from '../../App.module.css';
 const styles = {
 
   profileImage: {
-    width: 1280,
-    height: 720,
+    width: 1200,
+    height: 900,
   },
 };
 
