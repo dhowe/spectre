@@ -1,4 +1,5 @@
 /*
+static-css
 Overall
 */
 @import 'colors.scss';
@@ -161,6 +162,9 @@ strong {
     display: table-cell;
     width: 50%;
   }
+  .thankyou-icon {
+      margin: 0px auto 40px auto;
+    }
 }
 @media screen and (orientation:portrait) {
   body,
@@ -200,9 +204,17 @@ a.disabled {
 
 
 .DataIcons {
+
+  div{
+    margin: 0px;
+    padding: 0px;
+    height: 140px;
+  }
   .iconButtonText {
     font-size: 20px;
     margin-top: 3px;
+    margin-bottom: 0px;
+    padding: 0px;
   }
 
   button.iconEnabled * {
@@ -214,5 +226,8 @@ a.disabled {
     filter: grayscale(80%);
     width: 150px;
     height: 80px;
+  }
+  .thankyou-icon {
+    margin: 50px auto 60px;
   }
 }

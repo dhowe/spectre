@@ -11,17 +11,7 @@ import UserSession from '../../Components/UserSession/UserSession';
 import './Personalised.scss';
 
 const styles = {
-  root: {
-    flexGrow: 1,
-    width: '100%',
-    color: 'black',
-  },
-  clickToContinue: {
-    margin: '20% 0',
-  },
-  glow: {
-    color: '#ffd700',
-  },
+
 };
 
 class Personalised extends React.Component {
@@ -38,15 +28,13 @@ class Personalised extends React.Component {
           <div>
           <Fade in>
             <p className="copy">
-              In order to create a&nbsp;
-              <br/ >
-              <strong>personalised experience</strong>
+              In order to create a&nbsp;<strong>personalised experience</strong>
             </p>
           </Fade>
           <Fade in style={{transitionDelay: '1000ms'}}>
             <p className="copy">
-              Tell us what you love,
-              tell us what <br/> you hate...
+              Tell us what you love,<br/> 
+              tell us what you hate...
             </p>
           </Fade>
           </div>
