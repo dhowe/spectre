@@ -76,9 +76,11 @@ class ConsumerData extends React.Component {
               </Grid>
             </Grid>
           </div>
+          <div className="link">
           <Link className={this.state.count >= 3 ? 'true' : 'disabled'} to="/political-data">
             <IconButton enabled={this.state.count >= 3} icon="next" text="Next" />
           </Link>
+          </div>
         </div>
         <FooterLogo />
       </div>

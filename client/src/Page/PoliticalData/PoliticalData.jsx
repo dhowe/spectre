@@ -43,26 +43,27 @@ class PoliticalData extends React.Component {
           </p>
 
           <div onClick={this.countAdd} className="DataIcons">
-              <Grid className={classes.icons} container>
-                <Grid item sm={4}><IconButtonToggle enabled={false} icon="voting" text="Voting Records" /></Grid>
-                <Grid item sm={4}><IconButtonToggle enabled={false} icon="finance" text="Financial Records" /></Grid>
-                <Grid item sm={4}><IconButtonToggle enabled={false} icon="maps" text="Online Maps" /></Grid>
-              </Grid>
-              <Grid className={classes.icons} container>
-                <Grid item sm={4}><IconButtonToggle enabled={false} icon="political" text="Political Party" /></Grid>
-                <Grid item sm={4}><IconButtonToggle enabled={false} icon="polls" text="Polls &amp; Surveys" /></Grid>
-                <Grid item sm={4}><IconButtonToggle enabled={false} icon="consultants" text="SConsultants" /></Grid>
-              </Grid>
-              <Grid className={classes.icons} container>
-                <Grid item sm={4}><IconButtonToggle enabled={false} icon="bigdata" text="Big Data Sets" /></Grid>
-                <Grid item sm={4}><IconButtonToggle enabled={false} icon="internet" text="Internet Platforms" /></Grid>
-                <Grid item sm={4}><IconButtonToggle enabled={false} icon="group" text="Group Memberships" /></Grid>
-              </Grid>
+            <Grid className={classes.icons} container>
+              <Grid item sm={4}><IconButtonToggle enabled={false} icon="voting" text="Voting Records" /></Grid>
+              <Grid item sm={4}><IconButtonToggle enabled={false} icon="finance" text="Financial Records" /></Grid>
+              <Grid item sm={4}><IconButtonToggle enabled={false} icon="maps" text="Online Maps" /></Grid>
+            </Grid>
+            <Grid className={classes.icons} container>
+              <Grid item sm={4}><IconButtonToggle enabled={false} icon="political" text="Political Party" /></Grid>
+              <Grid item sm={4}><IconButtonToggle enabled={false} icon="polls" text="Polls &amp; Surveys" /></Grid>
+              <Grid item sm={4}><IconButtonToggle enabled={false} icon="consultants" text="SConsultants" /></Grid>
+            </Grid>
+            <Grid className={classes.icons} container>
+              <Grid item sm={4}><IconButtonToggle enabled={false} icon="bigdata" text="Big Data Sets" /></Grid>
+              <Grid item sm={4}><IconButtonToggle enabled={false} icon="internet" text="Internet Platforms" /></Grid>
+              <Grid item sm={4}><IconButtonToggle enabled={false} icon="group" text="Group Memberships" /></Grid>
+            </Grid>
           </div>
-
-          <Link className={this.state.count >= 3 ? "true" : "disabled"} to="/home-data">
-            <IconButton enabled={this.state.count >= 3} icon="next" text="Next" />
-          </Link>
+          <div className="link">
+            <Link className={this.state.count >= 3 ? "true" : "disabled"} to="/home-data">
+              <IconButton enabled={this.state.count >= 3} icon="next" text="Next" />
+            </Link>
+          </div>
         </div>
         <FooterLogo />
       </div>

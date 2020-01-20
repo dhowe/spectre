@@ -50,9 +50,11 @@ class Steps extends React.Component {
             <Fade in={true} style={{transitionDelay: '5000ms'}}>
                 <p className="copy">Ready?</p>
             </Fade>
+            <div className="link">
             <Link to="/follower">
                 <IconButton enabled={true} icon="tick" text="Yes" />
             </Link>
+            </div>
         </div>
         <FooterLogo />
     </div>

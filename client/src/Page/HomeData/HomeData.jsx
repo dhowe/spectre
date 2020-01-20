@@ -44,21 +44,22 @@ class HomeData extends React.Component {
           </p>
 
           <div onClick={this.countAdd} className="DataIcons">
-              <Grid className={classes.icons} container>
-                <Grid item sm={4}><IconButtonToggle enabled={false} icon="smartwatch" text="Smart Watch" /></Grid>
-                <Grid item sm={4}><IconButtonToggle enabled={false} icon="wifi" text="Wifi Router" /></Grid>
-                <Grid item sm={4}><IconButtonToggle enabled={false} icon="computers" text="Computers" /></Grid>
-              </Grid>
-              <Grid className={classes.icons} container>
-                <Grid item sm={4}><IconButtonToggle enabled={false} icon="mobile" text="Mobile Devices" /></Grid>
-                <Grid item sm={4}><IconButtonToggle enabled={false} icon="smarttv" text="Smart TV" /></Grid>
-                <Grid item sm={4}><IconButtonToggle enabled={false} icon="smartassistant" text="Smart Assistant" /></Grid>
-              </Grid>
+            <Grid className={classes.icons} container>
+              <Grid item sm={4}><IconButtonToggle enabled={false} icon="smartwatch" text="Smart Watch" /></Grid>
+              <Grid item sm={4}><IconButtonToggle enabled={false} icon="wifi" text="Wifi Router" /></Grid>
+              <Grid item sm={4}><IconButtonToggle enabled={false} icon="computers" text="Computers" /></Grid>
+            </Grid>
+            <Grid className={classes.icons} container>
+              <Grid item sm={4}><IconButtonToggle enabled={false} icon="mobile" text="Mobile Devices" /></Grid>
+              <Grid item sm={4}><IconButtonToggle enabled={false} icon="smarttv" text="Smart TV" /></Grid>
+              <Grid item sm={4}><IconButtonToggle enabled={false} icon="smartassistant" text="Smart Assistant" /></Grid>
+            </Grid>
           </div>
-
-          <Link className={this.state.count >= 2 ? "true" : "disabled"} to="/find-citizens">
-            <IconButton enabled={this.state.count >= 2} icon="next" text="Next" />
-          </Link>
+          <div className="link">
+            <Link className={this.state.count >= 2 ? "true" : "disabled"} to="/find-citizens">
+              <IconButton enabled={this.state.count >= 2} icon="next" text="Next" />
+            </Link>
+          </div>
         </div>
         <FooterLogo />
       </div>
