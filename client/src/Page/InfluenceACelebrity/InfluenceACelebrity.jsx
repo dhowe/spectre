@@ -70,32 +70,38 @@ class InfluenceACelebrity extends React.Component {
         <SpectreHeader colour="white" progressActive progressNumber="three" />
         <IdleChecker forceTerminate={this.state.idleCheckerDone} />
         <div className={`${classes.content} content`}>
-          <Fade in style={{ transitionDelay: '200ms' }}>
-            <p className="copy">Influence a celebrity!</p>
-          </Fade>
-          <Fade in style={{ transitionDelay: '200ms' }}>
-            <p className="copy-nextline">
-              Spectre has many famous followers.
+          <div className="split-half">
+            <div className="split-left">
+              <Fade in style={{ transitionDelay: '200ms' }}>
+                <p className="copy">Influence a celebrity!</p>
+              </Fade>
+              <Fade in style={{ transitionDelay: '200ms' }}>
+                <p className="copy-nextline">
+                  Spectre has many famous followers.
             </p>
-          </Fade>
-          <Fade in style={{ transitionDelay: '200ms' }}>
-            <p className="copy-nextline">
-              Listen to their confessions on&nbsp;{virtue}:
+              </Fade>
+              <Fade in style={{ transitionDelay: '200ms' }}>
+                <p className="copy">
+                  Listen to their confessions on&nbsp;{virtue}:
             </p>
-          </Fade>
-          {video && <Video autoPlay onComplete={this.stop} movie={video} />}
-          <AvatarCircle>
-            {this.celebs
-              .map((name, i) => (
-                <AvatarComponent
-                  active={name === celebrity}
-                  key={AvatarComponent.generateKey(i)}
-                  handleClick={() => this.play(name, virtue)}
-                  target={{ name, image: `/imgs/${name}.png` }}
-                />
-              ))}
-          </AvatarCircle>
-          <IconButton onClick={this.save} icon="next" text="Next" />
+              </Fade>
+              {video && <Video autoPlay onComplete={this.stop} movie={video} />}
+              <AvatarCircle>
+                {this.celebs
+                  .map((name, i) => (
+                    <AvatarComponent
+                      active={name === celebrity}
+                      key={AvatarComponent.generateKey(i)}
+                      handleClick={() => this.play(name, virtue)}
+                      target={{ name, image: `/imgs/${name}.png` }}
+                    />
+                  ))}
+              </AvatarCircle>
+                      </div>
+                          <div className="split-right">
+              <IconButton onClick={this.save} icon="next" text="Next" />
+            </div>
+          </div>
         </div>
         <FooterLogo />
       </div>

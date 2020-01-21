@@ -1,4 +1,4 @@
- import React from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
@@ -15,30 +15,27 @@ import './SocialLogin.scss';
 import ComponentsStyles from '../../App.module.css';
 
 const styles_landscape = {
-    fontSize: '1rem',
-    fontWeight: 400,
-    formControl: {
-      marginBottom: 15,
-    },
-    margin: {
-      display: 'block',
-
-    },
-
+  fontSize: '1rem',
+  fontWeight: 400,
+  formControl: {
+    marginBottom: 15,
+  },
+  margin: {
+    display: 'block',
+  },
 };
 
 const styles_portrait = {
-    fontSize: '1.25rem',
-        fontWeight: 400,
-    formControl: {
-      marginBottom: 75,
-    },
-    margin: {
-      display: 'block',
-      marginBottom: 75,
-    },
+  fontSize: '1.25rem',
+  fontWeight: 400,
+  formControl: {
+    marginBottom: 75,
+  },
+  margin: {
+    display: 'block',
+    marginBottom: 75,
+  },
 };
-
 
 let stateObj = {
   emailValid: false,
@@ -146,7 +143,8 @@ class SocialLogin extends React.Component {
   render() {
     const { classes } = this.props;
     const { email, name, gender } = this.state;
-    const btnEnabled = email.length && name.length && gender !== undefined;
+    const btnEnabled = email && email.length &&
+      name && name.length && gender !== undefined;
     return (
       <div className={`${classes.root} socialLogin`}>
         <div className={`${classes.content} socialLogin-content`}>
@@ -211,8 +209,8 @@ class SocialLogin extends React.Component {
               onKeyPress={button => this.onKeyPress(button)}
               layoutName={this.state.layoutName}
             />
-            <IconButton className={ComponentsStyles.iconButtonStyle1} ref={btn => { this.btn = btn; }} onClick={e => this.props.handleSubmit(e, this.state)}
-              enabled={btnEnabled ? "white" : false} colour="white" icon="next" text="Next" />
+            <IconButton className={ComponentsStyles.iconButtonStyle1 + ' iconButton-white'} ref={btn => { this.btn = btn; }} onClick={e => this.props.handleSubmit(e, this.state)}
+              enabled={btnEnabled ? "white" : false} color="white" icon="nextWhite" text="Next" />
           </form>
         </div>
       </div>

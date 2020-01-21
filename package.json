@@ -8,14 +8,19 @@
     "test-g": "NODE_ENV=test mocha ./tests --recursive --exit -r esm -g",
     "test-routes": "NODE_ENV=test mocha ./tests/routes --exit -r esm",
     "test-no-routes": "NODE_ENV=test mocha ./tests/ --exit -r esm",
+
+    "start": "concurrently --kill-others-on-fail \"yarn run server\" \"yarn run client\"",
     "server": "nodemon -r esm server.js",
     "client": "yarn --cwd client start",
-    "client-start": "yarn --cwd client start",
-    "client-build": "NODE_ENV=production yarn --cwd client build",
-    "build-prod": "NODE_ENV=production yarn run server",
-    "prepbuild-prod": "NODE_ENV=production yarn run client-build",
-    "start": "concurrently --kill-others-on-fail \"yarn run server\" \"yarn run client-start\"",
-    "full-install": "yarn install && yarn --cwd client install"
+
+    "build-client": "NODE_ENV=production yarn --cwd client build",
+    "production": "NODE_ENV=production yarn run server",
+    "preproduction": "NODE_ENV=production yarn --cwd client build",
+    
+    "install-all": "yarn install && yarn --cwd client install",
+    "uninstall-client": "rimraf \"./client/yarn-lock.json\" \"./client/node_modules\"",
+    "uninstall-server": "rimraf \"./yarn-lock.json\" \"./node_modules\"",
+    "reinstall": "yarn run uninstall-client && yarn run uninstall-server && yarn run install-all"
   },
   "author": "daniel howe",
   "dependencies": {
@@ -47,6 +52,7 @@
     "node-opencv": "^0.0.2-security",
     "on-finished": "~2.3.0",
     "on-headers": "~1.0.1",
+    "seedrandom": "~2.4.3",
     "sharp": "^0.23.4",
     "smartcrop": "^2.0.3",
     "sync-request": "^6.1.0"
@@ -55,9 +61,7 @@
   "license": "UNLICENSED",
   "nodemonConfig": {
     "ext": "js",
-    "ignore": [
-      "src/*"
-    ]
+    "ignore": [ "src/*" ]
   },
   "devDependencies": {
     "chai": "^4.2.0",
@@ -65,6 +69,7 @@
     "concurrently": "^5.0.2",
     "mocha": "^6.1.4",
     "node-fetch": "^2.6.0",
-    "nodemon": "^2.0.2"
+    "nodemon": "^2.0.2",
+    "rimraf": "^3.0.0"
   }
 }

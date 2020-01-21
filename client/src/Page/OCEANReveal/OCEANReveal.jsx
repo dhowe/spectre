@@ -35,7 +35,7 @@ class OCEANReveal extends React.Component {
     ].concat(user.generateSummary());
 
     this.setState({ sentences: sentences, celebrity: user.celebrity });
-    this.timeout = setTimeout(() => this.setState({ readyForVideo: true }), sentences.length * 1000);
+    this.timeout = setTimeout(() => this.setState({ readyForVideo: true }), sentences.length * 3000);
   }
 
   componentWillUnmount() {
@@ -63,7 +63,7 @@ class OCEANReveal extends React.Component {
           {sentences.map((sent, i) => {
             return (
               <Fade key={i} in={true}
-                style={{ transitionDelay: (i * 1000) + 'ms' }}>
+                style={{ transitionDelay: (i * 3000) + 'ms' }}>
                 <p className="copy-nextline" key={`fade-${i}`}
                   >
                   {sent}

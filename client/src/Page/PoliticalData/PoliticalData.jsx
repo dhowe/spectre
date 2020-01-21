@@ -12,44 +12,7 @@ import IconButtonToggle from '../../Components/IconButton/IconButtonToggle';
 import './PoliticalData.scss';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
-
 const styles = {
-  root: {
-    flexGrow: 1,
-    width: '100%',
-    color: 'black',
-  },
-  clickToContinue: {
-    margin: '20% 0',
-  },
-  button: {
-    borderRadius: '28px',
-    border: 'solid 3px #929391',
-    backgroundColor: '#ffffff',
-    boxShadow: 'none',
-    color: '#929391',
-  },
-  link: {
-    display: 'block',
-    marginBottom: '30px',
-  },
-  row: {
-    flexDirection: 'row',
-    display: 'flex',
-    padding: '0 30% 25% 25%', //tmp
-  },
-  column: {
-    flexDirection: 'column',
-    display: 'flex',
-  },
-  item: {
-    flexDirection: 'column',
-    display: 'flex',
-    padding: '30px',
-  },
-  icons: {
-    marginBottom: '30px',
-  },
 };
 
 class PoliticalData extends React.Component {
@@ -75,11 +38,11 @@ class PoliticalData extends React.Component {
         <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
         <IdleChecker />
         <div className={classes.content + " content"}>
-          <Typography component="h6" variant="h6">
+          <p className="copy">
             <strong>Choose 3 types of political data:</strong>
-          </Typography>
+          </p>
 
-          <div onClick={this.countAdd} className="PoliticalDataIcons">
+          <div onClick={this.countAdd} className="DataIcons">
               <Grid className={classes.icons} container>
                 <Grid item sm={4}><IconButtonToggle enabled={false} icon="voting" text="Voting Records" /></Grid>
                 <Grid item sm={4}><IconButtonToggle enabled={false} icon="finance" text="Financial Records" /></Grid>
