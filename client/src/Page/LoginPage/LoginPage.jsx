@@ -136,13 +136,11 @@ class LoginPage extends React.Component {
   }
 
   onKeyPress = (e) => {
-    if (e.keyCode === 39 && process.env.NODE_ENV !== 'production') {
-      if (this.videoStarted) { // next-page
-        this.props.history.push('/pledge');
-      }
-      else {
-        this.handleSubmit(false, {}); // dev only
-      }
+    if (this.videoStarted) { // next-page
+      this.props.history.push('/pledge');
+    }
+    else {
+      this.handleSubmit(false, {}); // dev only
     }
   }
 
