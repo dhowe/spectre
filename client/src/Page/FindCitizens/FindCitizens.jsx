@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
+//import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
@@ -37,9 +37,9 @@ class FindCitizens extends React.Component {
         <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
         <IdleChecker />
         <div className={`${classes.content} content`}>
-          <Typography component="h4" variant="h4"><strong>Excellent.</strong></Typography>
-          <Typography component="h6" variant="h6">Now target UK citizens with a similar OCEAN profile to <strong>{targetName}</strong>!</Typography>
-          <Typography component="h6" variant="h6">A silent army that could well tip the&nbsp;balance...</Typography>
+          <p className="copy"><strong>Excellent.</strong></p>
+          <p className="copy">Now target UK citizens with a similar OCEAN profile to <strong>{targetName}</strong>!</p>
+          <p className="copy">A silent army that could well tip the&nbsp;balance...</p>
           <Link to="/targets-found">
             <IconButton icon="next" text="Find them" />
           </Link>

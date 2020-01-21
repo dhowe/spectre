@@ -1,4 +1,5 @@
 /*
+static-css
 Overall
 */
 @import 'colors.scss';
@@ -26,6 +27,7 @@ Overall
   -webkit-tap-highlight-color: rgba(0,0,0,0);
   -webkit-tap-highlight-color: transparent;
   font-family: 'Montserrat' !important;
+  cursor: none !important;
 }
 
 p,
@@ -34,6 +36,7 @@ html {
   font-family: 'Montserrat' !important;
   margin: 0;
   padding: 0;
+
 }
 
 
@@ -66,15 +69,6 @@ html {
 .App-link {
   color: #61dafb;
 }
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
-}
 
 a {
   text-decoration: none;
@@ -89,11 +83,12 @@ a {
 /*
 Text
 */
-
-h1 {
-  font-size: 60px;
+h1, h2, h3, h4, h5, h6, p {
   margin-top: 0;
   padding-top: 0;
+}
+h1 {
+  font-size: 60px;
 }
 
 h2 {
@@ -116,9 +111,6 @@ h6 {
   font-size: 10px;
 }
 
-
-
-
 strong {
   color: $blue;
 }
@@ -131,12 +123,10 @@ strong {
   }
   p.copy {
     font-size: 35px;
-
     padding-bottom: 40px;
   }
   p.copy-nextline {
     font-size: 35px;
-
     padding-bottom: 10px;
   }
   .content {
@@ -151,6 +141,7 @@ strong {
     -webkit-justify-content: center;
     margin: 0;
     padding: 0;
+
   }
 
   .split-half {
@@ -171,6 +162,9 @@ strong {
     display: table-cell;
     width: 50%;
   }
+  .thankyou-icon {
+      margin: 0px auto 40px auto;
+    }
 }
 @media screen and (orientation:portrait) {
   body,
@@ -206,4 +200,34 @@ a.disabled {
 
 .iconButton{
 
+}
+
+
+.DataIcons {
+
+  div{
+    margin: 0px;
+    padding: 0px;
+    height: 140px;
+  }
+  .iconButtonText {
+    font-size: 20px;
+    margin-top: 3px;
+    margin-bottom: 0px;
+    padding: 0px;
+  }
+
+  button.iconEnabled * {
+    width: 150px;
+    height: 80px;
+  }
+
+  button.iconDisabled * {
+    filter: grayscale(80%);
+    width: 150px;
+    height: 80px;
+  }
+  .thankyou-icon {
+    margin: 50px auto 60px;
+  }
 }

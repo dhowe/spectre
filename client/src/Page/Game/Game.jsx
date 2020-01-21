@@ -12,11 +12,6 @@ import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
 
 const styles = {
-  root: {
-    flexGrow: 1,
-    width: '100%',
-    color: 'black',
-  },
 
   // configurable parameters
   allowedTimeMs: 35000,
@@ -54,7 +49,7 @@ function sketch(p) {
 
   p.setup = () => {
 
-    p.createCanvas(1080, 750);
+    p.createCanvas(1920, 660);
     colors.sketchBg = p.color(styles.sketchBg);
     colors.sketchText = p.color(styles.sketchText);
     colors.sketchStroke = p.color(styles.sketchStroke);
@@ -75,6 +70,7 @@ function sketch(p) {
   };
 
   p.draw = () => {
+
     p.background(colors.sketchBg);
     p.stroke(colors.sketchStroke);
 
@@ -85,6 +81,7 @@ function sketch(p) {
       p.line(0, ypos, p.width, ypos);
       if (p.frameCount === 1) linesY.push(ypos);
     }
+
 
     drawInfo(p, colors.sketchText);
 
@@ -112,11 +109,45 @@ function sketch(p) {
     }
   };
 
+
   p.keyReleased = () => {
     if (p.key === 'f') showFps = !showFps;
   };
 
   p.mouseReleased = () => {
+    mReleased();
+  };
+  p.touchEnded = () => {
+    mReleased();
+  }
+  p.touchStarted = () => {
+    mPressed();
+  }
+  p.mousePressed = () => {
+    mPressed();
+  };
+  p.touchMoved = () =>{
+    mDragged();
+  };
+  p.mouseDragged = () => {
+    mDragged();
+  };
+  function mDragged() {
+    if (Brand.active) {
+      Brand.active.y += p.mouseY - p.pmouseY;
+    }
+  }
+
+  function mPressed() {
+    //document.getElementById("clickMe").click();
+    Brand.active = false;
+    Brand.instances.forEach(b => {
+      if (b.contains(p.mouseX, p.mouseY)) {
+        Brand.active = b;
+      }
+    });
+  }
+  function mReleased() {
     if (instructions) {
       instructions = false;
       start = p.millis();
@@ -135,23 +166,7 @@ function sketch(p) {
       Brand.active.snapTo(linesY[lineIdx]);
       Brand.active = false;
     }
-  };
-
-  p.mousePressed = () => {
-    //document.getElementById("clickMe").click();
-    Brand.active = false;
-    Brand.instances.forEach(b => {
-      if (b.contains(p.mouseX, p.mouseY)) {
-        Brand.active = b;
-      }
-    });
-  };
-
-  p.mouseDragged = () => {
-    if (Brand.active) {
-      Brand.active.y += p.mouseY - p.pmouseY;
-    }
-  };
+  }
 
   function elapsed() {
     return p.millis() - start;
@@ -227,7 +242,7 @@ class Brand {
     this.rating = 0;
     this.item = item;
     this.logo = logos[item];
-    this.strokeWeight = colors.sketchStrokeMinWeight;;
+    this.strokeWeight = colors.sketchStrokeMinWeight;
   }
   draw() {
     if (this.x > -this.sz) this.render();
@@ -251,6 +266,7 @@ class Brand {
   }
 
   render() {
+
     let p = this.p;
     p.fill(colors.sketchBg);
     p.stroke(this === Brand.active ? colors.sketchStrokeSel : colors.sketchStroke);

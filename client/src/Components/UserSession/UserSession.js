@@ -1,7 +1,9 @@
+//import fs from 'fs';
 import React from 'react';
 import User from '../User/User';
 import DotEnv from 'dotenv';
 import FormData from 'form-data';
+import DefaultUsers from './default-users';
 
 const AdIssues = ['remain', 'leave'];
 const Genders = ['male', 'female', 'other'];
@@ -13,6 +15,7 @@ const Celebrities = FemaleCelebs.concat(MaleCelebs);
 // We store the current User in React context for easy access
 let UserSession = React.createContext({});
 
+UserSession.defaultUsers = DefaultUsers;
 UserSession.useBrowserStorage = true;
 UserSession.storageKey = 'spectre-user';
 UserSession.profileDir = User.profileDir;
@@ -22,20 +25,7 @@ UserSession.Vows = "aeiou".split('');
 UserSession.serverDisabled = false;
 UserSession.serverErrors = 0;
 
-// load default set of users in case no db
-fetch('/default-users.json').then(res => res.json())
-  .then(users => {
-    UserSession.defaultUsers = users;
-  }).catch(e => {
-    console.error('UserSession.defaultUsers:', e);
-  });
-
-///////////////////////////// functions ///////////////////////////////
-
-/*
- * Logs available fields to the console
- */
-UserSession.log = u => u.toString();
+/////////////////////////// API functions /////////////////////////////
 
 /*
  * Clears data from browser session storage
@@ -315,6 +305,14 @@ UserSession.postImage = async (user, image) => { // TODO: test
   }
 }
 
+/*
+ * Logs available fields to the console
+ */
+UserSession.log = u => u.toString();
+
+/*
+ * Randomizes set of celebrities
+ */
 UserSession.randomCelebrities = () => {
   return shuffle(shuffle(MaleCelebs).splice(0, 4).concat(FemaleCelebs));
 }
@@ -365,17 +363,30 @@ function doConfig() {
   // get auth from .env or heroku configs
   DotEnv.config();
 
+  const port = 8083;
   const env = process.env;
-  const route = '/api/users/';
+  const path = '/api/users/';
+  const host = window.location.host.replace(/:[0-9]{4}$/, '');
   const mode = env.NODE_ENV !== 'production' ? 'DEV' : 'PROD';
 
+  if (!env.REACT_APP_API_USER || !env.REACT_APP_API_SECRET) {
+    console.error('Running client without authentication; Server/DB'
+      + ' will not be avaiable. Are you missing a .env file ? ');
+    UserSession.serverDisabled = true;
+  }
+
   const cid = env.REACT_APP_CLIENT_ID || -1;
-  const host = env.REACT_APP_API_HOST || 'http://localhost:8083';
+
+  // Here we construct server host from window.location,
+  // assuming server/db is on the same host as the web-app)
+  const route = 'http://' + host + ':' + port + path;
+
+  //const host = env.REACT_APP_API_HOST || 'http://localhost:8083';
   const auth = env.REACT_APP_API_USER + ':' + env.REACT_APP_API_SECRET;
 
   if (!auth || !auth.length) console.error("Auth required!");
-
-  return { auth: auth, route: host + route, clientId: cid, mode: mode };
+  //console.log('UserSession.route: '+route);
+  return { auth: auth, route: route, clientId: cid, mode: mode };
 }
 
 function defaultSimilars() {

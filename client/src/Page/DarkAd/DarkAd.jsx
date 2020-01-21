@@ -1,23 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
+//import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import IconButton from '../../Components/IconButton/IconButton';
 import UserSession from '../../Components/UserSession/UserSession';
-
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
 const styles = {
-  root: {
-    flexGrow: 1,
-    width: '100%',
-    color: 'black',
-  },
-  content: {},
   image: {
     width: '160px',
     height: '130px',
@@ -98,7 +91,7 @@ class DarkAd extends React.Component {
     const { issue, images, slogans } = this.state;
     const redimg = UserSession.imageDir + 'darkadred.png';
     const cimage = UserSession.imageDir + 'vote-' + issue + '.png';
-
+    //console.log(slogans);
     return (
       <div className={classes.root + " darkAd"}>
         <SpectreHeader colour="white" progressActive progressNumber="one" />
@@ -106,19 +99,18 @@ class DarkAd extends React.Component {
         <div className={`${classes.content} content`}>
           <div className="split-half">
             <div className="split-left">
-              <Typography component="h6" variant="h6"><strong>Create Your Campaign</strong></Typography>
+              <p className="copy-nextline"><strong>Create Your Campaign</strong></p>
               <div className={classes.ad}>    { /* adIssue should never change after being selected '*/}
                 <img className={classes.adImage} src={this.state.image} alt="leave"></img>
                 <p className={classes.adText}>{this.state.text}</p>
                 {!this.state.defaultImageSelected ? <img className={classes.campaignImage} src={cimage} alt="leave"></img> : ''}
               </div>
             </div>
-
             <div className="split-right">
               <div>
                 {images.map((image, i) => (
                   <img className={classes.image} src={image} alt="leave" key={i}
-                    onClick={() => { this.setState({ image: image, defaultImageSelected: false }) }}></img>
+                    onClick={() => this.setState({ image: image, defaultImageSelected: false })}></img>
                 ))}
               </div>
               <div>
@@ -126,7 +118,7 @@ class DarkAd extends React.Component {
                   <Button className={classes.button} variant="contained" color="primary" key={i}
                     onClick={() => {
                       if (this.state.defaultImageSelected) this.setState({ image: redimg });
-                      this.setState({ text: slogan, defaultImageSelected: false })
+                      this.setState({ text: slogan });
                     }}>
                     {slogan.split(' ').slice(0, 2).join(' ') + '...'}
                   </Button>
@@ -135,15 +127,11 @@ class DarkAd extends React.Component {
               <div>
                 <Link to="/target-ad" onClick={() => this.context.targetAd =
                   { image: this.state.image, text: this.state.text }}>
-                  <IconButton icon="next" text="Next" />
+                  <IconButton enabled={(this.state.defaultImageSelected !== true && this.state.text.length)} icon="next" text="Next" />
                 </Link>
               </div>
-
-
             </div>
           </div>
-
-
         </div>
         <FooterLogo />
       </div>

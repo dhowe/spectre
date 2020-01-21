@@ -14,8 +14,8 @@ import ComponentsStyles from '../../App.module.css';
 const styles = {
 
   profileImage: {
-    width: 640,
-    height: 480,
+    width: 1920,
+    height: 1080,
   },
 };
 
@@ -29,11 +29,6 @@ class SearchingFor extends React.Component {
   setRef = (webcam) => {
     this.webcam = webcam;
   }
-
-  // capture = () => {
-  //   const image = this.webcam.getScreenshot();
-  //   this.setState({ screenshot: image });
-  // }
 
   async componentDidMount() {
     let user = await UserSession.ensure(this.context,
@@ -62,41 +57,36 @@ class SearchingFor extends React.Component {
     const user = this.context;
     user.virtue = virtue;
 
-    // here we are doing the webcam capture, disabled for now
-    if (1) {
-      // TODO: next work
-      try {
-
-        const data = this.webcam.getScreenshot();
-        if (data && data.length) {
-          const imgfile = this.toImageFile(data, user._id + '.jpg');
-          UserSession.postImage(this.context, imgfile,
-            (json) => {
-              console.log(`Upload: http://localhost:3000${json.url}`);
-              console.log(json);
-              this.context.hasImage = true;
-              this.props.history.push('/data-is');
-              return;
-            },
-            (e) => {
-              console.error('Error', e);
-              this.context.hasImage = false;
-              this.props.history.push('/data-is');
-              return;
-            }
-          );
-        }
-        else {
-          console.error('Webcam not available');
-          this.context.hasImage = false;
-          this.props.history.push('/data-is');
-          return;
-        }
+    try {
+      console.log('[WEBCAM] Taking image...');
+      const data = this.webcam.getScreenshot();
+      if (data && data.length) {
+        const imgfile = this.toImageFile(data, user._id + '.jpg');
+        UserSession.postImage(this.context, imgfile,
+          (json) => {
+            this.context.hasImage = true;
+            this.props.history.push('/data-is');
+            return;
+          },
+          (e) => {
+            console.error('Error', e);
+            this.context.hasImage = false;
+            this.props.history.push('/data-is');
+            return;
+          }
+        );
       }
-      catch (e) {
-        console.error('Webcam Error: ', e);
+      else {
+        console.error('Webcam not available');
+        this.context.hasImage = false;
+        this.props.history.push('/data-is');
+        return;
       }
     }
+    catch (e) {
+      console.error('Webcam Error: ', e);
+    }
+
     this.props.history.push('/data-is');
   }
 
@@ -135,7 +125,6 @@ class SearchingFor extends React.Component {
             <Button className={ComponentsStyles.button} variant="contained" color="primary" onClick={() => this.handleClick('wealth')}>Wealth</Button>
 
           </div>
-          {/*<this.state.screenshot ? <img src={this.state.screenshot} /> : null*/}
         </div>
         <FooterLogo />
       </div>

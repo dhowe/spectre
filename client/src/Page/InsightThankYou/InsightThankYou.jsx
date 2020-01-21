@@ -29,8 +29,8 @@ class InsightThankYou extends React.Component {
         <SpectreHeader colour="white" progressActive progressNumber="one" />
         <IdleChecker />
         <div className={`${classes.content} content`}>
-          <h1>Great!</h1>
-          <ThumbUp className="insight-thank-you-icon" />
+          <p className="copy"><strong>Great!</strong></p>
+          <ThumbUp className="thankyou-icon" />
           <p className="copy">Now you are beginning to think like an algorithm.</p>
           <p className="copy">Just two more to go</p>
           <Button className={ComponentsStyles.blueBtn} onClick={()=>this.props.history.push('/insight-sexuality')}>

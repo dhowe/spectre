@@ -7,7 +7,7 @@ We use yarn
 ### Dependencies and Versions
 
 ```
-Yarn version: v1.16
+Yarn version: v1.21
 ```
 
 Test versions with:
@@ -48,16 +48,6 @@ yarn build
 or to watch the CSS:
 ```
 yarn watch-css
-```
-
-## Testing
-Install watchman to watch the tests:
-```
-brew install watchman
-```
-run tests:
-```
-yarn test
 ```
 
 ## Builds

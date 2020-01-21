@@ -21,15 +21,19 @@ const styles = {
 class Selected extends React.Component {
   constructor(props) {
     super(props, '/insight-gender');
-    this.state = { targetName: '',
-      targetImage: UserSession.profileDir + 'default.jpg' };
+    this.state = {
+      targetName: '',
+      targetImage: UserSession.profileDir + 'default.jpg'
+    };
   }
 
   async componentDidMount() {
     const user = await UserSession.ensure(this.context,
       ['_id', 'name', 'login', 'gender', 'virtue', 'target']);
-    this.setState({ targetName: user.target.name,
-      targetImage: user.targetImageUrl() })
+    this.setState({
+      targetName: user.target.name,
+      targetImage: user.targetImageUrl()
+    })
   }
 
   render() {
