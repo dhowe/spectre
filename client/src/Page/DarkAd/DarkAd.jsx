@@ -124,7 +124,7 @@ class DarkAd extends React.Component {
                   </Button>
                 ))}
               </div>
-              <div>
+              <div className="link">
                 <Link to="/target-ad" onClick={() => this.context.targetAd =
                   { image: this.state.image, text: this.state.text }}>
                   <IconButton enabled={(this.state.defaultImageSelected !== true && this.state.text.length)} icon="next" text="Next" />

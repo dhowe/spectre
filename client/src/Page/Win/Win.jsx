@@ -45,9 +45,11 @@ class Win extends React.Component {
             <Trophy />
           </p>
           <p>Your silent army swung the vote!</p>
+          <div className="link">
           <Link to="/influence-a-celebrity">
             <IconButton icon="next" text="Next" />
           </Link>
+          </div>
         </div>
         <FooterLogo/>
       </div>

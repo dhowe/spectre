@@ -35,14 +35,18 @@ class PickYourSide extends React.Component {
           <p>
             Persuade <strong>{targetName}</strong> to:
           </p>
+          <div className="link">
           <Link to="/campaign">
             <img src="/imgs/vote_leave.png" width={420} alt="leave"
               onClick={() => { this.context.adIssue = 'leave'; }}></img>
           </Link>
+          </div>
+          <div className="link">
           <Link to="/campaign" style={{ marginBottom: '100px' }}>
             <img src='/imgs/vote_remain.png' width={300} alt="remain"
               onClick={() => { this.context.adIssue = 'remain'; }}></img>
           </Link>
+          </div>
           <span />
         </div>
         <FooterLogo />

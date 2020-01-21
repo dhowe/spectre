@@ -40,9 +40,11 @@ class FindCitizens extends React.Component {
           <p className="copy"><strong>Excellent.</strong></p>
           <p className="copy">Now target UK citizens with a similar OCEAN profile to <strong>{targetName}</strong>!</p>
           <p className="copy">A silent army that could well tip the&nbsp;balance...</p>
-          <Link to="/targets-found">
-            <IconButton icon="next" text="Find them" />
-          </Link>
+          <div className="link">
+            <Link to="/targets-found">
+              <IconButton icon="next" text="Find them" />
+            </Link>
+          </div>
         </div>
         <FooterLogo />
       </div>

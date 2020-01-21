@@ -33,9 +33,11 @@ class ThankYou extends React.Component {
             <ThumbUp className="thankyou-icon" />
             <p className="copy">Your experience has been <strong>personalised.</strong></p>
           </div>
+          <div className="link">
           <Link to="/steps">
             <IconButton enabled={true} icon="next" text="Next"/>
           </Link>
+          </div>
         </div>
         <FooterLogo />
       </div>
