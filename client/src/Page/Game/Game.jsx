@@ -23,7 +23,19 @@ const styles = {
   sketchText: '#929392',
   sketchStroke: '#929392',
   sketchStrokeSel: '#21c0fc',
+
 };
+
+const styles_portrait = {
+  sketchWidth: 1080,
+  sketchHeight: 900,
+};
+
+const styles_landscape = {
+  sketchWidth: 1920,
+  sketchHeight: 660,
+};
+
 
 /*
  * OCEAN Game sketch (temporarily) in p5js/canvas
@@ -48,8 +60,10 @@ function sketch(p) {
   }
 
   p.setup = () => {
-
-    p.createCanvas(1920, 660);
+    let sW,sH;
+    sW  = (window.innerWidth === 1920 ? styles_landscape.sketchWidth : styles_portrait.sketchWidth);
+    sH  = (window.innerWidth === 1920 ? styles_landscape.sketchHeight : styles_portrait.sketchHeight);
+    p.createCanvas(sW, sH);
     colors.sketchBg = p.color(styles.sketchBg);
     colors.sketchText = p.color(styles.sketchText);
     colors.sketchStroke = p.color(styles.sketchStroke);

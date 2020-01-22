@@ -30,16 +30,13 @@ Overall
   cursor: none !important;
 }
 
-p,
 body,
-html {
+html,
+p {
   font-family: 'Montserrat' !important;
   margin: 0;
   padding: 0;
-
 }
-
-
 
 .App {
   text-align: center;
@@ -79,14 +76,20 @@ a {
     outline: -webkit-focus-ring-color auto 0;
   }
 }
-
 /*
 Text
 */
-h1, h2, h3, h4, h5, h6, p {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
   margin-top: 0;
   padding-top: 0;
 }
+
 h1 {
   font-size: 60px;
 }
@@ -114,21 +117,23 @@ h6 {
 strong {
   color: $blue;
 }
-
-
 @media screen and (orientation:landscape) {
   body,
   html {
     font-size: 35px;
   }
+
   p.copy {
     font-size: 35px;
     padding-bottom: 40px;
   }
+
+  p,
   p.copy-nextline {
     font-size: 35px;
     padding-bottom: 10px;
   }
+
   .content {
     position: absolute;
     width: 100%;
@@ -141,11 +146,9 @@ strong {
     -webkit-justify-content: center;
     margin: 0;
     padding: 0;
-
   }
 
   .split-half {
-
     -webkit-justify-content: center;
     display: table;
     justify-content: center;
@@ -162,17 +165,63 @@ strong {
     display: table-cell;
     width: 50%;
   }
+
   .thankyou-icon {
-      margin: 0px auto 40px auto;
+    margin: 0 auto 40px;
+  }
+
+  .link {
+    width: fit-content;
+    margin: 0 auto;
+  }
+
+  .iconButtonText {
+    font-size: 25px;
+    margin-top: -15x;
+    margin-bottom: 0;
+    padding: 0;
+  }
+
+  .DataIcons {
+    div {
+      margin: 0;
+      padding: 0;
+      height: 140px;
     }
+
+    button.iconEnabled * {
+      width: 150px;
+      height: 80px;
+    }
+
+    button.iconDisabled * {
+      filter: grayscale(80%);
+      width: 150px;
+      height: 80px;
+    }
+    .iconButtonText {
+      font-size: 18px;
+      margin-top: 3px;
+      margin-bottom: 0;
+      padding: 0;
+    }
+  }
 }
 @media screen and (orientation:portrait) {
   body,
   html {
     font-size: 48px;
   }
-  p, .copy {
-    font-size: 48px;
+
+  p.copy {
+    font-size: 35px;
+    padding-bottom: 40px;
+  }
+
+  p,
+  p.copy-nextline {
+    font-size: 35px;
+    padding-bottom: 10px;
   }
 
   .content {
@@ -185,9 +234,38 @@ strong {
     color: $grey;
   }
 
+  .iconButtonText {
+    font-size: 30px;
+    margin-top: 0px;
+    margin-bottom: 0;
+    padding: 0;
+  }
 
+  .DataIcons {
+    div {
+      margin: 0;
+      padding: 0;
+      height: 200px;
+    }
+
+    button.iconEnabled * {
+      width: 150px;
+      height: 80px;
+    }
+
+    button.iconDisabled * {
+      filter: grayscale(80%);
+      width: 150px;
+      height: 80px;
+    }
+    .iconButtonText {
+      font-size: 20px;
+      margin-top: 5px;
+      margin-bottom: 0;
+      padding: 0;
+    }
+  }
 }
-
 
 a.disabled {
   pointer-events: none;
@@ -197,42 +275,13 @@ a.disabled {
   visibility: hidden;
 }
 
+.iconButton {}
 
-.iconButton{
-
+.thankyou-icon {
+  margin: 50px auto 60px;
 }
 
-
-.DataIcons {
-
-  div{
-    margin: 0px;
-    padding: 0px;
-    height: 140px;
-  }
-  .iconButtonText {
-    font-size: 20px;
-    margin-top: 3px;
-    margin-bottom: 0px;
-    padding: 0px;
-  }
-
-  button.iconEnabled * {
-    width: 150px;
-    height: 80px;
-  }
-
-  button.iconDisabled * {
-    filter: grayscale(80%);
-    width: 150px;
-    height: 80px;
-  }
-  .thankyou-icon {
-    margin: 50px auto 60px;
-  }
-}
-
-.link{
+.link {
   width: fit-content;
-  margin:0 auto;
+  margin: 0 auto;
 }

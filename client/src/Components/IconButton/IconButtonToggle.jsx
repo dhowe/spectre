@@ -14,12 +14,12 @@ class IconButtonToggle extends React.Component {
   }
 
   handleClick = () => {
-    console.log('handleClick -> '+(!this.state.isEnabled));
+    //console.log('handleClick -> '+(!this.state.isEnabled));
     this.setState({
       isEnabled: !this.state.isEnabled,
     });
   }
-  
+
   render() {
     return (
       <IconButton

@@ -9,7 +9,6 @@ import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import IconButton from '../../Components/IconButton/IconButton';
 import IconButtonToggle from '../../Components/IconButton/IconButtonToggle';
 
-import './HomeData.scss';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
 
@@ -56,8 +55,8 @@ class HomeData extends React.Component {
             </Grid>
           </div>
           <div className="link">
-            <Link className={this.state.count >= 2 ? "true" : "disabled"} to="/find-citizens">
-              <IconButton enabled={this.state.count >= 2} icon="next" text="Next" />
+            <Link className={this.state.count === 2 ? "true" : "disabled"} to="/find-citizens">
+              <IconButton enabled={this.state.count === 2} icon="next" text="Next" />
             </Link>
           </div>
         </div>
