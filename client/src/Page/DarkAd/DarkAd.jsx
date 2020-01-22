@@ -59,7 +59,7 @@ const styles = {
     fontWeight: '800',
     textAlign: 'center',
     width: '100%',
-    backgroundColor: 'red',
+    backgroundColor: 'none',
   },
 };
 
@@ -102,7 +102,7 @@ class DarkAd extends React.Component {
               <p className="copy-nextline"><strong>Create Your Campaign</strong></p>
               <div className={classes.ad}>    { /* adIssue should never change after being selected '*/}
                 <img className={classes.adImage} src={this.state.image} alt="leave"></img>
-                <p className={classes.adText}>{this.state.text}</p>
+                <p style={this.state.text ? {backgroundColor: 'red'} : {backgroundColor: 'none'}} className={classes.adText}>{this.state.text}</p>
                 {!this.state.defaultImageSelected ? <img className={classes.campaignImage} src={cimage} alt="leave"></img> : ''}
               </div>
             </div>

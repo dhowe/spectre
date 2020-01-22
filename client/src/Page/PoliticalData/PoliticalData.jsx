@@ -9,7 +9,7 @@ import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import IconButton from '../../Components/IconButton/IconButton';
 import IconButtonToggle from '../../Components/IconButton/IconButtonToggle';
 
-import './PoliticalData.scss';
+
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
 const styles = {
@@ -60,8 +60,8 @@ class PoliticalData extends React.Component {
             </Grid>
           </div>
           <div className="link">
-            <Link className={this.state.count >= 3 ? "true" : "disabled"} to="/home-data">
-              <IconButton enabled={this.state.count >= 3} icon="next" text="Next" />
+            <Link className={this.state.count === 3 ? "true" : "disabled"} to="/home-data">
+              <IconButton enabled={this.state.count === 3} icon="next" text="Next" />
             </Link>
           </div>
         </div>
