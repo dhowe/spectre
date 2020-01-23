@@ -166,10 +166,10 @@ UserSession.create = async (user) => {
 
   if (UserSession.serverDisabled) return;
 
-  const { route, auth, cid, mode } = doConfig();
+  const { route, auth, cid } = doConfig();
   if (user.clientId < 0) user.clientId = cid;
   try {
-    console.log('[POST] ' + mode + '.create: ' + route);
+    //console.log('[POST] ' + mode + '.create: ' + route);
     const response = await fetch(route, {
       method: "post",
       headers: {
