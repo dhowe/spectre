@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
+//import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid/Grid';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
@@ -9,7 +9,7 @@ import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import IconButton from '../../Components/IconButton/IconButton';
 import IconButtonToggle from '../../Components/IconButton/IconButtonToggle';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
-import './ConsumerData.scss';
+
 
 const styles = {
 };
@@ -76,9 +76,11 @@ class ConsumerData extends React.Component {
               </Grid>
             </Grid>
           </div>
-          <Link className={this.state.count >= 3 ? 'true' : 'disabled'} to="/political-data">
-            <IconButton enabled={this.state.count >= 3} icon="next" text="Next" />
+          <div className="link">
+          <Link className={this.state.count === 3 ? 'true' : 'disabled'} to="/political-data">
+            <IconButton enabled={this.state.count === 3} icon="next" text="Next" />
           </Link>
+          </div>
         </div>
         <FooterLogo />
       </div>

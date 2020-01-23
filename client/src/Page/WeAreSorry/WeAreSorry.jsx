@@ -32,9 +32,11 @@ class WeAreSorry extends React.Component {
         <div className={classes.content + " content"}>
           <p>We’re sorry <strong>{name}</strong>, </p>
           <p> we’re afraid you can’t do that.</p>
-          <Link to="/goodbye">
-            <IconButton icon="tick" text="Next" />
-          </Link>
+          <div className="link">
+            <Link to="/goodbye">
+              <IconButton icon="tick" text="Next" />
+            </Link>
+          </div>
         </div >
         <FooterLogo />
       </div >

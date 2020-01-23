@@ -54,9 +54,11 @@ class Campaign extends React.Component {
           <p className="copy">
             <strong>Slogans</strong> that contain {targetInfluences[1]}
           </p>
+          <div className="link">
           <Link to="/dark-ad">
             <IconButton icon="next" text="Next" />
           </Link>
+          </div>
         </div>
         <FooterLogo />
       </div>

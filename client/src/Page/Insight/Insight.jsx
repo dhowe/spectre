@@ -64,9 +64,11 @@ class Insight extends React.Component {
           <div onTouchEnd={this.EnableButton}>
             <TextSliderText leftText={leftText} rightText={rightText} middleText={middleText} />
           </div>
+          <div className="link">
           <Link to={next}>
             <IconButton enabled={this.state.buttonEnabled} icon="next" text="Next" />
           </Link>
+          </div>
         </div>
         <FooterLogo />
       </div>

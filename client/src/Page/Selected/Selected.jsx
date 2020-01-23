@@ -51,9 +51,11 @@ class Selected extends React.Component {
           <p className="copy">Let&apos;s start by verifying some of the basics to
             unlock insight into <strong>{targetName}</strong>. </p>
           <p className="copy">Don’t worry, only you will see the results. </p>
+          <div className="link">
           <Link to="/insight-gender">
             <Button className={ComponentsStyles.blueBtn}>Dive in</Button>
           </Link>
+          </div>
         </div>
         <FooterLogo />
       </div>

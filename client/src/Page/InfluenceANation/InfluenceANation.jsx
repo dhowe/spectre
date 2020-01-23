@@ -38,9 +38,11 @@ class InfluenceANation extends React.Component {
           <p className="copy">Let's amplify your campaign by convincing
               lots of others to vote <strong>{this.state.adIssue}</strong>.</p>
           <p className="copy">We can show you how, but first, you must...</p>
+          <div className="link">
           <Link to="/consumer-data">
           <Button className={ComponentsStyles.blueBtn}>Get more data!</Button>
           </Link>
+          </div>
         </div>
         <FooterLogo />
       </div>

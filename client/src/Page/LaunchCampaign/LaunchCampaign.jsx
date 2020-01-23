@@ -34,6 +34,7 @@ class LaunchCampaign extends React.Component {
         <IdleChecker />
         <div className={`${classes.content} content`}>
           <p className="copy">Launch Campaign!</p>
+          <div className="link">
           <Link to="/referendum-results">
             <img
               className={classes.image}
@@ -41,9 +42,12 @@ class LaunchCampaign extends React.Component {
               alt="launch campaign"
             />
           </Link>
+          </div>
+          <div className="link">
           <Link to="/referendum-results">
               <IconButton icon="next" text="Go" />
           </Link>
+          </div>
         </div>
         <FooterLogo />
       </div>
