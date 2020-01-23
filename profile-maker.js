@@ -5,11 +5,13 @@ import * as tf from '@tensorflow/tfjs-node';
 import observer from 'chokidar';
 import clfDate from 'clf-date';
 
+const BRIGHTEN = 1.5;
+
 class ProfileMaker {
 
   constructor(modelDir) {
 
-    this.border = 100;
+    this.border = 200;
     this.loaded = false;
     this.detectAgeGender = false;
     this.modelDir = modelDir || './model-weights';
@@ -69,6 +71,7 @@ class ProfileMaker {
       const dims = result.dimensions;
       const f = await sharp(infile)
         .extract(bounds(result.box, dims.w, dims.h))
+        .modulate({ brightness: BRIGHTEN }) // increase lightness factor
         .resize(width || 128, height || 128)
         .normalise()
         .toFile(outfile);
