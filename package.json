@@ -8,15 +8,12 @@
     "test-g": "NODE_ENV=test mocha ./tests --recursive --exit -r esm -g",
     "test-routes": "NODE_ENV=test mocha ./tests/routes --exit -r esm",
     "test-no-routes": "NODE_ENV=test mocha ./tests/ --exit -r esm",
-
     "start": "concurrently --kill-others-on-fail \"yarn run server\" \"yarn run client\"",
     "server": "nodemon -r esm server.js",
     "client": "yarn --cwd client start",
-
     "build-client": "NODE_ENV=production yarn --cwd client build",
     "production": "NODE_ENV=production yarn run server",
     "preproduction": "NODE_ENV=production yarn --cwd client build",
-    
     "install-all": "yarn install && yarn --cwd client install",
     "uninstall-client": "rimraf \"./client/yarn-lock.json\" \"./client/node_modules\"",
     "uninstall-server": "rimraf \"./yarn-lock.json\" \"./node_modules\"",
@@ -50,6 +47,7 @@
     "morgan": "^1.9.1",
     "multer": "^1.4.1",
     "node-opencv": "^0.0.2-security",
+    "nodemailer": "^6.4.2",
     "on-finished": "~2.3.0",
     "on-headers": "~1.0.1",
     "seedrandom": "~2.4.3",
@@ -61,7 +59,9 @@
   "license": "UNLICENSED",
   "nodemonConfig": {
     "ext": "js",
-    "ignore": [ "src/*" ]
+    "ignore": [
+      "src/*"
+    ]
   },
   "devDependencies": {
     "chai": "^4.2.0",
