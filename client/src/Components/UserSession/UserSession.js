@@ -369,6 +369,9 @@ function doConfig() {
   const host = window.location.host.replace(/:[0-9]{4}$/, '');
   const mode = env.NODE_ENV !== 'production' ? 'DEV' : 'PROD';
 
+  // use https if we're in production mode
+  const proto = env.NODE_ENV !== 'production' ? 'http' : 'https';
+
   if (!env.REACT_APP_API_USER || !env.REACT_APP_API_SECRET) {
     console.error('Running client without authentication; Server/DB'
       + ' will not be avaiable. Are you missing a .env file ? ');
@@ -379,7 +382,7 @@ function doConfig() {
 
   // Here we construct server host from window.location,
   // assuming server/db is on the same host as the web-app)
-  const route = 'http://' + host + ':' + port + path;
+  const route = proto + '://' + host + ':' + port + path;
 
   //const host = env.REACT_APP_API_HOST || 'http://localhost:8083';
   const auth = env.REACT_APP_API_USER + ':' + env.REACT_APP_API_SECRET;
