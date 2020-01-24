@@ -1,5 +1,7 @@
 import path from 'path';
 import cors from 'cors';
+import http from 'http';
+import https from 'https';
 import express from 'express';
 import logger from './logger';
 import routes from './routes';
@@ -69,10 +71,26 @@ const dbstr = dev ? dbUrl + '-dev' : dbUrl;
   }
 })();
 
-export default app.listen(port, () => {
-  console.log('Spectre API at localhost:' + port + base +
-    ' [' + dbstr.substring(dbstr.lastIndexOf('/') + 1) + ']\n');
-});
+let server;
+
+if (process.env.NODE_ENV === 'production') {
+  const privateKey = fs.readFileSync('/etc/letsencrypt/live/spectreknows.me/privkey1.pem', 'utf8');
+  const certificate = fs.readFileSync('/etc/letsencrypt/live/spectreknows.me/cert1.pem', 'utf8');
+  const credentials = { key: privateKey, cert: certificate };
+  server = https.createServer(credentials, app).listen(port, () => {
+    console.log('Spectre API at https://localhost:' + port + base +
+      ' [' + dbstr.substring(dbstr.lastIndexOf('/') + 1) + ']\n');
+  });
+}
+else {
+  server = http.createServer(app).listen(port, () => {
+    console.log('Spectre API at http://localhost:' + port + base +
+      ' [' + dbstr.substring(dbstr.lastIndexOf('/') + 1) + ']\n');
+  });
+}
+
+export default server;
+
 
 
 
