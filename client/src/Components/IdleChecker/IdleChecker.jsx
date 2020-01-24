@@ -1,28 +1,23 @@
 import React from 'react';
 import Modal from '../Modal/Modal';
 
+const MODAL_TEXT = 'Are you still there?';
+
 class IdleChecker extends React.Component {
 
   constructor(props) {
     super(props);
 
     this.state = {
-      //timout checker
       idleTimer: 0,
-      resetTimer: 5,
+      resetTimer: 5, // dialog countdown
+      idleTime: 15, // time before dialog
       isIdle: false,
-      //modal
-      modalOpen: false,
-      idleTime: 10,
+      modalOpen: false
     }
-
-    //modal
-    this.modalContent = '';
+    this.interval = -1;
     this.modalTitle = '';
-
-    this.handleIdle = this.handleIdle.bind(this);
-    this.detectClick = this.detectClick.bind(this);
-    this.interval = '';
+    this.modalContent = '';
   }
 
   componentDidMount() {
@@ -37,21 +32,17 @@ class IdleChecker extends React.Component {
     clearInterval(this.interval);
   }
 
-  handleIdle() {
-
-    //    if (this.props.forceTerminate) {
-    //    console.log("cleared idle checker : " + this.props.forceTerminate);
-    //document.removeEventListener('click', this.detectClick);
-    //      clearInterval(this.interval);
-    //    }
+  handleIdle = () => {
     let timer = this.state.idleTimer;
-    //    console.log(timer);
-    var t = this.props.setIdleTime === undefined ? this.state.idleTime : this.props.setIdleTime;
+    let t = typeof this.props.setIdleTime === 'undefined' ?
+      this.state.idleTime : this.props.setIdleTime;
+
     if (timer > t) {
       this.setState({
         isIdle: true
       });
-    } else {
+    }
+    else {
       if (!this.props.forceTerminate) {
         let t = this.state.idleTimer + 1;
         this.setState({
@@ -59,61 +50,46 @@ class IdleChecker extends React.Component {
         });
       }
     }
+
     if (this.state.isIdle) {
       this.modalTitle = this.state.resetTimer + '';
-      this.modalContent = 'Are you still here?';
-      this.setState({
-        modalOpen: true
-      });
-
+      this.modalContent = MODAL_TEXT;
       let t = this.state.resetTimer - 1;
-      this.setState({
-        resetTimer: t
-      });
+      this.setState({ resetTimer: t, modalOpen: true });
     }
+
     if (this.state.resetTimer <= -1) {
       window.open("/", "_self");
     }
   }
 
-  detectClick() {
-
-    //  if (!this.props.forceTerminate) {
+  detectClick = () => {
 
     this.setState({
-      idleTimer: 0
-    });
-    this.setState({
-      isIdle: false
-    });
-    this.setState({
+      idleTimer: 0,
+      isIdle: false,
       resetTimer: 5
     });
 
-    if (this.modalContent.includes('Are you still here?') && this.state.modalOpen) {
+    if (this.modalContent.includes(MODAL_TEXT) && this.state.modalOpen) {
       this.closeModal();
     }
-    //  }
-    //  console.log(this.interval)
-
   }
 
-  closeModal() {
-    this.setState({
-      modalOpen: false
-    });
-    //style={'background:white; opacity:0; filter:Alpha(opacity=0);'}
+  closeModal = () => {
+    this.setState({ modalOpen: false });
   }
 
   render() {
-    return (<div >
-      <Modal
-        isOpen={this.state.modalOpen}
-        title={this.modalTitle}
-        content={this.modalContent}
-        onClose={() => this.closeModal()}
-      />
-    </div>
+    return (
+      <div >
+        <Modal
+          isOpen={this.state.modalOpen}
+          title={this.modalTitle}
+          content={this.modalContent}
+          onClose={() => this.closeModal()}
+        />
+      </div>
     )
   }
 };
