@@ -85,7 +85,6 @@ class LoginPage extends React.Component {
       user.login = email;
       user.gender = gender;
       user.lastPageVisit = { page: 'login', time: Date.now() };
-
       this.setState({ modalOpen: false });
       this.saveUser(user);
     }

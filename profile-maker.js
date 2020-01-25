@@ -158,4 +158,4 @@ function pathify(p) {
   return p ? p.replace(/.*\/profiles/, '/profiles') : '__unknown__';
 }
 
-export default new ProfileMaker();
+export default ProfileMaker;

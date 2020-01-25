@@ -27,6 +27,18 @@ const list = async (req, res) => {
   });
 };
 
+const message = async (req, res) => {
+
+  // WORKING HERE
+
+  //console.log('CONTROLLER.MESSAGE: stub sending message', req);
+  return sendResponse(res, 'sent');
+  // await UserModel.getAll(function(err, users) {
+  //   if (err) return sendError(res, 'UserModel.getAll', err);
+  //   sendResponse(res, users);
+  // });
+};
+
 const current = async (req, res) => { // not used at present
 
   if (!req.params.hasOwnProperty('cid')) {
@@ -219,7 +231,8 @@ const photoset = async (req, res) => {
 };
 
 function sendResponse(res, data) {
-  res.status(200).send({ status: 200, data: data, message: 'ok' });
+  let o = { status: 200, data: data, message: 'ok' };
+  res.status(200).send(o);
 }
 
 function sendError(res, msg, e, code) {
@@ -229,4 +242,4 @@ function sendError(res, msg, e, code) {
   res.status(code).send({ status: code, data: null, message: msg });
 }
 
-export default { list, similars, create, fetch, update, remove, photo, photoset, current, createBatch }
+export default { list, similars, message, create, fetch, update, remove, photo, photoset, current, createBatch }

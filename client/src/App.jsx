@@ -5,6 +5,8 @@ import TouchToBegin from './Page/TouchToBegin/TouchToBegin';
 import LoginPage from './Page/LoginPage/LoginPage';
 //import TakeSelfie from './Page/TakeSelfie/TakeSelfie';
 import Pledge from './Page/Pledge/Pledge';
+import MessageForm from './Page/MessageForm/MessageForm';
+
 import SearchingFor from './Page/SearchingFor/SearchingFor';
 import DataIs from './Page/DataIs/DataIs';
 //import BelieveInDataism from './Page/BelieveInDataism/BelieveInDataism';
@@ -73,6 +75,8 @@ const theme = createMuiTheme({
   },
 });
 
+
+
 class App extends React.Component {
 
   render() {
@@ -84,12 +88,11 @@ class App extends React.Component {
               <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" />
               <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
               <Router>
-                {  // <Route exact path="/" render={p => <TouchToBegin {...p} setNext={this.setNext} next={this.next}/>} />
-                }
                 <React.Fragment>
                   <Keyboardist bindings={{ Right: this.next }} />
                   <Navigation />
                   <Route exact path="/" component={TouchToBegin} />
+                  <Route exact path="/message" component={MessageForm} />
                   <Route exact path="/login" component={LoginPage} />
                   <Route exact path="/pledge" component={Pledge} />
                   <Route exact path="/searching" component={SearchingFor} />
