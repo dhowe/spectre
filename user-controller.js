@@ -179,7 +179,7 @@ const photo = async (req, res) => {
     await upload(req, res, e => {
       if (e) return sendError(res, 'photo.upload', e);
       if (!req.file) return sendError(res, 'photo.upload: null req. file');
-      console.log('WROTE: '+req.file.path);
+      console.log('[' + clfDate() + '] ::* UPLOAD ' + req.file.path);
       req.file.url = req.file.path.replace(/.*\/profiles/, '/profiles');
       sendResponse(res, req.file);
     });
@@ -225,7 +225,7 @@ function sendResponse(res, data) {
 function sendError(res, msg, e, code) {
   code = code || 400;
   msg = msg += ' [' + e ? e : '' + ']';
-  console.log('[' + clfDate() + '] ::* ERROR', '"' + msg + '"', code);
+  console.log('[' + clfDate() + '] ::* ERROR', msg, code);
   res.status(code).send({ status: code, data: null, message: msg });
 }
 

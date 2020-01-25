@@ -95,13 +95,12 @@ class ProfileMaker {
 
   loadModels = async () => {
     this.loaded = true;  // ^ or 'tinyFaceDetector'
-    console.log('[' + clfDate() + '] ::* THUMB Preload face training models');
+    console.log('[' + clfDate() + '] ::* THUMB Loading face training models');
 
     await this.detectionNet.loadFromDisk(this.modelDir);
     if (this.detectAgeGender) {
       await this.ageGenderNet.loadFromDisk(this.modelDir);
     }
-    console.log('[' + clfDate() + '] ::* THUMB Loaded face training models');
   }
 
   detect = async (infile) => {
