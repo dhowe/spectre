@@ -15,15 +15,15 @@ class ProfileMaker {
     this.loaded = false;
     this.detectAgeGender = false;
     this.modelDir = modelDir || './model-weights';
-    //this.detectionNet = faceapi.nets.tintFaceDetector
     this.detectionNet = faceapi.nets.ssdMobilenetv1;
     this.ageGenderNet = faceapi.nets.ageGenderNet;
     const { Canvas, Image, ImageData } = canvas;
     faceapi.env.monkeyPatch({ Canvas, Image, ImageData });
+    this.loadModels();
   }
 
   watch = (path) => {
-
+    console.log('[' + clfDate() + '] ::* WATCH ' + pathify(path));
     observer.watch(path, {
       ignored: /^\./,
       persistent: true,
@@ -93,6 +93,17 @@ class ProfileMaker {
       .toFile(outfile)
   }
 
+  loadModels = async () => {
+    this.loaded = true;  // ^ or 'tinyFaceDetector'
+    console.log('[' + clfDate() + '] ::* THUMB Preload face training models');
+
+    await this.detectionNet.loadFromDisk(this.modelDir);
+    if (this.detectAgeGender) {
+      await this.ageGenderNet.loadFromDisk(this.modelDir);
+    }
+    console.log('[' + clfDate() + '] ::* THUMB Loaded face training models');
+  }
+
   detect = async (infile) => {
 
     console.log('[' + clfDate() + '] ::* DETECT ' + pathify(infile));
@@ -102,14 +113,7 @@ class ProfileMaker {
         : new faceapi.TinyFaceDetectorOptions
           ({ inputSize: 408, scoreThreshold: 0.5 });
     }
-    if (!this.loaded) {
-      this.loaded = true;  // ^ or 'tinyFaceDetector'
-      await this.detectionNet.loadFromDisk(this.modelDir);
-      if (this.detectAgeGender) {
-        await this.ageGenderNet.loadFromDisk(this.modelDir);
-      }
-      console.log('[' + clfDate() + '] ::* THUMB Loaded face training models');
-    }
+    if (!this.loaded) this.loadModels();
     let dims, image = await canvas.loadImage(infile);
     await sharp(infile).metadata().then(md => {
       dims = { w: md.width, h: md.height };
@@ -135,7 +139,7 @@ class ProfileMaker {
           detectorOpts(this.detectionNet));
       }
       catch (e) {
-        throw Error('Detection failed: '+e);
+        throw Error('Detection failed: ' + e);
       }
       if (!detection || !detection.box) {
         throw Error('Detection failed');
@@ -152,7 +156,7 @@ class ProfileMaker {
 }
 
 function pathify(p) {
-  return p ? p.replace(/.*\/public/, '/public') : '__unknown__';
+  return p ? p.replace(/.*\/profiles/, '/profiles') : '__unknown__';
 }
 
 export default new ProfileMaker();

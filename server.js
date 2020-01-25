@@ -16,7 +16,7 @@ import { dbUrl, apiUser, certs } from './config';
 const base = '/api/';
 const port = process.env.PORT || 8083;
 const test = process.env.NODE_ENV === 'test';
-const dev = process.env.NODE_ENV !== 'production';
+const prod = process.env.NODE_ENV === 'production';
 const client = path.join(__dirname, '/client');
 
 if (!apiUser[process.env.API_USER]) {
@@ -43,7 +43,7 @@ app.all('*', logger('[:date[clf]] :remote-addr :method :url :status', {
 }));
 
 // static react files (no-auth)
-app.use(express.static(client + '/build'));
+if (!prod) app.use(express.static(client + '/build'));
 
 // current user route (no-auth)
 app.get(base + 'users/current/:cid', controller.current);
@@ -51,16 +51,16 @@ app.get(base + 'users/current/:cid', controller.current);
 // for other api routes (w-auth)
 app.use(base, auth, routes);
 
-// for all react pages (no-auth)
-app.get('*', (req, res) => res.sendFile(client + '/build/index.html'));
+// for react pages in dev (no-auth)
+if (!prod) app.get('*', (req, res) => res.sendFile(client + '/build/index.html'));
 
 // watch for new profile images to process
-if (!test) profileMaker.watch(client + '/public/profiles');
+if (!test) profileMaker.watch(prod ? process.env.WEB_ROOT + '/profiles' : client + '/public/profiles');
 
 /////////////////////////// DbConnect ///////////////////////////////
 
 const opts = { useNewUrlParser: true, useFindAndModify: false };
-const dbstr = dev ? dbUrl + '-dev' : dbUrl;
+const dbstr = prod ? dbUrl : dbUrl + '-dev';
 
 (async () => {
   try {
@@ -74,7 +74,7 @@ const dbstr = dev ? dbUrl + '-dev' : dbUrl;
 
 let server;
 
-if (process.env.NODE_ENV === 'production') {
+if (prod) { // load ssl certs for production
   try {
     const ca = fs.readFileSync(certs + 'cert.pem', 'utf8');
     const key = fs.readFileSync(certs + 'privkey.pem', 'utf8');
@@ -86,9 +86,7 @@ if (process.env.NODE_ENV === 'production') {
     });
   }
   catch (e) {
-    console.error('\n[ERROR] Unable to start https server, falling back to http\n');
-    console.error(e);
-    console.error();
+    console.error('\n[ERROR] Unable to start HTTPS, trying HTTP\n',e,'\n');
   }
 }
 

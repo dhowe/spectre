@@ -10,6 +10,11 @@ import path from 'path';
   "data": "<payload object>"
 }*/
 
+const PROFILE_PATH = process.env.NODE_ENV === 'production' ?
+  //'/Library/WebServer/Documents/spectre/profiles/'
+  process.env.WEB_ROOT + '/profiles/'
+  : path.join('./client/public/profiles/');
+
 const USER_NOT_FOUND = 452;
 const USER_WO_TRAITS = 453;
 const NUM_SIMILARS = 6;
@@ -151,8 +156,6 @@ const remove = async (req, res) => {
   });
 };
 
-const profiles = './client/public/profiles/';
-
 const photo = async (req, res) => {
 
   if (typeof req.params.uid === 'undefined' ||
@@ -163,7 +166,7 @@ const photo = async (req, res) => {
   let upload = multer({
     storage: multer.diskStorage({
       destination: (req, file, cb) => {
-        cb(null, path.join(profiles))
+        cb(null, path.join(PROFILE_PATH))
       },
       filename: (req, file, cb) => {
         cb(null, req.params.uid + '_raw' +
@@ -172,14 +175,18 @@ const photo = async (req, res) => {
     })
   }).single('profileImage');
 
-  await upload(req, res, e => {
-    if (e) return sendError(res, 'photo.upload', e);
-    if (!req.file) return sendError(res, 'photo.upload: null req. file');
-    //let url = req.protocol + "://" +  req.hostname + '/' + req.file.path;
-    req.file.url = req.file.path.replace(/.*\/profiles/, '/profiles');
-    //console.log('Upload: '+req.file.url);
-    sendResponse(res, req.file);
-  });
+  try {
+    await upload(req, res, e => {
+      if (e) return sendError(res, 'photo.upload', e);
+      if (!req.file) return sendError(res, 'photo.upload: null req. file');
+      console.log('WROTE: '+req.file.path);
+      req.file.url = req.file.path.replace(/.*\/profiles/, '/profiles');
+      sendResponse(res, req.file);
+    });
+  }
+  catch (e) {
+    console.error('Unable to upload image', e);
+  }
 };
 
 const photoset = async (req, res) => {
@@ -195,7 +202,7 @@ const photoset = async (req, res) => {
   let upload = multer({
     storage: multer.diskStorage({
       destination: (req, file, cb) => {
-        cb(null, path.join(profiles))
+        cb(null, path.join(PROFILE_PATH))
       },
       filename: (req, file, cb) => {
         cb(null, req.params.uid + '-' + Date.now() +
@@ -207,7 +214,6 @@ const photoset = async (req, res) => {
   await upload(req, res, e => {
     if (e) return res.status(400).send({ error: e });
     console.log("FILES: ", req.files);
-    //let url = req.file.path.replace(/.*\/profiles/,'/profiles')});
     sendResponse(res, req.files);
   });
 };
