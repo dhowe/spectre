@@ -23,7 +23,7 @@ class ProfileMaker {
   }
 
   watch = (path) => {
-    console.log('[' + clfDate() + '] ::* WATCH ' + pathify(path));
+    console.log('[' + clfDate() + '] ::* WATCH ' + path);
     observer.watch(path, {
       ignored: /^\./,
       persistent: true,
