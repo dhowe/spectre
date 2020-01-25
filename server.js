@@ -1,3 +1,4 @@
+import fs from 'fs';
 import path from 'path';
 import cors from 'cors';
 import http from 'http';
@@ -8,9 +9,9 @@ import routes from './routes';
 import mongoose from 'mongoose';
 import bodyparser from 'body-parser';
 import basicAuth from 'express-basic-auth';
-import { dbUrl, apiUser } from './config';
 import controller from './user-controller';
 import profileMaker from './profile-maker';
+import { dbUrl, apiUser, certs } from './config';
 
 const base = '/api/';
 const port = process.env.PORT || 8083;
@@ -74,15 +75,24 @@ const dbstr = dev ? dbUrl + '-dev' : dbUrl;
 let server;
 
 if (process.env.NODE_ENV === 'production') {
-  const privateKey = fs.readFileSync('/etc/letsencrypt/live/spectreknows.me/privkey1.pem', 'utf8');
-  const certificate = fs.readFileSync('/etc/letsencrypt/live/spectreknows.me/cert1.pem', 'utf8');
-  const credentials = { key: privateKey, cert: certificate };
-  server = https.createServer(credentials, app).listen(port, () => {
-    console.log('Spectre API at https://localhost:' + port + base +
-      ' [' + dbstr.substring(dbstr.lastIndexOf('/') + 1) + ']\n');
-  });
+  try {
+    const ca = fs.readFileSync(certs + 'cert.pem', 'utf8');
+    const key = fs.readFileSync(certs + 'privkey.pem', 'utf8');
+    const cert = fs.readFileSync(certs + 'fullchain.pem', 'utf8');
+    const credentials = { key: key, cert: cert, ca: ca };
+    server = https.createServer(credentials, app).listen(port, () => {
+      console.log('Spectre API at https://localhost:' + port + base +
+        ' [' + dbstr.substring(dbstr.lastIndexOf('/') + 1) + ']\n');
+    });
+  }
+  catch (e) {
+    console.error('\n[ERROR] Unable to start https server, falling back to http\n');
+    console.error(e);
+    console.error();
+  }
 }
-else {
+
+if (!server) {
   server = http.createServer(app).listen(port, () => {
     console.log('Spectre API at http://localhost:' + port + base +
       ' [' + dbstr.substring(dbstr.lastIndexOf('/') + 1) + ']\n');

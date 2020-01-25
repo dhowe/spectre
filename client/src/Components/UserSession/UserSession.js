@@ -1,4 +1,3 @@
-//import fs from 'fs';
 import React from 'react';
 import User from '../User/User';
 import DotEnv from 'dotenv';

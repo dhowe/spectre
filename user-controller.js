@@ -3,14 +3,13 @@ import clfDate from 'clf-date';
 import multer from 'multer';
 import path from 'path';
 
-/*
-TODO: every call should return a uniform object:
+/* call return a uniform object:
 {
   "status": code,
   "message": "a user-readable message",
   "data": "<payload object>"
-}
-*/
+}*/
+
 const USER_NOT_FOUND = 452;
 const USER_WO_TRAITS = 453;
 const NUM_SIMILARS = 6;

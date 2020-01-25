@@ -10,11 +10,8 @@ import Video from '../../Components/Video/Video';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 import TosContent from './termsOfService'
 
-
 import { withStyles } from '@material-ui/core/styles';
 import './LoginPage.scss';
-
-
 
 window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true; // TMP: #138
 
@@ -25,7 +22,6 @@ const styles_landscape = {
 const styles_portrait = {
     marginBottom: 70,
 };
-
 
 class LoginPage extends React.Component {
 
