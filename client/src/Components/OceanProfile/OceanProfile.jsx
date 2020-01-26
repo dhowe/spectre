@@ -30,6 +30,7 @@ function OceanProfile(props) {
                 </div>
             </div>
             <div className="iconText">
+              
               <Openness/>
               <Typography>Openness</Typography>
             </div>
