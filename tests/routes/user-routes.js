@@ -59,23 +59,20 @@ describe('REST API', () => {
     });
 
     it('should send mail to single user', done => {
+
       let id = '888888888888888888888888';
       chai.request(host)
         .get('/api/users/message/' + id)
         .auth(env.API_USER, env.API_SECRET)
         .end((err, res) => {
-          console.log('res', res.body);
           expect(err).to.be.null;
           expect(res).to.have.status(200);
-
-          // WORKING HERE
-          //expect(res.body.data).to.be.a('object');
-          //expect(res.body.data._id).eq(id);
-          //expect(res.body.data.similars).to.be.undefined;
-          
+          expect(res.body.data).to.be.a('object');
+          expect(res.body.data.accepted).to.be.an('array');
+          expect(res.body.data.accepted[0]).eq('spectre-test@email.com');
           done();
         });
-    });
+    }).timeout(5000);
 
     it('should find similars for a user', done => {
       let id = '888888888888888888888888';

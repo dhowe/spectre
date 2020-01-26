@@ -1,14 +1,18 @@
 import UserModel from './user-model';
+import Mailer from './mailer';
 import clfDate from 'clf-date';
 import multer from 'multer';
 import path from 'path';
+import dotenv from 'dotenv';
 
-/* call return a uniform object:
+/* all calls return a uniform object:
 {
   "status": code,
   "message": "a user-readable message",
   "data": "<payload object>"
 }*/
+
+dotenv.config();
 
 const PROFILE_PATH = process.env.NODE_ENV === 'production' ?
   //'/Library/WebServer/Documents/spectre/profiles/'
@@ -32,7 +36,20 @@ const message = async (req, res) => {
   // WORKING HERE
 
   //console.log('CONTROLLER.MESSAGE: stub sending message', req);
-  return sendResponse(res, 'sent');
+  const mailer = new Mailer({
+    host: process.env.SMTP_HOST,
+    port: process.env.SMTP_PORT,
+    auth: {
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASS
+    }
+  });
+
+  await mailer.sendMessage({}, (err, info) => {
+    if (err) console.error('[MAILER] ', err);
+    sendResponse(res, err ? err : info);
+  });
+
   // await UserModel.getAll(function(err, users) {
   //   if (err) return sendError(res, 'UserModel.getAll', err);
   //   sendResponse(res, users);
