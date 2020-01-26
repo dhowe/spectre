@@ -11,7 +11,7 @@ import bodyparser from 'body-parser';
 import basicAuth from 'express-basic-auth';
 import controller from './user-controller';
 import { dbUrl, apiUser, certs } from './config';
-import ProfileMaker from './profile-maker';
+//import ProfileMaker from './profile-maker';
 
 const base = '/api/';
 const port = process.env.PORT || 8083;
@@ -55,9 +55,7 @@ app.use(base, auth, routes);
 if (!prod) app.get('*', (req, res) => res.sendFile(client + '/build/index.html'));
 
 // watch for new profile images to process
-if (!test) {
-  new ProfileMaker().watch(prod ? process.env.WEB_ROOT + '/profiles' : client + '/public/profiles');
-}
+//if (!test) new ProfileMaker().watch(prod ? process.env.WEB_ROOT + '/profiles' : client + '/public/profiles');
 
 /////////////////////////// DbConnect ///////////////////////////////
 

@@ -72,10 +72,10 @@ describe('REST API', () => {
           //expect(res.body.data).to.be.a('object');
           //expect(res.body.data._id).eq(id);
           //expect(res.body.data.similars).to.be.undefined;
-          
+
           done();
         });
-    });
+    }).timeout(5000);
 
     it('should find similars for a user', done => {
       let id = '888888888888888888888888';
