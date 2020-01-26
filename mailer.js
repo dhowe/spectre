@@ -1,5 +1,5 @@
 import nodemailer from 'nodemailer';
-import { renderToStaticMarkup } from 'react-dom/server'
+//import { renderToStaticMarkup } from 'react-dom/server'
 
 const DEFAULT_SUBJ = 'Spectre knows about you';
 const DEFAULT_HTML = '<h3>Have the most fun you can in a dsytopia!</h3><p>Get your <b>Spectre</b> today!</p>';
