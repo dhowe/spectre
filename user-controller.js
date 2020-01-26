@@ -25,7 +25,7 @@ const NUM_SIMILARS = 6;
 
 const list = async (req, res) => {
 
-  await UserModel.getAll(function(err, users) {
+  await UserModel.getAll((err, users) => {
     if (err) return sendError(res, 'UserModel.getAll', err);
     sendResponse(res, users);
   });

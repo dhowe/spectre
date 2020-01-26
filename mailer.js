@@ -18,17 +18,17 @@ export default class Mailer {
     return doctype + renderToStaticMarkup(body);
   }
 
-/*  function default_1(config, emails) {
-      const { transport: transportConfig, defaults } = config;
-      const transport = nodemailer_1.createTransport(transportConfig, defaults);
-      return {
-          send(template, props, message) {
-              const { subject, body } = emails[template](props);
-              return transport.sendMail(Object.assign({ subject, html: renderBody(body) }, message));
-          },
-      };
-  }
-*/
+  /*  function default_1(config, emails) {
+        const { transport: transportConfig, defaults } = config;
+        const transport = nodemailer_1.createTransport(transportConfig, defaults);
+        return {
+            send(template, props, message) {
+                const { subject, body } = emails[template](props);
+                return transport.sendMail(Object.assign({ subject, html: renderBody(body) }, message));
+            },
+        };
+    }
+  */
   sendReactComp(template, props, message) {
     const { subject, body } = emails[template](props);
     return transport.sendMail(Object.assign({ subject, html: renderReactComp(body) }, message));
@@ -50,10 +50,8 @@ export default class Mailer {
       }
     });
 
-    console.log('message', message);
+    //console.log('message', message);
 
-    let x = this.transport.sendMail(message, cb);
-
-    console.log('done',x);
+    this.transport.sendMail(message, cb);
   }
 }

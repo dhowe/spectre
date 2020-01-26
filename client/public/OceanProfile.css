@@ -1,0 +1,100 @@
+.OceanProfile {
+	 background-color: #fff;
+	 color: #21c0fc;
+	 width: 100vw;
+	 position: fixed;
+}
+ .OceanProfile h6 {
+	 color: #21c0fc;
+	 font-size: 18px;
+	 text-align: left;
+	 margin-bottom: 10px;
+}
+ .OceanProfile h6 strong {
+	 color: #21c0fc;
+	 font-weight: bold;
+}
+ .OceanProfile .OceanIcons {
+	 margin-right: 40px;
+	 margin-left: 20px;
+	 height: 320px;
+}
+ .OceanProfile .OceanText {
+	 max-width: 500px;
+	 margin-right: 50px;
+}
+ .OceanProfile .OceanSliders {
+	 margin-left: auto;
+	 margin-right: auto;
+	 display: flex;
+}
+ .OceanProfile .OceanSliders .textSliderText {
+	 color: #21c0fc;
+	 width: 120px;
+	 text-align: center;
+	 height: auto;
+	 overflow: visible;
+}
+ .OceanProfile .OceanSliders .textSliderText p {
+	 color: #21c0fc;
+	 font-size: 16px;
+	 font-size: 12px;
+	 text-align: center;
+	 width: 100%;
+}
+ .OceanProfile .OceanSliders .textSliderText .iconText {
+	 width: 100%;
+	 text-align: center;
+	 margin-top: -90px;
+}
+ .OceanProfile .OceanSliders .textSliderText .sliderContainer {
+	 height: 200px;
+	 display: inline-flex;
+	 padding-top: 50px;
+}
+ .OceanProfile .OceanSliders .textSliderText .slider {
+	 transform: rotate(270deg);
+	 height: 5px;
+	 width: 92px;
+	 margin-right: 40px;
+}
+ .OceanProfile .OceanSliders .textSliderText div[class*="MuiSlider-track"] {
+	 background-color: #21c0fc;
+}
+ .OceanProfile .OceanSliders .textSliderText div[class*="MuiSlider-track"][class*="MuiSlider-trackBefore"] {
+	 border-top-left-radius: 0;
+	 border-bottom-left-radius: 0;
+}
+ .OceanProfile .OceanSliders .textSliderText div[class*="MuiSlider-track"][class*="MuiSlider-trackAfter"] {
+	 opacity: 0;
+	 border-top-right-radius: 0;
+	 border-bottom-right-radius: 0;
+}
+ .OceanProfile .OceanSliders .textSliderText button[class*="MuiButtonBase"] {
+	 width: 30px;
+	 height: 30px;
+	 background-color: #21c0fc;
+	 border: solid #21c0fc 3px;
+	 display: none;
+}
+ .OceanProfile .OceanSliders .textSliderText button[class*="MuiButtonBase"][class*="MuiSlider-activated"] {
+	 width: 30px;
+	 height: 30px;
+	 background-color: #21c0fc;
+	 border: solid #21c0fc 3px;
+	 box-shadow: none;
+}
+ .content .OceanProfile {
+	 margin-left: -100px;
+	 position: relative;
+}
+ .content .OceanProfile h6 {
+	 color: #21c0fc;
+	 font-size: 18px;
+	 text-align: left;
+	 margin-bottom: 10px;
+}
+ .content .OceanProfile h6 strong {
+	 color: #21c0fc;
+	 font-weight: bold;
+}
