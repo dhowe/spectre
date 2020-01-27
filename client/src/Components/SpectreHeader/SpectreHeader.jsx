@@ -31,8 +31,6 @@ class SpectreHeader extends React.Component {
     }
   }
 
-  // WORKING HERE ON 399 - needs css fix (or move to game dialog)
-
   render() {
     const { userName, userImage} = this.state;
 

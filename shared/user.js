@@ -74,7 +74,6 @@ export default class User {
     let lines = this._descriptionLines(template);
 
     lines.forEach((l, i) => {
-
       data.push({
         line: parser.parse(l),
         trait: traitNames[i],
@@ -270,7 +269,7 @@ export default class User {
 
   setBrands(brandData) {
     let traits = {};
-    predict(brandData).forEach(t => traits[t.trait] = t.score);
+    predict(brandData).forEach(b => traits[b.trait] = b.score);
     return this.setTraits(traits);
   }
 
@@ -381,10 +380,10 @@ export default class User {
     }
   }
 
-  predictInfluences() {
+  /*predictInfluences() {
     // TODO
     this.influences = ['Images that contain X and Y', 'Slogans that contain X and Y'];
-  }
+  }*/
 
   predictDescriptors() {
     this.descriptors = this.generateSentences(3);
@@ -394,8 +393,8 @@ export default class User {
     if (typeof traits === 'string') throw Error('expecting traits object');
 
     this.traits = traits;
-    this.predictInfluences();
-    this.predictDescriptors();
+    //this.predictInfluences();
+    //this.predictDescriptors();
 
     return this;
   }
@@ -537,11 +536,13 @@ User.schema = () => {
     adIssue: {
       type: 'string'
     },
-    adImage: {
-      type: 'string'
-    },
-    adSlogan: {
-      type: 'string'
+    targetAd: {
+      image: {
+        type: 'string'
+      },
+      slogan: {
+        type: 'string'
+      }
     },
     lastPageVisit: {
       time: { type: 'date' },
