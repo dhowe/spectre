@@ -86,7 +86,7 @@ export default class User {
 
     let sentences = [];
     let re = new RegExp(this.name, "g");
-    for (let i = 0, idx = 0; i < data.length; i++) {
+    for (let i = 0; i < data.length; i++) {
       let parts = this.splitSentences(data[i].line);
       let added = 0;
       parts.forEach((p, j) => {
@@ -116,7 +116,6 @@ export default class User {
     }
     return images;
   }
-
 
   computeTargetAdData() { // requires adIssue & target with traits
 
@@ -556,11 +555,13 @@ User.schema = () => {
       type: 'string',
       required: true
     },
-    dataChoices: { // TODO: should be arrays
+    dataChoices: { // arrays?
       consumer: { type: 'string' }, // comma-delimited
       home: { type: 'string' }, // comma-delimited
       political: { type: 'string' } // comma-delimited
     },
+    darkAdImage: 'string',
+    darkAdSlogan: 'string',
     loginType: {
       type: 'string',
       enum: ['twitter', 'google', 'facebook', 'email'],
