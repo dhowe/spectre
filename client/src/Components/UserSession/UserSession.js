@@ -4,13 +4,6 @@ import DotEnv from 'dotenv';
 import FormData from 'form-data';
 import DefaultUsers from './default-users';
 
-const AdIssues = ['remain', 'leave'];
-const Genders = ['male', 'female', 'other'];
-const Virtues = ['wealth', 'influence', 'truth', 'power'];
-const FemaleCelebs = ['Kardashian', 'Abramovic'];
-const MaleCelebs = ['Freeman', 'Duchamp', 'Mercury', 'Trump', 'Zuckerberg'];
-const Celebrities = FemaleCelebs.concat(MaleCelebs);
-
 // We store the current User in React context for easy access
 let UserSession = React.createContext({});
 
@@ -62,40 +55,46 @@ UserSession.clear = () => {
  * Repairs a user using sessionStorage and db if needed (async)
  */
 UserSession.ensure = async (user, props) => {
+  try {
+    // do we have an id, if not repair it
+    if (props.includes('_id') && typeof user._id === 'undefined') {
+      props = arrayRemove(props, '_id');
 
-  // do we have an id, if not repair it
-  if (props.includes('_id') && typeof user._id === 'undefined') {
-    props = arrayRemove(props, '_id');
+      // do we have an id in session
+      const sid = sessionStorage.getItem(UserSession.storageKey);
+      if (!sid) {
+        console.warn('[STUB] No user._id, creating new user');
+        fillMissingProperties(user,
+          ['login', 'name', 'gender', 'virtue', 'adIssue', 'traits']);
 
-    // do we have an id in session
-    const sid = sessionStorage.getItem(UserSession.storageKey);
-    if (!sid) {
-      console.warn('[STUB] No user._id, creating new user');
-      fillMissingProperties(user,
-        ['login', 'name', 'gender', 'virtue', 'adIssue', 'traits']);
-      await UserSession.create(user);
-      console.warn('[STUB] Setting user._id: ' + user._id);
+        await UserSession.create(user);
+        console.warn('[STUB] Setting user._id: ' + user._id);
+
+      }
+      else {
+        user._id = JSON.parse(sid);
+        console.warn('[SESS] Reloaded user._id: ' + user._id + ' doing lookup');
+        await UserSession.lookup(user);
+      }
     }
-    else {
-      user._id = JSON.parse(sid);
-      console.warn('[SESS] Reloaded user._id: ' + user._id + ' doing lookup');
-      await UserSession.lookup(user);
+
+    // should have user with id here, if not, then probably no server
+    if (!user || !user._id) {
+      user._id = -1;
+      console.warn('[STUB] Unable to set user._id, using ' + user._id);
     }
-  }
-  // should have user with id here, if not, then probably no server
-  if (!user || !user._id) {
-    user._id = -1;
-    console.warn('[STUB] Unable to set user._id, using ' + user._id);
-  }
 
-  if (props.includes('target') && !user.similars.length) {
-    user = await UserSession.similars(user);
-    console.warn('[STUB] Fetched similars:', user.toString());
+    if (props.includes('target') && !user.similars.length) {
+      user = await UserSession.similars(user);
+      console.warn('[STUB] Fetched similars:', user.toString());
+    }
+
+    let modified = fillMissingProperties(user, props);
+    if (modified) await UserSession.update(user);
   }
-
-  let modified = fillMissingProperties(user, props);
-  if (modified) await UserSession.update(user);
-
+  catch (e) {
+    handleError(e);
+  }
   return user;
 }
 
@@ -130,6 +129,7 @@ UserSession.create = async (user) => {
     return user;
   }
   catch (e) {
+    console.log('CAUGHT!!!!');
     handleError(e, route);
   }
 }
@@ -196,7 +196,7 @@ UserSession.similars = async (user) => {
   const { route, auth, cid, mode } = doConfig();
 
   if (UserSession.serverDisabled || user._id === -1) {
-    logServerError(route);
+    handleError('no user id', route);
     user.similars = defaultSimilars();
     return user;
   }
@@ -267,13 +267,19 @@ UserSession.randomCelebrities = () => {
 
 const Cons = "bcdfghjklmnprstvxz".split('');
 const Vows = "aeiou".split('');
+const AdIssues = ['remain', 'leave'];
+const Genders = ['male', 'female', 'other'];
+const Virtues = ['wealth', 'influence', 'truth', 'power'];
+const FemaleCelebs = ['Kardashian', 'Abramovic'];
+const MaleCelebs = ['Freeman', 'Duchamp', 'Mercury', 'Trump', 'Zuckerberg'];
+const Celebrities = FemaleCelebs.concat(MaleCelebs);
 
 /*
  * Attempts to stub any undefined properties specified in props
  * Returns true if the user is modified, else false
  */
 function fillMissingProperties(user, props) {
-
+  //console.log(props);
   const checkTargetAdData = (missing) => {
     if (user.adIssue && user.adIssue.length &&
       user.target && user.target._id.length) {
@@ -326,6 +332,8 @@ function fillMissingProperties(user, props) {
     }
   };
 
+  //console.log(missing);
+
   Object.keys(propStubber).forEach(p => {
     if (missing.includes(p)) {
       user[p] = propStubber[p]();
@@ -360,25 +368,28 @@ function assignJsonResp(user, json) {
   Object.assign(user, json.data);
   return user;
 }
+//
+// function logServerError(route) {
+//
+// }
 
-function logServerError(route) {
-  if (++UserSession.serverErrors >= 3) {
+function handleError(e, route) {
+  ++UserSession.serverErrors;
+
+  // else {
+  //   console.error("Unable to connect to server at "
+  //     + route + ' [' + UserSession.serverErrors + ']');
+  // }
+  // if (e.toString() === 'TypeError: Failed to fetch') {
+  //   return logServerError(route);
+  // }
+  console.error('[ERROR] UserSession('+UserSession.serverErrors+'):', route, e);
+  if (UserSession.serverErrors >= 3) {
     console.error("Disabling all server calls after ["
       + UserSession.serverErrors + '] errors');
     UserSession.serverDisabled = true;
   }
-  else {
-    console.error("Unable to connect to server at "
-      + route + ' [' + UserSession.serverErrors + ']');
-  }
-}
-
-function handleError(e, route) {
-  if (e.toString() === 'TypeError: Failed to fetch') {
-    return logServerError(route);
-  }
-  console.error('[ERROR] UserSession:', e);
-  if (process.env.NODE_ENV !== 'production') throw e;
+  //if (process.env.NODE_ENV !== 'production') throw e;
 }
 
 function doConfig() {

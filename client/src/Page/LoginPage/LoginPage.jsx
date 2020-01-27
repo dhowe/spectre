@@ -93,7 +93,7 @@ class LoginPage extends React.Component {
   // save user then start video
   saveUser = async (user) => {
     try {
-      await UserSession.create(user);
+      UserSession.create(user);
       console.log('[LOGIN] ' + user.toString());
     }
     catch (e) {

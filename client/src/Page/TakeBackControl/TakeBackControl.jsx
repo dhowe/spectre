@@ -44,12 +44,8 @@ class TakeBackControl extends React.Component {
           <p className="copy">Take back control?</p>
           <p className="copy">Delete your data from Spectre’s system?</p>
           <div className={ComponentsStyles.buttonWrapper}>
-
               <Button className={ComponentsStyles.button} variant="contained" color="primary" onClick={() => this.handleClick(true)}>Keep</Button>
-
-
               <Button className={ComponentsStyles.button} variant="contained" color="primary" onClick={() => this.handleClick(false)}>Delete</Button>
-
           </div>
         </div>
         <FooterLogo />

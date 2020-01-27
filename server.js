@@ -11,7 +11,9 @@ import bodyparser from 'body-parser';
 import basicAuth from 'express-basic-auth';
 import controller from './user-controller';
 import { dbUrl, apiUser, certs } from './config';
+
 import ProfileMaker from './profile-maker';
+import UserModel from './user-model';
 
 const base = '/api/';
 const port = process.env.PORT || 8083;
@@ -66,9 +68,10 @@ const dbstr = prod ? dbUrl : dbUrl + '-dev';
   try {
     await mongoose.connect(dbstr, opts);
     mongoose.connection.on('error', console.error);
-  } catch (error) {
+  } catch (e) {
     console.error('\n[DB] ' + e.name + '...');
-    console.error('[DB] Unable to connect to ' + dbstr + '\n')
+    console.error('[DB] Unable to connect to ' + dbstr + '\n');
+    UserModel.databaseDisabled = true;
   }
 })();
 
@@ -98,9 +101,3 @@ if (!server) {
 }
 
 export default server;
-
-
-
-
-
-//////////////////////////// Startup ////////////////////////////////

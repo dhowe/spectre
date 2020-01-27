@@ -25,6 +25,8 @@ const NUM_SIMILARS = 6;
 
 const list = async (req, res) => {
 
+  if (UserModel.databaseDisabled) return sendError(res, 'No db');
+
   await UserModel.getAll(function(err, users) {
     if (err) return sendError(res, 'UserModel.getAll', err);
     sendResponse(res, users);
@@ -58,6 +60,8 @@ const message = async (req, res) => {
 
 const current = async (req, res) => { // not used at present
 
+  if (UserModel.databaseDisabled) return sendError(res, 'No db');
+
   if (!req.params.hasOwnProperty('cid')) {
     return sendError(res, 'ClientId(cid) required');
   }
@@ -72,6 +76,8 @@ const current = async (req, res) => { // not used at present
 };
 
 const createBatch = async (req, res) => {
+
+  if (UserModel.databaseDisabled) return sendError(res, 'No db');
 
   //console.log('REQ',req);
   const users = req.body;
@@ -90,6 +96,8 @@ const createBatch = async (req, res) => {
 };
 
 const create = async (req, res) => {
+
+  if (UserModel.databaseDisabled) return sendError(res, 'No db');
 
   if (!(req.body.login && req.body.loginType)) return sendError(res,
     "UserModel with no login/loginType:" + JSON.stringify(req.body));
@@ -116,6 +124,8 @@ const create = async (req, res) => {
 
 const fetch = async (req, res) => {
 
+  if (UserModel.databaseDisabled) return sendError(res, 'No db');
+
   if (!req.params.hasOwnProperty('uid')) {
     return sendError(res, 'UserId required');
   }
@@ -128,6 +138,8 @@ const fetch = async (req, res) => {
 };
 
 const update = async (req, res) => {
+
+  if (UserModel.databaseDisabled) return sendError(res, 'No db');
 
   if (!req.params.hasOwnProperty('uid')) {
     return sendError(res, 'UserId required');
@@ -156,6 +168,8 @@ const update = async (req, res) => {
 
 const similars = async (req, res) => {
 
+  if (UserModel.databaseDisabled) return sendError(res, 'No db');
+
   if (!req.params.hasOwnProperty('uid')) {
     return sendError(res, 'UserId required');
   }
@@ -179,6 +193,9 @@ const similars = async (req, res) => {
 };
 
 const remove = async (req, res) => {
+
+  if (UserModel.databaseDisabled) return sendError(res, 'No db');
+
   await UserModel.remove({ _id: req.params.uid }, (err) => {
     if (err) return sendError(res, 'Unable to delete user #' + req.params.uid, err);
     sendResponse(res, req.params.uid);
@@ -186,6 +203,8 @@ const remove = async (req, res) => {
 };
 
 const photo = async (req, res) => {
+
+  if (UserModel.databaseDisabled) return sendError(res, 'No db');
 
   if (typeof req.params.uid === 'undefined' ||
     req.params.uid === 'undefined') {
@@ -221,6 +240,8 @@ const photo = async (req, res) => {
 const photoset = async (req, res) => {
 
   //console.log("Routes.photoSet");
+
+  if (UserModel.databaseDisabled) return sendError(res, 'No db');
 
   if (typeof req.params.uid === 'undefined') {
     res.status(400).send({ error: 'no uid sent' });
