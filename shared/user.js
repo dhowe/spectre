@@ -536,6 +536,10 @@ User.schema = () => {
     adIssue: {
       type: 'string'
     },
+    keepData: {
+      type: 'boolean',
+      default: true
+    },
     targetAd: {
       image: {
         type: 'string'

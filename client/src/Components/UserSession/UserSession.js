@@ -165,7 +165,7 @@ UserSession.update = async (user) => {
 
   if (UserSession.serverDisabled) return;
 
-  if (!user || !user._id) throw Error('Invalid arg', user);
+  if (!user || !user._id) throw Error('Invalid user', user);
 
   const { route, auth, cid, mode } = doConfig();
   const endpoint = route + user._id;
