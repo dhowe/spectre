@@ -30,7 +30,7 @@ export default class User {
     if (u.login) s += ', ' + u.login;
     if (u.gender) s += ', ' + u.gender;
     if (u.virtue) s += ', ' + u.virtue;
-    if (u.target) s += ', target='+u.target.name;
+    if (u.target) s += ', target=' + u.target.name;
     if (u.descriptors && u.descriptors.length) {
       s += ', ' + u.descriptors.length + ' descriptors';
     }
@@ -258,7 +258,7 @@ export default class User {
     let idx = Math.floor(Math.random() * ots.length);
     //console.log(this.adIssue, this);
     return User.adInfluences
-      [this.adIssue][(Math.random() < .5 ? 'high' : 'low')][ots[idx]];
+    [this.adIssue][(Math.random() < .5 ? 'high' : 'low')][ots[idx]];
   }
 
   targetImageUrl() {
@@ -537,6 +537,12 @@ User.schema = () => {
     adIssue: {
       type: 'string'
     },
+    adImage: {
+      type: 'string'
+    },
+    adSlogan: {
+      type: 'string'
+    },
     lastPageVisit: {
       time: { type: 'date' },
       page: { type: 'string' }
@@ -560,8 +566,6 @@ User.schema = () => {
       home: { type: 'string' }, // comma-delimited
       political: { type: 'string' } // comma-delimited
     },
-    darkAdImage: 'string',
-    darkAdSlogan: 'string',
     loginType: {
       type: 'string',
       enum: ['twitter', 'google', 'facebook', 'email'],
