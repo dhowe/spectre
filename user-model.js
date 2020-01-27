@@ -102,5 +102,6 @@ function toMongoose(obj) {
 };
 
 const UserModel = mongoose.model('user', UserSchema);
+UserModel.databaseDisabled = false;
 
 export default UserModel;

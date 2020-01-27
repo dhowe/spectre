@@ -3,13 +3,8 @@ import PropTypes from "prop-types";
 import Typography from "@material-ui/core/Typography/Typography";
 import Grid from "@material-ui/core/Grid/Grid";
 import Slider from "@material-ui/core/Slider";
-import { ReactComponent as Openness } from "../../Icons/openness.svg";
-import { ReactComponent as Conscientiousness } from "../../Icons/conscientiousness.svg";
-import { ReactComponent as Extroversion } from "../../Icons/extroversion.svg";
-import { ReactComponent as Agreeableness } from "../../Icons/agreeableness.svg";
-import { ReactComponent as Neuroticism } from "../../Icons/neuroticism.svg";
 
-import "./OceanProfile.scss";
+import "./OceanProfile.css";
 
 function OceanProfile(props) {
   let traits = props.subject.traits;
@@ -30,8 +25,8 @@ function OceanProfile(props) {
                 </div>
             </div>
             <div className="iconText">
-              
-              <Openness/>
+
+              <img src="/imgs/openness.svg" alt="openness" />
               <Typography>Openness</Typography>
             </div>
           </div>
@@ -45,7 +40,7 @@ function OceanProfile(props) {
                 </div>
             </div>
             <div className="iconText">
-              <Conscientiousness/>
+            <img src="/imgs/conscientiousness.svg" alt="conscientiousness" />
               <Typography>Conscientiousness</Typography>
             </div>
           </div>
@@ -59,7 +54,7 @@ function OceanProfile(props) {
                 </div>
             </div>
             <div className="iconText">
-              <Extroversion/>
+            <img src="/imgs/extroversion.svg" alt="extraversion" />
               <Typography>Extroversion</Typography>
             </div>
           </div>
@@ -73,7 +68,7 @@ function OceanProfile(props) {
                 </div>
             </div>
             <div className="iconText">
-              <Agreeableness/>
+            <img src="/imgs/agreeableness.svg" alt="agreeableness" />
               <Typography>Agreeableness</Typography>
             </div>
           </div>
@@ -87,7 +82,7 @@ function OceanProfile(props) {
                 </div>
             </div>
             <div className="iconText">
-              <Neuroticism/>
+            <img src="/imgs/neuroticism.svg" alt="neuroticism" />
               <Typography>Neuroticism</Typography>
             </div>
           </div>

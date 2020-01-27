@@ -16,15 +16,12 @@ import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
 
 const styles = {
-
 };
 
 class InfluenceACelebrity extends React.Component {
+
   constructor(props) {
     super(props, '/OCEAN-reveal');
-    this.play = this.play.bind(this);
-    this.stop = this.stop.bind(this);
-    this.save = this.save.bind(this);
     this.state = {
       virtue: '',
       video: null,
@@ -39,18 +36,21 @@ class InfluenceACelebrity extends React.Component {
     this.setState({ virtue: user.virtue });
   }
 
-  save() {
-    //this.context.celebrity = this.state.celebrity;
-    // Send data somewhere
-    this.next();
+  save = () => {
+    const user = this.context;
+    if (this.state.celebrity) {
+      user.celebrity = this.state.celebrity;
+    }
+    if (user.celebrity) UserSession.update(user); // no await
+    this.props.history.push('/OCEAN-reveal');
   }
 
-  stop() {
+  stop = () => {
     this.setState({ video: null });
     this.setState({ idleCheckerDone: false });
   }
 
-  play(name, virtue) {
+  play = (name, virtue) => {
     const user = this.context;
     user.celebrity = name;
     this.setState({
@@ -58,7 +58,6 @@ class InfluenceACelebrity extends React.Component {
       video: `/video/${virtue}_${name}.mp4`,
     });
     this.setState({ idleCheckerDone: true });
-    UserSession.update(user);
   }
 
   render() {
@@ -97,8 +96,8 @@ class InfluenceACelebrity extends React.Component {
                     />
                   ))}
               </AvatarCircle>
-                      </div>
-                          <div className="split-right">
+            </div>
+            <div className="split-right">
               <IconButton onClick={this.save} icon="next" text="Next" />
             </div>
           </div>
