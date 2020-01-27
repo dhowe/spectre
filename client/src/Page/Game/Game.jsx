@@ -340,7 +340,7 @@ class Game extends React.Component {
 
   async componentComplete() { // redirect called from p5
     const user = await UserSession.ensure(this.context,
-      ['_id', 'login', 'gender', 'name', 'traits', 'descriptors', 'influences']);
+      ['_id', 'login', 'gender', 'name', 'traits' ]);
     this.props.history.push("/thank-you");
     UserSession.update(user);
   }
