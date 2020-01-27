@@ -275,7 +275,7 @@ function sendResponse(res, data) {
 
 function sendError(res, msg, e, code) {
   code = code || 400;
-  msg = msg += ' [' + e ? e : '' + ']';
+  msg = msg + (e ? ' [' + e + ']' : '');
   console.log('[' + clfDate() + '] ::* ERROR', msg, code);
   res.status(code).send({ status: code, data: null, message: msg });
 }

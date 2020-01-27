@@ -65,15 +65,23 @@ const opts = { useNewUrlParser: true, useFindAndModify: false };
 const dbstr = prod ? dbUrl : dbUrl + '-dev';
 
 (async () => {
+
   try {
     await mongoose.connect(dbstr, opts);
     mongoose.connection.on('error', console.error);
+    UserModel.databaseDisabled = false;
   } catch (e) {
     console.error('\n[DB] ' + e.name + '...');
     console.error('[DB] Unable to connect to ' + dbstr + '\n');
     UserModel.databaseDisabled = true;
   }
 })();
+
+// while (!dbConnect()) {
+//   setInterval(() => {
+//     console.log('[WARN] Retrying Db @ '+(+new Date()));
+//   }, 5000);
+// }
 
 let server;
 
@@ -99,5 +107,7 @@ if (!server) {
       ' [' + dbstr.substring(dbstr.lastIndexOf('/') + 1) + ']\n');
   });
 }
+
+
 
 export default server;

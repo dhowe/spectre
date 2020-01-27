@@ -93,7 +93,7 @@ UserSession.ensure = async (user, props) => {
     if (modified) await UserSession.update(user);
   }
   catch (e) {
-    handleError(e);
+    handleError(e, 'UserSession.ensure');
   }
   return user;
 }
@@ -129,7 +129,6 @@ UserSession.create = async (user) => {
     return user;
   }
   catch (e) {
-    console.log('CAUGHT!!!!');
     handleError(e, route);
   }
 }
@@ -368,24 +367,12 @@ function assignJsonResp(user, json) {
   Object.assign(user, json.data);
   return user;
 }
-//
-// function logServerError(route) {
-//
-// }
 
 function handleError(e, route) {
-  ++UserSession.serverErrors;
-
-  // else {
-  //   console.error("Unable to connect to server at "
-  //     + route + ' [' + UserSession.serverErrors + ']');
-  // }
-  // if (e.toString() === 'TypeError: Failed to fetch') {
-  //   return logServerError(route);
-  // }
-  console.error('[ERROR] UserSession('+UserSession.serverErrors+'):', route, e);
+  UserSession.serverErrors++;
+  console.error('[ERROR] UserSession(' + UserSession.serverErrors + '): ' + route + '\n' + e);
   if (UserSession.serverErrors >= 3) {
-    console.error("Disabling all server calls after ["
+    console.error("Disabling server calls after ["
       + UserSession.serverErrors + '] errors');
     UserSession.serverDisabled = true;
   }
