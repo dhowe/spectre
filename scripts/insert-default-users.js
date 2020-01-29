@@ -6,14 +6,16 @@ const confirm = require('inquirer-confirm');
 
 let { route, auth, mode } = doConfig();
 
-console.log('[SCRIPT] ' + users.length + ' users loaded', mode);
+if (typeof auth !== 'undefined') {
+  console.log('[SCRIPT] ' + users.length + ' users loaded, Db is ' + mode);
 
-if (mode === 'PROD') {
-  confirm({ question: 'Database is production. Confirm?' })
-    .then(insertBatch, () => { });
-}
-else {
-  insertBatch();
+  if (mode === 'PROD') {
+    confirm({ question: 'Database is production. Confirm?' })
+      .then(insertBatch, () => { });
+  }
+  else {
+    insertBatch();
+  }
 }
 
 function insertBatch() {
@@ -36,22 +38,37 @@ function insertBatch() {
 
 function doConfig() {
 
-  // get auth from .env or heroku configs
   dotEnv.config({ path: '../client/.env' });
 
+  const port = 8083;
   const env = process.env;
-  const route = '/api/users/';
+  const path = '/api/users/';
+  const host = typeof window !== 'undefined'
+    ? window.location.host.replace(/:[0-9]{4}$/, '') : 'localhost';
   const mode = env.NODE_ENV !== 'production' ? 'DEV' : 'PROD';
 
+  // use https if we're in production mode
+  const proto = env.NODE_ENV !== 'production' ? 'http' : 'https';
+
+  if (!env.REACT_APP_API_USER || !env.REACT_APP_API_SECRET) {
+    console.error('\n[ERROR] Running client without authentication; Server/DB'
+      + ' will not be available. Are you missing a .env file ?');
+    return {};
+  }
+
   const cid = env.REACT_APP_CLIENT_ID || -1;
-  const host = env.REACT_APP_API_HOST || 'http://localhost:8083';
+
+  // Here we construct server host from window.location,
+  // assuming server/db is on the same host as the web-app)
+  const route = proto + '://' + host + ':' + port + path;
+
+  //const host = env.REACT_APP_API_HOST || 'http://localhost:8083';
   const auth = env.REACT_APP_API_USER + ':' + env.REACT_APP_API_SECRET;
 
   if (!auth || !auth.length) console.error("Auth required!");
-
-  return { auth: auth, route: host + route, clientId: cid, mode: mode };
+  //console.log('UserSession.route: '+route);
+  return { auth: auth, route: route, clientId: cid, mode: mode };
 }
-
 
 function handleResponse(res) {
   return res.json().then(json =>
