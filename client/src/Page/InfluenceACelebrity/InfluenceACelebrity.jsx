@@ -90,7 +90,8 @@ class InfluenceACelebrity extends React.Component {
                   .map((name, i) => (
                     <AvatarComponent
                       active={name === celebrity}
-                      key={AvatarComponent.generateKey(i)}
+                      //key={AvatarComponent.generateKey(i)}
+                      key={i}
                       handleClick={() => this.play(name, virtue)}
                       target={{ name, image: `/imgs/${name}.png` }}
                     />

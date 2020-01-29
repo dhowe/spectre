@@ -28,9 +28,10 @@ const styles = {
 const defaultImage = UserSession.profileDir + 'default.jpg';
 
 class AvatarComponent extends React.Component {
-  static generateKey(index) {
-    return (7 * index); // why?
-  }
+  
+  // static generateKey(index) {
+  //   return (7 * index); // why?
+  // }
 
   constructor(props) {
     super(props);
