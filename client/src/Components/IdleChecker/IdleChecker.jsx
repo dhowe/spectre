@@ -10,7 +10,7 @@ class IdleChecker extends React.Component {
 
     this.state = {
       idleTimer: 0,
-      resetTimer: 6, // dialog countdown
+      resetTimer: 10, // dialog countdown
       idleTime: 15, // time before dialog
       isIdle: false,
       modalOpen: false
