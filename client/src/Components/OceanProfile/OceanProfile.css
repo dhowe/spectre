@@ -55,7 +55,6 @@
   transform: rotate(270deg);
   height: 92px;
   width: 92px;
-  margin-right: -6px;
   padding-top:20px;
 }
 .OceanProfile .OceanSliders .textSliderText div[class*="MuiSlider-track"] {
