@@ -11,10 +11,10 @@
 Button
 */
 .blueBtn span:first-child {
-  border: solid 3px var(--blue);
+  border: solid 3px #21c0fc;
   border-radius: 50px;
   padding: 0 30px;
-  color: var(--blue);
+  color: #21c0fc;
   width: auto;
 }
 
