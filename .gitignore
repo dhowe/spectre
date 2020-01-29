@@ -1,5 +1,6 @@
 **/node_modules
 auto_generated*
+spectre.log
 .env*
 misc
 cert

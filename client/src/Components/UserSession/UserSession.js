@@ -401,8 +401,8 @@ function doConfig() {
   const proto = env.NODE_ENV !== 'production' ? 'http' : 'https';
 
   if (!env.REACT_APP_API_USER || !env.REACT_APP_API_SECRET) {
-    console.error('Running client without authentication; Server/DB'
-      + ' will not be avaiable. Are you missing a .env file ? ');
+    console.error('\nRunning client without authentication; Server/DB'
+      + ' will not be available. Are you missing a .env file ?\n');
     UserSession.serverDisabled = true;
   }
 
