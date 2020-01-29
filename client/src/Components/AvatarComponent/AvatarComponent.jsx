@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import UserSession from '../../Components/UserSession/UserSession';
 import PropTypes from 'prop-types';
 
-import './AvatarComponent.scss';
+import './AvatarComponent.css';
 
 const styles = {
   targeted: {
@@ -28,7 +28,7 @@ const styles = {
 const defaultImage = UserSession.profileDir + 'default.jpg';
 
 class AvatarComponent extends React.Component {
-  
+
   // static generateKey(index) {
   //   return (7 * index); // why?
   // }

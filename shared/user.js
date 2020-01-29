@@ -259,7 +259,7 @@ export default class User {
     [this.adIssue][(Math.random() < .5 ? 'high' : 'low')][ots[idx]];
   }
 
-  targetImageUrl() {
+  targetImageUrl(mode) {
     let tid = (typeof this.target && typeof this.target._id
       !== 'undefined' && this.target._id.length)
       ? this.target._id : 'default';
@@ -479,8 +479,8 @@ export default class User {
   }
 };
 
-User.profileDir = process.env.PUBLIC_URL + '/profiles/';
-User.imageDir = process.env.PUBLIC_URL + '/imgs/';
+User.profileDir = (process.env.PUBLIC_URL || '') + '/profiles/';
+User.imageDir = (process.env.PUBLIC_URL || '') + '/imgs/';
 
 /**
  * MongoDB database schema for the application
