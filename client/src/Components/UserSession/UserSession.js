@@ -17,6 +17,32 @@ UserSession.serverErrors = 0;
 
 /////////////////////////// API functions /////////////////////////////
 
+// Create a new database record: /login only
+UserSession.create = async (user) => {
+
+  if (UserSession.serverDisabled) return;
+
+  const { route, auth, cid } = doConfig();
+  if (user.clientId < 0) user.clientId = cid;
+
+  //console.log('[POST] ' + mode + '.create: ' + route);
+  const [json, e] = await safeFetch(route, {
+    method: "post",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": 'Basic ' + btoa(auth)
+    },
+    body: toNetworkString(user)
+  });
+
+  if (e) return handleError(e, route, 'create');
+
+  UserSession.useBrowserStorage && sessionStorage.setItem
+    (UserSession.storageKey, JSON.stringify(json._id));
+
+  return json;
+}
+
 /*
  * Repairs a user (if needed) and returns it
  */
@@ -30,15 +56,15 @@ UserSession.sendMail = async (uid, email) => {
 
   console.log('[GET] ' + mode + '.sendMail: ' + endpoint);
 
-  let response = await fetch(endpoint, {
+  const [user, e] = await safeFetch(endpoint, {
     method: "get",
     headers: {
       "Content-Type": "application/json",
       "Authorization": 'Basic ' + btoa(auth)
     },
-  })
-
-  return await response.json();
+  });
+  if (e) return handleError(e, route, 'sendMail');
+  return user;
 }
 
 /*
@@ -93,7 +119,7 @@ UserSession.ensure = async (user, props) => {
     if (modified) await UserSession.update(user);
   }
   catch (e) {
-    handleError(e, '', 'UserSession.ensure');
+    handleError(e, '', 'ensure');
   }
   return user;
 }
@@ -104,33 +130,6 @@ UserSession.ensure = async (user, props) => {
 UserSession.validate = (user, props) => {
   fillMissingProperties(user, props);
   return user;
-}
-
-// Create a new database record: /login only
-UserSession.create = async (user) => {
-
-  if (UserSession.serverDisabled) return;
-
-  const { route, auth, cid } = doConfig();
-  if (user.clientId < 0) user.clientId = cid;
-  try {
-    //console.log('[POST] ' + mode + '.create: ' + route);
-    const response = await fetch(route, {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": 'Basic ' + btoa(auth)
-      },
-      body: toNetworkString(user)
-    })
-    assignJsonResp(user, await response.json());
-    UserSession.useBrowserStorage && sessionStorage.setItem
-      (UserSession.storageKey, JSON.stringify(user._id));
-    return user;
-  }
-  catch (e) {
-    handleError(e, route, 'UserSession.create');
-  }
 }
 
 /*
@@ -146,17 +145,18 @@ UserSession.lookup = async (user) => {
   const endpoint = route + user._id;
   try {
     console.log('[GET] ' + mode + '.lookup: ' + endpoint);
-    let response = await fetch(endpoint, {
+    const [json, e] = await safeFetch(endpoint, {
       method: "get",
       headers: {
         "Content-Type": "application/json",
         "Authorization": 'Basic ' + btoa(auth)
       },
     })
-    return assignJsonResp(user, await response.json());
+    if (e) return handleError(e, route, 'lookup');
+    return Object.assign(user, json);
   }
   catch (e) {
-    handleError(e, endpoint, 'UserSession.lookup');
+    handleError(e, endpoint, 'lookup');
   }
 }
 
@@ -173,7 +173,7 @@ UserSession.update = async (user) => {
 
   try {
     console.log('[PUT] ' + mode + '.update: ' + endpoint);
-    let response = await fetch(endpoint, {
+    const [json, e] = await safeFetch(endpoint, {
       method: "put",
       headers: {
         "Content-Type": "application/json",
@@ -181,10 +181,11 @@ UserSession.update = async (user) => {
       },
       body: toNetworkString(user)
     })
-    return assignJsonResp(user, await response.json());
+    if (e) return handleError(e, route, 'update');
+    return Object.assign(user, json);
   }
   catch (e) {
-    handleError(e, endpoint, 'UserSession.update');
+    handleError(e, endpoint, 'update');
   }
 }
 
@@ -207,20 +208,19 @@ UserSession.similars = async (user) => {
   if (user.clientId < 0) user.clientId = cid;
   try {
     console.log('[GET] ' + mode + '.similars: ' + endpoint);
-    let response = await fetch(endpoint, {
+    const [json, e] = await safeFetch(endpoint, {
       method: "get",
       headers: {
         "Content-Type": "application/json",
         "Authorization": 'Basic ' + btoa(auth)
       },
     });
-    const json = await response.json();
-    if (json.status !== 200) throw Error(JSON.stringify(json));
-    user.similars = json.data;
+    if (e) return handleError(e, route, 'similars');
+    user.similars = json;
     return user;
   }
   catch (e) {
-    handleError(e, endpoint, 'UserSession.similars');
+    handleError(e, endpoint, 'similars');
   }
 }
 
@@ -238,12 +238,13 @@ UserSession.postImage = async (user, image) => { // TODO: test
   const endpoint = route + 'photo/' + user._id;
   try {
     console.log('[POST] ' + mode + '.postImage: ' + endpoint);
-    let response = await fetch(endpoint, {
+    const [json, e] = await safeFetch(endpoint, {
       method: "post",
       headers: { "Authorization": 'Basic ' + btoa(auth) },
       body: fdata // JSON.stringfy(fdata) ??
     })
-    return response.json(); // what to do here?
+    if (e) return handleError(e, route, 'postImage');
+    return json; // what to do here?
   }
   catch (e) {
     handleError(e, endpoint, 'postImage');
@@ -362,30 +363,6 @@ function toNetworkString(user) {
   return JSON.stringify(safe);
 }
 
-function assignJsonResp(user, json) {
-  if (json.status !== 200) throw Error(JSON.stringify(json));
-  Object.assign(user, json.data);
-  return user;
-}
-
-const handle = (promise) => {
-  return promise
-    .then(data => ([data, undefined]))
-    .catch(error => Promise.resolve([undefined, error]));
-}
-
-function handleError(e, route, func) {
-  UserSession.serverErrors++;
-  console.error('[ERROR] UserSession(' + UserSession.serverErrors
-    + '): ' + func + '::' + route + '\n' + e);
-  if (UserSession.serverErrors >= 3) {
-    console.error("Disabling server calls after ["
-      + UserSession.serverErrors + '] errors');
-    UserSession.serverDisabled = true;
-  }
-  //if (process.env.NODE_ENV !== 'production') throw e;
-}
-
 function doConfig() {
 
   // get auth from .env or heroku configs
@@ -416,7 +393,7 @@ function doConfig() {
   const auth = env.REACT_APP_API_USER + ':' + env.REACT_APP_API_SECRET;
 
   if (!auth || !auth.length) console.error("Auth required!");
-  //console.log('UserSession.route: '+route);
+  //console.log('route: '+route);
   return { auth: auth, route: route, clientId: cid, mode: mode };
 }
 
@@ -467,6 +444,60 @@ function shuffle(arr) {
     newArray[p] = t;
   }
   return newArray;
+}
+
+/*
+async function assignJsonResp(user, json) {
+  if (!json) throw Error('Null json in assignJsonResp:' + user);
+  if (json.status !== 200) throw Error(JSON.stringify(json));
+  Object.assign(user, json.data);
+  return user;
+}
+
+
+async function safeJson(user, res, route, func) {
+  let [json, e] = handle(res.json());
+  if (e || !json) return handleError(e, route, func);
+  return assignJsonResp(user, json);
+}
+
+function handle(promise) {
+  return promise
+    .then(data => ([data, undefined]))
+    .catch(error => Promise.resolve([undefined, error]));
+}
+*/
+
+async function safeFetch() {
+  return fetch(...arguments)
+    .then(resp => {
+      //console.log('safeFetch1.resp',resp);
+      return resp ? resp.json() :
+        Promise.resolve([undefined, 'no-response'])
+    })
+    .then(json => {
+      //console.log('safeFetch2.json',json);
+      if (!json) return Promise.resolve([undefined, 'no-json-data'])
+      if (json.status !== 200) {
+        return Promise.resolve([undefined, json.status + '/' + (json.message || 'no-message')])
+      }
+      return [json.data, undefined];
+    })
+    .catch(error => Promise.resolve([undefined, error]));
+}
+
+function handleError(e, route, func) {
+  UserSession.serverErrors++;
+  route = route || 'unknown-route';
+  func = func || 'unknown-function';
+  console.error('[ERROR] UserSession(' + UserSession.serverErrors
+    + ') :: ' + func + ' -> ' + route + '\n' + e);
+  if (UserSession.serverErrors >= 3) {
+    console.error("Disabling server calls after ["
+      + UserSession.serverErrors + '] errors');
+    UserSession.serverDisabled = true;
+  }
+  //if (process.env.NODE_ENV !== 'production') throw e;
 }
 
 export default UserSession;

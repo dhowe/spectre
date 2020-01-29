@@ -24,6 +24,7 @@ const styles = {
     color: '#378685',
   },
 };
+
 const defaultImage = UserSession.profileDir + 'default.jpg';
 
 class AvatarComponent extends React.Component {
