@@ -25,8 +25,7 @@ export default class User {
 
   toString() {
     let u = this;
-    let s = u._id;
-    if (u.name) s += ', ' + u.name;
+    let s = u._id ? u._id+ ', ' + u.name : u.name;
     if (u.login) s += ', ' + u.login;
     if (u.gender) s += ', ' + u.gender;
     if (u.virtue) s += ', ' + u.virtue;
