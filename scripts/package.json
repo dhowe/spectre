@@ -11,5 +11,9 @@
   "devDependencies": {
     "btoa": "^1.2.1",
     "node-fetch": "^2.6.0"
+  },
+  "dependencies": {
+    "inquirer-confirm": "^2.0.7",
+    "prompt-confirm": "^2.0.4"
   }
 }
