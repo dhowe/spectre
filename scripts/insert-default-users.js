@@ -1,45 +1,43 @@
 const fetch = require('node-fetch');
-const DotEnv = require('dotenv');
+const dotEnv = require('dotenv');
 const btoa = require('btoa');
+const users = require('./default-users');
+const confirm = require('inquirer-confirm');
 
-fetch('http://localhost/spectre-pub/default-users.json')
-  .then(res => res.json())
-  .then(users => {
+let { route, auth, mode } = doConfig();
 
-    console.log('[SCRIPT] ' + users.length + ' users loaded');
+console.log('[SCRIPT] ' + users.length + ' users loaded', mode);
 
-    let { route, auth, mode } = doConfig();
+if (mode === 'PROD') {
+  confirm({ question: 'Database is production. Confirm?' })
+    .then(insertBatch, () => { });
+}
+else {
+  insertBatch();
+}
 
-    route += 'batch';
-    console.log('[POST] ' + mode + '.createBatch: ' + route);
+function insertBatch() {
 
-    let onSuccess = inserts => {
+  route += 'batch';
+  console.log('[POST] ' + mode + '.createBatch: ' + route);
 
-      console.log('[RESULT] Inserted ' + inserts.length + ' records')
-
-    }
-    let onError = e => { console.error('[ERROR] ' + e.status + '/' + e.statusText + ': ' + e.error.errmsg) };
-
-    fetch(route, {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": 'Basic ' + btoa(auth)
-      },
-      body: JSON.stringify(users)
-    })
-      .then(handleResponse)
-      .then(onSuccess)
-      .catch(onError);
-
-  }).catch(e => {
-    console.error('[ERROR]', e);
-  });
+  fetch(route, {
+    method: "post",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": 'Basic ' + btoa(auth)
+    },
+    body: JSON.stringify(users)
+  })
+    .then(handleResponse)
+    .then(data => console.log('[RESULT] Inserted ' + data.length + ' records'))
+    .catch(e => console.error('[ERROR] ' + e.status + '/' + e.message));
+}
 
 function doConfig() {
 
   // get auth from .env or heroku configs
-  DotEnv.config({ path: '../client/.env' });
+  dotEnv.config({ path: '../client/.env' });
 
   const env = process.env;
   const route = '/api/users/';
@@ -56,15 +54,6 @@ function doConfig() {
 
 
 function handleResponse(res) {
-  return res.json().then((json) => {
-    if (!res.ok) {
-      //console.log("JSON", json);
-      const error = Object.assign({}, json, {
-        status: res.status,
-        statusText: res.statusText,
-      });
-      return Promise.reject(error);
-    }
-    return json;
-  });
+  return res.json().then(json =>
+    res.status !== 200 ? Promise.reject(json) : json.data);
 }

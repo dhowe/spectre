@@ -70,7 +70,6 @@
     "chai-http": "^4.3.0",
     "concurrently": "^5.0.2",
     "mocha": "^6.1.4",
-    "node-fetch": "^2.6.0",
     "nodemon": "^2.0.2",
     "rimraf": "^3.0.0"
   }
