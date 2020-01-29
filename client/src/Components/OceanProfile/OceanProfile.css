@@ -50,13 +50,13 @@
 .OceanProfile .OceanSliders .textSliderText .sliderContainer {
   height: 200px;
   display: inline-flex;
-  padding-top: 50px;
 }
 .OceanProfile .OceanSliders .textSliderText .slider {
   transform: rotate(270deg);
-  height: 5px;
+  height: 92px;
   width: 92px;
   margin-right: -6px;
+  padding-top:20px;
 }
 .OceanProfile .OceanSliders .textSliderText div[class*="MuiSlider-track"] {
   background-color: #21c0fc;

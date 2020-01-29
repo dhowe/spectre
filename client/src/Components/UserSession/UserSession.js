@@ -93,7 +93,7 @@ UserSession.ensure = async (user, props) => {
     if (modified) await UserSession.update(user);
   }
   catch (e) {
-    handleError(e, 'UserSession.ensure');
+    handleError(e, '', 'UserSession.ensure');
   }
   return user;
 }
@@ -129,7 +129,7 @@ UserSession.create = async (user) => {
     return user;
   }
   catch (e) {
-    handleError(e, route);
+    handleError(e, route, 'UserSession.create');
   }
 }
 
@@ -156,7 +156,7 @@ UserSession.lookup = async (user) => {
     return assignJsonResp(user, await response.json());
   }
   catch (e) {
-    handleError(e, endpoint);
+    handleError(e, endpoint, 'UserSession.lookup');
   }
 }
 
@@ -184,7 +184,7 @@ UserSession.update = async (user) => {
     return assignJsonResp(user, await response.json());
   }
   catch (e) {
-    handleError(e, endpoint);
+    handleError(e, endpoint, 'UserSession.update');
   }
 }
 
@@ -220,7 +220,7 @@ UserSession.similars = async (user) => {
     return user;
   }
   catch (e) {
-    handleError(e, endpoint);
+    handleError(e, endpoint, 'UserSession.similars');
   }
 }
 
@@ -246,7 +246,7 @@ UserSession.postImage = async (user, image) => { // TODO: test
     return response.json(); // what to do here?
   }
   catch (e) {
-    handleError(e, endpoint);
+    handleError(e, endpoint, 'postImage');
   }
 }
 
@@ -368,9 +368,16 @@ function assignJsonResp(user, json) {
   return user;
 }
 
-function handleError(e, route) {
+const handle = (promise) => {
+  return promise
+    .then(data => ([data, undefined]))
+    .catch(error => Promise.resolve([undefined, error]));
+}
+
+function handleError(e, route, func) {
   UserSession.serverErrors++;
-  console.error('[ERROR] UserSession(' + UserSession.serverErrors + '): ' + route + '\n' + e);
+  console.error('[ERROR] UserSession(' + UserSession.serverErrors
+    + '): ' + func + '::' + route + '\n' + e);
   if (UserSession.serverErrors >= 3) {
     console.error("Disabling server calls after ["
       + UserSession.serverErrors + '] errors');
