@@ -44,7 +44,7 @@ function doConfig() {
   const env = process.env;
   const path = '/api/users/';
   const host = typeof window !== 'undefined'
-    ? window.location.host.replace(/:[0-9]{4}$/, '') : 'localhost';
+    ? window.location.host.replace(/:[0-9]{4}$/, '') : 'spectreknows.me';
   const mode = env.NODE_ENV !== 'production' ? 'DEV' : 'PROD';
 
   // use https if we're in production mode
