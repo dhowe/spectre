@@ -1,6 +1,5 @@
 import chai_http from 'chai-http';
 import server from '../../server';
-//import fetch from 'node-fetch';
 import dotEnv from 'dotenv';
 import chai from 'chai';
 
@@ -58,6 +57,22 @@ describe('REST API', () => {
           done();
         });
     });
+
+    it('should send mail to single user', done => {
+return; // tmp
+      let id = '888888888888888888888888';
+      chai.request(host)
+        .get('/api/users/message/' + id)
+        .auth(env.API_USER, env.API_SECRET)
+        .end((err, res) => {
+          expect(err).to.be.null;
+          expect(res).to.have.status(200);
+          expect(res.body.data).to.be.a('object');
+          expect(res.body.data.accepted).to.be.an('array');
+          expect(res.body.data.accepted[0]).eq('spectre-test@email.com');
+          done();
+        });
+    }).timeout(5000);
 
     it('should find similars for a user', done => {
       let id = '888888888888888888888888';

@@ -1,21 +1,31 @@
 import UserModel from './user-model';
+import Mailer from './mailer';
 import clfDate from 'clf-date';
 import multer from 'multer';
 import path from 'path';
+import dotenv from 'dotenv';
 
-/*
-TODO: every call should return a uniform object:
+/* all calls return a uniform object:
 {
   "status": code,
   "message": "a user-readable message",
   "data": "<payload object>"
-}
-*/
+}*/
+
+dotenv.config();
+
+const PROFILE_PATH = process.env.NODE_ENV === 'production' ?
+  //'/Library/WebServer/Documents/spectre/profiles/'
+  process.env.WEB_ROOT + '/profiles/'
+  : path.join('./client/public/profiles/');
+
 const USER_NOT_FOUND = 452;
 const USER_WO_TRAITS = 453;
 const NUM_SIMILARS = 6;
 
 const list = async (req, res) => {
+
+  if (UserModel.databaseDisabled) return sendError(res, 'No db');
 
   await UserModel.getAll(function(err, users) {
     if (err) return sendError(res, 'UserModel.getAll', err);
@@ -23,7 +33,34 @@ const list = async (req, res) => {
   });
 };
 
+const message = async (req, res) => {
+
+  // WORKING HERE
+
+  //console.log('CONTROLLER.MESSAGE: stub sending message', req);
+  const mailer = new Mailer({
+    host: process.env.SMTP_HOST,
+    port: process.env.SMTP_PORT,
+    auth: {
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASS
+    }
+  });
+
+  await mailer.sendMessage({}, (err, info) => {
+    if (err) console.error('[MAILER] ', err);
+    sendResponse(res, err ? err : info);
+  });
+
+  // await UserModel.getAll(function(err, users) {
+  //   if (err) return sendError(res, 'UserModel.getAll', err);
+  //   sendResponse(res, users);
+  // });
+};
+
 const current = async (req, res) => { // not used at present
+
+  if (UserModel.databaseDisabled) return sendError(res, 'No db');
 
   if (!req.params.hasOwnProperty('cid')) {
     return sendError(res, 'ClientId(cid) required');
@@ -39,6 +76,8 @@ const current = async (req, res) => { // not used at present
 };
 
 const createBatch = async (req, res) => {
+
+  if (UserModel.databaseDisabled) return sendError(res, 'No db');
 
   //console.log('REQ',req);
   const users = req.body;
@@ -57,6 +96,8 @@ const createBatch = async (req, res) => {
 };
 
 const create = async (req, res) => {
+
+  if (UserModel.databaseDisabled) return sendError(res, 'No db');
 
   if (!(req.body.login && req.body.loginType)) return sendError(res,
     "UserModel with no login/loginType:" + JSON.stringify(req.body));
@@ -83,6 +124,8 @@ const create = async (req, res) => {
 
 const fetch = async (req, res) => {
 
+  if (UserModel.databaseDisabled) return sendError(res, 'No db');
+
   if (!req.params.hasOwnProperty('uid')) {
     return sendError(res, 'UserId required');
   }
@@ -95,6 +138,8 @@ const fetch = async (req, res) => {
 };
 
 const update = async (req, res) => {
+
+  if (UserModel.databaseDisabled) return sendError(res, 'No db');
 
   if (!req.params.hasOwnProperty('uid')) {
     return sendError(res, 'UserId required');
@@ -123,6 +168,8 @@ const update = async (req, res) => {
 
 const similars = async (req, res) => {
 
+  if (UserModel.databaseDisabled) return sendError(res, 'No db');
+
   if (!req.params.hasOwnProperty('uid')) {
     return sendError(res, 'UserId required');
   }
@@ -146,15 +193,18 @@ const similars = async (req, res) => {
 };
 
 const remove = async (req, res) => {
+
+  if (UserModel.databaseDisabled) return sendError(res, 'No db');
+
   await UserModel.remove({ _id: req.params.uid }, (err) => {
     if (err) return sendError(res, 'Unable to delete user #' + req.params.uid, err);
     sendResponse(res, req.params.uid);
   });
 };
 
-const profiles = './client/public/profiles/';
-
 const photo = async (req, res) => {
+
+  if (UserModel.databaseDisabled) return sendError(res, 'No db');
 
   if (typeof req.params.uid === 'undefined' ||
     req.params.uid === 'undefined') {
@@ -164,7 +214,7 @@ const photo = async (req, res) => {
   let upload = multer({
     storage: multer.diskStorage({
       destination: (req, file, cb) => {
-        cb(null, path.join(profiles))
+        cb(null, path.join(PROFILE_PATH))
       },
       filename: (req, file, cb) => {
         cb(null, req.params.uid + '_raw' +
@@ -173,19 +223,25 @@ const photo = async (req, res) => {
     })
   }).single('profileImage');
 
-  await upload(req, res, e => {
-    if (e) return sendError(res, 'photo.upload', e);
-    if (!req.file) return sendError(res, 'photo.upload: null req. file');
-    //let url = req.protocol + "://" +  req.hostname + '/' + req.file.path;
-    req.file.url = req.file.path.replace(/.*\/profiles/, '/profiles');
-    //console.log('Upload: '+req.file.url);
-    sendResponse(res, req.file);
-  });
+  try {
+    await upload(req, res, e => {
+      if (e) return sendError(res, 'photo.upload', e);
+      if (!req.file) return sendError(res, 'photo.upload: null req. file');
+      console.log('[' + clfDate() + '] ::* UPLOAD ' + req.file.path);
+      req.file.url = req.file.path.replace(/.*\/profiles/, '/profiles');
+      sendResponse(res, req.file);
+    });
+  }
+  catch (e) {
+    console.error('Unable to upload image', e);
+  }
 };
 
 const photoset = async (req, res) => {
 
   //console.log("Routes.photoSet");
+
+  if (UserModel.databaseDisabled) return sendError(res, 'No db');
 
   if (typeof req.params.uid === 'undefined') {
     res.status(400).send({ error: 'no uid sent' });
@@ -196,7 +252,7 @@ const photoset = async (req, res) => {
   let upload = multer({
     storage: multer.diskStorage({
       destination: (req, file, cb) => {
-        cb(null, path.join(profiles))
+        cb(null, path.join(PROFILE_PATH))
       },
       filename: (req, file, cb) => {
         cb(null, req.params.uid + '-' + Date.now() +
@@ -208,20 +264,20 @@ const photoset = async (req, res) => {
   await upload(req, res, e => {
     if (e) return res.status(400).send({ error: e });
     console.log("FILES: ", req.files);
-    //let url = req.file.path.replace(/.*\/profiles/,'/profiles')});
     sendResponse(res, req.files);
   });
 };
 
 function sendResponse(res, data) {
-  res.status(200).send({ status: 200, data: data, message: 'ok' });
+  let o = { status: 200, data: data, message: 'ok' };
+  res.status(200).send(o);
 }
 
 function sendError(res, msg, e, code) {
   code = code || 400;
-  msg = msg += ' [' + e ? e : '' + ']';
-  console.log('[' + clfDate() + '] ::* ERROR', '"' + msg + '"', code);
+  msg = msg + (e ? ' [' + e + ']' : '');
+  console.log('[' + clfDate() + '] ::* ERROR', msg, code);
   res.status(code).send({ status: code, data: null, message: msg });
 }
 
-export default { list, similars, create, fetch, update, remove, photo, photoset, current, createBatch }
+export default { list, similars, message, create, fetch, update, remove, photo, photoset, current, createBatch }

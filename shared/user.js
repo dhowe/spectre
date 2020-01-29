@@ -30,7 +30,7 @@ export default class User {
     if (u.login) s += ', ' + u.login;
     if (u.gender) s += ', ' + u.gender;
     if (u.virtue) s += ', ' + u.virtue;
-    if (u.target) s += ', target='+u.target.name;
+    if (u.target) s += ', target=' + u.target.name;
     if (u.descriptors && u.descriptors.length) {
       s += ', ' + u.descriptors.length + ' descriptors';
     }
@@ -74,7 +74,6 @@ export default class User {
     let lines = this._descriptionLines(template);
 
     lines.forEach((l, i) => {
-
       data.push({
         line: parser.parse(l),
         trait: traitNames[i],
@@ -86,7 +85,7 @@ export default class User {
 
     let sentences = [];
     let re = new RegExp(this.name, "g");
-    for (let i = 0, idx = 0; i < data.length; i++) {
+    for (let i = 0; i < data.length; i++) {
       let parts = this.splitSentences(data[i].line);
       let added = 0;
       parts.forEach((p, j) => {
@@ -116,7 +115,6 @@ export default class User {
     }
     return images;
   }
-
 
   computeTargetAdData() { // requires adIssue & target with traits
 
@@ -259,7 +257,7 @@ export default class User {
     let idx = Math.floor(Math.random() * ots.length);
     //console.log(this.adIssue, this);
     return User.adInfluences
-      [this.adIssue][(Math.random() < .5 ? 'high' : 'low')][ots[idx]];
+    [this.adIssue][(Math.random() < .5 ? 'high' : 'low')][ots[idx]];
   }
 
   targetImageUrl() {
@@ -271,7 +269,7 @@ export default class User {
 
   setBrands(brandData) {
     let traits = {};
-    predict(brandData).forEach(t => traits[t.trait] = t.score);
+    predict(brandData).forEach(b => traits[b.trait] = b.score);
     return this.setTraits(traits);
   }
 
@@ -382,10 +380,10 @@ export default class User {
     }
   }
 
-  predictInfluences() {
+  /*predictInfluences() {
     // TODO
     this.influences = ['Images that contain X and Y', 'Slogans that contain X and Y'];
-  }
+  }*/
 
   predictDescriptors() {
     this.descriptors = this.generateSentences(3);
@@ -395,8 +393,8 @@ export default class User {
     if (typeof traits === 'string') throw Error('expecting traits object');
 
     this.traits = traits;
-    this.predictInfluences();
-    this.predictDescriptors();
+    //this.predictInfluences();
+    //this.predictDescriptors();
 
     return this;
   }
@@ -538,6 +536,18 @@ User.schema = () => {
     adIssue: {
       type: 'string'
     },
+    keepData: {
+      type: 'boolean',
+      default: true
+    },
+    targetAd: {
+      image: {
+        type: 'string'
+      },
+      slogan: {
+        type: 'string'
+      }
+    },
     lastPageVisit: {
       time: { type: 'date' },
       page: { type: 'string' }
@@ -556,7 +566,7 @@ User.schema = () => {
       type: 'string',
       required: true
     },
-    dataChoices: { // TODO: should be arrays
+    dataChoices: { // arrays?
       consumer: { type: 'string' }, // comma-delimited
       home: { type: 'string' }, // comma-delimited
       political: { type: 'string' } // comma-delimited

@@ -1958,11 +1958,6 @@ node-fetch@~2.1.2:
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.1.2.tgz#ab884e8e7e57e38a944753cec706f788d1768bb5"
   integrity sha1-q4hOjn5X44qUR1POxwb3iNF2i7U=
 
-node-opencv@^0.0.2-security:
-  version "0.0.2-security"
-  resolved "https://registry.yarnpkg.com/node-opencv/-/node-opencv-0.0.2-security.tgz#69caeba76365b81b50811ace888f9ea359cb18a8"
-  integrity sha512-fJP1Eosq85ONyhHawEdgvs3LzltCbA2YbGL7f2TyjsiTklrkQ6JH+moAKeW+pdLgCuJipf498qXFCrEMDlpi4A==
-
 node-pre-gyp@0.14.0:
   version "0.14.0"
   resolved "https://registry.yarnpkg.com/node-pre-gyp/-/node-pre-gyp-0.14.0.tgz#9a0596533b877289bcad4e143982ca3d904ddc83"

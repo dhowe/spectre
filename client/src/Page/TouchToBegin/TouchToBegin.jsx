@@ -13,33 +13,28 @@ import ComponentsStyles from '../../App.module.css';
 
 const styles_portrait = {
   root: {
-
     width: '100%',
     backgroundImage: `url(${BeginBackground})`,
     backgroundRepeat: 'no-repeat',
     backgroundPosition: '0 300px',
   },
   clickToContinue: {
-      fontSize: '0.5rem'
-  },
-
+    fontSize: '0.5rem'
+  }
 };
 
 const styles_landscape = {
   root: {
-
     justifyContent: 'center',
     alignItems: 'center',
     backgroundImage: `url(${BeginBackground})`,
     backgroundSize: 'auto 100%',
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
-
   },
   clickToContinue: {
-      fontSize: '0.5rem'
-  },
-
+    fontSize: '0.5rem'
+  }
 };
 
 class TouchToBegin extends React.Component {

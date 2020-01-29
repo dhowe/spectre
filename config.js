@@ -6,6 +6,7 @@ let env = process.env;
 let port = env.DB_PORT || 27017;
 let host = env.DB_HOST || 'localhost';
 let dbname = env.DB_NAME || 'spectre';
+let certs = env.CERT_PATH || 'unknown';
 
 let dbauth = '';
 let dbhost = host + ':' + port + '/' + dbname;
@@ -19,4 +20,4 @@ if (env.DB_USER && env.DB_USER.length) {
 
 let dbUrl = env.SPECTRE_DBURI || 'mongodb://' + dbauth + dbhost;
 
-export { dbUrl, apiUser };
+export { dbUrl, apiUser, certs };

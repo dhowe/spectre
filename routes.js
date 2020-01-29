@@ -27,13 +27,10 @@ router.route('/users/similars/:uid')
 router.route('/users/photo/:uid')
   .post(controller.photo)
 
-router.route('/users/photoset/:uid')
-  .post(controller.photoset) // ????????
+router.route('/users/message/:uid')
+  .get(controller.message)
 
-// router.route('/users/photo/:uid')
-//   .post(controller.photoUpload)
-// router.route('/post/images/') // tmp
-//   .post(controller.postImages)
-//
+router.route('/users/photoset/:uid')
+  .post(controller.photoset) // unused
 
 export default router;

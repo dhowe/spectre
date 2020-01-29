@@ -1,19 +1,24 @@
+import fs from 'fs';
 import path from 'path';
 import cors from 'cors';
+import http from 'http';
+import https from 'https';
 import express from 'express';
 import logger from './logger';
 import routes from './routes';
 import mongoose from 'mongoose';
 import bodyparser from 'body-parser';
 import basicAuth from 'express-basic-auth';
-import { dbUrl, apiUser } from './config';
 import controller from './user-controller';
-import profileMaker from './profile-maker';
+import { dbUrl, apiUser, certs } from './config';
+
+import ProfileMaker from './profile-maker';
+import UserModel from './user-model';
 
 const base = '/api/';
 const port = process.env.PORT || 8083;
 const test = process.env.NODE_ENV === 'test';
-const dev = process.env.NODE_ENV !== 'production';
+const prod = process.env.NODE_ENV === 'production';
 const client = path.join(__dirname, '/client');
 
 if (!apiUser[process.env.API_USER]) {
@@ -40,7 +45,7 @@ app.all('*', logger('[:date[clf]] :remote-addr :method :url :status', {
 }));
 
 // static react files (no-auth)
-app.use(express.static(client + '/build'));
+if (!prod) app.use(express.static(client + '/build'));
 
 // current user route (no-auth)
 app.get(base + 'users/current/:cid', controller.current);
@@ -48,33 +53,61 @@ app.get(base + 'users/current/:cid', controller.current);
 // for other api routes (w-auth)
 app.use(base, auth, routes);
 
-// for all react pages (no-auth)
-app.get('*', (req, res) => res.sendFile(client + '/build/index.html'));
+// for react pages in dev (no-auth)
+if (!prod) app.get('*', (req, res) => res.sendFile(client + '/build/index.html'));
 
 // watch for new profile images to process
-if (!test) profileMaker.watch(client + '/public/profiles');
+if (!test) new ProfileMaker().watch(prod ? process.env.WEB_ROOT + '/profiles' : client + '/public/profiles');
 
 /////////////////////////// DbConnect ///////////////////////////////
 
 const opts = { useNewUrlParser: true, useFindAndModify: false };
-const dbstr = dev ? dbUrl + '-dev' : dbUrl;
+const dbstr = prod ? dbUrl : dbUrl + '-dev';
 
 (async () => {
+
   try {
     await mongoose.connect(dbstr, opts);
     mongoose.connection.on('error', console.error);
-  } catch (error) {
+    UserModel.databaseDisabled = false;
+  } catch (e) {
     console.error('\n[DB] ' + e.name + '...');
-    console.error('[DB] Unable to connect to ' + dbstr + '\n')
+    console.error('[DB] Unable to connect to ' + dbstr + '\n');
+    UserModel.databaseDisabled = true;
   }
 })();
 
-export default app.listen(port, () => {
-  console.log('Spectre API at localhost:' + port + base +
-    ' [' + dbstr.substring(dbstr.lastIndexOf('/') + 1) + ']\n');
-});
+// while (!dbConnect()) {
+//   setInterval(() => {
+//     console.log('[WARN] Retrying Db @ '+(+new Date()));
+//   }, 5000);
+// }
+
+let server;
+
+if (prod) { // load ssl certs for production
+  try {
+    const ca = fs.readFileSync(certs + 'cert.pem', 'utf8');
+    const key = fs.readFileSync(certs + 'privkey.pem', 'utf8');
+    const cert = fs.readFileSync(certs + 'fullchain.pem', 'utf8');
+    const credentials = { key: key, cert: cert, ca: ca };
+    server = https.createServer(credentials, app).listen(port, () => {
+      console.log('Spectre API at https://localhost:' + port + base +
+        ' [' + dbstr.substring(dbstr.lastIndexOf('/') + 1) + ']\n');
+    });
+  }
+  catch (e) {
+    console.error('\n[ERROR] Unable to start HTTPS, trying HTTP\n',e,'\n');
+  }
+}
+
+if (!server) {
+  server = http.createServer(app).listen(port, () => {
+    console.log('Spectre API at http://localhost:' + port + base +
+      ' [' + dbstr.substring(dbstr.lastIndexOf('/') + 1) + ']\n');
+  });
+}
 
 
 
-
-//////////////////////////// Startup ////////////////////////////////
+export default server;

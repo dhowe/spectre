@@ -321,6 +321,7 @@ Brand.speed = styles.sketchSpeed;
 Brand.names = ['disney', 'converse', 'xbox', 'red bull', 'hello kitty', 'h&m', 'ben & jerrys', 'old spice', 'adidas', 'marvel', 'nike', 'zara', 'vans', 'starbucks', 'lacoste', 'sony', 'new look', 'rayban', 'asos', 'chanel'];
 Brand.drawAll = () => { Brand.instances.forEach(b => b.draw()) };
 Brand.updateAll = () => { Brand.instances.forEach(b => b.update()) };
+//Brand.allNames = ['cocacola', 'disney', 'converse', 'playstation', 'xbox', 'red bull', 'hello kitty', 'pepsi', 'h&m', 'ben & jerrys', 'old spice', 'burberry', 'adidas', 'marvel', 'nike', 'zara', 'vans', 'starbucks', 'topshop', 'lacoste', 'gap', 'sony', 'new look', 'calvin klein', 'rayban', 'next', 'swarovski', 'tommy hilfiger', 'asos', 'marks and spencer', 'vivienne westwood', 'chanel', 'nintendo64', 'lego'];
 
 ///////////////////// End p5.js sketch ////////////////////////////
 
@@ -339,9 +340,9 @@ class Game extends React.Component {
 
   async componentComplete() { // redirect called from p5
     const user = await UserSession.ensure(this.context,
-      ['_id', 'login', 'gender', 'name', 'traits', 'descriptors', 'influences']);
-    await UserSession.update(user);
+      ['_id', 'login', 'gender', 'name', 'traits' ]);
     this.props.history.push("/thank-you");
+    UserSession.update(user);
   }
 
   render() {

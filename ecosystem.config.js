@@ -1,9 +1,9 @@
 module.exports = {
   apps : [{
     name: 'spectre-server',
+    log_file: 'spectre.log',
     script: 'server.js',
-    instances: 1,
-    node_args: '-r esm',
+    node_args: '--require=esm',
     autorestart: true,
     watch: true,
     max_memory_restart: '1G',

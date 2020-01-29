@@ -10,11 +10,8 @@ import Video from '../../Components/Video/Video';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 import TosContent from './termsOfService'
 
-
 import { withStyles } from '@material-ui/core/styles';
 import './LoginPage.scss';
-
-
 
 window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true; // TMP: #138
 
@@ -25,7 +22,6 @@ const styles_landscape = {
 const styles_portrait = {
     marginBottom: 70,
 };
-
 
 class LoginPage extends React.Component {
 
@@ -89,7 +85,6 @@ class LoginPage extends React.Component {
       user.login = email;
       user.gender = gender;
       user.lastPageVisit = { page: 'login', time: Date.now() };
-
       this.setState({ modalOpen: false });
       this.saveUser(user);
     }
@@ -98,7 +93,7 @@ class LoginPage extends React.Component {
   // save user then start video
   saveUser = async (user) => {
     try {
-      await UserSession.create(user);
+      UserSession.create(user);
       console.log('[LOGIN] ' + user.toString());
     }
     catch (e) {
