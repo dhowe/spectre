@@ -25,8 +25,7 @@ export default class User {
 
   toString() {
     let u = this;
-    let s = u._id;
-    if (u.name) s += ', ' + u.name;
+    let s = u._id ? u._id+ ', ' + u.name : u.name;
     if (u.login) s += ', ' + u.login;
     if (u.gender) s += ', ' + u.gender;
     if (u.virtue) s += ', ' + u.virtue;
@@ -260,7 +259,7 @@ export default class User {
     [this.adIssue][(Math.random() < .5 ? 'high' : 'low')][ots[idx]];
   }
 
-  targetImageUrl() {
+  targetImageUrl(mode) {
     let tid = (typeof this.target && typeof this.target._id
       !== 'undefined' && this.target._id.length)
       ? this.target._id : 'default';
@@ -480,8 +479,8 @@ export default class User {
   }
 };
 
-User.profileDir = process.env.PUBLIC_URL + '/profiles/';
-User.imageDir = process.env.PUBLIC_URL + '/imgs/';
+User.profileDir = (process.env.PUBLIC_URL || '') + '/profiles/';
+User.imageDir = (process.env.PUBLIC_URL || '') + '/imgs/';
 
 /**
  * MongoDB database schema for the application

@@ -69,7 +69,8 @@ class InfluenceAFollower extends React.Component {
             <AvatarCircle>
               {similars.slice(0, 6).map((sim, i) => (
                 <AvatarComponent
-                  key={AvatarComponent.generateKey(i)}
+                  //key={AvatarComponent.generateKey(i)}
+                  key={i}
                   handleClick={() => this.handleSelect(sim)}
                   target={{ name: sim.name, image: `${UserSession.profileDir}/${sim._id}.jpg` }}
                 />

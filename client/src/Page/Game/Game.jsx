@@ -10,7 +10,6 @@ import UserSession from '../../Components/UserSession/UserSession';
 import './Game.scss';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
-
 const styles = {
 
   // configurable parameters
@@ -23,7 +22,6 @@ const styles = {
   sketchText: '#929392',
   sketchStroke: '#929392',
   sketchStrokeSel: '#21c0fc',
-
 };
 
 const styles_portrait = {
@@ -35,7 +33,6 @@ const styles_landscape = {
   sketchWidth: 1920,
   sketchHeight: 660,
 };
-
 
 /*
  * OCEAN Game sketch (temporarily) in p5js/canvas
@@ -60,9 +57,9 @@ function sketch(p) {
   }
 
   p.setup = () => {
-    let sW,sH;
-    sW  = (window.innerWidth === 1920 ? styles_landscape.sketchWidth : styles_portrait.sketchWidth);
-    sH  = (window.innerWidth === 1920 ? styles_landscape.sketchHeight : styles_portrait.sketchHeight);
+    let sW, sH;
+    sW = (window.innerWidth === 1920 ? styles_landscape.sketchWidth : styles_portrait.sketchWidth);
+    sH = (window.innerWidth === 1920 ? styles_landscape.sketchHeight : styles_portrait.sketchHeight);
     p.createCanvas(sW, sH);
     colors.sketchBg = p.color(styles.sketchBg);
     colors.sketchText = p.color(styles.sketchText);
@@ -123,44 +120,26 @@ function sketch(p) {
     }
   };
 
+  p.keyReleased = () => { if (p.key === 'f') showFps = !showFps; };
+  p.mouseReleased = () => { mReleased(); };
+  p.touchEnded = () => { mReleased(); }
+  p.touchStarted = () => { mPressed(); }
+  p.mousePressed = () => { mPressed(); };
+  p.touchMoved = () => { mDragged(); };
+  p.mouseDragged = () => { mDragged(); };
 
-  p.keyReleased = () => {
-    if (p.key === 'f') showFps = !showFps;
-  };
-
-  p.mouseReleased = () => {
-    mReleased();
-  };
-  p.touchEnded = () => {
-    mReleased();
-  }
-  p.touchStarted = () => {
-    mPressed();
-  }
-  p.mousePressed = () => {
-    mPressed();
-  };
-  p.touchMoved = () =>{
-    mDragged();
-  };
-  p.mouseDragged = () => {
-    mDragged();
-  };
   function mDragged() {
-    if (Brand.active) {
-      Brand.active.y += p.mouseY - p.pmouseY;
-    }
+    if (Brand.active) Brand.active.y += p.mouseY - p.pmouseY;
   }
 
   function mPressed() {
     //document.getElementById("clickMe").click();
     Brand.active = false;
     Brand.instances.forEach(b => {
-      if (b.contains(p.mouseX, p.mouseY)) {
-        Brand.active = b;
-      }
+      if (b.contains(p.mouseX, p.mouseY)) Brand.active = b;
     });
   }
+
   function mReleased() {
     if (instructions) {
       instructions = false;
@@ -189,8 +168,8 @@ function sketch(p) {
   function finished() {
     done = true;
     checkData();
-    let data = Brand.instances.map(b => ({ item: b.item, rating: b.rating }));
-    user.setBrands(data);
+    user.setBrands(Brand.instances.map
+      (b => ({ item: b.item, rating: b.rating })));
     game.componentComplete();
     //displayAsHtml(user);
   }
@@ -233,7 +212,6 @@ function sketch(p) {
     p.text('+ Love', p.width / 2, 20);
     p.text('- Hate', p.width / 2, p.height - 20)
   }
-
 
   function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -278,23 +256,20 @@ class Brand {
     this.ty = my;
     this.t = 0;
   }
-
   render() {
-
     let p = this.p;
     p.fill(colors.sketchBg);
     p.stroke(this === Brand.active ? colors.sketchStrokeSel : colors.sketchStroke);
     p.strokeWeight(this === Brand.active ? styles.sketchStrokeWeight : styles.sketchStrokeMinWeight);
     p.ellipse(this.x, this.y, this.sz);
-
     p.image(this.logo, this.x, this.y, this.sz * .8, this.sz * .8);
-
-    // p.noStroke();
-    // p.fill(colors.sketchText);
-    // p.textSize(this.sz / 4);
-    // p.textAlign(p.CENTER, p.TOP);
-    // p.text(this.item, this.x, this.y + this.sz / 2 + 2);
-
+    if (false) {
+      p.noStroke();
+      p.fill(colors.sketchText);
+      p.textSize(this.sz / 4);
+      p.textAlign(p.CENTER, p.TOP);
+      p.text(this.item, this.x, this.y + this.sz / 2 + 2);
+    }
     p.textAlign(p.CENTER, p.CENTER);
   }
   textHeight() {
@@ -340,7 +315,7 @@ class Game extends React.Component {
 
   async componentComplete() { // redirect called from p5
     const user = await UserSession.ensure(this.context,
-      ['_id', 'login', 'gender', 'name', 'traits' ]);
+      ['_id', 'login', 'gender', 'name', 'traits']);
     this.props.history.push("/thank-you");
     UserSession.update(user);
   }

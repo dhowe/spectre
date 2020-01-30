@@ -15,17 +15,53 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const PROFILE_PATH = process.env.NODE_ENV === 'production' ?
-  //'/Library/WebServer/Documents/spectre/profiles/'
-  process.env.WEB_ROOT + '/profiles/'
+  process.env.PUBLIC_URL + '/profiles/'
   : path.join('./client/public/profiles/');
 
 const USER_NOT_FOUND = 452;
 const USER_WO_TRAITS = 453;
+const NO_DATABASE = 454;
 const NUM_SIMILARS = 6;
+
+const create = async (req, res) => {
+
+  if (UserModel.databaseDisabled) return noDbError(res);
+
+  if (!req || !req.body) return sendError(res, 'Req without body');
+
+  const body = req.body;
+
+  if (!(body.login && body.loginType)) return sendError(res,
+    "Attempt to create User without login/loginType:" + JSON.stringify(body));
+
+  if (!body.clientId) return sendError(res,
+    "Attempt to create User without clientId:" + JSON.stringify(body));
+
+  let user = new UserModel();
+  Object.assign(user, body); // dangerous?
+
+  try {
+    await UserModel.find({ login: body.login, loginType: body.loginType }, (e, docs) => {
+
+      if (e || docs.length) return sendError(res, e || "Unique User Violation: " +
+        body.login + '/' + body.loginType);
+
+      user.save(err => {
+        if (err) return sendError(res, 'Unable to save user/' + err);
+        // TODO: check for ocean-traits and return user with similars
+        sendResponse(res, user);
+      });
+    });
+  }
+  catch(e) {
+    console.error('Unable to find user: ' + JSON.stringify(body));
+    return sendError(res, 'Unable to find user: ' + JSON.stringify(body));
+  }
+};
 
 const list = async (req, res) => {
 
-  if (UserModel.databaseDisabled) return sendError(res, 'No db');
+  if (UserModel.databaseDisabled) return noDbError(res);
 
   await UserModel.getAll(function(err, users) {
     if (err) return sendError(res, 'UserModel.getAll', err);
@@ -60,7 +96,7 @@ const message = async (req, res) => {
 
 const current = async (req, res) => { // not used at present
 
-  if (UserModel.databaseDisabled) return sendError(res, 'No db');
+  if (UserModel.databaseDisabled) return noDbError(res);
 
   if (!req.params.hasOwnProperty('cid')) {
     return sendError(res, 'ClientId(cid) required');
@@ -77,7 +113,7 @@ const current = async (req, res) => { // not used at present
 
 const createBatch = async (req, res) => {
 
-  if (UserModel.databaseDisabled) return sendError(res, 'No db');
+  if (UserModel.databaseDisabled) return noDbError(res);
 
   //console.log('REQ',req);
   const users = req.body;
@@ -95,36 +131,9 @@ const createBatch = async (req, res) => {
   });
 };
 
-const create = async (req, res) => {
-
-  if (UserModel.databaseDisabled) return sendError(res, 'No db');
-
-  if (!(req.body.login && req.body.loginType)) return sendError(res,
-    "UserModel with no login/loginType:" + JSON.stringify(req.body));
-
-  if (!req.body.clientId) return sendError(res,
-    "UserModel with no clientId:" + JSON.stringify(req.body));
-
-  let user = new UserModel();
-  Object.assign(user, req.body); // dangerous?
-
-  await UserModel.find({ login: req.body.login, loginType: req.body.loginType }, (e, docs) => {
-
-    if (e || docs.length) return sendError(res, e || "Unique User Violation: " +
-      req.body.login + '/' + req.body.loginType);
-
-    user.save(err => {
-      if (err) return sendError(res, err);
-      // TODO: check for ocean-traits and return user with similars
-      sendResponse(res, user);
-    });
-
-  });
-};
-
 const fetch = async (req, res) => {
 
-  if (UserModel.databaseDisabled) return sendError(res, 'No db');
+  if (UserModel.databaseDisabled) return noDbError(res);
 
   if (!req.params.hasOwnProperty('uid')) {
     return sendError(res, 'UserId required');
@@ -139,7 +148,7 @@ const fetch = async (req, res) => {
 
 const update = async (req, res) => {
 
-  if (UserModel.databaseDisabled) return sendError(res, 'No db');
+  if (UserModel.databaseDisabled) return noDbError(res);
 
   if (!req.params.hasOwnProperty('uid')) {
     return sendError(res, 'UserId required');
@@ -168,7 +177,7 @@ const update = async (req, res) => {
 
 const similars = async (req, res) => {
 
-  if (UserModel.databaseDisabled) return sendError(res, 'No db');
+  if (UserModel.databaseDisabled) return noDbError(res);
 
   if (!req.params.hasOwnProperty('uid')) {
     return sendError(res, 'UserId required');
@@ -194,7 +203,7 @@ const similars = async (req, res) => {
 
 const remove = async (req, res) => {
 
-  if (UserModel.databaseDisabled) return sendError(res, 'No db');
+  if (UserModel.databaseDisabled) return noDbError(res);
 
   await UserModel.remove({ _id: req.params.uid }, (err) => {
     if (err) return sendError(res, 'Unable to delete user #' + req.params.uid, err);
@@ -204,7 +213,7 @@ const remove = async (req, res) => {
 
 const photo = async (req, res) => {
 
-  if (UserModel.databaseDisabled) return sendError(res, 'No db');
+  if (UserModel.databaseDisabled) return noDbError(res);
 
   if (typeof req.params.uid === 'undefined' ||
     req.params.uid === 'undefined') {
@@ -241,7 +250,7 @@ const photoset = async (req, res) => {
 
   //console.log("Routes.photoSet");
 
-  if (UserModel.databaseDisabled) return sendError(res, 'No db');
+  if (UserModel.databaseDisabled) return noDbError(res);
 
   if (typeof req.params.uid === 'undefined') {
     res.status(400).send({ error: 'no uid sent' });
@@ -274,10 +283,16 @@ function sendResponse(res, data) {
 }
 
 function sendError(res, msg, e, code) {
-  code = code || 400;
+  code = code || 499;
   msg = msg + (e ? ' [' + e + ']' : '');
-  console.log('[' + clfDate() + '] ::* ERROR', msg, code);
+  console.log('[' + clfDate() + '] ::* ERROR', msg, code, 'on:');
   res.status(code).send({ status: code, data: null, message: msg });
+}
+
+function noDbError(res) {
+  res.status(NO_DATABASE).send({
+    status: NO_DATABASE, data: null, message: 'Db unavailable'
+  });
 }
 
 export default { list, similars, message, create, fetch, update, remove, photo, photoset, current, createBatch }
