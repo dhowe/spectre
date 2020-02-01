@@ -4,6 +4,7 @@ import * as faceapi from 'face-api.js';
 import * as tf from '@tensorflow/tfjs-node';
 import observer from 'chokidar';
 import clfDate from 'clf-date';
+import UserModel from './user-model';
 
 const BRIGHTEN = 1.5;
 
@@ -40,18 +41,25 @@ class ProfileMaker {
 
     if (/^.*\/[a-f\d]{24}_raw\.jpg$/i.test(path)) {
       try {
-        const outf = path.replace(/_raw\.jpg/, '.jpg');
+        const tmp = path.replace(/_raw\.jpg/, '');
+        const outf = tmp + '.jpg';
+        const id = tmp.substring(tmp.lastIndexOf('/') + 1);
+        console.log('id', id, 'outf', outf);
         this.makeThumbnail(path, outf)
           .then(res => {
             if (res.status !== 'ok') {
-              console.error('[ERROR] ProfileMaker.1:: ' + res.data);
+              console.error('[ERROR] ProfileMaker: ' + res.data);
               return;
             }
             console.log('[' + clfDate() + '] ::* THUMB', pathify(outf));
+            UserModel.findByIdAndUpdate(
+              id, { hasImage: true }, { new: true }, (err, u) => {
+                if (err) console.error('[ERROR] ProfileMaker(2): ' + err);
+              })/*console.log('Saved user: ' + u))*/
           });
       }
       catch (e) {
-        console.error('[ERROR] ProfileMaker.2:: ' + path + '\n' + e);
+        console.error('[ERROR] ProfileMaker(3): ' + path + '\n' + e);
       }
     }
   }

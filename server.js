@@ -57,7 +57,8 @@ app.use(base, auth, routes);
 if (!prod) app.get('*', (req, res) => res.sendFile(client + '/build/index.html'));
 
 // watch for new profile images to process
-if (!test) new ProfileMaker().watch(prod ? process.env.WEB_ROOT + '/profiles' : client + '/public/profiles');
+if (!test) new ProfileMaker().watch
+  (prod ? process.env.WEB_ROOT + '/profiles' : client + '/public/profiles');
 
 /////////////////////////// DbConnect ///////////////////////////////
 
