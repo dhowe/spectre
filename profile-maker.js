@@ -31,11 +31,11 @@ class ProfileMaker {
       ignoreInitial: true,
       awaitWriteFinish: true
     })
-      .on('add', this.onImage)
-      .on('change', this.onImage);
+      .on('add', this.onNewImage)
+      .on('change', this.onNewImage);
   }
 
-  onImage = (path) => {
+  onNewImage = (path) => {
 
     console.log('[' + clfDate() + '] ::* IMAGE ' + pathify(path));
 
@@ -44,7 +44,6 @@ class ProfileMaker {
         const tmp = path.replace(/_raw\.jpg/, '');
         const outf = tmp + '.jpg';
         const id = tmp.substring(tmp.lastIndexOf('/') + 1);
-        console.log('id', id, 'outf', outf);
         this.makeThumbnail(path, outf)
           .then(res => {
             if (res.status !== 'ok') {
