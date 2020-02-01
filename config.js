@@ -6,6 +6,8 @@ dotEnv.config();
 let env = process.env;
 let prod = env.NODE_ENV === 'production';
 
+console.log('MODE: '+(prod?'prod':'dev'));
+
 let portDb = env.DB_PORT || 27017;
 let hostDb = env.DB_HOST || 'localhost';
 let nameDb = env.DB_NAME || 'spectre';
@@ -24,6 +26,8 @@ let certs = env.CERT_PATH || 'unknown';
 let dbUrl = env.SPECTRE_DBURI || 'mongodb://' + dbauth + dbhost;
 
 let clientDir = path.join(__dirname, '/client');
-let profDir = prod ? '/profiles' : clientDir + '/public/profiles';
+let profDir = prod ? '/Library/WebServer/Documents/spectre/profiles'
+  : clientDir + '/public/profiles';
+
 
 export { dbUrl, apiUser, certs, profDir, prod, clientDir };
