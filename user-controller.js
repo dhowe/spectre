@@ -3,7 +3,7 @@ import Mailer from './mailer';
 import clfDate from 'clf-date';
 import multer from 'multer';
 import path from 'path';
-import dotenv from 'dotenv';
+import { profDir } from './config';
 
 /* all calls return a uniform object:
 {
@@ -11,12 +11,6 @@ import dotenv from 'dotenv';
   "message": "a user-readable message",
   "data": "<payload object>"
 }*/
-
-dotenv.config();
-
-const PROFILE_PATH = process.env.NODE_ENV === 'production' ?
-  /*process.env.PUBLIC_URL*/ + '/profiles/'
-  : path.join('./client/public/profiles/');
 
 const USER_NOT_FOUND = 452;
 const USER_WO_TRAITS = 453;
@@ -223,7 +217,7 @@ const photo = async (req, res) => {
   let upload = multer({
     storage: multer.diskStorage({
       destination: (req, file, cb) => {
-        cb(null, path.join(PROFILE_PATH))
+        cb(null, path.join(profDir))
       },
       filename: (req, file, cb) => {
         cb(null, req.params.uid + '_raw' +
@@ -237,7 +231,10 @@ const photo = async (req, res) => {
       if (e) return sendError(res, 'photo.upload', e);
       if (!req.file) return sendError(res, 'photo.upload: null req. file');
       console.log('[' + clfDate() + '] ::* UPLOAD ' + req.file.path);
+
+      // should this use profDir instead?
       req.file.url = req.file.path.replace(/.*\/profiles/, '/profiles');
+
       sendResponse(res, req.file);
     });
   }
@@ -261,7 +258,7 @@ const photoset = async (req, res) => {
   let upload = multer({
     storage: multer.diskStorage({
       destination: (req, file, cb) => {
-        cb(null, path.join(PROFILE_PATH))
+        cb(null, path.join(profDir))
       },
       filename: (req, file, cb) => {
         cb(null, req.params.uid + '-' + Date.now() +

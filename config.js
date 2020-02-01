@@ -1,15 +1,17 @@
 import dotEnv from 'dotenv';
+import path from 'path';
 
 dotEnv.config();
 
 let env = process.env;
-let port = env.DB_PORT || 27017;
-let host = env.DB_HOST || 'localhost';
-let dbname = env.DB_NAME || 'spectre';
-let certs = env.CERT_PATH || 'unknown';
+let prod = env.NODE_ENV === 'production';
+
+let portDb = env.DB_PORT || 27017;
+let hostDb = env.DB_HOST || 'localhost';
+let nameDb = env.DB_NAME || 'spectre';
 
 let dbauth = '';
-let dbhost = host + ':' + port + '/' + dbname;
+let dbhost = hostDb + ':' + portDb + '/' + nameDb;
 
 let apiUser = {};
 apiUser[env.API_USER] = env.API_SECRET;
@@ -18,6 +20,10 @@ if (env.DB_USER && env.DB_USER.length) {
   dbauth = env.DB_USER + ':' + env.DB_PASS + '@';
 }
 
+let certs = env.CERT_PATH || 'unknown';
 let dbUrl = env.SPECTRE_DBURI || 'mongodb://' + dbauth + dbhost;
 
-export { dbUrl, apiUser, certs };
+let clientDir = path.join(__dirname, '/client');
+let profDir = prod ? '/profiles' : clientDir + '/public/profiles';
+
+export { dbUrl, apiUser, certs, profDir, prod, clientDir };
