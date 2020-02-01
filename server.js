@@ -84,7 +84,11 @@ const dbstr = prod ? dbUrl : dbUrl + '-dev';
 //   }, 5000);
 // }
 
-let server;
+let server, logf = () => {
+  console.log('\nSpectre API at http://localhost:' + port + base
+    + ' [' + dbstr.substring(dbstr.lastIndexOf('/') + 1)
+    + ']\n  profiles: '+profiles);
+}
 
 if (prod) { // load ssl certs for production
   try {
@@ -92,24 +96,13 @@ if (prod) { // load ssl certs for production
     const key = fs.readFileSync(certs + 'privkey.pem', 'utf8');
     const cert = fs.readFileSync(certs + 'fullchain.pem', 'utf8');
     const credentials = { key: key, cert: cert, ca: ca };
-    server = https.createServer(credentials, app).listen(port, () => {
-      console.log('Spectre API at https://localhost:' + port + base +
-        ' [' + dbstr.substring(dbstr.lastIndexOf('/') + 1) + ']\n');
-    });
+    server = https.createServer(credentials, app).listen(port, logf);
   }
   catch (e) {
     console.error('\n[ERROR] Unable to start HTTPS, trying HTTP\n',e,'\n');
   }
 }
 
-if (!server) {
-  server = http.createServer(app).listen(port, () => {
-    console.log('\nSpectre API at http://localhost:' + port + base
-      + ' [' + dbstr.substring(dbstr.lastIndexOf('/') + 1)
-      + ']\n  profiles: '+profiles);
-  });
-}
-
-
+if (!server) server = http.createServer(app).listen(port, logf);
 
 export default server;
