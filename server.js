@@ -57,8 +57,8 @@ app.use(base, auth, routes);
 if (!prod) app.get('*', (req, res) => res.sendFile(client + '/build/index.html'));
 
 // watch for new profile images to process
-if (!test) new ProfileMaker().watch
-  (prod ? process.env.WEB_ROOT + '/profiles' : client + '/public/profiles');
+const profiles = prod ? '/profiles' : client + '/public/profiles'
+if (!test) new ProfileMaker().watch(profiles);
 
 /////////////////////////// DbConnect ///////////////////////////////
 
@@ -104,8 +104,9 @@ if (prod) { // load ssl certs for production
 
 if (!server) {
   server = http.createServer(app).listen(port, () => {
-    console.log('Spectre API at http://localhost:' + port + base +
-      ' [' + dbstr.substring(dbstr.lastIndexOf('/') + 1) + ']\n');
+    console.log('\nSpectre API at http://localhost:' + port + base
+      + ' [' + dbstr.substring(dbstr.lastIndexOf('/') + 1)
+      + ']\n  profiles: '+profiles);
   });
 }
 

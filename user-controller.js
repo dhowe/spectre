@@ -15,7 +15,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const PROFILE_PATH = process.env.NODE_ENV === 'production' ?
-  process.env.PUBLIC_URL + '/profiles/'
+  /*process.env.PUBLIC_URL*/ + '/profiles/'
   : path.join('./client/public/profiles/');
 
 const USER_NOT_FOUND = 452;

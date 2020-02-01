@@ -42,15 +42,15 @@ class ProfileMaker {
     if (/^.*\/[a-f\d]{24}_raw\.jpg$/i.test(path)) {
       try {
         const tmp = path.replace(/_raw\.jpg/, '');
-        const outf = tmp + '.jpg';
         const id = tmp.substring(tmp.lastIndexOf('/') + 1);
-        this.makeThumbnail(path, outf)
+        const outfile = tmp + '.jpg';
+        this.makeThumbnail(path, outfile)
           .then(res => {
             if (res.status !== 'ok') {
-              console.error('[ERROR] ProfileMaker: ' + res.data);
+              console.error('[ERROR] ProfileMaker(1): ' + res.data);
               return;
             }
-            console.log('[' + clfDate() + '] ::* THUMB', pathify(outf));
+            console.log('[' + clfDate() + '] ::* THUMB', pathify(outfile));
             UserModel.findByIdAndUpdate(
               id, { hasImage: true }, { new: true }, (err, u) => {
                 if (err) console.error('[ERROR] ProfileMaker(2): ' + err);
