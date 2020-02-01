@@ -24,6 +24,7 @@ let certs = env.CERT_PATH || 'unknown';
 let dbUrl = env.SPECTRE_DBURI || 'mongodb://' + dbauth + dbhost;
 
 let clientDir = path.join(__dirname, '/client');
-let profDir = prod ? '/profiles' : clientDir + '/public/profiles';
+let profDir = prod ? '/Library/WebServer/Documents/spectre/profiles'
+  : clientDir + '/public/profiles';
 
 export { dbUrl, apiUser, certs, profDir, prod, clientDir };
