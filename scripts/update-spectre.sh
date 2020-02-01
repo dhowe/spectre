@@ -1,7 +1,7 @@
 #!/bin/sh
 
 cd ~/git/spectre
-git pull
-yarn install
-yarn pub-client
-pm2 reload ecosystem.config.js --env=production --update-env
+/usr/local/bin/git pull
+/usr/local/Homebrew/bin/yarn install
+/usr/local/Homebrew/bin/yarn pub-client
+/usr/local/Homebrew/bin/pm2 reload ecosystem.config.js --env=production --update-env
