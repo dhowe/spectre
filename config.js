@@ -6,6 +6,8 @@ dotEnv.config();
 let env = process.env;
 let prod = env.NODE_ENV === 'production';
 
+console.log('MODE: '+(prod?'prod':'dev'));
+
 let portDb = env.DB_PORT || 27017;
 let hostDb = env.DB_HOST || 'localhost';
 let nameDb = env.DB_NAME || 'spectre';

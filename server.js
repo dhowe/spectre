@@ -12,6 +12,8 @@ import controller from './user-controller';
 
 import { dbUrl, apiUser, profDir, clientDir, certs, prod } from './config';
 
+console.log('MODE2: '+(prod?'prod':'dev'));
+
 import ProfileMaker from './profile-maker';
 import UserModel from './user-model';
 
@@ -82,8 +84,8 @@ const dbstr = prod ? dbUrl : dbUrl + '-dev';
 //   }, 5000);
 // }
 
-let server, logf = () => {
-  console.log('\nSpectre API at http://localhost:' + port + base + ' ['
+let server, logf = (dev) => {
+  console.log('\nSpectre API at '+(dev ? 'http' : 'https:') + '//localhost:' + port + base + ' ['
     + dbstr.substring(dbstr.lastIndexOf('/') + 1) + '::' + profDir + ']');
 }
 
@@ -100,6 +102,6 @@ if (prod) { // load ssl certs for production
   }
 }
 
-if (!server) server = http.createServer(app).listen(port, logf);
+if (!server) server = http.createServer(app).listen(port, () => log(true));
 
 export default server;
