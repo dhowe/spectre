@@ -8,7 +8,8 @@ import UserSession from '../../Components/UserSession/UserSession';
 import { Link } from 'react-router-dom';
 import Video from '../../Components/Video/Video';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
-import TosContent from './termsOfService'
+//import TosContent from './termsOfService'
+import  Tos  from './Tos'
 
 import { withStyles } from '@material-ui/core/styles';
 import './LoginPage.scss';
@@ -126,7 +127,8 @@ class LoginPage extends React.Component {
 
   termsOfService = () => {
     this.modalTitle = 'Terms of Service';
-    this.modalContent = TosContent.text;
+    //this.modalContent = TosContent.text;
+    this.modalContent = '';
     this.setState({ modalOpen: true });
   }
 
@@ -160,7 +162,8 @@ class LoginPage extends React.Component {
             title={this.modalTitle}
             content={this.modalContent}
             onClose={() => this.closeModal()}
-          />
+            htmlContent={<Tos/>}
+          ><Tos/></Modal>
           <Video
             ref={ele => { this.video = ele }}
             movie="/video/SpectreIntro.mp4"

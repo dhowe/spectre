@@ -29,7 +29,8 @@ const styles = theme => ({
   },
   content: {
     textAlign: "left"
-  }
+  },
+  htmlContent: "",
 });
 
 function SimpleModal(props) {
@@ -46,6 +47,7 @@ function SimpleModal(props) {
       onClose={props.onClose}
 
     >
+
       <div style={modalStyle} className={classes.paper} id="modal-title-div">
       <div id="modal-title-div-content">
         <Typography variant="h6" className={classes.title} id="modal-title">
@@ -55,9 +57,12 @@ function SimpleModal(props) {
             variant="subtitle1"
             className={classes.content}
             id="simple-modal-description">{props.content}</p>}
+                <div>{props.htmlContent}</div>
         <Button onClick={props.onClose} id="simple-modal-button">Close</Button>
       </div>
+
       </div>
+
     </Modal>
   );
 }
@@ -67,6 +72,7 @@ SimpleModal.propTypes = {
   content: PropTypes.string.isRequired,
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
+  htmlContent: PropTypes.string,
 };
 
 export default withStyles(styles)(SimpleModal);
