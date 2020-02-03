@@ -55,7 +55,7 @@ class InfluenceACelebrity extends React.Component {
     user.celebrity = name;
     this.setState({
       celebrity: name,
-      video: `/video/${virtue}_${name}.mp4`,
+      video: `https://spectreknows.me/video/${virtue}_${name}.mp4`,
     });
     this.setState({ idleCheckerDone: true });
   }

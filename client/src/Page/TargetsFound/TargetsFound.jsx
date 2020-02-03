@@ -24,7 +24,7 @@ class TargetsFound extends React.Component {
         <SpectreHeader colour="white" progressActive progressNumber="two" />
         <div className={`${classes.content} content`}>
           <Video className={ComponentsStyles.inPageVideo} autoPlay
-            movie="/video/TargetsFound_Animation.mp4"
+            movie="https://spectreknows.me/video/TargetsFound_Animation.mp4"
             onComplete={() => this.props.history.push('/launch-campaign')} />
         </div>
         <FooterLogo />
