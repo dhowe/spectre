@@ -152,11 +152,11 @@ UserSession.lookup = async (user) => {
         "Authorization": 'Basic ' + btoa(auth)
       },
     })
-    if (e) return handleError(e, route, 'lookup');
+    if (e) return handleError(e, route, 'lookup[1]');
     return Object.assign(user, json);
   }
   catch (e) {
-    handleError(e, endpoint, 'lookup');
+    handleError(e, endpoint, 'lookup[2]');
   }
 }
 
@@ -181,11 +181,11 @@ UserSession.update = async (user) => {
       },
       body: toNetworkString(user)
     })
-    if (e) return handleError(e, route, 'update');
+    if (e) return handleError(e, route, 'update[1]');
     return Object.assign(user, json);
   }
   catch (e) {
-    handleError(e, endpoint, 'update');
+    handleError(e, endpoint, 'update[2]');
   }
 }
 
@@ -196,7 +196,7 @@ UserSession.similars = async (user) => {
   const { route, auth, cid, mode } = doConfig();
 
   if (UserSession.serverDisabled || user._id === -1) {
-    handleError('no user id', route);
+    handleError('No user id', route, 'similars[1]');
     user.similars = defaultSimilars();
     return user;
   }
@@ -215,12 +215,12 @@ UserSession.similars = async (user) => {
         "Authorization": 'Basic ' + btoa(auth)
       },
     });
-    if (e) return handleError(e, route, 'similars');
+    if (e) return handleError(e, route, 'similars[2]');
     user.similars = json;
     return user;
   }
   catch (e) {
-    handleError(e, endpoint, 'similars');
+    handleError(e, endpoint, 'similars[3]');
   }
 }
 
@@ -243,11 +243,11 @@ UserSession.postImage = async (user, image) => { // TODO: test
       headers: { "Authorization": 'Basic ' + btoa(auth) },
       body: fdata // JSON.stringfy(fdata) ??
     })
-    if (e) return handleError(e, route, 'postImage');
+    if (e) return handleError(e, route, 'postImage[1]');
     return json; // what to do here?
   }
   catch (e) {
-    handleError(e, endpoint, 'postImage');
+    handleError(e, endpoint, 'postImage[2]');
   }
 }
 
