@@ -51,7 +51,7 @@ class InsightComplete extends React.Component {
           <Video
             ref={(el) => { this.video = el; }}
             onComplete={() => this.props.history.push('/your-power')}
-            autoPlay={false} movie="/video/OceanIntro.mp4" />
+            autoPlay={false} movie="https://spectreknows.me/video/OceanIntro.mp4" />
         </div>
         <FooterLogo />
       </div>

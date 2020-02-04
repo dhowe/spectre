@@ -166,7 +166,7 @@ class LoginPage extends React.Component {
           ><Tos/></Modal>
           <Video
             ref={ele => { this.video = ele }}
-            movie="/video/SpectreIntro.mp4"
+            movie="https://spectreknows.me/video/SpectreIntro.mp4"
             autoPlay={false}
             onComplete={this.endVideo}
             onKeyUp={this.onKeyPress}

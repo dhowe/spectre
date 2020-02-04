@@ -214,6 +214,7 @@ const photo = async (req, res) => {
     return sendError(res, 'no uid sent');
   }
 
+  // Destination here needs to be folder we are watching
   let upload = multer({
     storage: multer.diskStorage({
       destination: (req, file, cb) => {
@@ -227,14 +228,14 @@ const photo = async (req, res) => {
   }).single('profileImage');
 
   try {
+    // 2 steps here 1) write the file, 2) send filename to client
     await upload(req, res, e => {
       if (e) return sendError(res, 'photo.upload', e);
       if (!req.file) return sendError(res, 'photo.upload: null req. file');
       console.log('[' + clfDate() + '] ::* UPLOAD ' + req.file.path);
 
-      // should this use profDir instead?
+      // just for sending back to the client, but should use profDir instead ?
       req.file.url = req.file.path.replace(/.*\/profiles/, '/profiles');
-
       sendResponse(res, req.file);
     });
   }

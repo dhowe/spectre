@@ -29,5 +29,4 @@ let clientDir = path.join(__dirname, '/client');
 let profDir = prod ? '/Library/WebServer/Documents/spectre/profiles'
   : clientDir + '/public/profiles';
 
-
 export { dbUrl, apiUser, certs, profDir, prod, clientDir };
