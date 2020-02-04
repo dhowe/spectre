@@ -133,7 +133,7 @@ class LoginPage extends React.Component {
   }
 
   onKeyPress = (e) => {
-    if (this.videoStarted) { // next-page
+    if (this.videoStarted){ // next-page
       this.props.history.push('/pledge');
     }
     else {
@@ -162,11 +162,11 @@ class LoginPage extends React.Component {
             title={this.modalTitle}
             content={this.modalContent}
             onClose={() => this.closeModal()}
-            htmlContent={<Tos/>}
-          ><Tos/></Modal>
+            htmlContent={this.modalTitle === 'Terms of Service' ? <Tos/> : null}
+          />
           <Video
             ref={ele => { this.video = ele }}
-            movie="https://spectreknows.me/video/SpectreIntro.mp4"
+            movie="/video/SpectreIntro.mp4"
             autoPlay={false}
             onComplete={this.endVideo}
             onKeyUp={this.onKeyPress}
