@@ -9,13 +9,10 @@ import mongoose from 'mongoose';
 import bodyparser from 'body-parser';
 import basicAuth from 'express-basic-auth';
 import controller from './user-controller';
-
-import { dbUrl, apiUser, profDir, clientDir, certs, prod } from './config';
-
-console.log('MODE2: '+(prod?'prod':'dev'));
-
 import ProfileMaker from './profile-maker';
 import UserModel from './user-model';
+
+import { dbUrl, apiUser, profDir, clientDir, certs, prod } from './config';
 
 const base = '/api/';
 const port = process.env.PORT || 8083;
@@ -102,6 +99,6 @@ if (prod) { // load ssl certs for production
   }
 }
 
-if (!server) server = http.createServer(app).listen(port, () => log(true));
+if (!server) server = http.createServer(app).listen(port, () => logf(true));
 
 export default server;
