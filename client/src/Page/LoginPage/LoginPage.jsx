@@ -17,7 +17,7 @@ import './LoginPage.scss';
 window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true; // TMP: #138
 
 const styles_landscape = {
-    marginBottom: 20,
+
 };
 
 const styles_portrait = {
@@ -153,10 +153,10 @@ class LoginPage extends React.Component {
 
     return (
       <div className={this.props.classes.root + ' LoginPage'}>
-        <SpectreHeader />
+        <SpectreHeader colour="white"/>
         <IdleChecker forceTerminate={this.state.idleCheckerDone} />
         <div className={this.props.classes.content + ' LoginPage-content content'}>
-          <h2>Let's Play!</h2>
+          <h1 className="login-title">Let's Play!</h1>
           <Modal
             isOpen={this.state.modalOpen}
             title={this.modalTitle}

@@ -91,7 +91,9 @@ p {
 }
 
 h1 {
-  font-size: 60px;
+  font-size: 48px;
+  font-weight: normal;
+  line-height: 59px;
 }
 
 h2 {
@@ -117,20 +119,25 @@ h6 {
 strong {
   color: $blue;
 }
+
+span {
+  color: $blue;
+  font-weight: normal;
+}
 @media screen and (orientation:landscape) {
   body,
   html {
-    font-size: 35px;
+    font-size: 28px;
   }
 
   p.copy {
-    font-size: 35px;
+    font-size: 28px;
     padding-bottom: 40px;
   }
 
   p,
   p.copy-nextline {
-    font-size: 35px;
+    font-size: 28px;
     padding-bottom: 10px;
   }
 
@@ -278,7 +285,9 @@ a.disabled {
 .iconButton {}
 
 .thankyou-icon {
-  margin: 50px auto 60px;
+
+  width: 112px;
+  height: 112px;
 }
 
 .link {

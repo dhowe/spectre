@@ -1,25 +1,25 @@
 @import '../../colors.scss';
-
 @media screen and (orientation:landscape) {
   .touchToBegin {
     margin: 0;
     height: 100%;
     overflow: hidden;
     height: 100vh;
+    width: 100%;
     background-color: $blue;
-    width: 100%;
   }
 
-  .touchToBegin-beginButton {
-    text-decoration: none;
-    position: relative;
-    width: 100%;
-    top: -140px;
-    left: -15px;
-    text-align: center;
+  .touchToBegin-Header {
+    position: absolute;
+    width: 388px;
+    height: 118px;
+    left: 766px;
+    top: 200px;
   }
 
-
+  .touchToBegin-Header img {
+    width: 100%;
+  }
 }
 @media screen and (orientation:portrait) {
   .touchToBegin {
