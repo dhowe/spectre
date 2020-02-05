@@ -21,11 +21,13 @@
     "uninstall-client": "rimraf \"./client/yarn-lock.json\" \"./client/node_modules\"",
     "uninstall-server": "rimraf \"./yarn-lock.json\" \"./node_modules\"",
     "reinstall": "yarn uninstall-client && yarn uninstall-server && yarn install-all",
-    "build-mail": "NODE_ENV=production babel ... ",
+    "commentOutScss": "find build/Components/ -name '*.js' -print0 | xargs -0 sed -i '' 's/^require/\\/\\/&/'",
+    "build-mail": "NODE_ENV=production babel client/src/Components --out-dir build/Components && node-sass client/src/Components/ -o build/Components && npm run commentOutScss",
     "gen-mail": "NODE_ENV=production node scripts/generateEmail.js"
   },
   "author": "daniel howe",
   "dependencies": {
+    "@material-ui/core": "^4.9.1",
     "@tensorflow/tfjs-node": "^1.5.1",
     "archiver": "^3.0.0",
     "babel-cli": "^6.24.1",
@@ -34,6 +36,7 @@
     "babel-runtime": "^6.26.0",
     "basic-auth": "~2.0.0",
     "body-parser": "^1.19.0",
+    "btoa": "^1.2.1",
     "canvas": "^2.6.1",
     "chai-fs": "^2.0.0",
     "chai-string": "^1.5.0",

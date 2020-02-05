@@ -4,7 +4,7 @@ import Typography from "@material-ui/core/Typography/Typography";
 import Grid from "@material-ui/core/Grid/Grid";
 import Slider from "@material-ui/core/Slider";
 
-import "./OceanProfile.css";
+import "./OceanProfile.scss";
 
 function OceanProfile(props) {
   let traits = props.subject.traits;

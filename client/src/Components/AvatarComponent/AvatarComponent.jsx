@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import UserSession from '../../Components/UserSession/UserSession';
 import PropTypes from 'prop-types';
 
-import './AvatarComponent.css';
+import './AvatarComponent.scss';
 
 const styles = {
   targeted: {
