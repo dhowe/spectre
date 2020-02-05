@@ -1,15 +1,8 @@
 .LoginPage {
-  background-color: #21c0fc;
   color: #ffffff;
   flex-grow: 1;
   width: 100%;
   background-size: 'cover';
-}
-
-.LoginPage-content h2 {
-  font-size: 55px;
-  font-weight: 400;
-    color: #fff;
 }
 
 .LoginPage-content h6 {
@@ -18,7 +11,8 @@
   font-weight: 400;
   color: #fff;
 }
-.react-simple-keyboard span{
+
+.react-simple-keyboard span {
   font-size: 30px;
 }
 @media screen and (orientation:landscape) {
@@ -29,27 +23,32 @@
     h4,
     h5,
     h6 {
-      color: #ffffff;
+      color: #828282;
     }
-    background-color: #21c0fc;
+    background-color: #ffffff;
   }
 
-  .LoginPage-content h2 {
+  .LoginPage-content h1 {
     margin-top: -600px;
-
+    color: #42BAEB;
+    font-weight: bold;
+    font-size: 48px;
+    line-height: 59px;
+    text-align: center;
   }
 
   .LoginPage-content h6 {
-      padding-top: 20px;
+    padding-top: 20px;
   }
 
   .tos {
     position: fixed;
     margin: auto;
-    color: white;
+    color: #828282;
     text-align: left;
-    bottom: 2%;
-    left: 43%;
+    left: 29.5%;
+    bottom: 1.5%;
+    font-size: 18px;
   }
 }
 @media screen and (orientation:portrait) {
@@ -60,14 +59,18 @@
     justify-content: space-around;
   }
 
-  .LoginPage-content h2 {}
+  .LoginPage-content h2 {
+    font-size: 55px;
+    font-weight: 400;
+    color: #fff;
+  }
 
   .LoginPage-content h6 {}
 
   .tos {
     position: fixed;
     margin: auto;
-    color: white;
+    color: #828282;
     text-align: left;
     bottom: 3%;
     left: 28%;

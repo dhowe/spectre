@@ -6,6 +6,7 @@ import Modal from "@material-ui/core/Modal";
 import Button from "@material-ui/core/Button";
 import "./Modal.scss";
 
+
 function getModalStyle() {
   return {
     top: `50%`,
@@ -29,7 +30,8 @@ const styles = theme => ({
   },
   content: {
     textAlign: "left"
-  }
+  },
+
 });
 
 function SimpleModal(props) {
@@ -46,18 +48,20 @@ function SimpleModal(props) {
       onClose={props.onClose}
 
     >
+
       <div style={modalStyle} className={classes.paper} id="modal-title-div">
       <div id="modal-title-div-content">
         <Typography variant="h6" className={classes.title} id="modal-title">
           {props.title}
         </Typography>
         {props.content.length > 500 ?  <p id="tos-content">{props.content}</p> : <p
-            variant="subtitle1"
-            className={classes.content}
-            id="simple-modal-description">{props.content}</p>}
+            variant="subtitle1" className={classes.content} id="simple-modal-description">{props.content}</p>}
         <Button onClick={props.onClose} id="simple-modal-button">Close</Button>
+        <div id="tos-content">{props.htmlContent}</div>
       </div>
+
       </div>
+
     </Modal>
   );
 }
@@ -67,6 +71,7 @@ SimpleModal.propTypes = {
   content: PropTypes.string.isRequired,
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
+  htmlContent: PropTypes.element,
 };
 
 export default withStyles(styles)(SimpleModal);

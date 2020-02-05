@@ -100,8 +100,8 @@ class SearchingFor extends React.Component {
         <SpectreHeader colour="white" />
         <IdleChecker />
         <div className={`${classes.content} content`}>
-          <p><strong>{name}</strong></p>
-          <p>What are you searching for today?</p>
+          <h1><span>{name}, </span>what are you<br/>
+           searching for today?</h1>
           {<div className="ImageCapture">
             <Webcam
               audio={false}

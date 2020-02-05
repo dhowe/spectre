@@ -36,10 +36,9 @@ class Pledge extends React.Component {
         <div className={`${classes.content} content`}>
           <div className="pledge">
             <Fade in timeout={1000}>
-              <p className="copy">
-                Welcome to the altar of&nbsp;
-                <strong>Dataism.</strong>
-              </p>
+              <h1>
+                Welcome to the altar of <span>Dataism</span>.
+              </h1>
             </Fade>
             <Fade in timeout={1000} style={{ transitionDelay: '2500ms' }}>
               <p className="copy">Our technologies can tell you things about yourself that you don’t know.</p>
