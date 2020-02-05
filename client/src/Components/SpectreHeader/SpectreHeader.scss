@@ -1,65 +1,58 @@
-    .SpectreHeader {
-      z-index: 1;
-    }
-@media screen and (orientation:landscape){
-
-    .SpectreHeader {
-        text-align: center;
-        position: fixed;
-        top: 0px;
-        width: 100%;
-        margin: 0 0;
-    }
-
-    .SpectreHeader .logo-img {
-        width: 20%;
-    }
-    .SpectreHeader .avatar-image {
-      position: absolute;
-      top:0px;
-      left: 0px;
-    }
-    .SpectreHeader .avatar-name  {
-      position: absolute;
-      top:100px;
-      left: 20px;
-    }
-
-
-
-
-
-    .SpectreHeader-white {
-        background-color: #ffffff;
-    }
-
-    .SpectreHeader .progress{
-
-    }
-
-    .SpectreHeader hr{
-      margin-top: 10px;
-    }
+.SpectreHeader {
+  z-index: 1;
 }
-
-
-
-@media screen and (orientation:portrait){
-
+@media screen and (orientation:landscape) {
   .SpectreHeader {
-      text-align: left;
-      position: fixed;
-      top: 0;
-      width: 100%;
-      padding: 70px 50px;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 136px;
+    margin: 0;
   }
 
-  .SpectreHeader img {
-      width: 30%;
+  .SpectreHeader .logo-img {
+    width: 282px;
+  }
 
+
+
+  .SpectreHeader .avatar-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .SpectreHeader .avatar-name {
+    position: absolute;
+    top: 100px;
+    left: 20px;
   }
 
   .SpectreHeader-white {
-      background-color: #ffffff;
+    background-color: #ffffff;
+  }
+
+  .SpectreHeader .progress {}
+
+  .SpectreHeader hr {
+    margin-top: 0;
+  }
+}
+@media screen and (orientation:portrait) {
+  .SpectreHeader {
+    text-align: left;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 70px 50px;
+  }
+
+  .SpectreHeader img {
+    width: 30%;
+  }
+
+  .SpectreHeader-white {
+    background-color: #ffffff;
   }
 }

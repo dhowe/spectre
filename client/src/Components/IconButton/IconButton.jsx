@@ -6,12 +6,14 @@ import './IconButton.scss';
 import colours from '../../colors.scss';
 
 const styles = {
+  /*
   button: {
     display: 'flex',
     flexDirection: 'column',
     justifyItems: 'center',
     alignItems: 'center',
   },
+  */
 };
 
 const icons = {

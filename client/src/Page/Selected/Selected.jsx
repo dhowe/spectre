@@ -1,15 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button/Button';
+import IconButton from '../../Components/IconButton/IconButton';
 import { Link } from 'react-router-dom';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import AvatarComponent from '../../Components/AvatarComponent/AvatarComponent';
 //import colours from '../../colors.scss';
-
-import './Selected.scss';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 import ComponentsStyles from '../../App.module.css';
 
@@ -44,7 +42,7 @@ class Selected extends React.Component {
         <SpectreHeader colour="white" progressActive={true} progressNumber="one" />
         <IdleChecker />
         <div className={`${classes.content} content`}>
-          <p className="title">You selected:</p>
+          <h1>You selected:</h1>
           <div>
             <AvatarComponent target={{ name: targetName, image: targetImage }} />
           </div>
@@ -53,7 +51,7 @@ class Selected extends React.Component {
           <p className="copy">Don’t worry, only you will see the results. </p>
           <div className="link">
           <Link to="/insight-gender">
-            <Button className={ComponentsStyles.blueBtn}>Dive in</Button>
+            <IconButton enabled={true} className={ComponentsStyles.iconButtonStyle1} icon="tick" text="Dive in" />
           </Link>
           </div>
         </div>

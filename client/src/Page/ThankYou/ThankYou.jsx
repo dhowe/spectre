@@ -8,7 +8,7 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
-//import ComponentsStyles from '../../App.module.css';
+import ComponentsStyles from '../../App.module.css';
 
 const styles = {
 
@@ -35,7 +35,7 @@ class ThankYou extends React.Component {
           </div>
           <div className="link">
           <Link to="/steps">
-            <IconButton enabled={true} icon="next" text="Next"/>
+            <IconButton enabled={true} className={ComponentsStyles.iconButtonStyle1} icon="next" text="Next"/>
           </Link>
           </div>
         </div>

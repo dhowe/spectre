@@ -10,7 +10,7 @@ import TextSliderText from '../../Components/TextSliderText/TextSliderText';
 import AvatarComponent from '../../Components/AvatarComponent/AvatarComponent';
 import UserSession from '../../Components/UserSession/UserSession';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
-
+import ComponentsStyles from '../../App.module.css';
 
 const styles = {
   root: {
@@ -66,7 +66,7 @@ class Insight extends React.Component {
           </div>
           <div className="link">
           <Link to={next}>
-            <IconButton enabled={this.state.buttonEnabled} icon="next" text="Next" />
+            <IconButton enabled={this.state.buttonEnabled} className={ComponentsStyles.iconButtonStyle1} icon="next" text="Next" />
           </Link>
           </div>
         </div>

@@ -8,8 +8,8 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import IconButton from '../../Components/IconButton/IconButton';
 import IconButtonToggle from '../../Components/IconButton/IconButtonToggle';
-
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
+import ComponentsStyles from '../../App.module.css';
 
 
 const styles = {
@@ -56,7 +56,7 @@ class HomeData extends React.Component {
           </div>
           <div className="link">
             <Link className={this.state.count === 2 ? "true" : "disabled"} to="/find-citizens">
-              <IconButton enabled={this.state.count === 2} icon="next" text="Next" />
+              <IconButton enabled={this.state.count === 2} className={ComponentsStyles.iconButtonStyle1} icon="next" text="Next" />
             </Link>
           </div>
         </div>

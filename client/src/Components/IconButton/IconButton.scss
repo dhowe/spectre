@@ -3,11 +3,7 @@
 .iconButtonText {
     color: #21c0fc;
     text-decoration: none;
-    margin-top: -15px;
-    font-size: 45px;
 }
-
-
 
 .iconButton:disabled *{
   pointer-events: none;
@@ -17,6 +13,7 @@
 .iconButton *{
   pointer-events: auto;
   color: $blue;
+
 }
 
 .iconButton-white *{
@@ -28,8 +25,7 @@
   background: transparent no-repeat;
   border: none;
   cursor: none;
-  overflow: hidden;
   outline: none;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0;
+  padding: 0;
 }

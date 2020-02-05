@@ -8,9 +8,8 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import IconButton from '../../Components/IconButton/IconButton';
 import IconButtonToggle from '../../Components/IconButton/IconButtonToggle';
-
-
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
+import ComponentsStyles from '../../App.module.css';
 
 const styles = {
 };
@@ -61,7 +60,7 @@ class PoliticalData extends React.Component {
           </div>
           <div className="link">
             <Link className={this.state.count === 3 ? "true" : "disabled"} to="/home-data">
-              <IconButton enabled={this.state.count === 3} icon="next" text="Next" />
+              <IconButton enabled={this.state.count === 3} className={ComponentsStyles.iconButtonStyle1} icon="next" text="Next" />
             </Link>
           </div>
         </div>

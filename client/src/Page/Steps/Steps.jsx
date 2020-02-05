@@ -9,7 +9,7 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
-
+import ComponentsStyles from '../../App.module.css';
 
 const styles = {
 };
@@ -33,26 +33,26 @@ class Steps extends React.Component {
         <IdleChecker setIdleTime={14}/>
         <div className={classes.content + " content"}>
             <Fade in={true} >
-                <p className="copy">Find what you are looking for by following these three steps:</p>
+                <h1>Find what you are looking for<br/> by following these three steps:</h1>
             </Fade>
             <Fade in={true} style={{transitionDelay: '1000ms'}}>
-                <p className="copy-nextline"><strong>Step 1</strong> - influence a follower</p>
+                <p className="fourty-nextline"><strong>Step 1</strong> - influence a follower</p>
             </Fade>
             <Fade in={true} style={{transitionDelay: '2000ms'}}>
-                <p className="copy-nextline"><strong>Step 2</strong> - influence a nation</p>
+                <p className="fourty-nextline"><strong>Step 2</strong> - influence a nation</p>
             </Fade>
             <Fade in={true} style={{transitionDelay: '3000ms'}}>
-                <p className="copy"><strong>Step 3</strong> - influence a celebrity</p>
+                <p className="fourty"><strong>Step 3</strong> - influence a celebrity</p>
             </Fade>
             <Fade in={true} style={{transitionDelay: '4000ms'}}>
-                <p className="copy-nextline">Get the data. Get the {this.state.virtue}.</p>
+                <p className="fourty-nextline">Get the data. Get the {this.state.virtue}.</p>
             </Fade>
             <Fade in={true} style={{transitionDelay: '5000ms'}}>
-                <p className="copy">Ready?</p>
+                <p className="fourty"><span>Ready?</span></p>
             </Fade>
             <div className="link">
             <Link to="/follower">
-                <IconButton enabled={true} icon="tick" text="Yes" />
+                <IconButton enabled={true} className={ComponentsStyles.iconButtonStyle1} icon="next" text="Next"/>
             </Link>
             </div>
         </div>
