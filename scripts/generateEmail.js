@@ -13,7 +13,8 @@ const AvatarComp = require('../build/Components/AvatarComponent/AvatarComponent'
 const { ServerStyleSheets } = require('@material-ui/core/styles');
 const StyleTag = '%STYLE%', UserNameTag = "%USERNAME%", OceanProfileTag = '%OCEANPROFILE%', JssTag = "%JSS%";
 const DefaultSubject = 'Spectre knows about you';
-
+const DefaultTestEmail = 'spectre-test@email.com';
+let emailAddress;
 
 dotEnv.config();
 
@@ -110,7 +111,7 @@ function sendEmail(message, cb) {
   message = typeof message === 'object' ? message : { html: message };
   message = Object.assign({
     from: 'spectre@spectreknows.me',
-    to: 'spectre-test@email.com',
+    to: emailAddress ? emailAddress : DefaultTestEmail,
     subject: DefaultSubject
   }, message);
 
@@ -195,9 +196,23 @@ function createEmail(user) {
     });
 }
 
-createEmail(mockUser).then(saveEmail);
 
-/*lookupUser('888888888888888888888888')
-  .then(createEmail)
-  .then(saveEmail);
-  .then(sendEmail);*/
+
+ const args = require('minimist')(process.argv.slice(2));
+ // console.log(args)
+ if(args.length == 0) createEmail(mockUser).then(saveEmail);
+ else {
+   if (args.e) {
+     emailAddress = args.e;
+   }
+
+   if (args.u) {
+     lookupUser(args.u)
+       .then(createEmail)
+       .then(sendEmail);
+   } else {
+     createEmail(mockUser).then(sendEmail);
+   }
+
+  // node generateEmail.js -u [userID] -e [email]
+ }
