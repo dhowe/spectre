@@ -52,7 +52,7 @@ class OCEANReveal extends React.Component {
 
     let videoPlaceholder = readyForVideo ? (
       <Video ref={e => { this.video = e }} className={classes.video}
-        movie={`/video/wrapup_${celebrity}.mp4`} key="349587"
+        movie={`https://spectreknows.me/video/wrapup_${celebrity}.mp4`} key="349587"
         onComplete={() => this.props.history.push('/take-back-control')}
       />) : <br />;
 

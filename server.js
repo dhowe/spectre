@@ -1,5 +1,4 @@
 import fs from 'fs';
-import path from 'path';
 import cors from 'cors';
 import http from 'http';
 import https from 'https';
@@ -10,16 +9,14 @@ import mongoose from 'mongoose';
 import bodyparser from 'body-parser';
 import basicAuth from 'express-basic-auth';
 import controller from './user-controller';
-import { dbUrl, apiUser, certs } from './config';
-
 import ProfileMaker from './profile-maker';
 import UserModel from './user-model';
+
+import { dbUrl, apiUser, profDir, clientDir, certs, prod } from './config';
 
 const base = '/api/';
 const port = process.env.PORT || 8083;
 const test = process.env.NODE_ENV === 'test';
-const prod = process.env.NODE_ENV === 'production';
-const client = path.join(__dirname, '/client');
 
 if (!apiUser[process.env.API_USER]) {
   throw Error('Attempt to start server without ' +
@@ -45,7 +42,7 @@ app.all('*', logger('[:date[clf]] :remote-addr :method :url :status', {
 }));
 
 // static react files (no-auth)
-if (!prod) app.use(express.static(client + '/build'));
+if (!prod) app.use(express.static(clientDir + '/build'));
 
 // current user route (no-auth)
 app.get(base + 'users/current/:cid', controller.current);
@@ -54,10 +51,11 @@ app.get(base + 'users/current/:cid', controller.current);
 app.use(base, auth, routes);
 
 // for react pages in dev (no-auth)
-if (!prod) app.get('*', (req, res) => res.sendFile(client + '/build/index.html'));
+const index = clientDir + '/build/index.html';
+if (!prod) app.get('*', (req, res) => res.sendFile(index));
 
 // watch for new profile images to process
-if (!test) new ProfileMaker().watch(prod ? process.env.WEB_ROOT + '/profiles' : client + '/public/profiles');
+if (!test) new ProfileMaker().watch(profDir);
 
 /////////////////////////// DbConnect ///////////////////////////////
 
@@ -83,7 +81,10 @@ const dbstr = prod ? dbUrl : dbUrl + '-dev';
 //   }, 5000);
 // }
 
-let server;
+let server, logf = (dev) => {
+  console.log('\nSpectre API at '+(dev ? 'http' : 'https:') + '//localhost:' + port + base + ' ['
+    + dbstr.substring(dbstr.lastIndexOf('/') + 1) + '::' + profDir + ']');
+}
 
 if (prod) { // load ssl certs for production
   try {
@@ -91,23 +92,13 @@ if (prod) { // load ssl certs for production
     const key = fs.readFileSync(certs + 'privkey.pem', 'utf8');
     const cert = fs.readFileSync(certs + 'fullchain.pem', 'utf8');
     const credentials = { key: key, cert: cert, ca: ca };
-    server = https.createServer(credentials, app).listen(port, () => {
-      console.log('Spectre API at https://localhost:' + port + base +
-        ' [' + dbstr.substring(dbstr.lastIndexOf('/') + 1) + ']\n');
-    });
+    server = https.createServer(credentials, app).listen(port, logf);
   }
   catch (e) {
-    console.error('\n[ERROR] Unable to start HTTPS, trying HTTP\n',e,'\n');
+    console.error('\n[ERROR] Unable to start HTTPS, trying HTTP\n', e, '\n');
   }
 }
 
-if (!server) {
-  server = http.createServer(app).listen(port, () => {
-    console.log('Spectre API at http://localhost:' + port + base +
-      ' [' + dbstr.substring(dbstr.lastIndexOf('/') + 1) + ']\n');
-  });
-}
-
-
+if (!server) server = http.createServer(app).listen(port, () => logf(true));
 
 export default server;

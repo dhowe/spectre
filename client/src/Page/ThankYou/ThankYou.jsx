@@ -29,9 +29,10 @@ class ThankYou extends React.Component {
         <IdleChecker />
         <div className={`${classes.content} content`}>
           <div>
-            <p className="copy">Thank you, <strong>{user.name}!</strong></p>
-            <ThumbUp className="thankyou-icon" />
+            <h1>Thank you, <span>{user.name}!</span></h1>
+
             <p className="copy">Your experience has been <strong>personalised.</strong></p>
+            <ThumbUp className="thankyou-icon" />
           </div>
           <div className="link">
           <Link to="/steps">

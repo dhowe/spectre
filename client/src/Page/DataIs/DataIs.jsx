@@ -52,7 +52,7 @@ class DataIs extends React.Component {
         <SpectreHeader colour="white" />
         <div className={`${this.props.content} content`}>
           <Fade in={true} style={{ transitionDelay: '200ms' }}>
-            <p className="copy">DATA IS {virtue.toUpperCase()}</p>
+            <h1>Data is {virtue}</h1>
           </Fade>
           <Fade in={true} style={{ transitionDelay: '1200ms' }}>
             <p className="copy-nextline">To become more <strong>{virtueAdverb}</strong> you need&nbsp;more&nbsp;data</p>

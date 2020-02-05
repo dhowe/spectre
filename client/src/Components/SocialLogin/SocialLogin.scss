@@ -16,7 +16,7 @@ input[type="text"] {
 }
 
 .MuiFormGroup-root {
-  align-items: center;
+  align-items:flex-start;
 }
 @media screen and (orientation:landscape) {
   .simple-keyboard {
@@ -25,7 +25,7 @@ input[type="text"] {
   }
 
   .radio span {
-    color: white;
+    color: #828282;
     font-size: 25px;
   }
 
@@ -35,8 +35,11 @@ input[type="text"] {
     left: 29%;
   }
 
-  .MuiFormControl-root h6 {
-    text-align: center;
+  .MuiFormControl-root p {
+    padding-top: 60px;
+    text-align: left;
+    font-size: 28px;
+
   }
 
 }

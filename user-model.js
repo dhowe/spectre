@@ -14,7 +14,7 @@ Object.keys(functions).forEach(f => UserSchema.methods[f] = functions[f]);
 // find all users with traits
 UserSchema.methods.findByOcean = function(callback, limit) { // cb=function(err,users)
   let user = this;
-  UserModel.find({ 'traits.openness': { $gte: 0 } })
+  UserModel.find({ 'traits.openness': { $gte: 0 }, 'hasImage': true })
     .exec((err, candidates) => {
       if (err) {
         console.error('findByOcean', err);

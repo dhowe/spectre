@@ -1,1 +1,1 @@
-The larger set of celeb videos are not stored in github, but downloaded as part of install and placed in this folder (these should all start with a lowercase letter). The videos in git should start with an uppercase letter.
+To minimize build times, all videos are now served from https://spectreknows.me/video 

@@ -141,6 +141,8 @@ class SocialLogin extends React.Component {
 
 
   render() {
+    console.log(this.state.name.length)
+    console.log(this.state.focus)
     const { classes } = this.props;
     const { email, name, gender } = this.state;
     const btnEnabled = email && email.length &&
@@ -151,12 +153,11 @@ class SocialLogin extends React.Component {
           <form noValidate>
             {/* #267: SHIFT / CAPS, etc. dont work */}
             <FormControl className={classes.margin}>
-              <h6>Enter your name:</h6>
               <Input
                 name="name"
                 onClick={this.changeFocus('name')}
                 id="custom-css-standard-name"
-                value={this.state.name}
+                value={this.state.name.length === 0 || this.state.focus !== 'name' ? "Your Name" : this.state.name}
                 classes={{
                   root: classes.textField,
                   underline: classes.cssUnderline,
@@ -164,12 +165,11 @@ class SocialLogin extends React.Component {
               />
             </FormControl>
             <FormControl className={classes.margin}>
-              <h6>Your email:</h6>
               <Input
                 name="email"
                 onClick={this.changeFocus('email')}
                 id="custom-css-standard-email"
-                value={this.state.email}
+                value={this.state.email.length === 0 || this.state.focus !== 'email' ? "Your Email" : this.state.email}
                 classes={{
                   root: classes.textField,
                   underline: classes.cssUnderline,
@@ -178,7 +178,7 @@ class SocialLogin extends React.Component {
             </FormControl>
 
             <FormControl component="fieldset" className={classes.formControl}>
-              <h6>Your gender:</h6>
+              <p>Your gender:</p>
               <RadioGroup
                 aria-label="Gender"
                 name="gender"

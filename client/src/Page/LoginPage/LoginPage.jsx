@@ -8,7 +8,8 @@ import UserSession from '../../Components/UserSession/UserSession';
 import { Link } from 'react-router-dom';
 import Video from '../../Components/Video/Video';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
-import TosContent from './termsOfService'
+//import TosContent from './termsOfService'
+import  Tos  from './Tos'
 
 import { withStyles } from '@material-ui/core/styles';
 import './LoginPage.scss';
@@ -16,7 +17,7 @@ import './LoginPage.scss';
 window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true; // TMP: #138
 
 const styles_landscape = {
-    marginBottom: 20,
+
 };
 
 const styles_portrait = {
@@ -126,12 +127,13 @@ class LoginPage extends React.Component {
 
   termsOfService = () => {
     this.modalTitle = 'Terms of Service';
-    this.modalContent = TosContent.text;
+    //this.modalContent = TosContent.text;
+    this.modalContent = '';
     this.setState({ modalOpen: true });
   }
 
   onKeyPress = (e) => {
-    if (this.videoStarted) { // next-page
+    if (this.videoStarted){ // next-page
       this.props.history.push('/pledge');
     }
     else {
@@ -151,15 +153,16 @@ class LoginPage extends React.Component {
 
     return (
       <div className={this.props.classes.root + ' LoginPage'}>
-        <SpectreHeader />
+        <SpectreHeader colour="white"/>
         <IdleChecker forceTerminate={this.state.idleCheckerDone} />
         <div className={this.props.classes.content + ' LoginPage-content content'}>
-          <h2>Let's Play!</h2>
+          <h1 className="login-title">Let's Play!</h1>
           <Modal
             isOpen={this.state.modalOpen}
             title={this.modalTitle}
             content={this.modalContent}
             onClose={() => this.closeModal()}
+            htmlContent={this.modalTitle === 'Terms of Service' ? <Tos/> : null}
           />
           <Video
             ref={ele => { this.video = ele }}

@@ -2,7 +2,7 @@
 
 :root {
   --red: #e03c31;
-  --grey: #929391;
+  --grey: #4F4F4F;
   --lightGrey: #a5a6a8;
   --blue: #21c0fc;
 }
@@ -93,9 +93,8 @@ Button
   }
 
   .logo {
-    top: 50%;
-    left: 50%;
-    margin: -60px 0 0 -60px;
+    top: 48%;
+    left: 48%;
   }
 }
 

@@ -4,6 +4,7 @@ import * as faceapi from 'face-api.js';
 import * as tf from '@tensorflow/tfjs-node';
 import observer from 'chokidar';
 import clfDate from 'clf-date';
+import UserModel from './user-model';
 
 const BRIGHTEN = 1.5;
 
@@ -30,28 +31,34 @@ class ProfileMaker {
       ignoreInitial: true,
       awaitWriteFinish: true
     })
-      .on('add', this.onImage)
-      .on('change', this.onImage);
+      .on('add', this.onNewImage)
+      .on('change', this.onNewImage);
   }
 
-  onImage = (path) => {
+  onNewImage = (path) => {
 
     console.log('[' + clfDate() + '] ::* IMAGE ' + pathify(path));
 
     if (/^.*\/[a-f\d]{24}_raw\.jpg$/i.test(path)) {
       try {
-        const outf = path.replace(/_raw\.jpg/, '.jpg');
-        this.makeThumbnail(path, outf)
+        const tmp = path.replace(/_raw\.jpg/, '');
+        const id = tmp.substring(tmp.lastIndexOf('/') + 1);
+        const outfile = tmp + '.jpg';
+        this.makeThumbnail(path, outfile)
           .then(res => {
             if (res.status !== 'ok') {
-              console.error('[ERROR] ProfileMaker.1:: ' + res.data);
+              console.error('[ERROR] ProfileMaker(1): ' + res.data);
               return;
             }
-            console.log('[' + clfDate() + '] ::* THUMB', pathify(outf));
+            console.log('[' + clfDate() + '] ::* THUMB', pathify(outfile));
+            UserModel.findByIdAndUpdate(
+              id, { hasImage: true }, { new: true }, (err, u) => {
+                if (err) console.error('[ERROR] ProfileMaker(2): ' + err);
+              })/*console.log('Saved user: ' + u))*/
           });
       }
       catch (e) {
-        console.error('[ERROR] ProfileMaker.2:: ' + path + '\n' + e);
+        console.error('[ERROR] ProfileMaker(3): ' + path + '\n' + e);
       }
     }
   }

@@ -28,12 +28,14 @@
   width: 900px;
 }
 
-#modal-title-div-content p {
+#simple-modal-description {
   padding: 50px 15px;
   text-align: center;
   font-weight: normal;
   color: $blue;
 }
+
+
 
 #simple-modal-description {
   font-size: 34px;
@@ -41,7 +43,9 @@
 
 #tos-content {
   font-size: 20px;
+  text-align: left;
 }
+
 
 #simple-modal-button {
   padding-left: 10px;

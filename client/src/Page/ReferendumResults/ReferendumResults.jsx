@@ -48,7 +48,7 @@ class ReferendumResults extends React.Component {
 
     let videoPlaceholder = adIssue.length ? (
       <Video className={ComponentsStyles.inPageVideo}
-        movie={'/video/ReferendumResults_'+adIssue+'.mp4'}
+        movie={'https://spectreknows.me/video/ReferendumResults_'+adIssue+'.mp4'}
         onComplete={() => this.timeout = setTimeout(() => this.props.history.push('/win'), 1000)}
       />) : <br />;
 

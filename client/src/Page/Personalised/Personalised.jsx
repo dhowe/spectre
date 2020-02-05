@@ -27,14 +27,13 @@ class Personalised extends React.Component {
         <div className={`${classes.content} content`}>
           <div>
           <Fade in>
-            <p className="copy">
-              In order to create a&nbsp;<strong>personalised experience</strong>
-            </p>
+            <h1>
+              In order to create a&nbsp;<span>personalised experience</span>
+            </h1>
           </Fade>
           <Fade in style={{transitionDelay: '1000ms'}}>
             <p className="copy">
-              Tell us what you love,<br/> 
-              tell us what you hate...
+              Tell us what you love and tell us what you hate.
             </p>
           </Fade>
           </div>

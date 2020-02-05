@@ -29,7 +29,7 @@ const styles_landscape = {
   root: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundImage: `url(${BeginBackground})`,
+    //backgroundImage: `url(${BeginBackground})`,
     backgroundSize: 'auto 100%',
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
