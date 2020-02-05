@@ -43,9 +43,6 @@ UserSession.create = async (user) => {
   return json;
 }
 
-/*
- * Repairs a user (if needed) and returns it
- */
 UserSession.sendMail = async (uid, email) => {
 
   if (UserSession.serverDisabled) return;
