@@ -10,9 +10,7 @@ import UserSession from '../../Components/UserSession/UserSession';
 
 import './SpectreHeader.scss';
 
-const styles = {
-
-};
+const styles = {};
 
 class SpectreHeader extends React.Component {
 
@@ -22,7 +20,7 @@ class SpectreHeader extends React.Component {
   }
 
   async componentDidMount() { // tmp for testing webcam
-    if (/(personalised|game)$/.test(window.location.pathname)) {
+    if (/(steps|thank-you|game|follower)$/.test(window.location.pathname)) {
       let user = await UserSession.ensure(this.context, ['_id', 'name']);
       if (user) this.setState({
         userName: user.name,

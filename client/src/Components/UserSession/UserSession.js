@@ -221,7 +221,34 @@ UserSession.similars = async (user) => {
   }
 }
 
-UserSession.postImage = async (user, image) => { // TODO: test
+UserSession.uploadImage = (user, data) => {
+
+  const toImageFile = (data, fname) => {
+    const arr = data.split(',');
+    if (!data || data.length <= 6) {
+      data && console.error(data);
+      console.error('Bad image data: ' + data);
+      return null;
+    }
+    const mime = arr[0].match(/:(.*?);/)[1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], fname, { type: mime });
+  }
+
+  if (!user || !data || !data.length) return false;
+  const imgfile = toImageFile(data, user._id + '.jpg');
+  UserSession.postImage(user, imgfile,
+    (e) => console.error('[WEBCAM] Error', e),
+    () => user.hasImage = true);
+  return true;
+}
+
+UserSession.postImage = async (user, image, onError, onSuccess ) => { // TODO: test
 
   if (UserSession.serverDisabled) return;
 
@@ -240,7 +267,13 @@ UserSession.postImage = async (user, image) => { // TODO: test
       headers: { "Authorization": 'Basic ' + btoa(auth) },
       body: fdata // JSON.stringfy(fdata) ??
     })
-    if (e) return handleError(e, route, 'postImage[1]');
+    if (e) {
+      console.log('ERROR', e);
+      handleError(e, route, 'postImage[1]');
+      if (typeof onError === 'function') onError(e);
+      return null;
+    }
+    if (typeof onSuccess === 'function') onSuccess(json);
     return json; // what to do here?
   }
   catch (e) {

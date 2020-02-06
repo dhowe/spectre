@@ -3,7 +3,7 @@ import UserSession from '../../Components/UserSession/UserSession';
 import { withRouter } from 'react-router-dom';
 
 const routes = [
-  '/', '/login', '/selfie', '/pledge', '/searching', '/data-is', '/personalised',
+  '/', '/login', '/pledge', '/searching', '/data-is', '/personalised',
   '/game', '/thank-you', '/steps', '/follower', '/selected',
   '/insight-gender','/insight-skin', '/insight-financial', '/insight-thank-you',
   '/insight-sexuality', '/insight-political', '/insight-complete',
@@ -14,7 +14,7 @@ const routes = [
   '/take-back-control', '/goodbye'
 ];
 
-const disabled = [ '/login' ];
+const disabled = [ '/login', '/pledge' ];
 
 class Navigation extends React.Component {
 

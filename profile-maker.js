@@ -47,18 +47,22 @@ class ProfileMaker {
         this.makeThumbnail(path, outfile)
           .then(res => {
             if (res.status !== 'ok') {
-              console.error('[ERROR] ProfileMaker(1): ' + res.data);
+              console.error('[ERROR] ProfileMaker[1]: ' + res.data);
+              UserModel.findByIdAndUpdate(
+                id, { hasImage: false }, { new: true }, (err, u) => {
+                  if (err) console.error('[ERROR] ProfileMaker[2]: ' + err);
+                })/*console.log('Saved user: ' + u))*/
               return;
             }
             console.log('[' + clfDate() + '] ::* THUMB', pathify(outfile));
             UserModel.findByIdAndUpdate(
               id, { hasImage: true }, { new: true }, (err, u) => {
-                if (err) console.error('[ERROR] ProfileMaker(2): ' + err);
+                if (err) console.error('[ERROR] ProfileMaker[3]: ' + err);
               })/*console.log('Saved user: ' + u))*/
           });
       }
       catch (e) {
-        console.error('[ERROR] ProfileMaker(3): ' + path + '\n' + e);
+        console.error('[ERROR] ProfileMaker[4]: ' + path + '\n' + e);
       }
     }
   }
@@ -145,10 +149,10 @@ class ProfileMaker {
           detectorOpts(this.detectionNet));
       }
       catch (e) {
-        throw Error('Detection failed: ' + e);
+        throw Error('Detection failed[1] ' + e);
       }
       if (!detection || !detection.box) {
-        throw Error('Detection failed');
+        throw Error('Detection failed[2]');
       }
       result = {
         box: detection.box,
@@ -156,7 +160,7 @@ class ProfileMaker {
         image: image
       };
     }
-    //console.log('result', result);
+    console.log('detection', detection);
     return result;
   }
 }

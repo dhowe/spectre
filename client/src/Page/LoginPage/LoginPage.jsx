@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import Video from '../../Components/Video/Video';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 //import TosContent from './termsOfService'
-import  Tos  from './Tos'
+import Tos from './Tos'
 
 import { withStyles } from '@material-ui/core/styles';
 import './LoginPage.scss';
@@ -21,14 +21,15 @@ const styles_landscape = {
 };
 
 const styles_portrait = {
-    marginBottom: 70,
+  marginBottom: 70,
 };
+
+const nextPage = '/pledge'
 
 class LoginPage extends React.Component {
 
   constructor(props) {
-    super(props, '/pledge');
-
+    super(props);
     this.state = {
       height: props.height,
       emailErrorCount: 0,
@@ -36,7 +37,6 @@ class LoginPage extends React.Component {
       clearEmail: true,
       idleCheckerDone: false,
     };
-
     this.videoStarted = false;
     this.video = React.createRef();
     this.social = React.createRef();
@@ -74,10 +74,9 @@ class LoginPage extends React.Component {
         this.modalTitle = 'Oops...';
         this.modalContent = 'That doesn\'t look like a valid email address, please try again';
         this.setState({ modalOpen: true, emailErrorCount: this.state.emailErrorCount + 1 });
-        //clearEmail();
       }
       else {
-        // TODO: else return to login page
+        // else return to login page
         this.props.history.push('/login');
       }
     }
@@ -121,7 +120,7 @@ class LoginPage extends React.Component {
     }
     else {
       console.error("Unable to load video component");
-      this.props.history.push('/pledge');
+      this.props.history.push(nextPage);
     }
   }
 
@@ -133,11 +132,16 @@ class LoginPage extends React.Component {
   }
 
   onKeyPress = (e) => {
-    if (this.videoStarted){ // next-page
-      this.props.history.push('/selfie');// ('/pledge');
+    if (e.key === 'ArrowRight') {
+      if (this.videoStarted) { // next-page
+        this.props.history.push(nextPage);
+      }
+      else {
+        this.handleSubmit(false, {}); // dev only
+      }
     }
-    else {
-      this.handleSubmit(false, {}); // dev only
+    else if (e.key === 'ArrowLeft') {
+      this.props.history.push(this.videoStarted ? '/login' : '/');
     }
   }
 
@@ -153,7 +157,7 @@ class LoginPage extends React.Component {
 
     return (
       <div className={this.props.classes.root + ' LoginPage'}>
-        <SpectreHeader colour="white"/>
+        <SpectreHeader colour="white" />
         <IdleChecker forceTerminate={this.state.idleCheckerDone} />
         <div className={this.props.classes.content + ' LoginPage-content content'}>
           <h1 className="login-title">Let's Play!</h1>
@@ -162,7 +166,7 @@ class LoginPage extends React.Component {
             title={this.modalTitle}
             content={this.modalContent}
             onClose={() => this.closeModal()}
-            htmlContent={this.modalTitle === 'Terms of Service' ? <Tos/> : null}
+            htmlContent={this.modalTitle === 'Terms of Service' ? <Tos /> : null}
           />
           <Video
             ref={ele => { this.video = ele }}

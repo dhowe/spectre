@@ -39,6 +39,8 @@ export default class User {
     if (u.similars && u.similars.length) {
       s += ', ' + u.similars.length + ' similars';
     }
+    if (u.hasImage) s += ', hasImage';
+    if (u.hasImage === false) s += '=False';
     return s;
   }
 

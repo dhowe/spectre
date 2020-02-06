@@ -1,17 +1,18 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
 import Webcam from 'react-webcam';
+import PropTypes from 'prop-types';
+//import { Link } from 'react-router-dom';
 import UserSession from '../../Components/UserSession/UserSession';
-import './TakeSelfie.scss';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import Button from '@material-ui/core/Button';
 import IconButton from '../../Components/IconButton/IconButton';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
-import ComponentsStyles from '../../App.module.css';
+import ComponentStyles from '../../App.module.css';
 import Countdown from 'react-countdown';
+
+import { withStyles } from '@material-ui/core/styles';
+import './TakeSelfie.scss';
 
 const styles = {};
 
@@ -21,89 +22,43 @@ const styles = {};
 // 3. Should give the user the choice to retake or accept the image
 class TakeSelfie extends React.Component {
   constructor(props) {
-    super(props, '/pledge');
+    super(props, '/game');
     this.state = {
+      imgData: null,
       captureNow: false,
       now: Date.now(),
-      img: null,
       reset: Date.now(),
     };
+    this.webcam = React.createRef();
     this.countdowner = React.createRef();
-
   }
 
-  setRef = (webcam) => {
-    this.webcam = webcam;
-  }
-
-  handleClick(c) {
+  handleClick = (c) => {
     this.clicked = c;
-    console.log(this.countdowner)
-    //this.countdowner.date = Date.now() + 4000;
     this.countdowner.start();
-    if (c === 'capture')
+    if (c === 'capture') {
       this.setState({ captureNow: true });
+    }
   }
 
-
-  handlePhotoShoot(virtue) {
-
-    const user = this.context;
-    user.virtue = virtue;
-    this.setState({reset: (new Date().getTime())});
-    this.setState({now: Date.now()});
+  takeSelfie = () => {
+    this.setState({ reset: (new Date().getTime()), now: Date.now() });
     try {
-      console.log('[WEBCAM] Taking image...');
+      console.log('[WEBCAM] Taking selfie...');
       const data = this.webcam.getScreenshot();
-      this.setState({ captureNow: false });
-      this.setState({ imgData: data })
-
-/*
-      if (data && data.length) {
-        const imgfile = this.toImageFile(data, user._id + '.jpg');
-        UserSession.postImage(this.context, imgfile,
-          (json) => {
-            this.context.hasImage = true;
-            this.props.history.push('/data-is');
-            return;
-          },
-          (e) => {
-            console.error('Error', e);
-            this.context.hasImage = false;
-            this.props.history.push('/data-is');
-            return;
-          }
-        );
-      }
-      else {
-        console.error('Webcam not available');
-        this.context.hasImage = false;
-        this.props.history.push('/data-is');
-        return;
-      }
-    */
+      this.setState({ captureNow: false, imgData: data })
     }
     catch (e) {
       console.error('Webcam Error: ', e);
     }
-
-
   }
 
-  toImageFile(data, fname) {
-    const arr = data.split(',');
-    if (!data || data.length <= 6) {
-      data && console.error(data);
-      throw Error('Bad image data: ' + data);
+  processSelfie = () => {
+    console.log('[WEBCAM] Uploading selfie...');
+    if (!UserSession.uploadImage(this.context, this.state.imgData)) {
+      console.error('[WEBCAM] Error: failed to upload selfie');
     }
-    const mime = arr[0].match(/:(.*?);/)[1];
-    const bstr = atob(arr[1]);
-    let n = bstr.length;
-    const u8arr = new Uint8Array(n);
-    while (n--) {
-      u8arr[n] = bstr.charCodeAt(n);
-    }
-    return new File([u8arr], fname, { type: mime });
+    setTimeout(() => this.props.history.push('/game'), 2000);
   }
 
   render() {
@@ -113,40 +68,48 @@ class TakeSelfie extends React.Component {
       height: 720,
       facingMode: 'user',
     };
+    const imagePreview = this.state.imgData ?
+      (<div><img className={ComponentStyles.imgPreview}
+        src={this.state.imgData} alt="img" /></div>) : null;
     return (
-
       <div className="TakeSelfie content">
         <SpectreHeader colour="white" />
         <IdleChecker />
-        <div><img className={ComponentsStyles.imgPreview} src={this.state.imgData} alt="img" /></div>
-        <div className={ComponentsStyles.webcamVideo}>
+        {imagePreview}
+        <div className={ComponentStyles.webcamVideo}>
           <Webcam
             audio={false}
             height={1280}
             width={800}
-            ref={this.setRef}
+            ref={r => this.webcam = r}
             screenshotQuality={1}
             screenshotFormat="image/jpeg"
             videoConstraints={videoConstraints} />
         </div>
-        <div className={ComponentsStyles.buttonWrapper2}>
+        <div className={ComponentStyles.buttonWrapper2}>
           <p>Look up and smile for the camera!</p>
-          <Button className={ComponentsStyles.button} variant="outlined" color="primary" onClick={() => this.handleClick('capture')}>{this.state.imgData === undefined ? "Capture" : "Retake"}</Button>
+          <Button className={ComponentStyles.button} variant="outlined" color="primary"
+            onClick={() => this.handleClick('capture')}>
+            {this.state.imgData ? "Retake" : "Capture"}
+          </Button>
         </div>
         <Countdown autoStart={false}
           date={this.state.now + 3000}
           intervalDelay={1000}
           precision={1000}
-          ref={e => this.countdowner = e}
-          renderer={props => <div>{this.state.captureNow ? Math.round(props.total / 1000) : 'Ready?'}</div>}
-          onComplete={e=> e? this.handlePhotoShoot() : null}
+          ref={r => this.countdowner = r}
+          renderer={props => <div>{this.state.captureNow ?
+            Math.round(props.total / 1000) : 'Ready?'}</div>}
+          onComplete={e => e ? this.takeSelfie() : null}
           key={this.state.reset}
         />
-        <Link to="/pledge">
-          <div className={classes.clickToContinue}>
-            <IconButton enabled={this.state.imgData !== undefined} className={ComponentsStyles.iconButtonStyle1} icon="next" text="Next" />
-          </div>
-        </Link>
+        <div className={classes.clickToContinue}>
+          <IconButton
+            onClick={this.processSelfie}
+            enabled={this.state.imgData !== undefined}
+            className={ComponentStyles.iconButtonStyle1}
+            icon="next" text="Next" />
+        </div>
         <FooterLogo />
       </div>
     );
