@@ -9,6 +9,7 @@ import './TakeSelfie.scss';
 
 const styles = {};
 
+// 0. Large-text at top: "Lets take a selfie!"
 // 1. Should provide user with a countdown (like photo-booth)
 // 2. Should display the image after (perhaps in overlay)
 // 3. Should give the user the choice to retake or accept the image

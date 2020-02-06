@@ -134,7 +134,7 @@ class LoginPage extends React.Component {
 
   onKeyPress = (e) => {
     if (this.videoStarted){ // next-page
-      this.props.history.push('/pledge');
+      this.props.history.push('/selfie');// ('/pledge');
     }
     else {
       this.handleSubmit(false, {}); // dev only
@@ -166,7 +166,7 @@ class LoginPage extends React.Component {
           />
           <Video
             ref={ele => { this.video = ele }}
-            movie="/video/SpectreIntro.mp4"
+            movie="https://spectreknows.me/video/SpectreIntro.mp4"
             autoPlay={false}
             onComplete={this.endVideo}
             onKeyUp={this.onKeyPress}
