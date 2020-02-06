@@ -19,7 +19,7 @@ Button
 
 }
 
-.buttonWrapper button {
+.buttonWrapper button, .buttonWrapper2 button {
   display: inline-block;
   height: 53px;
   margin: 16px;
@@ -34,7 +34,7 @@ Button
   line-height: 32px;
 }
 
-.buttonWrapper button span:active {
+.buttonWrapper button span:active,.buttonWrapper2 button span:active {
   color: white;
 }
 
@@ -42,6 +42,12 @@ Button
 @media screen and (orientation:landscape) {
   .buttonWrapper {
     margin: 80px auto;
+    align-items: center;
+    width: 100%;
+  }
+
+  .buttonWrapper2 {
+    margin: 50px auto;
     align-items: center;
     width: 100%;
   }
@@ -70,7 +76,6 @@ Button
 
   }
 
-
   .iconButtonStyle2 {
     position: fixed;
     right: 10%;
@@ -92,13 +97,29 @@ Button
     padding-top: 40px;
     padding-left: 40px;
     font-size: 24px;
-
   }
 
   .logo {
     top: 48%;
     left: 48%;
   }
+}
+
+.webcamVideo{
+  margin: 0 auto;
+  padding-top: 120px;
+}
+
+.webcamVideo video{
+  height: 400px;
+}
+
+.imgPreview{
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  height: 400px;
 }
 
 @media screen and (orientation:portrait) {
