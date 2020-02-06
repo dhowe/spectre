@@ -155,7 +155,7 @@ class SocialLogin extends React.Component {
                 name="name"
                 onClick={this.changeFocus('name')}
                 id="custom-css-standard-name"
-                value={this.state.name.length === 0 || this.state.focus !== 'name' ? "Your Name" : this.state.name}
+                value={!this.state.name.length? "Your Name" : this.state.name}
                 classes={{
                   root: classes.textField,
                   underline: classes.cssUnderline,
@@ -167,7 +167,7 @@ class SocialLogin extends React.Component {
                 name="email"
                 onClick={this.changeFocus('email')}
                 id="custom-css-standard-email"
-                value={this.state.email.length === 0 || this.state.focus !== 'email' ? "Your Email" : this.state.email}
+                value={!this.state.email.length && this.state.focus !== 'email' ? "Your Email" : this.state.email}
                 classes={{
                   root: classes.textField,
                   underline: classes.cssUnderline,
@@ -207,8 +207,7 @@ class SocialLogin extends React.Component {
               onKeyPress={button => this.onKeyPress(button)}
               layoutName={this.state.layoutName}
             />
-            <IconButton className={ComponentsStyles.iconButtonStyle1 + ' iconButton-white'} ref={btn => { this.btn = btn; }} onClick={e => this.props.handleSubmit(e, this.state)}
-              enabled={btnEnabled ? "white" : false} color="white" icon="nextWhite" text="Next" />
+            <IconButton enabled={btnEnabled} onClick={e => this.props.handleSubmit(e, this.state)} className={ComponentsStyles.iconButtonStyle1} icon="next" text="Next" />
           </form>
         </div>
       </div>
