@@ -1,39 +1,40 @@
 import nodemailer from 'nodemailer';
-//import { renderToStaticMarkup } from 'react-dom/server'
+import sendgrid from '@sendgrid/mail';
 
 const DEFAULT_SUBJ = 'Spectre knows about you';
 const DEFAULT_HTML = '<h3>Have the most fun you can in a dsytopia!</h3><p>Get your <b>Spectre</b> today!</p>';
 
+/*
+ * When creating a new Mailer object,
+ * if using nodemailer the config object expects {
+     host: -----------
+     port: -----------
+     auth: {
+       user: -----------
+       pass: -----------
+     }}
+ * if using sendgrid the config object expects {
+     host: 'smtp.sendgrid.net'
+     auth: {
+       pass: 'YOUR_SENDGRID_API_KEY'
+     }}
+   }
+ */
 export default class Mailer {
 
   constructor(config) {
     if (!config) throw Error('transport config required');
-    //console.log('config', config);
-    this.transport = nodemailer.createTransport(config);
-  }
-/*
-  renderReactComp(body) {
-    const doctype = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" ' +
-      '"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">'
-    return doctype + renderToStaticMarkup(body);
-  }
-
-  function default_1(config, emails) {
-      const { transport: transportConfig, defaults } = config;
-      const transport = nodemailer_1.createTransport(transportConfig, defaults);
-      return {
-          send(template, props, message) {
-              const { subject, body } = emails[template](props);
-              return transport.sendMail(Object.assign({ subject, html: renderBody(body) }, message));
-          },
-      };
+    if (config && config.host === 'smtp.sendgrid.net') {
+      this.sendfun = 'send';
+      this.transport = sendgrid;
+      this.transport.setApiKey(config.auth.pass);
+    }
+    else {
+      this.sendfun = 'sendMessage';
+      this.transport = nodemailer.createTransport(config);
+    }
   }
 
-  sendReactComp(template, props, message) {
-    const { subject, body } = emails[template](props);
-    return transport.sendMail(Object.assign({ subject, html: renderReactComp(body) }, message));
-  }
-*/
   sendMessage(message = {}, cb) {
     message = Object.assign({
       from: 'spectre@spectreknows.me',
@@ -50,8 +51,6 @@ export default class Mailer {
       }
     });
 
-    //console.log('message', message);
-
-    this.transport.sendMail(message, cb);
+    this.transport[this.sendfun](message, cb);
   }
 }

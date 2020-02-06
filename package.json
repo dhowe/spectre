@@ -26,6 +26,7 @@
   },
   "author": "daniel howe",
   "dependencies": {
+    "@sendgrid/mail": "^6.5.2",
     "@tensorflow/tfjs-node": "^1.5.1",
     "archiver": "^3.0.0",
     "babel-cli": "^6.24.1",
