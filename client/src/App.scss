@@ -128,22 +128,16 @@ span {
   color: $blue;
   font-weight: normal;
 }
-
 @media screen and (orientation:landscape) {
   body,
-  html,p {
+  html,
+  p {
     font-size: 28px;
   }
 
-  p.smallText {
-    font-size: 28px;
+  p.copy {
     line-height: 46px;
     padding-bottom: 40px;
-  }
-  p,
-  p.smallText-nextline {
-    line-height: 28px;
-    padding-bottom: 10px;
   }
 
   p.fourty {
@@ -159,7 +153,11 @@ span {
     padding-bottom: 10px;
   }
 
-
+  p,
+  p.copy-nextline {
+    line-height: 46px;
+    padding-bottom: 10px;
+  }
 
   .content {
     position: absolute;
@@ -172,9 +170,8 @@ span {
     display: -webkit-flex;
     -webkit-justify-content: center;
     margin: 0;
-    padding: 0 0 126px 0;
+    padding: 0 0 126px;
   }
-
 
   .split-half {
     -webkit-justify-content: center;
@@ -220,6 +217,7 @@ span {
       width: 150px;
       height: 80px;
     }
+
     .iconButtonText {
       font-size: 18px;
       margin-top: 3px;
@@ -257,7 +255,7 @@ span {
 
   .iconButtonText {
     font-size: 30px;
-    margin-top: 0px;
+    margin-top: 0;
     margin-bottom: 0;
     padding: 0;
   }
@@ -279,6 +277,7 @@ span {
       width: 150px;
       height: 80px;
     }
+
     .iconButtonText {
       font-size: 20px;
       margin-top: 5px;
@@ -299,7 +298,6 @@ a.disabled {
 .iconButton {}
 
 .thankyou-icon {
-
   width: 112px;
   height: 112px;
 }

@@ -34,6 +34,7 @@ class ThankYou extends React.Component {
             <p className="smallText">Your experience has been <strong>personalised.</strong></p>
             <ThumbUp className="thankyou-icon" />
           </div>
+
           <div className="link">
           <Link to="/steps">
             <IconButton enabled={true} className={ComponentsStyles.iconButtonStyle1} icon="next" text="Next"/>
