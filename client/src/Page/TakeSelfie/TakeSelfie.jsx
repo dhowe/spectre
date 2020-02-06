@@ -58,7 +58,6 @@ class TakeSelfie extends React.Component {
     if (!UserSession.uploadImage(this.context, this.state.imgData)) {
       console.error('[WEBCAM] Error: failed to upload selfie');
     }
-    console.log('TO PERSONALISED');
     this.props.history.push('/personalised');
     //setTimeout(() => this.props.history.push('/personalised'), 2000);
   }
