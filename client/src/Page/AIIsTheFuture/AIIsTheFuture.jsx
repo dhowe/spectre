@@ -7,6 +7,7 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import IconButton from '../../Components/IconButton/IconButton';
+import ComponentsStyles from '../../App.module.css';
 
 const styles = {
 
@@ -23,7 +24,7 @@ class AIIsTheFuture extends React.Component {
           <Typography component="h6" variant="h6">Spectre can show you how to achieve true [power] </Typography>
 
               <Link to="/influence-a-celebrity">
-                  <IconButton icon="next" text="Next" />
+                  <IconButton className={ComponentsStyles.iconButtonStyle1} icon="next" text="Next" />
               </Link>
           </div >
           <FooterLogo />

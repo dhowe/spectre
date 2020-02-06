@@ -94,10 +94,14 @@ h1 {
   font-size: 48px;
   font-weight: normal;
   line-height: 59px;
+  color: $lightGrey;
 }
 
 h2 {
-  font-size: 50px;
+  font-size: 40px;
+  font-weight: normal;
+  line-height: 40px;
+  color: $lightGrey;
 }
 
 h3 {
@@ -124,20 +128,34 @@ span {
   color: $blue;
   font-weight: normal;
 }
+
 @media screen and (orientation:landscape) {
   body,
-  html {
+  html,p {
     font-size: 28px;
   }
 
   p.copy {
-    font-size: 28px;
+    line-height: 46px;
+    padding-bottom: 40px;
+  }
+
+  p.fourty {
+    font-size: 40px;
+    line-height: 56px;
     padding-bottom: 40px;
   }
 
   p,
+  p.fourty-nextline {
+    font-size: 40px;
+    line-height: 56px;
+    padding-bottom: 10px;
+  }
+
+  p,
   p.copy-nextline {
-    font-size: 28px;
+    line-height: 46px;
     padding-bottom: 10px;
   }
 
@@ -152,8 +170,9 @@ span {
     display: -webkit-flex;
     -webkit-justify-content: center;
     margin: 0;
-    padding: 0;
+    padding: 0 0 126px 0;
   }
+
 
   .split-half {
     -webkit-justify-content: center;
@@ -180,13 +199,6 @@ span {
   .link {
     width: fit-content;
     margin: 0 auto;
-  }
-
-  .iconButtonText {
-    font-size: 25px;
-    margin-top: -15x;
-    margin-bottom: 0;
-    padding: 0;
   }
 
   .DataIcons {

@@ -9,6 +9,7 @@ import UserSession from '../../Components/UserSession/UserSession';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
+import ComponentsStyles from '../../App.module.css';
 
 const styles = {
   image: {
@@ -127,7 +128,7 @@ class DarkAd extends React.Component {
               <div className="link">
                 <Link to="/target-ad" onClick={() => this.context.targetAd =
                   { image: this.state.image, slogan: this.state.text }}>
-                  <IconButton enabled={(this.state.defaultImageSelected !== true && this.state.text.length)} icon="next" text="Next" />
+                  <IconButton enabled={(this.state.defaultImageSelected !== true && this.state.text.length)} className={ComponentsStyles.iconButtonStyle1} icon="next" text="Next" />
                 </Link>
               </div>
             </div>

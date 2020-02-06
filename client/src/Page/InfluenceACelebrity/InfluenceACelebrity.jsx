@@ -10,10 +10,9 @@ import IconButton from '../../Components/IconButton/IconButton';
 import AvatarCircle from '../../Components/AvatarCircle/AvatarCircle';
 import AvatarComponent from '../../Components/AvatarComponent/AvatarComponent';
 import Video from '../../Components/Video/Video';
-
 import './InfluenceACelebrity.scss';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
-
+import ComponentsStyles from '../../App.module.css';
 
 const styles = {
 };
@@ -99,7 +98,7 @@ class InfluenceACelebrity extends React.Component {
               </AvatarCircle>
             </div>
             <div className="split-right">
-              <IconButton onClick={this.save} icon="next" text="Next" />
+              <IconButton onClick={this.save} className={ComponentsStyles.iconButtonStyle1} icon="next" text="Next" />
             </div>
           </div>
         </div>

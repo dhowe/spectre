@@ -6,6 +6,7 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import IconButton from '../../Components/IconButton/IconButton';
+import ComponentsStyles from '../../App.module.css';
 
 const styles = {
   root: {
@@ -27,7 +28,7 @@ class ShallowFake extends React.Component {
           <div className={classes.content + " content"}>
               [video]
               <Link to="/our-algorithms">
-                 <IconButton icon="next" text="Next" />
+                 <IconButton className={ComponentsStyles.iconButtonStyle1} icon="next" text="Next" />
               </Link>
           </div >
           <FooterLogo />

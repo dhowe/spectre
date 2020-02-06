@@ -9,6 +9,7 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import IconButton from '../../Components/IconButton/IconButton';
 import { Link } from 'react-router-dom';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
+import ComponentsStyles from '../../App.module.css';
 
 const styles = {
 
@@ -56,7 +57,7 @@ class Campaign extends React.Component {
           </p>
           <div className="link">
           <Link to="/dark-ad">
-            <IconButton icon="next" text="Next" />
+            <IconButton className={ComponentsStyles.iconButtonStyle1} icon="next" text="Next" />
           </Link>
           </div>
         </div>

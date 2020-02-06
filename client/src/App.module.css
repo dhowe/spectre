@@ -16,13 +16,14 @@ Button
   padding: 0 30px;
   color: #21c0fc;
   width: auto;
+
 }
 
 .buttonWrapper button {
   display: inline-block;
   height: 53px;
   margin: 16px;
-  border: solid 3px #929391;
+  border: solid 3px #21c0fc;
   border-radius: 28px;
   background-color: #ffffff;
   box-shadow: none;
@@ -31,7 +32,9 @@ Button
   text-transform: capitalize;
   letter-spacing: 0;
   line-height: 32px;
+
 }
+
 
 @media screen and (orientation:landscape) {
   .buttonWrapper {
@@ -46,10 +49,24 @@ Button
   }
 
   .iconButtonStyle1 {
+    display: inline-flex;
+    flex-direction: row-reverse;
     position: fixed;
-    right: 10%;
-    top: 45%;
+    left: 1366px;
+    top: 800px;
   }
+  .iconButtonStyle1 svg {
+    width: 86px;
+    height: 86px;
+  }
+
+  .iconButtonStyle1 div{
+    padding-top: 15px;
+    font-size: 40px;
+    text-align: right;
+
+  }
+
 
   .iconButtonStyle2 {
     position: fixed;
@@ -69,7 +86,7 @@ Button
 
   .clickToContinue p {
     color: #ffffff;
-    padding-bottom: 100px;
+    padding-top: 40px;
     padding-left: 40px;
     font-size: 24px;
 

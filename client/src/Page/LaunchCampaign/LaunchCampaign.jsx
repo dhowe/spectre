@@ -8,6 +8,7 @@ import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import IconButton from '../../Components/IconButton/IconButton';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
+import ComponentsStyles from '../../App.module.css';
 
 const styles = {
   root: {
@@ -45,7 +46,7 @@ class LaunchCampaign extends React.Component {
           </div>
           <div className="link">
           <Link to="/referendum-results">
-              <IconButton icon="next" text="Go" />
+              <IconButton className={ComponentsStyles.iconButtonStyle1} icon="next" text="Go" />
           </Link>
           </div>
         </div>

@@ -17,7 +17,8 @@
       text-align: center;
       margin-left: 40px;
       color: $blue;
-
+      background: $white;
+      font-size: 32px;
       div {
         position: relative;
         top: 50%;
@@ -27,6 +28,8 @@
 
       &.active {
         border: solid $blue 8px;
+        color: $white;
+        background: $blue;
       }
     }
   }

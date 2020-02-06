@@ -8,6 +8,7 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
+import ComponentsStyles from '../../App.module.css';
 
 const styles = {
   root: {
@@ -42,7 +43,7 @@ class FindCitizens extends React.Component {
           <p className="copy">A silent army that could well tip the&nbsp;balance...</p>
           <div className="link">
             <Link to="/targets-found">
-              <IconButton icon="next" text="Find them" />
+              <IconButton className={ComponentsStyles.iconButtonStyle1} icon="next" text="Find them" />
             </Link>
           </div>
         </div>
