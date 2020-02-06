@@ -71,15 +71,15 @@ class InfluenceACelebrity extends React.Component {
           <div className="split-half">
             <div className="split-left">
               <Fade in style={{ transitionDelay: '200ms' }}>
-                <p className="copy">Influence a celebrity!</p>
+                <p className="smallText">Influence a celebrity!</p>
               </Fade>
               <Fade in style={{ transitionDelay: '200ms' }}>
-                <p className="copy-nextline">
+                <p className="smallText-nextline">
                   Spectre has many famous followers.
             </p>
               </Fade>
               <Fade in style={{ transitionDelay: '200ms' }}>
-                <p className="copy">
+                <p className="smallText">
                   Listen to their confessions on&nbsp;{virtue}:
             </p>
               </Fade>

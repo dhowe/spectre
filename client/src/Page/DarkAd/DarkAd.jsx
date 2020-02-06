@@ -100,7 +100,7 @@ class DarkAd extends React.Component {
         <div className={`${classes.content} content`}>
           <div className="split-half">
             <div className="split-left">
-              <p className="copy-nextline"><strong>Create Your Campaign</strong></p>
+              <p className="smallText-nextline"><strong>Create Your Campaign</strong></p>
               <div className={classes.ad}>    { /* adIssue should never change after being selected '*/}
                 <img className={classes.adImage} src={this.state.image} alt="leave"></img>
                 <p style={this.state.text ? {backgroundColor: 'red'} : {backgroundColor: 'none'}} className={classes.adText}>{this.state.text}</p>

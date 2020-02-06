@@ -31,7 +31,7 @@ class ThankYou extends React.Component {
           <div>
             <h1>Thank you, <span>{user.name}!</span></h1>
 
-            <p className="copy">Your experience has been <strong>personalised.</strong></p>
+            <p className="smallText">Your experience has been <strong>personalised.</strong></p>
             <ThumbUp className="thankyou-icon" />
           </div>
 

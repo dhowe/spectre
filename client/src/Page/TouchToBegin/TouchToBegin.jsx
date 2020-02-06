@@ -1,9 +1,11 @@
 import React from 'react';
+import Webcam from 'react-webcam';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 //import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 import Logo from '../../Components/Logo/Logo';
+
 //import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import BeginBackground from '../../Images/1_Standby_Screen_1080px_by_1620px.jpg';
 import UserSession from '../../Components/UserSession/UserSession';
@@ -39,6 +41,7 @@ const styles_landscape = {
   }
 };
 
+// NOTE: load webcam here only to deal with user-prompt
 class TouchToBegin extends React.Component {
 
   constructor(props) {
@@ -60,6 +63,19 @@ class TouchToBegin extends React.Component {
             </div>
           </Link>
         </div>
+        <Webcam
+          audio={false}
+          screenshotQuality={1}
+          screenshotFormat="image/jpeg"
+          width={1080}
+          height={720}
+          style={{ left: '-5000px', position: 'fixed' }}
+          videoConstraints={{
+            width: 1080,
+            height: 720,
+            facingMode: "user"
+          }}
+        />
       </div>
     );
   }

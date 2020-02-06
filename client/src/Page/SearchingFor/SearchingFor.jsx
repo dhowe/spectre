@@ -89,8 +89,6 @@ class SearchingFor extends React.Component {
     this.props.history.push('/data-is');
   }
 
-
-
   render() {
     const { classes } = this.props;
     const { name } = this.state;
@@ -101,7 +99,7 @@ class SearchingFor extends React.Component {
         <div className={`${classes.content} content`}>
           <h1><span>{name}, </span>what are you<br/>
            searching for today?</h1>
-          {<div className="ImageCapture">
+          <div className="ImageCapture">
             <Webcam
               audio={false}
               ref={this.setRef}
@@ -116,7 +114,7 @@ class SearchingFor extends React.Component {
                 facingMode: "user"
               }}
             />
-          </div>}
+          </div>
           <div className={ComponentsStyles.buttonWrapper}>
             <Button className={ComponentsStyles.button} variant="contained" color="primary" onClick={() => this.handleClick('power')}>Power</Button>
             <Button className={ComponentsStyles.button} variant="contained" color="primary" onClick={() => this.handleClick('truth')}>Truth</Button>
