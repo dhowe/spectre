@@ -18,7 +18,10 @@ const styles = {
 class ConsumerData extends React.Component {
   constructor(props) {
     super(props, '/political-data');
-    this.state = { count: 0 };
+    this.state = { 
+      count: 0,
+      choices: [] 
+    };
   }
 
   componentDidUpdate() {
@@ -29,6 +32,15 @@ class ConsumerData extends React.Component {
 
   countAdd = () => {
     this.setState({ count: document.getElementsByClassName('iconEnabled').length });
+    console.log(this.state.count);
+  }
+
+  dataCollect = () => {
+    let choiceArray = [];
+    document.querySelectorAll('.iconEnabled > .iconButtonText').forEach(choice => {
+      choiceArray.push(choice.innerText);
+    });
+    this.setState({ choices: choiceArray });
   }
 
   render() {
@@ -45,7 +57,7 @@ class ConsumerData extends React.Component {
           <div onClick={this.countAdd} className="DataIcons">
             <Grid className={classes.icons} container>
               <Grid item sm={4}>
-                <IconButtonToggle enabled={true} icon="health" text="Health" />
+                <IconButtonToggle enabled={false} icon="health" text="Health" />
               </Grid>
               <Grid item sm={4}>
                 <IconButtonToggle enabled={false} icon="finance" text="Finance" />
@@ -78,7 +90,7 @@ class ConsumerData extends React.Component {
             </Grid>
           </div>
           <div className="link">
-          <Link className={this.state.count === 3 ? 'true' : 'disabled'} to="/political-data">
+          <Link onClick={this.dataCollect} className={this.state.count === 3 ? 'true' : 'disabled'} to="/political-data">
             <IconButton enabled={this.state.count === 3} className={ComponentsStyles.iconButtonStyle1} icon="next" text="Next" />
           </Link>
           </div>
