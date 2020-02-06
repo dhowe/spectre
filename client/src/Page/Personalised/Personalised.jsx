@@ -12,17 +12,13 @@ import './Personalised.scss';
 const styles = {};
 
 class Personalised extends React.Component {
-  constructor(props) {
-    super(props, '/game');
-    this.state = { nextPage: '/game' };
-  }
-
-  async componentDidMount() {
-    const user = await UserSession.ensure(this.context, ['_id', 'virtue']);
-    console.log("*** USER.HAS_IMAGE="+user.hasImage);
-    if (!user.hasImage) this.setState({ nextPage: '/selfie' });
-  }
-
+  // constructor(props) {
+  //   super(props, '/game');
+  //   //  this.state = { nextPage: '/game' };
+  // }
+  // async componentDidMount() {
+  //   await UserSession.ensure(this.context, ['_id', 'virtue']);
+  // }
   render() {
     const { classes } = this.props;
     return (
@@ -43,7 +39,7 @@ class Personalised extends React.Component {
           </div>
           <div className="hidden">
             <Countdown
-              onComplete={() => this.props.history.push(this.state.nextPage)}
+              onComplete={() => this.props.history.push('/game')}
               date={Date.now() + 5000}
               renderer={() => null}
             />

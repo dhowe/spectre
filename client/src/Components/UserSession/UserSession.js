@@ -78,7 +78,9 @@ UserSession.clear = () => {
  * Repairs a user using sessionStorage and db if needed (async)
  */
 UserSession.ensure = async (user, props) => {
+  let lookup = false;
   try {
+
     // do we have an id, if not repair it
     if (props.includes('_id') && typeof user._id === 'undefined') {
       props = arrayRemove(props, '_id');
@@ -98,6 +100,7 @@ UserSession.ensure = async (user, props) => {
         user._id = JSON.parse(sid);
         console.warn('[SESS] Reloaded user._id: ' + user._id + ' doing lookup');
         await UserSession.lookup(user);
+        lookup = true;
       }
     }
 
@@ -105,6 +108,13 @@ UserSession.ensure = async (user, props) => {
     if (!user || !user._id) {
       user._id = -1;
       console.warn('[STUB] Unable to set user._id, using ' + user._id);
+    }
+
+    // if we are dealin with hasImage, we need to check the db
+    if (props.includes('hasImage')) {
+      props = arrayRemove(props, 'hasImage');
+      if (user._id !== -1 && !lookup) await UserSession.lookup(user);
+      console.log('[USER] '+user._id + '.hasImage = ' + user.hasImage);
     }
 
     if (props.includes('target') && !user.similars.length) {
@@ -242,6 +252,7 @@ UserSession.uploadImage = (user, data) => {
 
   if (!user || !data || !data.length) return false;
   const imgfile = toImageFile(data, user._id + '.jpg');
+  if (!imgfile) return false;
   UserSession.postImage(user, imgfile,
     (e) => console.error('[WEBCAM] Error', e),
     () => user.hasImage = true);

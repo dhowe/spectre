@@ -46,19 +46,17 @@ class ProfileMaker {
         const outfile = tmp + '.jpg';
         this.makeThumbnail(path, outfile)
           .then(res => {
-            if (res.status !== 'ok') {
-              console.error('[ERROR] ProfileMaker[1]: ' + res.data);
-              UserModel.findByIdAndUpdate(
-                id, { hasImage: false }, { new: true }, (err, u) => {
-                  if (err) console.error('[ERROR] ProfileMaker[2]: ' + err);
-                })/*console.log('Saved user: ' + u))*/
-              return;
+            if (res.status === 'ok') {
+              console.log('[' + clfDate() + '] ::* THUMB' + pathify(outfile));
             }
-            console.log('[' + clfDate() + '] ::* THUMB', pathify(outfile));
+            else {
+              console.error('[' + clfDate() + '] ::* THUMB Failed', res.data);
+            }
             UserModel.findByIdAndUpdate(
-              id, { hasImage: true }, { new: true }, (err, u) => {
-                if (err) console.error('[ERROR] ProfileMaker[3]: ' + err);
-              })/*console.log('Saved user: ' + u))*/
+              id, { hasImage: res.status === 'ok' }, { new: true }, (err, u) => {
+                err && console.error('[ERROR] ProfileMaker.findByIdAndUpdate: ', err, u);
+                //else console.log('THUMB: user.hasImage=' + u.hasImage);
+              });
           });
       }
       catch (e) {
@@ -107,7 +105,6 @@ class ProfileMaker {
   loadModels = async () => {
     this.loaded = true;  // ^ or 'tinyFaceDetector'
     console.log('[' + clfDate() + '] ::* THUMB Loading face training models');
-
     await this.detectionNet.loadFromDisk(this.modelDir);
     if (this.detectAgeGender) {
       await this.ageGenderNet.loadFromDisk(this.modelDir);
@@ -151,16 +148,19 @@ class ProfileMaker {
       catch (e) {
         throw Error('Detection failed[1] ' + e);
       }
-      if (!detection || !detection.box) {
+      if (typeof detection === 'undefined') {
         throw Error('Detection failed[2]');
+      }
+      if (typeof detection.box === 'undefined') {
+        throw Error('Detection failed[3]');
       }
       result = {
         box: detection.box,
         dimensions: dims,
         image: image
       };
+      //console.log('detection', detection);
     }
-    console.log('detection', detection);
     return result;
   }
 }

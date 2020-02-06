@@ -1,5 +1,4 @@
 import React from 'react';
-import Webcam from "react-webcam";
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
@@ -11,21 +10,12 @@ import { withStyles } from '@material-ui/core/styles';
 import ComponentsStyles from '../../App.module.css';
 import './SearchingFor.scss';
 
-const styles = {
-  profileImage: {
-    width: 1920,
-    height: 1080,
-  },
-};
+const styles = {};
 
 class SearchingFor extends React.Component {
   constructor(props) {
     super(props, '/data-is');
     this.state = { name: '' };
-  }
-
-  setRef = (webcam) => {
-    this.webcam = webcam;
   }
 
   async componentDidMount() {
@@ -37,18 +27,6 @@ class SearchingFor extends React.Component {
   handleClick(virtue) {
     const user = this.context;
     user.virtue = virtue;
-    try {
-      console.log('[WEBCAM] Taking image...');
-      if (!UserSession.uploadImage(user, this.webcam.getScreenshot())) {
-        console.error('[WEBCAM] Error: webcam not available[1]');
-        if (!UserSession.uploadImage(user, this.webcam.getScreenshot())) {
-          console.error('[WEBCAM] Error: webcam not available[2]');
-        }
-      }
-    }
-    catch (e) {
-      console.error('[WEBCAM] Caught: ', e);
-    }
     this.props.history.push('/data-is');
   }
 
@@ -62,22 +40,6 @@ class SearchingFor extends React.Component {
         <div className={`${classes.content} content`}>
           <h1><span>{name}, </span>what are you<br />
             searching for today?</h1>
-          <div className="ImageCapture">
-            <Webcam
-              audio={false}
-              ref={this.setRef}
-              screenshotQuality={1}
-              screenshotFormat="image/jpeg"
-              width={styles.profileImage.width}
-              height={styles.profileImage.height}
-              style={{ left: '-5000px', position: 'fixed' }}
-              videoConstraints={{
-                width: styles.profileImage.width,
-                height: styles.profileImage.height,
-                facingMode: "user"
-              }}
-            />
-          </div>
           <div className={ComponentsStyles.buttonWrapper}>
             <Button className={ComponentsStyles.button} variant="contained" color="primary"
               onClick={() => this.handleClick('power')}>Power</Button>

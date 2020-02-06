@@ -22,7 +22,7 @@ const styles = {};
 // 3. Should give the user the choice to retake or accept the image
 class TakeSelfie extends React.Component {
   constructor(props) {
-    super(props, '/game');
+    super(props, '/personalised');
     this.state = {
       imgData: null,
       captureNow: false,
@@ -58,7 +58,9 @@ class TakeSelfie extends React.Component {
     if (!UserSession.uploadImage(this.context, this.state.imgData)) {
       console.error('[WEBCAM] Error: failed to upload selfie');
     }
-    setTimeout(() => this.props.history.push('/game'), 2000);
+    console.log('TO PERSONALISED');
+    this.props.history.push('/personalised');
+    //setTimeout(() => this.props.history.push('/personalised'), 2000);
   }
 
   render() {
