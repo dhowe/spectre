@@ -10,7 +10,6 @@ import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import Button from '@material-ui/core/Button';
 import IconButton from '../../Components/IconButton/IconButton';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
-import Fade from '@material-ui/core/Fade';
 import ComponentsStyles from '../../App.module.css';
 import Countdown from 'react-countdown';
 
@@ -26,7 +25,8 @@ class TakeSelfie extends React.Component {
     this.state = {
       captureNow: false,
       now: Date.now(),
-      img: null
+      img: null,
+      reset: Date.now(),
     };
     this.countdowner = React.createRef();
 
@@ -50,13 +50,15 @@ class TakeSelfie extends React.Component {
 
     const user = this.context;
     user.virtue = virtue;
-
+    this.setState({reset: (new Date().getTime())});
+    this.setState({now: Date.now()});
     try {
       console.log('[WEBCAM] Taking image...');
       const data = this.webcam.getScreenshot();
       this.setState({ captureNow: false });
       this.setState({ imgData: data })
-      /*
+
+/*
       if (data && data.length) {
         const imgfile = this.toImageFile(data, user._id + '.jpg');
         UserSession.postImage(this.context, imgfile,
@@ -78,13 +80,30 @@ class TakeSelfie extends React.Component {
         this.context.hasImage = false;
         this.props.history.push('/data-is');
         return;
-      }*/
+      }
+    */
     }
     catch (e) {
       console.error('Webcam Error: ', e);
     }
 
 
+  }
+
+  toImageFile(data, fname) {
+    const arr = data.split(',');
+    if (!data || data.length <= 6) {
+      data && console.error(data);
+      throw Error('Bad image data: ' + data);
+    }
+    const mime = arr[0].match(/:(.*?);/)[1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], fname, { type: mime });
   }
 
   render() {
@@ -113,7 +132,6 @@ class TakeSelfie extends React.Component {
         <div className={ComponentsStyles.buttonWrapper2}>
           <p>Look up and smile for the camera!</p>
           <Button className={ComponentsStyles.button} variant="outlined" color="primary" onClick={() => this.handleClick('capture')}>{this.state.imgData === undefined ? "Capture" : "Retake"}</Button>
-
         </div>
         <Countdown autoStart={false}
           date={this.state.now + 3000}
@@ -122,6 +140,7 @@ class TakeSelfie extends React.Component {
           ref={e => this.countdowner = e}
           renderer={props => <div>{this.state.captureNow ? Math.round(props.total / 1000) : 'Ready?'}</div>}
           onComplete={e=> e? this.handlePhotoShoot() : null}
+          key={this.state.reset}
         />
         <Link to="/pledge">
           <div className={classes.clickToContinue}>
