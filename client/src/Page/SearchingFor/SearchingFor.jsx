@@ -122,7 +122,6 @@ class SearchingFor extends React.Component {
             <Button className={ComponentsStyles.button} variant="contained" color="primary" onClick={() => this.handleClick('truth')}>Truth</Button>
             <Button className={ComponentsStyles.button} variant="contained" color="primary" onClick={() => this.handleClick('influence')}>Influence</Button>
             <Button className={ComponentsStyles.button} variant="contained" color="primary" onClick={() => this.handleClick('wealth')}>Wealth</Button>
-
           </div>
         </div>
         <FooterLogo />

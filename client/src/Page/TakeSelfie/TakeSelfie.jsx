@@ -6,6 +6,12 @@ import { Link } from 'react-router-dom';
 import Webcam from 'react-webcam';
 import UserSession from '../../Components/UserSession/UserSession';
 import './TakeSelfie.scss';
+import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
+import FooterLogo from '../../Components/FooterLogo/FooterLogo';
+import Button from '@material-ui/core/Button';
+import IconButton from '../../Components/IconButton/IconButton';
+import IdleChecker from '../../Components/IdleChecker/IdleChecker';
+import ComponentsStyles from '../../App.module.css';
 
 const styles = {};
 
@@ -23,6 +29,8 @@ class TakeSelfie extends React.Component {
     };
     return (
       <div className="TakeSelfie">
+      <SpectreHeader colour="white" />
+      <IdleChecker />
         <Webcam
           audio={false}
           height={1280}
@@ -31,11 +39,17 @@ class TakeSelfie extends React.Component {
           screenshotQuality={1}
           screenshotFormat="image/jpeg"
           videoConstraints={videoConstraints} />
+          <p>Look up and smile for the camera!</p>
+          <div className={ComponentsStyles.buttonWrapper}>
+            <Button className={ComponentsStyles.button} variant="contained" color="primary" onClick={() => this.handleClick('power')}>Capture</Button>
+          </div>
+
         <Link to="/pledge">
           <div className={classes.clickToContinue}>
-            <Typography>Look up and smile for the camera!</Typography>
+              <IconButton enabled={true} className={ComponentsStyles.iconButtonStyle1} icon="next" text="Next"/>
           </div>
         </Link>
+        <FooterLogo />
     </div>
     );
   }
