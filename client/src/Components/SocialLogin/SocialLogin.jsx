@@ -141,8 +141,6 @@ class SocialLogin extends React.Component {
 
 
   render() {
-    console.log(this.state.name.length)
-    console.log(this.state.focus)
     const { classes } = this.props;
     const { email, name, gender } = this.state;
     const btnEnabled = email && email.length &&
