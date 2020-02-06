@@ -3,7 +3,7 @@ import UserSession from '../../Components/UserSession/UserSession';
 import { withRouter } from 'react-router-dom';
 
 const routes = [
-  '/', '/login', '/pledge', '/searching', '/data-is', '/personalised',
+  '/', '/login', '/selfie', '/pledge', '/searching', '/data-is', '/personalised',
   '/game', '/thank-you', '/steps', '/follower', '/selected',
   '/insight-gender','/insight-skin', '/insight-financial', '/insight-thank-you',
   '/insight-sexuality', '/insight-political', '/insight-complete',

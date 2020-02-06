@@ -9,6 +9,9 @@ import './TakeSelfie.scss';
 
 const styles = {};
 
+// 1. Should provide user with a countdown (like photo-booth)
+// 2. Should display the image after (perhaps in overlay)
+// 3. Should give the user the choice to retake or accept the image
 class TakeSelfie extends React.Component {
   render() {
     const { classes } = this.props;
@@ -21,7 +24,7 @@ class TakeSelfie extends React.Component {
       <div className="TakeSelfie">
         <Webcam
           audio={false}
-          height={800}
+          height={1280}
           width={800}
           ref={this.setRef}
           screenshotQuality={1}

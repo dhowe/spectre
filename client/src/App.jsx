@@ -3,7 +3,7 @@ import { Route, BrowserRouter as Router } from 'react-router-dom';
 
 import TouchToBegin from './Page/TouchToBegin/TouchToBegin';
 import LoginPage from './Page/LoginPage/LoginPage';
-//import TakeSelfie from './Page/TakeSelfie/TakeSelfie';
+import TakeSelfie from './Page/TakeSelfie/TakeSelfie';
 import Pledge from './Page/Pledge/Pledge';
 import MessageForm from './Page/MessageForm/MessageForm';
 
@@ -92,6 +92,7 @@ class App extends React.Component {
                   <Keyboardist bindings={{ Right: this.next }} />
                   <Navigation />
                   <Route exact path="/" component={TouchToBegin} />
+                  <Route exact path="/selfie" component={TakeSelfie} />
                   <Route exact path="/message" component={MessageForm} />
                   <Route exact path="/login" component={LoginPage} />
                   <Route exact path="/pledge" component={Pledge} />

@@ -22,7 +22,6 @@ const styles = {
 class SearchingFor extends React.Component {
   constructor(props) {
     super(props, 'data-is');
-    this.state = {};
     this.state = { name: '' };
   }
 
