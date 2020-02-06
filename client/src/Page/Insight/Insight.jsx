@@ -59,7 +59,7 @@ class Insight extends React.Component {
         <SpectreHeader colour="white" progressActive progressNumber={progress} />
         <IdleChecker />
         <div className={`${classes.content} content insightPage`}>
-          <p className="copy">{question(targetName)}</p>
+          <p className="smallText">{question(targetName)}</p>
           <AvatarComponent target= {{name: targetName, image: targetImage }} />
           <div onTouchEnd={this.EnableButton}>
             <TextSliderText leftText={leftText} rightText={rightText} middleText={middleText} />

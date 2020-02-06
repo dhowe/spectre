@@ -38,7 +38,7 @@ class ConsumerData extends React.Component {
         <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
         <IdleChecker />
         <div className={`${classes.content} content`}>
-          <p className="copy">
+          <p className="smallText">
             <strong>Choose 3 types of consumer data:</strong>
           </p>
 
