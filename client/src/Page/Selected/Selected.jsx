@@ -46,9 +46,9 @@ class Selected extends React.Component {
           <div>
             <AvatarComponent target={{ name: targetName, image: targetImage }} />
           </div>
-          <p className="copy">Let&apos;s start by verifying some of the basics to
+          <p className="smallText">Let&apos;s start by verifying some of the basics to
             unlock insight into <strong>{targetName}</strong>. </p>
-          <p className="copy">Don’t worry, only you will see the results. </p>
+          <p className="smallText">Don’t worry, only you will see the results. </p>
           <div className="link">
           <Link to="/insight-gender">
             <IconButton enabled={true} className={ComponentsStyles.iconButtonStyle1} icon="tick" text="Dive in" />

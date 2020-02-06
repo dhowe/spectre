@@ -34,7 +34,7 @@ class LaunchCampaign extends React.Component {
         <SpectreHeader colour="white" />
         <IdleChecker />
         <div className={`${classes.content} content`}>
-          <p className="copy">Launch Campaign!</p>
+          <p className="smallText">Launch Campaign!</p>
           <div className="link">
           <Link to="/referendum-results">
             <img

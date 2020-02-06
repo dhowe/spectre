@@ -135,9 +135,15 @@ span {
     font-size: 28px;
   }
 
-  p.copy {
+  p.smallText {
+    font-size: 28px;
     line-height: 46px;
     padding-bottom: 40px;
+  }
+  p,
+  p.smallText-nextline {
+    line-height: 28px;
+    padding-bottom: 10px;
   }
 
   p.fourty {
@@ -153,11 +159,7 @@ span {
     padding-bottom: 10px;
   }
 
-  p,
-  p.copy-nextline {
-    line-height: 46px;
-    padding-bottom: 10px;
-  }
+
 
   .content {
     position: absolute;

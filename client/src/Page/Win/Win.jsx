@@ -39,7 +39,7 @@ class Win extends React.Component {
           <p>
             <strong>{adIssue === 'remain' ? 'Believe!' : 'BeLeave!'}</strong>
           </p>
-          <p className="copy">
+          <p className="smallText">
             &nbsp;Your campaign was successful...</p>
           <p className="thankyou-icon">
             <Trophy />
