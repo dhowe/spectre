@@ -4,7 +4,7 @@ import clfDate from 'clf-date';
 import multer from 'multer';
 import path from 'path';
 import { profDir } from './config';
-
+import childProcess from 'child_process';
 /* all calls return a uniform object:
 {
   "status": code,
@@ -16,6 +16,7 @@ const USER_NOT_FOUND = 452;
 const USER_WO_TRAITS = 453;
 const NO_DATABASE = 454;
 const NUM_SIMILARS = 6;
+const fsp = require('fs').promises;
 
 const create = async (req, res) => {
 
@@ -66,21 +67,35 @@ const list = async (req, res) => {
 const message = async (req, res) => {
 
   // WORKING HERE
+  // console.log('CONTROLLER.MESSAGE: stub sending message', req);
 
-  //console.log('CONTROLLER.MESSAGE: stub sending message', req);
-  const mailer = new Mailer({
-    host: process.env.SMTP_HOST,
-    port: process.env.SMTP_PORT,
-    auth: {
-      user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASS
-    }
-  });
+  const data = req.url.replace('/users/message/', '').split('&');
+  const userId = data[0];
+  const email = data[1]; //tmp
 
-  await mailer.sendMessage({}, (err, info) => {
-    if (err) console.error('[MAILER] ', err);
-    sendResponse(res, err ? err : info);
-  });
+  console.log("user-controller.js:: message", userId, email);
+
+  await generateEmail(userId, email);
+
+
+  // const mailer = new Mailer({
+  //   host: process.env.SMTP_HOST,
+  //   port: process.env.SMTP_PORT,
+  //   auth: {
+  //     user: process.env.SMTP_USER,
+  //     pass: process.env.SMTP_PASS
+  //   }
+  // });
+  //
+  // await mailer.sendMessage({
+  //   from: 'spectre@spectreknows.me',
+  //   to: 'spectre-test@email.com',
+  //   subject: DEFAULT_SUBJ,
+  //   html: DEFAULT_HTML
+  // }, (err, info) => {
+  //   if (err) console.error('[MAILER] ', err);
+  //   sendResponse(res, err ? err : info);
+  // });
 
   // await UserModel.getAll(function(err, users) {
   //   if (err) return sendError(res, 'UserModel.getAll', err);
@@ -292,5 +307,37 @@ function noDbError(res) {
     status: NO_DATABASE, data: null, message: 'Db unavailable'
   });
 }
+
+function runScript(scriptPath, args, callback) {
+
+    // keep track of whether callback has been invoked to prevent multiple invocations
+    let invoked = false;
+
+    const process = childProcess.fork(scriptPath, args);
+
+    // listen for errors as they may prevent the exit event from firing
+    process.on('error', function (err) {
+        if (invoked) return;
+        invoked = true;
+        callback(err);
+    });
+
+    // execute the callback once the process has finished running
+    process.on('exit', function (code) {
+        if (invoked) return;
+        invoked = true;
+        var err = code === 0 ? null : new Error('exit code ' + code);
+        callback(err);
+    });
+
+}
+
+function generateEmail(id, email) {
+  runScript('scripts/generateEmail.js', ["-e " + email], function (err) {
+    if (err) throw err;
+    console.log('finished running generateEmail.js');
+  });
+}
+
 
 export default { list, similars, message, create, fetch, update, remove, photo, photoset, current, createBatch }

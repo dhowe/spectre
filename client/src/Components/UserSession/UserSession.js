@@ -49,7 +49,7 @@ UserSession.sendMail = async (uid, email) => {
 
   const { route, auth, mode } = doConfig();
 
-  const endpoint = route + 'message/' + uid;
+  const endpoint = route + 'message/' + uid + "&" + email;
 
   console.log('[GET] ' + mode + '.sendMail: ' + endpoint);
 
