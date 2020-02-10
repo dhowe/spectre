@@ -18,7 +18,10 @@ const styles = {
 class HomeData extends React.Component {
   constructor(props) {
     super(props, '/find-citizens');
-    this.state = { count: 0 };
+    this.state = { 
+      count: 0,
+      choices: []
+    };
   }
 
   componentDidUpdate() {
@@ -29,6 +32,14 @@ class HomeData extends React.Component {
 
   countAdd = () => {
     this.setState({ count: document.getElementsByClassName("iconEnabled").length });
+  }
+
+  dataCollect = () => {
+    let choiceArray = [];
+    document.querySelectorAll('.iconEnabled > .iconButtonText').forEach(choice => {
+      choiceArray.push(choice.innerText);
+    });
+    this.setState({ choices: choiceArray });
   }
 
   render() {
@@ -55,7 +66,7 @@ class HomeData extends React.Component {
             </Grid>
           </div>
           <div className="link">
-            <Link className={this.state.count === 2 ? "true" : "disabled"} to="/find-citizens">
+            <Link onClick={this.dataCollect} className={this.state.count === 2 ? "true" : "disabled"} to="/find-citizens">
               <IconButton enabled={this.state.count === 2} className={ComponentsStyles.iconButtonStyle1} icon="next" text="Next" />
             </Link>
           </div>
