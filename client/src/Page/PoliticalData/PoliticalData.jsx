@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-//import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid/Grid';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
@@ -10,6 +9,7 @@ import IconButton from '../../Components/IconButton/IconButton';
 import IconButtonToggle from '../../Components/IconButton/IconButtonToggle';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 import ComponentsStyles from '../../App.module.css';
+import UserSession from '../../Components/UserSession/UserSession';
 
 const styles = {
 };
@@ -17,9 +17,9 @@ const styles = {
 class PoliticalData extends React.Component {
   constructor(props) {
     super(props, '/home-data');
-    this.state = { 
+    this.state = {
       count: 0,
-      choices: [] 
+      choices: []
     };
   }
 
@@ -39,7 +39,8 @@ class PoliticalData extends React.Component {
     document.querySelectorAll('.iconEnabled > .iconButtonText').forEach(choice => {
       choiceArray.push(choice.innerText);
     });
-    this.setState({ choices: choiceArray });
+    this.setState({ choices: choiceArray }); // needed? data stored in User (this.context)
+    this.context.dataChoices.political = choiceArray.join(',');
   }
 
   render() {
@@ -71,8 +72,8 @@ class PoliticalData extends React.Component {
             </Grid>
           </div>
           <div className="link">
-            <Link onClick={this.dataCollect} className={this.state.count === 3 ? "true" : "disabled"} to="/home-data">
-              <IconButton enabled={this.state.count === 3} className={ComponentsStyles.iconButtonStyle1} icon="next" text="Next" />
+            <Link onClick={this.dataCollect} className={this.state.count >= 3 ? "true" : "disabled"} to="/home-data">
+              <IconButton enabled={this.state.count >= 3} className={ComponentsStyles.iconButtonStyle1} icon="next" text="Next" />
             </Link>
           </div>
         </div>
@@ -85,5 +86,6 @@ class PoliticalData extends React.Component {
 PoliticalData.propTypes = {
   classes: PropTypes.object.isRequired
 };
+PoliticalData.contextType = UserSession;
 
 export default withStyles(styles)(PoliticalData);

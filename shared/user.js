@@ -21,6 +21,10 @@ export default class User {
     //this.isActive = (tmpl && tmpl.isActive) || false;
     this.category = (tmpl && tmpl.category) || 0;
     this.loginType = this.loginType || 'email';
+    this.dataChoices = this.dataChoices || {};
+    this.targetAd = this.targetAd || {};
+    this.celebrity = this.celebrity || '';
+    console.log('USER',this);
   }
 
   toString() {
