@@ -10,7 +10,7 @@ import TextSliderText from '../../Components/TextSliderText/TextSliderText';
 import AvatarComponent from '../../Components/AvatarComponent/AvatarComponent';
 import UserSession from '../../Components/UserSession/UserSession';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
-
+import ComponentsStyles from '../../App.module.css';
 
 const styles = {
   root: {
@@ -59,14 +59,14 @@ class Insight extends React.Component {
         <SpectreHeader colour="white" progressActive progressNumber={progress} />
         <IdleChecker />
         <div className={`${classes.content} content insightPage`}>
-          <p className="copy">{question(targetName)}</p>
+          <p className="smallText">{question(targetName)}</p>
           <AvatarComponent target= {{name: targetName, image: targetImage }} />
           <div onTouchEnd={this.EnableButton}>
             <TextSliderText leftText={leftText} rightText={rightText} middleText={middleText} />
           </div>
           <div className="link">
           <Link to={next}>
-            <IconButton enabled={this.state.buttonEnabled} icon="next" text="Next" />
+            <IconButton enabled={this.state.buttonEnabled} className={ComponentsStyles.iconButtonStyle1} icon="next" text="Next" />
           </Link>
           </div>
         </div>

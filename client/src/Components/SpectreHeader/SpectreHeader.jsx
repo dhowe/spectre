@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
 import HeaderLogo from '../../Icons/headerlogo.svg';
 import HeaderLogoColour from '../../Icons/headerlogo-colour.svg';
 import Progress from '../Progress/Progress';
@@ -8,21 +7,20 @@ import Divider from '@material-ui/core/Divider';
 import AvatarComponent from '../AvatarComponent/AvatarComponent';
 import UserSession from '../../Components/UserSession/UserSession';
 
+import { withStyles } from '@material-ui/core/styles';
 import './SpectreHeader.scss';
 
-const styles = {
-
-};
+const styles = {};
 
 class SpectreHeader extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {userName: 'Test'};
+    this.state = { userName: 'Test' };
   }
 
   async componentDidMount() { // tmp for testing webcam
-    if (/(personalised|game)$/.test(window.location.pathname)) {
+    if (/(data-is|personalised|game)$/.test(window.location.pathname)) {
       let user = await UserSession.ensure(this.context, ['_id', 'name']);
       if (user) this.setState({
         userName: user.name,
@@ -32,7 +30,7 @@ class SpectreHeader extends React.Component {
   }
 
   render() {
-    const { userName, userImage} = this.state;
+    const { userName, userImage } = this.state;
 
     // tmp for testing webcam
     const avatar = userImage ? <AvatarComponent

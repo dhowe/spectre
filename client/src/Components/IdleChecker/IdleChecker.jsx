@@ -7,7 +7,6 @@ class IdleChecker extends React.Component {
 
   constructor(props) {
     super(props);
-
     this.state = {
       idleTimer: 0,
       resetTimer: 10, // dialog countdown
@@ -22,8 +21,10 @@ class IdleChecker extends React.Component {
 
   componentDidMount() {
     if (process.env.NODE_ENV === 'production') { // DONT REMOVE
-      this.interval = setInterval(this.handleIdle, 1000);
-      document.addEventListener('click', this.detectClick);
+      if (!/game$/.test(window.location.pathname)) { // not in Game
+        this.interval = setInterval(this.handleIdle, 1000);
+        document.addEventListener('click', this.detectClick);
+      }
     }
   }
 
@@ -64,7 +65,6 @@ class IdleChecker extends React.Component {
   }
 
   detectClick = () => {
-
     this.setState({
       idleTimer: 0,
       isIdle: false,

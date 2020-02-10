@@ -78,7 +78,9 @@ UserSession.clear = () => {
  * Repairs a user using sessionStorage and db if needed (async)
  */
 UserSession.ensure = async (user, props) => {
+  let lookup = false;
   try {
+
     // do we have an id, if not repair it
     if (props.includes('_id') && typeof user._id === 'undefined') {
       props = arrayRemove(props, '_id');
@@ -98,6 +100,7 @@ UserSession.ensure = async (user, props) => {
         user._id = JSON.parse(sid);
         console.warn('[SESS] Reloaded user._id: ' + user._id + ' doing lookup');
         await UserSession.lookup(user);
+        lookup = true;
       }
     }
 
@@ -105,6 +108,13 @@ UserSession.ensure = async (user, props) => {
     if (!user || !user._id) {
       user._id = -1;
       console.warn('[STUB] Unable to set user._id, using ' + user._id);
+    }
+
+    // if we are dealin with hasImage, we need to check the db
+    if (props.includes('hasImage')) {
+      props = arrayRemove(props, 'hasImage');
+      if (user._id !== -1 && !lookup) await UserSession.lookup(user);
+      console.log('[USER] '+user._id + '.hasImage = ' + user.hasImage);
     }
 
     if (props.includes('target') && !user.similars.length) {
@@ -221,7 +231,35 @@ UserSession.similars = async (user) => {
   }
 }
 
-UserSession.postImage = async (user, image) => { // TODO: test
+UserSession.uploadImage = (user, data) => {
+
+  const toImageFile = (data, fname) => {
+    const arr = data.split(',');
+    if (!data || data.length <= 6) {
+      data && console.error(data);
+      console.error('Bad image data: ' + data);
+      return null;
+    }
+    const mime = arr[0].match(/:(.*?);/)[1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], fname, { type: mime });
+  }
+
+  if (!user || !data || !data.length) return false;
+  const imgfile = toImageFile(data, user._id + '.jpg');
+  if (!imgfile) return false;
+  UserSession.postImage(user, imgfile,
+    (e) => console.error('[WEBCAM] Error', e),
+    () => user.hasImage = true);
+  return true;
+}
+
+UserSession.postImage = async (user, image, onError, onSuccess ) => { // TODO: test
 
   if (UserSession.serverDisabled) return;
 
@@ -240,7 +278,13 @@ UserSession.postImage = async (user, image) => { // TODO: test
       headers: { "Authorization": 'Basic ' + btoa(auth) },
       body: fdata // JSON.stringfy(fdata) ??
     })
-    if (e) return handleError(e, route, 'postImage[1]');
+    if (e) {
+      console.log('ERROR', e);
+      handleError(e, route, 'postImage[1]');
+      if (typeof onError === 'function') onError(e);
+      return null;
+    }
+    if (typeof onSuccess === 'function') onSuccess(json);
     return json; // what to do here?
   }
   catch (e) {

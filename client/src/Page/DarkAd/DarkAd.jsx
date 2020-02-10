@@ -9,6 +9,7 @@ import UserSession from '../../Components/UserSession/UserSession';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
+import ComponentsStyles from '../../App.module.css';
 
 const styles = {
   image: {
@@ -99,7 +100,7 @@ class DarkAd extends React.Component {
         <div className={`${classes.content} content`}>
           <div className="split-half">
             <div className="split-left">
-              <p className="copy-nextline"><strong>Create Your Campaign</strong></p>
+              <p className="smallText-nextline"><strong>Create Your Campaign</strong></p>
               <div className={classes.ad}>    { /* adIssue should never change after being selected '*/}
                 <img className={classes.adImage} src={this.state.image} alt="leave"></img>
                 <p style={this.state.text ? {backgroundColor: 'red'} : {backgroundColor: 'none'}} className={classes.adText}>{this.state.text}</p>
@@ -127,7 +128,7 @@ class DarkAd extends React.Component {
               <div className="link">
                 <Link to="/target-ad" onClick={() => this.context.targetAd =
                   { image: this.state.image, slogan: this.state.text }}>
-                  <IconButton enabled={(this.state.defaultImageSelected !== true && this.state.text.length)} icon="next" text="Next" />
+                  <IconButton enabled={(this.state.defaultImageSelected !== true && this.state.text.length)} className={ComponentsStyles.iconButtonStyle1} icon="next" text="Next" />
                 </Link>
               </div>
             </div>

@@ -1,0 +1,88 @@
+@import '../../colors.scss';
+
+#tos-title-div {
+  width: 980px;
+  text-align: center;
+  border-radius: 50px;
+  max-height: 90vh;
+}
+
+#tos-content {
+  width: 970px;
+  font-size: 20px;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+  height: 40vh;
+  overflow-y: scroll;
+
+}
+
+#tos-content p{
+
+  font-size: 20px;
+}
+
+#modal-title {
+  font-size: 50px;
+  font-weight: 200;
+  text-align: center;
+  color: $grey;
+}
+
+#modal-container {
+  width: 900px;
+}
+
+#simple-modal-description {
+  padding: 50px 15px;
+  text-align: center;
+  font-weight: normal;
+  color: $blue;
+}
+
+
+
+#simple-modal-description {
+  font-size: 34px;
+}
+
+#tos-content {
+  font-size: 20px;
+  text-align: left;
+}
+
+
+#tos-modal-button {
+  padding-left: 10px;
+  color: $grey;
+  font-weight: 200;
+  font-size: 34px;
+}
+/*
+ *  Scrollbar
+ */
+#tos-content::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background-color: #FFF;
+}
+
+#tos-content::-webkit-scrollbar {
+  width: 12px;
+  background-color: #FFF;
+}
+
+#tos-content::-webkit-scrollbar-thumb {
+  border-radius: 50px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+  background-color: #EEE;
+}
+
+.tos-logo{
+
+  margin: 10px auto;
+}
+
+.tos-logo img{
+  width: 400px;
+}

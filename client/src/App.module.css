@@ -16,13 +16,14 @@ Button
   padding: 0 30px;
   color: #21c0fc;
   width: auto;
+
 }
 
-.buttonWrapper button {
+.buttonWrapper button, .buttonWrapper2 button {
   display: inline-block;
   height: 53px;
   margin: 16px;
-  border: solid 3px #929391;
+  border: solid 3px #21c0fc;
   border-radius: 28px;
   background-color: #ffffff;
   box-shadow: none;
@@ -33,9 +34,20 @@ Button
   line-height: 32px;
 }
 
+.buttonWrapper button span:active,.buttonWrapper2 button span:active {
+  color: white;
+}
+
+
 @media screen and (orientation:landscape) {
   .buttonWrapper {
     margin: 80px auto;
+    align-items: center;
+    width: 100%;
+  }
+
+  .buttonWrapper2 {
+    margin: 50px auto;
     align-items: center;
     width: 100%;
   }
@@ -46,9 +58,22 @@ Button
   }
 
   .iconButtonStyle1 {
+    display: inline-flex;
+    flex-direction: row-reverse;
     position: fixed;
-    right: 10%;
-    top: 45%;
+    left: 1366px;
+    top: 800px;
+  }
+  .iconButtonStyle1 svg {
+    width: 86px;
+    height: 86px;
+  }
+
+  .iconButtonStyle1 div{
+    padding-top: 15px;
+    font-size: 40px;
+    text-align: right;
+
   }
 
   .iconButtonStyle2 {
@@ -69,16 +94,32 @@ Button
 
   .clickToContinue p {
     color: #ffffff;
-    padding-bottom: 100px;
+    padding-top: 40px;
     padding-left: 40px;
     font-size: 24px;
-
   }
 
   .logo {
     top: 48%;
     left: 48%;
   }
+}
+
+.webcamVideo{
+  margin: 0 auto;
+  padding-top: 120px;
+}
+
+.webcamVideo video{
+  height: 400px;
+}
+
+.imgPreview{
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  height: 400px;
 }
 
 @media screen and (orientation:portrait) {

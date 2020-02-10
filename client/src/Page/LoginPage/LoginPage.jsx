@@ -2,14 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 //import Typography from '@material-ui/core/Typography';
 import Modal from '../../Components/Modal/Modal';
+import TOSModal from '../../Components/TOSModal/TOSModal';
 import SocialLogin from '../../Components/SocialLogin/SocialLogin';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import UserSession from '../../Components/UserSession/UserSession';
 import { Link } from 'react-router-dom';
 import Video from '../../Components/Video/Video';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
-//import TosContent from './termsOfService'
-import  Tos  from './Tos'
+import TosSummary from './tosSummary'
+import Tos from './Tos'
 
 import { withStyles } from '@material-ui/core/styles';
 import './LoginPage.scss';
@@ -21,27 +22,32 @@ const styles_landscape = {
 };
 
 const styles_portrait = {
-    marginBottom: 70,
+  marginBottom: 70,
 };
+
+const nextPage = '/pledge'
 
 class LoginPage extends React.Component {
 
   constructor(props) {
-    super(props, '/pledge');
-
+    super(props);
     this.state = {
       height: props.height,
       emailErrorCount: 0,
       modalOpen: false,
+      tosModalOpen: false,
       clearEmail: true,
       idleCheckerDone: false,
     };
-
     this.videoStarted = false;
     this.video = React.createRef();
     this.social = React.createRef();
     this.modalContent = '';
     this.modalTitle = '';
+    this.tosModalSummary = '';
+    this.tosModalContent = '';
+    this.tosModalTitle = '';
+
   }
 
   componentDidMount() {
@@ -74,10 +80,9 @@ class LoginPage extends React.Component {
         this.modalTitle = 'Oops...';
         this.modalContent = 'That doesn\'t look like a valid email address, please try again';
         this.setState({ modalOpen: true, emailErrorCount: this.state.emailErrorCount + 1 });
-        //clearEmail();
       }
       else {
-        // TODO: else return to login page
+        // else return to login page
         this.props.history.push('/login');
       }
     }
@@ -113,6 +118,10 @@ class LoginPage extends React.Component {
     this.setState({ modalOpen: false });
   }
 
+  closeTosModal = () => {
+    this.setState({ tosModalOpen: false });
+  }
+
   showVideo = () => {
     if (this.video) {
       this.videoStarted = true;
@@ -121,23 +130,28 @@ class LoginPage extends React.Component {
     }
     else {
       console.error("Unable to load video component");
-      this.props.history.push('/pledge');
+      this.props.history.push(nextPage);
     }
   }
 
   termsOfService = () => {
-    this.modalTitle = 'Terms of Service';
-    //this.modalContent = TosContent.text;
-    this.modalContent = '';
-    this.setState({ modalOpen: true });
+    this.tosModalTitle = 'Terms of Service';
+    this.tosModalSummary = TosSummary.text;
+    this.tosModalContent = '';
+    this.setState({ tosModalOpen: true });
   }
 
   onKeyPress = (e) => {
-    if (this.videoStarted){ // next-page
-      this.props.history.push('/pledge');
+    if (e.key === 'ArrowRight') {
+      if (this.videoStarted) { // next-page
+        this.props.history.push(nextPage);
+      }
+      else {
+        this.handleSubmit(false, {}); // dev only
+      }
     }
-    else {
-      this.handleSubmit(false, {}); // dev only
+    else if (e.key === 'ArrowLeft') {
+      this.props.history.push(this.videoStarted ? '/login' : '/');
     }
   }
 
@@ -153,7 +167,7 @@ class LoginPage extends React.Component {
 
     return (
       <div className={this.props.classes.root + ' LoginPage'}>
-        <SpectreHeader colour="white"/>
+        <SpectreHeader colour="white" />
         <IdleChecker forceTerminate={this.state.idleCheckerDone} />
         <div className={this.props.classes.content + ' LoginPage-content content'}>
           <h1 className="login-title">Let's Play!</h1>
@@ -162,11 +176,17 @@ class LoginPage extends React.Component {
             title={this.modalTitle}
             content={this.modalContent}
             onClose={() => this.closeModal()}
-            htmlContent={this.modalTitle === 'Terms of Service' ? <Tos/> : null}
+          />
+          <TOSModal
+            isOpen={this.state.tosModalOpen}
+            title={this.tosModalTitle}
+            summary={this.tosModalSummary}
+            content={<Tos />}
+            onClose={() => this.closeTosModal()}
           />
           <Video
             ref={ele => { this.video = ele }}
-            movie="/video/SpectreIntro.mp4"
+            movie="https://spectreknows.me/video/SpectreIntro.mp4"
             autoPlay={false}
             onComplete={this.endVideo}
             onKeyUp={this.onKeyPress}

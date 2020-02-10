@@ -10,10 +10,9 @@ import IconButton from '../../Components/IconButton/IconButton';
 import AvatarCircle from '../../Components/AvatarCircle/AvatarCircle';
 import AvatarComponent from '../../Components/AvatarComponent/AvatarComponent';
 import Video from '../../Components/Video/Video';
-
 import './InfluenceACelebrity.scss';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
-
+import ComponentsStyles from '../../App.module.css';
 
 const styles = {
 };
@@ -72,15 +71,15 @@ class InfluenceACelebrity extends React.Component {
           <div className="split-half">
             <div className="split-left">
               <Fade in style={{ transitionDelay: '200ms' }}>
-                <p className="copy">Influence a celebrity!</p>
+                <p className="smallText">Influence a celebrity!</p>
               </Fade>
               <Fade in style={{ transitionDelay: '200ms' }}>
-                <p className="copy-nextline">
+                <p className="smallText-nextline">
                   Spectre has many famous followers.
             </p>
               </Fade>
               <Fade in style={{ transitionDelay: '200ms' }}>
-                <p className="copy">
+                <p className="smallText">
                   Listen to their confessions on&nbsp;{virtue}:
             </p>
               </Fade>
@@ -99,7 +98,7 @@ class InfluenceACelebrity extends React.Component {
               </AvatarCircle>
             </div>
             <div className="split-right">
-              <IconButton onClick={this.save} icon="next" text="Next" />
+              <IconButton onClick={this.save} className={ComponentsStyles.iconButtonStyle1} icon="next" text="Next" />
             </div>
           </div>
         </div>

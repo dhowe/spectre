@@ -4,9 +4,7 @@ export default class Tos extends React.Component {
   render() {
     return (
       <div>
-        <meta httpEquiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>google_privacy_policy_en</title>
-        <meta name="generator" content="BCL easyConverter SDK 5.0.210" />
         <div>
           <div >
             </div>

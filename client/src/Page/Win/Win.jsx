@@ -9,7 +9,7 @@ import UserSession from '../../Components/UserSession/UserSession';
 import IconButton from '../../Components/IconButton/IconButton';
 import { ReactComponent as Trophy } from '../../Icons/trophy.svg';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
-
+import ComponentsStyles from '../../App.module.css';
 
 const styles = {
 
@@ -39,7 +39,7 @@ class Win extends React.Component {
           <p>
             <strong>{adIssue === 'remain' ? 'Believe!' : 'BeLeave!'}</strong>
           </p>
-          <p className="copy">
+          <p className="smallText">
             &nbsp;Your campaign was successful...</p>
           <p className="thankyou-icon">
             <Trophy />
@@ -47,7 +47,7 @@ class Win extends React.Component {
           <p>Your silent army swung the vote!</p>
           <div className="link">
           <Link to="/influence-a-celebrity">
-            <IconButton icon="next" text="Next" />
+            <IconButton className={ComponentsStyles.iconButtonStyle1} icon="next" text="Next" />
           </Link>
           </div>
         </div>

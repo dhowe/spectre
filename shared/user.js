@@ -18,9 +18,11 @@ export default class User {
     Object.assign(this, tmpl);
     this.similars = [];
     this.clientId = process.env.REACT_APP_CLIENT_ID || -1;
-    //this.isActive = (tmpl && tmpl.isActive) || false;
     this.category = (tmpl && tmpl.category) || 0;
     this.loginType = this.loginType || 'email';
+    this.dataChoices = this.dataChoices || {};
+    this.targetAd = this.targetAd || {};
+    this.celebrity = this.celebrity || '';
   }
 
   toString() {
@@ -39,6 +41,8 @@ export default class User {
     if (u.similars && u.similars.length) {
       s += ', ' + u.similars.length + ' similars';
     }
+    if (u.hasImage) s += ', hasImage';
+    if (u.hasImage === false) s += '=False';
     return s;
   }
 

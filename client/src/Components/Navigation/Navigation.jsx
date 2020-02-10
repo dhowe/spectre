@@ -14,7 +14,7 @@ const routes = [
   '/take-back-control', '/goodbye'
 ];
 
-const disabled = [ '/login' ];
+const disabled = [ '/login', '/pledge' ];
 
 class Navigation extends React.Component {
 

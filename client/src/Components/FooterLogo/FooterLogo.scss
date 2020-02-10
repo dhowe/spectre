@@ -7,10 +7,15 @@
       position: fixed;
       bottom: 0;
       width: 100%;
-      height: 200px;
+      height: 160px;
       display: flex;
       align-items: center;
       justify-content: center;
+  }
+
+  .FooterLogo svg{
+    width: 72.33px;
+    height: 78.49px;
   }
 
 }

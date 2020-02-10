@@ -62,10 +62,10 @@ class InfluenceAFollower extends React.Component {
         <div className="split-half">
           <div className="split-left">
             <p><strong>Influence a follower!</strong></p>
-            <p className="copy">Spectre has a global community of followers.</p>
+            <p className="smallText">Spectre has a global community of followers.</p>
           </div>
           <div className="split-right">
-            <p className="copy">Choose one:</p>
+            <p className="smallText">Choose one:</p>
             <AvatarCircle>
               {similars.slice(0, 6).map((sim, i) => (
                 <AvatarComponent
