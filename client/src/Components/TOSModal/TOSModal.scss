@@ -9,13 +9,18 @@
 
 #tos-content {
   width: 970px;
-  font-size: 100px;
+  font-size: 20px;
   text-align: center;
   background-color: rgba(255, 255, 255, 0.9);
   border-radius: 10px;
   height: 40vh;
   overflow-y: scroll;
 
+}
+
+#tos-content p{
+
+  font-size: 20px;
 }
 
 #modal-title {

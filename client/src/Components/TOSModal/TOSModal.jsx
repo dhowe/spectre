@@ -74,7 +74,7 @@ function SimpleModal(props) {
         <div className={ComponentStyles.buttonWrapper2}>
           <Link to="/"><Button className={ComponentStyles.button} id="tos-modal-button">I DO NOT ACCEPT</Button></Link>
           <Button className={ComponentStyles.button} onClick={props.onClose} id="tos-modal-button">I ACCEPT</Button>
-          <div onClick={handleClick}><Link className='tos' to='#here'>Terms of Service</Link></div>
+          <div onClick={handleClick}><Link className='tos' to='#here'>link to long policy</Link></div>
         </div>
       </div>
     </Modal>
