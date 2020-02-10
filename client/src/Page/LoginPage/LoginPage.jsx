@@ -2,13 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 //import Typography from '@material-ui/core/Typography';
 import Modal from '../../Components/Modal/Modal';
+import TOSModal from '../../Components/TOSModal/TOSModal';
 import SocialLogin from '../../Components/SocialLogin/SocialLogin';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import UserSession from '../../Components/UserSession/UserSession';
 import { Link } from 'react-router-dom';
 import Video from '../../Components/Video/Video';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
-//import TosContent from './termsOfService'
+import TosSummary from './tosSummary'
 import Tos from './Tos'
 
 import { withStyles } from '@material-ui/core/styles';
@@ -34,6 +35,7 @@ class LoginPage extends React.Component {
       height: props.height,
       emailErrorCount: 0,
       modalOpen: false,
+      tosModalOpen: false,
       clearEmail: true,
       idleCheckerDone: false,
     };
@@ -42,6 +44,10 @@ class LoginPage extends React.Component {
     this.social = React.createRef();
     this.modalContent = '';
     this.modalTitle = '';
+    this.tosModalSummary = '';
+    this.tosModalContent = '';
+    this.tosModalTitle = '';
+
   }
 
   componentDidMount() {
@@ -112,6 +118,10 @@ class LoginPage extends React.Component {
     this.setState({ modalOpen: false });
   }
 
+  closeTosModal = () => {
+    this.setState({ tosModalOpen: false });
+  }
+
   showVideo = () => {
     if (this.video) {
       this.videoStarted = true;
@@ -125,10 +135,10 @@ class LoginPage extends React.Component {
   }
 
   termsOfService = () => {
-    this.modalTitle = 'Terms of Service';
-    //this.modalContent = TosContent.text;
-    this.modalContent = '';
-    this.setState({ modalOpen: true });
+    this.tosModalTitle = 'Terms of Service';
+    this.tosModalSummary = TosSummary.text;
+    this.tosModalContent = '';
+    this.setState({ tosModalOpen: true });
   }
 
   onKeyPress = (e) => {
@@ -166,7 +176,13 @@ class LoginPage extends React.Component {
             title={this.modalTitle}
             content={this.modalContent}
             onClose={() => this.closeModal()}
-            htmlContent={this.modalTitle === 'Terms of Service' ? <Tos /> : null}
+          />
+          <TOSModal
+            isOpen={this.state.tosModalOpen}
+            title={this.tosModalTitle}
+            summary={this.tosModalSummary}
+            content={<Tos />}
+            onClose={() => this.closeTosModal()}
           />
           <Video
             ref={ele => { this.video = ele }}
