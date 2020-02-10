@@ -57,7 +57,6 @@ function SimpleModal(props) {
         {props.content.length > 500 ?  <p id="tos-content">{props.content}</p> : <p
             variant="subtitle1" className={classes.content} id="simple-modal-description">{props.content}</p>}
         <Button onClick={props.onClose} id="simple-modal-button">Close</Button>
-        <div id="tos-content">{props.htmlContent}</div>
       </div>
 
       </div>
@@ -71,7 +70,6 @@ SimpleModal.propTypes = {
   content: PropTypes.string.isRequired,
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  htmlContent: PropTypes.element,
 };
 
 export default withStyles(styles)(SimpleModal);
