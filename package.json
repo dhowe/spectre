@@ -14,6 +14,7 @@
     "client": "yarn --cwd client start",
     "build-client": "NODE_ENV=production yarn --cwd client build",
     "pub-client": "yarn build-client && yarn deploy-client",
+    "prepub-client": "cp client/public/.htaccess /Library/WebServer/Documents/spectre/",
     "deploy-client": "cp -r client/build/* /Library/WebServer/Documents/spectre/",
     "production": "NODE_ENV=production yarn server-prod",
     "preproduction": "NODE_ENV=production yarn --cwd client build",

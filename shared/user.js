@@ -18,13 +18,11 @@ export default class User {
     Object.assign(this, tmpl);
     this.similars = [];
     this.clientId = process.env.REACT_APP_CLIENT_ID || -1;
-    //this.isActive = (tmpl && tmpl.isActive) || false;
     this.category = (tmpl && tmpl.category) || 0;
     this.loginType = this.loginType || 'email';
     this.dataChoices = this.dataChoices || {};
     this.targetAd = this.targetAd || {};
     this.celebrity = this.celebrity || '';
-    console.log('USER',this);
   }
 
   toString() {
