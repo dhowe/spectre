@@ -77,7 +77,7 @@ class Video extends React.Component {
 
 Video.defaultProps = {
   onComplete: (video) => video.close(),
-  onKeyUp: (e) => console.log(e),
+  onKeyUp: (e) => {},
   autoPlay: true,
   className: null,
   style: null,

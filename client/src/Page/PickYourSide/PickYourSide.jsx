@@ -17,17 +17,17 @@ const styles = {
 class PickYourSide extends React.Component {
   constructor(props) {
     super(props, '/campaign');
-    this.state = { targetName: '' };
+    this.state = { targetName: '', pronoun: '' };
   }
 
   async componentDidMount() {
     const user = await UserSession.ensure(this.context, ['_id', 'name', 'target']);
-    this.setState({ targetName: user.target.name });
+    this.setState({ targetName: user.target.name, pronoun: (user.target.gender === 'male' ? 'him' : 'her')  });
   }
 
   render() {
     const { classes } = this.props;
-    const { targetName } = this.state;
+    const { targetName, pronoun } = this.state;
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive progressNumber="one" />
@@ -36,14 +36,14 @@ class PickYourSide extends React.Component {
           <h1>
           <br/>
             Use <span>{targetName}'s OCEAN profile</span><br/>
-            to perauade <span>[him/her]</span> to vote:
+            to persuade <span>{pronoun}</span> to vote:
           </h1>
           <div className="pickLink">
 
             <Link to="/campaign">
               <div className="RepublicanLogo">
                 <img src="/imgs/RepublicanLogo.svg" alt="leave"
-                  onClick={() => { this.context.adIssue = 'leave'; }}/>
+                  onClick={() => { this.context.adIssue = 'leave' }}/>
                     <h2><span>Republican</span></h2>
               </div>
 

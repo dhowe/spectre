@@ -62,7 +62,6 @@ class TakeSelfie extends React.Component {
   }
 
   render() {
-    console.log('RENDER: imgData=',this.state.imgData);
     const { classes } = this.props;
     const videoConstraints = {
       width: 1280,

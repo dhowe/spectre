@@ -375,7 +375,7 @@ function fillMissingProperties(user, props) {
     }
   };
 
-  console.log(missing);
+  //console.log(missing);
 
   Object.keys(propStubber).forEach(p => {
     if (missing.includes(p)) {

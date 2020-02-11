@@ -54,7 +54,7 @@ class SuccessAd extends React.Component {
               <h2 className="copy bold">Your targeted ad was successful!</h2>
               <p className="thankyou-icon"><Trophy/></p>
               <p className="normal">
-                <span>{targetName}</span> is now more likely to vote <span>{adIssue}</span> in the referendum.
+                <span>{targetName}</span> is now more likely to vote <span>{adIssue}</span> in the election.
               </p>
             </div>
           </Fade>

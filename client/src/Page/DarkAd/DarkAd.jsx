@@ -94,14 +94,14 @@ class DarkAd extends React.Component {
             </div>
             <div className="split-right">
               <div>
-              <p className="normal darkAdsubtitle">Select you image:</p>
+              <p className="normal darkAdsubtitle">Select your image:</p>
                 {images.map((image, i) => (
                   <img className={ComponentsStyles.adImageSelection} src={image} alt="leave" key={i}
                     onClick={() => this.setState({ image: image, defaultImageSelected: false })}></img>
                 ))}
               </div>
               <div>
-              <p className="normal darkAdsubtitle">Select you slogan:</p>
+              <p className="normal darkAdsubtitle">Select your slogan:</p>
                 {slogans.map((slogan, i) => (
                   <Button className={classes.button} variant="contained" color="primary" key={i}
                     onClick={() => {
