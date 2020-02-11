@@ -47,7 +47,7 @@ class DataIs extends React.Component {
             <h1 className="addSpacing">Data is {virtue}</h1>
           </Fade>
           <Fade in={true} style={{ transitionDelay: '1200ms' }}>
-            <p className="normal-nextline">To become more <strong>{virtueAdverb}</strong> you need&nbsp;more&nbsp;data</p>
+            <p className="normal">To become more <strong>{virtueAdverb}</strong> you need&nbsp;more&nbsp;data</p>
           </Fade>
           <Fade in={true} style={{ transitionDelay: '2000ms' }}>
             <p className="normal-nextline">We can help you believe in the {virtue}&nbsp;of&nbsp;Dataism.</p>
