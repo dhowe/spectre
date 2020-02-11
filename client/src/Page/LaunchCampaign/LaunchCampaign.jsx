@@ -23,7 +23,7 @@ const styles = {
 
 class LaunchCampaign extends React.Component {
   constructor(props) {
-    super(props, '/referendum-results');
+    super(props, '/campaign-results');
   }
 
   render() {
@@ -36,7 +36,7 @@ class LaunchCampaign extends React.Component {
         <div className={`${classes.content} content`}>
           <p className="smallText">Launch Campaign!</p>
           <div className="link">
-          <Link to="/referendum-results">
+          <Link to="/campaign-results">
             <img
               className={classes.image}
               src={launchImg}
@@ -45,7 +45,7 @@ class LaunchCampaign extends React.Component {
           </Link>
           </div>
           <div className="link">
-          <Link to="/referendum-results">
+          <Link to="/campaign-results">
               <IconButton className={ComponentsStyles.iconButtonStyle1} icon="next" text="Go" />
           </Link>
           </div>

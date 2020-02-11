@@ -27,7 +27,7 @@ const styles = {
   },
 };
 
-class ReferendumResults extends React.Component {
+class CampaignResults extends React.Component {
   constructor(props) {
     super(props, '/win');
     this.state = { adIssue: '' };
@@ -48,7 +48,7 @@ class ReferendumResults extends React.Component {
 
     let videoPlaceholder = adIssue.length ? (
       <Video className={ComponentsStyles.inPageVideo}
-        movie={'https://spectreknows.me/video/ReferendumResults_'+adIssue+'.mp4'}
+        movie={'https://spectreknows.me/video/ElectionResults_' + adIssue + '_US.mp4'}
         onComplete={() => this.timeout = setTimeout(() => this.props.history.push('/win'), 1000)}
       />) : <br />;
 
@@ -64,10 +64,10 @@ class ReferendumResults extends React.Component {
   }
 }
 
-ReferendumResults.propTypes = {
+CampaignResults.propTypes = {
   classes: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired
-};
-ReferendumResults.contextType = UserSession;
+}
+CampaignResults.contextType = UserSession;
 
-export default withStyles(styles)(ReferendumResults);
+export default withStyles(styles)(CampaignResults);

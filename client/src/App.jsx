@@ -1,15 +1,12 @@
 import React from 'react';
 import { Route, BrowserRouter as Router } from 'react-router-dom';
-
 import TouchToBegin from './Page/TouchToBegin/TouchToBegin';
 import LoginPage from './Page/LoginPage/LoginPage';
 import TakeSelfie from './Page/TakeSelfie/TakeSelfie';
 import Pledge from './Page/Pledge/Pledge';
 import MessageForm from './Page/MessageForm/MessageForm';
-
 import SearchingFor from './Page/SearchingFor/SearchingFor';
 import DataIs from './Page/DataIs/DataIs';
-//import BelieveInDataism from './Page/BelieveInDataism/BelieveInDataism';
 import Steps from './Page/Steps/Steps';
 import Personalised from './Page/Personalised/Personalised';
 import Game from './Page/Game/Game';
@@ -32,7 +29,7 @@ import HomeData from './Page/HomeData/HomeData';
 import FindCitizens from './Page/FindCitizens/FindCitizens';
 import TargetsFound from './Page/TargetsFound/TargetsFound';
 import LaunchCampaign from './Page/LaunchCampaign/LaunchCampaign';
-import ReferendumResults from './Page/ReferendumResults/ReferendumResults';
+import CampaignResults from './Page/CampaignResults/CampaignResults';
 import Win from './Page/Win/Win';
 import InfluenceACelebrity from './Page/InfluenceACelebrity/InfluenceACelebrity';
 import FRMask from './Page/FRMask/FRMask';
@@ -63,7 +60,6 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import blue from '@material-ui/core/colors/blue';
 import './App.scss';
 
-
 const theme = createMuiTheme({
   // silence deprecation warns
   useNextVariants: true,
@@ -74,8 +70,6 @@ const theme = createMuiTheme({
     danger: 'orange',
   },
 });
-
-
 
 class App extends React.Component {
 
@@ -127,7 +121,7 @@ class App extends React.Component {
                   <Route exact path="/find-citizens" component={FindCitizens} />
                   <Route exact path="/targets-found" component={TargetsFound} />
                   <Route exact path="/launch-campaign" component={LaunchCampaign} />
-                  <Route exact path="/referendum-results" component={ReferendumResults} />
+                  <Route exact path="/campaign-results" component={CampaignResults} />
                   <Route exact path="/win" component={Win} />
                   <Route exact path="/influence-a-celebrity" component={InfluenceACelebrity} />
                   <Route exact path="/FRMask" component={FRMask} />

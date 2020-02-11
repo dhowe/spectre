@@ -24,7 +24,6 @@ class TakeSelfie extends React.Component {
   constructor(props) {
     super(props, '/personalised');
     this.state = {
-      imgData: null,
       captureNow: false,
       now: Date.now(),
       reset: Date.now(),
@@ -63,6 +62,7 @@ class TakeSelfie extends React.Component {
   }
 
   render() {
+    console.log('RENDER: imgData=',this.state.imgData);
     const { classes } = this.props;
     const videoConstraints = {
       width: 1280,
@@ -107,7 +107,7 @@ class TakeSelfie extends React.Component {
         <div className={classes.clickToContinue}>
           <IconButton
             onClick={this.processSelfie}
-            enabled={this.state.imgData !== undefined}
+            enabled={typeof this.state.imgData !== 'undefined'}
             className={ComponentStyles.iconButtonStyle1}
             icon="next" text="Next" />
         </div>

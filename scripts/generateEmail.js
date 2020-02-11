@@ -11,9 +11,12 @@ const ReactDOMServer = require('react-dom/server');
 const OceanComp = require('../build/Components/OceanProfile/OceanProfile').default;
 const AvatarComp = require('../build/Components/AvatarComponent/AvatarComponent').default;
 const { ServerStyleSheets } = require('@material-ui/core/styles');
+
 const StyleTag = '%STYLE%', UserNameTag = "%USERNAME%", OceanProfileTag = '%OCEANPROFILE%', JssTag = "%JSS%";
+
 const DefaultSubject = 'Spectre knows about you';
 const DefaultTestEmail = 'spectre-test@email.com';
+
 let emailAddress;
 
 dotEnv.config();

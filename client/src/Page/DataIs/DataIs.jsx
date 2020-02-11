@@ -6,6 +6,7 @@ import Countdown from 'react-countdown';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
+//import Keyboardist from 'react-keyboardist';
 
 const styles_landscape = {}, styles_portrait = {
   root: {
@@ -40,7 +41,17 @@ class DataIs extends React.Component {
     const { virtue, virtueAdverb } = this.state;
 
     return (
+
       <div className={this.props.root}>
+        {
+        // <Keyboardist bindings={{
+        //   Right: () => {
+        //     console.log('RIGHT');
+        //     this.props.history.push(this.state.nextPage);
+        //     return false;
+        //   }
+        // }} />
+        }
         <SpectreHeader colour="white" />
         <div className={`${this.props.content} content`}>
           <Fade in={true} style={{ transitionDelay: '200ms' }}>

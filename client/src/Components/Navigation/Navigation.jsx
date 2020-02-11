@@ -10,15 +10,16 @@ const routes = [
   '/your-power', '/pick-your-side', '/campaign', '/dark-ad', '/target-ad',
   '/success-ad', '/influence-a-nation', '/consumer-data', '/political-data',
   '/home-data', '/find-citizens', '/targets-found', '/launch-campaign',
-  '/referendum-results', '/win', '/influence-a-celebrity', '/OCEAN-reveal',
+  '/campaign-results', '/win', '/influence-a-celebrity', '/OCEAN-reveal',
   '/take-back-control', '/goodbye'
 ];
 
-const disabled = [ '/login', '/pledge' ];
+const disabled = [ '/login', '/pledge' /* for webcam */];// '/data-is' ];
 
 class Navigation extends React.Component {
 
   next = (page) => {
+    console.log('Navigation.next');
     let current = window.location.pathname;
     if (!disabled.includes(current)) {
       let idx = routes.indexOf(current);
