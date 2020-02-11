@@ -86,26 +86,38 @@ h4,
 h5,
 h6,
 p {
+  font-style: normal;
   margin-top: 0;
   padding-top: 0;
 }
 
 h1 {
-  font-size: 48px;
-  font-weight: normal;
-  line-height: 59px;
   color: $lightGrey;
+  font-weight: normal;
+  font-size: 48px;
+  line-height: 59px;
+}
+
+h1.addSpacing {
+  margin-bottom: 60px;
 }
 
 h2 {
-  font-size: 40px;
   font-weight: normal;
-  line-height: 40px;
+  font-size: 40px;
+  line-height: 56px;
   color: $lightGrey;
 }
 
+
+h2.noSpacing {
+  margin-bottom: 0;
+}
+
 h3 {
-  font-size: 40px;
+  font-weight: normal;
+  font-size: 32px;
+  line-height: 52px;
 }
 
 h4 {
@@ -131,32 +143,35 @@ span {
 @media screen and (orientation:landscape) {
   body,
   html,
-  p {
+  p,p.normal {
+    font-weight: normal;
     font-size: 28px;
-  }
-
-  p.copy {
     line-height: 46px;
-    padding-bottom: 40px;
+  }
+  
+  p.normal-nextline {
+    font-weight: normal;
+    font-size: 28px;
+    line-height: 32px;
   }
 
-  p.fourty {
-    font-size: 40px;
-    line-height: 56px;
-    padding-bottom: 40px;
-  }
-
-  p,
-  p.fourty-nextline {
-    font-size: 40px;
-    line-height: 56px;
-    padding-bottom: 10px;
-  }
-
-  p,
-  p.copy-nextline {
+  p.normal-addSpacing {
+    font-weight: normal;
+    font-size: 28px;
     line-height: 46px;
-    padding-bottom: 10px;
+    margin-bottom: 40px;
+  }
+
+  p.small {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  p.tiny {
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 15px;
   }
 
   .content {
@@ -192,7 +207,7 @@ span {
   }
 
   .thankyou-icon {
-    margin: 0 auto 40px;
+    margin: 32px auto 40px;
   }
 
   .link {

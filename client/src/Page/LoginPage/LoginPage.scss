@@ -1,3 +1,5 @@
+@import '../../colors.scss';
+
 .LoginPage {
   color: #ffffff;
   flex-grow: 1;
@@ -17,24 +19,17 @@
 }
 @media screen and (orientation:landscape) {
   .LoginPage-content {
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-      color: #828282;
-    }
-    background-color: #ffffff;
-  }
 
+    background-color: $white;
+  }
   .LoginPage-content h1 {
-    margin-top: -460px;
-    color: #42BAEB;
+    position: absolute;
+    width: 732px;
+    height: 48px;
+    left: 594px;
+    top: 207px;
+    color: $blue;
     font-weight: bold;
-    font-size: 48px;
-    line-height: 59px;
-    text-align: center;
 
   }
 
@@ -45,10 +40,10 @@
   .tos {
     position: fixed;
     margin: auto;
-    color: #828282;
+    color: $grey;
     text-align: left;
-    left: 29.5%;
-    bottom: 1.5%;
+    left: 560px;
+    bottom: 251px;
     font-size: 18px;
   }
 }

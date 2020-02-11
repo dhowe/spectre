@@ -36,19 +36,19 @@ class Steps extends React.Component {
                 <h1>Find what you are looking for<br/> by following these three steps:</h1>
             </Fade>
             <Fade in={true} style={{transitionDelay: '1000ms'}}>
-                <p className="fourty-nextline"><strong>Step 1</strong> - influence a follower</p>
+                <h2><strong>Step 1</strong> - influence a follower</h2>
             </Fade>
             <Fade in={true} style={{transitionDelay: '2000ms'}}>
-                <p className="fourty-nextline"><strong>Step 2</strong> - influence a nation</p>
+                <h2><strong>Step 2</strong> - influence a nation</h2>
             </Fade>
             <Fade in={true} style={{transitionDelay: '3000ms'}}>
-                <p className="fourty"><strong>Step 3</strong> - influence a celebrity</p>
+                <h2><strong>Step 3</strong> - influence a celebrity</h2>
             </Fade>
             <Fade in={true} style={{transitionDelay: '4000ms'}}>
-                <p className="fourty-nextline">Get the data. Get the {this.state.virtue}.</p>
+                <h2 className="noSpacing">Get the data. Get the {this.state.virtue}.</h2>
             </Fade>
             <Fade in={true} style={{transitionDelay: '5000ms'}}>
-                <p className="fourty"><span>Ready?</span></p>
+                <h2 className="noSpacing"><span>Ready?</span></h2>
             </Fade>
             <div className="link">
             <Link to="/follower">

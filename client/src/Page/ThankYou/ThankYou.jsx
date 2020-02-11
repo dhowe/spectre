@@ -29,9 +29,9 @@ class ThankYou extends React.Component {
         <IdleChecker />
         <div className={`${classes.content} content`}>
           <div>
-            <h1>Thank you, <span>{user.name}!</span></h1>
+            <h1 className="addSpacing">Thank you, <span>{user.name}!</span></h1>
 
-            <p className="smallText">Your experience has been <strong>personalised.</strong></p>
+            <p className="normal">Your experience has been <strong>personalised.</strong></p>
             <ThumbUp className="thankyou-icon" />
           </div>
 

@@ -1,8 +1,11 @@
 $red:#e03c31;
-$grey:#4F4F4F;
-$lightGrey:#828282;
+$grey:#9B9DA0;
+$lightGrey:#C4C4C4;
 $blue:#42BAEB;
-$white:#ffffff;
+$white:#FEFEFE;
+$redGradient:linear-gradient(90deg, #DBB876 -1.51%, #FF2E00 100%);
+
+
 
 :export{
   red:$red;
@@ -10,4 +13,5 @@ $white:#ffffff;
   lightGrey:$lightGrey;
   blue:$blue;
   white:$white;
+  redGradient:$redGradient;
 }

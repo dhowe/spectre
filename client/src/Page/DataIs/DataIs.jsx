@@ -44,13 +44,13 @@ class DataIs extends React.Component {
         <SpectreHeader colour="white" />
         <div className={`${this.props.content} content`}>
           <Fade in={true} style={{ transitionDelay: '200ms' }}>
-            <h1>Data is {virtue}</h1>
+            <h1 className="addSpacing">Data is {virtue}</h1>
           </Fade>
           <Fade in={true} style={{ transitionDelay: '1200ms' }}>
-            <p className="smallText-nextline">To become more <strong>{virtueAdverb}</strong> you need&nbsp;more&nbsp;data</p>
+            <p className="normal-nextline">To become more <strong>{virtueAdverb}</strong> you need&nbsp;more&nbsp;data</p>
           </Fade>
           <Fade in={true} style={{ transitionDelay: '2000ms' }}>
-            <p className="smallText">We can help you believe in the {virtue}&nbsp;of&nbsp;Dataism.</p>
+            <p className="normal-nextline">We can help you believe in the {virtue}&nbsp;of&nbsp;Dataism.</p>
           </Fade>
           <Countdown
             ref={e => this.countdown = e}

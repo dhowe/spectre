@@ -50,7 +50,7 @@ class ConsumerData extends React.Component {
         <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
         <IdleChecker />
         <div className={`${classes.content} content`}>
-          <p className="smallText">
+          <p className="normal">
             <strong>Choose 3 types of consumer data:</strong>
           </p>
 

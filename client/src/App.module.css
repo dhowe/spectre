@@ -41,7 +41,7 @@ Button
 
 @media screen and (orientation:landscape) {
   .buttonWrapper {
-    margin: 80px auto;
+    margin: 20px auto;
     align-items: center;
     width: 100%;
   }
@@ -51,6 +51,7 @@ Button
     align-items: center;
     width: 100%;
   }
+
 
   .buttonWrapper button {
     width: 180px;

@@ -97,7 +97,7 @@ function sketch(p) {
     drawInfo(p, colors.sketchText);
 
     if (instructions) {
-      p.image(instruct, p.width / 2, p.height / 2 - 100);
+      p.image(instruct, p.width / 2, p.height / 2 );
       return;
     }
 

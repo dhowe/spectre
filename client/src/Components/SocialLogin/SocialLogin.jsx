@@ -155,7 +155,7 @@ class SocialLogin extends React.Component {
                 name="name"
                 onClick={this.changeFocus('name')}
                 id="custom-css-standard-name"
-                value={!this.state.name.length? "Your Name" : this.state.name}
+                value={!this.state.name.length? "Your name" : this.state.name}
                 classes={{
                   root: classes.textField,
                   underline: classes.cssUnderline,
@@ -167,25 +167,12 @@ class SocialLogin extends React.Component {
                 name="email"
                 onClick={this.changeFocus('email')}
                 id="custom-css-standard-email"
-                value={!this.state.email.length && this.state.focus !== 'email' ? "Your Email" : this.state.email}
+                value={!this.state.email.length && this.state.focus !== 'email' ? "Your email" : this.state.email}
                 classes={{
                   root: classes.textField,
                   underline: classes.cssUnderline,
                 }}
               />
-            </FormControl>
-
-            <FormControl component="fieldset" className={classes.formControl}>
-              <p>Your gender:</p>
-              <RadioGroup
-                aria-label="Gender"
-                name="gender"
-                onChange={this.handleRadioChange}
-                className={classes.radioGroup}>
-                <FormControlLabel className="radio" checked={this.state.gender === 'female'} value="female" control={<Radio color="primary" />} label="Woman" />
-                <FormControlLabel className="radio" checked={this.state.gender === 'male'} value="male" control={<Radio color="primary" />} label="Man" />
-                <FormControlLabel className="radio" checked={this.state.gender === 'other'} value="other" control={<Radio color="primary" />} label="Other" />
-              </RadioGroup>
             </FormControl>
             <Keyboard
               layout={{
@@ -207,6 +194,7 @@ class SocialLogin extends React.Component {
               onKeyPress={button => this.onKeyPress(button)}
               layoutName={this.state.layoutName}
             />
+
             <IconButton enabled={btnEnabled} onClick={e => this.props.handleSubmit(e, this.state)} className={ComponentsStyles.iconButtonStyle1} icon="next" text="Next" />
           </form>
         </div>

@@ -32,7 +32,7 @@ class Personalised extends React.Component {
               </h1>
             </Fade>
             <Fade in style={{ transitionDelay: '1000ms' }}>
-              <p className="smallText">
+              <p className="normal">
                 Tell us what you love and tell us what you hate.
             </p>
             </Fade>

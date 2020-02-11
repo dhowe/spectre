@@ -59,25 +59,23 @@ class InfluenceAFollower extends React.Component {
         <SpectreHeader colour="white" progressActive progressNumber="one" />
         <IdleChecker />
         <div className={`${this.props.content} content`}>
-        <div className="split-half">
-          <div className="split-left">
-            <p><strong>Influence a follower!</strong></p>
-            <p className="smallText">Spectre has a global community of followers.</p>
-          </div>
-          <div className="split-right">
-            <p className="smallText">Choose one:</p>
-            <AvatarCircle>
-              {similars.slice(0, 6).map((sim, i) => (
-                <AvatarComponent
-                  //key={AvatarComponent.generateKey(i)}
-                  key={i}
-                  handleClick={() => this.handleSelect(sim)}
-                  target={{ name: sim.name, image: `${UserSession.profileDir}/${sim._id}.jpg` }}
-                />
-              ))}
-            </AvatarCircle>
-          </div>
-          </div>
+
+          <h1><span><strong>Step 1</strong> - Influence a follower!</span></h1>
+          <p className="normal-nextline"><br/>Spectre has a global community of followers.</p>
+
+
+          <p className="normal"><br/>Choose one:</p>
+          <AvatarCircle>
+            {similars.slice(0, 6).map((sim, i) => (
+              <AvatarComponent
+                //key={AvatarComponent.generateKey(i)}
+                key={i}
+                handleClick={() => this.handleSelect(sim)}
+                target={{ name: sim.name, image: `${UserSession.profileDir}/${sim._id}.jpg` }}
+              />
+            ))}
+          </AvatarCircle>
+
         </div>
         <FooterLogo />
       </div>

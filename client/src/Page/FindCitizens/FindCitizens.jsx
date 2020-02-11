@@ -38,9 +38,9 @@ class FindCitizens extends React.Component {
         <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
         <IdleChecker />
         <div className={`${classes.content} content`}>
-          <p className="smallText"><strong>Excellent.</strong></p>
-          <p className="smallText">Now target UK citizens with a similar OCEAN profile to <strong>{targetName}</strong>!</p>
-          <p className="smallText">A silent army that could well tip the&nbsp;balance...</p>
+          <p className="normal"><strong>Excellent.</strong></p>
+          <p className="normal">Now target UK citizens with a similar OCEAN profile to <strong>{targetName}</strong>!</p>
+          <p className="normal">A silent army that could well tip the&nbsp;balance...</p>
           <div className="link">
             <Link to="/targets-found">
               <IconButton className={ComponentsStyles.iconButtonStyle1} icon="next" text="Find them" />

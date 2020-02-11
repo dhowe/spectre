@@ -43,16 +43,16 @@ class Campaign extends React.Component {
         <SpectreHeader colour="white" progressActive progressNumber="one" />
         <IdleChecker />
         <div className={`${classes.content} content`}>
-          <p className="smallText">
+          <p className="normal">
             Now use a simple design tool to create a targeted Facebook ad.
           </p>
-          <p className="smallText-nextline">
+          <p className="normal-nextline">
             <strong>{targetName}</strong>'s OCEAN profile shows that {targetPronoun} can be influenced by:
           </p>
-          <p className="smallText-nextline">
+          <p className="normal-nextline">
             <strong>Images</strong> that contain {targetInfluences[0]}
           </p>
-          <p className="smallText">
+          <p className="normal">
             <strong>Slogans</strong> that contain {targetInfluences[1]}
           </p>
           <div className="link">

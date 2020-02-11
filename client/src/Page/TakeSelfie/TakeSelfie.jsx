@@ -1,7 +1,7 @@
 import React from 'react';
 import Webcam from 'react-webcam';
 import PropTypes from 'prop-types';
-//import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import UserSession from '../../Components/UserSession/UserSession';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
@@ -105,11 +105,13 @@ class TakeSelfie extends React.Component {
           key={this.state.reset}
         />
         <div className={classes.clickToContinue}>
+        <Link to="/personalised">
           <IconButton
             onClick={this.processSelfie}
             enabled={this.state.imgData !== undefined}
             className={ComponentStyles.iconButtonStyle1}
             icon="next" text="Next" />
+            </Link>
         </div>
         <FooterLogo />
       </div>

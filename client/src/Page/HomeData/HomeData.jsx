@@ -50,7 +50,7 @@ class HomeData extends React.Component {
         <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
         <IdleChecker />
         <div className={classes.content + " content"}>
-          <p className="smallText">
+          <p className="normal">
             <strong>Choose 2 types of home data:</strong>
           </p>
 

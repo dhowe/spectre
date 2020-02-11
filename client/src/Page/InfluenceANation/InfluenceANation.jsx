@@ -34,10 +34,10 @@ class InfluenceANation extends React.Component {
         <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
         <IdleChecker />
         <div className={`${classes.content} content`}>
-          <p className="smallText"><strong>Influence a Nation</strong></p>
-          <p className="smallText">Let's amplify your campaign by convincing
+          <p className="normal"><strong>Influence a Nation</strong></p>
+          <p className="normal">Let's amplify your campaign by convincing
               lots of others to vote <strong>{this.state.adIssue}</strong>.</p>
-          <p className="smallText">We can show you how, but first, you must...</p>
+          <p className="normal">We can show you how, but first, you must...</p>
           <div className="link">
           <Link to="/consumer-data">
           <Button className={ComponentsStyles.blueBtn}>Get more data!</Button>
