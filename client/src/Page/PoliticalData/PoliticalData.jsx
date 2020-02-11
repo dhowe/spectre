@@ -53,7 +53,6 @@ class PoliticalData extends React.Component {
           <h1>
             <span><br />Choose 3 types of political data:</span>
           </h1>
-
           <div onClick={this.countAdd} className="DataIcons">
             <Grid className={classes.icons} container>
               <Grid item sm={4}></Grid>
