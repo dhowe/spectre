@@ -1,0 +1,35 @@
+@import '../../colors.scss';
+
+
+.pickLink{
+
+  display: inline-flex;
+  margin: 0 auto;
+
+}
+
+.pickLink div{
+  padding: 50px;
+  width: 360px;
+  height: 360px;
+  border: 1px solid #828282;
+  box-sizing: border-box;
+  border-radius: 24px;
+  margin: 77px;
+}
+
+.pickLink img{
+  height: 200px;
+}
+.RepublicanLogo img{
+  padding-top: 20px;
+}
+.DemocratLogo img{
+  padding-bottom: 20px;
+}
+
+.pick-or{
+  position: absolute;
+  top: 43%;
+  left: 49%;
+}

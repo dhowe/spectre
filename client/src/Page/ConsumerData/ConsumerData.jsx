@@ -50,49 +50,36 @@ class ConsumerData extends React.Component {
         <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
         <IdleChecker />
         <div className={`${classes.content} content`}>
-          <p className="normal">
-            <strong>Choose 3 types of consumer data:</strong>
-          </p>
-
+          <h1>
+            <span><br />Choose 3 types of consumer data:</span>
+          </h1>
           <div onClick={this.countAdd} className="DataIcons">
             <Grid className={classes.icons} container>
-              <Grid item sm={4}>
-                <IconButtonToggle enabled={false} icon="health" text="Health" />
-              </Grid>
-              <Grid item sm={4}>
-                <IconButtonToggle enabled={false} icon="finance" text="Finance" />
-              </Grid>
-              <Grid item sm={4}>
-                <IconButtonToggle enabled={false} icon="biometrics" text="Biometrics" />
-              </Grid>
+              <Grid item sm={4}></Grid>
+              <Grid item sm={1}><IconButtonToggle enabled={false} icon="health" text="Health" /></Grid>
+              <Grid item sm={2}><IconButtonToggle enabled={false} icon="finance" text="Finance" /></Grid>
+              <Grid item sm={1}><IconButtonToggle enabled={false} icon="biometrics" text="Biometrics" /></Grid>
+              <Grid item sm={4}></Grid>
             </Grid>
             <Grid className={classes.icons} container>
-              <Grid item sm={4}>
-                <IconButtonToggle enabled={false} icon="online" text="Online Search History" />
-              </Grid>
-              <Grid item sm={4}>
-                <IconButtonToggle enabled={false} icon="shopping" text="Shopping &amp; Mail Order" />
-              </Grid>
-              <Grid item sm={4}>
-                <IconButtonToggle enabled={false} icon="insurance" text="Insurance" />
-              </Grid>
+              <Grid item sm={4}></Grid>
+              <Grid item sm={1}><IconButtonToggle enabled={false} icon="online" text="Online Search History" /></Grid>
+              <Grid item sm={2}><IconButtonToggle enabled={false} icon="shopping" text="Shopping &amp; Mail Order" /></Grid>
+              <Grid item sm={1}><IconButtonToggle enabled={false} icon="insurance" text="Insurance" /></Grid>
+              <Grid item sm={4}></Grid>
             </Grid>
             <Grid className={classes.icons} container>
-              <Grid item sm={4}>
-                <IconButtonToggle enabled={false} icon="social" text="Social Media" />
-              </Grid>
-              <Grid item sm={4}>
-                <IconButtonToggle enabled={false} icon="travel" text="Travel" />
-              </Grid>
-              <Grid item sm={4}>
-                <IconButtonToggle enabled={false} icon="location" text="Location" />
-              </Grid>
+              <Grid item sm={4}></Grid>
+              <Grid item sm={1}><IconButtonToggle enabled={false} icon="social" text="Social Media" /></Grid>
+              <Grid item sm={2}><IconButtonToggle enabled={false} icon="travel" text="Travel" /></Grid>
+              <Grid item sm={1}><IconButtonToggle enabled={false} icon="location" text="Location" /></Grid>
+            </Grid><Grid item sm={4}>
             </Grid>
           </div>
           <div className="link">
-          <Link onClick={this.dataCollect} className={this.state.count >= 3 ? 'true' : 'disabled'} to="/political-data">
-            <IconButton enabled={this.state.count >= 3} className={ComponentsStyles.iconButtonStyle1} icon="next" text="Next" />
-          </Link>
+            <Link onClick={this.dataCollect} className={this.state.count >= 3 ? 'true' : 'disabled'} to="/political-data">
+              <IconButton enabled={this.state.count >= 3} className={ComponentsStyles.iconButtonStyle1} icon="next" text="Next" />
+            </Link>
           </div>
         </div>
         <FooterLogo />

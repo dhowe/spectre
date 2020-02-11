@@ -8,6 +8,7 @@ import UserSession from '../../Components/UserSession/UserSession';
 
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
+import './PickYourSide.scss';
 
 const styles = {
 
@@ -32,22 +33,36 @@ class PickYourSide extends React.Component {
         <SpectreHeader colour="white" progressActive progressNumber="one" />
         <IdleChecker />
         <div className={`${classes.content} content`}>
-          <p>
-            Persuade <strong>{targetName}</strong> to:
-          </p>
-          <div className="link">
-          <Link to="/campaign">
-            <img src="/imgs/vote_leave.png" width={420} alt="leave"
-              onClick={() => { this.context.adIssue = 'leave'; }}></img>
-          </Link>
+          <h1>
+          <br/>
+            Use <span>{targetName}'s OCEAN profile</span><br/>
+            to perauade <span>[him/her]</span> to vote:
+          </h1>
+          <div className="pickLink">
+
+            <Link to="/campaign">
+              <div className="RepublicanLogo">
+                <img src="/imgs/RepublicanLogo.svg" alt="leave"
+                  onClick={() => { this.context.adIssue = 'leave'; }}/>
+                    <h2><span>Republican</span></h2>
+              </div>
+
+            </Link>
+            <Link to="/campaign">
+              <div className="DemocratLogo">
+                <img src='/imgs/DemocratLogo.svg' alt="remain"
+                  onClick={() => { this.context.adIssue = 'remain'; }}/>
+                  <h2><span>Democrat</span></h2>
+              </div>
+
+            </Link>
+
           </div>
-          <div className="link">
-          <Link to="/campaign" style={{ marginBottom: '100px' }}>
-            <img src='/imgs/vote_remain.png' width={300} alt="remain"
-              onClick={() => { this.context.adIssue = 'remain'; }}></img>
-          </Link>
+
+          <div className="pick-or">
+                <h2>or</h2>
           </div>
-          <span />
+
         </div>
         <FooterLogo />
       </div>

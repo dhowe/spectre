@@ -50,10 +50,11 @@ class SuccessAd extends React.Component {
         <div className={`${classes.content} content`}>
           <Fade in timeout={1000}>
             <div>
-              <p className="copy bold">Your targeted ad was successful!</p>
+              <h1 className="addSpacing"><span>Great work!</span></h1>
+              <h2 className="copy bold">Your targeted ad was successful!</h2>
               <p className="thankyou-icon"><Trophy/></p>
               <p className="normal">
-                <strong>{targetName}</strong> is now more likely to vote <strong>{adIssue}</strong> in the referendum.
+                <span>{targetName}</span> is now more likely to vote <span>{adIssue}</span> in the referendum.
               </p>
             </div>
           </Fade>

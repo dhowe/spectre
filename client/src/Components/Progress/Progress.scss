@@ -11,10 +11,10 @@
       border: solid $blue 4px;
       padding: 30px;
       border-radius: 1000px;
-      width: 100px;
-      height: 100px;
+      width: 80px;
+      height: 80px;
       display: inline-block;
-      text-align: center;
+      text-align: left;
       margin-left: 40px;
       color: $blue;
       background: $white;
@@ -27,7 +27,7 @@
       }
 
       &.active {
-        border: solid $blue 8px;
+
         color: $white;
         background: $blue;
       }

@@ -50,25 +50,31 @@ class PoliticalData extends React.Component {
         <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
         <IdleChecker />
         <div className={classes.content + " content"}>
-          <p className="normal">
-            <strong>Choose 3 types of political data:</strong>
-          </p>
+          <h1>
+            <span><br />Choose 3 types of political data:</span>
+          </h1>
 
           <div onClick={this.countAdd} className="DataIcons">
             <Grid className={classes.icons} container>
-              <Grid item sm={4}><IconButtonToggle enabled={false} icon="voting" text="Voting Records" /></Grid>
-              <Grid item sm={4}><IconButtonToggle enabled={false} icon="finance" text="Financial Records" /></Grid>
-              <Grid item sm={4}><IconButtonToggle enabled={false} icon="maps" text="Online Maps" /></Grid>
+              <Grid item sm={4}></Grid>
+              <Grid item sm={1}><IconButtonToggle enabled={false} icon="voting" text="Voting Records" /></Grid>
+              <Grid item sm={2}><IconButtonToggle enabled={false} icon="finance" text="Financial Records" /></Grid>
+              <Grid item sm={1}><IconButtonToggle enabled={false} icon="maps" text="Online Maps" /></Grid>
+              <Grid item sm={4}></Grid>
             </Grid>
             <Grid className={classes.icons} container>
-              <Grid item sm={4}><IconButtonToggle enabled={false} icon="political" text="Political Party" /></Grid>
-              <Grid item sm={4}><IconButtonToggle enabled={false} icon="polls" text="Polls &amp; Surveys" /></Grid>
-              <Grid item sm={4}><IconButtonToggle enabled={false} icon="consultants" text="SConsultants" /></Grid>
+              <Grid item sm={4}></Grid>
+              <Grid item sm={1}><IconButtonToggle enabled={false} icon="political" text="Political Party" /></Grid>
+              <Grid item sm={2}><IconButtonToggle enabled={false} icon="polls" text="Polls &amp; Surveys" /></Grid>
+              <Grid item sm={1}><IconButtonToggle enabled={false} icon="consultants" text="SConsultants" /></Grid>
+              <Grid item sm={4}></Grid>
             </Grid>
             <Grid className={classes.icons} container>
-              <Grid item sm={4}><IconButtonToggle enabled={false} icon="bigdata" text="Big Data Sets" /></Grid>
-              <Grid item sm={4}><IconButtonToggle enabled={false} icon="internet" text="Internet Platforms" /></Grid>
-              <Grid item sm={4}><IconButtonToggle enabled={false} icon="group" text="Group Memberships" /></Grid>
+              <Grid item sm={4}></Grid>
+              <Grid item sm={1}><IconButtonToggle enabled={false} icon="bigdata" text="Big Data Sets" /></Grid>
+              <Grid item sm={2}><IconButtonToggle enabled={false} icon="internet" text="Internet Platforms" /></Grid>
+              <Grid item sm={1}><IconButtonToggle enabled={false} icon="group" text="Group Memberships" /></Grid>
+              <Grid item sm={4}></Grid>
             </Grid>
           </div>
           <div className="link">

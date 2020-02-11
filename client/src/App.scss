@@ -148,7 +148,7 @@ span {
     font-size: 28px;
     line-height: 46px;
   }
-  
+
   p.normal-nextline {
     font-weight: normal;
     font-size: 28px;
@@ -192,6 +192,7 @@ span {
     -webkit-justify-content: center;
     display: table;
     justify-content: center;
+    padding: 0 200px;
   }
 
   .split-left {
@@ -316,6 +317,12 @@ a.disabled {
   width: 112px;
   height: 112px;
 }
+
+.thankyou-icon svg {
+  width: 112px;
+  height: 112px;
+}
+
 
 .link {
   width: fit-content;
