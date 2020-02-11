@@ -10,7 +10,8 @@ import Video from '../../Components/Video/Video';
 import Modal from '../../Components/Modal/Modal';
 
 //import colours from '../../colors.scss';
-
+const speed = 50; // typing speed for each character
+const sentenceBreak = 4; // sentenceBreak*speed = wait time after each sentence
 const styles = {
 
 };
@@ -34,8 +35,11 @@ class OCEANReveal extends React.Component {
       'We haven\'t known you for very long, but already we know…',
     ].concat(user.generateSummary());
 
+    const totalChar = sentences.join().split("").length;
+    const waitingTime = totalChar * speed + (sentences.length - 1) * (sentenceBreak * speed)
+
     this.setState({ sentences: sentences, celebrity: user.celebrity });
-    this.timeout = setTimeout(() => this.setState({ readyForVideo: true }), sentences.length * 3000);
+    this.timeout = setTimeout(() => this.setState({ readyForVideo: true }), waitingTime);
   }
 
   componentWillUnmount() {
@@ -49,6 +53,7 @@ class OCEANReveal extends React.Component {
   render() {
     const { classes } = this.props;
     const { celebrity, sentences, modalOpen, readyForVideo } = this.state;
+    let timer = 0;
 
     let videoPlaceholder = readyForVideo ? (
       <Video ref={e => { this.video = e }} className={classes.video}
@@ -62,15 +67,21 @@ class OCEANReveal extends React.Component {
         <div className={`${classes.content} content`}>
           {sentences.map((sent, i) => {
             return (
-              <Fade key={i} in={true}
-                style={{ transitionDelay: (i * 3000) + 'ms' }}>
-                <p className="normal-nextline" key={`fade-${i}`}
-                  >
-                  {sent}
-                </p>
-              </Fade>
+              <p class="smallText_nextLine">
+                {sent.split("").map((letter,j) => {
+                  return(
+                  <Fade key={j} in={true} style={{ transitionDelay: ((timer++)+ i*sentenceBreak) * speed + 'ms' }}>
+                    <span  key={`fade-${j}`} style={{color:'#4F4F4F'}}>
+                      {letter}
+                    </span>
+                  </Fade>
+                );
+              })}
+              </p>
             );
+
           })}
+
         </div>
         <Modal
           isOpen={modalOpen}
