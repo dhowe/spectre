@@ -90,9 +90,10 @@ UserSession.ensure = async (user, props) => {
       if (!sid) {
         console.warn('[STUB] No user._id, creating new user');
         fillMissingProperties(user,
-          ['login', 'name', 'gender', 'virtue', 'adIssue', 'traits']);
+          ['login', 'name', 'gender', 'virtue', 'adIssue', 'traits', 'celebrity']);
 
-        await UserSession.create(user);
+        user = await UserSession.create(user);
+        console.log('json', user);
         console.warn('[STUB] Setting user._id: ' + user._id);
 
       }
@@ -352,13 +353,15 @@ function fillMissingProperties(user, props) {
   if (typeof user === 'undefined') throw Error('Null user');
 
   if (!Array.isArray(props)) props = [props];
-  let missing = props.filter(p => typeof user[p] === 'undefined'
-    || (Array.isArray(user[p]) && !user[p].length));
 
-  if (!missing) return false; // all props are ok
+  // a property is missing if its undefined or an empty array or string
+  let missing = props.filter(p => typeof user[p] === 'undefined'
+    || ((typeof user[p] === 'string' || Array.isArray(user[p]))
+    && !user[p].length));
+
+  if (!missing || !missing.length) return false; // all props are ok
 
   let modified = false; // check known props, 1-by-1
-
   let propStubber = {
     gender: () => rand(Genders),
     virtue: () => rand(Virtues),
@@ -373,7 +376,7 @@ function fillMissingProperties(user, props) {
     }
   };
 
-  //console.log(missing);
+  console.log(missing);
 
   Object.keys(propStubber).forEach(p => {
     if (missing.includes(p)) {

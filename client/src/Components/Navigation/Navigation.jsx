@@ -19,7 +19,7 @@ const disabled = [ '/login', '/pledge' /* for webcam */];// '/data-is' ];
 class Navigation extends React.Component {
 
   next = (page) => {
-    console.log('Navigation.next');
+    //console.log('Navigation.next');
     let current = window.location.pathname;
     if (!disabled.includes(current)) {
       let idx = routes.indexOf(current);
