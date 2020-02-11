@@ -50,25 +50,31 @@ class HomeData extends React.Component {
         <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
         <IdleChecker />
         <div className={classes.content + " content"}>
-          <p className="smallText">
-            <strong>Choose 2 types of home data:</strong>
-          </p>
+          <h1>
+            <span><br/>Choose 2 types of home data:</span>
+          </h1>
 
           <div onClick={this.countAdd} className="DataIcons">
             <Grid className={classes.icons} container>
-              <Grid item sm={4}><IconButtonToggle enabled={false} icon="smartwatch" text="Smart Watch" /></Grid>
-              <Grid item sm={4}><IconButtonToggle enabled={false} icon="wifi" text="Wifi Router" /></Grid>
-              <Grid item sm={4}><IconButtonToggle enabled={false} icon="computers" text="Computers" /></Grid>
+              <Grid item sm={4}></Grid>
+              <Grid item sm={1}><IconButtonToggle enabled={false} icon="smartwatch" text="Smart Watch" /></Grid>
+              <Grid item sm={2}><IconButtonToggle enabled={false} icon="wifi" text="Wifi Router" /></Grid>
+              <Grid item sm={1}><IconButtonToggle enabled={false} icon="computers" text="Computers" /></Grid>
+              <Grid item sm={4}></Grid>
             </Grid>
             <Grid className={classes.icons} container>
-              <Grid item sm={4}><IconButtonToggle enabled={false} icon="mobile" text="Mobile Devices" /></Grid>
-              <Grid item sm={4}><IconButtonToggle enabled={false} icon="smarttv" text="Smart TV" /></Grid>
-              <Grid item sm={4}><IconButtonToggle enabled={false} icon="smartassistant" text="Smart Assistant" /></Grid>
+              <Grid item sm={4}></Grid>
+              <Grid item sm={1}><IconButtonToggle enabled={false} icon="mobile" text="Mobile Devices" /></Grid>
+              <Grid item sm={2}><IconButtonToggle enabled={false} icon="smarttv" text="Smart TV" /></Grid>
+              <Grid item sm={1}><IconButtonToggle enabled={false} icon="smartassistant" text="Smart Assistant" /></Grid>
+              <Grid item sm={4}></Grid>
             </Grid>
             <Grid className={classes.icons} container>
-              <Grid item sm={4}><IconButtonToggle enabled={false} icon="mobile" text="Mobile Devices" /></Grid>
-              <Grid item sm={4}><IconButtonToggle enabled={false} icon="smarttv" text="Smart TV" /></Grid>
-              <Grid item sm={4}><IconButtonToggle enabled={false} icon="smartassistant" text="Smart Assistant" /></Grid>
+              <Grid item sm={4}></Grid>
+              <Grid item sm={1}><IconButtonToggle enabled={false} icon="mobile" text="Mobile Devices" /></Grid>
+              <Grid item sm={2}><IconButtonToggle enabled={false} icon="smarttv" text="Smart TV" /></Grid>
+              <Grid item sm={1}><IconButtonToggle enabled={false} icon="smartassistant" text="Smart Assistant" /></Grid>
+              <Grid item sm={4}></Grid>
             </Grid>
           </div>
           <div className="link">

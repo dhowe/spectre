@@ -10,13 +10,10 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 import ComponentsStyles from '../../App.module.css';
+import "./DarkAd.scss";
 
 const styles = {
-  image: {
-    width: '160px',
-    height: '130px',
-    margin: '25px',
-  },
+
   button: {
     borderRadius: '28px',
     margin: '30px',
@@ -24,7 +21,7 @@ const styles = {
     backgroundColor: '#ffffff',
     boxShadow: 'none',
     color: '#929391',
-    width: '330px',
+    width: '280px',
     height: '54px',
     whiteSpace: 'nowrap',
     overflow: 'hidden',
@@ -39,29 +36,17 @@ const styles = {
   ad: {
     position: 'relative',
     margin: '0 auto',
-    width: '800px',
+    width: '642px',
     height: '570px',
   },
-  adImage: {
-    width: '800px',
-    height: '570px',
-  },
+
   campaignImage: {
     position: 'absolute',
     bottom: '0px',
     right: '0',
     width: '150px',
   },
-  adText: {
-    position: 'absolute',
-    top: '43%',
-    fontSize: '45px',
-    color: '#fff',
-    fontWeight: '800',
-    textAlign: 'center',
-    width: '100%',
-    backgroundColor: 'none',
-  },
+
 };
 
 class DarkAd extends React.Component {
@@ -98,23 +83,25 @@ class DarkAd extends React.Component {
         <SpectreHeader colour="white" progressActive progressNumber="one" />
         <IdleChecker />
         <div className={`${classes.content} content`}>
+        <h1>Create Your Campaign</h1>
           <div className="split-half">
             <div className="split-left">
-              <p className="smallText-nextline"><strong>Create Your Campaign</strong></p>
               <div className={classes.ad}>    { /* adIssue should never change after being selected '*/}
-                <img className={classes.adImage} src={this.state.image} alt="leave"></img>
-                <p style={this.state.text ? {backgroundColor: 'red'} : {backgroundColor: 'none'}} className={classes.adText}>{this.state.text}</p>
+                <img className={ComponentsStyles.adImage} src={this.state.image} alt="leave"></img>
+                <p style={this.state.text ? {backgroundColor: 'red'} : {backgroundColor: 'none'}} className={ComponentsStyles.adText}>{this.state.text}</p>
                 {!this.state.defaultImageSelected ? <img className={classes.campaignImage} src={cimage} alt="leave"></img> : ''}
               </div>
             </div>
             <div className="split-right">
               <div>
+              <p className="normal darkAdsubtitle">Select you image:</p>
                 {images.map((image, i) => (
-                  <img className={classes.image} src={image} alt="leave" key={i}
+                  <img className={ComponentsStyles.adImageSelection} src={image} alt="leave" key={i}
                     onClick={() => this.setState({ image: image, defaultImageSelected: false })}></img>
                 ))}
               </div>
               <div>
+              <p className="normal darkAdsubtitle">Select you slogan:</p>
                 {slogans.map((slogan, i) => (
                   <Button className={classes.button} variant="contained" color="primary" key={i}
                     onClick={() => {

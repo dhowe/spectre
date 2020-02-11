@@ -5,6 +5,7 @@ import Modal from '../../Components/Modal/Modal';
 import TOSModal from '../../Components/TOSModal/TOSModal';
 import SocialLogin from '../../Components/SocialLogin/SocialLogin';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
+import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import { Link } from 'react-router-dom';
 import Video from '../../Components/Video/Video';
@@ -170,7 +171,7 @@ class LoginPage extends React.Component {
         <SpectreHeader colour="white" />
         <IdleChecker forceTerminate={this.state.idleCheckerDone} />
         <div className={this.props.classes.content + ' LoginPage-content content'}>
-          <h1 className="login-title">Let's Play!</h1>
+          <h1 className="login-title">Let's play!</h1>
           <Modal
             isOpen={this.state.modalOpen}
             title={this.modalTitle}
@@ -196,7 +197,7 @@ class LoginPage extends React.Component {
             handleSubmit={this.handleSubmit} />
         </div>
         <div onClick={this.termsOfService}><Link className='tos' to='#here'>Terms of Service</Link></div>
-
+        <FooterLogo />
       </div>
     );
   }

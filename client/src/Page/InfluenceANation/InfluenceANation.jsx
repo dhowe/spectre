@@ -24,7 +24,7 @@ class InfluenceANation extends React.Component {
 
   async componentDidMount() {
     const user = await UserSession.ensure(this.context, ['_id', 'adIssue']);
-    this.setState({adIssue: user.adIssue});
+    this.setState({ adIssue: user.adIssue });
   }
 
   render() {
@@ -34,14 +34,14 @@ class InfluenceANation extends React.Component {
         <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
         <IdleChecker />
         <div className={`${classes.content} content`}>
-          <p className="smallText"><strong>Influence a Nation</strong></p>
-          <p className="smallText">Let's amplify your campaign by convincing
-              lots of others to vote <strong>{this.state.adIssue}</strong>.</p>
-          <p className="smallText">We can show you how, but first, you must...</p>
+          <h1 className="normal"><span><strong>Step 2</strong> - Influence a nation</span></h1>
+          <p className="normal-addSpacing">Let's amplify your campaign by influencing lots more<br />
+            people to <span>vote {this.state.adIssue}</span>.</p>
+          <p className="normal-addSpacing">We can show you how, but first, you must...</p>
           <div className="link">
-          <Link to="/consumer-data">
-          <Button className={ComponentsStyles.blueBtn}>Get more data!</Button>
-          </Link>
+            <Link to="/consumer-data">
+              <Button className={ComponentsStyles.blueBtn}>Get more data!</Button>
+            </Link>
           </div>
         </div>
         <FooterLogo />

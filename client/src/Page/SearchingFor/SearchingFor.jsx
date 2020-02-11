@@ -38,7 +38,7 @@ class SearchingFor extends React.Component {
         <SpectreHeader colour="white" />
         <IdleChecker />
         <div className={`${classes.content} content`}>
-          <h1><span>{name}, </span>what are you<br />
+          <h1 className="addSpacing"><span>{name}, </span>what are you<br />
             searching for today?</h1>
           <div className={ComponentsStyles.buttonWrapper}>
             <Button className={ComponentsStyles.button} variant="contained" color="primary"

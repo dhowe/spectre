@@ -7,7 +7,6 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 //import colours from '../../colors.scss';
-import './Pledge.scss';
 
 const styles = {
 };
@@ -59,15 +58,15 @@ class Pledge extends React.Component {
         <div className={`${classes.content} content`}>
           <div className="pledge">
             <Fade in timeout={1000}>
-              <h1>
+              <h1 className="addSpacing">
                 Welcome to the altar of <span>Dataism</span>.
               </h1>
             </Fade>
             <Fade in timeout={1000} style={{ transitionDelay: '2500ms' }}>
-              <p className="smallText">Our technologies can tell you things about yourself that you don’t know.</p>
+              <p className="normal">Our technologies can tell you things about yourself that you don’t know.</p>
             </Fade>
             <Fade in timeout={1000} style={{ transitionDelay: '4500ms' }}>
-              <p className="smallText">In order for us to do this, first we need to get to know you a little bit.</p>
+              <p className="normal"><br/>In order for us to do this, first we need to get to know you a little bit.</p>
             </Fade>
           </div>
           <div className="ImageCapture">

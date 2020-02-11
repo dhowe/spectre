@@ -3,7 +3,9 @@ input[type="text"] {
   width: 100%;
   color: #828282;
   font-size: 28px;
-  padding-top: 40px;
+  line-height: 46px;
+  padding-top: 58px;
+  font-weight: 500;
 
 }
 
@@ -20,8 +22,8 @@ input[type="text"] {
 }
 @media screen and (orientation:landscape) {
   .simple-keyboard {
-    margin: auto;
-    min-width: 800px;
+    margin: 56px auto;
+    width: 732px;
   }
 
   .radio span {

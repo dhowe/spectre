@@ -42,11 +42,11 @@ class InsightComplete extends React.Component {
         <SpectreHeader colour="white" />
         <IdleChecker forceTerminate={idleCheckerDone} />
         <div className={`${classes.content} content`}>
-          <p className="smallText"><strong>Excellent.</strong></p>
-          <p className="smallText-nextline">Verification complete!</p>
-          <p className="smallText-nextline">You've unlocked OCEAN profiling!</p>
+          <p className="normal"><strong>Excellent.</strong></p>
+          <p className="normal-nextline">Verification complete!</p>
+          <p className="normal-nextline">You've unlocked OCEAN profiling!</p>
           <OceanProfile subject={target} classes={classes}></OceanProfile>
-          <p className="smallText-nextline">You now have the <strong>power</strong> to influence&nbsp;<strong>{target.name}</strong>.</p>
+          <p className="normal-nextline">You now have the <strong>power</strong> to influence&nbsp;<strong>{target.name}</strong>.</p>
           <IconButton enabled={true} className={ComponentsStyles.iconButtonStyle2} icon="play" text="WTF is OCEAN?" onClick={this.showVideo}/>
           <Video
             ref={(el) => { this.video = el; }}

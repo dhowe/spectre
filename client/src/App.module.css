@@ -16,7 +16,7 @@ Button
   padding: 0 30px;
   color: #21c0fc;
   width: auto;
-
+  height: 64px;
 }
 
 .buttonWrapper button, .buttonWrapper2 button {
@@ -29,7 +29,6 @@ Button
   box-shadow: none;
   color: #929391;
   font-weight: 500;
-  text-transform: capitalize;
   letter-spacing: 0;
   line-height: 32px;
 }
@@ -41,7 +40,7 @@ Button
 
 @media screen and (orientation:landscape) {
   .buttonWrapper {
-    margin: 80px auto;
+    margin: 20px auto;
     align-items: center;
     width: 100%;
   }
@@ -51,6 +50,7 @@ Button
     align-items: center;
     width: 100%;
   }
+
 
   .buttonWrapper button {
     width: 180px;
@@ -98,6 +98,28 @@ Button
     top: 48%;
     left: 48%;
   }
+
+  .adImage{
+    width: 642px;
+    height: 464px;
+  }
+
+  .adImageSelection{
+    width: 160px;
+    padding: 15px;
+  }
+
+  .adText {
+    position: absolute;
+    top: 38%;
+    font-size: 36px;
+    color: #fff;
+    font-weight: 800;
+    text-align: center;
+    width: 642px;
+    background-color: none;
+  }
+
 }
 
 .webcamVideo{

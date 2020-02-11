@@ -13,11 +13,7 @@ import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 import ComponentsStyles from '../../App.module.css';
 
 const styles = {
-  root: {
-    flexGrow: 1,
-    width: '100%',
-    color: 'black',
-  },
+
 };
 
 class Insight extends React.Component {
@@ -59,7 +55,8 @@ class Insight extends React.Component {
         <SpectreHeader colour="white" progressActive progressNumber={progress} />
         <IdleChecker />
         <div className={`${classes.content} content insightPage`}>
-          <p className="smallText">{question(targetName)}</p>
+          <h1 className="addSpacing">{question(targetName)}</h1>
+          <br/>
           <AvatarComponent target= {{name: targetName, image: targetImage }} />
           <div onTouchEnd={this.EnableButton}>
             <TextSliderText leftText={leftText} rightText={rightText} middleText={middleText} />

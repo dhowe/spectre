@@ -64,7 +64,7 @@ class OCEANReveal extends React.Component {
             return (
               <Fade key={i} in={true}
                 style={{ transitionDelay: (i * 3000) + 'ms' }}>
-                <p className="smallText-nextline" key={`fade-${i}`}
+                <p className="normal-nextline" key={`fade-${i}`}
                   >
                   {sent}
                 </p>

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 //import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
@@ -29,19 +29,17 @@ class InsightThankYou extends React.Component {
         <SpectreHeader colour="white" progressActive progressNumber="one" />
         <IdleChecker />
         <div className={`${classes.content} content`}>
-        <div>
-          <p className="smallText"><strong>Great!</strong></p>
-          <ThumbUp className="thankyou-icon" />
-          <p className="smallText">Now you are beginning to think like an algorithm.</p>
-          <p className="smallText">Just two more to go</p>
+          <div>
+            <h1><span>Great!</span></h1>
+            <ThumbUp className="thankyou-icon" />
+            <p className="normal-addSpacing">Now you are beginning to think like an algorithm.</p>
+            <p className="normal-addSpacing">Just two more to go.</p>
           </div>
-          <div className="link">
-          <Button className={ComponentsStyles.blueBtn} onClick={()=>this.props.history.push('/insight-sexuality')}>
-            Lets go deeper!
-          </Button>
+          <div className="insight-thankyou-link">
+            <IconButton enabled={true} className={ComponentsStyles.iconButtonStyle1} icon="next" text="Let's go deeper" />
           </div>
         </div>
-        <FooterLogo/>
+        <FooterLogo />
       </div>
     );
   }
