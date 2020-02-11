@@ -40,7 +40,7 @@ UserSession.create = async (user) => {
   UserSession.useBrowserStorage && sessionStorage.setItem
     (UserSession.storageKey, JSON.stringify(json._id));
 
-  return json;
+  return Object.assign(user, json);
 }
 
 UserSession.sendMail = async (uid, email) => {
@@ -92,8 +92,7 @@ UserSession.ensure = async (user, props) => {
         fillMissingProperties(user,
           ['login', 'name', 'gender', 'virtue', 'adIssue', 'traits', 'celebrity']);
 
-        user = await UserSession.create(user);
-        console.log('json', user);
+        await UserSession.create(user);
         console.warn('[STUB] Setting user._id: ' + user._id);
 
       }

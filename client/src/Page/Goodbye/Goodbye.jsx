@@ -26,7 +26,6 @@ class Goodbye extends React.Component {
 
   async componentDidMount() {
     const user = await UserSession.ensure(this.context, ['_id', 'celebrity']);
-    console.log('ensure done', 'celeb='+user.celebrity);
     this.setState({ celebrity: user.celebrity });
   }
 
