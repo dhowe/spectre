@@ -36,15 +36,16 @@ class Win extends React.Component {
         <SpectreHeader colour="white" progressActive progressNumber="two" />
         <IdleChecker />
         <div className={`${classes.content} content`}>
-          <p>
-            <strong>{adIssue === 'remain' ? 'Believe!' : 'BeLeave!'}</strong>
-          </p>
-          <p className="normal">
-            &nbsp;Your campaign was successful...</p>
+          <h1 className="addSpacing"><span><strong>Step 2</strong> - Complete!</span></h1>
+          <h2>
+            <span>{adIssue === 'remain' ? 'Believe!' : 'BeLeave!'}in the [virtue] of Dataism!</span>
+          </h2>
+          <p className="normal-addSpacing">
+            You have sucessfully used computational propaganda<br/>to influence this election!</p>
           <p className="thankyou-icon">
             <Trophy />
           </p>
-          <p>Your silent army swung the vote!</p>
+          <p className="normal">Democracy is easy. Like taking candy from a baby!</p>
           <div className="link">
           <Link to="/influence-a-celebrity">
             <IconButton className={ComponentsStyles.iconButtonStyle1} icon="next" text="Next" />

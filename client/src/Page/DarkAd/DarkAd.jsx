@@ -42,7 +42,7 @@ const styles = {
 
   campaignImage: {
     position: 'absolute',
-    bottom: '0px',
+    bottom: '106px',
     right: '0',
     width: '150px',
   },

@@ -11,14 +11,7 @@ import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 import ComponentsStyles from '../../App.module.css';
 
 const styles = {
-  root: {
-    flexGrow: 1,
-    width: '100%',
-    color: 'black',
-  },
-  clickToContinue: {
-    margin: '20% 0',
-  },
+
 };
 
 class LaunchCampaign extends React.Component {
@@ -34,20 +27,22 @@ class LaunchCampaign extends React.Component {
         <SpectreHeader colour="white" />
         <IdleChecker />
         <div className={`${classes.content} content`}>
-          <p className="normal">Launch Campaign!</p>
+          <h1 className="addSpacing"><span>Launch the campaign!</span></h1>
+          <h2>Keep America Great!</h2>
           <div className="link">
-          <Link to="/campaign-results">
-            <img
-              className={classes.image}
-              src={launchImg}
-              alt="launch campaign"
-            />
-          </Link>
-          </div>
-          <div className="link">
-          <Link to="/campaign-results">
-              <IconButton className={ComponentsStyles.iconButtonStyle1} icon="next" text="Go" />
-          </Link>
+            <Link to="/campaign-results">
+              <div className="pickLink">
+                <div className="RepublicanLogo">
+                  <img
+                    className={classes.image}
+                    src={launchImg}
+                    alt="launch campaign"
+                  />
+                  <h2><span>Republican</span></h2>
+                </div>
+              </div>
+              
+            </Link>
           </div>
         </div>
         <FooterLogo />

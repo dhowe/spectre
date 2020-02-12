@@ -8,7 +8,7 @@ import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import Video from '../../Components/Video/Video';
 import Modal from '../../Components/Modal/Modal';
-
+import './OCEANReveal.scss'
 //import colours from '../../colors.scss';
 
 const styles = {
@@ -29,13 +29,10 @@ class OCEANReveal extends React.Component {
     const user = await UserSession.ensure(this.context,
       ['_id', 'name', 'login', 'gender', 'traits', 'celebrity']);
 
-    let sentences = [
-      'A little data and a little tech goes a long way.',
-      'We haven\'t known you for very long, but already we know…',
-    ].concat(user.generateSummary());
+    let sentences = user.generateSummary();
 
     this.setState({ sentences: sentences, celebrity: user.celebrity });
-    this.timeout = setTimeout(() => this.setState({ readyForVideo: true }), sentences.length * 3000);
+    this.timeout = setTimeout(() => this.setState({ readyForVideo: true }), (sentences.length + 4) * 3000);
   }
 
   componentWillUnmount() {
@@ -60,15 +57,25 @@ class OCEANReveal extends React.Component {
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive progressNumber="three" />
         <div className={`${classes.content} content`}>
+        <Fade in={true}
+          style={{ transitionDelay: 0 + 'ms' }}>
+          <h1 className="addSpacing"><span>Spectre knows you.</span></h1>
+          </Fade>
+          <Fade in={true}
+            style={{ transitionDelay: 3000 + 'ms' }}>
+          <h2>We haven't known you for very long, <br/>but already we know…</h2>
+          </Fade>
           {sentences.map((sent, i) => {
             return (
+              <div className="reveal-box">
               <Fade key={i} in={true}
-                style={{ transitionDelay: (i * 3000) + 'ms' }}>
-                <p className="normal-nextline" key={`fade-${i}`}
+                style={{ transitionDelay: ((i+2) * 3000) + 'ms' }}>
+                <p className="normal" key={`fade-${i+2}`}
                   >
                   {sent}
                 </p>
               </Fade>
+              </div>
             );
           })}
         </div>

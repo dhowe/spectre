@@ -102,6 +102,11 @@ h1.addSpacing {
   margin-bottom: 60px;
 }
 
+h1.noSpacing {
+  margin-bottom: 8px;
+  line-height: 48px;
+}
+
 h2 {
   font-weight: normal;
   font-size: 40px;
@@ -211,7 +216,7 @@ span {
   }
 
   .thankyou-icon {
-    margin: 32px auto 40px;
+    margin: 0px auto 40px;
   }
 
   .link {
@@ -331,3 +336,37 @@ a.disabled {
   width: fit-content;
   margin: 0 auto;
 }
+
+.MuiButton-label{
+  text-transform: none;
+}
+
+
+/* PickYourSide && LaunchCampaign */
+.pickLink{
+  display: inline-flex;
+  margin: 0 auto;
+
+}
+
+.pickLink div{
+  padding: 50px;
+  width: 360px;
+  height: 360px;
+  border: 1px solid #828282;
+  box-sizing: border-box;
+  border-radius: 24px;
+  margin: 50px 77px 0 77px;
+}
+
+.pickLink img{
+  height: 200px;
+}
+.RepublicanLogo img{
+  padding-top: 20px;
+}
+.DemocratLogo img{
+  padding-bottom: 20px;
+}
+
+/* PickYourSide && LaunchCampaign end */

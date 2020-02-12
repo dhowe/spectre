@@ -7,6 +7,7 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import IconButton from '../../Components/IconButton/IconButton';
+import ComponentStyles from '../../App.module.css';
 
 const styles = {
 
@@ -30,11 +31,13 @@ class WeAreSorry extends React.Component {
       <div className={classes.root}>
         <SpectreHeader colour="white" />
         <div className={classes.content + " content"}>
-          <p>We’re sorry <strong>{name}</strong>, </p>
-          <p> we’re afraid you can’t do that.</p>
+          <p>We’re sorry <span>{name}</span>, you can’t do that.</p>
           <div className="link">
             <Link to="/goodbye">
-              <IconButton icon="tick" text="Next" />
+            <IconButton
+              enabled
+              className={ComponentStyles.iconButtonStyle1}
+              icon="next" text="Next" />
             </Link>
           </div>
         </div >

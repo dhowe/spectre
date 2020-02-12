@@ -42,8 +42,8 @@ class TakeBackControl extends React.Component {
         <SpectreHeader colour="white" />
         <IdleChecker />
         <div className={`${classes.content} content`}>
-          <p className="normal">Take back control?</p>
-          <p className="normal">Delete your data from Spectre’s system?</p>
+          <h1 className="addSpacing"><span>Take back control</span></h1>
+          <p className="normal-addSpacing">Delete your data from Spectre’s system?</p>
           <div className={ComponentsStyles.buttonWrapper}>
               <Button className={ComponentsStyles.button} variant="contained" color="primary" onClick={() => this.handleClick(true)}>Keep</Button>
               <Button className={ComponentsStyles.button} variant="contained" color="primary" onClick={() => this.handleClick(false)}>Delete</Button>
