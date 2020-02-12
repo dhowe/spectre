@@ -62,38 +62,53 @@ class LoginPage extends React.Component {
 
     const user = this.context;
 
-    if (!(name && name.length && gender &&
-      gender.length && email && email.length)) {
-
-      UserSession.validate(this.context, ['name', 'login', 'gender']);
-      name = user.name;
-      email = user.login;
-      gender = user.gender;
-      console.log("[STUB]", name, email, gender);
-    }
-
-    // see #343: incorrect email should be the only possible error case
-
-    this.social.setState({ name, email, gender });
-
-    if (!this.emailIsValid(email)) {
-      if (this.state.emailErrorCount < 3) {
-        this.modalTitle = 'Oops...';
-        this.modalContent = 'That doesn\'t look like a valid email address, please try again';
-        this.setState({ modalOpen: true, emailErrorCount: this.state.emailErrorCount + 1 });
-      }
-      else {
-        // else return to login page
-        this.props.history.push('/login');
+    if (gender === undefined) {
+      if (!this.emailIsValid(email)) {
+        if (this.state.emailErrorCount < 3) {
+          this.modalTitle = 'Oops...';
+          this.modalContent = 'That doesn\'t look like a valid email address, please try again';
+          this.setState({ modalOpen: true, emailErrorCount: this.state.emailErrorCount + 1 });
+        }
+        else {
+          // else return to login page
+          this.props.history.push('/login');
+        }
       }
     }
     else {
-      user.name = name;
-      user.login = email;
-      user.gender = gender;
-      user.lastPageVisit = { page: 'login', time: Date.now() };
-      this.setState({ modalOpen: false });
-      this.saveUser(user);
+      if (!(name && name.length && gender &&
+        gender.length && email && email.length)) {
+
+        UserSession.validate(this.context, ['name', 'login', 'gender']);
+        name = user.name;
+        email = user.login;
+        gender = user.gender;
+        console.log("[STUB]", name, email, gender);
+      }
+
+      // see #343: incorrect email should be the only possible error case
+
+      this.social.setState({ name, email, gender });
+/*
+      if (!this.emailIsValid(email)) {
+        if (this.state.emailErrorCount < 3) {
+          this.modalTitle = 'Oops...';
+          this.modalContent = 'That doesn\'t look like a valid email address, please try again';
+          this.setState({ modalOpen: true, emailErrorCount: this.state.emailErrorCount + 1 });
+        }
+        else {
+          // else return to login page
+          this.props.history.push('/login');
+        }
+      }
+      else {*/
+        user.name = name;
+        user.login = email;
+        user.gender = gender;
+        user.lastPageVisit = { page: 'login', time: Date.now() };
+        this.setState({ modalOpen: false });
+        this.saveUser(user);
+      //}
     }
   }
 

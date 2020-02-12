@@ -34,7 +34,7 @@ class InfluenceANation extends React.Component {
         <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
         <IdleChecker />
         <div className={`${classes.content} content`}>
-          <h1 className="normal"><span><strong>Step 2</strong> - Influence a nation</span></h1>
+          <h1 className="addSpacing"><span><strong>Step 2</strong> - Influence a nation</span></h1>
           <p className="normal-addSpacing">Let's amplify your campaign by influencing lots more<br />
             people to <span>vote {this.state.adIssue}</span>.</p>
           <p className="normal-addSpacing">We can show you how, but first, you must...</p>
