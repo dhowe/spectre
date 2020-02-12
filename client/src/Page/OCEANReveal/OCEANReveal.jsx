@@ -8,7 +8,7 @@ import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import Video from '../../Components/Video/Video';
 import Modal from '../../Components/Modal/Modal';
-
+import './OCEANReveal.scss'
 //import colours from '../../colors.scss';
 const speed = 50; // typing speed for each character
 const sentenceBreak = 4; // sentenceBreak*speed = wait time after each sentence
@@ -30,16 +30,15 @@ class OCEANReveal extends React.Component {
     const user = await UserSession.ensure(this.context,
       ['_id', 'name', 'login', 'gender', 'traits', 'celebrity']);
 
-    let sentences = [
-      'A little data and a little tech goes a long way.',
-      'We haven\'t known you for very long, but already we know…',
-    ].concat(user.generateSummary());
+    let sentences = user.generateSummary();
 
     const totalChar = sentences.join().split("").length;
     const waitingTime = totalChar * speed + (sentences.length - 1) * (sentenceBreak * speed)
 
     this.setState({ sentences: sentences, celebrity: user.celebrity });
-    this.timeout = setTimeout(() => this.setState({ readyForVideo: true }), waitingTime);
+
+    this.timeout = setTimeout(() => this.setState({ readyForVideo: true }), (sentences.length + 4) * 3000);
+
   }
 
   componentWillUnmount() {
@@ -65,8 +64,17 @@ class OCEANReveal extends React.Component {
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive progressNumber="three" />
         <div className={`${classes.content} content`}>
+        <Fade in={true}
+          style={{ transitionDelay: 0 + 'ms' }}>
+          <h1 className="addSpacing"><span>Spectre knows you.</span></h1>
+          </Fade>
+          <Fade in={true}
+            style={{ transitionDelay: 3000 + 'ms' }}>
+          <h2>We haven't known you for very long, <br/>but already we know…</h2>
+          </Fade>
           {sentences.map((sent, i) => {
             return (
+
               <p class="smallText_nextLine">
                 {sent.split("").map((letter,j) => {
                   return(
@@ -78,6 +86,7 @@ class OCEANReveal extends React.Component {
                 );
               })}
               </p>
+
             );
 
           })}

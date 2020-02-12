@@ -9,8 +9,6 @@ const { schema, functions } = toMongoose(userSchema);
 const UserSchema = mongoose.Schema(schema); // hack here
 Object.keys(functions).forEach(f => UserSchema.methods[f] = functions[f]);
 
-// TODO: all callbacks should pass error first
-
 // find all users with traits
 UserSchema.methods.findByOcean = function(callback, limit) { // cb=function(err,users)
   let user = this;
