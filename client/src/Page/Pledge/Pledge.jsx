@@ -63,10 +63,10 @@ class Pledge extends React.Component {
               </h1>
             </Fade>
             <Fade in timeout={1000} style={{ transitionDelay: '2500ms' }}>
-              <p className="normal">Our technologies can tell you things about yourself that you don’t know.</p>
+              <p className="normal">Our technologies can tell you things<br/> about yourself that you don’t know.</p>
             </Fade>
             <Fade in timeout={1000} style={{ transitionDelay: '4500ms' }}>
-              <p className="normal"><br/>In order for us to do this, first we need to get to know you a little bit.</p>
+              <p className="normal"><br/>In order for us to do this, first we need<br/> to get to know you a little bit.</p>
             </Fade>
           </div>
           <div className="ImageCapture">

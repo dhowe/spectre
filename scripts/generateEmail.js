@@ -4,7 +4,6 @@ const dotEnv = require('dotenv');
 const fetch = require('node-fetch');
 const mailer = require('nodemailer');
 const formatter = require('html-formatter');
-
 const Path = require('path');
 const React = require('react');
 const ReactDOMServer = require('react-dom/server');
@@ -12,8 +11,15 @@ const OceanComp = require('../build/Components/OceanProfile/OceanProfile').defau
 const AvatarComp = require('../build/Components/AvatarComponent/AvatarComponent').default;
 const { ServerStyleSheets } = require('@material-ui/core/styles');
 
-const StyleTag = '%STYLE%', UserNameTag = "%USERNAME%", OceanProfileTag = '%OCEANPROFILE%', JssTag = "%JSS%";
+/*******************************************************************/
+//
+// node generateEmail.js -u [userId] -e [emailAddress]
+//
+/*******************************************************************/
 
+
+const StyleTag = '%STYLE%', UserNameTag = "%USERNAME%",
+  OceanProfileTag = '%OCEANPROFILE%', JssTag = "%JSS%";
 const DefaultSubject = 'Spectre knows about you';
 const DefaultTestEmail = 'spectre-test@email.com';
 
@@ -163,7 +169,7 @@ function createEmail(user) {
       let avatarComp = React.createElement(AvatarComp, {
         target: {
           name: user.name,
-          image: '/profiles/'+user._id + '.jpg'
+          image: '/profiles/' + user._id + '.jpg'
         }
       });
       let avatarHtml = ReactDOMServer.renderToString(sheet2.collect(avatarComp));
@@ -171,7 +177,7 @@ function createEmail(user) {
       //console.log(avatarHtml, '\n');
 
       // combine the style sheets (what if there are shared styles?)
-      let style = style1 + '\n\n' + style2 ;
+      let style = style1 + '\n\n' + style2;
 
 
       // combine the html parts (should be one component)
@@ -199,23 +205,20 @@ function createEmail(user) {
     });
 }
 
-
-
- const args = require('minimist')(process.argv.slice(2));
- // console.log(args)
- if(args.length == 0) createEmail(mockUser).then(saveEmail);
- else {
-   if (args.e) {
-     emailAddress = args.e;
-   }
-
-   if (args.u) {
-     lookupUser(args.u)
-       .then(createEmail)
-       .then(sendEmail);
-   } else {
-     createEmail(mockUser).then(sendEmail);
-   }
-
-  // node generateEmail.js -u [userID] -e [email]
- }
+const args = require('minimist')(process.argv.slice(2));
+// console.log(args)
+if (args.length == 0) {
+  createEmail(mockUser).then(saveEmail);
+}
+else {
+  if (args.e) {
+    emailAddress = args.e;
+  }
+  if (args.u) {
+    lookupUser(args.u)
+      .then(createEmail)
+      .then(sendEmail);
+  } else {
+    createEmail(mockUser).then(sendEmail);
+  }
+}
