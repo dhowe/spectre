@@ -47,7 +47,7 @@ class Selected extends React.Component {
             <AvatarComponent target={{ name: targetName, image: targetImage }} />
           </div>
           <p className="normal"><br/>Let&apos;s start by verifying some of the basics to
-            unlock<br/> insight into <strong>{targetName}</strong>. </p>
+            unlock<br/> insight into <span>{targetName}</span>. </p>
           <p className="normal"><br/>Don’t worry, only you will see the results. </p>
           <div className="link">
           <Link to="/insight-gender">

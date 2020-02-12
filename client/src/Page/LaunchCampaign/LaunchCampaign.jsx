@@ -6,9 +6,9 @@ import { Link } from 'react-router-dom';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
-import IconButton from '../../Components/IconButton/IconButton';
+//import IconButton from '../../Components/IconButton/IconButton';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
-import ComponentsStyles from '../../App.module.css';
+//import ComponentsStyles from '../../App.module.css';
 
 const styles = {
 
@@ -41,7 +41,7 @@ class LaunchCampaign extends React.Component {
                   <h2><span>Republican</span></h2>
                 </div>
               </div>
-              
+
             </Link>
           </div>
         </div>
