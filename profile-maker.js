@@ -126,6 +126,8 @@ class ProfileMaker {
       dims = { w: md.width, h: md.height };
     });
 
+    // TODO: withFaceLandmarks().withFaceDescriptor()
+
     let result;
     if (this.detectAgeGender) {
       let detection = await faceapi.detectSingleFace(image,
