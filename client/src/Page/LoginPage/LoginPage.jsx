@@ -65,7 +65,7 @@ class LoginPage extends React.Component {
       gender = user.gender;
       console.log("[STUB]", name, email, gender);
     }
-
+        
     if (typeof gender === 'undefined') {
       if (!this.emailIsValid(email)) {
         if (this.state.emailErrorCount < 3) {
