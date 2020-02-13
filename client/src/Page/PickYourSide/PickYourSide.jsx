@@ -21,7 +21,7 @@ class PickYourSide extends React.Component {
   }
 
   async componentDidMount() {
-    const user = await UserSession.ensure(this.context, ['_id', 'name', 'target']);
+    const user = await UserSession.ensure(this.context, [/*'_id',*/ 'name', 'target']);
     this.setState({ targetName: user.target.name, pronoun: (user.target.gender === 'male' ? 'him' : 'her')  });
   }
 

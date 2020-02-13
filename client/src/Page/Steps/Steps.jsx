@@ -17,12 +17,12 @@ const styles = {
 class Steps extends React.Component {
   constructor(props) {
     super(props, '/follower');
-    this.state = {virtue: ''};
+    this.state = { virtue: '' };
   }
 
-  componentDidMount() {
-    const user = UserSession.validate(this.context, ['virtue']);
-    this.setState( { virtue: user.virtue } );
+  async componentDidMount() {
+    const user = await UserSession.ensure(this.context, ['virtue', 'traits']);//, { update: true });
+    this.setState({ virtue: user.virtue });
   }
 
   render() {
@@ -30,34 +30,34 @@ class Steps extends React.Component {
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" />
-        <IdleChecker setIdleTime={14}/>
+        <IdleChecker setIdleTime={14} />
         <div className={classes.content + " content"}>
-            <Fade in={true} >
-                <h1>Find what you are looking for<br/> by following these three steps:</h1>
-            </Fade>
-            <Fade in={true} style={{transitionDelay: '1000ms'}}>
-                <h2><strong>Step 1</strong> - influence a follower</h2>
-            </Fade>
-            <Fade in={true} style={{transitionDelay: '2000ms'}}>
-                <h2><strong>Step 2</strong> - influence a nation</h2>
-            </Fade>
-            <Fade in={true} style={{transitionDelay: '3000ms'}}>
-                <h2><strong>Step 3</strong> - influence a celebrity</h2>
-            </Fade>
-            <Fade in={true} style={{transitionDelay: '4000ms'}}>
-                <h2 className="noSpacing">Get the data. Get the {this.state.virtue}.</h2>
-            </Fade>
-            <Fade in={true} style={{transitionDelay: '5000ms'}}>
-                <h2 className="noSpacing"><span>Ready?</span></h2>
-            </Fade>
-            <div className="link">
+          <Fade in={true} >
+            <h1>Find what you are looking for<br /> by following these three steps:</h1>
+          </Fade>
+          <Fade in={true} style={{ transitionDelay: '1000ms' }}>
+            <h2><strong>Step 1</strong> - influence a follower</h2>
+          </Fade>
+          <Fade in={true} style={{ transitionDelay: '2000ms' }}>
+            <h2><strong>Step 2</strong> - influence a nation</h2>
+          </Fade>
+          <Fade in={true} style={{ transitionDelay: '3000ms' }}>
+            <h2><strong>Step 3</strong> - influence a celebrity</h2>
+          </Fade>
+          <Fade in={true} style={{ transitionDelay: '4000ms' }}>
+            <h2 className="noSpacing">Get the data. Get the {this.state.virtue}.</h2>
+          </Fade>
+          <Fade in={true} style={{ transitionDelay: '5000ms' }}>
+            <h2 className="noSpacing"><span>Ready?</span></h2>
+          </Fade>
+          <div className="link">
             <Link to="/follower">
-                <IconButton enabled={true} className={ComponentsStyles.iconButtonStyle1} icon="next" text="Next"/>
+              <IconButton enabled={true} className={ComponentsStyles.iconButtonStyle1} icon="next" text="Next" />
             </Link>
-            </div>
+          </div>
         </div>
         <FooterLogo />
-    </div>
+      </div>
     );
   }
 }

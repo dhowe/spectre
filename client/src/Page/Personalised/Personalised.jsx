@@ -17,7 +17,7 @@ class Personalised extends React.Component {
   //   //  this.state = { nextPage: '/game' };
   // }
   // async componentDidMount() {
-  //   await UserSession.ensure(this.context, ['_id', 'virtue']);
+  //   await UserSession.ensure(this.context, [/*'_id',*/ 'virtue']);
   // }
   render() {
     const { classes } = this.props;

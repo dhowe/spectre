@@ -9,7 +9,7 @@ import mongoose from 'mongoose';
 import bodyparser from 'body-parser';
 import basicAuth from 'express-basic-auth';
 import controller from './user-controller';
-//import ProfileMaker from './profile-maker';
+//import ProfileMaker from './profile-maker'; // comment-for-fast-tests
 import UserModel from './user-model';
 
 import { dbUrl, apiUser, profDir, clientDir, certs, prod } from './config';
@@ -51,20 +51,22 @@ app.use(base, auth, routes);
 const index = clientDir + '/build/index.html';
 if (!prod) app.get('*', (req, res) => res.sendFile(index));
 
-// watch for new profile images to process
-if (!test) new ProfileMaker().watch(profDir);
+ // watch for new profile images to process
+if (!test) import('./profile-maker').then(ProfileMaker => {
+   new (ProfileMaker.default)().watch(profDir);
+});
 
 /////////////////////////// DbConnect ///////////////////////////////
-
-const opts = { useNewUrlParser: true, useFindAndModify: false };
 const dbstr = prod ? dbUrl : dbUrl + '-dev';
-
 (async () => {
-
   try {
-    await mongoose.connect(dbstr, opts);
+    await mongoose.connect(dbstr, {
+      poolSize: 8,
+      useCreateIndex: true,
+      useNewUrlParser: true,
+      useFindAndModify: false
+    });
     mongoose.connection.on('error', console.error);
-    UserModel.databaseDisabled = false;
   } catch (e) {
     console.error('\n[DB] ' + e.name + '...');
     console.error('[DB] Unable to connect to ' + dbstr + '\n');
@@ -79,8 +81,9 @@ const dbstr = prod ? dbUrl : dbUrl + '-dev';
 // }
 
 let server, logf = (dev) => {
-  console.log('\nSpectre API at '+(dev ? 'http' : 'https:') + '//localhost:' + port + base + ' ['
-    + dbstr.substring(dbstr.lastIndexOf('/') + 1) + '::' + profDir + ']');
+  console.log('\nSpectre API at ' + (dev ? 'http' : 'https:') + '//localhost:'
+    + port + base + ' [' + dbstr.substring(dbstr.lastIndexOf('/') + 1)
+    + '::' + profDir + ']');
 }
 
 if (prod) { // load ssl certs for production

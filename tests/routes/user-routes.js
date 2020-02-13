@@ -84,7 +84,7 @@ describe('REST API', () => {
           expect(res).to.have.status(200);
           expect(res.body.data).to.be.an('array');
           let similars = res.body.data;
-          console.log(similars.map(s => s._id));
+          //console.log(similars.map(s => s._id));
           expect(similars.length).eq(6);
           expect(similars[0]).to.be.a('object');
           expect(similars[0]._id).to.be.a('string');
@@ -131,7 +131,7 @@ describe('REST API', () => {
                   expect(res).to.have.status(200);
                   expect(res.body.data).to.be.an('array');
                   let similars = res.body.data;
-                  console.log(similars.map(s => s._id));
+                  //console.log(similars.map(s => s._id));
                   expect(similars.length).eq(7);
                   expect(similars[0]).to.be.a('object');
                   expect(similars[0]._id).to.be.a('string');

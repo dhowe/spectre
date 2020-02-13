@@ -14,7 +14,7 @@ const routes = [
   '/take-back-control', '/goodbye'
 ];
 
-const disabled = [ '/login', '/pledge' /* for webcam */];// '/data-is' ];
+const disabled = [ '/login', '/pledge', '/selfie'/* last 2 for webcam */];
 
 class Navigation extends React.Component {
 

@@ -17,15 +17,25 @@ UserSession.serverErrors = 0;
 
 /////////////////////////// API functions /////////////////////////////
 
+/*
+ * Clears data from browser session storage
+ */
+UserSession.clear = () => {
+  sessionStorage.clear();
+  UserSession.serverErrors = 0;
+  UserSession.serverDisabled = false;
+  console.log('[USER] Session initialized');
+}
+
 // Create a new database record: /login only
 UserSession.create = async (user) => {
 
   if (UserSession.serverDisabled) return;
 
-  const { route, auth, cid } = doConfig();
-  if (user.clientId < 0) user.clientId = cid;
+  const { route, auth, clientId } = doConfig();
+  user.clientId = clientId;
 
-  //console.log('[POST] ' + mode + '.create: ' + route);
+  //console.log('[POST] User.create: ' + route, clientId, user);
   const [json, e] = await safeFetch(route, {
     method: "post",
     headers: {
@@ -65,32 +75,23 @@ UserSession.sendMail = async (uid, email) => {
 }
 
 /*
- * Clears data from browser session storage
- */
-UserSession.clear = () => {
-  sessionStorage.clear();
-  UserSession.serverErrors = 0;
-  UserSession.serverDisabled = false;
-  console.log('[USER] Session initialized');
-}
-
-/*
  * Repairs a user using sessionStorage and db if needed (async)
  */
-UserSession.ensure = async (user, props) => {
-  let lookup = false;
+UserSession.ensure = async (user, props, opts) => {
+  let userLookup = false;
+  let allowNoId = opts && opts.allowNoId;
+  let forceUpdate = opts && opts.forceUpdate;
   try {
-
     // do we have an id, if not repair it
-    if (props.includes('_id') && typeof user._id === 'undefined') {
-      props = arrayRemove(props, '_id');
+    if (typeof user._id === 'undefined') {
+      //props = arrayRemove(props, '_id');
 
       // do we have an id in session
       const sid = sessionStorage.getItem(UserSession.storageKey);
       if (!sid) {
         console.warn('[STUB] No user._id, creating new user');
-        fillMissingProperties(user,
-          ['login', 'name', 'gender', 'virtue', 'adIssue', 'traits', 'celebrity']);
+        fillMissingProperties(user, ['login', 'name', 'gender',
+          'virtue', 'adIssue', 'traits', 'celebrity']);
 
         await UserSession.create(user);
         console.warn('[STUB] Setting user._id: ' + user._id);
@@ -100,12 +101,12 @@ UserSession.ensure = async (user, props) => {
         user._id = JSON.parse(sid);
         console.warn('[SESS] Reloaded user._id: ' + user._id + ' doing lookup');
         await UserSession.lookup(user);
-        lookup = true;
+        userLookup = true;
       }
     }
 
     // should have user with id here, if not, then probably no server
-    if (!user || !user._id) {
+    if (!user || (!allowNoId && !user._id)) {
       user._id = -1;
       console.warn('[STUB] Unable to set user._id, using ' + user._id);
     }
@@ -113,8 +114,8 @@ UserSession.ensure = async (user, props) => {
     // if we are dealin with hasImage, we need to check the db
     if (props.includes('hasImage')) {
       props = arrayRemove(props, 'hasImage');
-      if (user._id !== -1 && !lookup) await UserSession.lookup(user);
-      console.log('[USER] '+user._id + '.hasImage = ' + user.hasImage);
+      if (user._id !== -1 && !userLookup) await UserSession.lookup(user);
+      console.log('[USER] ' + user._id + '.hasImage = ' + user.hasImage);
     }
 
     if (props.includes('target') && !user.similars.length) {
@@ -123,7 +124,7 @@ UserSession.ensure = async (user, props) => {
     }
 
     let modified = fillMissingProperties(user, props);
-    if (modified) await UserSession.update(user);
+    if (modified || forceUpdate) await UserSession.update(user);
   }
   catch (e) {
     handleError(e, '', 'ensure');
@@ -148,7 +149,7 @@ UserSession.lookup = async (user) => {
 
   if (!user || !user._id) throw Error('Invalid arg', user);
   const { route, auth, cid, mode } = doConfig();
-  if (user.clientId < 0) user.clientId = cid;
+  user.clientId = cid;
   const endpoint = route + user._id;
   try {
     console.log('[GET] ' + mode + '.lookup: ' + endpoint);
@@ -176,7 +177,7 @@ UserSession.update = async (user) => {
   const { route, auth, cid, mode } = doConfig();
   const endpoint = route + user._id;
 
-  if (user.clientId < 0) user.clientId = cid;
+  user.clientId = cid;
 
   try {
     console.log('[PUT] ' + mode + '.update: ' + endpoint);
@@ -212,7 +213,7 @@ UserSession.similars = async (user) => {
     throw Error('No traits for user #' + user._id);
   }
   const endpoint = route + 'similars/' + user._id;
-  if (user.clientId < 0) user.clientId = cid;
+  user.clientId = cid;
   try {
     console.log('[GET] ' + mode + '.similars: ' + endpoint);
     const [json, e] = await safeFetch(endpoint, {
@@ -231,6 +232,15 @@ UserSession.similars = async (user) => {
   }
 }
 
+/*
+ * Uploads image to the server asynchronously
+ *
+ * Note that we don't wait for it - if the function returns false
+ * it means we didn't get the image
+ *
+ * If it returns true it means ONLY that we attempted to send it.
+ * To check if it succeeded, we need to check user.hasImage later
+ */
 UserSession.uploadImage = (user, data) => {
 
   const toImageFile = (data, fname) => {
@@ -251,15 +261,19 @@ UserSession.uploadImage = (user, data) => {
   }
 
   if (!user || !data || !data.length) return false;
+
   const imgfile = toImageFile(data, user._id + '.jpg');
+
   if (!imgfile) return false;
+
   UserSession.postImage(user, imgfile,
     (e) => console.error('[WEBCAM] Error', e),
     () => user.hasImage = true);
+
   return true;
 }
 
-UserSession.postImage = async (user, image, onError, onSuccess ) => { // TODO: test
+UserSession.postImage = async (user, image, onError, onSuccess) => { // TODO: test
 
   if (UserSession.serverDisabled) return;
 
@@ -356,7 +370,7 @@ function fillMissingProperties(user, props) {
   // a property is missing if its undefined or an empty array or string
   let missing = props.filter(p => typeof user[p] === 'undefined'
     || ((typeof user[p] === 'string' || Array.isArray(user[p]))
-    && !user[p].length));
+      && !user[p].length));
 
   if (!missing || !missing.length) return false; // all props are ok
 
@@ -426,7 +440,12 @@ function doConfig() {
     UserSession.serverDisabled = true;
   }
 
-  const cid = env.REACT_APP_CLIENT_ID || -1;
+  let clientId = env.REACT_APP_CLIENT_ID || 0;
+  if (!clientId) {
+    if (mode === 'PROD') throw Error('\nREACT_APP_CLIENT_ID required in client .env file\n');
+    clientId = irand(1, 7);
+    console.warn('[STUB] Setting clientId: '+clientId);
+  }
 
   // Here we construct server host from window.location,
   // assuming server/db is on the same host as the web-app)
@@ -436,8 +455,9 @@ function doConfig() {
   const auth = env.REACT_APP_API_USER + ':' + env.REACT_APP_API_SECRET;
 
   if (!auth || !auth.length) console.error("Auth required!");
+
   //console.log('route: '+route);
-  return { auth: auth, route: route, clientId: cid, mode: mode };
+  return { auth: auth, route: route, clientId: clientId, mode: mode };
 }
 
 function defaultSimilars() {
@@ -463,14 +483,14 @@ function rand() {
   if (arguments.length === 1 && arguments[0].length) {
     return arguments[0][irand(arguments[0].length)];
   }
-  var randnum = Math.random();
+  let randnum = Math.random();
   if (!arguments.length) return randnum;
   return (arguments.length === 1) ? randnum * arguments[0] :
     randnum * (arguments[1] - arguments[0]) + arguments[0];
 }
 
 function irand() {
-  var randnum = Math.random();
+  let randnum = Math.random();
   if (!arguments.length) throw Error('requires args');
   return (arguments.length === 1) ? Math.floor(randnum * arguments[0]) :
     Math.floor(randnum * (arguments[1] - arguments[0]) + arguments[0]);
@@ -522,6 +542,7 @@ async function safeFetch() {
       //console.log('safeFetch2.json',json);
       if (!json) return Promise.resolve([undefined, 'no-json-data'])
       if (json.status !== 200) {
+        if (json.status === 449) throw Error('');
         return Promise.resolve([undefined, json.status + '/' + (json.message || 'no-message')])
       }
       return [json.data, undefined];

@@ -24,7 +24,7 @@ class InsightComplete extends React.Component {
 
   async componentDidMount() {
     const user = await UserSession.ensure(this.context,
-      ['_id', 'name', 'login', 'gender', 'virtue', 'target']);
+      [/*'_id',*/ 'name', 'login', 'gender', 'virtue', 'target']);
     this.setState({ target: user.target });
   }
 

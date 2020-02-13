@@ -26,7 +26,7 @@ class SuccessAd extends React.Component {
 
   async componentDidMount() {
     const user = await UserSession.ensure(this.context,
-      ['_id', 'adIssue', 'traits', 'target']);
+      [/*'_id',*/ 'adIssue', 'traits', 'target']);
 
     this.timeout = setTimeout(() =>
       this.props.history.push('/influence-a-nation'), 6000);

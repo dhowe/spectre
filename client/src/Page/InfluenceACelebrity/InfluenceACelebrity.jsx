@@ -31,7 +31,7 @@ class InfluenceACelebrity extends React.Component {
   }
 
   async componentDidMount() {
-    const user = await UserSession.ensure(this.context, ['_id', 'virtue']);
+    const user = await UserSession.ensure(this.context, [/*'_id',*/ 'virtue']);
     this.setState({ virtue: user.virtue });
   }
 

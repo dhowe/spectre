@@ -27,7 +27,7 @@ class Campaign extends React.Component {
 
   async componentDidMount() {
     const user = await UserSession.ensure(this.context,
-      ['_id', 'name', 'adIssue', 'target' ]);
+      [/*'_id',*/ 'name', 'adIssue', 'target' ]);
     this.setState({
         targetName: user.target.name.ucf(),
         targetInfluences: user.targetInfluences,

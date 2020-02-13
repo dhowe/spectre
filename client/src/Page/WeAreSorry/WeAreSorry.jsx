@@ -20,7 +20,7 @@ class WeAreSorry extends React.Component {
   }
 
   async componentDidMount() {
-    const user = await UserSession.ensure(this.context, ['_id', 'name']);
+    const user = await UserSession.ensure(this.context, [/*'_id',*/ 'name']);
     this.setState({ name: user.name });
   }
 

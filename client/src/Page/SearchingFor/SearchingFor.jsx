@@ -20,7 +20,7 @@ class SearchingFor extends React.Component {
 
   async componentDidMount() {
     let user = await UserSession.ensure(this.context,
-      ['_id', 'login', 'gender', 'name']);
+      [/*'_id',*/ 'login', 'gender', 'name']);
     this.setState({ name: user.name })
   }
 

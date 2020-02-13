@@ -11,7 +11,6 @@ const BRIGHTEN = 1.5;
 class ProfileMaker {
 
   constructor(modelDir) {
-
     this.border = 200;
     this.loaded = false;
     this.detectAgeGender = false;
@@ -47,7 +46,7 @@ class ProfileMaker {
         this.makeThumbnail(path, outfile)
           .then(res => {
             if (res.status === 'ok') {
-              console.log('[' + clfDate() + '] ::* THUMB' + pathify(outfile));
+              console.log('[' + clfDate() + '] ::* THUMB ' + pathify(outfile));
             }
             else {
               console.error('[' + clfDate() + '] ::* THUMB Failed', res.data);

@@ -24,7 +24,7 @@ class InfluenceAFollower extends React.Component {
 
   async componentDidMount() {
     let user = await UserSession.ensure(this.context,
-      ['_id', 'name', 'login', 'gender', 'virtue', 'traits']);
+      [/*'_id',*/ 'name', 'login', 'gender', 'virtue', 'traits']);
     user = await UserSession.similars(user);
     this.setState({ similars: user.similars });
   }

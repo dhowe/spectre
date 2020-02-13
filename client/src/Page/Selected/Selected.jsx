@@ -27,7 +27,7 @@ class Selected extends React.Component {
 
   async componentDidMount() {
     const user = await UserSession.ensure(this.context,
-      ['_id', 'name', 'login', 'gender', 'virtue', 'target']);
+      [/*'_id',*/ 'name', 'login', 'gender', 'virtue', 'target']);
     this.setState({
       targetName: user.target.name,
       targetImage: user.targetImageUrl()

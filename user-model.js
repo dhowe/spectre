@@ -3,27 +3,17 @@ import mongoose from 'mongoose';
 import { oceanSort } from './metrics';
 import ClientUser from './shared/user';
 
+const clientUser = new ClientUser(ClientUser.schema());
+const { schema, functions } = toMongoose(clientUser); // hack
+
+// create the user schema with unique index
+const UserSchema = mongoose.Schema(schema);
+UserSchema.index({ 'login': 1, 'loginType': 1 }, { unique: true });
+
 // share user functions between schema and model
-const userSchema = new ClientUser(ClientUser.schema());
-const { schema, functions } = toMongoose(userSchema);
-const UserSchema = mongoose.Schema(schema); // hack here
 Object.keys(functions).forEach(f => UserSchema.methods[f] = functions[f]);
 
-// find all users with traits
-UserSchema.methods.findByOcean = function(callback, limit) { // cb=function(err,users)
-  let user = this;
-  UserModel.find({ 'traits.openness': { $gte: 0 }, 'hasImage': true })
-    .exec((err, candidates) => {
-      if (err) {
-        console.error('findByOcean', err);
-        throw err;
-      }
-      let sorted = oceanSort(user, candidates);
-      sorted = sorted.slice(0, limit);
-      callback(err, sorted); // ADDED: DCH
-    });
-};
-
+// additional functions on the UserSchema
 UserSchema.statics.getAll = function(callback, limit) {
   UserModel.find(callback).limit(limit);
 }
@@ -40,6 +30,22 @@ UserSchema.statics.Create = function(tmpl) {
 
   return user;//._randomizeTraits();
 }
+
+// find all users with traits
+UserSchema.methods.findByOcean = function(callback, limit) { // cb=function(err,users)
+  let user = this;
+  UserModel.find({ 'traits.openness': { $gte: 0 }, 'hasImage': true })
+    .exec((err, candidates) => {
+      if (err) {
+        console.error('findByOcean', err);
+        throw err;
+      }
+      let sorted = oceanSort(user, candidates);
+      sorted = sorted.slice(0, limit);
+      callback(err, sorted); // ADDED: DCH
+    });
+    // TODO: this could VERY slow on a big database
+};
 
 ///////////////////////// Helpers ///////////////////////////
 
@@ -98,6 +104,7 @@ function toMongoose(obj) {
 
   return { schema: result, functions: funcs };
 };
+
 
 const UserModel = mongoose.model('user', UserSchema);
 UserModel.databaseDisabled = false;

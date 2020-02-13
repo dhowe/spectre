@@ -21,7 +21,7 @@ class DataIs extends React.Component {
 
   async componentDidMount() {
     let nextPage = this.state.nextPage;
-    const user = await UserSession.ensure(this.context, ['_id', 'virtue', 'hasImage']);
+    const user = await UserSession.ensure(this.context, [/*'_id',*/ 'virtue', 'hasImage']);
     if (!user.hasImage) {
       nextPage = '/selfie';
       console.log('[DATAIS] No webcam image found for ' + user._id);

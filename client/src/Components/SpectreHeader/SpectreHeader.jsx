@@ -21,7 +21,7 @@ class SpectreHeader extends React.Component {
 
   async componentDidMount() { // tmp for testing webcam
     if (/(data-is|personalised|game)$/.test(window.location.pathname)) {
-      let user = await UserSession.ensure(this.context, ['_id', 'name']);
+      let user = await UserSession.ensure(this.context, [/*'_id',*/'name']);
       if (user) this.setState({
         userName: user.name,
         userImage: UserSession.profileDir + user._id + '.jpg'

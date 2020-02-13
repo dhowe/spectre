@@ -20,22 +20,25 @@ import { profDir } from './config';
 const UNIQUE_USER_VIOLATION = 451;
 const USER_NOT_FOUND = 452;
 const USER_WO_TRAITS = 453;
+const USER_WO_LOGIN = 455;
 const NO_DATABASE = 454;
+const NO_CLIENT_ID = 449;
+const NO_USER_ID = 450;
 const NUM_SIMILARS = 6;
 
 const create = async (req, res) => {
 
   if (UserModel.databaseDisabled) return noDbError(res);
 
-  if (!req || !req.body) return sendError(res, 'Req without body');
+  if (!req || !req.body) return sendError(res, 'Request without body');
 
   const body = req.body;
 
-  if (!(body.login && body.loginType)) return sendError(res,
-    "Attempt to create User without login/loginType:" + JSON.stringify(body));
+  if (!(body.login && body.loginType)) return sendError(res, "API.create "
+    +"requires login/loginType: " + JSON.stringify(body), 0, USER_WO_LOGIN);
 
-  if (!body.clientId) return sendError(res,
-    "Attempt to create User without clientId:" + JSON.stringify(body));
+  if (!body.clientId) return sendError(res, "API.create "
+    + "requires clientId: " + JSON.stringify(body), 0, NO_CLIENT_ID);
 
   let user = new UserModel();
   Object.assign(user, body); // dangerous?
@@ -44,18 +47,18 @@ const create = async (req, res) => {
     await UserModel.find({ login: body.login, loginType: body.loginType }, (e, docs) => {
 
       if (e || docs.length) return sendError(res, e || "Unique User Violation: " +
-        body.login + '/' + body.loginType);
+        body.login + '/' + body.loginType, 0, UNIQUE_USER_VIOLATION);
 
       user.save(err => {
-        if (err) return sendError(res, 'Unable to save user/' + err);
+        if (err) return sendError(res, 'Unable to save user/', err);
         // TODO: check for ocean-traits and return user with similars
         sendResponse(res, user);
       });
     });
   }
-  catch(e) {
+  catch (e) {
     console.error('Unable to find user: ' + JSON.stringify(body));
-    return sendError(res, 'Unable to find user: ' + JSON.stringify(body));
+    return sendError(res, 'Unable to find user: ' + JSON.stringify(body), e);
   }
 };
 
@@ -109,13 +112,11 @@ const message = async (req, res) => {
   // });
 };
 */
-const current = async (req, res) => { // not used at present
+const current = async (req, res) => {
 
   if (UserModel.databaseDisabled) return noDbError(res);
 
-  if (!req.params.hasOwnProperty('cid')) {
-    return sendError(res, 'ClientId(cid) required');
-  }
+  if (!req.params.hasOwnProperty('cid')) return sendError(res, 'No clientId sent');
 
   await UserModel.findOne({ clientId: req.params.cid }, {}, {
     sort: { 'createdAt': -1 }
@@ -150,9 +151,8 @@ const fetch = async (req, res) => {
 
   if (UserModel.databaseDisabled) return noDbError(res);
 
-  if (!req.params.hasOwnProperty('uid')) {
-    return sendError(res, 'UserId required');
-  }
+  if (!req.params.hasOwnProperty('uid')) return sendError
+    (res, 'No uid sent', 0, NO_USER_ID);
 
   await UserModel.findById(req.params.uid, (err, user) => {
     if (err) return sendError(res, 'Error (findById) for #' + req.params.uid, err);
@@ -165,8 +165,8 @@ const update = async (req, res) => {
 
   if (UserModel.databaseDisabled) return noDbError(res);
 
-  if (!req.params.hasOwnProperty('uid')) {
-    return sendError(res, 'UserId required');
+  if (!req.params.hasOwnProperty('uid') || req.params.uid === '-1') {
+    return sendError(res, 'Invalid uid: ' + req.params.uid, 0, NO_USER_ID);
   }
 
   let uid = req.params.uid;
@@ -174,7 +174,7 @@ const update = async (req, res) => {
 
   await UserModel.findByIdAndUpdate(uid, req.body, { new: true }, (err, user) => {
 
-    if (err) return sendError(res, 'Update fail #' + req.params.uid);
+    if (err) return sendError(res, 'Update failed for user#' + req.params.uid);
     if (!user) return sendError(res, 'No user #' + req.params.uid, 0, USER_NOT_FOUND);
 
     if (!user.hasOceanTraits()) {
@@ -194,14 +194,11 @@ const similars = async (req, res) => {
 
   if (UserModel.databaseDisabled) return noDbError(res);
 
-  if (!req.params.hasOwnProperty('uid')) {
-    return sendError(res, 'UserId required');
-  }
+  if (!req.params.hasOwnProperty('uid')) return sendError
+    (res, 'No uid sent', 0, NO_USER_ID);
 
   let limit = NUM_SIMILARS; // default limit
-  if (req.query.hasOwnProperty('limit')) {
-    limit = parseInt(req.query.limit);
-  }
+  if (req.query.hasOwnProperty('limit')) limit = parseInt(req.query.limit);
 
   let uid = req.params.uid;
   await UserModel.findById(uid, (err, user) => {
@@ -232,7 +229,7 @@ const photo = async (req, res) => {
 
   if (typeof req.params.uid === 'undefined' ||
     req.params.uid === 'undefined') {
-    return sendError(res, 'no uid sent');
+    return sendError(res, 'No uid sent', 0, NO_USER_ID);
   }
 
   // Destination here needs to be folder we are watching
@@ -272,7 +269,7 @@ const photoset = async (req, res) => {
   if (UserModel.databaseDisabled) return noDbError(res);
 
   if (typeof req.params.uid === 'undefined') {
-    res.status(400).send({ error: 'no uid sent' });
+    return sendError(res, 'No uid sent', 0, NO_USER_ID);
   }
 
   console.log("Routes.uid: ", req.params.uid);

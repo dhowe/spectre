@@ -59,13 +59,13 @@ class LoginPage extends React.Component {
     const user = this.context;
 
     if (!e) { // right-arrow key
-      UserSession.validate(this.context, ['name', 'login', 'gender']);
+      UserSession.validate(this.context, ['name', 'login', 'gender'], {allowNoId: true});
       name = user.name;
       email = user.login;
       gender = user.gender;
       console.log("[STUB]", name, email, gender);
     }
-        
+
     if (typeof gender === 'undefined') {
       if (!this.emailIsValid(email)) {
         if (this.state.emailErrorCount < 3) {

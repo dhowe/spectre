@@ -310,12 +310,12 @@ class Game extends React.Component {
 
   async componentDidMount() {
     user = await UserSession.ensure
-      (this.context, ['_id', 'login', 'gender', 'name']);
+      (this.context, [/*'_id',*/ 'login', 'gender', 'name']);
   }
 
   async componentComplete() { // redirect called from p5
     const user = await UserSession.ensure(this.context,
-      ['_id', 'login', 'gender', 'name', 'traits']);
+      [/*'_id',*/ 'login', 'gender', 'name', 'traits']);
     this.props.history.push("/thank-you");
     UserSession.update(user);
   }

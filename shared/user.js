@@ -16,18 +16,18 @@ export default class User {
   constructor(tmpl) {
     Object.keys(User.schema()).forEach(k => this[k] = undefined);
     Object.assign(this, tmpl);
-    this.similars = [];
     this.clientId = process.env.REACT_APP_CLIENT_ID || -1;
     this.category = (tmpl && tmpl.category) || 0;
     this.loginType = this.loginType || 'email';
     this.dataChoices = this.dataChoices || {};
     this.targetAd = this.targetAd || {};
     this.celebrity = this.celebrity || '';
+    this.similars = [];
   }
 
   toString() {
     let u = this;
-    let s = u._id ? u._id+ ', ' + u.name : u.name;
+    let s = (u._id ? u._id+ ', ' + u.name : u.name) +'('+this.clientId+')';
     if (u.login) s += ', ' + u.login;
     if (u.gender) s += ', ' + u.gender;
     if (u.virtue) s += ', ' + u.virtue;
@@ -615,24 +615,7 @@ User.schema = () => {
   }
 }
 
-function rand() {
-  if (arguments.length === 1 && Array.isArray(arguments[0])) {
-    return arguments[0][irand(arguments[0].length)];
-  }
-  var randnum = Math.random();
-  if (!arguments.length) return randnum;
-  return (arguments.length === 1) ? randnum * arguments[0] :
-    randnum * (arguments[1] - arguments[0]) + arguments[0];
-}
-
-function irand() {
-  var randnum = Math.random();
-  if (!arguments.length) throw Error('requires args');
-  return (arguments.length === 1) ? Math.floor(randnum * arguments[0]) :
-    Math.floor(randnum * (arguments[1] - arguments[0]) + arguments[0]);
-}
-
-User._randomData = function(tmpl) {
+/*User._randomData = function(tmpl) {
   if (!tmpl || typeof tmpl._id === 'undefined' || typeof tmpl.name === 'undefined') {
     console.log(tmpl);
     throw Error('id and login required' + tmpl);
@@ -650,11 +633,11 @@ User._randomData = function(tmpl) {
   // user.dataChoices.consumer = ['health', 'finance', 'travel'];
   // user.dataChoices.home = ['smart watch', 'smart tv', 'smart assistant'];
   // user.dataChoices.political = ['online maps', 'polls & surveys', 'voting records'];
-  user.clientId = user.clientId || irand(1, 7);
+  user.clientId = user.clientId || irand(1, 6);
   user.hasImage = true;
 
   return user;
-}
+}*/
 
 User._randomTraits = function() {
   let traits = {};

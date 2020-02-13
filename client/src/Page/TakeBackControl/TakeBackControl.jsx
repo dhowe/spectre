@@ -25,7 +25,7 @@ class TakeBackControl extends React.Component {
   }
 
   async componentDidMount() {
-    await UserSession.ensure(this.context, ['_id', 'name', 'celebrity']);
+    await UserSession.ensure(this.context, [/*'_id',*/ 'name', 'celebrity']);
   }
 
   handleClick = (choice) => {
