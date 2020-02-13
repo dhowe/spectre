@@ -39,8 +39,8 @@ class InfluenceACelebrity extends React.Component {
     const user = this.context;
     if (this.state.celebrity) {
       user.celebrity = this.state.celebrity;
+      UserSession.update(user); // no await
     }
-    if (user.celebrity) UserSession.update(user); // no await
     this.props.history.push('/OCEAN-reveal');
   }
 

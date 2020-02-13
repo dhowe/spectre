@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-//import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
@@ -26,7 +25,7 @@ class FindCitizens extends React.Component {
   }
 
   async componentDidMount() {
-    const user = await UserSession.ensure(this.context, [/*'_id',*/ 'target']);
+    const user = await UserSession.ensure(this.context, ['target']);
     this.setState({ targetName: user.target.name });
   }
 
@@ -39,7 +38,7 @@ class FindCitizens extends React.Component {
         <IdleChecker />
         <div className={`${classes.content} content`}>
           <h1 className="addSpacing"><span>Excellent.</span></h1>
-          <p className="normal-addSpacing">Now target UK citizens with a similar OCEAN profile to <span>{targetName}</span>!</p>
+          <p className="normal-addSpacing">Now target US citizens with a similar OCEAN profile to <span>{targetName}</span>!</p>
           <p className="normal-addSpacing">A silent army that could well tip the&nbsp;balance...</p>
           <div className="link">
             <Link to="/targets-found">

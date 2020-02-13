@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-//import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import { Link } from 'react-router-dom';
 import IconButton from '../../Components/IconButton/IconButton';
@@ -10,8 +9,7 @@ import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
-const styles = {
-};
+const styles = {};
 
 class TargetAd extends React.Component {
   constructor(props) {
@@ -20,9 +18,9 @@ class TargetAd extends React.Component {
   }
 
   async componentDidMount() {
-    const user = await UserSession.ensure(this.context, [/*'_id',*/ 'target']);
+    const user = await UserSession.ensure(this.context, ['target']);
     this.setState({ targetName: user.target.name });
-    UserSession.update(user); // no async needed
+    UserSession.update(user); // no await
   }
 
   render() {
@@ -44,7 +42,7 @@ class TargetAd extends React.Component {
               </Link>
             </Grid>
             <Grid item>
-              <Link to="/success-ad"> {/* see issue #262 */}
+              <Link to="/success-ad"> {/* see issue #478 */}
                 <IconButton icon="next" text="No" />
               </Link>
             </Grid>
