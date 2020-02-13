@@ -10,7 +10,7 @@ describe('Client User', function () {
       let fields = Object.keys(User.schema());
 
       // these are fields defined with a default
-      let ignores = ['clientId', /*'isActive','similars', 'category',*/ 'loginType'];
+      let ignores = ['clientId', 'celebrity', 'targetAd', 'dataChoices', 'loginType'];
       fields.forEach(f => {
         if (!ignores.includes(f)) {
           expect(user).has.property(f);
