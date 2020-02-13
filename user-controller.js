@@ -43,6 +43,8 @@ const create = async (req, res) => {
   let user = new UserModel();
   Object.assign(user, body); // dangerous?
 
+  if (typeof user.clientId !== 'number') user.clientId = parseInt(user.clientId);
+
   try {
     await UserModel.find({ login: body.login, loginType: body.loginType }, (e, docs) => {
 

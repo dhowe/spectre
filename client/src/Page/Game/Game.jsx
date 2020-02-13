@@ -97,7 +97,7 @@ function sketch(p) {
     drawInfo(p, colors.sketchText);
 
     if (instructions) {
-      p.image(instruct, p.width / 2, p.height / 2 );
+      p.image(instruct, p.width / 2, p.height / 2);
       return;
     }
 
@@ -135,9 +135,14 @@ function sketch(p) {
   function mPressed() {
     //document.getElementById("clickMe").click();
     Brand.active = false;
-    Brand.instances.forEach(b => {
-      if (b.contains(p.mouseX, p.mouseY)) Brand.active = b;
-    });
+    if (typeof Brand.instances !== 'undefined') {
+      Brand.instances.forEach(b => {
+        if (b.contains(p.mouseX, p.mouseY)) Brand.active = b;
+      });
+    }
+    else {
+      console.error('[ERROR] No brand instances');
+    }
   }
 
   function mReleased() {

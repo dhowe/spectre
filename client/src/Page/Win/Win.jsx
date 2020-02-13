@@ -19,17 +19,17 @@ class Win extends React.Component {
 
   constructor(props) {
     super(props, '/influence-a-celebrity');
-    this.state = { adIssue: '' };
+    this.state = { virtue: '' };
   }
 
   async componentDidMount() {
-    const user = await UserSession.ensure(this.context, [/*'_id',*/ 'adIssue']);
-    this.setState({ adIssue: user.adIssue });
+    const user = await UserSession.ensure(this.context, ['virtue']);
+    this.setState({ virtue: user.virtue });
   }
 
   render() {
     const { classes } = this.props;
-    const { adIssue } = this.state;
+    const { virtue } = this.state;
 
     return (
       <div className={classes.root}>
@@ -38,7 +38,7 @@ class Win extends React.Component {
         <div className={`${classes.content} content`}>
           <h1 className="addSpacing"><span><strong>Step 2</strong> - Complete!</span></h1>
           <h2>
-            <span>{adIssue === 'remain' ? 'Believe!' : 'BeLeave!'}in the [virtue] of Dataism!</span>
+            <span>Believe in the {virtue} of Dataism!</span>
           </h2>
           <p className="normal-addSpacing">
             You have sucessfully used computational propaganda<br/>to influence this election!</p>

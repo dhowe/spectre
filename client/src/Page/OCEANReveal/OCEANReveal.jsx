@@ -28,7 +28,7 @@ class OCEANReveal extends React.Component {
 
   async componentDidMount() {
     const user = await UserSession.ensure(this.context,
-      [/*'_id',*/ 'name', 'login', 'gender', 'traits', 'celebrity']);
+      ['name', 'login', 'gender', 'traits', 'celebrity']);
 
     const sentences = user.generateSummary();
     const totalChar = sentences.join().length;
@@ -75,7 +75,7 @@ class OCEANReveal extends React.Component {
             sentences.map((sent, i) => {
             return (
               <p className="normal" key={i}>
-                {sent.split("").map((letter, j) => {
+                {sent.split('').map((letter, j) => {
                   let delay = timing[2] + ((++timer + (i * linePause)) * keyPause);
                   return (
                     <Fade key={j} in={true} style={{ transitionDelay:  delay + 'ms' }}>

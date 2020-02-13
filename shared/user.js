@@ -190,16 +190,18 @@ export default class User {
 
   targetAdInfluences() {
 
-    if (typeof this.target === 'undefined') { //TMP: remove
+    if (typeof this.target === 'undefined') {
       throw Error('No target for adInfluences!', this);
     }
 
     let ots = User.oceanTraits;
     let influences = this.randomInfluences();
+
     //console.log("OT",this.hasOceanTraits(this.target), typeof this.target);
-    if (typeof this.target !== 'undefined' &&
-      this.hasOceanTraits(this.target) &&
-      typeof this.adIssue !== 'undefined') {
+
+    if (typeof this.target !== 'undefined'
+      && this.hasOceanTraits(this.target)
+      && typeof this.adIssue !== 'undefined') {
 
       let cat = this.categorize(this.target);
       if (cat !== 0) {
@@ -577,8 +579,8 @@ User.schema = () => {
       }
     },
     lastPageVisit: {
-      time: { type: 'date' },
-      page: { type: 'string' }
+      time: { type: 'date', default: Date.now() },
+      page: { type: 'string', default: 'login' }
     },
     traits: {
       openness: { type: 'number' },

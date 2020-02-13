@@ -78,31 +78,36 @@ UserSession.sendMail = async (uid, email) => {
  * Repairs a user using sessionStorage and db if needed (async)
  */
 UserSession.ensure = async (user, props, opts) => {
-  let userLookup = false;
-  let allowNoId = opts && opts.allowNoId;
-  let forceUpdate = opts && opts.forceUpdate;
+
+  const allowNoId = opts && opts.allowNoId;
+  const forceUpdate = opts && opts.forceUpdate;
+
+  const checkSession = async (user) => {
+    // do we have an id in session
+    const sid = sessionStorage.getItem(UserSession.storageKey);
+    if (!sid) {
+      console.warn('[STUB] No user._id, creating new user');
+      fillMissingProperties(user, ['login', 'name', 'gender',
+        'virtue', 'adIssue', 'traits', 'celebrity']);
+
+      await UserSession.create(user);
+      console.warn('[STUB] Setting user._id: ' + user._id);
+      return false;
+    }
+    else {
+      user._id = JSON.parse(sid);
+      console.warn('[SESS] Reloaded user._id: ' + user._id + ' doing lookup');
+      await UserSession.lookup(user);
+      return true;
+    }
+  }
+
   try {
-    // do we have an id, if not repair it
-    if (typeof user._id === 'undefined') {
-      //props = arrayRemove(props, '_id');
+    let userLookup = false;
 
-      // do we have an id in session
-      const sid = sessionStorage.getItem(UserSession.storageKey);
-      if (!sid) {
-        console.warn('[STUB] No user._id, creating new user');
-        fillMissingProperties(user, ['login', 'name', 'gender',
-          'virtue', 'adIssue', 'traits', 'celebrity']);
-
-        await UserSession.create(user);
-        console.warn('[STUB] Setting user._id: ' + user._id);
-
-      }
-      else {
-        user._id = JSON.parse(sid);
-        console.warn('[SESS] Reloaded user._id: ' + user._id + ' doing lookup');
-        await UserSession.lookup(user);
-        userLookup = true;
-      }
+    // do we have an id, if not check session, and try to repair
+    if (!allowNoId && typeof user._id === 'undefined') {
+      userLookup = await checkSession(user);
     }
 
     // should have user with id here, if not, then probably no server
@@ -129,6 +134,7 @@ UserSession.ensure = async (user, props, opts) => {
   catch (e) {
     handleError(e, '', 'ensure');
   }
+
   return user;
 }
 
@@ -214,6 +220,7 @@ UserSession.similars = async (user) => {
   }
   const endpoint = route + 'similars/' + user._id;
   user.clientId = cid;
+
   try {
     console.log('[GET] ' + mode + '.similars: ' + endpoint);
     const [json, e] = await safeFetch(endpoint, {
@@ -422,8 +429,7 @@ function toNetworkString(user) {
 
 function doConfig() {
 
-  // get auth from .env or heroku configs
-  DotEnv.config();
+  DotEnv.config(); // get auth from .env
 
   const port = 8083;
   const env = process.env;
@@ -440,12 +446,10 @@ function doConfig() {
     UserSession.serverDisabled = true;
   }
 
-  let clientId = env.REACT_APP_CLIENT_ID || 0;
-  if (!clientId) {
-    if (mode === 'PROD') throw Error('\nREACT_APP_CLIENT_ID required in client .env file\n');
-    clientId = irand(1, 7);
-    console.warn('[STUB] Setting clientId: '+clientId);
-  }
+  if (!env.REACT_APP_CLIENT_ID && mode === 'PROD') throw Error
+    ('\nREACT_APP_CLIENT_ID required in client .env file\n');
+
+  let clientId = env.REACT_APP_CLIENT_ID || irand(1, 7);
 
   // Here we construct server host from window.location,
   // assuming server/db is on the same host as the web-app)
