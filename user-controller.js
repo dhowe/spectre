@@ -4,7 +4,12 @@ import clfDate from 'clf-date';
 import multer from 'multer';
 import path from 'path';
 import { profDir } from './config';
-import childProcess from 'child_process';
+
+//import childProcess from 'child_process';
+//import fs from 'fs';
+//const fsp = fs.promises;
+//const fsp = require('fs').promises; // dont mix require and import
+
 /* all calls return a uniform object:
 {
   "status": code,
@@ -12,11 +17,11 @@ import childProcess from 'child_process';
   "data": "<payload object>"
 }*/
 
+const UNIQUE_USER_VIOLATION = 451;
 const USER_NOT_FOUND = 452;
 const USER_WO_TRAITS = 453;
 const NO_DATABASE = 454;
 const NUM_SIMILARS = 6;
-const fsp = require('fs').promises;
 
 const create = async (req, res) => {
 
@@ -64,6 +69,7 @@ const list = async (req, res) => {
   });
 };
 
+/* NEED TO RETHINK
 const message = async (req, res) => {
 
   // WORKING HERE
@@ -75,7 +81,7 @@ const message = async (req, res) => {
 
   console.log("user-controller.js:: message", userId, email);
 
-  await generateEmail(userId, email);
+  //await generateEmail(userId, email);
 
 
   // const mailer = new Mailer({
@@ -102,7 +108,7 @@ const message = async (req, res) => {
   //   sendResponse(res, users);
   // });
 };
-
+*/
 const current = async (req, res) => { // not used at present
 
   if (UserModel.databaseDisabled) return noDbError(res);
@@ -308,6 +314,7 @@ function noDbError(res) {
   });
 }
 
+/*  NEED TO RETHINK THIS
 function runScript(scriptPath, args, callback) {
 
     // keep track of whether callback has been invoked to prevent multiple invocations
@@ -329,7 +336,6 @@ function runScript(scriptPath, args, callback) {
         var err = code === 0 ? null : new Error('exit code ' + code);
         callback(err);
     });
-
 }
 
 function generateEmail(id, email) {
@@ -337,7 +343,7 @@ function generateEmail(id, email) {
     if (err) throw err;
     console.log('finished running generateEmail.js');
   });
-}
+}*/
 
 
-export default { list, similars, message, create, fetch, update, remove, photo, photoset, current, createBatch }
+export default { list, similars, /*message,*/ create, fetch, update, remove, photo, photoset, current, createBatch }

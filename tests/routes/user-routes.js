@@ -57,7 +57,7 @@ describe('REST API', () => {
           done();
         });
     });
-     
+
     // it('should send mail to single user', done => {
     //   let id = '888888888888888888888888';
     //   chai.request(host)
@@ -84,10 +84,63 @@ describe('REST API', () => {
           expect(res).to.have.status(200);
           expect(res.body.data).to.be.an('array');
           let similars = res.body.data;
+          console.log(similars.map(s => s._id));
           expect(similars.length).eq(6);
           expect(similars[0]).to.be.a('object');
           expect(similars[0]._id).to.be.a('string');
+          for (var i = 0; i < similars.length; i++) {
+            expect(similars[i]._id).to.not.equal(id);
+          }
           done();
+        });
+    });
+
+    it('should ignore similars without an image', done => {
+      let id = '111111111111111111111111';
+      chai.request(host)
+        .get('/api/users/' + id)
+        .auth(env.API_USER, env.API_SECRET)
+        .end((err, res) => {
+          expect(err).to.be.null;
+          expect(res).to.have.status(200);
+          expect(res.body.data).to.be.a('object');
+          let user = res.body.data;
+          expect(user._id).eq(id);
+          expect(user.hasImage).eq(true);
+          expect(user.similars).to.be.undefined;
+          user.hasImage = false;
+
+          chai.request(host)
+            .put('/api/users/'+ id)
+            .auth(env.API_USER, env.API_SECRET)
+            .send(user)
+            .end((err, res) => {
+              expect(err).to.be.null;
+              expect(res).to.have.status(200);
+              expect(res.body.data).to.be.a('object')
+              expect(res.body.data._id).to.be.a('string');
+              Object.assign(user, res.body.data);
+              expect(user.hasImage).eq(false);
+
+              id = '888888888888888888888888';
+              chai.request(host)
+                .get('/api/users/similars/' + id + '?limit=' + 7)
+                .auth(env.API_USER, env.API_SECRET)
+                .end((err, res) => {
+                  expect(err).to.be.null;
+                  expect(res).to.have.status(200);
+                  expect(res.body.data).to.be.an('array');
+                  let similars = res.body.data;
+                  console.log(similars.map(s => s._id));
+                  expect(similars.length).eq(7);
+                  expect(similars[0]).to.be.a('object');
+                  expect(similars[0]._id).to.be.a('string');
+                  for (var i = 0; i < similars.length; i++) {
+                    expect(similars[i]._id).to.not.equal(id);
+                  }
+                  done();
+                });
+            });
         });
     });
 

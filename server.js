@@ -9,7 +9,7 @@ import mongoose from 'mongoose';
 import bodyparser from 'body-parser';
 import basicAuth from 'express-basic-auth';
 import controller from './user-controller';
-import ProfileMaker from './profile-maker';
+//import ProfileMaker from './profile-maker';
 import UserModel from './user-model';
 
 import { dbUrl, apiUser, profDir, clientDir, certs, prod } from './config';
@@ -43,9 +43,6 @@ app.all('*', logger('[:date[clf]] :remote-addr :method :url :status', {
 
 // static react files (no-auth)
 if (!prod) app.use(express.static(clientDir + '/build'));
-
-// current user route (no-auth)
-app.get(base + 'users/current/:cid', controller.current);
 
 // for other api routes (w-auth)
 app.use(base, auth, routes);

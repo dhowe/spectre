@@ -27,8 +27,8 @@ router.route('/users/similars/:uid')
 router.route('/users/photo/:uid')
   .post(controller.photo)
 
-router.route('/users/message/:uid')
-  .get(controller.message)
+// router.route('/users/message/:uid')
+//   .get(controller.message) // unused
 
 router.route('/users/photoset/:uid')
   .post(controller.photoset) // unused
