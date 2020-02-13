@@ -136,13 +136,12 @@ class LoginPage extends React.Component {
   }
 
   onKeyPress = (e) => {
-    console.log('onKeyPress', e.key);
     if (e.key === 'ArrowRight') {
       if (this.videoStarted) { // next-page
         this.props.history.push('/pledge');
       }
       else {
-        this.handleSubmit(false, {}); // dev only
+        this.handleSubmit(false, {}); // dev only: use mock data
       }
     }
     else if (e.key === 'ArrowLeft') {
