@@ -5,7 +5,7 @@ _Worship at the Altar_
 
 ## Dependencies
 ```
-We use react, express, node (v12.2), mongodb (v4.2) and yarn (v1.21)
+We use react, express, node (v12.9.1), mongodb (v4.2) and yarn (v1.21)
 ```
 
 <br/>

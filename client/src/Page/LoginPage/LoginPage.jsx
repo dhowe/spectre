@@ -26,18 +26,15 @@ const styles_portrait = {
   marginBottom: 70,
 };
 
-const nextPage = '/pledge'
-
 class LoginPage extends React.Component {
 
   constructor(props) {
-    super(props);
+    super(props, '/pledge');
     this.state = {
       height: props.height,
       emailErrorCount: 0,
       modalOpen: false,
       tosModalOpen: false,
-      clearEmail: true,
       idleCheckerDone: false,
     };
     this.videoStarted = false;
@@ -48,7 +45,6 @@ class LoginPage extends React.Component {
     this.tosModalSummary = '';
     this.tosModalContent = '';
     this.tosModalTitle = '';
-
   }
 
   componentDidMount() {
@@ -56,12 +52,20 @@ class LoginPage extends React.Component {
     this.setState({ height: window.innerHeight + 'px' });
   }
 
-  handleSubmit = (e, { name, email, gender, clearEmail }) => {
+  handleSubmit = (e, { name, email, gender }) => {
 
     if (e) e.preventDefault();
 
     const user = this.context;
 
+    if (!e) { // right-arrow key
+      UserSession.validate(this.context, ['name', 'login', 'gender']);
+      name = user.name;
+      email = user.login;
+      gender = user.gender;
+      console.log("[STUB]", name, email, gender);
+    }
+        
     if (typeof gender === 'undefined') {
       if (!this.emailIsValid(email)) {
         if (this.state.emailErrorCount < 3) {
@@ -76,39 +80,13 @@ class LoginPage extends React.Component {
       }
     }
     else {
-      if (!(name && name.length && gender &&
-        gender.length && email && email.length)) {
-
-        UserSession.validate(this.context, ['name', 'login', 'gender']);
-        name = user.name;
-        email = user.login;
-        gender = user.gender;
-        console.log("[STUB]", name, email, gender);
-      }
-
-      // see #343: incorrect email should be the only possible error case
-
       this.social.setState({ name, email, gender });
-/*
-      if (!this.emailIsValid(email)) {
-        if (this.state.emailErrorCount < 3) {
-          this.modalTitle = 'Oops...';
-          this.modalContent = 'That doesn\'t look like a valid email address, please try again';
-          this.setState({ modalOpen: true, emailErrorCount: this.state.emailErrorCount + 1 });
-        }
-        else {
-          // else return to login page
-          this.props.history.push('/login');
-        }
-      }
-      else {*/
-        user.name = name;
-        user.login = email;
-        user.gender = gender;
-        user.lastPageVisit = { page: 'login', time: Date.now() };
-        this.setState({ modalOpen: false });
-        this.saveUser(user);
-      //}
+      user.name = name;
+      user.login = email;
+      user.gender = gender;
+      user.lastPageVisit = { page: 'login', time: Date.now() };
+      this.setState({ modalOpen: false });
+      this.saveUser(user);
     }
   }
 
@@ -146,7 +124,7 @@ class LoginPage extends React.Component {
     }
     else {
       console.error("Unable to load video component");
-      this.props.history.push(nextPage);
+      this.props.history.push('/pledge');
     }
   }
 
@@ -160,10 +138,10 @@ class LoginPage extends React.Component {
   onKeyPress = (e) => {
     if (e.key === 'ArrowRight') {
       if (this.videoStarted) { // next-page
-        this.props.history.push(nextPage);
+        this.props.history.push('/pledge');
       }
       else {
-        this.handleSubmit(false, {}); // dev only
+        this.handleSubmit(false, {}); // dev only: use mock data
       }
     }
     else if (e.key === 'ArrowLeft') {

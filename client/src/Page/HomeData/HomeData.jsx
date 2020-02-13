@@ -11,11 +11,10 @@ import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 import ComponentsStyles from '../../App.module.css';
 import UserSession from '../../Components/UserSession/UserSession';
 
-
-const styles = {
-};
+const styles = {};
 
 class HomeData extends React.Component {
+
   constructor(props) {
     super(props, '/find-citizens');
     this.state = {
@@ -50,10 +49,7 @@ class HomeData extends React.Component {
         <SpectreHeader colour="white" progressActive={true} progressNumber="two" />
         <IdleChecker />
         <div className={classes.content + " content"}>
-          <h1>
-            <span><br/>Choose 2 types of home data:</span>
-          </h1>
-
+          <h1><span><br/>Choose 3 types of home data:</span></h1>
           <div onClick={this.countAdd} className="DataIcons">
             <Grid className={classes.icons} container>
               <Grid item sm={4}></Grid>
@@ -71,9 +67,9 @@ class HomeData extends React.Component {
             </Grid>
             <Grid className={classes.icons} container>
               <Grid item sm={4}></Grid>
-              <Grid item sm={1}><IconButtonToggle enabled={false} icon="mobile" text="Mobile Devices" /></Grid>
-              <Grid item sm={2}><IconButtonToggle enabled={false} icon="smarttv" text="Smart TV" /></Grid>
-              <Grid item sm={1}><IconButtonToggle enabled={false} icon="smartassistant" text="Smart Assistant" /></Grid>
+              <Grid item sm={1}><IconButtonToggle enabled={false} icon="babymonitor" text="Baby Monitor" /></Grid>
+              <Grid item sm={2}><IconButtonToggle enabled={false} icon="fitbit" text="FitBit" /></Grid>
+              <Grid item sm={1}><IconButtonToggle enabled={false} icon="smartdoorbell" text="Smart Doorbell" /></Grid>
               <Grid item sm={4}></Grid>
             </Grid>
           </div>
