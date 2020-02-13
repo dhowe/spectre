@@ -1,20 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Fade from '@material-ui/core/Fade';
-import { withStyles } from '@material-ui/core/styles';
-//import Typography from '@material-ui/core/Typography';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import Video from '../../Components/Video/Video';
 import Modal from '../../Components/Modal/Modal';
-import './OCEANReveal.scss'
-//import colours from '../../colors.scss';
-const speed = 50; // typing speed for each character
-const sentenceBreak = 4; // sentenceBreak*speed = wait time after each sentence
-const styles = {
 
-};
+import { withStyles } from '@material-ui/core/styles';
+import './OCEANReveal.scss'
+
+const keyPause = 50; // typing speed for each character
+const linePause = 4; // linePause * keyPause = wait time after each sentence
+const timing = [ 0 , 2000, 4000];
+const styles = {};
 
 class OCEANReveal extends React.Component {
   constructor(props) {
@@ -23,22 +22,23 @@ class OCEANReveal extends React.Component {
     this.modalTitle = '';
     this.modalContent = '';
     this.video = React.createRef();
-    this.state = { modalOpen: false, celebrity: '', sentences: [], readyForVideo: false };
+    this.state = { modalOpen: false, celebrity: '',
+      sentences: [], readyForVideo: false };
   }
 
   async componentDidMount() {
     const user = await UserSession.ensure(this.context,
       ['_id', 'name', 'login', 'gender', 'traits', 'celebrity']);
 
-    let sentences = user.generateSummary();
-
-    const totalChar = sentences.join().split("").length;
-    const waitingTime = totalChar * speed + (sentences.length - 1) * (sentenceBreak * speed)
+    const sentences = user.generateSummary();
+    const totalChar = sentences.join().length;
+    const waitingTime = (totalChar * keyPause)
+      + ((sentences.length - 1) * linePause)
+      + timing.reduce((a,v) => a+v) + 1000;
 
     this.setState({ sentences: sentences, celebrity: user.celebrity });
-
-    this.timeout = setTimeout(() => this.setState({ readyForVideo: true }), (sentences.length + 4) * 3000);
-
+    this.timeout = setTimeout(() => this.setState
+      ({ readyForVideo: true }), waitingTime);
   }
 
   componentWillUnmount() {
@@ -52,9 +52,8 @@ class OCEANReveal extends React.Component {
   render() {
     const { classes } = this.props;
     const { celebrity, sentences, modalOpen, readyForVideo } = this.state;
-    let timer = 0;
 
-    let videoPlaceholder = readyForVideo ? (
+    let timer = 0, videoPlaceholder = readyForVideo ? (
       <Video ref={e => { this.video = e }} className={classes.video}
         movie={`https://spectreknows.me/video/wrapup_${celebrity}.mp4`} key="349587"
         onComplete={() => this.props.history.push('/take-back-control')}
@@ -64,33 +63,32 @@ class OCEANReveal extends React.Component {
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive progressNumber="three" />
         <div className={`${classes.content} content`}>
-        <Fade in={true}
-          style={{ transitionDelay: 0 + 'ms' }}>
-          <h1 className="addSpacing"><span>Spectre knows you.</span></h1>
+          <Fade in={true}
+            style={{ transitionDelay: timing[0] + 'ms' }}>
+            <h1 className="addSpacing"><span>Spectre knows you.</span></h1>
           </Fade>
           <Fade in={true}
-            style={{ transitionDelay: 3000 + 'ms' }}>
-          <h2>We haven't known you for very long, <br/>but already we know…</h2>
+            style={{ transitionDelay: timing[1] + 'ms' }}>
+            <h2>We haven't known you for very long, <br />but already we know…</h2>
           </Fade>
-          {sentences.map((sent, i) => {
+          {
+            sentences.map((sent, i) => {
             return (
-
-              <p class="smallText_nextLine">
-                {sent.split("").map((letter,j) => {
-                  return(
-                  <Fade key={j} in={true} style={{ transitionDelay: ((timer++)+ i*sentenceBreak) * speed + 'ms' }}>
-                    <span  key={`fade-${j}`} style={{color:'#4F4F4F'}}>
-                      {letter}
-                    </span>
-                  </Fade>
-                );
-              })}
+              <p className="normal" key={i}>
+                {sent.split("").map((letter, j) => {
+                  let delay = timing[2] + ((++timer + (i * linePause)) * keyPause);
+                  return (
+                    <Fade key={j} in={true} style={{ transitionDelay:  delay + 'ms' }}>
+                      <span key={`fade-${i}`} style={{ color: '#4F4F4F' }}>
+                        {letter}
+                      </span>
+                    </Fade>
+                  );
+                })}
               </p>
-
             );
-
-          })}
-
+          })
+        }
         </div>
         <Modal
           isOpen={modalOpen}
