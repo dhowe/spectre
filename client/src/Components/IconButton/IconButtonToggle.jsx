@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import IconButton from '../IconButton/IconButton';
-//import colours from '../../colors.scss';
 import './IconButton.scss';
 
 const styles = {};
@@ -14,18 +13,15 @@ class IconButtonToggle extends React.Component {
   }
 
   handleClick = () => {
-    //console.log('handleClick -> '+(!this.state.isEnabled));
-    this.setState({
-      isEnabled: !this.state.isEnabled,
-    });
+    this.setState({ isEnabled: !this.state.isEnabled });
   }
 
   render() {
     return (
       <IconButton
+        enabled={true}
         onClick={this.handleClick}
         className={this.state.isEnabled ? 'iconEnabled' : 'iconDisabled'}
-        enabled={true}
         icon={this.props.icon}
         text={this.props.text}
       />
