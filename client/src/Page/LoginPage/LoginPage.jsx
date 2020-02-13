@@ -62,7 +62,7 @@ class LoginPage extends React.Component {
 
     const user = this.context;
 
-    if (gender === undefined) {
+    if (typeof gender === 'undefined') {
       if (!this.emailIsValid(email)) {
         if (this.state.emailErrorCount < 3) {
           this.modalTitle = 'Oops...';

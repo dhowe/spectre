@@ -164,7 +164,7 @@ class SocialLogin extends React.Component {
     const btnEnabledPg1 = email && email.length &&
       name && name.length;
     const btnEnabledPg2 = email && email.length &&
-      name && name.length && gender !== undefined;
+      name && name.length && (typeof gender !== 'undefined');
 
     return (
       <div className={`${classes.root} socialLogin`}>

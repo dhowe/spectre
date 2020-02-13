@@ -32,8 +32,8 @@ class OCEANReveal extends React.Component {
 
     let sentences = user.generateSummary();
 
-    const totalChar = sentences.join().split("").length;
-    const waitingTime = totalChar * speed + (sentences.length - 1) * (sentenceBreak * speed)
+    //const totalChar = sentences.join().split("").length;
+    //const waitingTime = totalChar * speed + (sentences.length - 1) * (sentenceBreak * speed)
 
     this.setState({ sentences: sentences, celebrity: user.celebrity });
 
