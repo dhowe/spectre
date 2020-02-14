@@ -16,11 +16,11 @@ const dbstr = prod ? dbUrl : dbUrl + '-dev';
     console.error('[DB] Unable to connect to ' + dbstr + '\n');
     throw e;
   }
-  let user = { _id: new ObjectID('888888888888888888888888') };
+  let user = { _id: new ObjectID('111111111111111111111111') };
   UserModel.aggregate(
     [
       { $match: { 'traits.openness': { $gte: 0 }, "_id": { $ne: user._id }, hasImage: true } },
-      { $sort: { clientId: -1, lastUpdate: -1 } },
+      { $sort: { clientId: -1, lastUpdate: 1 } },
       {
         $group: {
           _id: "$clientId", // group by client-id

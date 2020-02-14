@@ -35,7 +35,7 @@ const create = async (req, res) => {
   const body = req.body;
 
   if (!(body.login && body.loginType)) return sendError(res, "API.create "
-    +"requires login/loginType: " + JSON.stringify(body), 0, USER_WO_LOGIN);
+    + "requires login/loginType: " + JSON.stringify(body), 0, USER_WO_LOGIN);
 
   if (!body.clientId) return sendError(res, "API.create "
     + "requires clientId: " + JSON.stringify(body), 0, NO_CLIENT_ID);
@@ -186,12 +186,25 @@ const update = async (req, res) => {
     }
 
     user.findByOcean((err, sims) => {
-      if (err) return sendError(res, 'Unable to findByOcean for #' + req.params.uid, err);
+      if (err) return sendError(res, 'FindByOcean failed for #' + uid, err);
       user._doc.similars = sims.slice(0, NUM_SIMILARS); // why is _doc needed ?
       sendResponse(res, user);
     }, limit);
   });
 }
+
+const recents = async (req, res) => {
+
+  if (UserModel.databaseDisabled) return noDbError(res);
+
+  if (!req.params.hasOwnProperty('uid')) return sendError
+    (res, 'No uid sent', 0, NO_USER_ID);
+
+  UserModel.findByRecent(req.params.uid, (e, recents) => {
+    if (e) return sendError(res, 'FindByRecent failed for #' + req.params.uid, e);
+    sendResponse(res, recents);
+  });
+};
 
 const similars = async (req, res) => {
 
@@ -346,4 +359,7 @@ function generateEmail(id, email) {
 }*/
 
 
-export default { list, similars, /*message,*/ create, fetch, update, remove, photo, photoset, current, createBatch }
+export default {
+  list, similars, /*message,*/ recents, create, fetch,
+  update, remove, photo, photoset, current, createBatch
+};

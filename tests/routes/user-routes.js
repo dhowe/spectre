@@ -111,7 +111,7 @@ describe('REST API', () => {
           user.hasImage = false;
 
           chai.request(host)
-            .put('/api/users/'+ id)
+            .put('/api/users/' + id)
             .auth(env.API_USER, env.API_SECRET)
             .send(user)
             .end((err, res) => {
@@ -138,6 +138,66 @@ describe('REST API', () => {
                   for (var i = 0; i < similars.length; i++) {
                     expect(similars[i]._id).to.not.equal(id);
                   }
+                  done();
+                });
+            });
+        });
+    });
+
+    it('should return recent user before any defaults', done => {
+      let user = new User();
+      user.name = "Dave";
+      user.login = "Dave@aol.com";
+      user.gender = "male";
+      chai.request(host)
+        .post('/api/users/')
+        .auth(env.API_USER, env.API_SECRET)
+        .send(user)
+        .end((err, res) => {
+          expect(err).to.be.null;
+          expect(res).to.have.status(200);
+          expect(res.body.data).to.be.a('object')
+          Object.assign(user, res.body.data);
+          expect(user._id).to.be.a('string');
+
+          user.clientId = Math.floor(Math.random() * 5) + 1;
+          user.traits = User.randomTraits();
+          user.lastUpdate = Date.now();
+          user.hasImage = true;
+
+          chai.request(host)
+            .put('/api/users/' + user._id)
+            .auth(env.API_USER, env.API_SECRET)
+            .send(user)
+            .end((err, res) => {
+              expect(err).to.be.null;
+              expect(res).to.have.status(200);
+              expect(res.body.data).to.be.a('object')
+              expect(res.body.data._id).to.be.a('string');
+              expect(res.body.data.clientId).to.be.a('number');
+              expect(res.body.data.clientId).eq(user.clientId);
+              expect(res.body.data.similars).to.be.an('array');
+              expect(res.body.data.similars.length).eq(6);
+
+              //delete res.body.data.similars && console.log(res.body.data);
+
+              let id = '111111111111111111111111';
+              // result must always include recently added 'Dave'
+              chai.request(host)
+                .get('/api/users/recents/' + id)
+                .auth(env.API_USER, env.API_SECRET)
+                .end((err, res) => {
+                  expect(err).to.be.null;
+                  expect(res).to.have.status(200);
+                  expect(res.body.data).to.be.an('array');
+                  let recents = res.body.data;
+                  //console.log(recents.map(s => s._id + '/' + s.clientId));
+                  expect(recents[0]).to.be.a('object');
+                  expect(recents[0]._id).to.be.a('string');
+                  expect(recents.map(r => r._id)).not.to.include(id);
+                  expect(recents.map(r => r._id)).to.include(user._id,
+                    recents.map(s => s._id + '/' + s.clientId));
+                  expect(recents.map(r => r.clientId)).to.include(user.clientId);
                   done();
                 });
             });
@@ -277,54 +337,6 @@ describe('REST API', () => {
         });
     });
 
-    after(refreshDb);
+    //after(refreshDb);
   });
 });
-
-  // function saveAll(records, cb) {
-  //   let users = [];
-  //   records.forEach(r => users.push(User._randomData(new UserModel(r))));
-  //   let count = users.length;
-  //   let result = [];
-  //   users.forEach(user => {
-  //     chai.request(host)
-  //       .post('/api/users/')
-  //       .auth(env.API_USER, env.API_SECRET)
-  //       .send(user)
-  //       .end((err, res) => {
-  //         if (err) throw err;
-  //         expect(res).to.have.status(200);
-  //         Object.assign(user, res);
-  //         result.push(user);
-  //         if (--count === 0) return cb(result);
-  //       });
-  //   });
-  // }
-  //
-  //   function updateAll(users, cb) {
-  //
-  //     let result = [];
-  //     let count = users.length;
-  //     users.forEach(user => {
-  //       chai.request(host)
-  //         .put('/api/users/' + user._id)
-  //         .auth(env.API_USER, env.API_SECRET)
-  //         .send(user)
-  //         .end((err, res) => {
-  //           expect(res).to.have.status(200);
-  //           Object.assign(user, res.body.data);
-  //           result.push(user);
-  //           if (--count === 0) return cb(result);
-  //         });
-  //     });
-  //   }
-  //
-  //   saveAll(defaults, function(users) {
-  //     updateAll(users, function(results) {
-  //       // let header = '// ------------------------------ This file was auto-';
-  //       // header += 'generated ------------------------------\nlet users = [';
-  //       fs.writeFileSync('auto_generated_users.json', JSON.stringify(results));
-  //       done();
-  //     });
-  //   });
-  // });
