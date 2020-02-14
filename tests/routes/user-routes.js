@@ -253,7 +253,7 @@ describe('REST API', () => {
 
           //console.log(user);
           expect(user._id).to.be.a('string');
-          user.traits = User._randomTraits();
+          user.traits = User.randomTraits();
           expect(user.traits).to.be.a('object');
           expect(user.traits.openness).to.be.gte(0);
 

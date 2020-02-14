@@ -81,7 +81,6 @@ UserSession.ensure = async (user, props, opts) => {
 
   const allowNoId = opts && opts.allowNoId;
   const forceUpdate = opts && opts.forceUpdate;
-
   const checkSession = async (user) => {
     // do we have an id in session
     const sid = sessionStorage.getItem(UserSession.storageKey);
@@ -90,7 +89,7 @@ UserSession.ensure = async (user, props, opts) => {
       fillMissingProperties(user, ['login', 'name', 'gender',
         'virtue', 'adIssue', 'traits', 'celebrity']);
 
-      await UserSession.create(user);
+      await UserSession.create(user); // save new user
       console.warn('[STUB] Setting user._id: ' + user._id);
       return false;
     }
@@ -103,7 +102,7 @@ UserSession.ensure = async (user, props, opts) => {
   }
 
   try {
-    let userLookup = false;
+    let userLookup = false, modified = false;
 
     // do we have an id, if not check session, and try to repair
     if (!allowNoId && typeof user._id === 'undefined') {
@@ -116,19 +115,24 @@ UserSession.ensure = async (user, props, opts) => {
       console.warn('[STUB] Unable to set user._id, using ' + user._id);
     }
 
-    // if we are dealin with hasImage, we need to check the db
+    // if we are dealing with hasImage, we need to check the db
     if (props.includes('hasImage')) {
       props = arrayRemove(props, 'hasImage');
       if (user._id !== -1 && !userLookup) await UserSession.lookup(user);
       console.log('[USER] ' + user._id + '.hasImage = ' + user.hasImage);
     }
 
+    // if we need a target, we need similars as well
     if (props.includes('target') && !user.similars.length) {
+      if (!user.hasOceanTraits()) {
+        modified = fillMissingProperties(user, ['traits']);
+      }
       user = await UserSession.similars(user);
       console.warn('[STUB] Fetched similars:', user.toString());
     }
 
-    let modified = fillMissingProperties(user, props);
+    // stub any other properties and update if needed
+    modified = fillMissingProperties(user, props) || modified;
     if (modified || forceUpdate) await UserSession.update(user);
   }
   catch (e) {
@@ -218,6 +222,7 @@ UserSession.similars = async (user) => {
   if (!user.traits || typeof user.traits.openness === 'undefined') {
     throw Error('No traits for user #' + user._id);
   }
+
   const endpoint = route + 'similars/' + user._id;
   user.clientId = cid;
 
@@ -232,7 +237,7 @@ UserSession.similars = async (user) => {
     });
     if (e) return handleError(e, route, 'similars[2]');
     user.similars = json;
-    return user;
+    return user; // ?
   }
   catch (e) {
     handleError(e, endpoint, 'similars[3]');
@@ -386,7 +391,7 @@ function fillMissingProperties(user, props) {
     gender: () => rand(Genders),
     virtue: () => rand(Virtues),
     adIssue: () => rand(AdIssues),
-    traits: () => User._randomTraits(),
+    traits: () => User.randomTraits(),
     name: () => (rand(Cons) + rand(Vows) + rand(Cons)).ucf(),
     login: () => user.name + (+new Date()) + '@test.com',
     celebrity: () => rand(Celebrities),

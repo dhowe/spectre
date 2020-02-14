@@ -5,23 +5,16 @@ import text2p from './text2p';
 
 DotEnv.config();
 
-/*
- * Lifecycle:
- *    - created [ id, createdAt ]  {1}
- *    - updated with brand data -> [ traits, influences, similars ]  {1}
- *    - updated with lastPageVisit{url, time} [] {*}
- */
 export default class User {
 
   constructor(tmpl) {
     Object.keys(User.schema()).forEach(k => this[k] = undefined);
     Object.assign(this, tmpl);
     this.clientId = process.env.REACT_APP_CLIENT_ID || -1;
-    this.category = (tmpl && tmpl.category) || 0;
     this.loginType = this.loginType || 'email';
+    this.lastPage = this.lastPage || 'login'
     this.dataChoices = this.dataChoices || {};
-    this.targetAd = this.targetAd || {};
-    this.celebrity = this.celebrity || '';
+    this.targetAd = this.targetAd || {};;
     this.similars = [];
   }
 
@@ -44,11 +37,6 @@ export default class User {
     if (u.hasImage) s += ', hasImage';
     if (u.hasImage === false) s += '=False';
     return s;
-  }
-
-  lastPage() {
-    return typeof this.lastPageVisit === 'object' && this.lastPageVisit.page.length
-      ? this.lastPageVisit.page : 'unknown';
   }
 
   generateSummary(numSentences) {
@@ -443,7 +431,7 @@ export default class User {
   // getTarget() {
   //   if (typeof this.target === 'undefined') {
   //     console.error("ERROR: user has no target");
-  //     return { id: null, name: null, traits: User._randomTraits() };
+  //     return { id: null, name: null, traits: User.randomTraits() };
   //   }
   //   return JSON.parse(this.target); // TODO: cache
   // }
@@ -501,7 +489,7 @@ export default class User {
   }
 
   _randomizeTraits() {
-    this.traits = User._randomTraits();
+    this.traits = User.randomTraits();
     return this;
   }
 };
@@ -523,13 +511,11 @@ User.schema = () => {
     influences: {
       type: ['string']
     },
-
     /* monolith-id from client's .env file */
     clientId: {
       type: 'number',
       default: -1
     },
-
     /*
      * OCEAN-group: from -5 to 5, according to OCEAN acronym (O=1, C=2, etc).
      * Positive numbers mean 'high', negative numbers mean 'low',
@@ -539,24 +525,13 @@ User.schema = () => {
     //   type: 'number',
     //   default: 0,
     // },
-
     hasImage: {
       type: 'boolean',
       default: false
     },
-
-    // isActive: { // computed
-    //   type: 'boolean',
-    //   default: false
-    // },
     targetId: {
       type: 'string'
     },
-
-    // similars: { // computed
-    //   type: ['string'] // array of json strings
-    // },
-
     descriptors: {
       type: ['string']
     },
@@ -578,10 +553,8 @@ User.schema = () => {
         type: 'string'
       }
     },
-    lastPageVisit: {
-      time: { type: 'date', default: Date.now() },
-      page: { type: 'string', default: 'login' }
-    },
+    lastPage: {type: 'string', default: 'login'},
+    lastUpdate: { type: 'date', default: new Date("1970-01-01T12:00:00.00") },
     traits: {
       openness: { type: 'number' },
       conscientiousness: { type: 'number' },
@@ -617,33 +590,9 @@ User.schema = () => {
   }
 }
 
-/*User._randomData = function(tmpl) {
-  if (!tmpl || typeof tmpl._id === 'undefined' || typeof tmpl.name === 'undefined') {
-    console.log(tmpl);
-    throw Error('id and login required' + tmpl);
-  }
-  let user = tmpl;
-  if (typeof tmpl.hasOceanTraits !== 'function') user = new User(tmpl);
-
-  user._randomizeTraits();
-  user.login = user.login || user.name.toLowerCase() + '@mail.com';
-  user.loginType = user.loginType || 'email';
-  user.adIssue = user.adIssue || rand(['leave', 'remain']);
-  user.gender = user.gender || rand(['male', 'female', 'other'])
-  user.virtue = user.virtue || rand(['power', 'wealth', 'influence', 'truth']);
-  // user.dataChoices = {};
-  // user.dataChoices.consumer = ['health', 'finance', 'travel'];
-  // user.dataChoices.home = ['smart watch', 'smart tv', 'smart assistant'];
-  // user.dataChoices.political = ['online maps', 'polls & surveys', 'voting records'];
-  user.clientId = user.clientId || irand(1, 6);
-  user.hasImage = true;
-
-  return user;
-}*/
-
-User._randomTraits = function() {
-  let traits = {};
-  User.oceanTraits.forEach(t => traits[t] = Math.random());
+User.randomTraits = function() {
+  let traits = {};  // non-zero random trait values
+  User.oceanTraits.forEach(t => traits[t] = Math.random() + .000000001);
   return traits;
 }
 

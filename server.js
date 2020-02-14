@@ -8,8 +8,7 @@ import routes from './routes';
 import mongoose from 'mongoose';
 import bodyparser from 'body-parser';
 import basicAuth from 'express-basic-auth';
-import controller from './user-controller';
-//import ProfileMaker from './profile-maker'; // comment-for-fast-tests
+
 import UserModel from './user-model';
 
 import { dbUrl, apiUser, profDir, clientDir, certs, prod } from './config';
@@ -57,6 +56,7 @@ if (!test) import('./profile-maker').then(ProfileMaker => {
 });
 
 /////////////////////////// DbConnect ///////////////////////////////
+
 const dbstr = prod ? dbUrl : dbUrl + '-dev';
 (async () => {
   try {
@@ -73,12 +73,6 @@ const dbstr = prod ? dbUrl : dbUrl + '-dev';
     UserModel.databaseDisabled = true;
   }
 })();
-
-// while (!dbConnect()) {
-//   setInterval(() => {
-//     console.log('[WARN] Retrying Db @ '+(+new Date()));
-//   }, 5000);
-// }
 
 let server, logf = (dev) => {
   console.log('\nSpectre API at ' + (dev ? 'http' : 'https:') + '//localhost:'

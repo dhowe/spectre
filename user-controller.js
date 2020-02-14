@@ -179,7 +179,8 @@ const update = async (req, res) => {
     if (err) return sendError(res, 'Update failed for user#' + req.params.uid);
     if (!user) return sendError(res, 'No user #' + req.params.uid, 0, USER_NOT_FOUND);
 
-    if (!user.hasOceanTraits()) {
+    // return if we don't yet have traits, or we already have similars
+    if (!user.hasOceanTraits() || (user.similars && user.similars.length)) {
       sendResponse(res, user);
       return;
     }

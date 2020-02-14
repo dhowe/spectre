@@ -24,7 +24,6 @@ class Navigation extends React.Component {
     if (!disabled.includes(current)) {
       let idx = routes.indexOf(current);
       page = page || routes[++idx % routes.length];
-      //console.log('nav: '+current+' -> '+page);
       this.props.history.push(page);
     }
   }
@@ -50,10 +49,11 @@ class Navigation extends React.Component {
   render() {
     let page = window.location.pathname;
     if (page.length > 1) page = page.replace(/^\//, '');
-    this.context.lastPageVisit = {
-      page: page,
-      time: Date.now()
-    };
+
+    // store the page/update-time with the user
+    this.context.lastPage = page;
+    this.context.lastUpdate = Date.now();
+
     if (typeof this.context._id !== 'undefined') {
       console.log(('[' + page.substring(0, 6) + '] ')
         .toUpperCase() + this.context.toString());

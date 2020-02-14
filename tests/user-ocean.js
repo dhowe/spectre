@@ -44,7 +44,7 @@ describe('OCEAN descriptions', function () {
       let user = new User(); //User.Create();
       user.name = "Jane";
       user.gender = "female";
-      user.traits = User._randomTraits();
+      user.traits = User.randomTraits();
       let head = [
         "A little data and a little tech goes a long way.",
         "We haven't known you for very long, but already we know that…"
@@ -73,7 +73,7 @@ describe('OCEAN descriptions', function () {
       let user = new User(); //User.Create();
       user.name = "Jane";
       user.gender = "female";
-      user.traits = User._randomTraits();
+      user.traits = User.randomTraits();
       let result = user.generateSentences(3);
       //console.log(result);
       expect(result).is.a('array');

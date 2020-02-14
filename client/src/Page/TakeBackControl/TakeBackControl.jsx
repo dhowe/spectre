@@ -31,7 +31,6 @@ class TakeBackControl extends React.Component {
   handleClick = (choice) => {
     this.context.keepData = choice;
     this.props.history.push(choice ? "/goodbye" : "/we-are-sorry");
-    //this.context.lastPageVisit = { page: '/take-back-control', time: Date.now() };
     UserSession.update(this.context); // no await
   }
 

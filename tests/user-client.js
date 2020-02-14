@@ -8,18 +8,15 @@ describe('Client User', function () {
     it('Should correctly construct an empty user', function () {
       let user = new User();
       let fields = Object.keys(User.schema());
-
       // these are fields defined with a default
-      let ignores = ['clientId', 'celebrity', 'targetAd', 'dataChoices', 'loginType'];
+      let withDefaults = ['clientId', 'lastPage', 'targetAd', 'dataChoices', 'loginType'];
       fields.forEach(f => {
-        if (!ignores.includes(f)) {
+        if (!withDefaults.includes(f)) {
           expect(user).has.property(f);
-          expect(user[f]).is.undefined;
+          expect(user[f], 'user.'+f+' was '+user[f]).is.undefined;
         }
       });
       expect(user.clientId).eq(-1);
-      expect(user.category).eq(0);
-      //expect(user.isActive).eq(false);
       expect(user.virtue).eq(undefined);
       expect(user.hasOceanTraits()).eq(false);
     });
@@ -33,7 +30,8 @@ describe('Client User', function () {
         loginType: "twitter",
         virtue: 'truth',
         gender: 'male',
-        lastPageVisit: { time: +Date.now(), page: '/Test' },
+        lastPage: '/Test',
+        lastUpdate: +Date.now(),
         traits: {
           agreeableness: .3,
           conscientiousness: .4,
@@ -49,7 +47,7 @@ describe('Client User', function () {
       expect(user.login).eq("dave@abc.com");
       expect(user.hasImage).eq(true);
       expect(user.loginType).eq("twitter");
-      expect(user.lastPageVisit.page).eq("/Test");
+      expect(user.lastPage).eq("/Test");
       expect(user.traits.openness).to.equal(1);
       expect(user.hasOceanTraits()).eq(true);
       expect(user.categorize()).eq(1);
@@ -65,8 +63,8 @@ describe('Client User', function () {
         loginType: "twitter"
       });
 
-      user.setSimilars([{ id: '1111', name: 'Dave', traits: User._randomTraits() },
-        { id: '2222', name: 'Jen', traits: User._randomTraits() }]);
+      user.setSimilars([{ id: '1111', name: 'Dave', traits: User.randomTraits() },
+        { id: '2222', name: 'Jen', traits: User.randomTraits() }]);
 
       expect(user.name).eq("dave");
       expect(user.login).eq("dave@abc.com");
@@ -84,7 +82,7 @@ describe('Client User', function () {
         login: "dave@abc.com",
         loginType: "twitter"
       });
-      user.setTarget({ id: '2222', name: 'Jen', traits: User._randomTraits() });
+      user.setTarget({ id: '2222', name: 'Jen', traits: User.randomTraits() });
       expect(user.name).eq("dave");
       expect(user.login).eq("dave@abc.com");
       expect(user.getTarget().name).eq('Jen');

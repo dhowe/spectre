@@ -31,6 +31,32 @@ UserSchema.statics.Create = function(tmpl) {
   return user;//._randomizeTraits();
 }
 
+UserSchema.methods.findByRecent = function(callback) { // cb=function(err,users)
+  let user = this;
+  //let id = new ObjectID(user._id);
+  UserModel.aggregate(
+    [
+      { $match: { 'traits.openness': { $gte: 0 }, "_id": { $ne: user._id }, hasImage: true } },
+      { $sort: { clientId: -1, lastUpdate: -1 } },
+      {
+        $group: {
+          _id: "$clientId", // group by client-id
+          id: { $last: "$_id" },
+          name: { $last: "$name" },
+          login: { $last: "$login" },
+          lastUpdate: { $last: "$lastUpdate" },
+          lastPage: { $last: "$lastPage" },
+          hasImage: { $last: "$hasImage" },
+        }
+      },
+      { $project: { _id: "$id", clientId: "$_id", lastUpdate: 1, hasImage: 1, name: 1, lastPage: 1, login: 1 } }
+    ], callback);
+    // (err, users) => {
+    //   if (err) console.log('error', err);
+    //   console.log('users', users);
+    // }
+};
+
 // find all users with traits
 UserSchema.methods.findByOcean = function(callback, limit) { // cb=function(err,users)
   let user = this;
