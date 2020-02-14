@@ -337,6 +337,6 @@ describe('REST API', () => {
         });
     });
 
-    //after(refreshDb);
+    after(refreshDb);
   });
 });
