@@ -12,9 +12,7 @@ import UserSession from '../../Components/UserSession/UserSession';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 import ComponentsStyles from '../../App.module.css';
 
-const styles = {
-
-};
+const styles = {};
 
 class Insight extends React.Component {
 
@@ -34,9 +32,11 @@ class Insight extends React.Component {
 
   async componentDidMount() {
     const user = await UserSession.ensure(this.context,
-      [/*'_id',*/ 'name', 'login', 'gender', 'virtue', 'target']);
-    this.setState({ targetName: user.target.name,
-      targetImage: user.targetImageUrl() });
+      [ 'name', 'login', 'gender', 'virtue', 'target' ]);
+    this.setState({
+      targetName: user.target.name,
+      targetImage: user.targetImageUrl()
+    });
   }
 
   render() {

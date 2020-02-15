@@ -492,7 +492,7 @@ export default class User {
     this.traits = User.randomTraits();
     return this;
   }
-};
+}
 
 User.profileDir = (process.env.PUBLIC_URL || '') + '/profiles/';
 User.imageDir = (process.env.PUBLIC_URL || '') + '/imgs/';
