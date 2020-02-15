@@ -189,11 +189,11 @@ const update = async (req, res) => {
       return;
     }
 
-    user.findByOcean((err, sims) => {
+    UserModel.findByOcean(user, limit, (err, sims) => {
       if (err) return sendError(res, 'FindByOcean failed for #' + uid, err);
-      user._doc.similars = sims.slice(0, NUM_SIMILARS); // why is _doc needed ?
+      user.similars = sims;
       sendResponse(res, user);
-    }, limit);
+    });
   });
 }
 
@@ -204,7 +204,7 @@ const recents = async (req, res) => {
   if (!req.params.hasOwnProperty('uid')) return sendError
     (res, 'No uid sent', 0, NO_USER_ID);
 
-  UserModel.findByRecent(req.params.uid, (e, recents) => {
+  UserModel.findByLastPerMono(req.params.uid, (e, recents) => {
     if (e) return sendError(res, 'FindByRecent failed for #' + req.params.uid, e);
     sendResponse(res, recents);
   });
@@ -222,14 +222,16 @@ const similars = async (req, res) => {
 
   let uid = req.params.uid;
   await UserModel.findById(uid, (err, user) => {
+
     if (err) return sendError(res, 'Unable to find user #' + uid, err);
     if (!user) return sendError(res, 'No user #' + uid, 0, USER_NOT_FOUND);
     if (!user.traits || !user.traits.openness) return sendError
       (res, 'No traits for user #' + uid, 0, USER_WO_TRAITS);
-    user.findByOcean((err, sims) => {
+
+    UserModel.findByOcean(user, limit, (err, sims) => {
       if (err) return sendError(res, 'Unable to findByOcean for #' + req.params.uid, err);
       sendResponse(res, sims);
-    }, limit);
+    });
   });
 };
 

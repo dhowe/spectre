@@ -18,6 +18,7 @@ UserSchema.statics.getAll = function(callback, limit) {
   UserModel.find(callback).limit(limit);
 }
 
+// create a randomised or templated user
 UserSchema.statics.Create = function(tmpl) {
 
   let randName = () => Math.random().toString(36)
@@ -28,10 +29,33 @@ UserSchema.statics.Create = function(tmpl) {
   user.login = tmpl && tmpl.login ? tmpl.login : user.name + '@' + randName() + '.com';
   user.loginType = tmpl && tmpl.loginType ? tmpl.loginType : 'email';
 
-  return user;//._randomizeTraits();
+  return user;
 }
 
-UserSchema.statics.findByRecent = function(userId, callback) { // cb=function(err,users)
+// find users within a date range
+UserSchema.statics.findByDate = function(date1, date2, callback) { // cb=function(err,users)
+  UserModel.find({
+    'traits.openness': { $gte: 0 },
+    hasImage: true,
+    created_at: {             // untested
+      $gte: ISODate(date1),
+      $lt: ISODate(date2)
+    }
+  }, callback);
+}
+
+// find most recent users with traits and image
+UserSchema.statics.findByUpdated = function(userId, limit, callback) { // cb=function(err,users)
+  UserModel.aggregate([
+    { $match: { 'traits.openness': { $gte: 0 }, "_id": { $ne: userId }, hasImage: true } },
+    { $sort: { lastUpdate: 1 } },
+    { $limit: limit },
+    { $project: { _id: 1, lastUpdate: 1, name: 1 } }
+  ], callback);
+};
+
+// find most recent user on each with traits and image
+UserSchema.statics.findByLastPerMono = function(userId, callback) { // cb=function(err,users)
   UserModel.aggregate([
     { $match: { 'traits.openness': { $gte: 0 }, "_id": { $ne: userId }, hasImage: true } },
     { $sort: { clientId: -1, lastUpdate: 1 } },
@@ -50,20 +74,19 @@ UserSchema.statics.findByRecent = function(userId, callback) { // cb=function(er
   ], callback);
 };
 
-// find all users with traits
-UserSchema.methods.findByOcean = function(callback, limit) { // cb=function(err,users)
-  let user = this;
-  UserModel.find({ 'traits.openness': { $gte: 0 }, 'hasImage': true })
-    .exec((err, candidates) => {
-      if (err) {
-        console.error('findByOcean', err);
-        throw err;
-      }
-      let sorted = oceanSort(user, candidates);
-      sorted = sorted.slice(0, limit);
-      callback(err, sorted); // ADDED: DCH
-    });
-  // TODO: this could be VERY slow on a big database
+
+// find most similar users according to ocean traits
+// TODO: this could be VERY slow on a big database ***
+UserSchema.statics.findByOcean = function(user, limit, callback) { // cb=function(err,users)
+  limit = limit || Number.MAX_SAFE_INTEGER;
+  // find all users with traits and image
+  UserModel.find({ 'traits.openness': { $gte: 0 }, 'hasImage': true }, (e, all) => {
+    if (e) throw e;
+    // then sort by ocean, then limit
+    let sorted = oceanSort(user, all);
+    if (limit) sorted = sorted.slice(0, limit);
+    callback(e, sorted); // ADDED: DCH
+  });
 };
 
 ///////////////////////// Helpers ///////////////////////////

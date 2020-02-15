@@ -18,62 +18,15 @@ UserSession.serverDisabled = typeof auth === 'undefined';
 UserSession.serverErrors = 0;
 UserSession.clientId = -1;
 
-UserSession.localIPs = (cb, prefix) => {
-
-  if (typeof window === 'undefined') {
-    cb('localhost');
-    return;
-  }
-
-  const PeerConnect = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
-  const pc = new PeerConnect({ iceServers: [] }), noop = () => { }, localIPs = {},
-    ipRegex = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/g;
-
-  function iterateIP(ip) {
-    if (ip && !localIPs[ip] && (!prefix || ip.startsWith(prefix))) cb(ip);
-    localIPs[ip] = true;
-  }
-
-  //create a bogus data channel
-  pc.createDataChannel('');
-
-  // create offer & set local description
-  pc.createOffer().then((sdp) => {
-    sdp.sdp.split('\n').forEach((line) => {
-      if (line.indexOf('candidate') < 0) return;
-      line.match(ipRegex).forEach(iterateIP);
-    });
-    pc.setLocalDescription(sdp, noop, noop);
-
-  }).catch(e => console.error('[SESSION] ' + e));
-
-  // listen for candidate events
-  pc.onicecandidate = function(ice) {
-    if (!ice || !ice.candidate || !ice.candidate.candidate || !ice.candidate.candidate.match(ipRegex)) return;
-    ice.candidate.candidate.match(ipRegex).forEach(iterateIP);
-  };
-}
-
 UserSession.localIPs(ip => (UserSession.clientId = ip), '192.');
 
-/////////////////////////// API functions /////////////////////////////
-
 /*
- * Clears data from browser session storage
+ * Creates a new database record: /login only
  */
-UserSession.clear = () => {
-  sessionStorage.clear();
-  UserSession.serverErrors = 0;
-  UserSession.serverDisabled = false;
-  console.log('[USER] Session initialized');
-}
-
-// Create a new database record: /login only
 UserSession.create = async (user) => {
 
   if (UserSession.serverDisabled) return;
 
-  //const { route, auth } = doConfig();
   user.clientId = UserSession.clientId;
 
   //console.log('[POST] User.create: ' + route, user.clientId);
@@ -94,25 +47,14 @@ UserSession.create = async (user) => {
   return Object.assign(user, json);
 }
 
-UserSession.sendMail = async (uid, email) => {
-
-  if (UserSession.serverDisabled) return;
-
-  //const { route, auth, mode } = doConfig();
-
-  const endpoint = route + 'message/' + uid + "&" + email;
-
-  console.log('[GET] ' + mode + '.sendMail: ' + endpoint);
-
-  const [user, e] = await safeFetch(endpoint, {
-    method: "get",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": 'Basic ' + btoa(auth)
-    },
-  });
-  if (e) return handleError(e, route, 'sendMail');
-  return user;
+/*
+ * Clears data from browser session storage
+ */
+UserSession.clear = () => {
+  sessionStorage.clear();
+  UserSession.serverErrors = 0;
+  UserSession.serverDisabled = false;
+  console.log('[USER] Session initialized');
 }
 
 /*
@@ -192,14 +134,13 @@ UserSession.validate = (user, props) => {
 }
 
 /*
- * Loads users fields from database
+ * Loads a user's properties from database
  */
 UserSession.lookup = async (user) => {
 
   if (UserSession.serverDisabled) return;
 
   if (!user || !user._id) throw Error('Invalid arg', user);
-  //const { route, auth, mode } = doConfig();
 
   const endpoint = route + user._id;
   try {
@@ -219,13 +160,16 @@ UserSession.lookup = async (user) => {
   }
 }
 
+/*
+ * Updates database with user's properties
+ */
 UserSession.update = async (user) => {
+
 
   if (UserSession.serverDisabled) return;
 
   if (!user || !user._id) throw Error('Invalid user', user);
 
-  //const { route, auth, mode } = doConfig();
   const endpoint = route + user._id;
 
   try {
@@ -246,11 +190,12 @@ UserSession.update = async (user) => {
   }
 }
 
+/*
+ * Fetch similars for a user (requires traits)
+ */
 UserSession.similars = async (user) => {
 
   if (!user) throw Error('Null user in UserSession.similars');
-
-  //const { route, auth, mode } = doConfig();
 
   if (UserSession.serverDisabled || user._id === -1) {
     handleError('No user id', route, 'similars[1]');
@@ -327,8 +272,6 @@ UserSession.postImage = async (user, image, onError, onSuccess) => { // TODO: te
 
   if (UserSession.serverDisabled) return;
 
-  //const { route, auth, mode } = doConfig();
-
   const fdata = new FormData();
   fdata.append('profileImage', image);
   //fdata.append('clientId', UserSession.clientId);
@@ -356,14 +299,26 @@ UserSession.postImage = async (user, image, onError, onSuccess) => { // TODO: te
   }
 }
 
-/*
- * Logs available fields to the console
- */
-UserSession.log = u => u.toString();
+UserSession.sendMail = async (uid, email) => { // unused for now
 
-/*
- * Randomizes set of celebrities
- */
+  if (UserSession.serverDisabled) return;
+
+  const endpoint = route + 'message/' + uid + "&" + email;
+
+  console.log('[GET] ' + mode + '.sendMail: ' + endpoint);
+
+  const [user, e] = await safeFetch(endpoint, {
+    method: "get",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": 'Basic ' + btoa(auth)
+    },
+  });
+  if (e) return handleError(e, route, 'sendMail');
+  return user;
+}
+
+/* Randomizes set of celebrities */
 UserSession.randomCelebrities = () => {
   return shuffle(shuffle(MaleCelebs).splice(0, 4).concat(FemaleCelebs));
 }
@@ -581,6 +536,40 @@ function doConfig() {
   const route = proto + '://' + host + ':' + port + path;
 
   return { route, auth, mode };
+}
+
+// hack that uses RTC to get local ip
+function localIPs(cb, prefix) {
+
+  if (typeof window === 'undefined') return cb('localhost');
+
+  const PeerConnect = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
+  const pc = new PeerConnect({ iceServers: [] }), noop = () => { }, localIPs = {},
+    ipRegex = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/g;
+
+  function iterateIP(ip) {
+    if (ip && !localIPs[ip] && (!prefix || ip.startsWith(prefix))) cb(ip);
+    localIPs[ip] = true;
+  }
+
+  //create a bogus data channel
+  pc.createDataChannel('');
+
+  // create offer & set local description
+  pc.createOffer().then((sdp) => {
+    sdp.sdp.split('\n').forEach((line) => {
+      if (line.indexOf('candidate') < 0) return;
+      line.match(ipRegex).forEach(iterateIP);
+    });
+    pc.setLocalDescription(sdp, noop, noop);
+
+  }).catch(e => console.error('[SESSION] ' + e));
+
+  // listen for candidate events
+  pc.onicecandidate = function(ice) {
+    if (!ice || !ice.candidate || !ice.candidate.candidate || !ice.candidate.candidate.match(ipRegex)) return;
+    ice.candidate.candidate.match(ipRegex).forEach(iterateIP);
+  };
 }
 
 export default UserSession;

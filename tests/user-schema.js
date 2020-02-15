@@ -1,12 +1,52 @@
 import { expect } from 'chai';
-import { oceanDist, oceanSort } from '../metrics';
 import UserModel from '../user-model';
 
-describe('Server User', function () {
+describe('Server User', function() {
 
-  describe('UserModel.Create()', function () {
+  // describe('UserModel.findByUpdateTime()', function () {
+  //   const id = "666666666666666666666666";
+  //   let users = UserModel.mostRecent(limit)
+  // });
 
-    it('Should correctly complete a test user', function () {
+  describe('UserModel.FindBy', () => {
+
+    it('Should correctly find similars via ocean', (done) => {
+
+      const id = "666666666666666666666666";
+      UserModel.findById(id, (e, user) => {
+        if (e) throw e;
+        expect(user._id.toString()).eq(id);
+        UserModel.findByOcean(user, 6, (err, users) => {
+          if (err) throw err;
+          //console.log(users.map(u => u._id + '/' + u.name));
+          expect(users.length).eq(6, users.map(u => u._id + '/' + u.name));
+          expect(id).not.to.be.oneOf(users.map(u => u._id.toString()));
+          done();
+        });
+      })
+    });
+
+    it('Should correctly find most recent users', (done) => {
+
+      const id = "666666666666666666666666";
+      UserModel.findById(id, (e, user) => {
+        if (e) throw e;
+        expect(user._id.toString()).eq(id);
+        UserModel.findByUpdated(user._id, 6, (err, users) => {
+          if (err) throw err;
+          //console.log(users.map(u => u._id + '/' + u.name));
+          expect(users.length).eq(6, users.map(u => u._id + '/' + u.name));
+          expect(id).not.to.be.oneOf(users.map(u => u._id.toString()));
+          done();
+        });
+      })
+    });
+
+  });
+
+  describe('UserModel.Create', function() {
+
+    it('Should correctly complete a test user', function() {
       let user = UserModel.Create();
       expect(user.name.length).gt(0);
       expect(user.login.length).gt(0);
@@ -14,7 +54,7 @@ describe('Server User', function () {
       expect(Object.keys(user.traits).length).to.be.gte(5);
     });
 
-    it('Should correctly complete a templated user', function () {
+    it('Should correctly complete a templated user', function() {
       let user = UserModel.Create({
         name: "dave",
         login: "dave@abc.com",
@@ -26,18 +66,18 @@ describe('Server User', function () {
       expect(Object.keys(user.traits).length).to.be.gte(5);
     });
 
-    it('Should return Big5 trait names', function () {
+    it('Should return Big5 trait names', function() {
       expect(UserModel.Create().oceanTraits().length).to.equal(5);
     });
   })
 
-  describe('UserModel.generateDescription()', function () {
+  describe('UserModel.Generate', function() {
 
-    it('Should fail for a user without traits', function () {
+    it('Should fail for a user without traits', function() {
       expect(() => new UserModel().generateDescription()).to.throw();
     });
 
-    it('Should describe a user based on OCEAN traits', function () {
+    it('Should describe a user based on OCEAN traits', function() {
       let user = UserModel.Create();
       user.name = "Jane";
       user.gender = "female";

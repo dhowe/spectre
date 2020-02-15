@@ -34,7 +34,6 @@ describe('REST API', () => {
       });
     }
 
-
     beforeEach(refreshDb);
 
     it('should fetch a single user', done => {
