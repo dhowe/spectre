@@ -1,23 +1,17 @@
 import chai_http from 'chai-http';
-import server from '../../server';
+import server from '../server';
 import dotEnv from 'dotenv';
 import chai from 'chai';
 
-import DefaultUsers from '../../client/src/Components/UserSession/default-users';
-import UserModel from '../../user-model';
-import User from '../../shared/user';
+import DefaultUsers from '../client/src/Components/UserSession/default-users';
+import UserModel from '../user-model';
+import User from '../shared/user';
 
 const env = process.env;
 const expect = chai.expect;
-const port = env.PORT || 8083;
 
 dotEnv.config();
 chai.use(chai_http);
-
-let host = server;
-if (typeof env.API_HOST !== 'undefined') {
-  host = env.API_HOST + ':' + port;
-}
 
 describe('REST API', () => {
   describe('User Routes', () => {
@@ -27,7 +21,7 @@ describe('REST API', () => {
       UserModel.deleteMany({}, (err) => {
         err && console.error('ERROR', err);
         expect(DefaultUsers.length).eq(9);
-        chai.request(host)
+        chai.request(server)
           .post('/api/users/batch/')
           .auth(env.API_USER, env.API_SECRET)
           .send(users)
@@ -45,7 +39,7 @@ describe('REST API', () => {
 
     it('should fetch a single user', done => {
       let id = '888888888888888888888888';
-      chai.request(host)
+      chai.request(server)
         .get('/api/users/' + id)
         .auth(env.API_USER, env.API_SECRET)
         .end((err, res) => {
@@ -60,7 +54,7 @@ describe('REST API', () => {
 
     // it('should send mail to single user', done => {
     //   let id = '888888888888888888888888';
-    //   chai.request(host)
+    //   chai.request(server)
     //     .get('/api/users/message/' + id)
     //     .auth(env.API_USER, env.API_SECRET)
     //     .end((err, res) => {
@@ -76,7 +70,7 @@ describe('REST API', () => {
     it('should find similars for a user', done => {
       let id = '888888888888888888888888';
       let limit = 6;
-      chai.request(host)
+      chai.request(server)
         .get('/api/users/similars/' + id + '?limit=' + limit)
         .auth(env.API_USER, env.API_SECRET)
         .end((err, res) => {
@@ -97,7 +91,7 @@ describe('REST API', () => {
 
     it('should ignore similars without an image', done => {
       let id = '111111111111111111111111';
-      chai.request(host)
+      chai.request(server)
         .get('/api/users/' + id)
         .auth(env.API_USER, env.API_SECRET)
         .end((err, res) => {
@@ -110,7 +104,7 @@ describe('REST API', () => {
           expect(user.similars).to.be.undefined;
           user.hasImage = false;
 
-          chai.request(host)
+          chai.request(server)
             .put('/api/users/' + id)
             .auth(env.API_USER, env.API_SECRET)
             .send(user)
@@ -123,7 +117,7 @@ describe('REST API', () => {
               expect(user.hasImage).eq(false);
 
               id = '888888888888888888888888';
-              chai.request(host)
+              chai.request(server)
                 .get('/api/users/similars/' + id + '?limit=' + 7)
                 .auth(env.API_USER, env.API_SECRET)
                 .end((err, res) => {
@@ -149,7 +143,7 @@ describe('REST API', () => {
       user.name = "Dave";
       user.login = "Dave@aol.com";
       user.gender = "male";
-      chai.request(host)
+      chai.request(server)
         .post('/api/users/')
         .auth(env.API_USER, env.API_SECRET)
         .send(user)
@@ -165,7 +159,7 @@ describe('REST API', () => {
           user.lastUpdate = Date.now();
           user.hasImage = true;
 
-          chai.request(host)
+          chai.request(server)
             .put('/api/users/' + user._id)
             .auth(env.API_USER, env.API_SECRET)
             .send(user)
@@ -183,7 +177,7 @@ describe('REST API', () => {
 
               let id = '111111111111111111111111';
               // result must always include recently added 'Dave'
-              chai.request(host)
+              chai.request(server)
                 .get('/api/users/recents/' + id)
                 .auth(env.API_USER, env.API_SECRET)
                 .end((err, res) => {
@@ -205,7 +199,7 @@ describe('REST API', () => {
     });
 
     it('should list all users', done => {
-      chai.request(host)
+      chai.request(server)
         .get('/api/users/')
         .auth(env.API_USER, env.API_SECRET)
         .end((err, res) => {
@@ -229,7 +223,7 @@ describe('REST API', () => {
       user.name = "Dave";
       user.login = "Dave@aol.com";
       user.gender = "male";
-      chai.request(host)
+      chai.request(server)
         .post('/api/users/')
         .auth(env.API_USER, env.API_SECRET)
         .send(user)
@@ -241,7 +235,7 @@ describe('REST API', () => {
           Object.assign(user, res.body.data);
 
           expect(user._id).to.be.a('string');
-          chai.request(host)
+          chai.request(server)
             .get('/api/users/' + user._id)
             .auth(env.API_USER, env.API_SECRET)
             .end((err, res) => {
@@ -261,7 +255,7 @@ describe('REST API', () => {
       user.login = "Dave@aol.com";
       user.gender = "male";
 
-      chai.request(host)
+      chai.request(server)
         .post('/api/users/')
         .auth(env.API_USER, env.API_SECRET)
         .send(user)
@@ -276,7 +270,7 @@ describe('REST API', () => {
           expect(user._id).to.be.a('string');
           expect(user.traits).to.be.undefined;
 
-          chai.request(host)
+          chai.request(server)
             .put('/api/users/' + user._id)
             .auth(env.API_USER, env.API_SECRET)
             .send(user)
@@ -298,7 +292,7 @@ describe('REST API', () => {
       user.login = "Dave@aol.com";
       user.gender = "male";
 
-      chai.request(host)
+      chai.request(server)
         .post('/api/users/')
         .auth(env.API_USER, env.API_SECRET)
         .send(user)
@@ -317,7 +311,7 @@ describe('REST API', () => {
           expect(user.traits).to.be.a('object');
           expect(user.traits.openness).to.be.gte(0);
 
-          chai.request(host)
+          chai.request(server)
             .put('/api/users/' + user._id)
             .auth(env.API_USER, env.API_SECRET)
             .send(user)

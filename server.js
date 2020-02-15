@@ -93,6 +93,6 @@ if (prod) { // load ssl certs for production
   }
 }
 
-if (!server) server = http.createServer(app).listen(port, () => logf(true));
+if (!server) server = http.createServer(app).listen(test ? 8094 : port, () => logf(true));
 
 export default server;

@@ -6821,6 +6821,11 @@ loader-utils@1.2.3, loader-utils@^1.0.2, loader-utils@^1.1.0, loader-utils@^1.2.
     emojis-list "^2.0.0"
     json5 "^1.0.1"
 
+local-ip-url@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/local-ip-url/-/local-ip-url-1.0.2.tgz#8755dab6aaaa46154c371acc3b1db29b810a8f39"
+  integrity sha512-7zT8W8l7n0Bcvd8z5UyWFOJ2gMfBTgSEKCAqiGdNJhipgx4dLpi+QPtDtO7c4gJ1SrKsyZZCF4wZvl4xNPbk3A==
+
 locate-path@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/locate-path/-/locate-path-2.0.0.tgz#2b568b265eec944c6d9c0de9c3dbbbca0354cd8e"

@@ -44,10 +44,9 @@ const create = async (req, res) => {
   let user = new UserModel();
   Object.assign(user, body); // dangerous?
 
-  if (typeof user.clientId !== 'number') user.clientId = parseInt(user.clientId);
-  let ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-  console.log('IP:'+ip);
-
+  // if (typeof user.clientId !== 'number') user.clientId = parseInt(user.clientId);
+  // let ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+  // console.log('IP:'+ip);
 
   try {
     await UserModel.find({ login: body.login, loginType: body.loginType }, (e, docs) => {
@@ -117,7 +116,7 @@ const message = async (req, res) => {
   //   sendResponse(res, users);
   // });
 };
-*/
+
 const current = async (req, res) => {
 
   if (UserModel.databaseDisabled) return noDbError(res);
@@ -132,6 +131,7 @@ const current = async (req, res) => {
     sendResponse(res, { id: user._id });
   });
 };
+*/
 
 const createBatch = async (req, res) => {
 
@@ -247,10 +247,8 @@ const photo = async (req, res) => {
 
   if (UserModel.databaseDisabled) return noDbError(res);
 
-  if (typeof req.params.uid === 'undefined' ||
-    req.params.uid === 'undefined') {
-    return sendError(res, 'No uid sent', 0, NO_USER_ID);
-  }
+  if (!req.params.hasOwnProperty('uid')) return sendError
+    (res, 'No uid sent', 0, NO_USER_ID);
 
   // Destination here needs to be folder we are watching
   let upload = multer({
@@ -364,6 +362,6 @@ function generateEmail(id, email) {
 
 
 export default {
-  list, similars, /*message,*/ recents, create, fetch,
-  update, remove, photo, photoset, current, createBatch
+  similars, /*message,current*/ recents, create, fetch,
+  list, update, remove, photo, photoset, createBatch
 };

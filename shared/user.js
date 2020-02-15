@@ -494,9 +494,6 @@ export default class User {
   }
 }
 
-User.profileDir = (process.env.PUBLIC_URL || '') + '/profiles/';
-User.imageDir = (process.env.PUBLIC_URL || '') + '/imgs/';
-
 /**
  * MongoDB database schema for the application
  */

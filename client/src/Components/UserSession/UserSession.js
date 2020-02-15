@@ -1,8 +1,10 @@
 import React from 'react';
-import User from '../User/User';
 import DotEnv from 'dotenv';
+import User from '../User/User';
 import FormData from 'form-data';
 import DefaultUsers from './default-users';
+
+const { route, auth, mode } = doConfig();
 
 // We store the current User in React context for easy access
 let UserSession = React.createContext({});
@@ -10,10 +12,49 @@ let UserSession = React.createContext({});
 UserSession.defaultUsers = DefaultUsers;
 UserSession.useBrowserStorage = true;
 UserSession.storageKey = 'spectre-user';
-UserSession.profileDir = User.profileDir;
-UserSession.imageDir = User.imageDir;
-UserSession.serverDisabled = false;
+UserSession.profileDir = (process.env.PUBLIC_URL || '') + '/profiles/';
+UserSession.imageDir = (process.env.PUBLIC_URL || '') + '/imgs/';
+UserSession.serverDisabled = typeof auth === 'undefined';
 UserSession.serverErrors = 0;
+UserSession.clientId = -1;
+
+UserSession.localIPs = (cb, prefix) => {
+
+  if (typeof window === 'undefined') {
+    cb('localhost');
+    return;
+  }
+
+  const PeerConnect = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
+  const pc = new PeerConnect({ iceServers: [] }), noop = () => { }, localIPs = {},
+    ipRegex = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/g;
+
+  function iterateIP(ip) {
+    if (ip && !localIPs[ip] && (!prefix || ip.startsWith(prefix))) cb(ip);
+    localIPs[ip] = true;
+  }
+
+  //create a bogus data channel
+  pc.createDataChannel('');
+
+  // create offer & set local description
+  pc.createOffer().then((sdp) => {
+    sdp.sdp.split('\n').forEach((line) => {
+      if (line.indexOf('candidate') < 0) return;
+      line.match(ipRegex).forEach(iterateIP);
+    });
+    pc.setLocalDescription(sdp, noop, noop);
+
+  }).catch(e => console.error('[SESSION] ' + e));
+
+  // listen for candidate events
+  pc.onicecandidate = function(ice) {
+    if (!ice || !ice.candidate || !ice.candidate.candidate || !ice.candidate.candidate.match(ipRegex)) return;
+    ice.candidate.candidate.match(ipRegex).forEach(iterateIP);
+  };
+}
+
+UserSession.localIPs(ip => (UserSession.clientId = ip), '192.');
 
 /////////////////////////// API functions /////////////////////////////
 
@@ -32,10 +73,10 @@ UserSession.create = async (user) => {
 
   if (UserSession.serverDisabled) return;
 
-  const { route, auth, clientId } = doConfig();
-  user.clientId = clientId;
+  //const { route, auth } = doConfig();
+  user.clientId = UserSession.clientId;
 
-  //console.log('[POST] User.create: ' + route, clientId, user);
+  //console.log('[POST] User.create: ' + route, user.clientId);
   const [json, e] = await safeFetch(route, {
     method: "post",
     headers: {
@@ -57,7 +98,7 @@ UserSession.sendMail = async (uid, email) => {
 
   if (UserSession.serverDisabled) return;
 
-  const { route, auth, mode } = doConfig();
+  //const { route, auth, mode } = doConfig();
 
   const endpoint = route + 'message/' + uid + "&" + email;
 
@@ -158,8 +199,8 @@ UserSession.lookup = async (user) => {
   if (UserSession.serverDisabled) return;
 
   if (!user || !user._id) throw Error('Invalid arg', user);
-  const { route, auth, cid, mode } = doConfig();
-  user.clientId = cid;
+  //const { route, auth, mode } = doConfig();
+
   const endpoint = route + user._id;
   try {
     console.log('[GET] ' + mode + '.lookup: ' + endpoint);
@@ -184,10 +225,8 @@ UserSession.update = async (user) => {
 
   if (!user || !user._id) throw Error('Invalid user', user);
 
-  const { route, auth, cid, mode } = doConfig();
+  //const { route, auth, mode } = doConfig();
   const endpoint = route + user._id;
-
-  user.clientId = cid;
 
   try {
     console.log('[PUT] ' + mode + '.update: ' + endpoint);
@@ -211,7 +250,7 @@ UserSession.similars = async (user) => {
 
   if (!user) throw Error('Null user in UserSession.similars');
 
-  const { route, auth, cid, mode } = doConfig();
+  //const { route, auth, mode } = doConfig();
 
   if (UserSession.serverDisabled || user._id === -1) {
     handleError('No user id', route, 'similars[1]');
@@ -224,7 +263,6 @@ UserSession.similars = async (user) => {
   }
 
   const endpoint = route + 'similars/' + user._id;
-  user.clientId = cid;
 
   try {
     console.log('[GET] ' + mode + '.similars: ' + endpoint);
@@ -289,11 +327,11 @@ UserSession.postImage = async (user, image, onError, onSuccess) => { // TODO: te
 
   if (UserSession.serverDisabled) return;
 
-  const { route, auth, mode } = doConfig();
+  //const { route, auth, mode } = doConfig();
 
   const fdata = new FormData();
   fdata.append('profileImage', image);
-  fdata.append('clientId', process.env.CLIENT_ID);
+  //fdata.append('clientId', UserSession.clientId);
   //fdata.append('videoId', 2);
 
   const endpoint = route + 'photo/' + user._id;
@@ -419,54 +457,17 @@ function fillMissingProperties(user, props) {
   return modified;
 }
 
-function toNetworkString(user) {
+function toNetworkString(user) { // don't send undefined or empty arrays
   let safe = {};
   Object.keys(User.schema()).forEach(p => {
     let val = user[p];
     if (typeof val === 'undefined') return;
     if (Array.isArray(val) && !val.length) return;
-    // TODO: deal with objects here
+    // TODO: deal with objects here (count keys?)
     safe[p] = user[p];
   });
 
   return JSON.stringify(safe);
-}
-
-function doConfig() {
-
-  DotEnv.config(); // get auth from .env
-
-  const port = 8083;
-  const env = process.env;
-  const path = '/api/users/';
-  const host = window.location.host.replace(/:[0-9]{4}$/, '');
-  const mode = env.NODE_ENV !== 'production' ? 'DEV' : 'PROD';
-
-  // use https if we're in production mode
-  const proto = env.NODE_ENV !== 'production' ? 'http' : 'https';
-
-  if (!env.REACT_APP_API_USER || !env.REACT_APP_API_SECRET) {
-    console.error('\nRunning client without authentication; Server/DB'
-      + ' will not be available. Are you missing a .env file ?\n');
-    UserSession.serverDisabled = true;
-  }
-
-  if (!env.REACT_APP_CLIENT_ID && mode === 'PROD') throw Error
-    ('\nREACT_APP_CLIENT_ID required in client .env file\n');
-
-  let clientId = env.REACT_APP_CLIENT_ID || irand(1, 7);
-
-  // Here we construct server host from window.location,
-  // assuming server/db is on the same host as the web-app)
-  const route = proto + '://' + host + ':' + port + path;
-
-  //const host = env.REACT_APP_API_HOST || 'http://localhost:8083';
-  const auth = env.REACT_APP_API_USER + ':' + env.REACT_APP_API_SECRET;
-
-  if (!auth || !auth.length) console.error("Auth required!");
-
-  //console.log('route: '+route);
-  return { auth: auth, route: route, clientId: clientId, mode: mode };
 }
 
 function defaultSimilars() {
@@ -552,6 +553,34 @@ function handleError(e, route, func) {
     UserSession.serverDisabled = true;
   }
   //if (process.env.NODE_ENV !== 'production') throw e;
+}
+
+function doConfig() {
+
+  DotEnv.config(); // get auth from .env
+
+  const port = 8083;
+  const env = process.env;
+  const path = '/api/users/';
+  const host = typeof window !== 'undefined' ? window.location.host.replace(/:[0-9]{4}$/, '') : 'localhost'; // for-node
+  const mode = env.NODE_ENV !== 'production' ? 'DEV' : 'PROD';
+
+  // use https if we're in production mode
+  const proto = env.NODE_ENV !== 'production' ? 'http' : 'https';
+
+  if (!env.REACT_APP_API_USER || !env.REACT_APP_API_SECRET) {
+    console.error('\nRunning client without authentication; Server/DB'
+      + ' will not be available. Are you missing a .env file ?\n');
+    UserSession.serverDisabled = true;
+  }
+
+  const auth = env.REACT_APP_API_USER + ':' + env.REACT_APP_API_SECRET;
+
+  // Here we construct server host from window.location,
+  // assuming server/db is on the same host as the web-app)
+  const route = proto + '://' + host + ':' + port + path;
+
+  return { route, auth, mode };
 }
 
 export default UserSession;

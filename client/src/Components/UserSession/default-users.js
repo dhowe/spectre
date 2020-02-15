@@ -1,4 +1,3 @@
-// Note: file temporarily duplicated in /spectre/scripts
 export default [
   {
     "traits": {
