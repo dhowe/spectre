@@ -17,13 +17,14 @@ import { profDir } from './config';
   "data": "<payload object>"
 }*/
 
-const UNIQUE_USER_VIOLATION = 451;
-const USER_NOT_FOUND = 452;
-const USER_WO_TRAITS = 453;
-const USER_WO_LOGIN = 455;
-const NO_DATABASE = 454;
-const NO_CLIENT_ID = 449;
-const NO_USER_ID = 450;
+const NO_USER_ID = 490;
+const UNIQUE_USER_VIOLATION = 491;
+const USER_NOT_FOUND = 492;
+const USER_WO_TRAITS = 493;
+const USER_WO_LOGIN = 494;
+const NO_DATABASE = 495;
+const NO_CLIENT_ID = 496;
+
 const NUM_SIMILARS = 6;
 
 const create = async (req, res) => {
@@ -44,6 +45,9 @@ const create = async (req, res) => {
   Object.assign(user, body); // dangerous?
 
   if (typeof user.clientId !== 'number') user.clientId = parseInt(user.clientId);
+  let ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+  console.log('IP:'+ip);
+
 
   try {
     await UserModel.find({ login: body.login, loginType: body.loginType }, (e, docs) => {

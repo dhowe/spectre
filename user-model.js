@@ -26,7 +26,7 @@ UserSchema.statics.Create = function(tmpl) {
   let user = new UserModel();
   user.name = tmpl && tmpl.name ? tmpl.name : randName();
   user.login = tmpl && tmpl.login ? tmpl.login : user.name + '@' + randName() + '.com';
-  user.loginType = tmpl && tmpl.loginType ? tmpl.loginType : 'facebook';
+  user.loginType = tmpl && tmpl.loginType ? tmpl.loginType : 'email';
 
   return user;//._randomizeTraits();
 }

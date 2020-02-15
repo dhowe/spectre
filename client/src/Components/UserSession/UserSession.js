@@ -518,28 +518,6 @@ function shuffle(arr) {
   return newArray;
 }
 
-/*
-async function assignJsonResp(user, json) {
-  if (!json) throw Error('Null json in assignJsonResp:' + user);
-  if (json.status !== 200) throw Error(JSON.stringify(json));
-  Object.assign(user, json.data);
-  return user;
-}
-
-
-async function safeJson(user, res, route, func) {
-  let [json, e] = handle(res.json());
-  if (e || !json) return handleError(e, route, func);
-  return assignJsonResp(user, json);
-}
-
-function handle(promise) {
-  return promise
-    .then(data => ([data, undefined]))
-    .catch(error => Promise.resolve([undefined, error]));
-}
-*/
-
 async function safeFetch() {
   return fetch(...arguments)
     .then(resp => {
@@ -551,7 +529,10 @@ async function safeFetch() {
       //console.log('safeFetch2.json',json);
       if (!json) return Promise.resolve([undefined, 'no-json-data'])
       if (json.status !== 200) {
-        if (json.status === 449) throw Error('');
+
+        // HANDLE SPECIFIC ERROR CODES HERE (See user-controller.js)
+
+        // if (json.status === 449) throw Error('');
         return Promise.resolve([undefined, json.status + '/' + (json.message || 'no-message')])
       }
       return [json.data, undefined];
