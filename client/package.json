@@ -10,7 +10,6 @@
     "dotenv-extended": "^2.4.0",
     "eslint": "6.8.0",
     "json-loader": "^0.5.7",
-    "local-ip-url": "^1.0.2",
     "node-opencv": "^0.0.2-security",
     "node-sass": "^4.12.0",
     "p5": "^0.10.2",
