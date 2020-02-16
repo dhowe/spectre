@@ -179,11 +179,11 @@ function sketch(p) {
     //displayAsHtml(user);
   }
 
-  function displayAsHtml(user) { // eslint-disable-line no-unused-vars
+  /*function displayAsHtml(user) { // eslint-disable-line no-unused-vars
     let otr = '<tr><td>';
     let ctd = '</td><td>';
     let ctr = '</td></tr>'
-    let traits = user.oceanTraits();
+    let traits = User.oceanTraits;
     let rows = traits.length;
     let desc = '</td><td rowspan=' + rows +
       ' id="desc">' + user.generateDescription();
@@ -192,7 +192,7 @@ function sketch(p) {
     }, '');
     document.getElementById("content").style.display = 'inline-block';
     document.getElementById("tdata").innerHTML = html;
-  }
+  }*/
 
   function randomizeData() {
     Brand.instances.forEach(b => {

@@ -11,6 +11,13 @@ const { route, auth, mode } = doConfig();
 
 console.log('[SCRIPT] ' + users.length + ' users loaded, Db is ' + mode, route);
 
+/* Add influences here (and store in file)?
+users.forEach(u => {
+  console.log(u);
+});
+process.exit(1);
+*/
+
 if (mode === 'PROD') {
   iconfirm({ question: 'Database is production. Confirm?' })
     .then(insertDefaultUsers, () => { });

@@ -54,7 +54,7 @@ class ProfileMaker {
             UserModel.findByIdAndUpdate(
               id, { hasImage: res.status === 'ok' }, { new: true }, (err, u) => {
                 err && console.error('[ERROR] ProfileMaker.findByIdAndUpdate: ', err, u);
-                //else console.log('THUMB: user.hasImage=' + u.hasImage);
+                console.log('[' + clfDate() + '] ::* UPDATE hasImage', u.hasImage);
               });
           });
       }

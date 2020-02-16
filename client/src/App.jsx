@@ -18,7 +18,6 @@ import InsightComplete from './Page/InsightComplete/InsightComplete';
 import YourPower from './Page/YourPower/YourPower';
 import PickYourSide from './Page/PickYourSide/PickYourSide';
 import Campaign from './Page/Campaign/Campaign';
-import InfluencedBy from './Page/InfluencedBy/InfluencedBy';
 import DarkAd from './Page/DarkAd/DarkAd';
 import TargetAd from './Page/TargetAd/TargetAd';
 import SuccessAd from './Page/SuccessAd/SuccessAd';
@@ -110,7 +109,6 @@ class App extends React.Component {
                   <Route exact path="/your-power" component={YourPower} />
                   <Route exact path="/pick-your-side" component={PickYourSide} />
                   <Route exact path="/campaign" component={Campaign} />
-                  <Route exact path="/influenced-by" component={InfluencedBy} />
                   <Route exact path="/dark-ad" component={DarkAd} />
                   <Route exact path="/target-ad" component={TargetAd} />
                   <Route exact path="/success-ad" component={SuccessAd} />

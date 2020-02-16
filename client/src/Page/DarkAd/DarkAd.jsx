@@ -55,20 +55,19 @@ class DarkAd extends React.Component {
     this.state = {
       text: '',
       issue: '',
-      images: [],
-      slogans: [],
+      images: ['','',''],
+      slogans: ['','',''],
       defaultImageSelected: true,
       image: '/imgs/darkad-default.png'
     };
   }
 
   async componentDidMount() {
-    const user = await UserSession.ensure(this.context,
-      [/*'_id',*/ 'adIssue', 'target', 'targetImages', 'targetSlogans']);
+    const user = await UserSession.ensure(this.context, [ 'adIssue', 'target' ]);
     this.setState({
       issue: user.adIssue,
-      images: user.targetImages,
-      slogans: user.targetSlogans
+      images: user.target.influences[user.adIssue].images,
+      slogans: user.target.influences[user.adIssue].slogans,
     });
   }
 

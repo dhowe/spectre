@@ -65,10 +65,6 @@ describe('Server User', function() {
       expect(user.loginType).eq("twitter");
       expect(Object.keys(user.traits).length).to.be.gte(5);
     });
-
-    it('Should return Big5 trait names', function() {
-      expect(UserModel.Create().oceanTraits().length).to.equal(5);
-    });
   })
 
   describe('UserModel.Generate', function() {

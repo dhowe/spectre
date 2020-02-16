@@ -64,6 +64,7 @@ UserSession.ensure = async (user, props, opts) => {
 
   const allowNoId = opts && opts.allowNoId;
   const forceUpdate = opts && opts.forceUpdate;
+
   const checkSession = async (user) => {
     // do we have an id in session
     const sid = sessionStorage.getItem(UserSession.storageKey);
@@ -77,9 +78,10 @@ UserSession.ensure = async (user, props, opts) => {
       return false;
     }
     else {
-      user._id = JSON.parse(sid);
-      console.warn('[SESS] Reloaded user._id: ' + user._id + ' doing lookup');
-      await UserSession.lookup(user);
+      let uid = JSON.parse(sid);
+      console.warn('[SESS] Reloaded user._id: ' + uid + ' doing lookup');
+      let json = await UserSession.lookup(uid);
+      Object.assign(user, json);
       return true;
     }
   }
@@ -94,20 +96,21 @@ UserSession.ensure = async (user, props, opts) => {
 
     // should have user with id here, if not, then probably no server
     if (!user || (!allowNoId && !user._id)) {
+      console.warn('[STUB] Unable to set user._id, using ' + user._id, user);
       user._id = -1;
-      console.warn('[STUB] Unable to set user._id, using ' + user._id);
     }
 
-    // if we need hasImage, we need to check the db
-    if (props.includes('hasImage')) {
-      props = arrayRemove(props, 'hasImage');
-      if (user._id !== -1 && !userLookup) await UserSession.lookup(user);
-      console.log('[USER] ' + user._id + '.hasImage = ' + user.hasImage);
-    }
+    // // if we need hasImage, we need to check the db
+    // if (props.includes('hasImage')) {
+    //   props = arrayRemove(props, 'hasImage');
+    //   //if (user._id !== -1 && !userLookup) await UserSession.lookup(user._id);
+    //   console.log('[USER] ' + user._id + '.hasImage = ' + user.hasImage);
+    // }
 
-    // if we need a target we need similars
-    if (props.includes('target') && !user.targetId) {
+    // similars: if we need a target then we need similars
+    if (props.includes('target') && !user.target) {
       if (!props.includes('similars')) props.unshift('similars');
+      //console.log('  added similars', props);
     }
 
     // if we need a similars then, we need traits
@@ -123,10 +126,77 @@ UserSession.ensure = async (user, props, opts) => {
     if (modified || forceUpdate) await UserSession.update(user);
   }
   catch (e) {
-    handleError(e, '', 'ensure');
+    handleError(e, 'no-route', 'ensure');
   }
 
   return user;
+}
+
+/*
+ * Attempts to stub any undefined properties specified in props
+ * Returns true if the user is modified, else false
+ */
+function fillMissingProps(user, props) {
+
+  const onUpdateProperty = (p) => {
+    modified = true;
+    missing = arrayRemove(missing, p);
+    if (typeof user[p] === 'undefined') throw Error
+      ('Could not stub user.' + p, user);
+    let val = user[p];
+    if (Array.isArray(val)) val = '[' + val.length + ']';
+    if (typeof val === 'object') val = JSON.stringify(val).substring(0, 60);
+    console.warn('[STUB] Setting user.' + p + ': ' + val);
+  };
+
+  if (typeof props === 'undefined') return true;
+  if (typeof user === 'undefined') throw Error('Null user');
+
+  if (!Array.isArray(props)) props = [props];
+
+  // a property is missing if its undefined or an empty array or string
+  let missing = props.filter(p => typeof user[p] === 'undefined'
+    || ((typeof user[p] === 'string' || Array.isArray(user[p]))
+      && !user[p].length));
+
+  if (!missing || !missing.length) return false; // all props are ok
+
+  let modified = false; // check known props, 1-by-1
+  let propStubber = {
+    gender: () => rand(Genders),
+    virtue: () => rand(Virtues),
+    adIssue: () => rand(AdIssues),
+    traits: () => User.randomTraits(),
+    name: () => (rand(Cons) + rand(Vows) + rand(Cons)).ucf(),
+    login: () => user.name + (+new Date()) + '@test.com',
+    celebrity: () => rand(Celebrities),
+    target: () => {
+      if (!user.similars || !user.similars.length) throw Error
+        ('propStubber.target -> no similars')
+      return rand(user.similars);
+    }
+  };
+
+  //console.log(missing);
+
+  Object.keys(propStubber).forEach(p => {
+    if (missing.includes(p)) {
+      user[p] = propStubber[p]();
+      if (p === 'target') {
+        user.targetId = user.target._id;
+        User.computeInfluencesFor(user.target, AdIssues);
+        //console.log('  target: '+user.targetId+"/"+JSON.stringify(user.target));
+      }
+      onUpdateProperty(p);
+    }
+  });
+
+  //missing = checkTargetInfluences(missing);
+
+  if (missing.length) throw Error
+    ('Unable to stub user properties: ' + missing);
+
+  return modified;
 }
 
 /*
@@ -140,13 +210,13 @@ UserSession.validate = (user, props) => {
 /*
  * Loads a user's properties from database
  */
-UserSession.lookup = async (user) => {
+UserSession.lookup = async (userId) => {
 
   if (UserSession.serverDisabled) return;
 
-  if (!user || !user._id) throw Error('Invalid arg', user);
+  if (!userId) throw Error('Invalid userId:', userId);
 
-  const endpoint = route + user._id;
+  const endpoint = route + userId;
   try {
     console.log('[GET] ' + mode + '.lookup: ' + endpoint);
     const [json, e] = await safeFetch(endpoint, {
@@ -157,7 +227,7 @@ UserSession.lookup = async (user) => {
       },
     })
     if (e) return handleError(e, route, 'lookup[1]');
-    return Object.assign(user, json);
+    return Object.assign(new User(), json);
   }
   catch (e) {
     handleError(e, endpoint, 'lookup[2]');
@@ -364,6 +434,40 @@ UserSession.randomCelebrities = () => {
   return shuffle(shuffle(MaleCelebs).splice(0, 4).concat(FemaleCelebs));
 }
 
+UserSession.possPron = (user) => { // not used
+  switch (user.gender) {
+    case 'male':
+      return 'his';
+    case 'female':
+      return 'her';
+    default:
+      return 'their';
+  }
+}
+
+UserSession.objPron = (user) => {// not used
+  switch (user.gender) {
+    case 'male':
+      return 'him';
+    case 'female':
+      return 'her';
+    default:
+      return 'them';
+
+  }
+}
+
+UserSession.persPron = (user) => {// not used
+  switch (user.gender) {
+    case 'male':
+      return 'he';
+    case 'female':
+      return 'she';
+    default:
+      return 'they';
+  }
+}
+
 /////////////////////////////// Helpers //////////////////////////////////////
 
 const Cons = "bcdfghjklmnprstvxz".split('');
@@ -374,83 +478,6 @@ const Virtues = ['wealth', 'influence', 'truth', 'power'];
 const FemaleCelebs = ['Kardashian', 'Abramovic'];
 const MaleCelebs = ['Freeman', 'Duchamp', 'Mercury', 'Trump', 'Zuckerberg'];
 const Celebrities = FemaleCelebs.concat(MaleCelebs);
-
-/*
- * Attempts to stub any undefined properties specified in props
- * Returns true if the user is modified, else false
- */
-function fillMissingProps(user, props) {
-  //console.log(props);
-  const checkTargetAdData = (missing) => {
-    if (user.adIssue && user.adIssue.length &&
-      user.target && user.target._id.length) {
-
-      if (!(user.targetImages && user.targetImages.length &&
-        user.targetSlogans && user.targetSlogans.length &&
-        user.targetInfluences && user.targetInfluences.length)) {
-        user.computeTargetAdData();
-        missing = arrayRemove(missing,
-          ['targetImages', 'targetSlogans', 'targetInfluences']);
-        modified = true;
-      }
-    }
-    return missing;
-  }
-
-  const onUpdateProperty = (p) => {
-    modified = true;
-    missing = arrayRemove(missing, p);
-    if (typeof user[p] === 'undefined') throw Error
-      ('Could not stub user.' + p, user);
-    let val = user[p];
-    if (Array.isArray(val)) val = '[' + val.length + ']';
-    if (p === 'target') val = val.name + '/#' + val._id;
-    if (typeof val === 'object') val = JSON.stringify(val).substring(0, 60);
-    console.warn('[STUB] Setting user.' + p + ': ' + val);
-  };
-
-  if (typeof props === 'undefined') return true;
-  if (typeof user === 'undefined') throw Error('Null user');
-
-  if (!Array.isArray(props)) props = [props];
-
-  // a property is missing if its undefined or an empty array or string
-  let missing = props.filter(p => typeof user[p] === 'undefined'
-    || ((typeof user[p] === 'string' || Array.isArray(user[p]))
-      && !user[p].length));
-
-  if (!missing || !missing.length) return false; // all props are ok
-
-  let modified = false; // check known props, 1-by-1
-  let propStubber = {
-    gender: () => rand(Genders),
-    virtue: () => rand(Virtues),
-    adIssue: () => rand(AdIssues),
-    traits: () => User.randomTraits(),
-    name: () => (rand(Cons) + rand(Vows) + rand(Cons)).ucf(),
-    login: () => user.name + (+new Date()) + '@test.com',
-    celebrity: () => rand(Celebrities),
-    target: () => rand(user.similars), // must have similars
-    targetId: () => user.target ? user.target._id : rand(user.similars)._id
-  };
-
-  //console.log(missing);
-
-  Object.keys(propStubber).forEach(p => {
-    if (missing.includes(p)) {
-      user[p] = propStubber[p]();
-      if (p === 'target') user.targetId = user.target._id;
-      onUpdateProperty(p);
-    }
-  });
-
-  missing = checkTargetAdData(missing);
-
-  if (missing.length) throw Error
-    ('Unable to stub user properties: ' + missing);
-
-  return modified;
-}
 
 function toNetworkString(user) { // don't send undefined or empty arrays
   let safe = {};

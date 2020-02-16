@@ -11,33 +11,36 @@ import { Link } from 'react-router-dom';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 import ComponentsStyles from '../../App.module.css';
 
-const styles = {
-
-};
+const styles = {};
 
 class Campaign extends React.Component {
   constructor(props) {
     super(props, '/dark-ad');
     this.state = {
       targetName: '',
-      targetInfluences: [],
-      targetPronoun: ''
+      targetThemes: ['',''],
+      targetPron: ''
     };
   }
 
   async componentDidMount() {
     const user = await UserSession.ensure(this.context,
       ['name', 'adIssue', 'target']);
+    console.log('adIssue', user.adIssue);
+    console.log('targetName', user.target.name);
+    console.log('target-influences', user.target.influences);
+    console.log('target-gender', user.target.gender);
+    console.log('target-pronoun', UserSession.persPron(user.target));
     this.setState({
       targetName: user.target.name.ucf(),
-      targetInfluences: user.targetInfluences,
-      targetPronoun: (user.target.gender === 'male' ? 'he' : 'she')
+      targetThemes: user.target.influences[user.adIssue].themes,
+      targetPronoun: UserSession.persPron(user.target)
     });
   }
 
   render() {
     const { classes } = this.props;
-    let { targetInfluences, targetPronoun, targetName } = this.state;
+    let { targetThemes, targetPronoun, targetName } = this.state;
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive progressNumber="one" />
@@ -50,10 +53,10 @@ class Campaign extends React.Component {
             {targetName}'s <span>OCEAN profile</span> shows that {targetPronoun} can be influenced by:
           </p>
           <p className="normal-addSpacing">
-            <span>Images</span> that contain {targetInfluences[0]}
+            <span>Images</span> that contain {targetThemes[0]}
           </p>
           <p className="normal-addSpacing">
-            <span>Slogans</span> that contain {targetInfluences[1]}
+            <span>Slogans</span> that contain {targetThemes[1]}
           </p>
           <div className="link">
             <Link to="/dark-ad">

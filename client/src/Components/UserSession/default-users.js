@@ -7,11 +7,6 @@ export default [
       "agreeableness": 0.7362640444503088,
       "neuroticism": 0.47905473249106567
     },
-    "influences": [
-      "Immigration issues",
-      "Images of large crowds",
-      "Short, punchy slogans"
-    ],
     "hasImage": true,
     "targetId": -1,
     "descriptors": [
@@ -27,7 +22,6 @@ export default [
     "createdAt": "2019-06-03T00:12:07.595Z",
     "adIssue": "leave",
     "virtue": "influence",
-
     "__v": 1
   },
   {
@@ -38,11 +32,6 @@ export default [
       "agreeableness": 0.53689483140265,
       "neuroticism": 0.27450635813796476
     },
-    "influences": [
-      "Immigration issues",
-      "Images of large crowds",
-      "Short, punchy slogans"
-    ],
     "hasImage": true,
     "targetId": -1,
     "descriptors": [
@@ -58,7 +47,6 @@ export default [
     "createdAt": "2019-06-03T00:12:07.591Z",
     "adIssue": "remain",
     "virtue": "influence",
-
     "__v": 1
   },
   {
@@ -69,11 +57,6 @@ export default [
       "agreeableness": 0.8732309731226064,
       "neuroticism": 0.05682854932637982
     },
-    "influences": [
-      "Immigration issues",
-      "Images of large crowds",
-      "Short, punchy slogans"
-    ],
     "hasImage": true,
     "targetId": -1,
     "descriptors": [
@@ -89,7 +72,6 @@ export default [
     "createdAt": "2019-06-03T00:12:07.592Z",
     "adIssue": "remain",
     "virtue": "influence",
-
     "__v": 1
   },
   {
@@ -100,11 +82,6 @@ export default [
       "agreeableness": 0.11652733325307274,
       "neuroticism": 0.7439499291609459
     },
-    "influences": [
-      "Immigration issues",
-      "Images of large crowds",
-      "Short, punchy slogans"
-    ],
     "hasImage": true,
     "targetId": -1,
     "descriptors": [
@@ -120,7 +97,6 @@ export default [
     "createdAt": "2019-06-03T00:12:07.590Z",
     "adIssue": "leave",
     "virtue": "power",
-
     "__v": 1
   },
   {
@@ -131,11 +107,6 @@ export default [
       "agreeableness": 0.8871755663827146,
       "neuroticism": 0.4770123042736807
     },
-    "influences": [
-      "Immigration issues",
-      "Images of large crowds",
-      "Short, punchy slogans"
-    ],
     "hasImage": true,
     "targetId": -1,
     "descriptors": [
@@ -151,7 +122,6 @@ export default [
     "createdAt": "2019-06-03T00:12:07.580Z",
     "adIssue": "leave",
     "virtue": "power",
-
     "__v": 1
   },
   {
@@ -162,11 +132,6 @@ export default [
       "agreeableness": 0.7671342728008894,
       "neuroticism": 0.9546014222333083
     },
-    "influences": [
-      "Immigration issues",
-      "Images of large crowds",
-      "Short, punchy slogans"
-    ],
     "hasImage": true,
     "targetId": -1,
     "descriptors": [
@@ -182,7 +147,6 @@ export default [
     "createdAt": "2019-06-03T00:12:07.601Z",
     "adIssue": "leave",
     "virtue": "power",
-
     "__v": 1
   },
   {
@@ -193,11 +157,6 @@ export default [
       "agreeableness": 0.6008941864440192,
       "neuroticism": 0.20154338443905195
     },
-    "influences": [
-      "Immigration issues",
-      "Images of large crowds",
-      "Short, punchy slogans"
-    ],
     "hasImage": true,
     "targetId": -1,
     "descriptors": [
@@ -213,7 +172,6 @@ export default [
     "createdAt": "2019-06-03T00:12:07.599Z",
     "adIssue": "leave",
     "virtue": "power",
-
     "__v": 1
   },
   {
@@ -224,11 +182,6 @@ export default [
       "agreeableness": 0.7294584661749706,
       "neuroticism": 0.16741349639932745
     },
-    "influences": [
-      "Immigration issues",
-      "Images of large crowds",
-      "Short, punchy slogans"
-    ],
     "hasImage": true,
     "targetId": -1,
     "descriptors": [
@@ -244,7 +197,6 @@ export default [
     "createdAt": "2019-06-03T00:12:07.597Z",
     "adIssue": "leave",
     "virtue": "wealth",
-
     "__v": 1
   },
   {
@@ -255,11 +207,6 @@ export default [
       "agreeableness": 0.23041047939734138,
       "neuroticism": 0.7753808412826357
     },
-    "influences": [
-      "Immigration issues",
-      "Images of large crowds",
-      "Short, punchy slogans"
-    ],
     "hasImage": true,
     "targetId": -1,
     "descriptors": [
@@ -275,7 +222,6 @@ export default [
     "createdAt": "2019-06-03T00:12:07.588Z",
     "adIssue": "leave",
     "virtue": "power",
-
     "__v": 1
   }
 ];

@@ -50,33 +50,10 @@ UserSchema.statics.findByDate = function(date1, date2, callback) { // cb=functio
 // find mix of recents and similars
 UserSchema.statics.findTargets = function(user, limit, callback) { // cb=function(err,users)console.log("findTargets: ", user.name);
   aSync.parallel([
-    (cb) => {
-      UserModel.findByRecent(user._id, Math.floor(limit / 2), cb);
-    },
-    (cb) => {
-      UserModel.findByOcean(user, Math.ceil(limit / 2), cb);
-    }],
-    (err, results) => {
-      callback(err, results[0].concat(results[1]));
-    });
+    (cb) => UserModel.findByRecent(user._id, Math.floor(limit / 2), cb),
+    (cb) => UserModel.findByOcean(user, Math.ceil(limit / 2), cb)],
+    (e, results) => callback(e, results[0].concat(results[1])));
 };
-// UserModel.findByRecent(user._id, maxRecents, (e1, recents) => {
-//   if (e1) {
-//     console.error('[FindTargets.FindByRecent]', e1);
-//     recents = [];
-//   }
-//
-//   // TODO: should happen in parallel
-//   UserModel.findByOcean(user, limit - recents.length, (e2, similars) => {
-//     if (e2) {
-//       console.error('[FindTargets.findByOcean]', e2);
-//       similars = [];
-//     }
-//     console.log("[TARGETS] RECENTS: ", recents.length, "SIMILARS: ", similars.length, 'TODO: make parallel');
-//     callback(e1 || e2, similars.concat(recents));
-//   });
-//   });
-// };
 
 // find most recently updated users with traits and image
 UserSchema.statics.findByRecent = function(userId, limit, callback) { // cb=function(err,users)
