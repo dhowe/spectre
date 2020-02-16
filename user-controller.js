@@ -1,4 +1,5 @@
 import UserModel from './user-model';
+import User from './shared/user';
 import Mailer from './mailer';
 import clfDate from 'clf-date';
 import multer from 'multer';
@@ -185,7 +186,7 @@ const update = async (req, res) => {
     if (!user) return sendError(res, 'No user #' + req.params.uid, 0, USER_NOT_FOUND);
 
     // return if we don't yet have traits, or we already have similars
-    if (!user.hasOceanTraits() || (user.similars && user.similars.length)) {
+    if (!User.hasOceanTraits(user) || (user.similars && user.similars.length)) {
       sendResponse(res, user);
       return;
     }
@@ -229,7 +230,7 @@ const targets = async (req, res) => {
     if (!user.traits || !user.traits.openness) return sendError
       (res, 'No traits for user #' + uid, 0, USER_WO_TRAITS);
 
-    UserModel.findByTarget(user, Math.floor(limits/2), limit, (err, sims) => {
+    UserModel.findTargets(user, limit, (err, sims) => {
       if (err) return sendError(res, 'Unable to findByOcean for #' + req.params.uid, err);
       sendResponse(res, sims);
     });

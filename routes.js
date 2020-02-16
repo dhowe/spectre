@@ -22,7 +22,7 @@ router.route('/users/recents/:uid')
   .get(controller.recents)
 
 router.route('/users/targets/:uid')
-  .get(controller.recents)
+  .get(controller.targets)
 
 router.route('/users/photo/:uid')
   .post(controller.photo)

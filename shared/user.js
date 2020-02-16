@@ -10,11 +10,12 @@ export default class User {
   constructor(tmpl) {
     Object.keys(User.schema()).forEach(k => this[k] = undefined);
     Object.assign(this, tmpl);
-    this.clientId = process.env.REACT_APP_CLIENT_ID || -1;
+    //this.clientId = process.env.REACT_APP_CLIENT_ID || -1;
     this.loginType = this.loginType || 'email';
     this.lastPage = this.lastPage || 'login'
     this.dataChoices = this.dataChoices || {};
-    this.targetAd = this.targetAd || {};;
+    this.influences = this.influences || {};
+    this.targetAd = this.targetAd || {};
     this.similars = [];
   }
 
@@ -24,12 +25,9 @@ export default class User {
     if (u.login) s += ', ' + u.login;
     if (u.gender) s += ', ' + u.gender;
     if (u.virtue) s += ', ' + u.virtue;
-    if (u.target) s += ', target=' + u.target.name;
+    if (u.target) s += ', target=' + u.target._id + '/' + u.target.name;
     if (u.descriptors && u.descriptors.length) {
       s += ', ' + u.descriptors.length + ' descriptors';
-    }
-    if (u.influences && u.influences.length) {
-      s += ', ' + u.influences.length + ' influences';
     }
     if (u.similars && u.similars.length) {
       s += ', ' + u.similars.length + ' similars';
@@ -46,7 +44,7 @@ export default class User {
 
   generateSentences(template, numSentences) {
 
-    this._verifyTraits();
+    if (!User.hasOceanTraits(this)) throw Error('traits required');
 
     if (arguments.length === 1 && typeof template === 'number') {
       numSentences = template;
@@ -94,66 +92,53 @@ export default class User {
     return sentences;
   }
 
-  randomImages(pre) {
-    let images = [];
-    let ots = User.oceanTraits;
-    while (images.length < 4) {
-      let flip = Math.random() < .5 ? 1 : 2;
-      let mult = Math.random() < .5 ? 1 : -1;
-      let cat = (Math.floor(Math.random() * ots.length) * mult);
-      let imgName = pre + this.adIssue + '_' + cat + '.' + flip + '.png';
-      if (images.indexOf(imgName) < 0) images.push(imgName);
-    }
-    return images;
-  }
+  // computeInfluences(target) { // requires adIssue & target with traits
+  //
+  //   if (typeof this.target === 'undefined') {
+  //     throw Error('No target for targetAdData', this);
+  //   }
+  //   if (typeof this.adIssue === 'undefined') {
+  //     throw Error('No adIssue for targetAdData', this);
+  //   }
+  //   if (!this.hasOceanTraits(this.target)) {
+  //     throw Error('No target.traits for targetAdData', this);
+  //   }
+  //
+  //   const pre = 'imgs/', cat = this.categorize(this.target);
+  //
+  //   let images = this.randomInfluencingImages(this.adIssue, pre);
+  //   let slogans = this.randomIfluencingSlogans(this.adIssue);
+  //   let themes = this.randomInfluencingThemes(this.adIssue);
+  //
+  //   if (cat !== 0) {
+  //     images = [
+  //       pre + this.adIssue + '_' + cat + '.1.png',
+  //       pre + this.adIssue + '_' + cat + '.2.png',
+  //       pre + this.adIssue + '_' + -cat + '.1.png',
+  //       pre + this.adIssue + '_' + -cat + '.2.png'
+  //     ];
+  //     themes = User.influencingThemes[this.adIssue][(cat > 0 ? 'high' : 'low')][User.oceanTraits[Math.abs(cat) - 1]];
+  //     slogans = User.ifluencingSlogans[this.adIssue][(cat > 0 ? 'high' : 'low')][User.oceanTraits[Math.abs(cat) - 1]];
+  //     slogans = slogans.concat(User.ifluencingSlogans[this.adIssue][(cat < 0 ? 'high' : 'low')][User.oceanTraits[Math.abs(cat) - 1]]);
+  //   }
+  //   else {
+  //     console.warn('[TARG] Using random target data: ',
+  //       cat, images, influences, slogans);
+  //   }
+  //   this.target.influencingImages = images;
+  //   this.target.influencingThemes = themes;
+  //   this.target.influencingSlogans = slogans;
+  //   //console.log('COMPUTED: ',this.targetImages, this.targetSlogans, this.targetInfluences);
+  // }
 
-  computeTargetAdData() { // requires adIssue & target with traits
-
-    if (typeof this.target === 'undefined') {
-      throw Error('No target for targetAdData', this);
-    }
-    if (typeof this.adIssue === 'undefined') {
-      throw Error('No adIssue for targetAdData', this);
-    }
-    if (!this.hasOceanTraits(this.target)) {
-      throw Error('No target.traits for targetAdData', this);
-    }
-
-    const pre = 'imgs/', cat = this.categorize(this.target);
-
-    let images = this.randomImages(pre);
-    let slogans = this.randomSlogans();
-    let influences = this.randomInfluences();
-
-    if (cat !== 0) {
-      images = [
-        pre + this.adIssue + '_' + cat + '.1.png',
-        pre + this.adIssue + '_' + cat + '.2.png',
-        pre + this.adIssue + '_' + -cat + '.1.png',
-        pre + this.adIssue + '_' + -cat + '.2.png'
-      ];
-      influences = User.adInfluences[this.adIssue][(cat > 0 ? 'high' : 'low')][User.oceanTraits[Math.abs(cat) - 1]];
-      slogans = User.adSlogans[this.adIssue][(cat > 0 ? 'high' : 'low')][User.oceanTraits[Math.abs(cat) - 1]];
-      slogans = slogans.concat(User.adSlogans[this.adIssue][(cat < 0 ? 'high' : 'low')][User.oceanTraits[Math.abs(cat) - 1]]);
-    }
-    else {
-      console.warn('[TARG] Using random target data: ',
-        cat, images, influences, slogans);
-    }
-    this.targetImages = images;
-    this.targetSlogans = slogans;
-    this.targetInfluences = influences;
-    //console.log('COMPUTED: ',this.targetImages, this.targetSlogans, this.targetInfluences);
-  }
-
-  targetAdImages() {
+  /*targetAdImages() {
     let pre = 'imgs/';
 
     if (typeof this.target === 'undefined') {
       throw Error('No target for adImages!', this);
     }
 
-    let images = this.randomImages(pre);
+    let images = this.randomInfluencingImages(pre);
     if (typeof this.target !== 'undefined' &&
       this.hasOceanTraits(this.target) &&
       typeof this.adIssue !== 'undefined') {
@@ -174,16 +159,16 @@ export default class User {
     }
 
     return images;
-  }
+  }*/
 
-  targetAdInfluences() {
+  /*targetAdInfluences() {
 
     if (typeof this.target === 'undefined') {
-      throw Error('No target for adInfluences!', this);
+      throw Error('No target for influencingThemes!', this);
     }
 
     let ots = User.oceanTraits;
-    let influences = this.randomInfluences();
+    let influences = this.randomInfluencingThemes();
 
     //console.log("OT",this.hasOceanTraits(this.target), typeof this.target);
 
@@ -193,7 +178,7 @@ export default class User {
 
       let cat = this.categorize(this.target);
       if (cat !== 0) {
-        influences = User.adInfluences[this.adIssue]
+        influences = User.influencingThemes[this.adIssue]
         [(cat > 0 ? 'high' : 'low')][ots[Math.abs(cat) - 1]];
       }
     } else {
@@ -201,17 +186,17 @@ export default class User {
         "using random influences [issue=" + this.adIssue + "] target=", this.target);
     }
     return influences;
-  }
+  }*/
 
   // TODO: combine these 3: targetAdItem(type) ?
-  targetAdSlogans() {
+  /*targetAdSlogans() {
 
     if (typeof this.target === 'undefined') { //TMP: remove
-      throw Error('No target for adSlogans!', this);
+      throw Error('No target for ifluencingSlogans!', this);
     }
 
     let ots = User.oceanTraits;
-    let slogans = this.randomSlogans();
+    let slogans = this.randomIfluencingSlogans();
     if (typeof this.target !== 'undefined' &&
       this.hasOceanTraits(this.target) &&
       typeof this.adIssue !== 'undefined') {
@@ -219,9 +204,9 @@ export default class User {
       let cat = this.categorize(this.target);
       if (cat !== 0) {
         //console.log('['+this.adIssue+']['+(cat > 0 ? 'high' : 'low')+']['+ots[Math.abs(cat)-1]+']');
-        let good = User.adSlogans[this.adIssue]
+        let good = User.ifluencingSlogans[this.adIssue]
         [(cat > 0 ? 'high' : 'low')][ots[Math.abs(cat) - 1]];
-        let bad = User.adSlogans[this.adIssue]
+        let bad = User.ifluencingSlogans[this.adIssue]
         [(cat < 0 ? 'high' : 'low')][ots[Math.abs(cat) - 1]];
         slogans = good.concat(bad);
       }
@@ -231,28 +216,7 @@ export default class User {
     }
 
     return slogans;
-  }
-
-  randomSlogans() {
-    let ots = User.oceanTraits;
-    let issue = this.adIssue;
-    let idx1 = Math.floor(Math.random() * ots.length);
-    let idx2 = Math.floor(Math.random() * ots.length)
-    //console.log('['+this.adIssue+']['+(Math.random() < .5 ? 'high' : 'low')+']['+[ots[idx1]]+']');
-    let set1 = User.adSlogans[issue]
-    [(Math.random() < .5 ? 'high' : 'low')][ots[idx1]];
-    let set2 = User.adSlogans[issue]
-    [(Math.random() < .5 ? 'high' : 'low')][ots[idx2]];
-    return set1.concat(set2);
-  }
-
-  randomInfluences() {
-    let ots = User.oceanTraits;
-    let idx = Math.floor(Math.random() * ots.length);
-    //console.log(this.adIssue, this);
-    return User.adInfluences
-    [this.adIssue][(Math.random() < .5 ? 'high' : 'low')][ots[idx]];
-  }
+  }*/
 
   targetImage() {
     let tid = (this.target && typeof this.target._id !== 'undefined'
@@ -265,38 +229,6 @@ export default class User {
     predict(brandData).forEach(b => traits[b.trait] = b.score);
     return this.setTraits(traits);
   }
-
-  hasOceanTraits(obj) {
-    obj = obj || this;
-    if (typeof obj === 'string') {
-      obj = JSON.parse(obj); // TMP:for targets
-    }
-    if (typeof obj.traits === 'undefined') {
-      return false;
-    }
-    let result = true;
-    User.oceanTraits.forEach(tname => {
-      if (typeof obj.traits[tname] === 'undefined') {
-        //if (obj.traits.hasOwnProperty(tname)) {
-        result = false;
-        return;
-      }
-      let val = obj.traits[tname];
-      if (typeof val === 'undefined' || val < 0 || val > 1) {
-        result = false;
-        return;
-      }
-    });
-    return result;
-  }
-
-  _verifyTraits() {
-
-    if (!this.hasOceanTraits()) {
-      throw Error('User with traits required');
-    }
-  }
-
   splitSentences(text) {
 
     let delim = '___';
@@ -344,7 +276,7 @@ export default class User {
   }
 
   generateDescription() {
-    this._verifyTraits();
+    if (!User.hasOceanTraits(this)) throw Error('traits required');
     let parser = new Parser(this);
     let lines = this._descriptionLines();
     for (let i = 0; i < lines.length; i++) {
@@ -454,20 +386,54 @@ export default class User {
     return User.oceanTraits;
   }
 
-  categorize(obj) {
+  _randomizeTraits() {
+    this.traits = User.randomTraits();
+    return this;
+  }
 
-    obj = obj || this;
-    if (typeof obj === 'string') {
-      obj = JSON.parse(obj); // TMP:for targets
+  // statics =================================================================
+
+  static hasOceanTraits(obj) {
+
+    if (typeof obj !== 'object') throw Error
+      ('categorize requires object: got ' + typeof obj);
+
+    if (typeof obj.traits === 'undefined') {
+      return false;
     }
-    obj.category = 0;
+    let result = true;
+    User.oceanTraits.forEach(tname => {
+      if (typeof obj.traits[tname] === 'undefined') {
+        //if (obj.traits.hasOwnProperty(tname)) {
+        result = false;
+        return;
+      }
+      let val = obj.traits[tname];
+      if (typeof val === 'undefined' || val < 0 || val > 1) {
+        result = false;
+        return;
+      }
+    });
+    return result;
+  }
+
+  /*
+   * Categorize according to OCEAN-group:
+   * from -5 to 5, according to OCEAN acronym (O=1, C=2, etc).
+   * Positive numbers mean 'high', negative numbers mean 'low',
+   * 0 means the user is neutral and gets random assignments
+   */
+  static categorize(user) {
+
+    if (typeof user !== 'object') throw Error
+      ('categorize requires object: got ' + typeof user);
 
     let maxVal = 0;
     let trait = null;
     let traits = User.oceanTraits;
 
     traits.forEach(t => {
-      let val = obj.traits[t];
+      let val = user.traits[t];
       if (Math.abs(val - .5) > maxVal) {
         maxVal = Math.abs(val - .5);
         trait = t;
@@ -479,21 +445,104 @@ export default class User {
     //console.log('def-trait: '+trait, this.traits[trait], 'idx='+traitIdx);
 
     let multiply = 0;
-    if (obj.traits[trait] < .4) multiply = -1;
-    if (obj.traits[trait] >= .6) multiply = 1;
+    if (user.traits[trait] < .4) multiply = -1;
+    if (user.traits[trait] >= .6) multiply = 1;
 
-    obj.category = traitIdx * multiply;
-
-    return obj.category;
+    return traitIdx * multiply;
   }
 
-  _randomizeTraits() {
-    this.traits = User.randomTraits();
-    return this;
+  static randomInfluencingImages(adIssue, pre) {
+    let images = [];
+    let ots = User.oceanTraits;
+    while (images.length < 4) {
+      let flip = Math.random() < .5 ? 1 : 2;
+      let mult = Math.random() < .5 ? 1 : -1;
+      let cat = (Math.floor(Math.random() * ots.length) * mult);
+      let imgName = pre + adIssue + '_' + cat + '.' + flip + '.png';
+      if (images.indexOf(imgName) < 0) images.push(imgName);
+    }
+    return images;
+  }
+
+  static randomIfluencingSlogans(adIssue) {
+    let ots = User.oceanTraits;
+    let idx1 = Math.floor(Math.random() * ots.length);
+    let idx2 = Math.floor(Math.random() * ots.length)
+    //console.log('['+this.adIssue+']['+(Math.random() < .5 ? 'high' : 'low')+']['+[ots[idx1]]+']');
+    let set1 = User.ifluencingSlogans[adIssue]
+    [(Math.random() < .5 ? 'high' : 'low')][ots[idx1]];
+    let set2 = User.ifluencingSlogans[adIssue]
+    [(Math.random() < .5 ? 'high' : 'low')][ots[idx2]];
+    return set1.concat(set2);
+  }
+
+  static randomInfluencingThemes(adIssue) {
+    let ots = User.oceanTraits;
+    let idx = Math.floor(Math.random() * ots.length);
+    //console.log(this.adIssue, this);
+    return User.influencingThemes[adIssue]
+    [(Math.random() < .5 ? 'high' : 'low')][ots[idx]];
+  }
+
+  // target requires adIssue & target with traits
+  static computeInfluencesFor(target, issues) {
+
+    if (typeof target === 'undefined') {
+      throw Error('No target in User.computeInfluencesFor()');
+    }
+
+    if (typeof issues === 'undefined' || !issues.length) {
+      throw Error('No issues for User.computeInfluencesFor()', this);
+    }
+
+    let needsWork = false;
+    issues.forEach(issue => {
+      if (!target.influences
+        || !target.influences[issue]
+        || !target.influences[issue].images
+        || !target.influences[issue].themes
+        || !target.influences[issue].slogans) {
+        needsWork = true;
+      }
+    });
+
+    if (!needsWork) return;
+
+    if (!User.hasOceanTraits(target)) throw Error
+      ('No traits for target in User.computeInfluencesFor()');
+
+    const pre = 'imgs/', cat = User.categorize(target);
+    target.influences = {};
+
+    issues.forEach(issue => {
+      let images = this.randomInfluencingImages(issue, pre);
+      let slogans = this.randomIfluencingSlogans(issue);
+      let themes = this.randomInfluencingThemes(issue);
+
+      if (cat !== 0) {
+        images = [
+          pre + issue + '_' + cat + '.1.png',
+          pre + issue + '_' + cat + '.2.png',
+          pre + issue + '_' + -cat + '.1.png',
+          pre + issue + '_' + -cat + '.2.png'
+        ];
+        themes = User.influencingThemes[issue][(cat > 0 ? 'high' : 'low')][User.oceanTraits[Math.abs(cat) - 1]];
+        slogans = User.ifluencingSlogans[issue][(cat > 0 ? 'high' : 'low')][User.oceanTraits[Math.abs(cat) - 1]];
+        slogans = slogans.concat(User.ifluencingSlogans[issue][(cat < 0 ? 'high' : 'low')][User.oceanTraits[Math.abs(cat) - 1]]);
+      }
+      else {
+        //console.warn('[TARGET] Using random target data: ', issue, cat, images, themes, slogans);
+      }
+
+      target.influences[issue] = {};
+      target.influences[issue].images = images;
+      target.influences[issue].themes = themes;
+      target.influences[issue].slogans = slogans;
+    });
   }
 }
 
-/**
+/*
  * MongoDB database schema for the application
  */
 User.schema = () => {
@@ -504,23 +553,10 @@ User.schema = () => {
     celebrity: {
       type: 'string'
     },
-    influences: {
-      type: ['string']
-    },
-    /* monolith-id from client's .env file */
     clientId: {
-      type: 'number',
-      default: -1
+      type: 'string',
+      default: 'localhost'
     },
-    /*
-     * OCEAN-group: from -5 to 5, according to OCEAN acronym (O=1, C=2, etc).
-     * Positive numbers mean 'high', negative numbers mean 'low',
-     * 0 means the user is neutral and gets random assignments
-     */
-    // category: {
-    //   type: 'number',
-    //   default: 0,
-    // },
     hasImage: {
       type: 'boolean',
       default: false
@@ -549,8 +585,14 @@ User.schema = () => {
         type: 'string'
       }
     },
-    lastPage: { type: 'string', default: 'login' },
-    lastUpdate: { type: 'date', default: new Date("1970-01-01T12:00:00.00") },
+    lastPage: {
+      type: 'string',
+      default: 'login'
+    },
+    lastUpdate: {
+      type: 'date',
+      default: new Date("1970-01-01T12:00:00.00")
+    },
     traits: {
       openness: { type: 'number' },
       conscientiousness: { type: 'number' },
@@ -594,7 +636,7 @@ User.randomTraits = function() {
 
 User.oceanTraits = ['openness', 'conscientiousness', 'extraversion', 'agreeableness', 'neuroticism'];
 
-User.adInfluences = {
+User.influencingThemes = {
   leave: {
     high: {
       openness: ["expansive, open themes", "‘freedom’, ‘future’ or ‘potential’"],
@@ -629,7 +671,7 @@ User.adInfluences = {
   }
 };
 
-User.adSlogans = {
+User.ifluencingSlogans = {
   leave: {
     high: {
       openness: ["Free to create a British future", "Unleash our true potential"],

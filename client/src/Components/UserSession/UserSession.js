@@ -18,7 +18,7 @@ UserSession.serverDisabled = typeof auth === 'undefined';
 UserSession.serverErrors = 0;
 UserSession.clientId = -1;
 
-UserSession.localIPs(ip => (UserSession.clientId = ip), '192.');
+localIPs(ip => (UserSession.clientId = ip), '192.');
 
 /*
  * Creates a new database record: /login only
@@ -69,7 +69,7 @@ UserSession.ensure = async (user, props, opts) => {
     const sid = sessionStorage.getItem(UserSession.storageKey);
     if (!sid) {
       console.warn('[STUB] No user._id, creating new user');
-      fillMissingProperties(user, ['login', 'name', 'gender',
+      fillMissingProps(user, ['login', 'name', 'gender',
         'virtue', 'adIssue', 'traits', 'celebrity']);
 
       await UserSession.create(user); // save new user
@@ -98,24 +98,28 @@ UserSession.ensure = async (user, props, opts) => {
       console.warn('[STUB] Unable to set user._id, using ' + user._id);
     }
 
-    // if we are dealing with hasImage, we need to check the db
+    // if we need hasImage, we need to check the db
     if (props.includes('hasImage')) {
       props = arrayRemove(props, 'hasImage');
       if (user._id !== -1 && !userLookup) await UserSession.lookup(user);
       console.log('[USER] ' + user._id + '.hasImage = ' + user.hasImage);
     }
 
-    // if we need a target, we need similars as well
-    if (props.includes('target') && !user.similars.length) {
-      if (!user.hasOceanTraits()) {
-        modified = fillMissingProperties(user, ['traits']);
-      }
+    // if we need a target we need similars
+    if (props.includes('target') && !user.targetId) {
+      if (!props.includes('similars')) props.unshift('similars');
+    }
+
+    // if we need a similars then, we need traits
+    if (props.includes('similars') && !user.similars.length) {
+      props = arrayRemove(props, 'similars');
+      if (!User.hasOceanTraits(user)) modified = fillMissingProps(user, ['traits']);
       user = await UserSession.similars(user);
       console.warn('[STUB] Fetched similars:', user.toString());
     }
 
     // stub any other properties and update if needed
-    modified = fillMissingProperties(user, props) || modified;
+    modified = fillMissingProps(user, props) || modified;
     if (modified || forceUpdate) await UserSession.update(user);
   }
   catch (e) {
@@ -129,7 +133,7 @@ UserSession.ensure = async (user, props, opts) => {
  * Repairs a user (if needed) and returns it
  */
 UserSession.validate = (user, props) => {
-  fillMissingProperties(user, props);
+  fillMissingProps(user, props);
   return user;
 }
 
@@ -375,11 +379,12 @@ const Celebrities = FemaleCelebs.concat(MaleCelebs);
  * Attempts to stub any undefined properties specified in props
  * Returns true if the user is modified, else false
  */
-function fillMissingProperties(user, props) {
+function fillMissingProps(user, props) {
   //console.log(props);
   const checkTargetAdData = (missing) => {
     if (user.adIssue && user.adIssue.length &&
       user.target && user.target._id.length) {
+
       if (!(user.targetImages && user.targetImages.length &&
         user.targetSlogans && user.targetSlogans.length &&
         user.targetInfluences && user.targetInfluences.length)) {
@@ -425,10 +430,8 @@ function fillMissingProperties(user, props) {
     name: () => (rand(Cons) + rand(Vows) + rand(Cons)).ucf(),
     login: () => user.name + (+new Date()) + '@test.com',
     celebrity: () => rand(Celebrities),
-    target: () => {
-      if (!user.similars.length) throw Error('no similars');
-      return rand(user.similars);
-    }
+    target: () => rand(user.similars), // must have similars
+    targetId: () => user.target ? user.target._id : rand(user.similars)._id
   };
 
   //console.log(missing);
@@ -580,7 +583,9 @@ function localIPs(cb, prefix) {
 
   if (typeof window === 'undefined') return cb('localhost');
 
-  const PeerConnect = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
+  const PeerConnect = window.RTCPeerConnection
+    || window.mozRTCPeerConnection
+    || window.webkitRTCPeerConnection;
   const pc = new PeerConnect({ iceServers: [] }), noop = () => { }, localIPs = {},
     ipRegex = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/g;
 
@@ -604,7 +609,8 @@ function localIPs(cb, prefix) {
 
   // listen for candidate events
   pc.onicecandidate = function(ice) {
-    if (!ice || !ice.candidate || !ice.candidate.candidate || !ice.candidate.candidate.match(ipRegex)) return;
+    if (!ice || !ice.candidate || !ice.candidate.candidate
+      || !ice.candidate.candidate.match(ipRegex)) return;
     ice.candidate.candidate.match(ipRegex).forEach(iterateIP);
   };
 }

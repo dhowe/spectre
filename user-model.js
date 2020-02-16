@@ -1,3 +1,5 @@
+
+import aSync from 'async';
 import lodash from 'lodash';
 import mongoose from 'mongoose';
 import { oceanSort } from './metrics';
@@ -46,16 +48,35 @@ UserSchema.statics.findByDate = function(date1, date2, callback) { // cb=functio
 }
 
 // find mix of recents and similars
-UserSchema.statics.findTargets = function(user, maxRecents, limit, callback) { // cb=function(err,users)
-  UserSchema.findByRecent(user._id, maxRecents, (e, recents) => {
-    if (e) {
-      console.error('[FindTargets.FindByRecent]', e);
-      recents = [];
-    }
-    // TODO: should happen in parallel
-    UserSchema.findByOcean(user, limit-recents.length, callback);
-  });
+UserSchema.statics.findTargets = function(user, limit, callback) { // cb=function(err,users)console.log("findTargets: ", user.name);
+  aSync.parallel([
+    (cb) => {
+      UserModel.findByRecent(user._id, Math.floor(limit / 2), cb);
+    },
+    (cb) => {
+      UserModel.findByOcean(user, Math.ceil(limit / 2), cb);
+    }],
+    (err, results) => {
+      callback(err, results[0].concat(results[1]));
+    });
 };
+// UserModel.findByRecent(user._id, maxRecents, (e1, recents) => {
+//   if (e1) {
+//     console.error('[FindTargets.FindByRecent]', e1);
+//     recents = [];
+//   }
+//
+//   // TODO: should happen in parallel
+//   UserModel.findByOcean(user, limit - recents.length, (e2, similars) => {
+//     if (e2) {
+//       console.error('[FindTargets.findByOcean]', e2);
+//       similars = [];
+//     }
+//     console.log("[TARGETS] RECENTS: ", recents.length, "SIMILARS: ", similars.length, 'TODO: make parallel');
+//     callback(e1 || e2, similars.concat(recents));
+//   });
+//   });
+// };
 
 // find most recently updated users with traits and image
 UserSchema.statics.findByRecent = function(userId, limit, callback) { // cb=function(err,users)
@@ -69,7 +90,7 @@ UserSchema.statics.findByRecent = function(userId, limit, callback) { // cb=func
     },
     { $sort: { lastUpdate: -1 } },
     { $limit: limit },
-    { $project: { _id: 1, lastUpdate: 1, name: 1 } }
+    { $project: { similars: 0 } }
   ], callback);
 };
 
@@ -157,10 +178,10 @@ function toMongoose(obj) {
       return;
     }
 
-    let type, property = lodash.cloneDeep(obj[key]), ptype = property.type;
+    let property = lodash.cloneDeep(obj[key]), ptype = property.type;
 
     // arrays and primitives
-    type = (Array.isArray(ptype)) ?
+    let type = (Array.isArray(ptype)) ?
       [toMongooseType(ptype[0])]
       : toMongooseType(ptype);
 

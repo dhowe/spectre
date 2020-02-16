@@ -25,7 +25,7 @@ describe('OCEAN descriptions', function () {
       expect(result).is.a('string');
       expect(result.length).is.gt(0);
       expect(result.startsWith('Jane')).eq(true);
-      expect(user.hasOceanTraits()).eq(true);
+      expect(User.hasOceanTraits(user)).eq(true);
     });
   });
 

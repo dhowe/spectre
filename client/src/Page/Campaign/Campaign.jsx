@@ -27,12 +27,12 @@ class Campaign extends React.Component {
 
   async componentDidMount() {
     const user = await UserSession.ensure(this.context,
-      [/*'_id',*/ 'name', 'adIssue', 'target' ]);
+      ['name', 'adIssue', 'target']);
     this.setState({
-        targetName: user.target.name.ucf(),
-        targetInfluences: user.targetInfluences,
-        targetPronoun: (user.target.gender === 'male' ? 'he' : 'she')
-      });
+      targetName: user.target.name.ucf(),
+      targetInfluences: user.targetInfluences,
+      targetPronoun: (user.target.gender === 'male' ? 'he' : 'she')
+    });
   }
 
   render() {
@@ -56,9 +56,9 @@ class Campaign extends React.Component {
             <span>Slogans</span> that contain {targetInfluences[1]}
           </p>
           <div className="link">
-          <Link to="/dark-ad">
-            <IconButton className={ComponentsStyles.iconButtonStyle1} icon="next" text="Next" />
-          </Link>
+            <Link to="/dark-ad">
+              <IconButton className={ComponentsStyles.iconButtonStyle1} icon="next" text="Next" />
+            </Link>
           </div>
         </div>
         <FooterLogo />

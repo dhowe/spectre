@@ -27,7 +27,7 @@ export default [
     "createdAt": "2019-06-03T00:12:07.595Z",
     "adIssue": "leave",
     "virtue": "influence",
-    "clientId": 1,
+
     "__v": 1
   },
   {
@@ -58,7 +58,7 @@ export default [
     "createdAt": "2019-06-03T00:12:07.591Z",
     "adIssue": "remain",
     "virtue": "influence",
-    "clientId": 3,
+
     "__v": 1
   },
   {
@@ -89,7 +89,7 @@ export default [
     "createdAt": "2019-06-03T00:12:07.592Z",
     "adIssue": "remain",
     "virtue": "influence",
-    "clientId": 5,
+
     "__v": 1
   },
   {
@@ -120,7 +120,7 @@ export default [
     "createdAt": "2019-06-03T00:12:07.590Z",
     "adIssue": "leave",
     "virtue": "power",
-    "clientId": 3,
+
     "__v": 1
   },
   {
@@ -151,7 +151,7 @@ export default [
     "createdAt": "2019-06-03T00:12:07.580Z",
     "adIssue": "leave",
     "virtue": "power",
-    "clientId": 5,
+
     "__v": 1
   },
   {
@@ -182,7 +182,7 @@ export default [
     "createdAt": "2019-06-03T00:12:07.601Z",
     "adIssue": "leave",
     "virtue": "power",
-    "clientId": 6,
+
     "__v": 1
   },
   {
@@ -213,7 +213,7 @@ export default [
     "createdAt": "2019-06-03T00:12:07.599Z",
     "adIssue": "leave",
     "virtue": "power",
-    "clientId": 1,
+
     "__v": 1
   },
   {
@@ -244,7 +244,7 @@ export default [
     "createdAt": "2019-06-03T00:12:07.597Z",
     "adIssue": "leave",
     "virtue": "wealth",
-    "clientId": 5,
+
     "__v": 1
   },
   {
@@ -275,7 +275,7 @@ export default [
     "createdAt": "2019-06-03T00:12:07.588Z",
     "adIssue": "leave",
     "virtue": "power",
-    "clientId": 3,
+
     "__v": 1
   }
 ];

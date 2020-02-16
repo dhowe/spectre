@@ -9,6 +9,7 @@ import User from '../shared/user';
 
 const env = process.env;
 const expect = chai.expect;
+const clientId = 'localhost';
 
 dotEnv.config();
 chai.use(chai_http);
@@ -139,6 +140,7 @@ describe('REST API', () => {
 
     it('should return more recent targets before older', done => {
       let user = new User();
+      user.clientId = clientId;
       user.name = "Dave";
       user.login = "Dave@aol.com";
       user.gender = "male";
@@ -153,7 +155,6 @@ describe('REST API', () => {
           Object.assign(user, res.body.data);
           expect(user._id).to.be.a('string');
 
-          //user.clientId = Math.floor(Math.random() * 5) + 1;
           user.traits = User.randomTraits();
           user.lastUpdate = Date.now();
           user.hasImage = true;
@@ -174,6 +175,7 @@ describe('REST API', () => {
 
               // create Dave2
               user = new User();
+              user.clientId = clientId;
               user.name = "Dave2";
               user.login = "Dave2@aol.com";
               user.gender = "male";
@@ -238,6 +240,7 @@ describe('REST API', () => {
 
     it('should return more recent users before older', done => {
       let user = new User();
+      user.clientId = clientId;
       user.name = "Dave";
       user.login = "Dave@aol.com";
       user.gender = "male";
@@ -252,7 +255,6 @@ describe('REST API', () => {
           Object.assign(user, res.body.data);
           expect(user._id).to.be.a('string');
 
-          //user.clientId = Math.floor(Math.random() * 5) + 1;
           user.traits = User.randomTraits();
           user.lastUpdate = Date.now();
           user.hasImage = true;
@@ -273,6 +275,7 @@ describe('REST API', () => {
 
               // create Dave2
               user = new User();
+              user.clientId = clientId;
               user.name = "Dave2";
               user.login = "Dave2@aol.com";
               user.gender = "male";
@@ -337,6 +340,7 @@ describe('REST API', () => {
 
     it('should return recent user before any defaults', done => {
       let user = new User();
+      user.clientId = clientId;
       user.name = "Dave";
       user.login = "Dave@aol.com";
       user.gender = "male";
@@ -415,6 +419,7 @@ describe('REST API', () => {
 
     it('should insert a new user, then fetch it', done => {
       let user = new User();
+      user.clientId = clientId;
       user.name = "Dave";
       user.login = "Dave@aol.com";
       user.gender = "male";
@@ -446,6 +451,7 @@ describe('REST API', () => {
 
     it('should insert, then update a user', done => {
       let user = new User();
+      user.clientId = clientId;
       user.name = "Dave";
       user.login = "Dave@aol.com";
       user.gender = "male";
@@ -483,6 +489,7 @@ describe('REST API', () => {
 
     it('should insert, then update a user with traits', done => {
       let user = new User();
+      user.clientId = clientId;
       user.name = "Dave";
       user.login = "Dave@aol.com";
       user.gender = "male";
