@@ -20,7 +20,7 @@ export default class User {
 
   toString() {
     let u = this;
-    let s = (u._id ? u._id+ ', ' + u.name : u.name) +'('+this.clientId+')';
+    let s = (u._id ? u._id + ', ' + u.name : u.name) + '(' + this.clientId + ')';
     if (u.login) s += ', ' + u.login;
     if (u.gender) s += ', ' + u.gender;
     if (u.virtue) s += ', ' + u.virtue;
@@ -254,11 +254,10 @@ export default class User {
     [this.adIssue][(Math.random() < .5 ? 'high' : 'low')][ots[idx]];
   }
 
-  targetImageUrl(mode) {
-    let tid = (typeof this.target && typeof this.target._id
-      !== 'undefined' && this.target._id.length)
-      ? this.target._id : 'default';
-    return User.profileDir + tid + '.jpg';
+  targetImage() {
+    let tid = (this.target && typeof this.target._id !== 'undefined'
+      && this.target._id.length) ? this.target._id : 'default';
+    return tid + '.jpg'
   }
 
   setBrands(brandData) {
@@ -550,7 +549,7 @@ User.schema = () => {
         type: 'string'
       }
     },
-    lastPage: {type: 'string', default: 'login'},
+    lastPage: { type: 'string', default: 'login' },
     lastUpdate: { type: 'date', default: new Date("1970-01-01T12:00:00.00") },
     traits: {
       openness: { type: 'number' },

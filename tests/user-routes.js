@@ -137,6 +137,204 @@ describe('REST API', () => {
         });
     });
 
+    it('should return more recent targets before older', done => {
+      let user = new User();
+      user.name = "Dave";
+      user.login = "Dave@aol.com";
+      user.gender = "male";
+      chai.request(server)
+        .post('/api/users/')
+        .auth(env.API_USER, env.API_SECRET)
+        .send(user)
+        .end((err, res) => {
+          expect(err).to.be.null;
+          expect(res).to.have.status(200);
+          expect(res.body.data).to.be.a('object')
+          Object.assign(user, res.body.data);
+          expect(user._id).to.be.a('string');
+
+          //user.clientId = Math.floor(Math.random() * 5) + 1;
+          user.traits = User.randomTraits();
+          user.lastUpdate = Date.now();
+          user.hasImage = true;
+
+          // update Dave
+          chai.request(server)
+            .put('/api/users/' + user._id)
+            .auth(env.API_USER, env.API_SECRET)
+            .send(user)
+            .end((err, res) => {
+              expect(err).to.be.null;
+              expect(res).to.have.status(200);
+              expect(res.body.data).to.be.a('object')
+              expect(res.body.data._id).to.be.a('string');
+              expect(res.body.data.clientId).eq(user.clientId);
+              expect(res.body.data.similars).to.be.an('array');
+              expect(res.body.data.similars.length).eq(6);
+
+              // create Dave2
+              user = new User();
+              user.name = "Dave2";
+              user.login = "Dave2@aol.com";
+              user.gender = "male";
+              chai.request(server)
+                .post('/api/users/')
+                .auth(env.API_USER, env.API_SECRET)
+                .send(user)
+                .end((err, res) => {
+                  expect(err).to.be.null;
+                  expect(res).to.have.status(200);
+                  expect(res.body.data).to.be.a('object')
+                  Object.assign(user, res.body.data);
+                  expect(user._id).to.be.a('string');
+
+                  user.traits = User.randomTraits();
+                  user.lastUpdate = Date.now();
+                  user.hasImage = true;
+
+                  // update Dave2
+                  chai.request(server)
+                    .put('/api/users/' + user._id)
+                    .auth(env.API_USER, env.API_SECRET)
+                    .send(user)
+                    .end((err, res) => {
+                      expect(err).to.be.null;
+                      expect(res).to.have.status(200);
+                      expect(res.body.data).to.be.a('object')
+                      expect(res.body.data._id).to.be.a('string');
+                      expect(res.body.data.clientId).eq(user.clientId);
+                      expect(res.body.data.similars).to.be.an('array');
+                      expect(res.body.data.similars.length).eq(6);
+
+                      //delete res.body.data.similars && console.log(res.body.data);
+
+                      // Now check recents
+                      let id = '111111111111111111111111';
+                      // result should be [ 'Dave2', 'Dave']
+                      chai.request(server)
+                        .get('/api/users/targets/' + id)
+                        .auth(env.API_USER, env.API_SECRET)
+                        .end((err, res) => {
+                          expect(err).to.be.null;
+                          expect(res).to.have.status(200);
+                          expect(res.body.data).to.be.an('array');
+                          let recents = res.body.data;
+                          //console.log(recents.map(s => s._id + '/' + s.name));
+                          expect(recents.length).eq(6);
+                          expect(recents[0]).to.be.a('object');
+                          expect(recents[0]._id).to.be.a('string');
+                          expect(recents[0].name).eq('Dave2');
+                          expect(recents[1]).to.be.a('object');
+                          expect(recents[1]._id).to.be.a('string');
+                          expect(recents[1].name).eq('Dave');
+                          expect(recents.map(r => r._id)).not.to.include(id);
+                          done();
+                        });
+                    });
+                });
+            });
+        });
+    });
+
+    it('should return more recent users before older', done => {
+      let user = new User();
+      user.name = "Dave";
+      user.login = "Dave@aol.com";
+      user.gender = "male";
+      chai.request(server)
+        .post('/api/users/')
+        .auth(env.API_USER, env.API_SECRET)
+        .send(user)
+        .end((err, res) => {
+          expect(err).to.be.null;
+          expect(res).to.have.status(200);
+          expect(res.body.data).to.be.a('object')
+          Object.assign(user, res.body.data);
+          expect(user._id).to.be.a('string');
+
+          //user.clientId = Math.floor(Math.random() * 5) + 1;
+          user.traits = User.randomTraits();
+          user.lastUpdate = Date.now();
+          user.hasImage = true;
+
+          // update Dave
+          chai.request(server)
+            .put('/api/users/' + user._id)
+            .auth(env.API_USER, env.API_SECRET)
+            .send(user)
+            .end((err, res) => {
+              expect(err).to.be.null;
+              expect(res).to.have.status(200);
+              expect(res.body.data).to.be.a('object')
+              expect(res.body.data._id).to.be.a('string');
+              expect(res.body.data.clientId).eq(user.clientId);
+              expect(res.body.data.similars).to.be.an('array');
+              expect(res.body.data.similars.length).eq(6);
+
+              // create Dave2
+              user = new User();
+              user.name = "Dave2";
+              user.login = "Dave2@aol.com";
+              user.gender = "male";
+              chai.request(server)
+                .post('/api/users/')
+                .auth(env.API_USER, env.API_SECRET)
+                .send(user)
+                .end((err, res) => {
+                  expect(err).to.be.null;
+                  expect(res).to.have.status(200);
+                  expect(res.body.data).to.be.a('object')
+                  Object.assign(user, res.body.data);
+                  expect(user._id).to.be.a('string');
+
+                  user.traits = User.randomTraits();
+                  user.lastUpdate = Date.now();
+                  user.hasImage = true;
+
+                  // update Dave2
+                  chai.request(server)
+                    .put('/api/users/' + user._id)
+                    .auth(env.API_USER, env.API_SECRET)
+                    .send(user)
+                    .end((err, res) => {
+                      expect(err).to.be.null;
+                      expect(res).to.have.status(200);
+                      expect(res.body.data).to.be.a('object')
+                      expect(res.body.data._id).to.be.a('string');
+                      expect(res.body.data.clientId).eq(user.clientId);
+                      expect(res.body.data.similars).to.be.an('array');
+                      expect(res.body.data.similars.length).eq(6);
+
+                      //delete res.body.data.similars && console.log(res.body.data);
+
+                      // Now check recents
+                      let id = '111111111111111111111111';
+                      // result should be [ 'Dave2', 'Dave']
+                      chai.request(server)
+                        .get('/api/users/recents/' + id + '?limit=2')
+                        .auth(env.API_USER, env.API_SECRET)
+                        .end((err, res) => {
+                          expect(err).to.be.null;
+                          expect(res).to.have.status(200);
+                          expect(res.body.data).to.be.an('array');
+                          let recents = res.body.data;
+                          //console.log(recents.map(s => s._id + '/' + s.name));
+                          expect(recents.length).eq(2);
+                          expect(recents[0]).to.be.a('object');
+                          expect(recents[0]._id).to.be.a('string');
+                          expect(recents[0].name).eq('Dave2');
+                          expect(recents[1]).to.be.a('object');
+                          expect(recents[1]._id).to.be.a('string');
+                          expect(recents[1].name).eq('Dave');
+                          expect(recents.map(r => r._id)).not.to.include(id);
+                          done();
+                        });
+                    });
+                });
+            });
+        });
+    });
+
     it('should return recent user before any defaults', done => {
       let user = new User();
       user.name = "Dave";
@@ -153,7 +351,7 @@ describe('REST API', () => {
           Object.assign(user, res.body.data);
           expect(user._id).to.be.a('string');
 
-          user.clientId = Math.floor(Math.random() * 5) + 1;
+          //user.clientId = Math.floor(Math.random() * 5) + 1;
           user.traits = User.randomTraits();
           user.lastUpdate = Date.now();
           user.hasImage = true;
@@ -167,7 +365,7 @@ describe('REST API', () => {
               expect(res).to.have.status(200);
               expect(res.body.data).to.be.a('object')
               expect(res.body.data._id).to.be.a('string');
-              expect(res.body.data.clientId).to.be.a('number');
+              //expect(res.body.data.clientId).to.be.a('number');
               expect(res.body.data.clientId).eq(user.clientId);
               expect(res.body.data.similars).to.be.an('array');
               expect(res.body.data.similars.length).eq(6);
@@ -177,20 +375,18 @@ describe('REST API', () => {
               let id = '111111111111111111111111';
               // result must always include recently added 'Dave'
               chai.request(server)
-                .get('/api/users/recents/' + id)
+                .get('/api/users/recents/' + id + '?limit=1')
                 .auth(env.API_USER, env.API_SECRET)
                 .end((err, res) => {
                   expect(err).to.be.null;
                   expect(res).to.have.status(200);
                   expect(res.body.data).to.be.an('array');
                   let recents = res.body.data;
-                  //console.log(recents.map(s => s._id + '/' + s.clientId));
+                  //console.log(recents.map(s => s._id + '/' + s.name));
+                  expect(recents.length).eq(1);
                   expect(recents[0]).to.be.a('object');
                   expect(recents[0]._id).to.be.a('string');
                   expect(recents.map(r => r._id)).not.to.include(id);
-                  expect(recents.map(r => r._id)).to.include(user._id,
-                    recents.map(s => s._id + '/' + s.clientId));
-                  expect(recents.map(r => r.clientId)).to.include(user.clientId);
                   done();
                 });
             });
@@ -330,6 +526,6 @@ describe('REST API', () => {
         });
     });
 
-    after(refreshDb);
+    //after(refreshDb);
   });
 });

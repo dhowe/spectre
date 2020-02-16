@@ -9,6 +9,7 @@ const { schema, functions } = toMongoose(clientUser); // hack
 // create the user schema with unique index
 const UserSchema = mongoose.Schema(schema);
 UserSchema.index({ 'login': 1, 'loginType': 1 }, { unique: true });
+UserSchema.index({ 'updateTime': 1 }); // for sorting
 
 // share user functions between schema and model
 Object.keys(functions).forEach(f => UserSchema.methods[f] = functions[f]);
@@ -44,20 +45,59 @@ UserSchema.statics.findByDate = function(date1, date2, callback) { // cb=functio
   }, callback);
 }
 
-// find most recent users with traits and image
-UserSchema.statics.findByUpdated = function(userId, limit, callback) { // cb=function(err,users)
+// find mix of recents and similars
+UserSchema.statics.findTargets = function(user, maxRecents, limit, callback) { // cb=function(err,users)
+  UserSchema.findByRecent(user._id, maxRecents, (e, recents) => {
+    if (e) {
+      console.error('[FindTargets.FindByRecent]', e);
+      recents = [];
+    }
+    // TODO: should happen in parallel
+    UserSchema.findByOcean(user, limit-recents.length, callback);
+  });
+};
+
+// find most recently updated users with traits and image
+UserSchema.statics.findByRecent = function(userId, limit, callback) { // cb=function(err,users)
   UserModel.aggregate([
-    { $match: { 'traits.openness': { $gte: 0 }, "_id": { $ne: userId }, hasImage: true } },
-    { $sort: { lastUpdate: 1 } },
+    {
+      $match: {
+        'traits.openness': { $gte: 0 },
+        _id: { $ne: new mongoose.Types.ObjectId(userId) },
+        hasImage: true
+      }
+    },
+    { $sort: { lastUpdate: -1 } },
     { $limit: limit },
     { $project: { _id: 1, lastUpdate: 1, name: 1 } }
   ], callback);
 };
 
-// find most recent user on each with traits and image
+// find most similar users according to ocean traits
+// TODO: this could be VERY slow on a big database ***
+UserSchema.statics.findByOcean = function(user, limit, callback) { // cb=function(err,users)
+  limit = limit || Number.MAX_SAFE_INTEGER;
+  // find all users with traits and image
+  UserModel.find({ 'traits.openness': { $gte: 0 }, "_id": { $ne: user._id }, 'hasImage': true },
+    (e, similars) => {
+      if (e) throw e;
+      // then sort by ocean, then limit
+      let sorted = oceanSort(user, similars);
+      if (limit) sorted = sorted.slice(0, limit);
+      callback(e, sorted); // ADDED: DCH
+    });
+};
+
+// find most recent user on each with traits and image (not-used)
 UserSchema.statics.findByLastPerMono = function(userId, callback) { // cb=function(err,users)
   UserModel.aggregate([
-    { $match: { 'traits.openness': { $gte: 0 }, "_id": { $ne: userId }, hasImage: true } },
+    {
+      $match: {
+        'traits.openness': { $gte: 0 },
+        _id: { $ne: new mongoose.Types.ObjectId(userId) },
+        hasImage: true
+      }
+    },
     { $sort: { clientId: -1, lastUpdate: 1 } },
     {
       $group: {
@@ -72,21 +112,6 @@ UserSchema.statics.findByLastPerMono = function(userId, callback) { // cb=functi
     },
     { $project: { _id: "$id", clientId: "$_id", lastUpdate: 1, name: 1, lastPage: 1, login: 1 } }
   ], callback);
-};
-
-
-// find most similar users according to ocean traits
-// TODO: this could be VERY slow on a big database ***
-UserSchema.statics.findByOcean = function(user, limit, callback) { // cb=function(err,users)
-  limit = limit || Number.MAX_SAFE_INTEGER;
-  // find all users with traits and image
-  UserModel.find({ 'traits.openness': { $gte: 0 }, 'hasImage': true }, (e, all) => {
-    if (e) throw e;
-    // then sort by ocean, then limit
-    let sorted = oceanSort(user, all);
-    if (limit) sorted = sorted.slice(0, limit);
-    callback(e, sorted); // ADDED: DCH
-  });
 };
 
 ///////////////////////// Helpers ///////////////////////////

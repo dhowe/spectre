@@ -31,14 +31,12 @@ const oceanSort = (user, candidates, limit) => {
 
   if (!Number.isInteger(limit) || limit < 0) throw Error('bad limit: '+limit);
 
-  candidates = candidates.filter(function(o) {
-    return !(o.login === user.login && o.loginType === user.loginType);
-  });
-  let distances = function (b, i) {
-    return { index: i, value: module.exports.oceanDist(user, b) };
-  };
+  let distances = (b, i) => ({ index: i, value: module.exports.oceanDist(user, b) });
   let compare = function (a, b) { return a.value - b.value; };
   let reorder = function (e) { return candidates[e.index]; };
+
+  // exclude current user
+  candidates = candidates.filter(c => c._id !== user._id);
 
   return candidates.map(distances).sort(compare).map(reorder).slice(0, limit);
 }

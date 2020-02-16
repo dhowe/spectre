@@ -7,9 +7,7 @@ import UserSession from '../../Components/UserSession/UserSession';
 import Video from '../../Components/Video/Video';
 import ComponentsStyles from '../../App.module.css';
 
-const styles = {
-
-};
+const styles = {};
 
 class TargetsFound extends React.Component {
 

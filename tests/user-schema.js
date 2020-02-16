@@ -32,7 +32,7 @@ describe('Server User', function() {
       UserModel.findById(id, (e, user) => {
         if (e) throw e;
         expect(user._id.toString()).eq(id);
-        UserModel.findByUpdated(user._id, 6, (err, users) => {
+        UserModel.findByRecent(user._id, 6, (err, users) => {
           if (err) throw err;
           //console.log(users.map(u => u._id + '/' + u.name));
           expect(users.length).eq(6, users.map(u => u._id + '/' + u.name));

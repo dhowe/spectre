@@ -30,7 +30,7 @@ class Selected extends React.Component {
       [ 'name', 'login', 'gender', 'virtue', 'target' ]);
     this.setState({
       targetName: user.target.name,
-      targetImage: user.targetImageUrl()
+      targetImage: UserSession.profileDir + user.targetImage()
     })
   }
 

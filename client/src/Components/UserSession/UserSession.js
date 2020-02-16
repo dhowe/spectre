@@ -165,7 +165,6 @@ UserSession.lookup = async (user) => {
  */
 UserSession.update = async (user) => {
 
-
   if (UserSession.serverDisabled) return;
 
   if (!user || !user._id) throw Error('Invalid user', user);
@@ -187,6 +186,44 @@ UserSession.update = async (user) => {
   }
   catch (e) {
     handleError(e, endpoint, 'update[2]');
+  }
+}
+
+/*
+ * Fetch targets for a user (requires traits)
+ * Returns a mix of recent and similar users
+ */
+UserSession.targets = async (user) => {
+
+  if (!user) throw Error('Null user in UserSession.targets');
+
+  if (UserSession.serverDisabled || user._id === -1) {
+    handleError('No user id', route, 'targets[1]');
+    user.similars = defaultSimilars();
+    return user;
+  }
+
+  if (!user.traits || typeof user.traits.openness === 'undefined') {
+    throw Error('No traits for user #' + user._id);
+  }
+
+  const endpoint = route + 'targets/' + user._id;
+
+  try {
+    console.log('[GET] ' + mode + '.targets: ' + endpoint);
+    const [json, e] = await safeFetch(endpoint, {
+      method: "get",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": 'Basic ' + btoa(auth)
+      },
+    });
+    if (e) return handleError(e, route, 'targets[2]');
+    user.similars = json;
+    return user; // ?
+  }
+  catch (e) {
+    handleError(e, endpoint, 'targets[3]');
   }
 }
 

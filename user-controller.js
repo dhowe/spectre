@@ -25,7 +25,7 @@ const USER_WO_LOGIN = 494;
 const NO_DATABASE = 495;
 const NO_CLIENT_ID = 496;
 
-const NUM_SIMILARS = 6;
+const NUM_TARGETS = 6;
 
 const create = async (req, res) => {
 
@@ -176,7 +176,8 @@ const update = async (req, res) => {
   }
 
   let uid = req.params.uid;
-  let limit = req.query.hasOwnProperty('limit') ? parseInt(req.query.limit) : 6;
+  let limit = req.query.hasOwnProperty('limit') ?
+    parseInt(req.query.limit) : NUM_TARGETS;
 
   await UserModel.findByIdAndUpdate(uid, req.body, { new: true }, (err, user) => {
 
@@ -201,12 +202,37 @@ const recents = async (req, res) => {
 
   if (UserModel.databaseDisabled) return noDbError(res);
 
+  let limit = req.query.hasOwnProperty('limit') ?
+    parseInt(req.query.limit) : NUM_TARGETS;
+
+  UserModel.findByRecent(req.params.uid || '-1', limit, (e, recents) => {
+    if (e) return sendError(res, 'FindByRecent failed for #' + req.params.uid, e);
+    sendResponse(res, recents);
+  });
+};
+
+const targets = async (req, res) => {
+
+  if (UserModel.databaseDisabled) return noDbError(res);
+
   if (!req.params.hasOwnProperty('uid')) return sendError
     (res, 'No uid sent', 0, NO_USER_ID);
 
-  UserModel.findByLastPerMono(req.params.uid, (e, recents) => {
-    if (e) return sendError(res, 'FindByRecent failed for #' + req.params.uid, e);
-    sendResponse(res, recents);
+  let limit = NUM_TARGETS; // default limit
+  if (req.query.hasOwnProperty('limit')) limit = parseInt(req.query.limit);
+
+  let uid = req.params.uid;
+  await UserModel.findById(uid, (err, user) => {
+
+    if (err) return sendError(res, 'Unable to find user #' + uid, err);
+    if (!user) return sendError(res, 'No user #' + uid, 0, USER_NOT_FOUND);
+    if (!user.traits || !user.traits.openness) return sendError
+      (res, 'No traits for user #' + uid, 0, USER_WO_TRAITS);
+
+    UserModel.findByTarget(user, Math.floor(limits/2), limit, (err, sims) => {
+      if (err) return sendError(res, 'Unable to findByOcean for #' + req.params.uid, err);
+      sendResponse(res, sims);
+    });
   });
 };
 
@@ -217,7 +243,7 @@ const similars = async (req, res) => {
   if (!req.params.hasOwnProperty('uid')) return sendError
     (res, 'No uid sent', 0, NO_USER_ID);
 
-  let limit = NUM_SIMILARS; // default limit
+  let limit = NUM_TARGETS; // default limit
   if (req.query.hasOwnProperty('limit')) limit = parseInt(req.query.limit);
 
   let uid = req.params.uid;
@@ -364,6 +390,6 @@ function generateEmail(id, email) {
 
 
 export default {
-  similars, /*message,current*/ recents, create, fetch,
-  list, update, remove, photo, photoset, createBatch
+  list, /*message,current*/targets, recents, create, fetch,
+  similars, update, remove, photo, photoset, createBatch
 };
