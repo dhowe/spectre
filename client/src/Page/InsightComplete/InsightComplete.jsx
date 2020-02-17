@@ -19,7 +19,10 @@ const styles = {
 class InsightComplete extends React.Component {
   constructor(props) {
     super(props, '/your-power');
-    this.state = { idleCheckerDone: false, target: { name: '', traits: '' } };
+    this.state = {
+      idleCheckerDone: false,
+      target: { name: '', traits: '' },
+    };
   }
 
   async componentDidMount() {
@@ -41,13 +44,11 @@ class InsightComplete extends React.Component {
       <div className={classes.root}>
         <SpectreHeader colour="white" />
         <IdleChecker forceTerminate={idleCheckerDone} />
+        <OceanProfile subject={target} className="w3-bar-item w3-button"></OceanProfile>
         <div className={`${classes.content} content`}>
-          <p className="normal"><strong>Excellent.</strong></p>
-          <p className="normal-nextline">Verification complete!</p>
-          <p className="normal-nextline">You've unlocked OCEAN profiling!</p>
-          <OceanProfile subject={target} classes={classes}></OceanProfile>
+          <IconButton enabled={true} icon="play" text="menu" onClick={e=>this.handleSideBar(e)} />
           <p className="normal-nextline">You now have the <strong>power</strong> to influence&nbsp;<strong>{target.name}</strong>.</p>
-          <IconButton enabled={true} className={ComponentsStyles.iconButtonStyle2} icon="play" text="WTF is OCEAN?" onClick={this.showVideo}/>
+          <IconButton enabled={true} className={ComponentsStyles.iconButtonStyle2} icon="play" text="WTF is OCEAN?" onClick={this.showVideo} />
           <Video
             ref={(el) => { this.video = el; }}
             onComplete={() => this.props.history.push('/your-power')}

@@ -75,6 +75,7 @@ class DarkAd extends React.Component {
       pageDone: false,
       pageOne: { display: 'block' },
       pageTwo: { display: 'none' },
+      targetName: ''
     };
   }
 
@@ -84,6 +85,7 @@ class DarkAd extends React.Component {
       issue: user.adIssue,
       images: user.target.influences[user.adIssue].images,
       slogans: user.target.influences[user.adIssue].slogans,
+      targetName: user.target.name,
     });
   }
 
@@ -98,7 +100,7 @@ class DarkAd extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { issue, images, slogans } = this.state;
+    const { issue, images, slogans, targetName } = this.state;
     const redimg = UserSession.imageDir + 'darkadred.png';
     const cimage = UserSession.imageDir + 'vote-' + issue + '.png';
     const btnEnabledPg1 = (this.state.defaultImageSelected !== true && this.state.text.length);
@@ -149,14 +151,14 @@ class DarkAd extends React.Component {
                 <p style={this.state.text ? { backgroundColor: 'red' } : { backgroundColor: 'none' }} className={ComponentsStyles.adTextPage2}>{this.state.text}</p>
                 {!this.state.defaultImageSelected ? <img className={classes.campaignPage2} src={cimage} alt="leave"></img> : ''}
               </div>
-              <p> Share with <span>[name]</span></p>
+              <p> Share with <span>{targetName}</span></p>
           </div>
           <div className="link">
             <div style={this.state.pageOne}>
               <IconButton enabled={btnEnabledPg1} onClick={e => this.handleNextPage(e)} className={ComponentsStyles.iconButtonStyle1} icon="next" text="Next" />
             </div>
             <div style={this.state.pageTwo}>
-              <Link to="/target-ad" onClick={() => this.context.targetAd =
+              <Link to="/success-ad" onClick={() => this.context.targetAd =
                 { image: this.state.image, slogan: this.state.text }}>
                 <div className={ComponentsStyles.buttonWrapper}>
                   <Button className="shareButton" variant="contained" color="primary"><img alt="shareIcon" src="./imgs/shareIcon.svg" /><strong>Share</strong></Button>

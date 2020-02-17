@@ -2,18 +2,19 @@
 
 .OceanProfile {
   background-color: #ffffff;
-  color: $blue;
+  color: $white;
   width: 100vw;
   position: fixed;
+  z-index: 1000;
 
   h6 {
-    color: $blue;
+    color: $white;
     font-size: 18px;
     text-align: left;
     margin-bottom: 10px;
 
     strong {
-      color: $blue;
+      color: $white;
       font-weight: bold;
     }
   }
@@ -35,14 +36,14 @@
     display: flex;
 
     .textSliderText {
-      color: $blue;
+      color: $white;
       width: 120px;
       text-align: center;
       height: auto;
       overflow: visible;
 
       p {
-        color: $blue;
+        color: $white;
         font-size: 16px;
         font-size: 12px;
         //margin-top: -10px;
@@ -56,6 +57,10 @@
         margin-top: -90px;
       }
 
+      .iconText img{
+filter: brightness(0) invert(1);
+      }
+
       .sliderContainer {
         height: 200px;
         display: inline-flex;
@@ -67,10 +72,13 @@
         width: 92px;
         padding-top:20px;
       }
+      .slider  *{
+        color: white;
+      }
 
       div[class*="MuiSlider-track"] {
         //height: 9px !important;
-        background-color: $blue;
+        background-color: $white;
 
         &[class*="MuiSlider-trackBefore"] {
           border-top-left-radius: 0;
@@ -87,15 +95,15 @@
       button[class*="MuiButtonBase"] {
         width: 30px;
         height: 30px;
-        background-color: $blue;
-        border: solid $blue 3px;
+        background-color: $white;
+        border: solid $white 3px;
         display: none;
 
         &[class*="MuiSlider-activated"] {
           width: 30px;
           height: 30px;
-          background-color: $blue;
-          border: solid $blue 3px;
+          background-color: $white;
+          border: solid $white 3px;
           box-shadow: none;
         }
       }
@@ -108,13 +116,13 @@
   position: relative;
 
   h6 {
-    color: $blue;
+    color: $white;
     font-size: 18px;
     text-align: left;
     margin-bottom: 10px;
 
     strong {
-      color: $blue;
+      color: $white;
       font-weight: bold;
     }
   }
