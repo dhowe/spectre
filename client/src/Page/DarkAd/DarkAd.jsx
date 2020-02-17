@@ -40,6 +40,19 @@ const styles = {
     height: '570px',
   },
 
+  adPage2:{
+    position: 'relative',
+    margin: '0 auto',
+    width: '642px',
+  },
+
+  campaignPage2: {
+    position: 'absolute',
+    bottom: '13px',
+    right: '0',
+    width: '150px',
+  },
+
   campaignImage: {
     position: 'absolute',
     bottom: '106px',
@@ -55,15 +68,18 @@ class DarkAd extends React.Component {
     this.state = {
       text: '',
       issue: '',
-      images: ['','',''],
-      slogans: ['','',''],
+      images: ['', '', ''],
+      slogans: ['', '', ''],
       defaultImageSelected: true,
-      image: '/imgs/darkad-default.png'
+      image: '/imgs/no_propaganda_bg.svg',
+      pageDone: false,
+      pageOne: { display: 'block' },
+      pageTwo: { display: 'none' },
     };
   }
 
   async componentDidMount() {
-    const user = await UserSession.ensure(this.context, [ 'adIssue', 'target' ]);
+    const user = await UserSession.ensure(this.context, ['adIssue', 'target']);
     this.setState({
       issue: user.adIssue,
       images: user.target.influences[user.adIssue].images,
@@ -71,55 +87,85 @@ class DarkAd extends React.Component {
     });
   }
 
+  handleNextPage(e) {
+    e.preventDefault();
+
+//    if (btnEnabledPg1)) {
+      this.setState({ pageOne: { display: 'none' } })
+      this.setState({ pageTwo: { display: 'block' } })
+  //  }
+  }
+
   render() {
     const { classes } = this.props;
     const { issue, images, slogans } = this.state;
     const redimg = UserSession.imageDir + 'darkadred.png';
     const cimage = UserSession.imageDir + 'vote-' + issue + '.png';
+    const btnEnabledPg1 = (this.state.defaultImageSelected !== true && this.state.text.length);
+    const btnEnabledPg2 = btnEnabledPg1;
     //console.log(slogans);
     return (
       <div className={classes.root + " darkAd"}>
         <SpectreHeader colour="white" progressActive progressNumber="one" />
         <IdleChecker />
         <div className={`${classes.content} content`}>
-        <h1>Create Your Campaign</h1>
-          <div className="split-half">
-            <div className="split-left">
-              <div className={classes.ad}>    { /* adIssue should never change after being selected '*/}
-                <img className={ComponentsStyles.adImage} src={this.state.image} alt="leave"></img>
-                <p style={this.state.text ? {backgroundColor: 'red'} : {backgroundColor: 'none'}} className={ComponentsStyles.adText}>{this.state.text}</p>
-                {!this.state.defaultImageSelected ? <img className={classes.campaignImage} src={cimage} alt="leave"></img> : ''}
+          <div style={this.state.pageOne}>
+            <h1>Create Your Campaign</h1>
+            <div className="split-half">
+              <div className="split-left">
+                <div className={classes.ad}>    { /* adIssue should never change after being selected '*/}
+                  <img className={ComponentsStyles.adImage} src={this.state.image} alt="leave"></img>
+                  <p style={this.state.text ? { backgroundColor: 'red' } : { backgroundColor: 'none' }} className={ComponentsStyles.adText}>{this.state.text}</p>
+                  {!this.state.defaultImageSelected ? <img className={classes.campaignImage} src={cimage} alt="leave"></img> : ''}
+                </div>
               </div>
-            </div>
-            <div className="split-right">
-              <div>
-              <p className="normal darkAdsubtitle">Select your image:</p>
-                {images.map((image, i) => (
-                  <img className={ComponentsStyles.adImageSelection} src={image} alt="leave" key={i}
-                    onClick={() => this.setState({ image: image, defaultImageSelected: false })}></img>
-                ))}
-              </div>
-              <div>
-              <p className="normal darkAdsubtitle">Select your slogan:</p>
-                {slogans.map((slogan, i) => (
-                  <Button className={classes.button} variant="contained" color="primary" key={i}
-                    onClick={() => {
-                      if (this.state.defaultImageSelected) this.setState({ image: redimg });
-                      this.setState({ text: slogan });
-                    }}>
-                    {slogan.split(' ').slice(0, 2).join(' ') + '...'}
-                  </Button>
-                ))}
-              </div>
-              <div className="link">
-                <Link to="/target-ad" onClick={() => this.context.targetAd =
-                  { image: this.state.image, slogan: this.state.text }}>
-                  <IconButton enabled={(this.state.defaultImageSelected !== true && this.state.text.length)} className={ComponentsStyles.iconButtonStyle1} icon="next" text="Next" />
-                </Link>
+              <div className="split-right">
+                <div>
+                  <p className="normal darkAdsubtitle">Select your image:</p>
+                  {images.map((image, i) => (
+                    <img className={ComponentsStyles.adImageSelection} src={image} alt="leave" key={i}
+                      onClick={() => this.setState({ image: image, defaultImageSelected: false })}></img>
+                  ))}
+                </div>
+                <div>
+                  <p className="normal darkAdsubtitle">Select your slogan:</p>
+                  {slogans.map((slogan, i) => (
+                    <Button className={classes.button} variant="contained" color="primary" key={i}
+                      onClick={() => {
+                        if (this.state.defaultImageSelected) this.setState({ image: redimg });
+                        this.setState({ text: slogan });
+                      }}>
+                      {slogan.split(' ').slice(0, 2).join(' ') + '...'}
+                    </Button>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
+          <div style={this.state.pageTwo}>
+            <h1 className="noSpacing"><br/>Your Targeted Facebook ad:</h1>
+              <div className={classes.adPage2}>    { /* adIssue should never change after being selected '*/}
+                <img className={ComponentsStyles.adImage} src={this.state.image} alt="leave"></img>
+                <p style={this.state.text ? { backgroundColor: 'red' } : { backgroundColor: 'none' }} className={ComponentsStyles.adTextPage2}>{this.state.text}</p>
+                {!this.state.defaultImageSelected ? <img className={classes.campaignPage2} src={cimage} alt="leave"></img> : ''}
+              </div>
+              <p> Share with <span>[name]</span></p>
+          </div>
+          <div className="link">
+            <div style={this.state.pageOne}>
+              <IconButton enabled={btnEnabledPg1} onClick={e => this.handleNextPage(e)} className={ComponentsStyles.iconButtonStyle1} icon="next" text="Next" />
+            </div>
+            <div style={this.state.pageTwo}>
+              <Link to="/target-ad" onClick={() => this.context.targetAd =
+                { image: this.state.image, slogan: this.state.text }}>
+                <div className={ComponentsStyles.buttonWrapper}>
+                  <Button className="shareButton" variant="contained" color="primary"><img alt="shareIcon" src="./imgs/shareIcon.svg" /><strong>Share</strong></Button>
+                </div>
+              </Link>
+            </div>
+          </div>
         </div>
+
         <FooterLogo />
       </div>
     );

@@ -6,6 +6,10 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import { ReactComponent as Trophy } from '../../Icons/trophy.svg';
+import { Link } from 'react-router-dom';
+import IdleChecker from '../../Components/IdleChecker/IdleChecker';
+import IconButton from '../../Components/IconButton/IconButton';
+import ComponentsStyles from '../../App.module.css';
 
 import './SuccessAd.scss';
 
@@ -28,8 +32,7 @@ class SuccessAd extends React.Component {
     const user = await UserSession.ensure(this.context,
       [/*'_id',*/ 'adIssue', 'traits', 'target']);
 
-    this.timeout = setTimeout(() =>
-      this.props.history.push('/influence-a-nation'), 6000);
+    //  this.timeout = setTimeout(() => this.props.history.push('/influence-a-nation'), 6000);
 
     this.setState({
       adIssue: user.adIssue,
@@ -47,17 +50,23 @@ class SuccessAd extends React.Component {
     return (
       <div className={`${classes.root} successAd`}>
         <SpectreHeader colour="white" progressActive progressNumber="two" />
+        <IdleChecker />
         <div className={`${classes.content} content`}>
           <Fade in timeout={1000}>
             <div>
               <h1 className="addSpacing"><span>Great work!</span></h1>
               <h2 className="copy bold">Your targeted ad was successful!</h2>
-              <p className="thankyou-icon"><Trophy/></p>
+              <p className="thankyou-icon"><Trophy /></p>
               <p className="normal">
                 <span>{targetName}</span> is now more likely to vote <span>{adIssue}</span> in the election.
               </p>
             </div>
           </Fade>
+          <div className="link">
+            <Link to="/influence-a-nation">
+              <IconButton className={ComponentsStyles.iconButtonStyle1} icon="next" text="Next" />
+            </Link>
+          </div>
         </div>
         <FooterLogo />
       </div>
