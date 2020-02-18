@@ -38,6 +38,7 @@ Button
 }
 
 
+
 @media screen and (orientation:landscape) {
   .buttonWrapper {
     margin: 20px auto;
@@ -110,7 +111,7 @@ Button
     padding: 15px;
   }
 
-  .adText {
+  .adText, .adTextPage2 {
     position: absolute;
     top: 39%;
     font-size: 36px;
@@ -119,6 +120,10 @@ Button
     text-align: center;
     width: 642px;
     background-color: none;
+  }
+
+  .adTextPage2 {
+    top: 46%;
   }
 
 }

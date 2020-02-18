@@ -6,8 +6,7 @@ import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
-import OceanProfile from '../../Components/OceanProfile/OceanProfile';
-
+import { ReactComponent as ThumbUp } from '../../Icons/insightthankyou.svg';
 import Video from '../../Components/Video/Video';
 import './InsightComplete.scss';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
@@ -19,7 +18,9 @@ const styles = {
 class InsightComplete extends React.Component {
   constructor(props) {
     super(props, '/your-power');
-    this.state = { idleCheckerDone: false, target: { name: '', traits: '' } };
+    this.state = {
+      idleCheckerDone: false,
+    };
   }
 
   async componentDidMount() {
@@ -36,18 +37,16 @@ class InsightComplete extends React.Component {
   render() {
     //console.log('page',window.location.pathname);
     const { classes } = this.props;
-    const { target, idleCheckerDone } = this.state;
+    const { idleCheckerDone } = this.state;
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" />
         <IdleChecker forceTerminate={idleCheckerDone} />
         <div className={`${classes.content} content`}>
-          <p className="normal"><strong>Excellent.</strong></p>
-          <p className="normal-nextline">Verification complete!</p>
-          <p className="normal-nextline">You've unlocked OCEAN profiling!</p>
-          <OceanProfile subject={target} classes={classes}></OceanProfile>
-          <p className="normal-nextline">You now have the <strong>power</strong> to influence&nbsp;<strong>{target.name}</strong>.</p>
-          <IconButton enabled={true} className={ComponentsStyles.iconButtonStyle2} icon="play" text="WTF is OCEAN?" onClick={this.showVideo}/>
+          <h1><span><strong>Step 1</strong> complete!</span></h1>
+          <h2>You've unlocked <span>OCEAN Profiling</span></h2>
+          <ThumbUp className="thankyou-icon" />
+          <IconButton enabled={true} className={ComponentsStyles.iconButtonStyle1} icon="play" text="WTF is OCEAN?" onClick={this.showVideo} />
           <Video
             ref={(el) => { this.video = el; }}
             onComplete={() => this.props.history.push('/your-power')}

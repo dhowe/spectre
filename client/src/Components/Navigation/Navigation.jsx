@@ -7,7 +7,7 @@ const routes = [
   '/game', '/thank-you', '/steps', '/follower', '/selected',
   '/insight-gender','/insight-skin', '/insight-financial', '/insight-thank-you',
   '/insight-sexuality', '/insight-political', '/insight-complete',
-  '/your-power', '/pick-your-side', '/campaign', '/dark-ad', '/target-ad',
+  '/your-power', '/pick-your-side', '/campaign', '/dark-ad',
   '/success-ad', '/influence-a-nation', '/consumer-data', '/political-data',
   '/home-data', '/find-citizens', '/targets-found', '/launch-campaign',
   '/campaign-results', '/win', '/influence-a-celebrity', '/OCEAN-reveal',

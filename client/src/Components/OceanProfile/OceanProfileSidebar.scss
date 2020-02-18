@@ -1,0 +1,153 @@
+@import '../../colors.scss';
+
+SideNav-expanded {
+  background: $blue;
+}
+
+.SideNav-main-collapsed,
+.SideNav-main-expanded {
+  background: $blue;
+  color: $white;
+  top: 100px;
+  height: 800px;
+  min-width: 0;
+}
+
+.SideNav-main-expanded {
+  -webkit-transition: width 0.2s;
+  width: 1278px;
+}
+
+.SideNav-main-collapsed {
+  width: 0;
+  -webkit-transition: width 0.2s;
+
+}
+
+.SideNav-toggle-collapsed,
+.SideNav-toggle-expanded {
+  background: $blue;
+  color: $white;
+  width: 72px;
+  height: 322px;
+  border-bottom-right-radius: 110px;
+  /* 100px of height + 10px of border */
+  border-top-right-radius: 110px;
+  /* 100px of height + 10px of border */
+  border-color: $blue;
+  top: 230px;
+}
+
+.SideNav-toggle-expanded {
+  left: 1276px;
+  -webkit-transition: left 0.2s;
+}
+
+.SideNav-toggle-collapsed {
+  left: 0;
+  -webkit-transition: left 0.2s;
+}
+
+.SideNav-toggle-collapsed h1,
+.SideNav-toggle-expanded h1 {
+  color: $white;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  height: 322px;
+  font-size: 28px;
+  padding-top: 20px;
+  margin: 0 auto;
+}
+
+.SideNav-toggle-collapsed .sidenav---icon-bar---u1f02,
+.SideNav-toggle-expanded .sidenav---icon-bar---u1f02 {
+  display: none;
+}
+
+#box2 {
+  position: relative;
+  top: 25%;
+  right: 25%;
+  z-index: 1;
+}
+
+#box2Text:after {
+  content: "";
+  left: calc(50% - 5px);
+  margin-top: 5px;
+  margin-left: 10px;
+  position: absolute;
+  border: solid #FFF;
+  border-width: 0 3px 3px 0;
+  width: 18px;
+  height: 18px;
+  top: 30px;
+  transform: rotate(-45deg);
+}
+
+.SideNav {
+  background: $blue;
+  color: $white;
+}
+
+.SideNav-item-expanded {
+  display: block;
+  -webkit-transition: display 0.5s;
+  background: $blue;
+  top: -500px;
+}
+
+.SideNav-expanded {
+  background: $blue;
+  height: 300px;
+}
+
+.SideNav-item-collapsed {
+  display: none;
+  -webkit-transition: display 0.5s;
+}
+
+.SideNav-item {
+  background: $blue;
+  color: $white;
+  margin: 0 auto;
+}
+
+.ocean-profile-div {
+  margin: 0 auto;
+}
+
+.ocean-profile-div h1,
+.ocean-profile-div p {
+  text-align: left;
+  color: $white;
+}
+
+.ocean-profile-div h1 {
+  font-size: 32px;
+  line-height: 52px;
+}
+
+.ocean-profile-div p {
+  font-size: 24px;
+  line-height: 40px;
+}
+
+
+.split-h {
+  padding: 0;
+  margin: 0 auto;
+  width: 1200px;
+  display: flex;
+  white-space: normal;
+  position: relative;
+  top: 300px;
+}
+
+.split-l,
+.split-r {
+  padding: 0;
+  margin: 0;
+  width: 600px;
+  text-align: left;
+}
