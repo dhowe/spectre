@@ -6,8 +6,7 @@ import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
-import OceanProfile from '../../Components/OceanProfile/OceanProfile';
-
+import { ReactComponent as ThumbUp } from '../../Icons/insightthankyou.svg';
 import Video from '../../Components/Video/Video';
 import './InsightComplete.scss';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
@@ -21,7 +20,6 @@ class InsightComplete extends React.Component {
     super(props, '/your-power');
     this.state = {
       idleCheckerDone: false,
-      target: { name: '', traits: '' },
     };
   }
 
@@ -39,16 +37,16 @@ class InsightComplete extends React.Component {
   render() {
     //console.log('page',window.location.pathname);
     const { classes } = this.props;
-    const { target, idleCheckerDone } = this.state;
+    const { idleCheckerDone } = this.state;
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" />
         <IdleChecker forceTerminate={idleCheckerDone} />
-        <OceanProfile subject={target} className="w3-bar-item w3-button"></OceanProfile>
         <div className={`${classes.content} content`}>
-          <IconButton enabled={true} icon="play" text="menu" onClick={e=>this.handleSideBar(e)} />
-          <p className="normal-nextline">You now have the <strong>power</strong> to influence&nbsp;<strong>{target.name}</strong>.</p>
-          <IconButton enabled={true} className={ComponentsStyles.iconButtonStyle2} icon="play" text="WTF is OCEAN?" onClick={this.showVideo} />
+          <h1><span><strong>Step 1</strong> complete!</span></h1>
+          <h2>You've unlocked <span>OCEAN Profiling</span></h2>
+          <ThumbUp className="thankyou-icon" />
+          <IconButton enabled={true} className={ComponentsStyles.iconButtonStyle1} icon="play" text="WTF is OCEAN?" onClick={this.showVideo} />
           <Video
             ref={(el) => { this.video = el; }}
             onComplete={() => this.props.history.push('/your-power')}

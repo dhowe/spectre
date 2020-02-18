@@ -104,7 +104,7 @@ class DarkAd extends React.Component {
     const redimg = UserSession.imageDir + 'darkadred.png';
     const cimage = UserSession.imageDir + 'vote-' + issue + '.png';
     const btnEnabledPg1 = (this.state.defaultImageSelected !== true && this.state.text.length);
-    const btnEnabledPg2 = btnEnabledPg1;
+  //  const btnEnabledPg2 = btnEnabledPg1;
     //console.log(slogans);
     return (
       <div className={classes.root + " darkAd"}>

@@ -9,6 +9,7 @@ import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import IconButton from '../../Components/IconButton/IconButton';
+import OceanProfile from '../../Components/OceanProfile/OceanProfile';
 import ComponentsStyles from '../../App.module.css';
 
 const styles = {};
@@ -21,6 +22,7 @@ class YourPower extends React.Component {
       virtue: '',
       targetName: '',
       targetPronoun: '',
+      target: { name: '', traits: '' }
     }
   }
 
@@ -30,18 +32,20 @@ class YourPower extends React.Component {
     this.setState({
       virtue: user.virtue,
       targetName: user.target.name,
-      targetPronoun: UserSession.possPron(user.target)
+      targetPronoun: UserSession.possPron(user.target),
+      target: user.target
     });
   }
 
   render() {
 
     const { classes } = this.props;
-    const { virtue, targetName, targetPronoun } = this.state;
+    const { virtue, targetName, targetPronoun, target } = this.state;
 
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive progressNumber="one" />
+        <OceanProfile subject={target} />
         <div className={`${classes.content} content`}>
           <Fade in style={{ transitionDelay: '200ms' }}>
             <h2>You now have the <span>{virtue}</span> to influence&nbsp;<span>{targetName}</span>.</h2>

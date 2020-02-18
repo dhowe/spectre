@@ -1,7 +1,7 @@
 @import '../../colors.scss';
 
 .OceanProfile {
-  background-color: #ffffff;
+
   color: $white;
   width: 100vw;
   position: fixed;
@@ -31,16 +31,17 @@
   }
 
   .OceanSliders {
-    margin-left: auto;
+    margin-left: 50px;
     margin-right: auto;
-    display: flex;
+    display: block;
 
-    .textSliderText {
+    .textSlider {
       color: $white;
-      width: 120px;
-      text-align: center;
-      height: auto;
+      width: 600px;
+      text-align: left;
+      height: 100px;
       overflow: visible;
+      display: flex;
 
       p {
         color: $white;
@@ -51,29 +52,54 @@
         width: 100%;
       }
 
-      .iconText {
-        width: 100%;
-        text-align: center;
-        margin-top: -90px;
+      .sliderText {
+        display: flex;
       }
 
-      .iconText img{
-filter: brightness(0) invert(1);
+      .slider-title {
+        width: 200px;
+        left:50px;
+        font-size: 28px;
+        line-height: 46px;
+        padding-top: 20px;
+        text-align: left;
+      }
+      .slider-percentage {
+        width: 200px;
+        font-size: 18px;
+        line-height: 25px;
+        text-align: right;
+        padding-top: 30px;
+
+      }
+      .icon {
+        padding-top: 10px;
+        width: 95px;
+        height: 95px;
+      }
+
+      .icon img{
+        filter: brightness(0) invert(1);
       }
 
       .sliderContainer {
-        height: 200px;
-        display: inline-flex;
+        width: auto;
+        height: auto;
+        display: block;
       }
 
+
       .slider {
-        transform: rotate(270deg);
-        height: 92px;
-        width: 92px;
-        padding-top:20px;
+      //  transform: rotate(270deg);
+        height: 10px;
+        width: 380px;
+        padding-top:0px;
       }
       .slider  *{
         color: white;
+      }
+      .MuiSlider-root{
+        padding: 0 0;
       }
 
       div[class*="MuiSlider-track"] {
