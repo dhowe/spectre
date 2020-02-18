@@ -13,15 +13,24 @@ import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 import "./OceanProfile.scss";
 import "./OceanProfileSidebar.scss";
 
-
-
+let activateProfile = false;
+let prevActivateProfile = false;
 function OceanProfile(props) {
   let traits = props.subject.traits;
   let tname = props.subject.name;
 
+  activateProfile = props.activateProfile;
+
   const [sideBar, setSideBar] = React.useState({
     isSideBarActive: false
   });
+
+  if(prevActivateProfile !== activateProfile){
+    setSideBar({ isSideBarActive: activateProfile });
+    prevActivateProfile = props.activateProfile;
+  }
+
+
   //let sideBar = sB;
 
   function handleClick(e) {
@@ -31,8 +40,22 @@ function OceanProfile(props) {
       setSideBar({ isSideBarActive: true });
     }
   }
+    //console.log(props.activateProfile)
+    /*
+  function handleChange(e){
+
+    if(props.activateProfile){
+      setSideBar({ isSideBarActive: false });
+    }else{
+      setSideBar({ isSideBarActive: true });
+    }
+  }
+*/
+
+
+
   return (
-    <div id="outer-container" className="OceanProfile">
+    <div id="outer-container" className="OceanProfile" >
       <SideNav expanded={sideBar.isSideBarActive} onToggle={e => handleClick(e) }
         onSelect={(selected) =>  console.log(selected) } className={sideBar.isSideBarActive ? "SideNav-main-expanded" : "SideNav-main-collapsed"}>
         <SideNav.Toggle className={sideBar.isSideBarActive ? "SideNav-toggle-expanded" : "SideNav-toggle-collapsed"}
