@@ -17,13 +17,30 @@ users.forEach(u => {
 });
 process.exit(1);
 */
-
+console.log(route);
 if (mode === 'PROD') {
   iconfirm({ question: 'Database is production. Confirm?' })
     .then(insertDefaultUsers, () => { });
 }
 else {
-  insertDefaultUsers();
+  insertDefaultUsers().then(fetchUser);
+  //fetchUser();
+}
+
+async function fetchUser() {
+
+  console.log('[POST] fetchUser: ' + route);
+  const [json, e] = await safeFetch('http://localhost:8083/api/users/888888888888888888888888', {
+    method: "get",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": 'Basic ' + btoa(auth)
+    },
+  });
+
+  if (e) throw e;
+  //json = JSON.parse(json);
+  console.log('*******************\n'+json.updatedAt+' '+(typeof json.updatedAt));
 }
 
 async function insertDefaultUsers() {
@@ -75,6 +92,7 @@ async function safeFetch() {
       if (json.status !== 200) {
         return Promise.resolve([undefined, json.status + '/' + (json.message || 'no-message')])
       }
+
       return [json.data, undefined];
     })
     .catch(error => Promise.resolve([undefined, error]));

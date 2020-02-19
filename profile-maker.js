@@ -6,14 +6,14 @@ import observer from 'chokidar';
 import clfDate from 'clf-date';
 import UserModel from './user-model';
 
-const BRIGHTEN = 1.5;
+const BRIGHTEN = 1.3;
 
 class ProfileMaker {
 
   constructor(modelDir) {
     this.border = 200;
     this.loaded = false;
-    this.detectAgeGender = false;
+    this.detectAgeGender = true;
     this.modelDir = modelDir || './model-weights';
     this.detectionNet = faceapi.nets.ssdMobilenetv1;
     this.ageGenderNet = faceapi.nets.ageGenderNet;
@@ -47,13 +47,28 @@ class ProfileMaker {
           .then(res => {
             if (res.status === 'ok') {
               console.log('[' + clfDate() + '] ::* THUMB ' + pathify(outfile));
+              console.log('[' + clfDate() + '] ::* DETECT ' + res.data.age
+                + '/' + res.data.gender + '(' + res.data.genderProbability + ')');
             }
             else {
               console.error('[' + clfDate() + '] ::* THUMB Failed', res.data);
             }
+            const fieldsToUpdate = { hasImage: res.status === 'ok' };
+            if (this.detectAgeGender && res.status === 'ok') {
+              Object.assign(fieldsToUpdate, {
+                detectedAge: res.data.age || -1,
+                detectedGender: res.data.gender || 'unknown',
+                detectedGenderProb: res.data.genderProbability || -1,
+              });
+            }
+
+console.log('[' + clfDate() + '] ::* DETECT ', fieldsToUpdate);
+
+            // We have successfully detect the face, then cropped and
+            // processed the image, now update the db with this info
             UserModel.findByIdAndUpdate(
-              id, { hasImage: res.status === 'ok' }, { new: true }, (err, u) => {
-                err && console.error('[ERROR] ProfileMaker.findByIdAndUpdate: ', err, u);
+              id, fieldsToUpdate, { new: true }, (err, u) => {
+                err && console.error('[ERROR] ProfileMaker.update: ', err, u);
                 console.log('[' + clfDate() + '] ::* UPDATE hasImage', u.hasImage);
               });
           });
@@ -73,9 +88,9 @@ class ProfileMaker {
       const h = Math.min(ih - top, Math.round(b.height + this.border * 2));
       return { width: w, height: h, top: top, left: left };
     }
-
     try {
       const result = await this.detect(infile);
+      if (!result) throw Error('No face-detection result');
       const dims = result.dimensions;
       const f = await sharp(infile)
         .extract(bounds(result.box, dims.w, dims.h))
@@ -83,7 +98,7 @@ class ProfileMaker {
         .resize(width || 128, height || 128)
         .normalise()
         .toFile(outfile);
-      return { status: 'ok', data: f };
+      return { status: 'ok', data: result };
     }
     catch (e) {
       return { status: 'err', data: e };
@@ -134,7 +149,7 @@ class ProfileMaker {
       result = {
         age: detection.age,
         gender: detection.gender,
-        genderProb: detection.genderProbability,
+        genderProbability: detection.genderProbability,
         box: detection.detection.box,
         dimensions: dims,
         image: image

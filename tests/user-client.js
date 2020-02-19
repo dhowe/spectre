@@ -9,7 +9,7 @@ describe('Client User', function() {
       let user = new User();
       let fields = Object.keys(User.schema());
       // these are fields defined with a default
-      let withDefaults = ['clientId', 'lastPage', 'targetAd', 'dataChoices', 'loginType'];
+      let withDefaults = ['clientId', 'lastPage', 'targetAd', 'dataChoices', 'loginType', 'updatedAt'];
       fields.forEach(f => {
         if (!withDefaults.includes(f)) {
           expect(user).has.property(f);
@@ -31,7 +31,6 @@ describe('Client User', function() {
         virtue: 'truth',
         gender: 'male',
         lastPage: '/Test',
-        lastUpdate: +Date.now(),
         traits: {
           agreeableness: .3,
           conscientiousness: .4,

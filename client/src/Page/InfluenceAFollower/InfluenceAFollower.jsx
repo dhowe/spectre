@@ -22,7 +22,9 @@ class InfluenceAFollower extends React.Component {
   async componentDidMount() {
     let user = await UserSession.ensure(this.context,
       ['name', 'login', 'gender', 'virtue', 'traits']);
-    user = await UserSession.targets(user);
+      console.log('pre');
+    await UserSession.targets(user);
+    console.log('post',user.similars[0].updatedAt instanceof Date,user.similars[0].updatedAt);
     this.setState({ targets: user.similars });
   }
 
@@ -43,10 +45,14 @@ class InfluenceAFollower extends React.Component {
           <p className="normal-nextline"><br />Spectre has a global community of followers.</p>
           <p className="normal"><br />Choose one:</p>
           <AvatarCircle>
-            {targets.map((sim, i) => (
+            {targets.map((t, i) => (
               <AvatarComponent key={i}
-                handleClick={() => this.handleSelect(sim)}
-                target={{ name: sim.name, image: `${UserSession.profileDir}/${sim._id}.jpg` }}
+                handleClick={() => this.handleSelect(t)}
+                target={{
+                  name: t.name,
+                  image: `${UserSession.profileDir}/${t._id}.jpg`,
+                  updatedAt: t.updatedAt,
+                }}
               />
             ))}
           </AvatarCircle>

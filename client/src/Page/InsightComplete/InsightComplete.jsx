@@ -46,11 +46,15 @@ class InsightComplete extends React.Component {
           <h1><span><strong>Step 1</strong> complete!</span></h1>
           <h2>You've unlocked <span>OCEAN Profiling</span></h2>
           <ThumbUp className="thankyou-icon" />
-          <IconButton enabled={true} className={ComponentsStyles.iconButtonStyle1} icon="play" text="WTF is OCEAN?" onClick={this.showVideo} />
+          <IconButton enabled={true}
+            className={ComponentsStyles.iconButtonStyle1}
+            icon="play" text="WTF is OCEAN?"
+            onClick={this.showVideo} />
           <Video
             ref={(el) => { this.video = el; }}
             onComplete={() => this.props.history.push('/your-power')}
-            autoPlay={false} movie="https://spectreknows.me/video/OceanIntro.mp4" />
+            movie={`${UserSession.publicUrl}video/OceanIntro.mp4`}
+            />
         </div>
         <FooterLogo />
       </div>

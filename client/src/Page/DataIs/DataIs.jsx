@@ -8,8 +8,7 @@ import UserSession from '../../Components/UserSession/UserSession';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 //import Keyboardist from 'react-keyboardist';
 
-const styles_landscape = {}, styles_portrait = {
-};
+const styles_landscape = {}, styles_portrait = {};
 
 class DataIs extends React.Component {
 
@@ -22,7 +21,7 @@ class DataIs extends React.Component {
   async componentDidMount() {
     let nextPage = this.state.nextPage;
     const user = await UserSession.ensure(this.context, ['virtue', 'hasImage']);
-    if (!user.hasImage) {
+    if (!user.hasImage) { // MOVE TO personalized?
       nextPage = '/selfie';
       console.log('[DATAIS] No webcam image found for ' + user._id);
     }
@@ -31,18 +30,15 @@ class DataIs extends React.Component {
 
   render() {
     const { virtue, virtueAdverb } = this.state;
-
     return (
 
       <div className={this.props.root}>
-        {
-        // <Keyboardist bindings={{
+        { // <Keyboardist bindings={{
         //   Right: () => {
         //     console.log('RIGHT');
         //     this.props.history.push(this.state.nextPage);
         //     return false;
-        //   }
-        // }} />
+        //   }}} />
         }
         <SpectreHeader colour="white" />
         <div className={`${this.props.content} content`}>

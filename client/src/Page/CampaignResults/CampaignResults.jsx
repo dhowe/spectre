@@ -34,7 +34,7 @@ class CampaignResults extends React.Component {
   }
 
   async componentDidMount() {
-    const user = await UserSession.ensure(this.context, [/*'_id',*/ 'adIssue']);
+    const user = await UserSession.ensure(this.context, ['adIssue']);
     this.setState({ adIssue: user.adIssue });
   }
 
@@ -45,10 +45,10 @@ class CampaignResults extends React.Component {
   render() {
     const { classes } = this.props;
     const { adIssue } = this.state;
-
     let videoPlaceholder = adIssue.length ? (
-      <Video className={ComponentsStyles.inPageVideo}
-        movie={'https://spectreknows.me/video/ElectionResults_' + adIssue + '_US.mp4'}
+      <Video
+        className={ComponentsStyles.inPageVideo}
+        movie={`${UserSession.publicUrl}video/ElectionResults_${adIssue}_US.mp4`}
         onComplete={() => this.timeout = setTimeout(() => this.props.history.push('/win'), 1000)}
       />) : <br />;
 

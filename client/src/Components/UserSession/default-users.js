@@ -10,11 +10,11 @@ export default [
     "hasImage": true,
     "targetId": -1,
     "descriptors": [
-      "Bernard is impulsive and whimsical, and fine with it!",
+      "Bernard is impulsive and whimsical, and ok with it.",
       "He would say that sometimes decisions need to be made quickly, and that he makes them quicker than most.",
       "He is someone people get along with easily."
     ],
-    "_id": "666666666666666666666666",
+    "_id": "666666666666666666666666",  "detectedAge": "36", "detectedGender": "male", "detectedGenderProb": ".9876",
     "login": "bernard30987235489@mail.com",
     "loginType": "email",
     "name": "Bernard",
@@ -22,7 +22,7 @@ export default [
     "createdAt": "2019-06-03T00:12:07.595Z",
     "adIssue": "leave",
     "virtue": "influence",
-    "__v": 1
+    "updatedAt": new Date("2019-06-03T00:12:07.595Z")
   },
   {
     "traits": {
@@ -39,7 +39,7 @@ export default [
       "He is someone who doesn’t need lots of other people around to have fun, and sometimes finds people tiring.",
       "He is calm and emotionally stable."
     ],
-    "_id": "444444444444444444444444",
+    "_id": "444444444444444444444444",  "detectedAge": "34", "detectedGender": "male", "detectedGenderProb": ".9874",
     "login": "tyler8927340597@mail.com",
     "loginType": "email",
     "name": "Tyler",
@@ -47,7 +47,7 @@ export default [
     "createdAt": "2019-06-03T00:12:07.591Z",
     "adIssue": "remain",
     "virtue": "influence",
-    "__v": 1
+    "updatedAt": new Date("2019-06-03T00:12:07.595Z")
   },
   {
     "traits": {
@@ -64,7 +64,7 @@ export default [
       "She comes across as very calm and resilient.",
       "She is impulsive and whimsical, and fine with it!"
     ],
-    "_id": "555555555555555555555555",
+    "_id": "555555555555555555555555",  "detectedAge": "35", "detectedGender": "female", "detectedGenderProb": ".9875",
     "login": "fran987302457@mail.com",
     "loginType": "email",
     "name": "Fran",
@@ -72,7 +72,7 @@ export default [
     "createdAt": "2019-06-03T00:12:07.592Z",
     "adIssue": "remain",
     "virtue": "influence",
-    "__v": 1
+    "updatedAt": new Date("2019-06-03T00:12:07.595Z")
   },
   {
     "traits": {
@@ -89,7 +89,7 @@ export default [
       "She finds life easier if things don’t change unnecessarily.",
       "She is willing to make difficult decisions when necessary, and will point out when something is wrong no matter what other people might feel."
     ],
-    "_id": "333333333333333333333333",
+    "_id": "333333333333333333333333",  "detectedAge": "33", "detectedGender": "female", "detectedGenderProb": ".9873",
     "login": "devin908417684@mail.com",
     "loginType": "email",
     "name": "Devin",
@@ -97,7 +97,7 @@ export default [
     "createdAt": "2019-06-03T00:12:07.590Z",
     "adIssue": "leave",
     "virtue": "power",
-    "__v": 1
+    "updatedAt": new Date("2019-06-03T00:12:07.595Z")
   },
   {
     "traits": {
@@ -114,7 +114,7 @@ export default [
       "He prefers to plan everything to the last detail, which has consequently led to his being very successful and extremely reliable.",
       "He is down-to-earth and prefers things to be simple and straightforward."
     ],
-    "_id": "111111111111111111111111",
+    "_id": "111111111111111111111111",  "detectedAge": "31", "detectedGender": "male", "detectedGenderProb": ".9871",
     "login": "remy3458909234@mail.com",
     "loginType": "email",
     "name": "Remy",
@@ -122,7 +122,7 @@ export default [
     "createdAt": "2019-06-03T00:12:07.580Z",
     "adIssue": "leave",
     "virtue": "power",
-    "__v": 1
+    "updatedAt": new Date("2019-06-03T00:12:07.595Z")
   },
   {
     "traits": {
@@ -139,7 +139,7 @@ export default [
       "However he has an emotional depth that others may lack.",
       "He is down-to-earth and prefers things to be simple and straightforward."
     ],
-    "_id": "999999999999999999999999",
+    "_id": "999999999999999999999999",  "detectedAge": "39", "detectedGender": "male", "detectedGenderProb": ".9879",
     "login": "dick9875789937849@mail.com",
     "loginType": "email",
     "name": "Dick",
@@ -147,7 +147,7 @@ export default [
     "createdAt": "2019-06-03T00:12:07.601Z",
     "adIssue": "leave",
     "virtue": "power",
-    "__v": 1
+    "updatedAt": new Date("2019-06-03T00:12:07.595Z")
   },
   {
     "traits": {
@@ -164,7 +164,7 @@ export default [
       "She prefers to plan everything to the last detail, which has consequently led to her being very successful and extremely reliable.",
       "Sally is far more intellectually curious and sensitive to beauty than most."
     ],
-    "_id": "888888888888888888888888",
+    "_id": "888888888888888888888888",  "detectedAge": "38", "detectedGender": "female", "detectedGenderProb": ".9878",
     "login": "sally4983578918989@mail.com",
     "loginType": "email",
     "name": "Sally",
@@ -172,7 +172,7 @@ export default [
     "createdAt": "2019-06-03T00:12:07.599Z",
     "adIssue": "leave",
     "virtue": "power",
-    "__v": 1
+    "updatedAt": new Date("2019-06-03T00:12:07.595Z")
   },
   {
     "traits": {
@@ -189,7 +189,7 @@ export default [
       "He finds life easier if things don’t change unnecessarily.",
       "He is extremely difficult to upset or stress out, since he rarely, if ever, react with negative emotions, and even when he is anxious about something the feeling quickly passes."
     ],
-    "_id": "777777777777777777777777",
+    "_id": "777777777777777777777777",  "detectedAge": "37", "detectedGender": "male", "detectedGenderProb": ".9877",
     "login": "sing987435029837@mail.com",
     "loginType": "email",
     "name": "Sing",
@@ -197,7 +197,7 @@ export default [
     "createdAt": "2019-06-03T00:12:07.597Z",
     "adIssue": "leave",
     "virtue": "wealth",
-    "__v": 1
+    "updatedAt": new Date("2019-06-03T00:12:07.595Z")
   },
   {
     "traits": {
@@ -214,7 +214,7 @@ export default [
       "He would say that sometimes decisions need to be made quickly, and that he makes them quicker than most.",
       "He is down-to-earth and prefers things to be simple and straightforward."
     ],
-    "_id": "222222222222222222222222",
+    "_id": "222222222222222222222222",  "detectedAge": "32", "detectedGender": "male", "detectedGenderProb": ".9872",
     "login": "bailey987045982734@mail.com",
     "loginType": "email",
     "name": "Bailey",
@@ -222,6 +222,6 @@ export default [
     "createdAt": "2019-06-03T00:12:07.588Z",
     "adIssue": "leave",
     "virtue": "power",
-    "__v": 1
+    "updatedAt": new Date("2019-06-03T00:12:07.595Z")
   }
 ];

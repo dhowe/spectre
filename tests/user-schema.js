@@ -44,10 +44,10 @@ describe('Server User', function() {
 
   });
 
-  describe('UserModel.Create', function() {
+  describe('UserModel.CreateModel', function() {
 
     it('Should correctly complete a test user', function() {
-      let user = UserModel.Create();
+      let user = UserModel.CreateModel();
       expect(user.name.length).gt(0);
       expect(user.login.length).gt(0);
       expect(user.loginType.length).gt(0);
@@ -55,7 +55,7 @@ describe('Server User', function() {
     });
 
     it('Should correctly complete a templated user', function() {
-      let user = UserModel.Create({
+      let user = UserModel.CreateModel({
         name: "dave",
         login: "dave@abc.com",
         loginType: "twitter"
@@ -74,7 +74,7 @@ describe('Server User', function() {
     });
 
     it('Should describe a user based on OCEAN traits', function() {
-      let user = UserModel.Create();
+      let user = UserModel.CreateModel();
       user.name = "Jane";
       user.gender = "female";
       user._randomizeTraits();

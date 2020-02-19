@@ -1,37 +1,30 @@
 import React from "react";
 import PropTypes from "prop-types";
-//import Typography from "@material-ui/core/Typography/Typography";
-//import Grid from "@material-ui/core/Grid/Grid";
 import Slider from "@material-ui/core/Slider";
-//import ComponentsStyles from '../../App.module.css';
 import SideNav, { NavItem, NavText } from '@trendmicro/react-sidenav';
 import AvatarComponent from '../../Components/AvatarComponent/AvatarComponent';
+
 // Be sure to include styles at some point, probably during your bootstraping
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 import OceanProfileHelpModal from '../OceanProfileHelpModal/OceanProfileHelpModal';
 import "./OceanProfile.scss";
 import "./OceanProfileSidebar.scss";
+//import ComponentsStyles from '../../App.module.css';
 
-let activateProfile = false;
 let prevActivateProfile = false;
 
 function OceanProfile(props) {
-  let traits = props.subject.traits;
-  let tname = props.subject.name;
+  const name = props.target.name;
+  const traits = props.target.traits;
+  const perspron = props.target.perspron;
+  const posspron = props.target.posspron;
+  const objpron = props.target.objpron;
+  const image = props.target.image;
+  const updatedAt = props.target.updatedAt;
+  const activateProfile = props.activateProfile;
 
-  let targetImage = props.subjectImage;
-
-  activateProfile = props.activateProfile;
-
-  const [sideBar, setSideBar] = React.useState({
-    isSideBarActive: false
-  });
-
-  const [helpDialog, setHelpDialog] = React.useState({
-    isHelpOpened: false
-  });
-
-
+  const [sideBar, setSideBar] = React.useState({ isSideBarActive: false });
+  const [helpDialog, setHelpDialog] = React.useState({ isHelpOpened: false });
 
   if (prevActivateProfile !== activateProfile) {
     setSideBar({ isSideBarActive: activateProfile });
@@ -39,33 +32,26 @@ function OceanProfile(props) {
   }
 
   function handleClick(e) {
-    if (sideBar.isSideBarActive) {
-      setSideBar({ isSideBarActive: false });
-    } else {
-      setSideBar({ isSideBarActive: true });
-    }
+    setSideBar({ isSideBarActive: !sideBar.isSideBarActive });
   }
 
   function handleHelp(e) {
-    if (sideBar.isSideBarActive && e) {
-      setHelpDialog({ isHelpOpened: true });
-    } else {
-      setHelpDialog({ isHelpOpened: false });
+    setHelpDialog({ isHelpOpened: sideBar.isSideBarActive && e });
+  }
+
+  function closeHelpModal(){
+    setHelpDialog({ isHelpOpened: false });
+  }
+
+  /* function handleChange(e){
+    if(props.activateProfile){
+      setSideBar({ isSideBarActive: false });
+    }else{
+      setSideBar({ isSideBarActive: true });
     }
-  }
-  //console.log(props.activateProfile)
-  /*
-function handleChange(e){
+  } */
 
-  if(props.activateProfile){
-    setSideBar({ isSideBarActive: false });
-  }else{
-    setSideBar({ isSideBarActive: true });
-  }
-}
-*/
-
-  let oceanSliders = Object.keys(traits).map(function(key) {
+  const oceanSliders = Object.keys(traits).map(function(key) {
     return (
       <div className="textSlider" key={key}>
         <div className="icon">
@@ -83,19 +69,25 @@ function handleChange(e){
       </div>
     )
   });
-  let helpMainTitle = "From these FIVE personality traits, marketers believe they can distinguish every human being";
 
-  let helpTitle = ["Openness",
+  const helpMainTitle = "From these FIVE personality traits, we can distinguish each & every every human being";
+
+  const helpTitle = [ // get this data from User
+    "Openness",
     "Conscientiousness",
     "Extraversion",
     "Agreeableness",
-    "Neuroticism"];
+    "Neuroticism"
+  ];
 
-  let helpText = [{Openness: "Openness to experience describes a dimension of personality that distinguishes imaginative, creative people from down-to-earth, conventional people. ",
+  // get this data from User
+  const helpText = [{
+    Openness: "Openness to experience describes a dimension of personality that distinguishes imaginative, creative people from down-to-earth, conventional people. ",
     Conscientiousness: "Conscientiousness concerns the way in which we control, regulate, and direct our impulses. ",
     Extraversion:" Extraversion is marked by  engagement with the external world, versus being comfortable with your own company.",
     Agreeableness: "Agreeableness reflects individual differences in concern with cooperation and social harmony. ",
-    Neuroticism: "Neuroticism refers to the tendency to experience negative emotions."}];
+    Neuroticism: "Neuroticism refers to the tendency to experience negative emotions."
+  }];
 
   const oceanHelp = [];
 
@@ -103,7 +95,8 @@ function handleChange(e){
     oceanHelp.push(
       <div className="help-item" key={index}>
         <div className="icon">
-          <img src={"/imgs/" + helpTitle[index].charAt(0).toLowerCase() + helpTitle[index].slice(1) + ".svg"} alt={index} />
+          <img src={"/imgs/" + helpTitle[index].charAt(0).toLowerCase()
+            + helpTitle[index].slice(1) + ".svg"} alt={index} />
           <h2 className="slider-title">{helpTitle[index]}</h2>
         </div>
         <div className="paragraph">
@@ -114,11 +107,6 @@ function handleChange(e){
   }
 
   /*
-
-
-
-
-
     let oceanHelp = Object.keys(traits).map(function(key) {
       return (
         <div className="helpItem" key={key}>
@@ -133,17 +121,11 @@ function handleChange(e){
 
     });
   */
-
-  function closeHelpModal(){
-    setHelpDialog({ isHelpOpened: false });
-  }
-
   return (
     <div id="outer-container" className="OceanProfile" >
       <SideNav expanded={sideBar.isSideBarActive} onToggle={e => handleClick(e)}
         className={sideBar.isSideBarActive ? "SideNav-main-expanded" : "SideNav-main-collapsed"}>
         <SideNav.Toggle className={sideBar.isSideBarActive ? "SideNav-toggle-expanded" : "SideNav-toggle-collapsed"}
-
           onClick={e => handleClick(e)}>  <div id="box2">
             <span id="box2Text"></span>
           </div><h1>OCEAN Profile</h1>
@@ -154,17 +136,17 @@ function handleChange(e){
               <div className="split-h">
                 <div className="split-l">
                   <div className="profile-info">
-                    <AvatarComponent target={{ name: tname, image: targetImage }} />
-                    <h2>{tname}'s<br />OCEAN Profile</h2>
+                    <AvatarComponent target={{ name: name, image: image, updatedAt: updatedAt }} />
+                    <h2>{name}'s<br />OCEAN Profile</h2>
                     <img className="helpIcon" alt="help" src="imgs/help.svg" onClick={e => handleHelp(true)} />
                   </div>
                   <hr />
                   <p>
-                    {tname} is the type of person that is not afraid to tell people how it is.
+                    {name} is the type of person that is not afraid to tell people how it is.
                   <br /><br />
-                    They may appear argumentative, confrontational, insensitive, intimidating, and controlling.
+                    {perspron.ucf()} may appear argumentative, confrontational, insensitive, intimidating, and controlling.
                   <br /><br />
-                    They can overwhelm others with their energy, intelligence, and desire to order the world around them. </p>
+                    {perspron.ucf()} can overwhelm others with {posspron} energy, intelligence, and desire to order the world around {objpron}. </p>
                 </div>
                 <div className="split-r">
                   <div className="OceanSliders">
@@ -182,9 +164,7 @@ function handleChange(e){
           </NavItem>
         </SideNav.Nav>
       </SideNav>
-
     </div>
-
   );
 }
 

@@ -3,19 +3,11 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Button from "@material-ui/core/Button";
-import HeaderLogo from '../../Icons/headerlogo-colour.svg';
+
 import ComponentStyles from '../../App.module.css';
-import { Link } from 'react-router-dom';
 import "./OceanProfileHelpModal.scss";
-
-
-function getModalStyle() {
-  return {
-    top: `50%`,
-    left: `50%`,
-    transform: `translate(-50%, -50%)`
-  };
-}
+//import HeaderLogo from '../../Icons/headerlogo-colour.svg';
+//import { Link } from 'react-router-dom';
 
 const styles = theme => ({
   paper: {
@@ -25,35 +17,39 @@ const styles = theme => ({
     boxShadow: theme.shadows[5],
     outline: "none",
     padding: "12px"
-
   },
   title: {
     textAlign: "left"
   },
   content: {
     textAlign: "left"
-  },
-
+  }
 });
+
+function getModalStyle() {
+  return {
+    top: `50%`,
+    left: `50%`,
+    transform: `translate(-50%, -50%)`
+  };
+}
 
 function SimpleModal(props) {
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = React.useState(getModalStyle);
 
   const { classes } = props;
-  let content = props.content;
+  const content = props.content;
+  const helpTitle = [];
+  const helpText = [];
+  const oceanHelp = [];
 
-  let helpTitle = [];
-  let helpText = [];
-
-  content.forEach((item, i) => {
+  content.forEach((item) => {
     for (var key in item) {
       helpTitle.push(key)
       helpText.push(item[key])
     }
   });
-
-  const oceanHelp = [];
 
   for (const [index, value] of helpText.entries()) {
     oceanHelp.push(
@@ -68,7 +64,6 @@ function SimpleModal(props) {
       </div>
     )
   }
-
 
   //  console.log(summary.contentHere.length === 0? setSummary({contentHere: props.summary}): setSummary({contentHere: props.summary}))
   return (
@@ -93,7 +88,8 @@ function SimpleModal(props) {
             {oceanHelp[4]}
           </div>
         </div>
-          <Button className={ComponentStyles.button} onClick={props.onClose} id="help-modal-button">X</Button>
+        <Button className={ComponentStyles.button}
+          onClick={props.onClose} id="help-modal-button">X</Button>
       </div>
     </Modal>
   );

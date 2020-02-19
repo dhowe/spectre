@@ -8,8 +8,7 @@ import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 //import colours from '../../colors.scss';
 
-const styles = {
-};
+const styles = {};
 
 class Pledge extends React.Component {
   constructor(props) {

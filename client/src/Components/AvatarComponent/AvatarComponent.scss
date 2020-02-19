@@ -1,12 +1,12 @@
 @import '../../colors.scss';
+
 div.avatar-image {
-  background-image: url("default.jpg");
+  background-image: url("default.jpg"); // duplicated - pls remove
   background-repeat: no-repeat;
   background-position: center bottom;
   background-size: 95px 95px;
   font-size: 0px;
 }
-
 
 @media screen and (orientation:landscape) {
   div.avatar-image {
@@ -15,7 +15,6 @@ div.avatar-image {
     height: 100px;
     border: solid $grey 3px;
 
-
     &:hover {
         border-color: $blue;
     }
@@ -23,13 +22,9 @@ div.avatar-image {
 
   .content p.avatar-name {
     font-size: 20px;
-
     color: $lightGrey;
   }
-
-
 }
-
 
 @media screen and (orientation:portrait) {
   div.avatar-image {
@@ -48,6 +43,4 @@ div.avatar-image {
     font-weight: 500;
     color: $lightGrey;
   }
-
-
 }

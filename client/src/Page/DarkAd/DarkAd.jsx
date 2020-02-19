@@ -32,7 +32,7 @@ const styles = {
     '&:hover': {
       backgroundColor: '#21c0fc',
       color: '#ffffff',
-    },
+    }
   },
   ad: {
     position: 'relative',
@@ -40,27 +40,23 @@ const styles = {
     width: '642px',
     height: '570px',
   },
-
-  adPage2:{
+  adPage2: {
     position: 'relative',
     margin: '0 auto',
     width: '642px',
   },
-
   campaignPage2: {
     position: 'absolute',
     bottom: '13px',
     right: '0',
     width: '150px',
   },
-
   campaignImage: {
     position: 'absolute',
     bottom: '106px',
     right: '0',
     width: '150px',
-  },
-
+  }
 };
 
 class DarkAd extends React.Component {
@@ -76,9 +72,7 @@ class DarkAd extends React.Component {
       pageDone: false,
       pageOne: { display: 'block' },
       pageTwo: { display: 'none' },
-      targetName: '',
-      target: { name: '', traits: '' },
-      targetImage: null,
+      target: UserSession.oceanData(),
     };
   }
 
@@ -86,39 +80,36 @@ class DarkAd extends React.Component {
     const user = await UserSession.ensure(this.context, ['adIssue', 'target']);
     this.setState({
       issue: user.adIssue,
+      target: UserSession.oceanData(user.target),
       images: user.target.influences[user.adIssue].images,
-      slogans: user.target.influences[user.adIssue].slogans,
-      targetName: user.target.name,
-      target: user.target,
-      targetImage: UserSession.profileDir + user.targetImage()
+      slogans: user.target.influences[user.adIssue].slogans
     });
   }
 
   handleNextPage(e) {
     e.preventDefault();
-
-//    if (btnEnabledPg1)) {
-      this.setState({ pageOne: { display: 'none' } })
-      this.setState({ pageTwo: { display: 'block' } })
-  //  }
+    this.setState({ pageOne: { display: 'none' }, pageTwo: { display: 'block' } })
+    // if (btnEnabledPg1)) {
+    // this.setState({ pageOne: { display: 'none' } })
+    // this.setState({ pageTwo: { display: 'block' } })
+    // }
   }
 
   render() {
     const { classes } = this.props;
-    const { issue, images, slogans, targetName, target, targetImage } = this.state;
+    const { issue, images, slogans, target } = this.state;
     const redimg = UserSession.imageDir + 'darkadred.png';
     const cimage = UserSession.imageDir + 'vote-' + issue + '.png';
     const btnEnabledPg1 = (this.state.defaultImageSelected !== true && this.state.text.length);
-  //  const btnEnabledPg2 = btnEnabledPg1;
+    //  const btnEnabledPg2 = btnEnabledPg1;
     //console.log(slogans);
     return (
       <div className={classes.root + " darkAd"}>
         <SpectreHeader colour="white" progressActive progressNumber="one" />
-          <OceanProfile subject={target} subjectImage={targetImage} />
+        <OceanProfile target={target} />
         <IdleChecker />
         <div className={`${classes.content} content`}>
           <div style={this.state.pageOne}>
-
             <h1>Create Your Campaign</h1>
             <div className="split-half">
               <div className="split-left">
@@ -152,23 +143,28 @@ class DarkAd extends React.Component {
             </div>
           </div>
           <div style={this.state.pageTwo}>
-            <h1 className="noSpacing"><br/>Your Targeted Facebook ad:</h1>
-              <div className={classes.adPage2}>    { /* adIssue should never change after being selected '*/}
-                <img className={ComponentsStyles.adImage} src={this.state.image} alt="leave"></img>
-                <p style={this.state.text ? { backgroundColor: 'red' } : { backgroundColor: 'none' }} className={ComponentsStyles.adTextPage2}>{this.state.text}</p>
-                {!this.state.defaultImageSelected ? <img className={classes.campaignPage2} src={cimage} alt="leave"></img> : ''}
-              </div>
-              <p> Share with <span>{targetName}</span></p>
+            <h1 className="noSpacing"><br />Your Targeted Facebook ad:</h1>
+            <div className={classes.adPage2}>    { /* adIssue should never change after being selected '*/}
+              <img className={ComponentsStyles.adImage} src={this.state.image} alt="leave"></img>
+              <p style={this.state.text ? { backgroundColor: 'red' } : { backgroundColor: 'none' }} className={ComponentsStyles.adTextPage2}>{this.state.text}</p>
+              {!this.state.defaultImageSelected ? <img className={classes.campaignPage2} src={cimage} alt="leave"></img> : ''}
+            </div>
+            <p> Share with <span>{target.name}</span></p>
           </div>
           <div className="link">
             <div style={this.state.pageOne}>
-              <IconButton enabled={btnEnabledPg1} onClick={e => this.handleNextPage(e)} className={ComponentsStyles.iconButtonStyle1} icon="next" text="Next" />
+              <IconButton enabled={btnEnabledPg1}
+                onClick={e => this.handleNextPage(e)}
+                className={ComponentsStyles.iconButtonStyle1}
+                icon="next" text="Next" />
             </div>
             <div style={this.state.pageTwo}>
               <Link to="/success-ad" onClick={() => this.context.targetAd =
                 { image: this.state.image, slogan: this.state.text }}>
                 <div className={ComponentsStyles.buttonWrapper}>
-                  <Button className="shareButton" variant="contained" color="primary"><img alt="shareIcon" src="./imgs/shareIcon.svg" /><strong>Share</strong></Button>
+                  <Button className="shareButton" variant="contained" color="primary">
+                    <img alt="shareIcon" src="./imgs/shareIcon.svg" /><strong>Share</strong>
+                  </Button>
                 </div>
               </Link>
             </div>

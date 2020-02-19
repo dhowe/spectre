@@ -9,14 +9,17 @@ const { route, auth, mode } = doConfig();
 // We store the current User in React context for easy access
 let UserSession = React.createContext({});
 
-UserSession.defaultUsers = DefaultUsers;
+UserSession.clientId = -1;
+UserSession.serverErrors = 0;
 UserSession.useBrowserStorage = true;
-UserSession.storageKey = 'spectre-user';
+UserSession.defaultUsers = DefaultUsers;
 UserSession.profileDir = (process.env.PUBLIC_URL || '') + '/profiles/';
 UserSession.imageDir = (process.env.PUBLIC_URL || '') + '/imgs/';
+UserSession.publicUrl = 'https://spectreknows.me/'; // ?
 UserSession.serverDisabled = typeof auth === 'undefined';
-UserSession.serverErrors = 0;
-UserSession.clientId = -1;
+UserSession.epochDate = new Date("1970-01-01T12:00:00.00");
+UserSession.storageKey = 'spectre-user';
+
 
 localIPs(ip => (UserSession.clientId = ip), '192.');
 
@@ -44,18 +47,46 @@ UserSession.create = async (user) => {
   UserSession.useBrowserStorage && sessionStorage.setItem
     (UserSession.storageKey, JSON.stringify(json._id));
 
-  return Object.assign(user, json);
+  return user.assign(json);
+}
+
+UserSession.targetImage = (target) => {
+  let fname = ((target && typeof target._id !== 'undefined'
+    && target._id.length) ? target._id : 'default') + '.jpg';
+  return (target ? UserSession.profileDir : UserSession.imageDir) + fname;
 }
 
 /*
  * Clears data from browser session storage
  */
-UserSession.clear = () => {
+UserSession.clear = (context) => {
   sessionStorage.clear();
+  if (context) context = new User();
   UserSession.serverErrors = 0;
   UserSession.serverDisabled = false;
   console.log('[USER] Session initialized');
 }
+
+// target: {
+//   name: '',
+//   traits: {},
+//   perspron: 'their',
+//   posspron: 'they',
+//   objpron: 'them',
+//   image: UserSession.imageDir + 'default.jpg',
+//   updatedAt: UserSession.epochDate
+// }
+
+UserSession.oceanData = (target) => ({
+  name: target ? target.name : '',
+  traits: target ? target.traits : {},
+  perspron: target ? UserSession.persPron(target) : 'their',
+  posspron: target ? UserSession.possPron(target) : 'they',
+  objpron: target ? UserSession.objPron(target) : 'them',
+  updatedAt: target ? target.updatedAt : UserSession.epochDate,
+  image: UserSession.targetImage(target),
+});
+
 
 /*
  * Repairs a user using sessionStorage and db if needed (async)
@@ -71,7 +102,7 @@ UserSession.ensure = async (user, props, opts) => {
     if (!sid) {
       console.warn('[STUB] No user._id, creating new user');
       fillMissingProps(user, ['login', 'name', 'gender',
-        'virtue', 'adIssue', 'traits', 'celebrity']);
+        'virtue', 'adIssue', 'traits', 'celebrity', 'updatedAt']);
 
       await UserSession.create(user); // save new user
       console.warn('[STUB] Setting user._id: ' + user._id);
@@ -87,7 +118,8 @@ UserSession.ensure = async (user, props, opts) => {
   }
 
   try {
-    let userLookup = false, modified = false;
+    let userLookup = false;
+    let modified = false;
 
     // do we have an id, if not check session, and try to repair
     if (!allowNoId && typeof user._id === 'undefined') {
@@ -96,16 +128,16 @@ UserSession.ensure = async (user, props, opts) => {
 
     // should have user with id here, if not, then probably no server
     if (!user || (!allowNoId && !user._id)) {
-      console.warn('[STUB] Unable to set user._id, using ' + user._id, user);
       user._id = -1;
+      console.warn('[STUB] Unable to set user._id, using ' + user._id, user);
     }
 
     // // if we need hasImage, we need to check the db
-    // if (props.includes('hasImage')) {
-    //   props = arrayRemove(props, 'hasImage');
-    //   //if (user._id !== -1 && !userLookup) await UserSession.lookup(user._id);
-    //   console.log('[USER] ' + user._id + '.hasImage = ' + user.hasImage);
-    // }
+    if (props.includes('hasImage')) {
+      props = arrayRemove(props, 'hasImage');
+      if (user._id !== -1 && !userLookup) await UserSession.lookup(user._id);
+      //console.log('[USER] ' + user._id + '.hasImage = ' + user.hasImage);
+    }
 
     // similars: if we need a target then we need similars
     if (props.includes('target') && !user.target) {
@@ -117,8 +149,8 @@ UserSession.ensure = async (user, props, opts) => {
     if (props.includes('similars') && !user.similars.length) {
       props = arrayRemove(props, 'similars');
       if (!User.hasOceanTraits(user)) modified = fillMissingProps(user, ['traits']);
-      user = await UserSession.similars(user);
-      console.warn('[STUB] Fetched similars:', user.toString());
+      user = await UserSession.targets(user);
+      console.log('[STUB] Fetched similars:', user.toString());
     }
 
     // stub any other properties and update if needed
@@ -168,8 +200,9 @@ function fillMissingProps(user, props) {
     adIssue: () => rand(AdIssues),
     traits: () => User.randomTraits(),
     name: () => (rand(Cons) + rand(Vows) + rand(Cons)).ucf(),
-    login: () => user.name + (+new Date()) + '@test.com',
+    login: () => user.name + Date.now() + '@test.com',
     celebrity: () => rand(Celebrities),
+    updatedAt: () => new Date(),
     target: () => {
       if (!user.similars || !user.similars.length) throw Error
         ('propStubber.target -> no similars')
@@ -227,7 +260,7 @@ UserSession.lookup = async (userId) => {
       },
     })
     if (e) return handleError(e, route, 'lookup[1]');
-    return Object.assign(new User(), json);
+    return User.create(json);
   }
   catch (e) {
     handleError(e, endpoint, 'lookup[2]');
@@ -256,7 +289,7 @@ UserSession.update = async (user) => {
       body: toNetworkString(user)
     })
     if (e) return handleError(e, route, 'update[1]');
-    return Object.assign(user, json);
+    return user.assign(json);
   }
   catch (e) {
     handleError(e, endpoint, 'update[2]');
@@ -293,7 +326,12 @@ UserSession.targets = async (user) => {
       },
     });
     if (e) return handleError(e, route, 'targets[2]');
-    user.similars = json;
+
+    if (!Array.isArray(json)) throw Error
+      ('Expected JSON array got ' + typeof json + ' -> ' + json);
+
+    user.similars = json.map(sim => User.create(sim));
+
     return user; // ?
   }
   catch (e) {
@@ -303,6 +341,7 @@ UserSession.targets = async (user) => {
 
 /*
  * Fetch similars for a user (requires traits)
+ * Returns most similar users regardless of recentness
  */
 UserSession.similars = async (user) => {
 
@@ -330,7 +369,9 @@ UserSession.similars = async (user) => {
       },
     });
     if (e) return handleError(e, route, 'similars[2]');
-    user.similars = json;
+
+    user.similars = json.map(sim => User.create(sim));
+
     return user; // ?
   }
   catch (e) {
@@ -374,7 +415,7 @@ UserSession.uploadImage = (user, data) => {
 
   UserSession.postImage(user, imgfile,
     (e) => console.error('[WEBCAM] Error', e),
-    () => user.hasImage = true);
+    () => console.log('[WEBCAM] Upload OK'));
 
   return true;
 }

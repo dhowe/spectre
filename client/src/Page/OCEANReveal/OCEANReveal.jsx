@@ -16,6 +16,7 @@ const timing = [ 0 , 2000, 4000];
 const styles = {};
 
 class OCEANReveal extends React.Component {
+
   constructor(props) {
     super(props, '/take-back-control');
     this.timeout = -1;
@@ -54,8 +55,10 @@ class OCEANReveal extends React.Component {
     const { celebrity, sentences, modalOpen, readyForVideo } = this.state;
 
     let timer = 0, videoPlaceholder = readyForVideo ? (
-      <Video ref={e => { this.video = e }} className={classes.video}
-        movie={`https://spectreknows.me/video/wrapup_${celebrity}.mp4`} key="349587"
+      <Video key="349587"
+        ref={e => { this.video = e }}
+        className={classes.video}
+        movie={`${UserSession.publicUrl}video/wrapup_${celebrity}.mp4`}
         onComplete={() => this.props.history.push('/take-back-control')}
       />) : <br />;
 
@@ -75,16 +78,18 @@ class OCEANReveal extends React.Component {
             sentences.map((sent, i) => {
             return (
               <p className="normal" key={i}>
-                {sent.split('').map((letter, j) => {
-                  let delay = timing[2] + ((++timer + (i * linePause)) * keyPause);
-                  return (
-                    <Fade key={j} in={true} style={{ transitionDelay:  delay + 'ms' }}>
-                      <span key={`fade-${i}`} style={{ color: '#4F4F4F' }}>
-                        {letter}
-                      </span>
-                    </Fade>
-                  );
-                })}
+                {
+                  sent.split('').map((letter, j) => {
+                    let delay = timing[2] + ((++timer + (i * linePause)) * keyPause);
+                    return (
+                      <Fade key={j} in={true} style={{ transitionDelay:  delay + 'ms' }}>
+                        <span key={`fade-${i}`} style={{ color: '#4F4F4F' }}>
+                          {letter}
+                        </span>
+                      </Fade>
+                    );
+                  })
+                }
               </p>
             );
           })

@@ -8,11 +8,11 @@ import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import IconButton from '../../Components/IconButton/IconButton';
 import IconButtonToggle from '../../Components/IconButton/IconButtonToggle';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
-import ComponentsStyles from '../../App.module.css';
 import UserSession from '../../Components/UserSession/UserSession';
 
-const styles = {
-};
+import ComponentsStyles from '../../App.module.css';
+
+const styles = {};
 
 class ConsumerData extends React.Component {
   constructor(props) {
@@ -31,7 +31,6 @@ class ConsumerData extends React.Component {
 
   countAdd = () => {
     this.setState({ count: document.getElementsByClassName('iconEnabled').length });
-    console.log(this.state.count);
   }
 
   dataCollect = () => {
