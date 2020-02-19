@@ -141,7 +141,7 @@ SideNav-expanded {
   display: flex;
   white-space: normal;
   position: relative;
-  top: 300px;
+  top: 250px;
 }
 
 .split-l,
@@ -150,4 +150,27 @@ SideNav-expanded {
   margin: 0;
   width: 600px;
   text-align: left;
+}
+
+
+.profile-info{
+  display: flex;
+}
+
+.profile-info div p{
+  display: none;
+}
+
+.profile-info h2{
+  font-size: 32px;
+  line-height: 52px;
+  color: $white;
+  padding-left:20px;
+  padding-top:10px;
+}
+
+.helpIcon{
+  filter: brightness(0) invert(1);
+  padding-left: 130px;
+
 }
