@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 //import Typography from '@material-ui/core/Typography';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
-
+import OceanProfile from '../../Components/OceanProfile/OceanProfile';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import IconButton from '../../Components/IconButton/IconButton';
 import { Link } from 'react-router-dom';
@@ -18,8 +18,10 @@ class Campaign extends React.Component {
     super(props, '/dark-ad');
     this.state = {
       targetName: '',
-      targetThemes: ['',''],
-      targetPron: ''
+      targetThemes: ['', ''],
+      targetPron: '',
+      target: { name: '', traits: '' },
+      targetImage: null,
     };
   }
 
@@ -34,16 +36,19 @@ class Campaign extends React.Component {
     this.setState({
       targetName: user.target.name.ucf(),
       targetThemes: user.target.influences[user.adIssue].themes,
-      targetPronoun: UserSession.persPron(user.target)
+      targetPronoun: UserSession.persPron(user.target),
+      target: user.target,
+      targetImage: UserSession.profileDir + user.targetImage()
     });
   }
 
   render() {
     const { classes } = this.props;
-    let { targetThemes, targetPronoun, targetName } = this.state;
+    let { targetThemes, targetPronoun, targetName, target, targetImage } = this.state;
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive progressNumber="one" />
+        <OceanProfile subject={target} subjectImage={targetImage} />
         <IdleChecker />
         <div className={`${classes.content} content`}>
           <h1 className="addSpacing">

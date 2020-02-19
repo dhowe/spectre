@@ -1,0 +1,120 @@
+@import '../../colors.scss';
+
+#help-title-div {
+  width: 1713px;
+  text-align: center;
+  border-radius: 0px;
+  height: 963px;
+  background-color: $blue;
+}
+
+#help-title-div button *{
+  color: $white;
+}
+
+#help-title-div button {
+  position: absolute;
+  top: 10px;
+  right:10px;
+}
+
+#help-content {
+  width: 1650px;
+  text-align: center;
+  background-color: $blue;
+  border-radius: 0;
+
+  overflow-y:hidden;
+  display: flex;
+}
+
+
+#modal-title {
+  font-size: 50px;
+  font-weight: 200;
+  text-align: center;
+  color: $white;
+}
+
+
+
+#simple-modal-description {
+  padding: 50px 15px;
+  text-align: center;
+  font-weight: normal;
+  color: $blue;
+    font-size: 34px;
+}
+
+
+#help-modal-button {
+  padding-left: 10px;
+  color: $white;
+  font-weight: 200;
+  font-size: 34px;
+}
+
+.help-logo{
+  margin: 10px auto;
+}
+
+.help-logo img{
+  width: 400px;
+}
+
+
+
+
+.help-main-title{
+  color: $white;
+  font-size: 28px;
+  line-height: 46px;
+  width: 100%;
+    font-weight: bold;
+    padding-top: 50px;
+}
+
+
+.helpPage-title{
+  width: 1200px;
+}
+
+.help-item{
+  padding: 20px 20px 60px 60px;
+  height: 200px;
+}
+
+.help-item .icon{
+  display: flex;
+}
+
+.help-item .icon h2{
+  display: flex;
+  color: $white;
+  font-size: 32px;
+  line-height: 52px;
+  padding-top:20px;
+  padding-left: 20px;
+
+}
+
+.help-item .icon img{
+  filter: brightness(0) invert(1);
+  width: 93px;
+  height: 93px;
+}
+
+.help-paragraph p {
+  color: $white;
+  font-size: 24px;
+  line-height: 40px;
+}
+
+
+#help-content .split-l{
+  width: 820px;
+}
+
+#help-content .split-r{
+    width: 820px;
+}

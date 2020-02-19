@@ -17,21 +17,29 @@ const styles = {
 class PickYourSide extends React.Component {
   constructor(props) {
     super(props, '/campaign');
-    this.state = { targetName: '', pronoun: '', target: { name: '', traits: '' } };
+    this.state = {
+      targetName: '', pronoun: '',
+      target: { name: '', traits: '' },
+      targetImage: null,
+    };
   }
 
   async componentDidMount() {
     const user = await UserSession.ensure(this.context, [/*'_id',*/ 'name', 'target']);
-    this.setState({ targetName: user.target.name, pronoun: (user.target.gender === 'male' ? 'him' : 'her'), target: user.target });
+    this.setState({
+      targetName: user.target.name, pronoun: (user.target.gender === 'male' ? 'him' : 'her'),
+      target: user.target,
+      targetImage: UserSession.profileDir + user.targetImage()
+    });
   }
 
   render() {
     const { classes } = this.props;
-    const { targetName, pronoun, target } = this.state;
+    const { targetName, pronoun, target, targetImage } = this.state;
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive progressNumber="one" />
-        <OceanProfile subject={target} />
+        <OceanProfile subject={target} subjectImage={targetImage} />
         <IdleChecker />
         <div className={`${classes.content} content`}>
           <h1>

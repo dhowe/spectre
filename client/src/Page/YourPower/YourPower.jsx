@@ -25,6 +25,7 @@ class YourPower extends React.Component {
       targetName: '',
       targetPronoun: '',
       target: { name: '', traits: '' },
+      targetImage: null,
       activateProfile: false
     }
   }
@@ -36,7 +37,8 @@ class YourPower extends React.Component {
       virtue: user.virtue,
       targetName: user.target.name,
       targetPronoun: UserSession.possPron(user.target),
-      target: user.target
+      target: user.target,
+      targetImage: UserSession.profileDir + user.targetImage()
     });
   }
 
@@ -47,13 +49,13 @@ class YourPower extends React.Component {
   render() {
 
     const { classes } = this.props;
-    const { virtue, targetName, targetPronoun, target } = this.state;
+    const { virtue, targetName, targetPronoun, target, targetImage } = this.state;
     //console.log(this.state.activateProfile)
 
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive progressNumber="one" />
-        {this.state.activateProfile ? <OceanProfile subject={target} activateProfile={this.state.activateProfile} /> : null}
+        {this.state.activateProfile ? <OceanProfile subject={target} subjectImage={targetImage} activateProfile={this.state.activateProfile} /> : null}
         <div className={`${classes.content} content`}>
           <Fade in style={{ transitionDelay: '200ms' }}>
             <h2>You now have the <span>{virtue}</span> to influence&nbsp;<span>{targetName}</span>.</h2>
