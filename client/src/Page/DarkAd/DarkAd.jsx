@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import IconButton from '../../Components/IconButton/IconButton';
 import UserSession from '../../Components/UserSession/UserSession';
+import OceanProfile from '../../Components/OceanProfile/OceanProfile';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
@@ -75,7 +76,9 @@ class DarkAd extends React.Component {
       pageDone: false,
       pageOne: { display: 'block' },
       pageTwo: { display: 'none' },
-      targetName: ''
+      targetName: '',
+      target: { name: '', traits: '' },
+      targetImage: null,
     };
   }
 
@@ -86,6 +89,8 @@ class DarkAd extends React.Component {
       images: user.target.influences[user.adIssue].images,
       slogans: user.target.influences[user.adIssue].slogans,
       targetName: user.target.name,
+      target: user.target,
+      targetImage: UserSession.profileDir + user.targetImage()
     });
   }
 
@@ -100,7 +105,7 @@ class DarkAd extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { issue, images, slogans, targetName } = this.state;
+    const { issue, images, slogans, targetName, target, targetImage } = this.state;
     const redimg = UserSession.imageDir + 'darkadred.png';
     const cimage = UserSession.imageDir + 'vote-' + issue + '.png';
     const btnEnabledPg1 = (this.state.defaultImageSelected !== true && this.state.text.length);
@@ -109,9 +114,11 @@ class DarkAd extends React.Component {
     return (
       <div className={classes.root + " darkAd"}>
         <SpectreHeader colour="white" progressActive progressNumber="one" />
+          <OceanProfile subject={target} subjectImage={targetImage} />
         <IdleChecker />
         <div className={`${classes.content} content`}>
           <div style={this.state.pageOne}>
+
             <h1>Create Your Campaign</h1>
             <div className="split-half">
               <div className="split-left">

@@ -24,7 +24,7 @@ class YourPower extends React.Component {
       virtue: '',
       targetName: '',
       targetPronoun: '',
-      target: { name: '', traits: ''},
+      target: { name: '', traits: '' },
       targetImage: null,
       activateProfile: false
     }
