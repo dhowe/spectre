@@ -20,7 +20,12 @@ class DataIs extends React.Component {
 
   async componentDidMount() {
     let nextPage = this.state.nextPage;
+    console.log('DataIs1', this.context.virtue);
     const user = await UserSession.ensure(this.context, ['virtue', 'hasImage']);
+    if (user.virtue !== this.context.virtue) throw Error(user+"\n\n"+this.context);
+    console.log('DataIs2', user.virtue);
+    console.log('DataIs2b', this.context.virtue);
+
     if (!user.hasImage) { // MOVE TO personalized?
       nextPage = '/selfie';
       console.log('[DATAIS] No webcam image found for ' + user._id);
@@ -34,15 +39,17 @@ class DataIs extends React.Component {
 
   render() {
     const { virtue, virtueAdverb } = this.state;
+    console.log('DataIs3', virtue);
+
     return (
 
       <div className={this.props.root}>
         { // <Keyboardist bindings={{
-        //   Right: () => {
-        //     console.log('RIGHT');
-        //     this.context.goto(this.props, this.state.nextPage)}
-        //     return false;
-        //   }}} />
+          //   Right: () => {
+          //     console.log('RIGHT');
+          //     this.context.goto(this.props, this.state.nextPage)}
+          //     return false;
+          //   }}} />
         }
         <SpectreHeader colour="white" />
         <div className={`${this.props.content} content`}>
@@ -50,10 +57,12 @@ class DataIs extends React.Component {
             <h1 className="addSpacing">Data is {virtue}</h1>
           </Fade>
           <Fade in={true} style={{ transitionDelay: '1200ms' }}>
-            <p className="normal">To become more <span>{virtueAdverb}</span> you need&nbsp;more&nbsp;data</p>
+            <p className="normal">To become more <span>{virtueAdverb} </span>
+              you need&nbsp;more&nbsp;data</p>
           </Fade>
           <Fade in={true} style={{ transitionDelay: '2000ms' }}>
-            <p className="normal-nextline">We can help you believe in the {virtue}&nbsp;of&nbsp;Dataism.</p>
+            <p className="normal-nextline">We can help you believe in the
+              {virtue}&nbsp;of&nbsp;Dataism.</p>
           </Fade>
           <Countdown
             ref={e => this.countdown = e}

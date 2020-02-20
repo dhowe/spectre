@@ -42,7 +42,7 @@ let stateObj = {
   emailValid: false,
   email: '',
   name: '',
-  gender: '',
+  //gender: '',
   focus: 'name',
   layoutName: 'default'
   //clearEmail: this.clearEmail,
@@ -160,11 +160,9 @@ class SocialLogin extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { email, name, gender } = this.state;
-    const btnEnabledPg1 = email && email.length &&
-      name && name.length;
-    const btnEnabledPg2 = email && email.length &&
-      name && name.length && (typeof gender !== 'undefined');
+    const { email, name } = this.state;
+    const btnEnabledPg1 = email && email.length && name && name.length;
+    const btnEnabledPg2 = email && email.length && name && name.length;
 
     return (
       <div className={`${classes.root} socialLogin`}>

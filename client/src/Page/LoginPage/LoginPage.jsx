@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-//import Typography from '@material-ui/core/Typography';
 import Modal from '../../Components/Modal/Modal';
 import TOSModal from '../../Components/TOSModal/TOSModal';
 import SocialLogin from '../../Components/SocialLogin/SocialLogin';
@@ -16,13 +15,9 @@ import Tos from './Tos'
 import { withStyles } from '@material-ui/core/styles';
 import './LoginPage.scss';
 
-window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true; // TMP: #138
+//window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true; // TMP: #138
 
 const styles_landscape = {};
-
-const styles_portrait = {
-  marginBottom: 70,
-};
 
 class LoginPage extends React.Component {
 
@@ -54,39 +49,31 @@ class LoginPage extends React.Component {
     this.context.goto(this.props, page);
   }
 
-  handleSubmit = (e, { name, email, gender }) => {
+  handleSubmit = (e, { name, email }) => {
 
     if (e) e.preventDefault();
-
     const user = this.context;
-
     if (!e) { // right-arrow key
-      UserSession.validate(this.context,
-        ['name', 'login', 'gender'],
-        { allowNoId: true });
+      UserSession.validate(this.context, ['name', 'login' ], { allowNoId: true });
       name = user.name;
       email = user.login;
-      gender = user.gender;
-      console.log("[STUB]", name, email, gender);
+      console.log("[STUB]", name, email);
     }
 
-    if (typeof gender === 'undefined') {
-      if (!this.emailIsValid(email)) {
-        if (this.state.emailErrorCount < 3) {
-          this.modalTitle = 'Oops...';
-          this.modalContent = 'That doesn\'t look like a valid email address, please try again';
-          this.setState({ modalOpen: true, emailErrorCount: this.state.emailErrorCount + 1 });
-        }
-        else {
-          this.goto('/login');
-        }
+    if (!this.emailIsValid(email)) {
+      if (this.state.emailErrorCount < 3) {
+        this.modalTitle = 'Oops...';
+        this.modalContent = 'That doesn\'t look like a valid email address, please try again';
+        this.setState({ modalOpen: true, emailErrorCount: this.state.emailErrorCount + 1 });
+      }
+      else {
+        this.goto('/login');
       }
     }
     else {
-      this.social.setState({ name, email, gender });
+      this.social.setState({ name, email });
       user.name = name;
       user.login = email;
-      user.gender = gender;
       this.setState({ modalOpen: false });
       this.saveUser(user);
     }
@@ -103,7 +90,12 @@ class LoginPage extends React.Component {
       if (e.error === 'EmailInUse') {
         this.modalTitle = 'Invalid email';
         this.modalContent = 'Email has already been used';
+
+        // HANDLE #465 HERE (can also use the modal here to alert
+        // user they are being taken to their previous location)
+
         //this.setState({ modalOpen: true });
+
       } else {
         console.error('UserSession.create: ', e);
       }
@@ -161,7 +153,6 @@ class LoginPage extends React.Component {
   }
 
   render() {
-
     return (
       <div className={this.props.classes.root + ' LoginPage'}>
         <SpectreHeader colour="white" />
@@ -192,22 +183,22 @@ class LoginPage extends React.Component {
             ref={ele => { this.social = ele }}
             handleSubmit={this.handleSubmit} />
         </div>
-        <div onClick={this.termsOfService}><Link className='tos' to='#here'>Terms of Service</Link></div>
+        <div onClick={this.termsOfService}>
+          <Link className='tos' to='#here'>Terms of Service</Link>
+        </div>
         <FooterLogo />
       </div>
     );
   }
 }
 
+LoginPage.defaultProps = {
+  height: '500px'
+};
 LoginPage.propTypes = {
   classes: PropTypes.object.isRequired,
   height: PropTypes.string
 };
-
 LoginPage.contextType = UserSession;
 
-LoginPage.defaultProps = {
-  height: '500px'
-};
-
-export default withStyles(window.innerWidth === 1920 ? styles_landscape : styles_portrait)(LoginPage);
+export default withStyles(styles_landscape)(LoginPage);

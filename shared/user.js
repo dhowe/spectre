@@ -46,7 +46,7 @@ export default class User {
       this.lastPage += (this.lastPage.length ? ',' : '') + page;
     }
     this.updatedAt = new Date();
-    console.log('[USER]', this.lastPage, this.updatedAt);
+    //console.log('[USER]', this.lastPage, this.updatedAt);
   }
 
   goto(props, page) {

@@ -5,8 +5,8 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
-
 import { withStyles } from '@material-ui/core/styles';
+
 import ComponentsStyles from '../../App.module.css';
 import './SearchingFor.scss';
 
@@ -19,14 +19,12 @@ class SearchingFor extends React.Component {
   }
 
   async componentDidMount() {
-    let user = await UserSession.ensure(this.context,
-      [/*'_id',*/ 'login', 'gender', 'name']);
+    let user = await UserSession.ensure(this.context, ['login', 'name']);
     this.setState({ name: user.name })
   }
 
   handleClick(virtue) {
-    const user = this.context;
-    user.virtue = virtue;
+    this.context.virtue = virtue;
     this.context.goto(this.props, '/data-is');
   }
 
