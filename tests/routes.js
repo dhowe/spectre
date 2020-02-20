@@ -14,16 +14,13 @@ const clientId = 'localhost';
 dotEnv.config();
 chai.use(chai_http);
 
-expect(DefaultUsers[0].createdAt).to.be.a('date');
-expect(DefaultUsers[0].createdAt.getTime()).eq(new Date(1970,1,1).getTime());
+const dUser = DefaultUsers[0];
+expect(dUser.createdAt).to.be.a('date');
+expect(dUser.createdAt.getTime()).eq(User.epochDate.getTime());
 
 describe('REST API', () => {
 
   let refreshDb = (done) => {
-    // console.log('CALL: refreshDb()');
-    // let users = DefaultUsers.map(u => User.create(u));
-    // expect(users[0].createdAt).to.be.a('date');
-    // expect(users[0].createdAt.getTime()).eq(new Date(1970,1,1).getTime());
     UserModel.deleteMany({}, (err) => {
       err && console.error('ERROR', err);
       let users = DefaultUsers;
@@ -39,34 +36,12 @@ describe('REST API', () => {
           expect(user.createdAt).to.be.a('date');
           expect(user.createdAt.getTime()).eq(new Date(1970,1,1).getTime());
           expect(user.updatedAt).to.be.a('date');
-          // let id = '888888888888888888888888';
-          // chai.request(server)
-          //   .get('/api/users/' + id)
-          //   .auth(env.API_USER, env.API_SECRET)
-          //   .end((err, res) => {
-          //     expect(err).to.be.null;
-          //     expect(res).to.have.status(200);
-          //     expect(res.body.data).to.be.a('object');
-          //     expect(res.body.data._id).eq(id);
-          //     expect(res.body.data.createdAt).to.be.a('string');
-          //     expect(res.body.data.updatedAt).to.be.a('string');
-          //
-          //     let user = User.create(res.body.data);
-          //     expect(user).to.be.a('object');
-          //     expect(user.createdAt).to.be.a('date');
-          //     expect(user.createdAt.getTime()).eq(new Date(1970,1,1).getTime());
-          //     expect(user.updatedAt).to.be.a('date');
-          //     expect(user.updatedAt.getTime()).eq(new Date(2019,1,1).getTime());
-          //
-          //     expect(user._id).eq(id);
-          //     done();
-          //   });
           done();
         });
     });
   }
 
-  it('should prepare db', refreshDb);
+  //it('should prepare db', refreshDb);
 
   describe('User Routes', () => {
 

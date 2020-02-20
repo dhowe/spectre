@@ -26,6 +26,9 @@ class Campaign extends React.Component {
   async componentDidMount() {
     const user = await UserSession.ensure(this.context,
       ['name', 'adIssue', 'target']);
+    if (!user.target) throw Error('no target');
+    console.log(user);
+    console.log(user.target);
     // console.log('adIssue', user.adIssue);
     // console.log('targetName', user.target.name);
     // console.log('target-influences', user.target.influences);

@@ -420,27 +420,15 @@ export default class User {
   // statics =================================================================
 
   static hasOceanTraits(obj) {
-
     if (typeof obj !== 'object') throw Error
-      ('categorize requires object: got ' + typeof obj);
-
-    if (typeof obj.traits === 'undefined') {
-      return false;
+      ('hasOceanTraits expects object: got ' + typeof obj);
+    if (typeof obj.traits === 'undefined') return false;
+    for (let i = 0; i < User.oceanTraits.length; i++) {
+      let t = User.oceanTraits[i];
+      if (!obj.traits.hasOwnProperty(t)) return false;
+      if (obj.traits[t] < 0 || obj.traits[t] > 1) return false;
     }
-    let result = true;
-    User.oceanTraits.forEach(tname => {
-      if (typeof obj.traits[tname] === 'undefined') {
-        //if (obj.traits.hasOwnProperty(tname)) {
-        result = false;
-        return;
-      }
-      let val = obj.traits[tname];
-      if (typeof val === 'undefined' || val < 0 || val > 1) {
-        result = false;
-        return;
-      }
-    });
-    return result;
+    return true;
   }
 
   /*
@@ -569,7 +557,6 @@ export default class User {
     });
   }
 }
-User.epochDate = new Date(1970);
 
 /*
  * MongoDB database schema for the application
@@ -660,6 +647,8 @@ User.schema = () => {
     }
   }
 }
+
+User.epochDate = new Date(1970,1,1);
 
 User.randomTraits = () => {
   let traits = {};  // non-zero random trait values

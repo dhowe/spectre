@@ -17,7 +17,7 @@ UserSession.profileDir = (process.env.PUBLIC_URL || '') + '/profiles/';
 UserSession.imageDir = (process.env.PUBLIC_URL || '') + '/imgs/';
 UserSession.publicUrl = 'https://spectreknows.me/'; // ?
 UserSession.serverDisabled = typeof auth === 'undefined';
-UserSession.epochDate = new Date(1970,1,1);
+UserSession.epochDate = User.epochDate;
 UserSession.storageKey = 'spectre-user';
 
 localIPs(ip => (UserSession.clientId = ip), '192.');
@@ -145,7 +145,7 @@ UserSession.ensure = async (user, props, opts) => {
     }
 
     // if we need a similars then, we need traits
-    if (props.includes('similars') && !user.similars.length) {
+    if (props.includes('similars') && !user.similars) {
       props = arrayRemove(props, 'similars');
       if (!User.hasOceanTraits(user)) modified = fillMissingProps(user, ['traits']);
       user = await UserSession.targets(user);
@@ -188,7 +188,7 @@ function fillMissingProps(user, props) {
   // a property is missing if its undefined or an empty array or string
   let missing = props.filter(p => typeof user[p] === 'undefined'
     || ((typeof user[p] === 'string' || Array.isArray(user[p]))
-      && !user[p].length));
+      && !user[p].length) || (p === 'traits' && user[p].openness < 0));
 
   if (!missing || !missing.length) return false; // all props are ok
 
