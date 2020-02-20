@@ -516,6 +516,8 @@ describe('REST API', () => {
       user.detectedAge = 50
       user.detectedGender = "female";
       user.detectedGenderProb = .4567
+      user.adIssue = 'remain';
+      user.virtue = 'truth';
 
       chai.request(server)
         .post('/api/users/')
@@ -561,6 +563,6 @@ describe('REST API', () => {
         });
     });
 
-    //after(refreshDb);
+    after(refreshDb);
   });
 });

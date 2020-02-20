@@ -15,9 +15,9 @@ export default class User {
     this.updatedAt = this.updatedAt || new Date();
     this.loginType = this.loginType || 'email';
     this.lastPage = this.lastPage || 'login'
-    this.dataChoices = this.dataChoices || {};
-    this.influences = this.influences || {};
-    this.targetAd = this.targetAd || {};
+    // this.dataChoices = this.dataChoices || {};
+    // this.influences = this.influences || {};
+    // this.targetAd = this.targetAd || {};
   }
 
   assign(json) {

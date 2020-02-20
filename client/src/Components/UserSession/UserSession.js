@@ -20,7 +20,6 @@ UserSession.serverDisabled = typeof auth === 'undefined';
 UserSession.epochDate = new Date("1970-01-01T12:00:00.00");
 UserSession.storageKey = 'spectre-user';
 
-
 localIPs(ip => (UserSession.clientId = ip), '192.');
 
 /*
@@ -100,17 +99,17 @@ UserSession.ensure = async (user, props, opts) => {
     // do we have an id in session
     const sid = sessionStorage.getItem(UserSession.storageKey);
     if (!sid) {
-      console.warn('[STUB] No user._id, creating new user');
+      console.log('[STUB] No user._id, creating new user');
       fillMissingProps(user, ['login', 'name', 'gender',
         'virtue', 'adIssue', 'traits', 'celebrity', 'updatedAt']);
 
       await UserSession.create(user); // save new user
-      console.warn('[STUB] Setting user._id: ' + user._id);
+      console.log('[STUB] Setting user._id: ' + user._id);
       return false;
     }
     else {
       let uid = JSON.parse(sid);
-      console.warn('[SESS] Reloaded user._id: ' + uid + ' doing lookup');
+      console.log('[SESS] Reloaded user._id: ' + uid + ' doing lookup');
       let json = await UserSession.lookup(uid);
       Object.assign(user, json);
       return true;
@@ -178,7 +177,7 @@ function fillMissingProps(user, props) {
     let val = user[p];
     if (Array.isArray(val)) val = '[' + val.length + ']';
     if (typeof val === 'object') val = JSON.stringify(val).substring(0, 60);
-    console.warn('[STUB] Setting user.' + p + ': ' + val);
+    console.log('[STUB] Setting user.' + p + ': ' + val);
   };
 
   if (typeof props === 'undefined') return true;
