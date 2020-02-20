@@ -34,18 +34,25 @@ class OCEANReveal extends React.Component {
       ['name', 'login', 'gender', 'traits', 'celebrity']);
 
     const sentences = user.generateSummary();
-    const totalChar = sentences.join().length;
-    const waitingTime = (totalChar * keyPause)
-      + ((sentences.length - 1) * linePause)
+    const allChar = sentences.join("----");
+    const waitingTime = (allChar.length * keyPause)
       + timing.reduce((a, v) => a + v) + 1000;
 
     this.setState({ sentences: sentences, celebrity: user.celebrity });
     this.timeout = setTimeout(() => this.setState
       ({ readyForVideo: true }), waitingTime);
+
+     // append script tag for audio
+     const script = document.createElement("script");
+     script.innerHTML = 'const allChar = "'+ allChar +'";const waitTime = ' + timing[2] + '; const each =' + 50 + ";";
+     script.innerHTML += 'var audio=document.getElementById("type");setTimeout(function(){for(let a=0;a<allChar.length;a++){setTimeout(function(a){"-"!=allChar[a]&&" "!=allChar[a]?audio.play():audio.pause()},each*a,a)}},waitTime);';
+     script.async = true;
+     document.body.appendChild(script);
   }
 
   componentWillUnmount() {
     clearTimeout(this.timeout);
+    //TODO: clear audio timeout?
   }
 
   closeModal = () => {
@@ -95,6 +102,8 @@ class OCEANReveal extends React.Component {
               );
             })
           }
+        <audio id="type" src="http://chenqianxun.com/download/key.wav" preload="auto">
+        </audio>
         </div>
         <Modal
           isOpen={modalOpen}
