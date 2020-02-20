@@ -50,6 +50,10 @@ class LoginPage extends React.Component {
     this.setState({ height: window.innerHeight + 'px' });
   }
 
+  goto = (page) => {
+    this.context.goto(this.props, page);
+  }
+
   handleSubmit = (e, { name, email, gender }) => {
 
     if (e) e.preventDefault();
@@ -74,8 +78,7 @@ class LoginPage extends React.Component {
           this.setState({ modalOpen: true, emailErrorCount: this.state.emailErrorCount + 1 });
         }
         else {
-          // else return to login page
-          this.props.history.push('/login');
+          this.goto('/login');
         }
       }
     }
@@ -124,7 +127,7 @@ class LoginPage extends React.Component {
     }
     else {
       console.error("Unable to load video component");
-      this.props.history.push('/pledge');
+      this.goto('/pledge');
     }
   }
 
@@ -138,19 +141,19 @@ class LoginPage extends React.Component {
   onKeyPress = (e) => {
     if (e.key === 'ArrowRight') {
       if (this.videoStarted) { // next-page
-        this.props.history.push('/pledge');
+        this.goto('/pledge');
       }
       else {
         this.handleSubmit(false, {}); // dev only: use mock data
       }
     }
     else if (e.key === 'ArrowLeft') {
-      this.props.history.push(this.videoStarted ? '/login' : '/');
+      this.goto(this.videoStarted ? '/login' : '/');
     }
   }
 
   endVideo = () => { // to next page
-    if (this.videoStarted) this.props.history.push('/pledge');
+    if (this.videoStarted) this.goto('/pledge');
   }
 
   emailIsValid = (addr) => {

@@ -61,7 +61,7 @@ class OCEANReveal extends React.Component {
         ref={e => { this.video = e }}
         className={classes.video}
         movie={`${UserSession.publicUrl}video/wrapup_${celebrity}.mp4`}
-        onComplete={() => this.props.history.push('/take-back-control')}
+        onComplete={() => this.context.goto(this.props, '/take-back-control')}
       />) : <br />;
 
     return (
@@ -70,7 +70,7 @@ class OCEANReveal extends React.Component {
         <div className={`${classes.content} content`}>
           <Fade in={true}
             style={{ transitionDelay: timing[0] + 'ms' }}>
-            <h1 className="addSpacing"><span>Spectre knows you.</span></h1>
+            <h1 className="addSpacing"><span>Spectre knows you</span></h1>
           </Fade>
           <Fade in={true}
             style={{ transitionDelay: timing[1] + 'ms' }}>

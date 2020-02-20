@@ -31,7 +31,7 @@ class Goodbye extends React.Component {
   }
 
   componentWillUnmount() {
-    UserSession.clear();
+    UserSession.clear(this.context);
   }
 
   render() {
@@ -41,7 +41,7 @@ class Goodbye extends React.Component {
     let videoPlaceholder = celebrity.length ? (
       <Video className={classes.video}
         movie={`${UserSession.publicUrl}video/goodbye_${celebrity}.mp4`} key="34345871"
-        onComplete={() => this.props.history.push('/')}
+        onComplete={() => this.context.goto(this.props, '/')}
       />) : <br />;
 
     return (

@@ -9,14 +9,11 @@ import { ReactComponent as Trophy } from '../../Icons/trophy.svg';
 import { Link } from 'react-router-dom';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 import IconButton from '../../Components/IconButton/IconButton';
-import ComponentsStyles from '../../App.module.css';
 
+import ComponentsStyles from '../../App.module.css';
 import './SuccessAd.scss';
 
-
-const styles = {
-
-};
+const styles = {};
 
 class SuccessAd extends React.Component {
   constructor(props) {
@@ -30,10 +27,7 @@ class SuccessAd extends React.Component {
 
   async componentDidMount() {
     const user = await UserSession.ensure(this.context,
-      [/*'_id',*/ 'adIssue', 'traits', 'target']);
-
-    //  this.timeout = setTimeout(() => this.props.history.push('/influence-a-nation'), 6000);
-
+      ['adIssue', 'traits', 'target']);
     this.setState({
       adIssue: user.adIssue,
       targetName: user.target.name

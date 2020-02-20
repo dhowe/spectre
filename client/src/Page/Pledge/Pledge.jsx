@@ -15,16 +15,12 @@ class Pledge extends React.Component {
     super(props, '/searching');
     this.timeout1 = -1;
     this.timeout2 = -1;
-  }
-
-  setRef = (webcam) => {
-    this.webcam = webcam;
+    this.webcam = React.createRef();
   }
 
   async componentDidMount() {
     this.timeout1 = setTimeout(() =>
       this.context.goto(this.props, '/searching'), 7500);
-      //this.props.history.push('/searching'), 7500);
     this.timeout2 = setTimeout(this.captureImage, 4000);
   }
 
@@ -71,7 +67,7 @@ class Pledge extends React.Component {
           <div className="ImageCapture">
             <Webcam
               audio={false}
-              ref={this.setRef}
+              ref={r => this.webcam = r}
               screenshotQuality={1}
               screenshotFormat="image/jpeg"
               width={1280}

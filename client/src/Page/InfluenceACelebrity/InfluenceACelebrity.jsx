@@ -78,11 +78,12 @@ class InfluenceACelebrity extends React.Component {
                   target={{
                     name: name,
                     image: `${UserSession.imageDir}${name}.png`,
-                    updatedAt: UserSession.epochDate }}
+                    updatedAt: UserSession.epochDate
+                  }}
                 />
               ))}
           </AvatarCircle>
-          <IconButton onClick={() => this.props.history.push('/OCEAN-reveal')}
+          <IconButton onClick={() => this.context.goto(this.props, '/OCEAN-reveal')}
            className={ComponentsStyles.iconButtonStyle1} icon="next" text="Next" />
         </div>
         <FooterLogo />

@@ -52,7 +52,7 @@ class InsightComplete extends React.Component {
             onClick={this.showVideo} />
           <Video
             ref={(el) => { this.video = el; }}
-            onComplete={() => this.props.history.push('/your-power')}
+            onComplete={() => this.context.goto(this.props, '/your-power')}
             movie={`${UserSession.publicUrl}video/OceanIntro.mp4`}
             />
         </div>

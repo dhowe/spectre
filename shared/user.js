@@ -15,9 +15,9 @@ export default class User {
     this.updatedAt = this.updatedAt || new Date();
     this.loginType = this.loginType || 'email';
     this.lastPage = this.lastPage || '';
-    // this.dataChoices = this.dataChoices || {};
-    // this.influences = this.influences || {};
-    // this.targetAd = this.targetAd || {};
+    this.dataChoices = this.dataChoices || {};
+    this.influences = this.influences || {};
+    this.targetAd = this.targetAd || {};
   }
 
   static create(json) {
@@ -511,7 +511,7 @@ export default class User {
 
   // target is an object with traits
   static computeInfluencesFor(target, issues) {
-    console.log('computeInfluencesFor: '+target.name);
+    //console.log('computeInfluencesFor: '+target.name);
     if (typeof target === 'undefined') {
       throw Error('No target in User.computeInfluencesFor()');
     }

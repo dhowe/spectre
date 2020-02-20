@@ -156,7 +156,7 @@ UserSession.ensure = async (user, props, opts) => {
     // // if we need hasImage, we need to check the db
     if (props.includes('hasImage')) {
       props = arrayRemove(props, 'hasImage');
-      if (user._id !== -1 ) await UserSession.lookup(user._id);
+      if (user._id !== -1 ) user = await UserSession.lookup(user._id);
       console.log('[USER] ' + user._id + '.hasImage = ' + user.hasImage);
     }
 

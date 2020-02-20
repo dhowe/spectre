@@ -12,13 +12,6 @@ import './Personalised.scss';
 const styles = {};
 
 class Personalised extends React.Component {
-  // constructor(props) {
-  //   super(props, '/game');
-  //   //  this.state = { nextPage: '/game' };
-  // }
-  // async componentDidMount() {
-  //   await UserSession.ensure(this.context, [/*'_id',*/ 'virtue']);
-  // }
   render() {
     const { classes } = this.props;
     return (
@@ -27,9 +20,7 @@ class Personalised extends React.Component {
         <div className={`${classes.content} content`}>
           <div>
             <Fade in>
-              <h1>
-                In order to create a&nbsp;<span>personalised experience</span>
-              </h1>
+              <h1>In order to create a&nbsp;<span>personalised experience</span></h1>
             </Fade>
             <Fade in style={{ transitionDelay: '1000ms' }}>
               <p className="normal">
@@ -38,10 +29,9 @@ class Personalised extends React.Component {
             </Fade>
           </div>
           <div className="hidden">
-            <Countdown
-              onComplete={() => this.props.history.push('/game')}
+            <Countdown renderer={() => null}
+              onComplete={() => this.context.goto(this.props, '/game')}
               date={Date.now() + 5000}
-              renderer={() => null}
             />
           </div>
         </div>

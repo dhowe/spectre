@@ -10,7 +10,7 @@ describe('Client User', function() {
       let fields = Object.keys(User.schema());
 
       // these are fields defined with a default
-      let withDefaults = ['clientId', 'lastPage', //'targetAd', 'dataChoices',
+      let withDefaults = ['clientId', 'lastPage', 'targetAd', 'dataChoices',
         'loginType', 'updatedAt', 'createdAt', 'traits'];
 
       fields.forEach(f => {
@@ -21,7 +21,6 @@ describe('Client User', function() {
       });
       //expect(user.clientId).eq(-1);
       expect(user.virtue).eq(undefined);
-      console.log(user);
       expect(User.hasOceanTraits(user)).eq(false);
     });
 

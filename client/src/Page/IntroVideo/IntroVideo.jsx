@@ -16,9 +16,6 @@ class IntroVideo extends React.Component {
   playVideo() {
     this.refs.video.play();
   }
-  goTo() {
-    this.props.history.push('/username');
-  }
   render() {
     const { classes } = this.props;
     return (
@@ -30,17 +27,13 @@ class IntroVideo extends React.Component {
             <source src={movie} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
-          <button
-            hidden
-            ref="playVideo"
-            id="playButton"
-            onClick={this.playVideo.bind(this)}
-          >
+          <button hidden ref="playVideo" id="playButton"
+            onClick={this.playVideo.bind(this)}>
             Play!
           </button>
           <div className="hidden">
             <Countdown
-              onComplete={this.goTo.bind(this)}
+              onComplete={() => this.context.goto(this.props, '//username')}
               date={Date.now() + 5000}
               renderer={() => null}
             />

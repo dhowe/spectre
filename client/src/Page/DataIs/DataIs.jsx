@@ -25,7 +25,11 @@ class DataIs extends React.Component {
       nextPage = '/selfie';
       console.log('[DATAIS] No webcam image found for ' + user._id);
     }
-    this.setState({ virtue: user.virtue, virtueAdverb: user.virtueAsAdverb(), nextPage: nextPage });
+    this.setState({
+      virtue: user.virtue,
+      virtueAdverb: user.virtueAsAdverb(),
+      nextPage: nextPage
+    });
   }
 
   render() {
@@ -36,7 +40,7 @@ class DataIs extends React.Component {
         { // <Keyboardist bindings={{
         //   Right: () => {
         //     console.log('RIGHT');
-        //     this.props.history.push(this.state.nextPage);
+        //     this.context.goto(this.props, this.state.nextPage)}
         //     return false;
         //   }}} />
         }
@@ -53,7 +57,7 @@ class DataIs extends React.Component {
           </Fade>
           <Countdown
             ref={e => this.countdown = e}
-            onComplete={() => this.props.history.push(this.state.nextPage)}
+            onComplete={() => this.context.goto(this.props, this.state.nextPage)}
             date={Date.now() + 5000}
             renderer={() => null}
           />

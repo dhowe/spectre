@@ -39,7 +39,7 @@ class HomeData extends React.Component {
       choiceArray.push(choice.innerText);
     });
     this.setState({ choices: choiceArray });
-    this.context.dataChoices.homed = choiceArray.join(',');
+    this.context.dataChoices.home = choiceArray.join(',');
   }
 
   render() {

@@ -64,7 +64,7 @@ class PoliticalData extends React.Component {
               <Grid item sm={4}></Grid>
               <Grid item sm={1}><IconButtonToggle enabled={false} icon="political" text="Political Party" /></Grid>
               <Grid item sm={2}><IconButtonToggle enabled={false} icon="polls" text="Polls &amp; Surveys" /></Grid>
-              <Grid item sm={1}><IconButtonToggle enabled={false} icon="consultants" text="SConsultants" /></Grid>
+              <Grid item sm={1}><IconButtonToggle enabled={false} icon="consultants" text="Consultants" /></Grid>
               <Grid item sm={4}></Grid>
             </Grid>
             <Grid className={classes.icons} container>

@@ -17,7 +17,7 @@ import './TakeSelfie.scss';
 const styles = {};
 
 class TakeSelfie extends React.Component {
-  
+
   constructor(props) {
     super(props, '/personalised');
     this.state = {
@@ -51,7 +51,7 @@ class TakeSelfie extends React.Component {
     if (!UserSession.uploadImage(this.context, this.state.imgData)) {
       console.error('[WEBCAM] Error: failed to upload selfie');
     }
-    this.props.history.push('/personalised');
+    this.context.goto(this.props, '/personalised');
   }
 
   render() {

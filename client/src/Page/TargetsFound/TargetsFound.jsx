@@ -10,11 +10,6 @@ import ComponentsStyles from '../../App.module.css';
 const styles = {};
 
 class TargetsFound extends React.Component {
-
-  constructor(props) {
-    super(props, '/launch-campaign');
-  }
-
   render() {
     const { classes } = this.props;
     return (
@@ -23,7 +18,7 @@ class TargetsFound extends React.Component {
         <div className={`${classes.content} content`}>
           <Video className={ComponentsStyles.inPageVideo} autoPlay
             movie={`${UserSession.publicUrl}video/TargetsFound_US.mp4`}
-            onComplete={() => this.props.history.push('/launch-campaign')} />
+            onComplete={() => this.context.goto(this.props, '/launch-campaign')} />
         </div>
         <FooterLogo />
       </div>

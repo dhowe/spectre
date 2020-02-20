@@ -27,7 +27,7 @@ class SearchingFor extends React.Component {
   handleClick(virtue) {
     const user = this.context;
     user.virtue = virtue;
-    this.props.history.push('/data-is');
+    this.context.goto(this.props, '/data-is');
   }
 
   render() {

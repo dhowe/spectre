@@ -32,7 +32,7 @@ class InfluenceAFollower extends React.Component {
     user.targetId = target._id;
     UserSession.computeInfluencesFor(target);
     UserSession.update(user);
-    this.props.history.push('/selected');
+    this.context.goto(this.props, '/selected');
   }
 
   render() {

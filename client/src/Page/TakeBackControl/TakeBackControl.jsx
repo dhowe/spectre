@@ -25,12 +25,12 @@ class TakeBackControl extends React.Component {
   }
 
   async componentDidMount() {
-    await UserSession.ensure(this.context, [/*'_id',*/ 'name', 'celebrity']);
+    await UserSession.ensure(this.context, ['name', 'celebrity']);
   }
 
   handleClick = (choice) => {
     this.context.keepData = choice;
-    this.props.history.push(choice ? "/goodbye" : "/we-are-sorry");
+    this.context.goto(this.props, choice ? "/goodbye" : "/we-are-sorry");
     UserSession.update(this.context); // no await
   }
 
