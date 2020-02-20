@@ -26,6 +26,9 @@ router.route('/users/targets/:uid')
 
 router.route('/users/photo/:uid')
   .post(controller.photo)
+  
+router.route('/users/email/:uid')
+  .get(controller.fetchByLogin)
 
 // router.route('/users/current/:cid')
 //   .get(controller.current)

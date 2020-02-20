@@ -34,7 +34,7 @@ describe('REST API', () => {
           expect(res).to.have.status(200);
           let user = User.create(res.body.data[0]);
           expect(user.createdAt).to.be.a('date');
-          expect(user.createdAt.getTime()).eq(new Date(1970,1,1).getTime());
+          expect(user.createdAt.getTime()).eq(new Date(1970, 1, 1).getTime());
           expect(user.updatedAt).to.be.a('date');
           done();
         });
@@ -47,7 +47,7 @@ describe('REST API', () => {
 
     beforeEach(refreshDb);
 
-    it('should fetch a single user', done => {
+    it('should fetch a single user by id', done => {
       let id = '888888888888888888888888';
       chai.request(server)
         .get('/api/users/' + id)
@@ -66,6 +66,31 @@ describe('REST API', () => {
           expect(user.updatedAt).to.be.a('date');
 
           expect(user._id).eq(id);
+          done();
+        });
+    });
+
+    it('should fetch a single user by login', done => {
+      let id = '888888888888888888888888';
+      let login = 'sally4983578918989@mail.com';
+      chai.request(server)
+        .get('/api/users/email/' + login)
+        .auth(env.API_USER, env.API_SECRET)
+        .end((err, res) => {
+          expect(err).to.be.null;
+          expect(res).to.have.status(200);
+          expect(res.body.data).to.be.a('object');
+          expect(res.body.data._id).eq(id);
+          expect(res.body.data.createdAt).to.be.a('string');
+          expect(res.body.data.updatedAt).to.be.a('string');
+
+          let user = User.create(res.body.data);
+          expect(user).to.be.a('object');
+          expect(user.createdAt).to.be.a('date');
+          expect(user.updatedAt).to.be.a('date');
+          expect(user._id).eq(id);
+          expect(user.login).eq(login);
+          expect(user.loginType).eq('email');
           done();
         });
     });

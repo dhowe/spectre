@@ -71,6 +71,11 @@ UserSchema.statics.findByRecent = function(userId, limit, callback) { // cb=func
   ], callback);
 };
 
+UserSchema.statics.findByLogin = function(login, callback) { // cb=function(err,users)
+  // find all users with traits and image
+  UserModel.findOne({ login: login, loginType: 'email' }, callback);
+};
+
 // find most similar users according to ocean traits
 // TODO: this could be VERY slow on a big database ***
 UserSchema.statics.findByOcean = function(user, limit, callback) { // cb=function(err,users)

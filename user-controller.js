@@ -19,6 +19,7 @@ import { profDir } from './config';
 }*/
 
 const NO_USER_ID = 490;
+const NO_USER_EMAIL = 489;
 const UNIQUE_USER_VIOLATION = 491;
 const USER_NOT_FOUND = 492;
 const USER_WO_TRAITS = 493;
@@ -165,7 +166,7 @@ const handleDates = (ob) => {
   return ob;
 };
 
-const fetch = async (req, res) => {
+const fetch = async (req, res) => { // accepts either _id or login
 
   if (UserModel.databaseDisabled) return noDbError(res);
 
@@ -177,7 +178,51 @@ const fetch = async (req, res) => {
     if (!user) return sendError(res, 'No user #' + req.params.uid, 0, USER_NOT_FOUND);
     sendResponse(res, user);
   });
-};
+}
+
+const fetchByLogin = async (req, res) => { // accepts either _id or login
+
+  if (UserModel.databaseDisabled) return noDbError(res);
+
+  if (!req.params.hasOwnProperty('uid')) return sendError
+    (res, 'No email sent', 0, NO_USER_EMAIL);
+
+  await UserModel.findByLogin(req.params.uid, (err, user) => {
+    if (err) return sendError(res, 'Error (findByLogin): email/'
+      + req.params.uid, err);
+    if (!user) return sendError(res, 'No user with login: email/'
+      + req.params.uid, 0, USER_NOT_FOUND);
+    sendResponse(res, user);
+  });
+}
+//
+// const fetchX = async (req, res) => { // accepts either _id or login
+//
+//   if (UserModel.databaseDisabled) return noDbError(res);
+//
+//   console.log('fetch', req.params);
+//
+//   if (req.params.hasOwnProperty('uid')) {
+//     console.log('uid.fetch', req.params);
+//     await UserModel.findById(req.params.uid, (err, user) => {
+//       if (err) return sendError(res, 'Error (findById) for #' + req.params.uid, err);
+//       if (!user) return sendError(res, 'No user #' + req.params.uid, 0, USER_NOT_FOUND);
+//       sendResponse(res, user);
+//     });
+//     return;
+//   }
+//   else if (req.params.hasOwnProperty('login')) {
+//     console.log('login.fetch', req.params);
+//     await UserModel.findByLogin(req.params.login, (err, user) => {
+//       if (err) return sendError(res, 'Error (findByILogin) for #' + req.params.login, err);
+//       if (!user) return sendError(res, 'No user #' + req.params.login, 0, USER_NOT_FOUND);
+//       sendResponse(res, user);
+//     });
+//     return;
+//   }
+//
+//   return sendError(res, 'No uid/login sent', 0, NO_USER_ID);
+// };
 
 const update = async (req, res) => {
 
@@ -194,25 +239,25 @@ const update = async (req, res) => {
   await UserModel.findByIdAndUpdate(uid, handleDates(req.body),
     { new: true }, (err, user) => {
 
-    if (err) return sendError(res, 'Update failed for user#' + req.params.uid);
-    if (!user) return sendError(res, 'No user #' + req.params.uid, 0, USER_NOT_FOUND);
+      if (err) return sendError(res, 'Update failed for user#' + req.params.uid);
+      if (!user) return sendError(res, 'No user #' + req.params.uid, 0, USER_NOT_FOUND);
 
-    // return if we don't yet have traits, or we already have similars
-    if (!User.hasOceanTraits(user) || (user.similars && user.similars.length)) {
-      sendResponse(res, user);
-      return;
-    }
+      // return if we don't yet have traits, or we already have similars
+      if (!User.hasOceanTraits(user) || (user.similars && user.similars.length)) {
+        sendResponse(res, user);
+        return;
+      }
 
-    // we have traits but no similars yet, find them
-    UserModel.findTargets(user, limit, (err, sims) => {
-      if (err) return sendError(res, 'findTargets failed for #' + uid, err);
-      // Make this a full user, rather than a simple
-      // data record, so it can hold similars []
-      let fuser = User.create(user._doc);
-      fuser.similars = sims;
-      sendResponse(res, fuser);
+      // we have traits but no similars yet, find them
+      UserModel.findTargets(user, limit, (err, sims) => {
+        if (err) return sendError(res, 'findTargets failed for #' + uid, err);
+        // Make this a full user, rather than a simple
+        // data record, so it can hold similars []
+        let fuser = User.create(user._doc);
+        fuser.similars = sims;
+        sendResponse(res, fuser);
+      });
     });
-  });
 }
 
 // most recent users
@@ -410,5 +455,5 @@ function generateEmail(id, email) {
 
 export default {
   list, /*message,current*/targets, recents, create, fetch,
-  similars, update, remove, photo, photoset, createBatch
+  similars, update, remove, photo, photoset, createBatch, fetchByLogin
 };
