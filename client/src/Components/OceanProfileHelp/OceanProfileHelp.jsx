@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Button from "@material-ui/core/Button";
+import UserSession from '../../Components/UserSession/UserSession';
+
 import ComponentStyles from '../../App.module.css';
-import "./OceanProfileHelpModal.scss";
-//import HeaderLogo from '../../Icons/headerlogo-colour.svg';
-//import { Link } from 'react-router-dom';
+import "./OceanProfileHelp.scss";
 
 const styles = theme => ({
   paper: {
@@ -37,44 +37,26 @@ function SimpleModal(props) {
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = React.useState(getModalStyle);
 
-  const { classes } = props;
-  const content = props.content;
-  const helpTitle = [];
-  const helpText = [];
-  const oceanHelp = [];
-
-  content.forEach((item) => {
-    for (var key in item) {
-      helpTitle.push(key)
-      helpText.push(item[key])
-    }
-  });
-
-  for (const [index, value] of helpText.entries()) {
-    oceanHelp.push(
-      <div className="help-item" key={index}>
-        <div className="icon">
-          <img src={"/imgs/" + helpTitle[index].charAt(0).toLowerCase() + helpTitle[index].slice(1) + ".svg"} alt={index} />
-          <h2 className="helper-title">{helpTitle[index]}</h2>
-        </div>
-        <div className="help-paragraph">
-          <p>{value}</p>
-        </div>
+  const oceanData = UserSession.oceanDescTemplate;
+  const oceanHelp = Object.keys(oceanData).map(trait => (
+    <div className="help-item" key={trait}>
+      <div className="icon">
+        <img src={`/imgs/${trait}.svg`} alt={trait} />
+        <h2 className="helper-title">{trait.ucf()}</h2>
       </div>
-    )
-  }
+      <div className="help-paragraph">
+        <p>{oceanData[trait].desc}</p>
+      </div>
+    </div>
+  ));
 
-  //  console.log(summary.contentHere.length === 0? setSummary({contentHere: props.summary}): setSummary({contentHere: props.summary}))
   return (
-    <Modal
+    <Modal open={props.isOpen} onClose={props.onClose}
       aria-labelledby="simple-modal-title"
-      aria-describedby="simple-modal-description"
-      open={props.isOpen}
-      onClose={props.onClose}
-    >
-      <div style={modalStyle} className={classes.paper} id="help-title-div">
+      aria-describedby="simple-modal-description">
+      <div style={modalStyle} className={props.classes.paper} id="help-title-div">
         <h2 className="help-main-title" >
-          {props.title}
+          From these FIVE personality traits we can <em>scientifically</em> quantify every human being...
         </h2>
         <div id="help-content">
           <div className="split-l">
@@ -95,8 +77,6 @@ function SimpleModal(props) {
 }
 
 SimpleModal.propTypes = {
-  title: PropTypes.string.isRequired,
-  content: PropTypes.array.isRequired,
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
 };

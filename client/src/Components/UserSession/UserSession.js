@@ -20,6 +20,7 @@ UserSession.publicUrl = 'https://spectreknows.me/'; // ?
 UserSession.serverDisabled = typeof auth === 'undefined';
 UserSession.epochDate = User.epochDate;
 UserSession.oceanTraits = User.oceanTraits;
+UserSession.oceanDescTemplate = User.oceanDescTemplate;
 UserSession.storageKey = 'spectre-user';
 UserSession.profileDir = '/profiles/';
 UserSession.imageDir = '/imgs/';
@@ -124,25 +125,18 @@ UserSession.ensure = async (user, props, opts) => {
   }
 
   try {
-    let userLookup = false;
+    //let userLookup = false;
     let modified = false;
 
     // do we have an id, if not check session, and try to repair
     if (!allowNoId && typeof user._id === 'undefined') {
-      userLookup = await checkSession(user);
+      /*userLookup = */await checkSession(user);
     }
 
     // should have user with id here, if not, then probably no server
     if (!user || (!allowNoId && !user._id)) {
       user._id = -1;
       console.warn('[STUB] Unable to set user._id, using ' + user._id, user);
-    }
-
-    // // if we need hasImage, we need to check the db
-    if (props.includes('hasImage')) {
-      props = arrayRemove(props, 'hasImage');
-      if (user._id !== -1 && !userLookup) await UserSession.lookup(user._id);
-      //console.log('[USER] ' + user._id + '.hasImage = ' + user.hasImage);
     }
 
     // similars: if we need a target then we need similars
@@ -157,6 +151,13 @@ UserSession.ensure = async (user, props, opts) => {
       if (!User.hasOceanTraits(user)) modified = fillMissingProps(user, ['traits']);
       user = await UserSession.targets(user);
       console.log('[STUB] Fetched similars:', user.toString());
+    }
+
+    // // if we need hasImage, we need to check the db
+    if (props.includes('hasImage')) {
+      props = arrayRemove(props, 'hasImage');
+      if (user._id !== -1 ) await UserSession.lookup(user._id);
+      console.log('[USER] ' + user._id + '.hasImage = ' + user.hasImage);
     }
 
     // stub any other properties and update if needed
@@ -400,7 +401,7 @@ UserSession.uploadImage = (user, data) => {
     console.error('[IMAGE] Bad user/id: ' + user);
     return false;
   }
-  
+
   const toImageFile = (data, fname) => {
     const arr = data.split(',');
     if (!data || data.length <= 6) {

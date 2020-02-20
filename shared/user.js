@@ -294,7 +294,7 @@ export default class User {
 
   _descriptionLines(tmpl) {
 
-    tmpl = tmpl || User.descriptionTemplate;
+    tmpl = tmpl || User.oceanDescTemplate;
 
     let lines = [];
     let traitNames = User.oceanTraits;
@@ -749,7 +749,7 @@ User.abbreviations = ["Adm.", "Capt.", "Cmdr.", "Col.", "Dr.", "Gen.", "Gov.", "
 
 User.secondPersonTemplate = text2p;
 
-User.descriptionTemplate = {
+User.oceanDescTemplate = {
   openness: {
     desc: 'Openness to experience relates to our imagination and the degree to which we are comfortable with unfamiliarity',
     poles: ['Conservative and Traditional', 'Liberal and Artistic'],

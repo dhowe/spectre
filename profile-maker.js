@@ -48,9 +48,11 @@ class ProfileMaker {
         this.makeThumbnail(path, outfile)
           .then(res => {
             if (res.status === 'ok') {
-              console.log('[' + clfDate() + '] ::* THUMB ' + pathify(outfile));
-              console.log('[' + clfDate() + '] ::* DETECT ' + res.data.age
-                + '/' + res.data.gender + '(' + res.data.genderProbability + ')');
+              console.log('[' + clfDate() + '] ::* WROTE ' + pathify(outfile));
+
+              if (this.detectAgeGender) console.log('[' + clfDate()
+                + '] ::* DETECTED ' + res.data.age + '/' + res.data.gender
+                + '(' + res.data.genderProbability + ')');
             }
             else {
               console.error('[' + clfDate() + '] ::* THUMB Failed', res.data);
@@ -132,27 +134,28 @@ class ProfileMaker {
 
   detect = async (infile) => {
 
-    console.log('[' + clfDate() + '] ::* DETECT ' + pathify(infile));
     const detectorOpts = (net) => {
       return net === faceapi.nets.ssdMobilenetv1
         ? new faceapi.SsdMobilenetv1Options({ minConfidence: 0.5 })
         : new faceapi.TinyFaceDetectorOptions
           ({ inputSize: 408, scoreThreshold: 0.5 });
     }
-    if (!this.loaded) this.loadModels();
-    let dims, image = await canvas.loadImage(infile);
-    await sharp(infile).metadata().then(md => {
-      dims = { w: md.width, h: md.height };
-    });
+    const image = await canvas.loadImage(infile);
+    // await sharp(infile).metadata().then(md => {
+    //   dims = { w: md.width, h: md.height };
+    // });
+    const md = await sharp(infile).metadata();
+    const dims = { w: md.width, h: md.height };
+
+    console.log('[' + clfDate() + '] ::* CANVAS ', dims, pathify(infile));
 
     // TODO: withFaceLandmarks().withFaceDescriptor()
 
-    let result;
     if (this.detectAgeGender) {
-      let detection = await faceapi.detectSingleFace(image,
+      const detection = await faceapi.detectSingleFace(image,
         detectorOpts(this.detectionNet)).withAgeAndGender();
       if (!detection) throw Error('Detection failed[0] null-result');
-      result = {
+      return {
         age: detection.age,
         gender: detection.gender,
         genderProbability: detection.genderProbability,
@@ -162,28 +165,23 @@ class ProfileMaker {
       }
     }
     else {
-      let detection;
       try {
-        detection = await faceapi.detectSingleFace(image,
+        const detection = await faceapi.detectSingleFace(image,
           detectorOpts(this.detectionNet));
+        if (typeof detection === 'undefined'
+          || typeof detection.box === 'undefined') {
+          throw Error('No detection returned');
+        }
+        return {
+          box: detection.box,
+          dimensions: dims,
+          image: image
+        };
       }
       catch (e) {
         throw Error('Detection failed[1] ' + e);
       }
-      if (typeof detection === 'undefined') {
-        throw Error('Detection failed[2]');
-      }
-      if (typeof detection.box === 'undefined') {
-        throw Error('Detection failed[3]');
-      }
-      result = {
-        box: detection.box,
-        dimensions: dims,
-        image: image
-      };
-      //console.log('detection', detection);
     }
-    return result;
   }
 }
 
