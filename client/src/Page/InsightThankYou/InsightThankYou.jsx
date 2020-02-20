@@ -1,20 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
-//import Typography from '@material-ui/core/Typography';
 import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
-import { ReactComponent as ThumbUp } from '../../Icons/insightthankyou.svg';
-//import colours from '../../colors.scss';
-import './InsightThankYou.scss';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
+
+import { ReactComponent as ThumbUp } from '../../Icons/insightthankyou.svg';
+
+import './InsightThankYou.scss';
 import ComponentsStyles from '../../App.module.css';
 
-const styles = {
-
-};
+const styles = {};
 
 class InsightThankYou extends React.Component {
 
@@ -36,7 +35,10 @@ class InsightThankYou extends React.Component {
             <p className="normal-addSpacing">Just two more to go.</p>
           </div>
           <div className="insight-thankyou-link">
-            <IconButton enabled={true} className={ComponentsStyles.iconButtonStyle1} icon="next" text="Let's go deeper" />
+            <Link to="/insight-sexuality">
+              <IconButton enabled={true} className={ComponentsStyles.iconButtonStyle1} icon="next" text="Let's go deeper" />
+            </Link>
+
           </div>
         </div>
         <FooterLogo />

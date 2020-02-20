@@ -17,9 +17,8 @@ UserSession.profileDir = (process.env.PUBLIC_URL || '') + '/profiles/';
 UserSession.imageDir = (process.env.PUBLIC_URL || '') + '/imgs/';
 UserSession.publicUrl = 'https://spectreknows.me/'; // ?
 UserSession.serverDisabled = typeof auth === 'undefined';
-UserSession.epochDate = new Date("1970-01-01T12:00:00.00");
+UserSession.epochDate = User.epochDate;
 UserSession.storageKey = 'spectre-user';
-
 
 localIPs(ip => (UserSession.clientId = ip), '192.');
 
@@ -100,17 +99,17 @@ UserSession.ensure = async (user, props, opts) => {
     // do we have an id in session
     const sid = sessionStorage.getItem(UserSession.storageKey);
     if (!sid) {
-      console.warn('[STUB] No user._id, creating new user');
+      console.log('[STUB] No user._id, creating new user');
       fillMissingProps(user, ['login', 'name', 'gender',
         'virtue', 'adIssue', 'traits', 'celebrity', 'updatedAt']);
 
       await UserSession.create(user); // save new user
-      console.warn('[STUB] Setting user._id: ' + user._id);
+      console.log('[STUB] Setting user._id: ' + user._id);
       return false;
     }
     else {
       let uid = JSON.parse(sid);
-      console.warn('[SESS] Reloaded user._id: ' + uid + ' doing lookup');
+      console.log('[SESS] Reloaded user._id: ' + uid + ' doing lookup');
       let json = await UserSession.lookup(uid);
       Object.assign(user, json);
       return true;
@@ -146,7 +145,7 @@ UserSession.ensure = async (user, props, opts) => {
     }
 
     // if we need a similars then, we need traits
-    if (props.includes('similars') && !user.similars.length) {
+    if (props.includes('similars') && !user.similars) {
       props = arrayRemove(props, 'similars');
       if (!User.hasOceanTraits(user)) modified = fillMissingProps(user, ['traits']);
       user = await UserSession.targets(user);
@@ -178,7 +177,7 @@ function fillMissingProps(user, props) {
     let val = user[p];
     if (Array.isArray(val)) val = '[' + val.length + ']';
     if (typeof val === 'object') val = JSON.stringify(val).substring(0, 60);
-    console.warn('[STUB] Setting user.' + p + ': ' + val);
+    console.log('[STUB] Setting user.' + p + ': ' + val);
   };
 
   if (typeof props === 'undefined') return true;
@@ -189,7 +188,7 @@ function fillMissingProps(user, props) {
   // a property is missing if its undefined or an empty array or string
   let missing = props.filter(p => typeof user[p] === 'undefined'
     || ((typeof user[p] === 'string' || Array.isArray(user[p]))
-      && !user[p].length));
+      && !user[p].length) || (p === 'traits' && user[p].openness < 0));
 
   if (!missing || !missing.length) return false; // all props are ok
 
@@ -310,7 +309,7 @@ UserSession.targets = async (user) => {
     return user;
   }
 
-  if (!user.traits || typeof user.traits.openness === 'undefined') {
+  if (!user.traits || typeof user.traits.openness >= 0) {
     throw Error('No traits for user #' + user._id);
   }
 

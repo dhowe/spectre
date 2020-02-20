@@ -34,7 +34,7 @@ const create = async (req, res) => {
 
   if (!req || !req.body) return sendError(res, 'Request without body');
 
-  const body = req.body;
+  const body = handleDates(req.body);
 
   if (!(body.login && body.loginType)) return sendError(res, "API.create "
     + "requires login/loginType: " + JSON.stringify(body), 0, USER_WO_LOGIN);
@@ -139,19 +139,30 @@ const createBatch = async (req, res) => {
   if (UserModel.databaseDisabled) return noDbError(res);
 
   //console.log('REQ',req);
-  const users = req.body;
+  const users = handleDates(req.body);
+
   if (!users || !Array.isArray(users)) {
     return sendError(res, 'No users in request body');
   }
 
   await UserModel.insertMany(users, (err, result) => {
-    if (err) {
-      return sendError(res, 'UserModel.insertMany', err);
-    }
-    else {
-      sendResponse(res, result);
-    }
+    if (err) return sendError(res, 'UserModel.insertMany', err);
+    sendResponse(res, result);
   });
+};
+
+const handleDates = (ob) => {
+  if (Array.isArray(ob)) {
+    ob.forEach(o => {
+      o.updatedAt = new Date(o.updatedAt);
+      o.createdAt = new Date(o.createdAt);
+    });
+  }
+  else if (typeof ob === 'object') {
+    ob.updatedAt = new Date(ob.updatedAt);
+    ob.createdAt = new Date(ob.createdAt);
+  }
+  return ob;
 };
 
 const fetch = async (req, res) => {
@@ -180,7 +191,8 @@ const update = async (req, res) => {
   let limit = req.query.hasOwnProperty('limit') ?
     parseInt(req.query.limit) : NUM_TARGETS;
 
-  await UserModel.findByIdAndUpdate(uid, req.body, { new: true }, (err, user) => {
+  await UserModel.findByIdAndUpdate(uid, handleDates(req.body),
+    { new: true }, (err, user) => {
 
     if (err) return sendError(res, 'Update failed for user#' + req.params.uid);
     if (!user) return sendError(res, 'No user #' + req.params.uid, 0, USER_NOT_FOUND);
@@ -191,14 +203,19 @@ const update = async (req, res) => {
       return;
     }
 
-    UserModel.findByOcean(user, limit, (err, sims) => {
-      if (err) return sendError(res, 'FindByOcean failed for #' + uid, err);
-      user.similars = sims;
-      sendResponse(res, user);
+    // we have traits but no similars yet, find them
+    UserModel.findTargets(user, limit, (err, sims) => {
+      if (err) return sendError(res, 'findTargets failed for #' + uid, err);
+      // Make this a full user, rather than a simple
+      // data record, so it can hold similars []
+      let fuser = User.create(user._doc);
+      fuser.similars = sims;
+      sendResponse(res, fuser);
     });
   });
 }
 
+// most recent users
 const recents = async (req, res) => {
 
   if (UserModel.databaseDisabled) return noDbError(res);
@@ -237,6 +254,7 @@ const targets = async (req, res) => {
   });
 };
 
+// most similar users
 const similars = async (req, res) => {
 
   if (UserModel.databaseDisabled) return noDbError(res);

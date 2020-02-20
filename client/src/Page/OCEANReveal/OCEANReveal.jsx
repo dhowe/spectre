@@ -30,7 +30,7 @@ class OCEANReveal extends React.Component {
   async componentDidMount() {
     const user = await UserSession.ensure(this.context,
       ['name', 'login', 'gender', 'traits', 'celebrity']);
-
+    
     const sentences = user.generateSummary();
     const totalChar = sentences.join().length;
     const waitingTime = (totalChar * keyPause)

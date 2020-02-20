@@ -14,27 +14,36 @@ const clientId = 'localhost';
 dotEnv.config();
 chai.use(chai_http);
 
-describe('REST API', () => {
-  describe('User Routes', () => {
+const dUser = DefaultUsers[0];
+expect(dUser.createdAt).to.be.a('date');
+expect(dUser.createdAt.getTime()).eq(User.epochDate.getTime());
 
-    let users = DefaultUsers;
-    let refreshDb = done => {
-      UserModel.deleteMany({}, (err) => {
-        err && console.error('ERROR', err);
-        expect(DefaultUsers.length).eq(9);
-        expect(DefaultUsers[0].updatedAt).to.be.a('date');
-        chai.request(server)
-          .post('/api/users/batch/')
-          .auth(env.API_USER, env.API_SECRET)
-          .send(users)
-          .end((err, res) => {
-            expect(err).to.be.null;
-            expect(res).to.have.status(200);
-            expect(res.body.data.length).eq(9);
-            done();
-          });
-      });
-    }
+describe('REST API', () => {
+
+  let refreshDb = (done) => {
+    UserModel.deleteMany({}, (err) => {
+      err && console.error('ERROR', err);
+      let users = DefaultUsers;
+      chai.request(server)
+        .post('/api/users/batch/')
+        .auth(env.API_USER, env.API_SECRET)
+        .send(users)
+        .end((err, res) => {
+          users = res.body.data;
+          expect(err).to.be.null;
+          expect(res).to.have.status(200);
+          let user = User.create(res.body.data[0]);
+          expect(user.createdAt).to.be.a('date');
+          expect(user.createdAt.getTime()).eq(new Date(1970,1,1).getTime());
+          expect(user.updatedAt).to.be.a('date');
+          done();
+        });
+    });
+  }
+
+  //it('should prepare db', refreshDb);
+
+  describe('User Routes', () => {
 
     beforeEach(refreshDb);
 
@@ -48,9 +57,14 @@ describe('REST API', () => {
           expect(res).to.have.status(200);
           expect(res.body.data).to.be.a('object');
           expect(res.body.data._id).eq(id);
-          expect(res.body.data.similars).to.be.undefined;
+          expect(res.body.data.createdAt).to.be.a('string');
+          expect(res.body.data.updatedAt).to.be.a('string');
+
           let user = User.create(res.body.data);
           expect(user).to.be.a('object');
+          expect(user.createdAt).to.be.a('date');
+          expect(user.updatedAt).to.be.a('date');
+
           expect(user._id).eq(id);
           done();
         });
@@ -102,10 +116,10 @@ describe('REST API', () => {
           expect(err).to.be.null;
           expect(res).to.have.status(200);
           expect(res.body.data).to.be.a('object');
-          let user = res.body.data;
+          let user = User.create(res.body.data);
           expect(user._id).eq(id);
           expect(user.hasImage).eq(true);
-          expect(user.similars).to.be.undefined;
+          //expect(user.similars).to.be.undefined;
           user.hasImage = false;
 
           chai.request(server)
@@ -117,7 +131,8 @@ describe('REST API', () => {
               expect(res).to.have.status(200);
               expect(res.body.data).to.be.a('object')
               expect(res.body.data._id).to.be.a('string');
-              Object.assign(user, res.body.data);
+
+              user.assign(res.body.data);
               expect(user.hasImage).eq(false);
 
               id = '888888888888888888888888';
@@ -157,7 +172,7 @@ describe('REST API', () => {
           expect(err).to.be.null;
           expect(res).to.have.status(200);
           expect(res.body.data).to.be.a('object')
-          Object.assign(user, res.body.data);
+          user.assign(res.body.data);
           expect(user._id).to.be.a('string');
 
           user.traits = User.randomTraits();
@@ -184,6 +199,7 @@ describe('REST API', () => {
               user.name = "Dave2";
               user.login = "Dave2@aol.com";
               user.gender = "male";
+
               chai.request(server)
                 .post('/api/users/')
                 .auth(env.API_USER, env.API_SECRET)
@@ -192,7 +208,7 @@ describe('REST API', () => {
                   expect(err).to.be.null;
                   expect(res).to.have.status(200);
                   expect(res.body.data).to.be.a('object')
-                  Object.assign(user, res.body.data);
+                  user.assign(res.body.data);
                   expect(user._id).to.be.a('string');
 
                   user.traits = User.randomTraits();
@@ -265,7 +281,7 @@ describe('REST API', () => {
           expect(err).to.be.null;
           expect(res).to.have.status(200);
           expect(res.body.data).to.be.a('object')
-          Object.assign(user, res.body.data);
+          user.assign(res.body.data);
           expect(user._id).to.be.a('string');
 
           user.traits = User.randomTraits();
@@ -300,7 +316,7 @@ describe('REST API', () => {
                   expect(err).to.be.null;
                   expect(res).to.have.status(200);
                   expect(res.body.data).to.be.a('object')
-                  Object.assign(user, res.body.data);
+                  user.assign(res.body.data);
                   expect(user._id).to.be.a('string');
 
                   user.traits = User.randomTraits();
@@ -333,7 +349,7 @@ describe('REST API', () => {
                           expect(err).to.be.null;
                           expect(res).to.have.status(200);
                           expect(res.body.data).to.be.an('array');
-                          
+
                           let recents = res.body.data.map(j => User.create(j))
 
                           //console.log(recents.map(s => s._id + '/' + s.name));
@@ -367,7 +383,7 @@ describe('REST API', () => {
           expect(err).to.be.null;
           expect(res).to.have.status(200);
           expect(res.body.data).to.be.a('object')
-          Object.assign(user, res.body.data);
+          user.assign(res.body.data);
           expect(user._id).to.be.a('string');
 
           //user.clientId = Math.floor(Math.random() * 5) + 1;
@@ -447,7 +463,7 @@ describe('REST API', () => {
           expect(res).to.have.status(200);
           expect(res.body.data).to.be.a('object')
           expect(res.body.data._id).to.be.a('string');
-          Object.assign(user, res.body.data);
+          user.assign(res.body.data);
 
           expect(user._id).to.be.a('string');
           chai.request(server)
@@ -458,7 +474,7 @@ describe('REST API', () => {
               expect(res).to.have.status(200);
               expect(res.body.data).to.be.a('object');
               expect(res.body.data._id).eq(user._id);
-              expect(res.body.data.similars).to.be.an('array');
+              //expect(res.body.data.similars).to.be.an('array');
               done();
             });
         });
@@ -480,11 +496,12 @@ describe('REST API', () => {
           expect(res).to.have.status(200);
           expect(res.body.data).to.be.a('object')
           expect(res.body.data._id).to.be.a('string');
-          expect(res.body.data.similars.length).eq(0);
-          Object.assign(user, res.body.data);
+          //expect(res.body.data.similars.length).eq(0);
+          user.assign(res.body.data);
 
           expect(user._id).to.be.a('string');
-          expect(user.traits).to.be.undefined;
+          expect(user.traits).to.be.an('object');
+          expect(user.traits.openness).eq(-1);
 
           chai.request(server)
             .put('/api/users/' + user._id)
@@ -495,8 +512,8 @@ describe('REST API', () => {
               expect(res).to.have.status(200);
               expect(res.body.data).to.be.a('object')
               expect(res.body.data._id).to.be.a('string');
-              expect(res.body.data.similars).to.be.an('array');
-              expect(res.body.data.similars.length).eq(0);
+              //expect(res.body.data.similars).to.be.an('array');
+              //expect(res.body.data.similars.length).eq(0);
               done();
             });
         });
@@ -508,6 +525,11 @@ describe('REST API', () => {
       user.name = "Dave";
       user.login = "Dave@aol.com";
       user.gender = "male";
+      user.detectedAge = 50
+      user.detectedGender = "female";
+      user.detectedGenderProb = .4567
+      user.adIssue = 'remain';
+      user.virtue = 'truth';
 
       chai.request(server)
         .post('/api/users/')
@@ -517,10 +539,15 @@ describe('REST API', () => {
           expect(err).to.be.null;
           expect(res).to.have.status(200);
           expect(res.body.data).to.be.a('object')
-          expect(res.body.data._id).to.be.a('string');
-          expect(res.body.data.similars.length).eq(0);
+          //console.log(res.body.data);
+          expect(res.body.data.detectedAge).to.be.a('number');
+          expect(res.body.data.detectedGender).to.be.a('string');
+          expect(res.body.data.detectedGenderProb).to.be.a('number');
 
-          Object.assign(user, res.body.data);
+          expect(res.body.data._id).to.be.a('string');
+          //expect(res.body.data.similars.length).eq(0);
+
+          user.assign(res.body.data);
 
           //console.log(user);
           expect(user._id).to.be.a('string');
@@ -548,6 +575,6 @@ describe('REST API', () => {
         });
     });
 
-    //after(refreshDb);
+    after(refreshDb);
   });
 });

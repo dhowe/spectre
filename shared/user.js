@@ -10,13 +10,16 @@ export default class User {
   constructor(tmpl) {
     Object.keys(User.schema()).forEach(k => this[k] = undefined);
     if (tmpl) this.assign(tmpl);
+    this.traits = this.traits || User.emptyTraits();
+    //console.log('pre: '+typeof this.createdAt, this.createdAt);
+    this.createdAt = this.createdAt || new Date();
+    //console.log('pre2: '+typeof this.createdAt, this.createdAt);
     this.updatedAt = this.updatedAt || new Date();
     this.loginType = this.loginType || 'email';
     this.lastPage = this.lastPage || 'login'
-    this.dataChoices = this.dataChoices || {};
-    this.influences = this.influences || {};
-    this.targetAd = this.targetAd || {};
-    this.similars = this.similars || [];
+    // this.dataChoices = this.dataChoices || {};
+    // this.influences = this.influences || {};
+    // this.targetAd = this.targetAd || {};
   }
 
   assign(json) {
@@ -27,6 +30,8 @@ export default class User {
         if (!typeof json[df] === 'string') throw Error
           ('Expecting date string, found ' + typeof json[df]);
         this[df] = new Date(json[df]);
+        if (!this[df] instanceof Date) throw Error
+          ('Expecting Date object, found ' + typeof this[df]);
         delete json[df];
       }
     });
@@ -415,27 +420,15 @@ export default class User {
   // statics =================================================================
 
   static hasOceanTraits(obj) {
-
     if (typeof obj !== 'object') throw Error
-      ('categorize requires object: got ' + typeof obj);
-
-    if (typeof obj.traits === 'undefined') {
-      return false;
+      ('hasOceanTraits expects object: got ' + typeof obj);
+    if (typeof obj.traits === 'undefined') return false;
+    for (let i = 0; i < User.oceanTraits.length; i++) {
+      let t = User.oceanTraits[i];
+      if (!obj.traits.hasOwnProperty(t)) return false;
+      if (obj.traits[t] < 0 || obj.traits[t] > 1) return false;
     }
-    let result = true;
-    User.oceanTraits.forEach(tname => {
-      if (typeof obj.traits[tname] === 'undefined') {
-        //if (obj.traits.hasOwnProperty(tname)) {
-        result = false;
-        return;
-      }
-      let val = obj.traits[tname];
-      if (typeof val === 'undefined' || val < 0 || val > 1) {
-        result = false;
-        return;
-      }
-    });
-    return result;
+    return true;
   }
 
   /*
@@ -564,7 +557,6 @@ export default class User {
     });
   }
 }
-User.epochDate = new Date("1970-01-01T12:00:00.00");
 
 /*
  * MongoDB database schema for the application
@@ -573,6 +565,25 @@ User.schema = () => {
   return {
     name: {
       type: 'string'
+    },
+    login: {
+      type: 'string',
+      required: true
+    },
+    createdAt: {
+      type: Date,
+    },
+    updatedAt: {
+      type: Date
+    },
+    detectedAge: {
+      type: 'number'
+    },
+    detectedGender: {
+      type: 'string'
+    },
+    detectedGenderProb: {
+      type: 'number'
     },
     celebrity: {
       type: 'string'
@@ -610,35 +621,15 @@ User.schema = () => {
       type: 'string',
       default: 'login'
     },
-    updatedAt: {
-      type: 'date'
-    },
-    detectedAge: {
-      type: 'number'
-    },
-    detectedGender: {
-      type: 'string'
-    },
-    detectedGenderProb: {
-      type: 'number'
-    },
-    createdAt: {
-      type: 'date',
-      default: Date.now
-    },
     traits: {
-      openness: { type: 'number' },
-      conscientiousness: { type: 'number' },
-      extraversion: { type: 'number' },
-      agreeableness: { type: 'number' },
-      neuroticism: { type: 'number' },
-      relationship: { type: 'number' },
-      gender: { type: 'number' },
-      age: { type: 'number' }
-    },
-    login: {
-      type: 'string',
-      required: true
+      openness: { type: 'number', default: -1 },
+      conscientiousness: { type: 'number', default: -1 },
+      extraversion: { type: 'number', default: -1 },
+      agreeableness: { type: 'number', default: -1 },
+      neuroticism: { type: 'number', default: -1 },
+      relationship: { type: 'number', default: -1 },
+      gender: { type: 'string', default: 'other' },
+      age: { type: 'number', default: -1 }
     },
     dataChoices: { // arrays?
       consumer: { type: 'string' }, // comma-delimited
@@ -657,9 +648,17 @@ User.schema = () => {
   }
 }
 
+User.epochDate = new Date(1970,1,1);
+
 User.randomTraits = () => {
   let traits = {};  // non-zero random trait values
   User.oceanTraits.forEach(t => traits[t] = Math.random() + .000000001);
+  return traits;
+}
+
+User.emptyTraits = () => {
+  let traits = {};  // non-zero random trait values
+  User.oceanTraits.forEach(t => traits[t] = -1);
   return traits;
 }
 
