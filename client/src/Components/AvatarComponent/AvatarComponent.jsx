@@ -15,10 +15,8 @@ const styles = {
     border: '5px solid #378685',
   },
   active: {
-    margin: 10,
-    width: 100,
-    height: 100,
-    border: '5px solid #4FAE50',
+
+
   },
   targeted_text: {
     color: '#378685',
@@ -56,13 +54,16 @@ class AvatarComponent extends React.Component {
           <Avatar
             alt={target.name}
             src={target.image}
-            style={(this.isActive(target) ? styles.active : null)}
             onError={() => { this.src = defaultImg }}
             className={(active || className !== 'active') ? 'avatar-image' : null}
           />
+          <div className="active-div" style={(this.isActive(target) ? {display:'block'} : {display:'none'})}>
+          <span className="activeDot"></span>
+          <span className="activeDotText">LIVE</span>
+          </div>
         </Grid>
-        <Typography className="avatar-name" style={className === 'targeted' ?
-          styles.targeted_text : null}>{target.name}</Typography>
+        <p className="avatar-name" style={className === 'targeted' ?
+          styles.targeted_text : null}>{target.name}</p>
       </div>
     );
   }
