@@ -10,13 +10,14 @@ export default class User {
   constructor(tmpl) {
     Object.keys(User.schema()).forEach(k => this[k] = undefined);
     if (tmpl) this.assign(tmpl);
+    this.traits = this.traits || User.emptyTraits();
+    this.createdAt = this.createdAt || new Date();
     this.updatedAt = this.updatedAt || new Date();
     this.loginType = this.loginType || 'email';
     this.lastPage = this.lastPage || 'login'
     this.dataChoices = this.dataChoices || {};
     this.influences = this.influences || {};
     this.targetAd = this.targetAd || {};
-    this.similars = this.similars || [];
   }
 
   assign(json) {
@@ -624,17 +625,17 @@ User.schema = () => {
     },
     createdAt: {
       type: 'date',
-      default: Date.now
+      default: new Date()
     },
     traits: {
-      openness: { type: 'number' },
-      conscientiousness: { type: 'number' },
-      extraversion: { type: 'number' },
-      agreeableness: { type: 'number' },
-      neuroticism: { type: 'number' },
-      relationship: { type: 'number' },
-      gender: { type: 'number' },
-      age: { type: 'number' }
+      openness: { type: 'number', default: -1 },
+      conscientiousness: { type: 'number', default: -1 },
+      extraversion: { type: 'number', default: -1 },
+      agreeableness: { type: 'number', default: -1 },
+      neuroticism: { type: 'number', default: -1 },
+      relationship: { type: 'number', default: -1 },
+      gender: { type: 'string', default: 'other' },
+      age: { type: 'number', default: -1 }
     },
     login: {
       type: 'string',
@@ -660,6 +661,12 @@ User.schema = () => {
 User.randomTraits = () => {
   let traits = {};  // non-zero random trait values
   User.oceanTraits.forEach(t => traits[t] = Math.random() + .000000001);
+  return traits;
+}
+
+User.emptyTraits = () => {
+  let traits = {};  // non-zero random trait values
+  User.oceanTraits.forEach(t => traits[t] = -1);
   return traits;
 }
 

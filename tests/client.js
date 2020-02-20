@@ -9,7 +9,8 @@ describe('Client User', function() {
       let user = new User();
       let fields = Object.keys(User.schema());
       // these are fields defined with a default
-      let withDefaults = ['clientId', 'lastPage', 'targetAd', 'dataChoices', 'loginType', 'updatedAt'];
+      let withDefaults = ['clientId', 'lastPage', 'targetAd', 'dataChoices',
+        'loginType', 'updatedAt', 'createdAt', 'traits'];
       fields.forEach(f => {
         if (!withDefaults.includes(f)) {
           expect(user).has.property(f);

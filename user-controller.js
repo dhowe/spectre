@@ -191,10 +191,14 @@ const update = async (req, res) => {
       return;
     }
 
-    UserModel.findByOcean(user, limit, (err, sims) => {
-      if (err) return sendError(res, 'FindByOcean failed for #' + uid, err);
-      user.similars = sims;
-      sendResponse(res, user);
+    // we have traits but no similars yet, find them
+    UserModel.findTargets(user, limit, (err, sims) => {
+      if (err) return sendError(res, 'findTargets failed for #' + uid, err);
+      // Make this a full user, rather than a simple
+      // data record, so it can hold similars []
+      let fuser = User.create(user._doc);
+      fuser.similars = sims;
+      sendResponse(res, fuser);
     });
   });
 }
