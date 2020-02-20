@@ -3,9 +3,7 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Button from "@material-ui/core/Button";
-import HeaderLogo from '../../Icons/headerlogo-colour.svg';
 import ComponentStyles from '../../App.module.css';
-import { Link } from 'react-router-dom';
 import "./OceanProfileHelpModal.scss";
 
 
