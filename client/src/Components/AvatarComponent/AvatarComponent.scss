@@ -7,13 +7,39 @@ div.avatar-image {
   background-size: 95px 95px;
   font-size: 0px;
 }
+.active-div{
+  margin: 0px;
+  padding: 0px;
+  position: absolute;
+  top:78px;
+  left: 60px;
+}
+  .activeDotText{
+
+    color: #27AE60;
+    font-size: 12px;
+    font-weight: 600;
+    position: relative;
+    bottom: 50px;
+    left: 25px;
+
+  }
+  .activeDot{
+    width: 20px;
+    height: 20px;
+    background-color: #27AE60;
+    border-radius: 50%;
+    display: inline-block;
+    color: #27AE60;
+
+  }
 
 @media screen and (orientation:landscape) {
   div.avatar-image {
     margin: 10px;
     width: 100px;
     height: 100px;
-    border: solid $grey 3px;
+    border: solid $grey 0px;
 
     &:hover {
         border-color: $blue;
@@ -21,9 +47,12 @@ div.avatar-image {
   }
 
   .content p.avatar-name {
-    font-size: 20px;
-    color: $lightGrey;
+    font-size: 18px;
+    font-weight: 500;
+    color: #828282;
+    line-height: 22px;
   }
+
 }
 
 @media screen and (orientation:portrait) {
@@ -39,8 +68,9 @@ div.avatar-image {
   }
 
   .content p.avatar-name {
-    font-size: 24px;
+    font-size: 18px;
     font-weight: 500;
-    color: $lightGrey;
+    color: #828282;
+    line-height: 22px;
   }
 }

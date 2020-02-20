@@ -49,13 +49,13 @@ const styles = {
     position: 'absolute',
     bottom: '13px',
     right: '0',
-    width: '150px',
+    width: '100px',
   },
   campaignImage: {
     position: 'absolute',
     bottom: '106px',
     right: '0',
-    width: '150px',
+    width: '100px',
   }
 };
 
@@ -99,7 +99,7 @@ class DarkAd extends React.Component {
     const { classes } = this.props;
     const { issue, images, slogans, target } = this.state;
     const redimg = UserSession.imageDir + 'darkadred.png';
-    const cimage = UserSession.imageDir + 'vote-' + issue + '.png';
+    const cimage = UserSession.imageDir + 'vote-' + issue + '.svg';
     const btnEnabledPg1 = (this.state.defaultImageSelected !== true && this.state.text.length);
     //  const btnEnabledPg2 = btnEnabledPg1;
     //console.log(slogans);

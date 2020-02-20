@@ -21,7 +21,6 @@ SideNav-expanded {
 .SideNav-main-collapsed {
   width: 0;
   -webkit-transition: width 0.2s;
-
 }
 
 .SideNav-toggle-collapsed,
@@ -71,18 +70,29 @@ SideNav-expanded {
   z-index: 1;
 }
 
-#box2Text:after {
+.SideNav-toggle-collapsed #box2Text:after,
+.SideNav-toggle-expanded #box2Text:after {
   content: "";
   left: calc(50% - 5px);
   margin-top: 5px;
-  margin-left: 10px;
   position: absolute;
   border: solid #FFF;
   border-width: 0 3px 3px 0;
   width: 18px;
   height: 18px;
   top: 30px;
+}
+
+.SideNav-toggle-collapsed #box2Text:after {
+  margin-left: 10px;
   transform: rotate(-45deg);
+  -webkit-transition: rotate 2s;
+}
+
+.SideNav-toggle-expanded #box2Text:after {
+  transform: rotate(135deg);
+  margin-left: 18px;
+  -webkit-transition: rotate 2s;
 }
 
 .SideNav {
@@ -133,7 +143,6 @@ SideNav-expanded {
   line-height: 40px;
 }
 
-
 .split-h {
   padding: 0;
   margin: 0 auto;
@@ -152,25 +161,23 @@ SideNav-expanded {
   text-align: left;
 }
 
-
-.profile-info{
+.profile-info {
   display: flex;
 }
 
-.profile-info div p{
+.profile-info div p {
   display: none;
 }
 
-.profile-info h2{
+.profile-info h2 {
   font-size: 32px;
   line-height: 52px;
   color: $white;
-  padding-left:20px;
-  padding-top:10px;
+  padding-left: 20px;
+  padding-top: 10px;
 }
 
-.helpIcon{
+.helpIcon {
   filter: brightness(0) invert(1);
   padding-left: 130px;
-
 }
