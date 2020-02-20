@@ -310,7 +310,7 @@ UserSession.targets = async (user) => {
     return user;
   }
 
-  if (!user.traits || typeof user.traits.openness === 'undefined') {
+  if (!user.traits || typeof user.traits.openness >= 0) {
     throw Error('No traits for user #' + user._id);
   }
 
