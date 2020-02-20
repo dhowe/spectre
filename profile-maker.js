@@ -36,7 +36,7 @@ class ProfileMaker {
 
   onNewImage = (path) => {
 
-    console.log('[' + clfDate() + '] ::* IMAGE ' + pathify(path));
+    console.log('[' + clfDate() + '] ::* FOUND ' + pathify(path));
 
     if (/^.*\/[a-f\d]{24}_raw\.jpg$/i.test(path)) {
       try {
@@ -62,14 +62,14 @@ class ProfileMaker {
               });
             }
 
-console.log('[' + clfDate() + '] ::* DETECT ', fieldsToUpdate);
+            //console.log('[' + clfDate() + '] ::* DETECT ', fieldsToUpdate);
 
             // We have successfully detect the face, then cropped and
             // processed the image, now update the db with this info
             UserModel.findByIdAndUpdate(
               id, fieldsToUpdate, { new: true }, (err, u) => {
                 err && console.error('[ERROR] ProfileMaker.update: ', err, u);
-                console.log('[' + clfDate() + '] ::* UPDATE hasImage', u.hasImage);
+                console.log('[' + clfDate() + '] ::* UPDATED hasImage:', u.hasImage);
               });
           });
       }
