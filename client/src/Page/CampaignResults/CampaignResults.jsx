@@ -49,8 +49,9 @@ class CampaignResults extends React.Component {
       <Video
         className={ComponentsStyles.inPageVideo}
         movie={`${UserSession.publicUrl}video/ElectionResults_${adIssue}_US.mp4`}
-        onComplete={() => this.timeout = setTimeout(() => this.props.history.push('/win'), 1000)}
-      />) : <br />;
+        onComplete={() => this.timeout = setTimeout(() => {
+          this.props.history.push('/win')
+        }, 1000)}/>) : <br />;
 
     return (
       <div className={classes.root}>

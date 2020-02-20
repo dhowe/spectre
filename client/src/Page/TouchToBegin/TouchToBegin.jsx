@@ -44,6 +44,7 @@ class TouchToBegin extends React.Component {
   constructor(props) {
     super(props, '/login');
   }
+
   render() {
     return (
       <div className={this.props.classes.root + ' touchToBegin'}>

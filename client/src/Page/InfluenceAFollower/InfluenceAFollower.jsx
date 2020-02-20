@@ -20,15 +20,18 @@ class InfluenceAFollower extends React.Component {
   }
 
   async componentDidMount() {
-    let user = await UserSession.ensure(this.context,
+    const user = await UserSession.ensure(this.context,
       ['name', 'login', 'gender', 'virtue', 'traits']);
     await UserSession.targets(user);
     this.setState({ targets: user.similars });
   }
 
   handleSelect = (target) => {
-    this.context.target = target;
-    this.context.targetId = target._id;
+    const user = this.context;
+    user.target = target;
+    user.targetId = target._id;
+    UserSession.computeInfluencesFor(target);
+    UserSession.update(user);
     this.props.history.push('/selected');
   }
 

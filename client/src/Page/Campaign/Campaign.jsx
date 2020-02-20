@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-//import Typography from '@material-ui/core/Typography';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import OceanProfile from '../../Components/OceanProfile/OceanProfile';
@@ -9,6 +8,7 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import IconButton from '../../Components/IconButton/IconButton';
 import { Link } from 'react-router-dom';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
+
 import ComponentsStyles from '../../App.module.css';
 
 const styles = {};
@@ -27,12 +27,6 @@ class Campaign extends React.Component {
     const user = await UserSession.ensure(this.context,
       ['name', 'adIssue', 'target']);
     if (!user.target) throw Error('no target');
-    console.log(user);
-    console.log(user.target);
-    // console.log('adIssue', user.adIssue);
-    // console.log('targetName', user.target.name);
-    // console.log('target-influences', user.target.influences);
-    // console.log('target-gender', user.target.gender);
     this.setState({
       tname: user.target.name.ucf(),
       themes: user.target.influences[user.adIssue].themes,

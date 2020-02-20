@@ -13,12 +13,16 @@ UserSession.clientId = -1;
 UserSession.serverErrors = 0;
 UserSession.useBrowserStorage = true;
 UserSession.defaultUsers = DefaultUsers;
-UserSession.profileDir = (process.env.PUBLIC_URL || '') + '/profiles/';
-UserSession.imageDir = (process.env.PUBLIC_URL || '') + '/imgs/';
+UserSession.adIssues = ['remain', 'leave'];
+//UserSession.profileDir = (process.env.PUBLIC_URL || '') + '/profiles/';
+//UserSession.imageDir = (process.env.PUBLIC_URL || '') + '/imgs/';
 UserSession.publicUrl = 'https://spectreknows.me/'; // ?
 UserSession.serverDisabled = typeof auth === 'undefined';
 UserSession.epochDate = User.epochDate;
+UserSession.oceanTraits = User.oceanTraits;
 UserSession.storageKey = 'spectre-user';
+UserSession.profileDir = '/profiles/';
+UserSession.imageDir = '/imgs/';
 
 localIPs(ip => (UserSession.clientId = ip), '192.');
 
@@ -48,6 +52,9 @@ UserSession.create = async (user) => {
 
   return user.assign(json);
 }
+
+UserSession.computeInfluencesFor = (target) =>
+  User.computeInfluencesFor(target, UserSession.adIssues);
 
 UserSession.targetImage = (target) => {
   let fname = ((target && typeof target._id !== 'undefined'
@@ -196,7 +203,7 @@ function fillMissingProps(user, props) {
   let propStubber = {
     gender: () => rand(Genders),
     virtue: () => rand(Virtues),
-    adIssue: () => rand(AdIssues),
+    adIssue: () => rand(UserSession.adIssues),
     traits: () => User.randomTraits(),
     name: () => (rand(Cons) + rand(Vows) + rand(Cons)).ucf(),
     login: () => user.name + Date.now() + '@test.com',
@@ -216,7 +223,7 @@ function fillMissingProps(user, props) {
       user[p] = propStubber[p]();
       if (p === 'target') {
         user.targetId = user.target._id;
-        User.computeInfluencesFor(user.target, AdIssues);
+        User.computeInfluencesFor(user.target, UserSession.adIssues);
         //console.log('  target: '+user.targetId+"/"+JSON.stringify(user.target));
       }
       onUpdateProperty(p);
@@ -389,11 +396,16 @@ UserSession.similars = async (user) => {
  */
 UserSession.uploadImage = (user, data) => {
 
+  if (!user || !user._id || user._id === -1) {
+    console.error('[IMAGE] Bad user/id: ' + user);
+    return false;
+  }
+  
   const toImageFile = (data, fname) => {
     const arr = data.split(',');
     if (!data || data.length <= 6) {
       data && console.error(data);
-      console.error('Bad image data: ' + data);
+      console.error('[IMAGE] Bad image data: ' + data);
       return null;
     }
     const mime = arr[0].match(/:(.*?);/)[1];
@@ -512,7 +524,6 @@ UserSession.persPron = (user) => {// not used
 
 const Cons = "bcdfghjklmnprstvxz".split('');
 const Vows = "aeiou".split('');
-const AdIssues = ['remain', 'leave'];
 const Genders = ['male', 'female', 'other'];
 const Virtues = ['wealth', 'influence', 'truth', 'power'];
 const FemaleCelebs = ['Kardashian', 'Abramovic'];

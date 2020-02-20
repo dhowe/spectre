@@ -12,7 +12,7 @@ import './OCEANReveal.scss'
 
 const keyPause = 50; // typing speed for each character
 const linePause = 4; // linePause * keyPause = wait time after each sentence
-const timing = [ 0 , 2000, 4000];
+const timing = [0, 2000, 4000];
 const styles = {};
 
 class OCEANReveal extends React.Component {
@@ -23,19 +23,21 @@ class OCEANReveal extends React.Component {
     this.modalTitle = '';
     this.modalContent = '';
     this.video = React.createRef();
-    this.state = { modalOpen: false, celebrity: '',
-      sentences: [], readyForVideo: false };
+    this.state = {
+      modalOpen: false, celebrity: '',
+      sentences: [], readyForVideo: false
+    };
   }
 
   async componentDidMount() {
     const user = await UserSession.ensure(this.context,
       ['name', 'login', 'gender', 'traits', 'celebrity']);
-    
+
     const sentences = user.generateSummary();
     const totalChar = sentences.join().length;
     const waitingTime = (totalChar * keyPause)
       + ((sentences.length - 1) * linePause)
-      + timing.reduce((a,v) => a+v) + 1000;
+      + timing.reduce((a, v) => a + v) + 1000;
 
     this.setState({ sentences: sentences, celebrity: user.celebrity });
     this.timeout = setTimeout(() => this.setState
@@ -76,24 +78,23 @@ class OCEANReveal extends React.Component {
           </Fade>
           {
             sentences.map((sent, i) => {
-            return (
-              <p className="normal" key={i}>
-                {
-                  sent.split('').map((letter, j) => {
-                    let delay = timing[2] + ((++timer + (i * linePause)) * keyPause);
-                    return (
-                      <Fade key={j} in={true} style={{ transitionDelay:  delay + 'ms' }}>
+              return (
+                <p className="normal" key={i}>
+                  {
+                    sent.split('').map((letter, j) => {
+                      let delay = timing[2] + ((++timer + (i * linePause)) * keyPause);
+                      return (
+                        <Fade key={j} in={true} style={{ transitionDelay: delay + 'ms' }}>
                         <span key={`fade-${i}`} style={{ color: '#4F4F4F' }}>
                           {letter}
                         </span>
                       </Fade>
-                    );
-                  })
-                }
-              </p>
-            );
-          })
-        }
+                    )})
+                  }
+                </p>
+              );
+            })
+          }
         </div>
         <Modal
           isOpen={modalOpen}

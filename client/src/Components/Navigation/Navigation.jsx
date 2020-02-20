@@ -36,7 +36,7 @@ class Navigation extends React.Component {
     //console.log('onKey:'+e.keyCode);
     if (e.keyCode === 39) this.next(); // ->
     if (e.keyCode === 37) this.last(); // <-
-    if (e.keyCode === 67) { // c
+    if (e.keyCode === 67) {            // c
       UserSession.clear();
       window.location.reload();
     }
@@ -52,12 +52,10 @@ class Navigation extends React.Component {
 
   render() {
     let page = window.location.pathname;
-    if (page.length > 1) page = page.replace(/^\//, '');
 
     // store the page/update-time with the user
-    this.context.lastPage = page;
-    this.context.updatedAt = new Date();
-
+    this.context.logVisit(page);
+    if (page.length > 1) page = page.replace(/^\//, '');
     if (typeof this.context._id !== 'undefined') {
       console.log(('[' + page.substring(0, 6) + '] ')
         .toUpperCase() + this.context.toString());

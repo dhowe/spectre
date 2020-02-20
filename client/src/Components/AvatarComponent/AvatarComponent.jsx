@@ -44,7 +44,7 @@ class AvatarComponent extends React.Component {
     }
     const inActiveMs = (Date.now() - target.updatedAt.getTime())
     const targetActive = inActiveMs < liveUserInterval;
-    //console.log('[AVATAR] ' + target.name + ' inactive for ' + Math.round(inActiveMs / 1000) + 's :: live: ' + targetActive);
+    console.log('[AVATAR] ' + target.name + ' inactive for ' + Math.round(inActiveMs / 1000) + 's :: live: ' + targetActive);
     return targetActive;
   }
 

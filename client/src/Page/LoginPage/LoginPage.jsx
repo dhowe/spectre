@@ -84,7 +84,6 @@ class LoginPage extends React.Component {
       user.name = name;
       user.login = email;
       user.gender = gender;
-      user.lastPage = 'login';
       this.setState({ modalOpen: false });
       this.saveUser(user);
     }
@@ -92,6 +91,7 @@ class LoginPage extends React.Component {
 
   // save user then start video
   saveUser = async (user) => {
+    user.logVisit();
     try {
       UserSession.create(user);
       console.log('[LOGIN] ' + user.toString());

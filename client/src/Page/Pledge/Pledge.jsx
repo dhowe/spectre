@@ -22,9 +22,9 @@ class Pledge extends React.Component {
   }
 
   async componentDidMount() {
-    await UserSession.ensure(this.context, ['_id']);
     this.timeout1 = setTimeout(() =>
-      this.props.history.push('/searching'), 7500);
+      this.context.goto(this.props, '/searching'), 7500);
+      //this.props.history.push('/searching'), 7500);
     this.timeout2 = setTimeout(this.captureImage, 4000);
   }
 

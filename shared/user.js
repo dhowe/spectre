@@ -11,15 +11,17 @@ export default class User {
     Object.keys(User.schema()).forEach(k => this[k] = undefined);
     if (tmpl) this.assign(tmpl);
     this.traits = this.traits || User.emptyTraits();
-    //console.log('pre: '+typeof this.createdAt, this.createdAt);
     this.createdAt = this.createdAt || new Date();
-    //console.log('pre2: '+typeof this.createdAt, this.createdAt);
     this.updatedAt = this.updatedAt || new Date();
     this.loginType = this.loginType || 'email';
-    this.lastPage = this.lastPage || 'login'
+    this.lastPage = this.lastPage || '';
     // this.dataChoices = this.dataChoices || {};
     // this.influences = this.influences || {};
     // this.targetAd = this.targetAd || {};
+  }
+
+  static create(json) {
+    return new User().assign(json);
   }
 
   assign(json) {
@@ -38,8 +40,18 @@ export default class User {
     return Object.assign(this, json);
   }
 
-  static create(json) {
-    return new User().assign(json);
+  logVisit(page) {
+    page = page || window && window.location.pathname;
+    if (!this.lastPage.endsWith(page)) {
+      this.lastPage += (this.lastPage.length ? ',' : '') + page;
+    }
+    this.updatedAt = new Date();
+    console.log('[USER]', this.lastPage, this.updatedAt);
+  }
+
+  goto(props, page) {
+    this.logVisit(page);
+    props.history.push(page);
   }
 
   toString() {
@@ -60,7 +72,6 @@ export default class User {
   }
 
   generateSummary(numSentences) {
-
     return this.generateSentences(User.secondPersonTemplate, numSentences);
   }
 
@@ -500,7 +511,7 @@ export default class User {
 
   // target is an object with traits
   static computeInfluencesFor(target, issues) {
-
+    console.log('computeInfluencesFor: '+target.name);
     if (typeof target === 'undefined') {
       throw Error('No target in User.computeInfluencesFor()');
     }
@@ -619,7 +630,7 @@ User.schema = () => {
     },
     lastPage: {
       type: 'string',
-      default: 'login'
+      default: ''
     },
     traits: {
       openness: { type: 'number', default: -1 },

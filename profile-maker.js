@@ -36,13 +36,15 @@ class ProfileMaker {
 
   onNewImage = (path) => {
 
-    console.log('[' + clfDate() + '] ::* FOUND ' + pathify(path));
-
     if (/^.*\/[a-f\d]{24}_raw\.jpg$/i.test(path)) {
+
+      console.log('[' + clfDate() + '] ::* FOUND ' + pathify(path));
+
       try {
         const tmp = path.replace(/_raw\.jpg/, '');
         const id = tmp.substring(tmp.lastIndexOf('/') + 1);
         const outfile = tmp + '.jpg';
+
         this.makeThumbnail(path, outfile)
           .then(res => {
             if (res.status === 'ok') {
@@ -53,6 +55,7 @@ class ProfileMaker {
             else {
               console.error('[' + clfDate() + '] ::* THUMB Failed', res.data);
             }
+
             const fieldsToUpdate = { hasImage: res.status === 'ok' };
             if (this.detectAgeGender && res.status === 'ok') {
               Object.assign(fieldsToUpdate, {
@@ -66,8 +69,8 @@ class ProfileMaker {
 
             // We have successfully detect the face, then cropped and
             // processed the image, now update the db with this info
-            UserModel.findByIdAndUpdate(
-              id, fieldsToUpdate, { new: true }, (err, u) => {
+            UserModel.findByIdAndUpdate(id,
+              fieldsToUpdate, { new: true }, (err, u) => {
                 err && console.error('[ERROR] ProfileMaker.update: ', err, u);
                 console.log('[' + clfDate() + '] ::* UPDATED hasImage:', u.hasImage);
               });
@@ -91,16 +94,18 @@ class ProfileMaker {
     try {
       const result = await this.detect(infile);
       if (!result) throw Error('No face-detection result');
-      const dims = result.dimensions;
-      const f = await sharp(infile)
-        .extract(bounds(result.box, dims.w, dims.h))
+
+      await sharp(infile)
+        .extract(bounds(result.box, result.dimensions.w, result.dimensions.h))
         .modulate({ brightness: BRIGHTEN }) // increase lightness factor
         .resize(width || 128, height || 128)
         .normalise()
         .toFile(outfile);
+
       return { status: 'ok', data: result };
     }
     catch (e) {
+      console.error('[ERROR] THUMBNAIL: ', e);
       return { status: 'err', data: e };
     }
   }
@@ -146,6 +151,7 @@ class ProfileMaker {
     if (this.detectAgeGender) {
       let detection = await faceapi.detectSingleFace(image,
         detectorOpts(this.detectionNet)).withAgeAndGender();
+      if (!detection) throw Error('Detection failed[0] null-result');
       result = {
         age: detection.age,
         gender: detection.gender,
