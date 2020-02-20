@@ -18,7 +18,7 @@ class LaunchCampaign extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const launchImg = `/imgs/vote-${(this.context.adIssue || 'remain')}.png`;
+    const launchImg = `/imgs/vote-${(this.context.adIssue || 'remain')}.svg`;
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" />
@@ -35,7 +35,7 @@ class LaunchCampaign extends React.Component {
                     src={launchImg}
                     alt="launch campaign"
                   />
-                  <h2><span>Republican</span></h2>
+                  <h2><span>{this.context.adIssue === 'leave' ? 'Replublican' : 'Democrat'}</span></h2>
                 </div>
               </div>
 
