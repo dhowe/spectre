@@ -25,6 +25,7 @@ class SearchingFor extends React.Component {
 
   handleClick(virtue) {
     this.context.virtue = virtue;
+    // TODO: is this page loading twice??
     this.context.goto(this.props, '/data-is');
   }
 

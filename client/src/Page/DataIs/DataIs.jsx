@@ -20,11 +20,9 @@ class DataIs extends React.Component {
 
   async componentDidMount() {
     let nextPage = this.state.nextPage;
-    console.log('DataIs1', this.context.virtue);
     const user = await UserSession.ensure(this.context, ['virtue', 'hasImage']);
-    if (user.virtue !== this.context.virtue) throw Error(user+"\n\n"+this.context);
-    console.log('DataIs2', user.virtue);
-    console.log('DataIs2b', this.context.virtue);
+    // TODO: ERROR: virtue is getting changed here
+    // if (user.virtue !== this.context.virtue) throw Error(user+"\n\n"+this.context);
 
     if (!user.hasImage) { // MOVE TO personalized?
       nextPage = '/selfie';
@@ -39,8 +37,6 @@ class DataIs extends React.Component {
 
   render() {
     const { virtue, virtueAdverb } = this.state;
-    console.log('DataIs3', virtue);
-
     return (
 
       <div className={this.props.root}>
