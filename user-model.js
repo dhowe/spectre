@@ -22,7 +22,7 @@ UserSchema.statics.getAll = function(callback, limit) {
 }
 
 // create a randomised or templated user
-UserSchema.statics.Create = function(tmpl) {
+UserSchema.statics.CreateModel = function(tmpl) {
 
   let randName = () => Math.random().toString(36)
     .replace(/[^a-z]+/g, '').substring(0, 5);
@@ -48,7 +48,7 @@ UserSchema.statics.findByDate = function(date1, date2, callback) { // cb=functio
 }
 
 // find mix of recents and similars
-UserSchema.statics.findTargets = function(user, limit, callback) { // cb=function(err,users)console.log("findTargets: ", user.name);
+UserSchema.statics.findTargets = function(user, limit, callback) { // cb=function(err,users)
   aSync.parallel([
     (cb) => UserModel.findByRecent(user._id, Math.floor(limit / 2), cb),
     (cb) => UserModel.findByOcean(user, Math.ceil(limit / 2), cb)],
@@ -65,7 +65,7 @@ UserSchema.statics.findByRecent = function(userId, limit, callback) { // cb=func
         hasImage: true
       }
     },
-    { $sort: { lastUpdate: -1 } },
+    { $sort: { updatedAt: -1 } },
     { $limit: limit },
     { $project: { similars: 0 } }
   ], callback);
@@ -96,19 +96,19 @@ UserSchema.statics.findByLastPerMono = function(userId, callback) { // cb=functi
         hasImage: true
       }
     },
-    { $sort: { clientId: -1, lastUpdate: 1 } },
+    { $sort: { clientId: -1, updatedAt: 1 } },
     {
       $group: {
         _id: "$clientId", // group by client-id
         id: { $last: "$_id" },
         name: { $last: "$name" },
         login: { $last: "$login" },
-        lastUpdate: { $last: "$lastUpdate" },
+        updatedAt: { $last: "$updatedAt" },
         lastPage: { $last: "$lastPage" },
         hasImage: { $last: "$hasImage" },
       }
     },
-    { $project: { _id: "$id", clientId: "$_id", lastUpdate: 1, name: 1, lastPage: 1, login: 1 } }
+    { $project: { _id: "$id", clientId: "$_id", updatedAt: 1, name: 1, lastPage: 1, login: 1 } }
   ], callback);
 };
 

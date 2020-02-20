@@ -17,35 +17,27 @@ const styles = {
 class PickYourSide extends React.Component {
   constructor(props) {
     super(props, '/campaign');
-    this.state = {
-      targetName: '', pronoun: '',
-      target: { name: '', traits: '' },
-      targetImage: null,
-    };
+    this.state = { target: UserSession.oceanData() };
   }
 
   async componentDidMount() {
-    const user = await UserSession.ensure(this.context, [/*'_id',*/ 'name', 'target']);
-    this.setState({
-      targetName: user.target.name, pronoun: (user.target.gender === 'male' ? 'him' : 'her'),
-      target: user.target,
-      targetImage: UserSession.profileDir + user.targetImage()
-    });
+    const user = await UserSession.ensure(this.context, [ 'name', 'target' ]);
+    this.setState({ target: UserSession.oceanData(user.target) });
   }
 
   render() {
     const { classes } = this.props;
-    const { targetName, pronoun, target, targetImage } = this.state;
+    const { target } = this.state;
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive progressNumber="one" />
-        <OceanProfile subject={target} subjectImage={targetImage} />
+        <OceanProfile target={target} />
         <IdleChecker />
         <div className={`${classes.content} content`}>
           <h1>
             <br />
-            Use <span>{targetName}'s OCEAN profile</span><br />
-            to persuade <span>{pronoun}</span> to vote:
+            Use <span>{target.name}'s OCEAN profile</span><br />
+            to persuade <span>{target.objpron}</span> to vote:
           </h1>
           <div className="pickLink">
 

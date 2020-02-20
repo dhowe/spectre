@@ -18,9 +18,7 @@ import './LoginPage.scss';
 
 window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true; // TMP: #138
 
-const styles_landscape = {
-
-};
+const styles_landscape = {};
 
 const styles_portrait = {
   marginBottom: 70,
@@ -48,7 +46,7 @@ class LoginPage extends React.Component {
   }
 
   componentDidMount() {
-    UserSession.clear();
+    UserSession.clear(this.context);
     this.setState({ height: window.innerHeight + 'px' });
   }
 
@@ -59,7 +57,9 @@ class LoginPage extends React.Component {
     const user = this.context;
 
     if (!e) { // right-arrow key
-      UserSession.validate(this.context, ['name', 'login', 'gender'], {allowNoId: true});
+      UserSession.validate(this.context,
+        ['name', 'login', 'gender'],
+        { allowNoId: true });
       name = user.name;
       email = user.login;
       gender = user.gender;
@@ -85,7 +85,6 @@ class LoginPage extends React.Component {
       user.login = email;
       user.gender = gender;
       user.lastPage = 'login';
-      user.lastUpdate = Date.now();
       this.setState({ modalOpen: false });
       this.saveUser(user);
     }
@@ -181,10 +180,10 @@ class LoginPage extends React.Component {
           />
           <Video
             ref={ele => { this.video = ele }}
-            movie="https://spectreknows.me/video/SpectreIntro.mp4"
-            autoPlay={false}
+            movie={`${UserSession.publicUrl}video/SpectreIntro.mp4`}
             onComplete={this.endVideo}
             onKeyUp={this.onKeyPress}
+            autoPlay={false}
           />
           <SocialLogin
             ref={ele => { this.social = ele }}

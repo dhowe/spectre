@@ -9,14 +9,32 @@ export default class User {
 
   constructor(tmpl) {
     Object.keys(User.schema()).forEach(k => this[k] = undefined);
-    Object.assign(this, tmpl);
-    //this.clientId = process.env.REACT_APP_CLIENT_ID || -1;
+    if (tmpl) this.assign(tmpl);
+    this.updatedAt = this.updatedAt || new Date();
     this.loginType = this.loginType || 'email';
     this.lastPage = this.lastPage || 'login'
     this.dataChoices = this.dataChoices || {};
     this.influences = this.influences || {};
     this.targetAd = this.targetAd || {};
-    this.similars = [];
+    this.similars = this.similars || [];
+  }
+
+  assign(json) {
+    if (!json) throw Error('null json in User.assign');
+    let dateFields = ['updatedAt', 'createdAt'];
+    dateFields.forEach(df => {
+      if (json.hasOwnProperty(df)) {
+        if (!typeof json[df] === 'string') throw Error
+          ('Expecting date string, found ' + typeof json[df]);
+        this[df] = new Date(json[df]);
+        delete json[df];
+      }
+    });
+    return Object.assign(this, json);
+  }
+
+  static create(json) {
+    return new User().assign(json);
   }
 
   toString() {
@@ -33,7 +51,7 @@ export default class User {
       s += ', ' + u.similars.length + ' similars';
     }
     if (u.hasImage) s += ', hasImage';
-    return s;
+    return s + ', '+(u.updatedAt.getYear() + 1900);
   }
 
   generateSummary(numSentences) {
@@ -546,6 +564,7 @@ export default class User {
     });
   }
 }
+User.epochDate = new Date("1970-01-01T12:00:00.00");
 
 /*
  * MongoDB database schema for the application
@@ -591,9 +610,21 @@ User.schema = () => {
       type: 'string',
       default: 'login'
     },
-    lastUpdate: {
+    updatedAt: {
+      type: 'date'
+    },
+    detectedAge: {
+      type: 'number'
+    },
+    detectedGender: {
+      type: 'string'
+    },
+    detectedGenderProb: {
+      type: 'number'
+    },
+    createdAt: {
       type: 'date',
-      default: new Date("1970-01-01T12:00:00.00")
+      default: Date.now
     },
     traits: {
       openness: { type: 'number' },
@@ -622,10 +653,6 @@ User.schema = () => {
     gender: {
       type: 'string',
       enum: ['male', 'female', 'other']
-    },
-    createdAt: {
-      type: 'date',
-      default: Date.now
     }
   }
 }

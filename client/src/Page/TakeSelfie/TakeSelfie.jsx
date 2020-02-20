@@ -16,17 +16,13 @@ import './TakeSelfie.scss';
 
 const styles = {};
 
-// 0. Large-text at top: "Lets take a selfie!"
-// 1. Should provide user with a countdown (like photo-booth)
-// 2. Should display the image after (perhaps in overlay)
-// 3. Should give the user the choice to retake or accept the image
 class TakeSelfie extends React.Component {
+  
   constructor(props) {
     super(props, '/personalised');
     this.state = {
-      captureNow: false,
       now: Date.now(),
-      reset: Date.now(),
+      captureNow: false
     };
     this.webcam = React.createRef();
     this.countdowner = React.createRef();
@@ -35,17 +31,15 @@ class TakeSelfie extends React.Component {
   handleClick = (c) => {
     this.clicked = c;
     this.countdowner.start();
-    if (c === 'capture') {
-      this.setState({ captureNow: true });
-    }
+    if (c === 'capture') this.setState({ captureNow: true });
   }
 
   takeSelfie = () => {
-    this.setState({ reset: (new Date().getTime()), now: Date.now() });
+    let now = Date.now();
     try {
       console.log('[WEBCAM] Taking selfie...');
       const data = this.webcam.getScreenshot();
-      this.setState({ captureNow: false, imgData: data })
+      this.setState({ now: now, captureNow: false, imgData: data })
     }
     catch (e) {
       console.error('Webcam Error: ', e);
@@ -58,19 +52,15 @@ class TakeSelfie extends React.Component {
       console.error('[WEBCAM] Error: failed to upload selfie');
     }
     this.props.history.push('/personalised');
-    //setTimeout(() => this.props.history.push('/personalised'), 2000);
   }
 
   render() {
     const { classes } = this.props;
-    const videoConstraints = {
-      width: 1280,
-      height: 720,
-      facingMode: 'user',
-    };
+
     const imagePreview = this.state.imgData ?
       (<div><img className={ComponentStyles.imgPreview}
         src={this.state.imgData} alt="img" /></div>) : null;
+
     return (
       <div className="TakeSelfie content">
         <SpectreHeader colour="white" />
@@ -84,7 +74,11 @@ class TakeSelfie extends React.Component {
             ref={r => this.webcam = r}
             screenshotQuality={1}
             screenshotFormat="image/jpeg"
-            videoConstraints={videoConstraints} />
+            videoConstraints={{
+              width: 1280,
+              height: 720,
+              facingMode: 'user',
+            }} />
         </div>
         <div className={ComponentStyles.buttonWrapper2}>
           <p>Look up and smile for the camera!</p>
@@ -101,16 +95,15 @@ class TakeSelfie extends React.Component {
           renderer={props => <div>{this.state.captureNow ?
             Math.round(props.total / 1000) : 'Ready?'}</div>}
           onComplete={e => e ? this.takeSelfie() : null}
-          key={this.state.reset}
         />
         <div className={classes.clickToContinue}>
-        <Link to="/personalised">
-          <IconButton
-            onClick={this.processSelfie}
-            enabled={typeof this.state.imgData !== 'undefined'}
-            className={ComponentStyles.iconButtonStyle1}
-            icon="next" text="Next" />
-            </Link>
+          <Link to="/personalised">
+            <IconButton
+              onClick={this.processSelfie}
+              enabled={typeof this.state.imgData !== 'undefined'}
+              className={ComponentStyles.iconButtonStyle1}
+              icon="next" text="Next" />
+          </Link>
         </div>
         <FooterLogo />
       </div>

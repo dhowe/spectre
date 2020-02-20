@@ -40,7 +40,7 @@ class Goodbye extends React.Component {
 
     let videoPlaceholder = celebrity.length ? (
       <Video className={classes.video}
-        movie={`https://spectreknows.me/video/goodbye_${celebrity}.mp4`} key="34345871"
+        movie={`${UserSession.publicUrl}video/goodbye_${celebrity}.mp4`} key="34345871"
         onComplete={() => this.props.history.push('/')}
       />) : <br />;
 

@@ -16,25 +16,36 @@ class SpectreHeader extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { userName: 'Test' };
+    this.state = {
+      userName: 'Test',
+      userImage: undefined,
+      userUpdate: UserSession.epochDate
+    };
   }
 
   async componentDidMount() { // tmp for testing webcam
-    if (/(data-is|personalised|game)$/.test(window.location.pathname)) {
-      let user = await UserSession.ensure(this.context, [/*'_id',*/'name']);
+    if (/(personalised|game)$/.test(window.location.pathname)) {
+//console.log('SpectreHeader1', this.context.updatedAt);
+      let user = await UserSession.ensure(this.context, ['name', 'updatedAt', 'hasImage']);
+//if (user) console.log('SpectreHeader2', user.updatedAt);
       if (user) this.setState({
         userName: user.name,
-        userImage: UserSession.profileDir + user._id + '.jpg'
+        userImage: UserSession.profileDir + user._id + '.jpg',
+        userUpdate: user.updatedAt,
       });
     }
   }
 
   render() {
-    const { userName, userImage } = this.state;
+    const { userName, userImage, userUpdate } = this.state;
 
     // tmp for testing webcam
     const avatar = userImage ? <AvatarComponent
-      target={{ name: userName, image: userImage }} /> : '';
+      target={{
+        name: userName,
+        image: userImage,
+        updatedAt: userUpdate
+      }} /> : '';
 
     return this.props.colour === "white" ?
       (

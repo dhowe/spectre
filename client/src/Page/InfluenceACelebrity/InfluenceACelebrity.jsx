@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-//mport Typography from '@material-ui/core/Typography';
 import Fade from '@material-ui/core/es/Fade/Fade';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
@@ -9,13 +8,13 @@ import UserSession from '../../Components/UserSession/UserSession';
 import IconButton from '../../Components/IconButton/IconButton';
 import AvatarCircle from '../../Components/AvatarCircle/AvatarCircle';
 import AvatarComponent from '../../Components/AvatarComponent/AvatarComponent';
-import Video from '../../Components/Video/Video';
-import './InfluenceACelebrity.scss';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
+import Video from '../../Components/Video/Video';
+
+import './InfluenceACelebrity.scss';
 import ComponentsStyles from '../../App.module.css';
 
-const styles = {
-};
+const styles = {};
 
 class InfluenceACelebrity extends React.Component {
 
@@ -35,15 +34,6 @@ class InfluenceACelebrity extends React.Component {
     this.setState({ virtue: user.virtue });
   }
 
-  save = () => {
-    const user = this.context;
-    if (this.state.celebrity) {
-      user.celebrity = this.state.celebrity;
-      UserSession.update(user); // no await
-    }
-    this.props.history.push('/OCEAN-reveal');
-  }
-
   stop = () => {
     this.setState({ video: null });
     this.setState({ idleCheckerDone: false });
@@ -54,15 +44,15 @@ class InfluenceACelebrity extends React.Component {
     user.celebrity = name;
     this.setState({
       celebrity: name,
-      video: `https://spectreknows.me/video/${virtue}_${name}.mp4`,
+      video: `${UserSession.publicUrl}video/${virtue}_${name}.mp4`,
     });
     this.setState({ idleCheckerDone: true });
+    UserSession.update(user); // no await
   }
 
   render() {
     const { classes, celebrity } = this.props;
     const { video, virtue } = this.state;
-
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive progressNumber="three" />
@@ -81,18 +71,19 @@ class InfluenceACelebrity extends React.Component {
           </Fade>
           {video && <Video autoPlay onComplete={this.stop} movie={video} />}
           <AvatarCircle>
-            {this.celebs
-              .map((name, i) => (
-                <AvatarComponent
+            {this.celebs.map((name, i) => (
+                <AvatarComponent key={i}
                   active={name === celebrity}
-                  //key={AvatarComponent.generateKey(i)}
-                  key={i}
                   handleClick={() => this.play(name, virtue)}
-                  target={{ name, image: `/imgs/${name}.png` }}
+                  target={{
+                    name: name,
+                    image: `${UserSession.imageDir}${name}.png`,
+                    updatedAt: UserSession.epochDate }}
                 />
               ))}
           </AvatarCircle>
-          <IconButton onClick={this.save} className={ComponentsStyles.iconButtonStyle1} icon="next" text="Next" />
+          <IconButton onClick={() => this.props.history.push('/OCEAN-reveal')}
+           className={ComponentsStyles.iconButtonStyle1} icon="next" text="Next" />
         </div>
         <FooterLogo />
       </div>

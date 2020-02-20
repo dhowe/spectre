@@ -22,6 +22,7 @@ describe('REST API', () => {
       UserModel.deleteMany({}, (err) => {
         err && console.error('ERROR', err);
         expect(DefaultUsers.length).eq(9);
+        expect(DefaultUsers[0].updatedAt).to.be.a('date');
         chai.request(server)
           .post('/api/users/batch/')
           .auth(env.API_USER, env.API_SECRET)
@@ -48,6 +49,9 @@ describe('REST API', () => {
           expect(res.body.data).to.be.a('object');
           expect(res.body.data._id).eq(id);
           expect(res.body.data.similars).to.be.undefined;
+          let user = User.create(res.body.data);
+          expect(user).to.be.a('object');
+          expect(user._id).eq(id);
           done();
         });
     });
@@ -144,6 +148,7 @@ describe('REST API', () => {
       user.name = "Dave";
       user.login = "Dave@aol.com";
       user.gender = "male";
+
       chai.request(server)
         .post('/api/users/')
         .auth(env.API_USER, env.API_SECRET)
@@ -156,7 +161,7 @@ describe('REST API', () => {
           expect(user._id).to.be.a('string');
 
           user.traits = User.randomTraits();
-          user.lastUpdate = Date.now();
+          user.updatedAt = new Date();
           user.hasImage = true;
 
           // update Dave
@@ -191,7 +196,7 @@ describe('REST API', () => {
                   expect(user._id).to.be.a('string');
 
                   user.traits = User.randomTraits();
-                  user.lastUpdate = Date.now();
+                  user.updatedAt = new Date();
                   user.hasImage = true;
 
                   // update Dave2
@@ -208,6 +213,13 @@ describe('REST API', () => {
                       expect(res.body.data.similars).to.be.an('array');
                       expect(res.body.data.similars.length).eq(6);
 
+                      let u = User.create(res.body.data);
+                      expect(u).to.be.a('object')
+                      expect(u._id).to.be.a('string');
+                      expect(u.clientId).eq(user.clientId);
+                      expect(u.similars).to.be.an('array');
+                      expect(u.similars.length).eq(6);
+
                       //delete res.body.data.similars && console.log(res.body.data);
 
                       // Now check recents
@@ -220,7 +232,8 @@ describe('REST API', () => {
                           expect(err).to.be.null;
                           expect(res).to.have.status(200);
                           expect(res.body.data).to.be.an('array');
-                          let recents = res.body.data;
+                          let recents = res.body.data.map(j => User.create(j))
+
                           //console.log(recents.map(s => s._id + '/' + s.name));
                           expect(recents.length).eq(6);
                           expect(recents[0]).to.be.a('object');
@@ -256,7 +269,7 @@ describe('REST API', () => {
           expect(user._id).to.be.a('string');
 
           user.traits = User.randomTraits();
-          user.lastUpdate = Date.now();
+          user.updatedAt = new Date();
           user.hasImage = true;
 
           // update Dave
@@ -291,7 +304,7 @@ describe('REST API', () => {
                   expect(user._id).to.be.a('string');
 
                   user.traits = User.randomTraits();
-                  user.lastUpdate = Date.now();
+                  user.updatedAt = new Date();
                   user.hasImage = true;
 
                   // update Dave2
@@ -320,7 +333,9 @@ describe('REST API', () => {
                           expect(err).to.be.null;
                           expect(res).to.have.status(200);
                           expect(res.body.data).to.be.an('array');
-                          let recents = res.body.data;
+                          
+                          let recents = res.body.data.map(j => User.create(j))
+
                           //console.log(recents.map(s => s._id + '/' + s.name));
                           expect(recents.length).eq(2);
                           expect(recents[0]).to.be.a('object');
@@ -357,7 +372,7 @@ describe('REST API', () => {
 
           //user.clientId = Math.floor(Math.random() * 5) + 1;
           user.traits = User.randomTraits();
-          user.lastUpdate = Date.now();
+          user.updatedAt = new Date();
           user.hasImage = true;
 
           chai.request(server)

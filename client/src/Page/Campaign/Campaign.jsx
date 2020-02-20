@@ -17,51 +17,46 @@ class Campaign extends React.Component {
   constructor(props) {
     super(props, '/dark-ad');
     this.state = {
-      targetName: '',
-      targetThemes: ['', ''],
-      targetPron: '',
-      target: { name: '', traits: '' },
-      targetImage: null,
+      tname: '',
+      themes: ['', ''],
+      target: UserSession.oceanData(),
     };
   }
 
   async componentDidMount() {
     const user = await UserSession.ensure(this.context,
       ['name', 'adIssue', 'target']);
-    console.log('adIssue', user.adIssue);
-    console.log('targetName', user.target.name);
-    console.log('target-influences', user.target.influences);
-    console.log('target-gender', user.target.gender);
-    console.log('target-pronoun', UserSession.persPron(user.target));
+    // console.log('adIssue', user.adIssue);
+    // console.log('targetName', user.target.name);
+    // console.log('target-influences', user.target.influences);
+    // console.log('target-gender', user.target.gender);
     this.setState({
-      targetName: user.target.name.ucf(),
-      targetThemes: user.target.influences[user.adIssue].themes,
-      targetPronoun: UserSession.persPron(user.target),
-      target: user.target,
-      targetImage: UserSession.profileDir + user.targetImage()
+      tname: user.target.name.ucf(),
+      themes: user.target.influences[user.adIssue].themes,
+      target: UserSession.oceanData(user.target),
     });
   }
 
   render() {
     const { classes } = this.props;
-    let { targetThemes, targetPronoun, targetName, target, targetImage } = this.state;
+    let { themes, tname, target } = this.state;
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive progressNumber="one" />
-        <OceanProfile subject={target} subjectImage={targetImage} />
+        <OceanProfile target={target} />
         <IdleChecker />
         <div className={`${classes.content} content`}>
           <h1 className="addSpacing">
             Create a targeted Facebook ad.
           </h1>
           <p className="normal-addSpacing">
-            {targetName}'s <span>OCEAN profile</span> shows that {targetPronoun} can be influenced by:
+            {tname}'s <span>OCEAN profile</span> shows that {target.perspron} can be influenced by:
           </p>
           <p className="normal-addSpacing">
-            <span>Images</span> that contain {targetThemes[0]}
+            <span>Images</span> that contain {themes[0]}
           </p>
           <p className="normal-addSpacing">
-            <span>Slogans</span> that contain {targetThemes[1]}
+            <span>Slogans</span> that contain {themes[1]}
           </p>
           <div className="link">
             <Link to="/dark-ad">

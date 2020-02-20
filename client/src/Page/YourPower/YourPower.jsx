@@ -22,11 +22,8 @@ class YourPower extends React.Component {
     super(props, '/pick-your-side');
     this.state = {
       virtue: '',
-      targetName: '',
-      targetPronoun: '',
-      target: { name: '', traits: '' },
-      targetImage: null,
-      activateProfile: false
+      activateProfile: false,
+      target: UserSession.oceanData()
     }
   }
 
@@ -35,10 +32,7 @@ class YourPower extends React.Component {
       ['name', 'login', 'gender', 'virtue', 'target']);
     this.setState({
       virtue: user.virtue,
-      targetName: user.target.name,
-      targetPronoun: UserSession.possPron(user.target),
-      target: user.target,
-      targetImage: UserSession.profileDir + user.targetImage()
+      target: UserSession.oceanData(user.target)
     });
   }
 
@@ -49,19 +43,20 @@ class YourPower extends React.Component {
   render() {
 
     const { classes } = this.props;
-    const { virtue, targetName, targetPronoun, target, targetImage } = this.state;
+    const { virtue, target } = this.state;
     //console.log(this.state.activateProfile)
 
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" progressActive progressNumber="one" />
-        {this.state.activateProfile ? <OceanProfile subject={target} subjectImage={targetImage} activateProfile={this.state.activateProfile} /> : null}
+        {this.state.activateProfile ? <OceanProfile target={ target }
+          activateProfile={this.state.activateProfile} /> : null}
         <div className={`${classes.content} content`}>
           <Fade in style={{ transitionDelay: '200ms' }}>
-            <h2>You now have the <span>{virtue}</span> to influence&nbsp;<span>{targetName}</span>.</h2>
+            <h2>You now have the <span>{virtue}</span> to influence&nbsp;<span>{target.name}</span>.</h2>
           </Fade>
           <Fade in style={{ transitionDelay: '2000ms' }}>
-            <h2 className="noSpacing">View <span>{targetName}'s OCEAN profile</span> to understand {targetPronoun} personality.</h2>
+            <h2 className="noSpacing">View <span>{target.name}'s OCEAN profile</span> to understand {target.pronoun} personality.</h2>
           </Fade>
           <Fade in={this.state.activateProfile} style={{ transitionDelay: '2000ms' }}>
             <Link to="/pick-your-side" style={this.state.activateProfile ? { visibility: 'visible' } : { visibility: 'hidden' }} >

@@ -2,15 +2,12 @@ import React from 'react';
 import Webcam from 'react-webcam';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-//import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 import Logo from '../../Components/Logo/Logo';
-
-//import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
-import BeginBackground from '../../Images/1_Standby_Screen_1080px_by_1620px.jpg';
 import UserSession from '../../Components/UserSession/UserSession';
+
+import BeginBackground from '../../Images/1_Standby_Screen_1080px_by_1620px.jpg';
 import HeaderLogo from '../../Icons/headerlogo.svg';
-//import HeaderLogoColour from '../../Icons/headerlogo-colour.svg';
 
 import './TouchToBegin.scss';
 import ComponentsStyles from '../../App.module.css';
