@@ -19,10 +19,10 @@ export default [
     "loginType": "email",
     "name": "Bernard",
     "gender": "male",
-    "createdAt": "2019-06-03T00:12:07.595Z",
+    "createdAt": new Date(1970, 1, 1),
     "adIssue": "leave",
     "virtue": "influence",
-    "updatedAt": new Date("2019-06-03T00:12:07.595Z")
+    "updatedAt": new Date(2019, 1, 1)
   },
   {
     "traits": {
@@ -44,10 +44,10 @@ export default [
     "loginType": "email",
     "name": "Tyler",
     "gender": "male",
-    "createdAt": "2019-06-03T00:12:07.591Z",
+    "createdAt": new Date(1970, 1, 1),
     "adIssue": "remain",
     "virtue": "influence",
-    "updatedAt": new Date("2019-06-03T00:12:07.595Z")
+    "updatedAt": new Date(2019, 1, 1)
   },
   {
     "traits": {
@@ -69,10 +69,10 @@ export default [
     "loginType": "email",
     "name": "Fran",
     "gender": "female",
-    "createdAt": "2019-06-03T00:12:07.592Z",
+    "createdAt": new Date(1970, 1, 1),
     "adIssue": "remain",
     "virtue": "influence",
-    "updatedAt": new Date("2019-06-03T00:12:07.595Z")
+    "updatedAt": new Date(2019, 1, 1)
   },
   {
     "traits": {
@@ -94,10 +94,10 @@ export default [
     "loginType": "email",
     "name": "Devin",
     "gender": "female",
-    "createdAt": "2019-06-03T00:12:07.590Z",
+    "createdAt": new Date(1970, 1, 1),
     "adIssue": "leave",
     "virtue": "power",
-    "updatedAt": new Date("2019-06-03T00:12:07.595Z")
+    "updatedAt": new Date(2019, 1, 1)
   },
   {
     "traits": {
@@ -119,10 +119,10 @@ export default [
     "loginType": "email",
     "name": "Remy",
     "gender": "male",
-    "createdAt": "2019-06-03T00:12:07.580Z",
+    "createdAt": new Date(1970, 1, 1),
     "adIssue": "leave",
     "virtue": "power",
-    "updatedAt": new Date("2019-06-03T00:12:07.595Z")
+    "updatedAt": new Date(2019, 1, 1)
   },
   {
     "traits": {
@@ -144,10 +144,10 @@ export default [
     "loginType": "email",
     "name": "Dick",
     "gender": "male",
-    "createdAt": "2019-06-03T00:12:07.601Z",
+    "createdAt": new Date(1970, 1, 1),
     "adIssue": "leave",
     "virtue": "power",
-    "updatedAt": new Date("2019-06-03T00:12:07.595Z")
+    "updatedAt": new Date(2019, 1, 1)
   },
   {
     "traits": {
@@ -169,10 +169,10 @@ export default [
     "loginType": "email",
     "name": "Sally",
     "gender": "female",
-    "createdAt": "2019-06-03T00:12:07.599Z",
+    "createdAt": new Date(1970, 1, 1),
     "adIssue": "leave",
     "virtue": "power",
-    "updatedAt": new Date("2019-06-03T00:12:07.595Z")
+    "updatedAt": new Date(2019, 1, 1)
   },
   {
     "traits": {
@@ -194,10 +194,10 @@ export default [
     "loginType": "email",
     "name": "Sing",
     "gender": "male",
-    "createdAt": "2019-06-03T00:12:07.597Z",
+    "createdAt": new Date(1970, 1, 1),
     "adIssue": "leave",
     "virtue": "wealth",
-    "updatedAt": new Date("2019-06-03T00:12:07.595Z")
+    "updatedAt": new Date(2019, 1, 1)
   },
   {
     "traits": {
@@ -219,9 +219,9 @@ export default [
     "loginType": "email",
     "name": "Bailey",
     "gender": "male",
-    "createdAt": "2019-06-03T00:12:07.588Z",
+    "createdAt": new Date(1970, 1, 1),
     "adIssue": "leave",
     "virtue": "power",
-    "updatedAt": new Date("2019-06-03T00:12:07.595Z")
+    "updatedAt": new Date(2019, 1, 1)
   }
 ];

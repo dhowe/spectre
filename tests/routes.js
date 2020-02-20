@@ -14,22 +14,53 @@ const clientId = 'localhost';
 dotEnv.config();
 chai.use(chai_http);
 
+expect(DefaultUsers[0].createdAt).to.be.a('date');
+expect(DefaultUsers[0].createdAt.getTime()).eq(new Date(1970,1,1).getTime());
+
 describe('REST API', () => {
 
-  let refreshDb = done => {
-    let users = DefaultUsers.map(u => User.create(u));
+  let refreshDb = (done) => {
+    // console.log('CALL: refreshDb()');
+    // let users = DefaultUsers.map(u => User.create(u));
+    // expect(users[0].createdAt).to.be.a('date');
+    // expect(users[0].createdAt.getTime()).eq(new Date(1970,1,1).getTime());
     UserModel.deleteMany({}, (err) => {
       err && console.error('ERROR', err);
-      expect(users.length).eq(9);
-      expect(users[0].updatedAt).to.be.a('date');
+      let users = DefaultUsers;
       chai.request(server)
         .post('/api/users/batch/')
         .auth(env.API_USER, env.API_SECRET)
         .send(users)
         .end((err, res) => {
+          users = res.body.data;
           expect(err).to.be.null;
           expect(res).to.have.status(200);
-          expect(res.body.data.length).eq(9);
+          let user = User.create(res.body.data[0]);
+          expect(user.createdAt).to.be.a('date');
+          expect(user.createdAt.getTime()).eq(new Date(1970,1,1).getTime());
+          expect(user.updatedAt).to.be.a('date');
+          // let id = '888888888888888888888888';
+          // chai.request(server)
+          //   .get('/api/users/' + id)
+          //   .auth(env.API_USER, env.API_SECRET)
+          //   .end((err, res) => {
+          //     expect(err).to.be.null;
+          //     expect(res).to.have.status(200);
+          //     expect(res.body.data).to.be.a('object');
+          //     expect(res.body.data._id).eq(id);
+          //     expect(res.body.data.createdAt).to.be.a('string');
+          //     expect(res.body.data.updatedAt).to.be.a('string');
+          //
+          //     let user = User.create(res.body.data);
+          //     expect(user).to.be.a('object');
+          //     expect(user.createdAt).to.be.a('date');
+          //     expect(user.createdAt.getTime()).eq(new Date(1970,1,1).getTime());
+          //     expect(user.updatedAt).to.be.a('date');
+          //     expect(user.updatedAt.getTime()).eq(new Date(2019,1,1).getTime());
+          //
+          //     expect(user._id).eq(id);
+          //     done();
+          //   });
           done();
         });
     });
@@ -51,9 +82,14 @@ describe('REST API', () => {
           expect(res).to.have.status(200);
           expect(res.body.data).to.be.a('object');
           expect(res.body.data._id).eq(id);
-          //expect(res.body.data.similars).to.be.undefined;
+          expect(res.body.data.createdAt).to.be.a('string');
+          expect(res.body.data.updatedAt).to.be.a('string');
+
           let user = User.create(res.body.data);
           expect(user).to.be.a('object');
+          expect(user.createdAt).to.be.a('date');
+          expect(user.updatedAt).to.be.a('date');
+
           expect(user._id).eq(id);
           done();
         });
@@ -188,6 +224,7 @@ describe('REST API', () => {
               user.name = "Dave2";
               user.login = "Dave2@aol.com";
               user.gender = "male";
+
               chai.request(server)
                 .post('/api/users/')
                 .auth(env.API_USER, env.API_SECRET)

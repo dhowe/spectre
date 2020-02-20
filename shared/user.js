@@ -11,7 +11,9 @@ export default class User {
     Object.keys(User.schema()).forEach(k => this[k] = undefined);
     if (tmpl) this.assign(tmpl);
     this.traits = this.traits || User.emptyTraits();
+    //console.log('pre: '+typeof this.createdAt, this.createdAt);
     this.createdAt = this.createdAt || new Date();
+    //console.log('pre2: '+typeof this.createdAt, this.createdAt);
     this.updatedAt = this.updatedAt || new Date();
     this.loginType = this.loginType || 'email';
     this.lastPage = this.lastPage || 'login'
@@ -28,6 +30,8 @@ export default class User {
         if (!typeof json[df] === 'string') throw Error
           ('Expecting date string, found ' + typeof json[df]);
         this[df] = new Date(json[df]);
+        if (!this[df] instanceof Date) throw Error
+          ('Expecting Date object, found ' + typeof this[df]);
         delete json[df];
       }
     });
@@ -565,7 +569,7 @@ export default class User {
     });
   }
 }
-User.epochDate = new Date("1970-01-01T12:00:00.00");
+User.epochDate = new Date(1970);
 
 /*
  * MongoDB database schema for the application
@@ -574,6 +578,25 @@ User.schema = () => {
   return {
     name: {
       type: 'string'
+    },
+    login: {
+      type: 'string',
+      required: true
+    },
+    createdAt: {
+      type: Date,
+    },
+    updatedAt: {
+      type: Date
+    },
+    detectedAge: {
+      type: 'number'
+    },
+    detectedGender: {
+      type: 'string'
+    },
+    detectedGenderProb: {
+      type: 'number'
     },
     celebrity: {
       type: 'string'
@@ -611,22 +634,6 @@ User.schema = () => {
       type: 'string',
       default: 'login'
     },
-    updatedAt: {
-      type: 'date'
-    },
-    detectedAge: {
-      type: 'number'
-    },
-    detectedGender: {
-      type: 'string'
-    },
-    detectedGenderProb: {
-      type: 'number'
-    },
-    createdAt: {
-      type: 'date',
-      default: new Date()
-    },
     traits: {
       openness: { type: 'number', default: -1 },
       conscientiousness: { type: 'number', default: -1 },
@@ -636,10 +643,6 @@ User.schema = () => {
       relationship: { type: 'number', default: -1 },
       gender: { type: 'string', default: 'other' },
       age: { type: 'number', default: -1 }
-    },
-    login: {
-      type: 'string',
-      required: true
     },
     dataChoices: { // arrays?
       consumer: { type: 'string' }, // comma-delimited

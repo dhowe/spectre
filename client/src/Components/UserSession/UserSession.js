@@ -17,7 +17,7 @@ UserSession.profileDir = (process.env.PUBLIC_URL || '') + '/profiles/';
 UserSession.imageDir = (process.env.PUBLIC_URL || '') + '/imgs/';
 UserSession.publicUrl = 'https://spectreknows.me/'; // ?
 UserSession.serverDisabled = typeof auth === 'undefined';
-UserSession.epochDate = new Date("1970-01-01T12:00:00.00");
+UserSession.epochDate = new Date(1970,1,1);
 UserSession.storageKey = 'spectre-user';
 
 localIPs(ip => (UserSession.clientId = ip), '192.');
