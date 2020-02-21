@@ -14,8 +14,6 @@ const styles = {
     border: '5px solid #378685',
   },
   active: {
-
-
   },
   targeted_text: {
     color: '#378685',
@@ -23,7 +21,7 @@ const styles = {
 };
 
 const defaultImg = UserSession.imageDir + 'default.jpg';
-const liveUserInterval = 5 * (1000 * 60); // minutes
+const liveUserInterval = 5 * (1000 * 60); // 5 minutes
 
 class AvatarComponent extends React.Component {
 
@@ -41,7 +39,8 @@ class AvatarComponent extends React.Component {
     }
     const inActiveMs = (Date.now() - target.updatedAt.getTime())
     const targetActive = inActiveMs < liveUserInterval;
-    console.log('[AVATAR] ' + target.name + ' inactive for ' + Math.round(inActiveMs / 1000) + 's :: live: ' + targetActive);
+    if (targetActive) console.log('[AVATAR] ' + target.name + ' inactive for '
+      + Math.round(inActiveMs / 1000) + 's :: live: ' + targetActive);
     return targetActive;
   }
 

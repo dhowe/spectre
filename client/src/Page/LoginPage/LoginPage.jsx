@@ -71,9 +71,9 @@ class LoginPage extends React.Component {
       }
     }
     else {
-      this.social.setState({ name, email });
       user.name = name;
       user.login = email;
+      this.social.setState({ name, email });
       this.setState({ modalOpen: false });
       this.saveUser(user);
     }
@@ -93,7 +93,15 @@ class LoginPage extends React.Component {
 
         // HANDLE #465 HERE (can also use the modal here to alert
         // user they are being taken to their previous location)
-
+        user = await UserSession.lookup(this.context.login);
+        let pages = user.lastPage.split(',');
+        let next = pages.pop();
+        console.log('[LOGIN] Returning user: '+user.toString(), next);
+        /*
+         * Looks like you've visited before, want to continue?
+         * [no thanks] [[sure!]]
+         * to-login    to-'next'
+         */
         //this.setState({ modalOpen: true });
 
       } else {

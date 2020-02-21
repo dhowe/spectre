@@ -62,10 +62,11 @@ class InfluenceACelebrity extends React.Component {
             <h1 className="noSpacing"><span><strong>Step 3</strong> - Influence a celebrity!</span></h1>
           </Fade>
           <Fade in style={{ transitionDelay: '200ms' }}>
-              <h2>Spectre has many famous followers.</h2>
+              <h2>{/*Spectre has many famous followers.*/}</h2>
           </Fade>
           <Fade in style={{ transitionDelay: '200ms' }}>
             <p className="normal-addSpacing">
+              Spectre has many famous followers.<br/>
               Listen to their confessions on&nbsp;{virtue}:
             </p>
           </Fade>

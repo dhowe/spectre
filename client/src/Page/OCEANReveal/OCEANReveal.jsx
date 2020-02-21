@@ -10,9 +10,10 @@ import Modal from '../../Components/Modal/Modal';
 import { withStyles } from '@material-ui/core/styles';
 import './OCEANReveal.scss'
 
-const keyPause = 50; // typing speed for each character
+const keyPause = 30; // typing speed for each character
 const linePause = 4; // linePause * keyPause = wait time after each sentence
 const timing = [0, 2000, 4000];
+const withAudio = false;
 const styles = {};
 
 class OCEANReveal extends React.Component {
@@ -30,6 +31,7 @@ class OCEANReveal extends React.Component {
   }
 
   async componentDidMount() {
+
     const user = await UserSession.ensure(this.context,
       ['name', 'login', 'gender', 'traits', 'celebrity']);
 
@@ -42,12 +44,13 @@ class OCEANReveal extends React.Component {
     this.timeout = setTimeout(() => this.setState
       ({ readyForVideo: true }), waitingTime);
 
-     // append script tag for audio
-     const script = document.createElement("script");
-     script.innerHTML = 'const allChar = "'+ allChar +'";const waitTime = ' + timing[2] + '; const each =' + 50 + ";";
-     script.innerHTML += 'var audio=document.getElementById("type");setTimeout(function(){for(let a=0;a<allChar.length;a++){setTimeout(function(a){"-"!=allChar[a]&&" "!=allChar[a]?audio.play():audio.pause()},each*a,a)}},waitTime);';
-     script.async = true;
-     document.body.appendChild(script);
+    if (withAudio) {
+      const script = document.createElement("script");
+      script.innerHTML = 'const allChar = "' + allChar + '";const waitTime = ' + timing[2] + '; const each =' + keyPause + ";";
+      script.innerHTML += 'var audio=document.getElementById("type");setTimeout(function(){for(let a=0;a<allChar.length;a++){setTimeout(function(a){"-"!=allChar[a]&&" "!=allChar[a]?audio.play():audio.pause()},each*a,a)}},waitTime);';
+      script.async = true;
+      document.body.appendChild(script);
+    }
   }
 
   componentWillUnmount() {
@@ -92,18 +95,19 @@ class OCEANReveal extends React.Component {
                       let delay = timing[2] + ((++timer + (i * linePause)) * keyPause);
                       return (
                         <Fade key={j} in={true} style={{ transitionDelay: delay + 'ms' }}>
-                        <span key={`fade-${i}`} style={{ color: '#4F4F4F' }}>
-                          {letter}
-                        </span>
-                      </Fade>
-                    )})
+                          <span key={`fade-${i}`} style={{ color: '#4F4F4F' }}>
+                            {letter}
+                          </span>
+                        </Fade>
+                      )
+                    })
                   }
                 </p>
               );
             })
           }
-        <audio id="type" src="http://chenqianxun.com/download/key.wav" preload="auto">
-        </audio>
+          <audio id="type" src="http://chenqianxun.com/download/key.wav" preload="auto">
+          </audio>
         </div>
         <Modal
           isOpen={modalOpen}

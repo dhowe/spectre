@@ -35,7 +35,7 @@ class LaunchCampaign extends React.Component {
                     src={launchImg}
                     alt="launch campaign"
                   />
-                  <h2><span>{this.context.adIssue === 'leave' ? 'Replublican' : 'Democrat'}</span></h2>
+                  <h2><span>{this.context.adIssue === 'leave' ? 'Republican' : 'Democrat'}</span></h2>
                 </div>
               </div>
 

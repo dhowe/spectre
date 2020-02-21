@@ -15,18 +15,22 @@ const styles = {};
 class SearchingFor extends React.Component {
   constructor(props) {
     super(props, '/data-is');
+    this.clickDisabled = false;
     this.state = { name: '' };
   }
 
   async componentDidMount() {
-    let user = await UserSession.ensure(this.context, ['login', 'name']);
-    this.setState({ name: user.name })
+    await UserSession.ensure(this.context, ['login', 'name']);
+    this.setState({ name: this.context.name })
   }
 
-  handleClick(virtue) {
-    this.context.virtue = virtue;
-    // TODO: is this page loading twice??
-    this.context.goto(this.props, '/data-is');
+  handleClick = async (virtue) => {
+    if (!this.clickDisabled) {
+      this.clickDisabled = true;
+      this.context.virtue = virtue;
+      await UserSession.update(this.context);
+      this.context.goto(this.props, '/data-is');
+    }
   }
 
   render() {

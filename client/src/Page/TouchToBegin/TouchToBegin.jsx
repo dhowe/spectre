@@ -38,11 +38,15 @@ const styles_landscape = {
   }
 };
 
-// NOTE: load webcam here only to deal with user-prompt
+// NOTE:  webcam here only to trigger with user-prompt
 class TouchToBegin extends React.Component {
 
   constructor(props) {
     super(props, '/login');
+  }
+
+  async componentDidMount() {
+    UserSession.clear(this.context);
   }
 
   render() {

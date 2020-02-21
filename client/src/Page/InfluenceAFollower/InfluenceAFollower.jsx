@@ -32,7 +32,7 @@ class InfluenceAFollower extends React.Component {
     user.targetId = target._id;
     UserSession.computeInfluencesFor(target);
     UserSession.update(user);
-    this.context.goto(this.props, '/selected');
+    user.goto(this.props, '/selected');
   }
 
   render() {
@@ -51,8 +51,8 @@ class InfluenceAFollower extends React.Component {
                 handleClick={() => this.handleSelect(t)}
                 target={{
                   name: t.name,
-                  image: `${UserSession.profileDir}/${t._id}.jpg`,
                   updatedAt: t.updatedAt,
+                  image: UserSession.targetImage(t)
                 }}
               />
             ))}

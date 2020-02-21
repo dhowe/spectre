@@ -19,11 +19,11 @@ class DataIs extends React.Component {
   }
 
   async componentDidMount() {
-    let nextPage = this.state.nextPage;
-    const user = await UserSession.ensure(this.context, ['virtue', 'hasImage']);
-    // TODO: ERROR: virtue is getting changed here
-    // if (user.virtue !== this.context.virtue) throw Error(user+"\n\n"+this.context);
 
+    const user = await UserSession.ensure(this.context, ['virtue', 'hasImage']);
+    if (user.virtue !== this.context.virtue) throw Error("\n"+user+"\n"+this.context);
+
+    let nextPage = this.state.nextPage;
     if (!user.hasImage) { // MOVE TO personalized?
       nextPage = '/selfie';
       console.log('[DATAIS] No webcam image found for ' + user._id);
