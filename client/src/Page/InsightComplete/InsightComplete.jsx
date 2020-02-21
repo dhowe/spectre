@@ -12,20 +12,18 @@ import './InsightComplete.scss';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 import ComponentsStyles from '../../App.module.css';
 
-const styles = {
-};
+const styles = {};
 
 class InsightComplete extends React.Component {
   constructor(props) {
     super(props, '/your-power');
-    this.state = {
-      idleCheckerDone: false,
-    };
+    this.video = React.createRef();
+    this.state = { idleCheckerDone: false };
   }
 
   async componentDidMount() {
     const user = await UserSession.ensure(this.context,
-      [/*'_id',*/ 'name', 'login', 'gender', 'virtue', 'target']);
+      [ 'name', 'login', 'gender', 'virtue', 'target']);
     this.setState({ target: user.target });
   }
 
@@ -35,7 +33,6 @@ class InsightComplete extends React.Component {
   }
 
   render() {
-    //console.log('page',window.location.pathname);
     const { classes } = this.props;
     const { idleCheckerDone } = this.state;
     return (
@@ -51,10 +48,11 @@ class InsightComplete extends React.Component {
             icon="play" text="WTF is OCEAN?"
             onClick={this.showVideo} />
           <Video
-            ref={(el) => { this.video = el; }}
+            ref={e => { this.video = e; }}
             onComplete={() => this.context.goto(this.props, '/your-power')}
             movie={`${UserSession.publicUrl}video/OceanIntro.mp4`}
-            />
+            autoPlay={false}
+          />
         </div>
         <FooterLogo />
       </div>
