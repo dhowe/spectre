@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import P5Wrapper from 'react-p5-wrapper';
-//import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
@@ -24,16 +23,6 @@ const styles = {
   sketchStrokeSel: '#21c0fc',
 };
 
-const styles_portrait = {
-  sketchWidth: 1080,
-  sketchHeight: 900,
-};
-
-const styles_landscape = {
-  sketchWidth: 1920,
-  sketchHeight: 660,
-};
-
 /*
  * OCEAN Game sketch (temporarily) in p5js/canvas
  *
@@ -52,15 +41,13 @@ function sketch(p) {
   p.preload = () => {
     instruct = p.loadImage('/imgs/game_instruct.png');
     Brand.names.forEach((name) => {
-      logos[name] = p.loadImage('/imgs/' + name.replace(/ /g, '_') + '.png');
+      const img = name.replace(/ /g, '_') + '.png';
+      logos[name] = p.loadImage(UserSession.imageDir + img);
     });
   }
 
   p.setup = () => {
-    let sW, sH;
-    sW = (window.innerWidth === 1920 ? styles_landscape.sketchWidth : styles_portrait.sketchWidth);
-    sH = (window.innerWidth === 1920 ? styles_landscape.sketchHeight : styles_portrait.sketchHeight);
-    p.createCanvas(sW, sH);
+    p.createCanvas(1920, 660); // 1080, 900 for portrait
     colors.sketchBg = p.color(styles.sketchBg);
     colors.sketchText = p.color(styles.sketchText);
     colors.sketchStroke = p.color(styles.sketchStroke);
@@ -92,7 +79,6 @@ function sketch(p) {
       p.line(0, ypos, p.width, ypos);
       if (p.frameCount === 1) linesY.push(ypos);
     }
-
 
     drawInfo(p, colors.sketchText);
 
@@ -133,7 +119,6 @@ function sketch(p) {
   }
 
   function mPressed() {
-    //document.getElementById("clickMe").click();
     Brand.active = false;
     if (typeof Brand.instances !== 'undefined') {
       Brand.instances.forEach(b => {
@@ -298,10 +283,10 @@ class Brand {
 
 Brand.active = false;
 Brand.speed = styles.sketchSpeed;
-Brand.names = ['disney', 'converse', 'xbox', 'red bull', 'hello kitty', 'h&m', 'ben & jerrys', 'old spice', 'adidas', 'marvel', 'nike', 'zara', 'vans', 'starbucks', 'lacoste', 'sony', 'new look', 'rayban', 'asos', 'chanel'];
+Brand.sheffield = ['disney', 'converse', 'xbox', 'red bull', 'hello kitty', 'h&m', 'ben & jerrys', 'old spice', 'adidas', 'marvel', 'nike', 'zara', 'vans', 'starbucks', 'lacoste', 'sony', 'new look', 'rayban', 'asos', 'chanel'];
 Brand.drawAll = () => { Brand.instances.forEach(b => b.draw()) };
 Brand.updateAll = () => { Brand.instances.forEach(b => b.update()) };
-//Brand.allNames = ['cocacola', 'disney', 'converse', 'playstation', 'xbox', 'red bull', 'hello kitty', 'pepsi', 'h&m', 'ben & jerrys', 'old spice', 'burberry', 'adidas', 'marvel', 'nike', 'zara', 'vans', 'starbucks', 'topshop', 'lacoste', 'gap', 'sony', 'new look', 'calvin klein', 'rayban', 'next', 'swarovski', 'tommy hilfiger', 'asos', 'marks and spencer', 'vivienne westwood', 'chanel', 'nintendo64', 'lego'];
+Brand.names = ['cocacola', 'disney', 'converse', 'playstation', 'xbox', 'red bull', 'hello kitty', 'pepsi', 'h&m', 'ben & jerrys', 'old spice', 'burberry', 'adidas', 'marvel', 'nike', 'zara', 'vans', 'starbucks', 'topshop', 'lacoste', 'gap', 'sony', 'new look', 'calvin klein', 'rayban', 'next', 'swarovski', 'tommy hilfiger', 'asos', 'marks and spencer', 'vivienne westwood', 'chanel', 'nintendo64', 'lego'];
 
 ///////////////////// End p5.js sketch ////////////////////////////
 
@@ -315,15 +300,14 @@ class Game extends React.Component {
 
   async componentDidMount() {
     user = await UserSession.ensure
-      (this.context, [/*'_id',*/ 'login', 'gender', 'name']);
+      (this.context, ['login', 'gender', 'name']);
   }
 
   async componentComplete() { // redirect called from p5
     const user = await UserSession.ensure(this.context,
-      ['login', 'gender', 'name', 'traits']);
-    //this.props.history.push("/thank-you");
-    this.context.goto(this.props, '/thank-you');
+      ['login', 'gender', 'name', 'traits']); // needed?
     UserSession.update(user);
+    user.goto(this.props, '/thank-you');
   }
 
   render() {
