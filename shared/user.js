@@ -58,16 +58,17 @@ export default class User {
     let u = this;
     let s = u._id ? u._id + ', ' + u.name : u.name;
     if (u.login) s += ', ' + u.login;
-    if (u.gender) s += ', ' + u.gender;
+    if (u.detectedGender) s += ', ' + u.detectedGender;
     if (u.virtue) s += ', ' + u.virtue;
     if (u.target) s += ', target=' + u.target._id + '/' + u.target.name;
     // if (u.descriptors && u.descriptors.length) {
     //   s += ', ' + u.descriptors.length + ' descriptors';
     // }
     if (u.similars && u.similars.length) {
-      s += ', ' + u.similars.length + ' similars';
+      s += ', similars('+u.similars.length+')';
     }
     if (u.hasImage) s += ', hasImage';
+    if (User.hasOceanTraits(this)) s += ', traits';
     return s + ', '+(u.updatedAt.getYear() + 1900);
   }
 
@@ -125,141 +126,15 @@ export default class User {
     return sentences;
   }
 
-  // computeInfluences(target) { // requires adIssue & target with traits
-  //
-  //   if (typeof this.target === 'undefined') {
-  //     throw Error('No target for targetAdData', this);
-  //   }
-  //   if (typeof this.adIssue === 'undefined') {
-  //     throw Error('No adIssue for targetAdData', this);
-  //   }
-  //   if (!this.hasOceanTraits(this.target)) {
-  //     throw Error('No target.traits for targetAdData', this);
-  //   }
-  //
-  //   const pre = 'imgs/', cat = this.categorize(this.target);
-  //
-  //   let images = this.randomInfluencingImages(this.adIssue, pre);
-  //   let slogans = this.randomIfluencingSlogans(this.adIssue);
-  //   let themes = this.randomInfluencingThemes(this.adIssue);
-  //
-  //   if (cat !== 0) {
-  //     images = [
-  //       pre + this.adIssue + '_' + cat + '.1.png',
-  //       pre + this.adIssue + '_' + cat + '.2.png',
-  //       pre + this.adIssue + '_' + -cat + '.1.png',
-  //       pre + this.adIssue + '_' + -cat + '.2.png'
-  //     ];
-  //     themes = User.influencingThemes[this.adIssue][(cat > 0 ? 'high' : 'low')][User.oceanTraits[Math.abs(cat) - 1]];
-  //     slogans = User.ifluencingSlogans[this.adIssue][(cat > 0 ? 'high' : 'low')][User.oceanTraits[Math.abs(cat) - 1]];
-  //     slogans = slogans.concat(User.ifluencingSlogans[this.adIssue][(cat < 0 ? 'high' : 'low')][User.oceanTraits[Math.abs(cat) - 1]]);
-  //   }
-  //   else {
-  //     console.warn('[TARG] Using random target data: ',
-  //       cat, images, influences, slogans);
-  //   }
-  //   this.target.influencingImages = images;
-  //   this.target.influencingThemes = themes;
-  //   this.target.influencingSlogans = slogans;
-  //   //console.log('COMPUTED: ',this.targetImages, this.targetSlogans, this.targetInfluences);
-  // }
-
-  /*targetAdImages() {
-    let pre = 'imgs/';
-
-    if (typeof this.target === 'undefined') {
-      throw Error('No target for adImages!', this);
-    }
-
-    let images = this.randomInfluencingImages(pre);
-    if (typeof this.target !== 'undefined' &&
-      this.hasOceanTraits(this.target) &&
-      typeof this.adIssue !== 'undefined') {
-
-      let cat = this.categorize(this.target);
-      if (cat !== 0) {
-        //console.log('['+this.adIssue+']['+(cat > 0 ? 'high' : 'low')+']['+User.oceanTraits[Math.abs(cat)-1]+']');
-        images = [
-          pre + this.adIssue + '_' + cat + '.1.png',
-          pre + this.adIssue + '_' + cat + '.2.png',
-          pre + this.adIssue + '_' + -cat + '.1.png',
-          pre + this.adIssue + '_' + -cat + '.2.png'
-        ];
-      }
-    } else {
-      console.error("[WARN] no target/traits/issue: " +
-        "using random images, issue=" + this.adIssue, this.target.traits);
-    }
-
-    return images;
-  }*/
-
-  /*targetAdInfluences() {
-
-    if (typeof this.target === 'undefined') {
-      throw Error('No target for influencingThemes!', this);
-    }
-
-    let ots = User.oceanTraits;
-    let influences = this.randomInfluencingThemes();
-
-    //console.log("OT",this.hasOceanTraits(this.target), typeof this.target);
-
-    if (typeof this.target !== 'undefined'
-      && this.hasOceanTraits(this.target)
-      && typeof this.adIssue !== 'undefined') {
-
-      let cat = this.categorize(this.target);
-      if (cat !== 0) {
-        influences = User.influencingThemes[this.adIssue]
-        [(cat > 0 ? 'high' : 'low')][ots[Math.abs(cat) - 1]];
-      }
-    } else {
-      console.error("[WARN] no target/traits/issue: " +
-        "using random influences [issue=" + this.adIssue + "] target=", this.target);
-    }
-    return influences;
-  }*/
-
-  // TODO: combine these 3: targetAdItem(type) ?
-  /*targetAdSlogans() {
-
-    if (typeof this.target === 'undefined') { //TMP: remove
-      throw Error('No target for ifluencingSlogans!', this);
-    }
-
-    let ots = User.oceanTraits;
-    let slogans = this.randomIfluencingSlogans();
-    if (typeof this.target !== 'undefined' &&
-      this.hasOceanTraits(this.target) &&
-      typeof this.adIssue !== 'undefined') {
-
-      let cat = this.categorize(this.target);
-      if (cat !== 0) {
-        //console.log('['+this.adIssue+']['+(cat > 0 ? 'high' : 'low')+']['+ots[Math.abs(cat)-1]+']');
-        let good = User.ifluencingSlogans[this.adIssue]
-        [(cat > 0 ? 'high' : 'low')][ots[Math.abs(cat) - 1]];
-        let bad = User.ifluencingSlogans[this.adIssue]
-        [(cat < 0 ? 'high' : 'low')][ots[Math.abs(cat) - 1]];
-        slogans = good.concat(bad);
-      }
-    } else {
-      console.error("[WARN] no target/traits/issue: using random slogan, issue="
-        + this.adIssue, this.target.traits);
-    }
-
-    return slogans;
-  }*/
-
   targetImage() {
     let tid = (this.target && typeof this.target._id !== 'undefined'
       && this.target._id.length) ? this.target._id : 'default';
     return tid + '.jpg'
   }
 
-  setBrands(brandData) {
+  traitsFromBrands(brandRatings) {
     let traits = {};
-    predict(brandData).forEach(b => traits[b.trait] = b.score);
+    predict(brandRatings).forEach(b => traits[b.trait] = b.score);
     this.traits = traits;
   }
 
@@ -815,3 +690,129 @@ User.oceanDescTemplate = {
     ]
   }
 };
+
+  // computeInfluences(target) { // requires adIssue & target with traits
+  //
+  //   if (typeof this.target === 'undefined') {
+  //     throw Error('No target for targetAdData', this);
+  //   }
+  //   if (typeof this.adIssue === 'undefined') {
+  //     throw Error('No adIssue for targetAdData', this);
+  //   }
+  //   if (!this.hasOceanTraits(this.target)) {
+  //     throw Error('No target.traits for targetAdData', this);
+  //   }
+  //
+  //   const pre = 'imgs/', cat = this.categorize(this.target);
+  //
+  //   let images = this.randomInfluencingImages(this.adIssue, pre);
+  //   let slogans = this.randomIfluencingSlogans(this.adIssue);
+  //   let themes = this.randomInfluencingThemes(this.adIssue);
+  //
+  //   if (cat !== 0) {
+  //     images = [
+  //       pre + this.adIssue + '_' + cat + '.1.png',
+  //       pre + this.adIssue + '_' + cat + '.2.png',
+  //       pre + this.adIssue + '_' + -cat + '.1.png',
+  //       pre + this.adIssue + '_' + -cat + '.2.png'
+  //     ];
+  //     themes = User.influencingThemes[this.adIssue][(cat > 0 ? 'high' : 'low')][User.oceanTraits[Math.abs(cat) - 1]];
+  //     slogans = User.ifluencingSlogans[this.adIssue][(cat > 0 ? 'high' : 'low')][User.oceanTraits[Math.abs(cat) - 1]];
+  //     slogans = slogans.concat(User.ifluencingSlogans[this.adIssue][(cat < 0 ? 'high' : 'low')][User.oceanTraits[Math.abs(cat) - 1]]);
+  //   }
+  //   else {
+  //     console.warn('[TARG] Using random target data: ',
+  //       cat, images, influences, slogans);
+  //   }
+  //   this.target.influencingImages = images;
+  //   this.target.influencingThemes = themes;
+  //   this.target.influencingSlogans = slogans;
+  //   //console.log('COMPUTED: ',this.targetImages, this.targetSlogans, this.targetInfluences);
+  // }
+
+  /*targetAdImages() {
+    let pre = 'imgs/';
+
+    if (typeof this.target === 'undefined') {
+      throw Error('No target for adImages!', this);
+    }
+
+    let images = this.randomInfluencingImages(pre);
+    if (typeof this.target !== 'undefined' &&
+      this.hasOceanTraits(this.target) &&
+      typeof this.adIssue !== 'undefined') {
+
+      let cat = this.categorize(this.target);
+      if (cat !== 0) {
+        //console.log('['+this.adIssue+']['+(cat > 0 ? 'high' : 'low')+']['+User.oceanTraits[Math.abs(cat)-1]+']');
+        images = [
+          pre + this.adIssue + '_' + cat + '.1.png',
+          pre + this.adIssue + '_' + cat + '.2.png',
+          pre + this.adIssue + '_' + -cat + '.1.png',
+          pre + this.adIssue + '_' + -cat + '.2.png'
+        ];
+      }
+    } else {
+      console.error("[WARN] no target/traits/issue: " +
+        "using random images, issue=" + this.adIssue, this.target.traits);
+    }
+
+    return images;
+  }*/
+
+  /*targetAdInfluences() {
+
+    if (typeof this.target === 'undefined') {
+      throw Error('No target for influencingThemes!', this);
+    }
+
+    let ots = User.oceanTraits;
+    let influences = this.randomInfluencingThemes();
+
+    //console.log("OT",this.hasOceanTraits(this.target), typeof this.target);
+
+    if (typeof this.target !== 'undefined'
+      && this.hasOceanTraits(this.target)
+      && typeof this.adIssue !== 'undefined') {
+
+      let cat = this.categorize(this.target);
+      if (cat !== 0) {
+        influences = User.influencingThemes[this.adIssue]
+        [(cat > 0 ? 'high' : 'low')][ots[Math.abs(cat) - 1]];
+      }
+    } else {
+      console.error("[WARN] no target/traits/issue: " +
+        "using random influences [issue=" + this.adIssue + "] target=", this.target);
+    }
+    return influences;
+  }*/
+
+  // TODO: combine these 3: targetAdItem(type) ?
+  /*targetAdSlogans() {
+
+    if (typeof this.target === 'undefined') { //TMP: remove
+      throw Error('No target for ifluencingSlogans!', this);
+    }
+
+    let ots = User.oceanTraits;
+    let slogans = this.randomIfluencingSlogans();
+    if (typeof this.target !== 'undefined' &&
+      this.hasOceanTraits(this.target) &&
+      typeof this.adIssue !== 'undefined') {
+
+      let cat = this.categorize(this.target);
+      if (cat !== 0) {
+        //console.log('['+this.adIssue+']['+(cat > 0 ? 'high' : 'low')+']['+ots[Math.abs(cat)-1]+']');
+        let good = User.ifluencingSlogans[this.adIssue]
+        [(cat > 0 ? 'high' : 'low')][ots[Math.abs(cat) - 1]];
+        let bad = User.ifluencingSlogans[this.adIssue]
+        [(cat < 0 ? 'high' : 'low')][ots[Math.abs(cat) - 1]];
+        slogans = good.concat(bad);
+      }
+    } else {
+      console.error("[WARN] no target/traits/issue: using random slogan, issue="
+        + this.adIssue, this.target.traits);
+    }
+
+    return slogans;
+  }*/

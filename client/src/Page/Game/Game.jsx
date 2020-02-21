@@ -158,26 +158,9 @@ function sketch(p) {
   function finished() {
     done = true;
     checkData();
-    user.setBrands(Brand.instances.map
-      (b => ({ item: b.item, rating: b.rating })));
-    game.componentComplete();
-    //displayAsHtml(user);
+    game.onCompletion(Brand.instances.map(b =>
+      ({ item: b.item, rating: b.rating })));
   }
-
-  /*function displayAsHtml(user) { // eslint-disable-line no-unused-vars
-    let otr = '<tr><td>';
-    let ctd = '</td><td>';
-    let ctr = '</td></tr>'
-    let traits = User.oceanTraits;
-    let rows = traits.length;
-    let desc = '</td><td rowspan=' + rows +
-      ' id="desc">' + user.generateDescription();
-    let html = traits.reduce((acc, t, i) => {
-      return acc + otr + t + ctd + user.traits[t] + (i ? '' : desc) + ctr;
-    }, '');
-    document.getElementById("content").style.display = 'inline-block';
-    document.getElementById("tdata").innerHTML = html;
-  }*/
 
   function randomizeData() {
     Brand.instances.forEach(b => {
@@ -303,10 +286,9 @@ class Game extends React.Component {
       (this.context, ['login', 'gender', 'name']);
   }
 
-  async componentComplete() { // redirect called from p5
-    const user = await UserSession.ensure(this.context,
-      ['login', 'gender', 'name', 'traits']); // needed?
-    UserSession.update(user);
+  async onCompletion(ratings) { // called from p5
+    user.traitsFromBrands(ratings);
+    await UserSession.update(user);
     user.goto(this.props, '/thank-you');
   }
 
