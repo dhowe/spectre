@@ -2,16 +2,16 @@ import React from "react";
 import Slider from "@material-ui/core/Slider";
 import Grid from "@material-ui/core/Grid";
 
-
 import "./TextSliderText.scss";
 
 class TextSliderText extends React.Component {
-  state = {
-    value: 50
-  };
-  handleChange = (event, value) => {
-    this.setState({ value });
-  };
+
+  constructor(props) {
+    super(props);
+    this.state = { value: 50 };
+  }
+
+  handleChange = (e, value) => { this.setState({ value }) };
 
   render() {
     const { value } = this.state;
@@ -24,6 +24,7 @@ class TextSliderText extends React.Component {
         </Grid>
         <Grid item xs={4}>
           <Slider
+            color="primary"
             value={value}
             aria-labelledby="label"
             onChange={this.handleChange}

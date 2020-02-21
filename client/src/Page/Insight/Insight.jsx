@@ -42,15 +42,8 @@ class Insight extends React.Component {
   }
 
   render() {
-    const {
-      classes,
-      leftText,
-      middleText,
-      rightText,
-      question,
-      next,
-      progress,
-    } = this.props;
+    const { leftText, rightText, middleText } = this.props;
+    const { classes, question, next, progress } = this.props;
     const { targetName, targetImage, targetUpdate } = this.state;
     return (
       <div className={classes.root} id='clickMe'>
