@@ -1,18 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-//import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
+import { withStyles } from '@material-ui/core/styles';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import OceanProfile from '../../Components/OceanProfile/OceanProfile';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
+
 import './PickYourSide.scss';
 
-const styles = {
-
-};
+const styles = {};
 
 class PickYourSide extends React.Component {
   constructor(props) {
@@ -43,16 +41,16 @@ class PickYourSide extends React.Component {
 
             <Link to="/campaign">
               <div className="RepublicanLogo">
-                <img src="/imgs/vote-leave.svg" alt="leave"
-                  onClick={() => { this.context.adIssue = 'leave' }} />
+                <img src="/imgs/vote-republican.svg" alt="republican"
+                  onClick={() => { this.context.adIssue = 'republican' }} />
                 <h2><span>Republican</span></h2>
               </div>
 
             </Link>
             <Link to="/campaign">
               <div className="DemocratLogo">
-                <img src='/imgs/vote-remain.svg' alt="remain"
-                  onClick={() => { this.context.adIssue = 'remain'; }} />
+                <img src='/imgs/vote-democrat.svg' alt="democrat"
+                  onClick={() => { this.context.adIssue = 'democrat' }} />
                 <h2><span>Democrat</span></h2>
               </div>
 

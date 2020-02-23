@@ -97,13 +97,13 @@ describe('Client User', function() {
 
   describe('User.personalization()', function() {
 
-    let issues = ['leave', 'remain'];
+    let issues = ['republican', 'democrat'];
 
     it('Should pick correct themes for target category', function() {
       let user;
 
       user = new User({
-        adIssue: 'leave',
+        adIssue: 'republican',
         target: {
           name: 'TARGET',
           traits: {
@@ -122,7 +122,7 @@ describe('Client User', function() {
         (["expansive, open themes", "‘freedom’, ‘future’ or ‘potential’"]);
 
       user = new User({
-        adIssue: 'leave',
+        adIssue: 'republican',
         target: {
           name: 'TARGET',
           traits: {
@@ -141,7 +141,7 @@ describe('Client User', function() {
         (["struggle or strife", "‘borders’, ‘jobs’ or ‘mistakes’"]);
 
       user = new User({
-        adIssue: 'remain',
+        adIssue: 'democrat',
         target: {
           name: 'TARGET',
           traits: {
@@ -159,7 +159,7 @@ describe('Client User', function() {
       expect(user.target.influences[user.adIssue].themes.length).to.eq(2); // random
 
       user = new User({
-        adIssue: 'remain',
+        adIssue: 'democrat',
         target: {
           name: 'TARGET',
           traits: {
@@ -182,7 +182,7 @@ describe('Client User', function() {
       let user;
 
       user = new User({
-        adIssue: 'leave',
+        adIssue: 'republican',
         target: {
           name: 'TARGET',
           traits: {
@@ -198,14 +198,14 @@ describe('Client User', function() {
       User.computeInfluencesFor(user.target, issues);
 
       expect(user.target.influences[user.adIssue].images).to.have.members([
-        'imgs/leave_1.1.png',
-        'imgs/leave_1.2.png',
-        'imgs/leave_-1.1.png',
-        'imgs/leave_-1.2.png'
+        'imgs/republican_1.1.png',
+        'imgs/republican_1.2.png',
+        'imgs/republican_-1.1.png',
+        'imgs/republican_-1.2.png'
       ]);
 
       user = new User({
-        adIssue: 'leave',
+        adIssue: 'republican',
         target: {
           name: 'TARGET',
           traits: {
@@ -221,14 +221,14 @@ describe('Client User', function() {
       User.computeInfluencesFor(user.target, issues);
 
       expect(user.target.influences[user.adIssue].images).to.have.members([
-        'imgs/leave_4.1.png',
-        'imgs/leave_4.2.png',
-        'imgs/leave_-4.1.png',
-        'imgs/leave_-4.2.png'
+        'imgs/republican_4.1.png',
+        'imgs/republican_4.2.png',
+        'imgs/republican_-4.1.png',
+        'imgs/republican_-4.2.png'
       ]);
 
       user = new User({
-        adIssue: 'remain',
+        adIssue: 'democrat',
         target: {
           name: 'TARGET',
           traits: {
@@ -246,11 +246,11 @@ describe('Client User', function() {
       // random 'remains'
       expect(user.target.influences[user.adIssue].images.length).to.eq(4);
       user.target.influences[user.adIssue].images.forEach(img => {
-        expect(img.startsWith('imgs/remain')).to.eq(true);
+        expect(img.startsWith('imgs/democrat')).to.eq(true);
       });
 
       user = new User({
-        adIssue: 'remain',
+        adIssue: 'democrat',
         target: {
           name: 'TARGET',
           traits: {
@@ -266,10 +266,10 @@ describe('Client User', function() {
       User.computeInfluencesFor(user.target, issues);
 
       expect(user.target.influences[user.adIssue].images).to.have.members([
-        'imgs/remain_5.1.png',
-        'imgs/remain_5.2.png',
-        'imgs/remain_-5.1.png',
-        'imgs/remain_-5.2.png'
+        'imgs/democrat_5.1.png',
+        'imgs/democrat_5.2.png',
+        'imgs/democrat_-5.1.png',
+        'imgs/democrat_-5.2.png'
       ]);
     });
 
@@ -277,7 +277,7 @@ describe('Client User', function() {
       let user, slo;
 
       user = new User({
-        adIssue: 'leave',
+        adIssue: 'republican',
         target: {
           name: 'TARGET',
           traits: {
@@ -291,11 +291,11 @@ describe('Client User', function() {
       });
       User.computeInfluencesFor(user.target, issues);
       slo = user.target.influences[user.adIssue].slogans;
-      expect(slo).to.include.members(User.ifluencingSlogans.leave.high.openness);
-      expect(slo).to.include.members(User.ifluencingSlogans.leave.low.openness);
+      expect(slo).to.include.members(User.ifluencingSlogans.republican.high.openness);
+      expect(slo).to.include.members(User.ifluencingSlogans.republican.low.openness);
 
       user = new User({
-        adIssue: 'leave',
+        adIssue: 'republican',
         target: {
           name: 'TARGET',
           traits: {
@@ -309,11 +309,11 @@ describe('Client User', function() {
       });
       User.computeInfluencesFor(user.target, issues);
       slo = user.target.influences[user.adIssue].slogans;
-      expect(slo).to.include.members(User.ifluencingSlogans.leave.high.agreeableness);
-      expect(slo).to.include.members(User.ifluencingSlogans.leave.low.agreeableness);
+      expect(slo).to.include.members(User.ifluencingSlogans.republican.high.agreeableness);
+      expect(slo).to.include.members(User.ifluencingSlogans.republican.low.agreeableness);
 
       user = new User({
-        adIssue: 'remain',
+        adIssue: 'democrat',
         target: {
           name: 'TARGET',
           traits: {
@@ -331,7 +331,7 @@ describe('Client User', function() {
       expect(slo.length).to.eq(4); // cat=1
 
       user = new User({
-        adIssue: 'remain',
+        adIssue: 'democrat',
         target: {
           name: 'TARGET',
           traits: {
@@ -345,8 +345,8 @@ describe('Client User', function() {
       });
       User.computeInfluencesFor(user.target, issues);
       slo = user.target.influences[user.adIssue].slogans;
-      expect(slo).to.include.members(User.ifluencingSlogans.remain.high.neuroticism);
-      expect(slo).to.include.members(User.ifluencingSlogans.remain.low.neuroticism);
+      expect(slo).to.include.members(User.ifluencingSlogans.democrat.high.neuroticism);
+      expect(slo).to.include.members(User.ifluencingSlogans.democrat.low.neuroticism);
     });
 
     it('Should assign correct category for given traits', function() {

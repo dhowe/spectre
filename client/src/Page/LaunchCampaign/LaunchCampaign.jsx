@@ -7,18 +7,22 @@ import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
-const styles = {
-
-};
+const styles = {};
 
 class LaunchCampaign extends React.Component {
   constructor(props) {
     super(props, '/campaign-results');
+    this.state = { adIssue: '' };
+  }
+
+  async componentDidMount() {
+    const user = await UserSession.ensure(this.context, ['adIssue']);
+    this.setState({ adIssue: user.adIssue });
   }
 
   render() {
     const { classes } = this.props;
-    const launchImg = `/imgs/vote-${(this.context.adIssue || 'remain')}.svg`;
+    const { adIssue } = this.state;
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" />
@@ -32,10 +36,10 @@ class LaunchCampaign extends React.Component {
                 <div className="RepublicanLogo">
                   <img
                     className={classes.image}
-                    src={launchImg}
+                    src={`/imgs/vote-${adIssue}.svg`}
                     alt="launch campaign"
                   />
-                  <h2><span>{this.context.adIssue === 'leave' ? 'Republican' : 'Democrat'}</span></h2>
+                  <h2><span>{adIssue.ufc()}</span></h2>
                 </div>
               </div>
 

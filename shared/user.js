@@ -213,39 +213,6 @@ export default class User {
   //   this.descriptors = this.generateSentences(3);
   // }
 
-  // setTraits(traits) {
-  //   if (typeof traits === 'string') throw Error('expecting traits object');
-  //
-  //   this.traits = traits;
-  //   //this.predictInfluences();
-  //   //this.predictDescriptors();
-  //
-  //   return this;
-  // }
-
-  // setSimilars(arr) {
-  //   if (!Array.isArray(arr)) throw Error('expecting array of objects');
-  //   //this.similars = arr.map(obj => JSON.stringify(obj)); // TODO: cache
-  // }
-  // setTarget(obj) {
-  //   if (typeof obj === 'string') throw Error('expecting object');
-  //   this.target = JSON.stringify(obj); // TODO: cache
-  //   //this.target = obj;
-  // }
-  //
-  // getSimilars() {
-  //   if (typeof this.similars === 'undefined') return [];
-  //   return this.similars.map(s => JSON.parse(s)); // TODO: cache
-  // }
-  //
-  // getTarget() {
-  //   if (typeof this.target === 'undefined') {
-  //     console.error("ERROR: user has no target");
-  //     return { id: null, name: null, traits: User.randomTraits() };
-  //   }
-  //   return JSON.parse(this.target); // TODO: cache
-  // }
-
   virtueAsAdverb() {
     const adverbs = {
       power: 'powerful',
@@ -551,6 +518,40 @@ User.emptyTraits = () => {
 User.oceanTraits = ['openness', 'conscientiousness', 'extraversion', 'agreeableness', 'neuroticism'];
 
 User.influencingThemes = {
+  ///////////////////////////////// US /////////////////////////////////////
+  republican: {
+    high: {
+      openness: ["expansive, open themes", "‘freedom’, ‘future’ or ‘potential’"],
+      conscientiousness: ["money or financial focus", "‘control’, ‘savings’ or ‘rights’"],
+      extraversion: ["successful, outspoken people", "‘your rules’ or ‘your rights’ "],
+      agreeableness: ["family scenes, or relaxing locations", "negativity toward institutions"],
+      neuroticism: ["negative imagery, fear of ‘others’", "messages of fear"]
+    },
+    low: {
+      openness: ["British traditions and culture", "‘British’ or ‘traditions’"],
+      conscientiousness: ["action rather than tranquility", "‘no more’ or ‘time to act’"],
+      extraversion: ["strong characters and visions of the future", "ideas of a ‘new’ tomorrow"],
+      agreeableness: ["struggle or strife", "‘borders’, ‘jobs’ or ‘mistakes’"],
+      neuroticism: ["easy-going or relaxing themes ", "‘relax’ or ‘no big deal’"]
+    }
+  },
+  democrat: {
+    high: {
+      openness: ["aspirational or inclusive themes", "‘solidarity’ or collective action "],
+      conscientiousness: ["gambling or risk-taking ", "‘gambling’ or ‘trust’"],
+      extraversion: ["successful, outspoken people", "outspoken or vocal themes"],
+      agreeableness: ["social or familial harmony", "familial or cooperative themes"],
+      neuroticism: ["fear and uncertainty", "‘stability’ or ‘uncertainty’"],
+    },
+    low: {
+      openness: ["conventional or traditional families", "change and fear"],
+      conscientiousness: ["impulsive, risky actions", "risk and danger"],
+      extraversion: ["solitary people or ‘loners’", "thoughts of the future"],
+      agreeableness: ["competition or contest", "losing’, ’quitting’ or ‘control’"],
+      neuroticism: ["scenes of relaxation", "‘hassle’ or ‘worry’"],
+    }
+  },
+  ///////////////////////////////// UK /////////////////////////////////////
   leave: {
     high: {
       openness: ["expansive, open themes", "‘freedom’, ‘future’ or ‘potential’"],
@@ -586,6 +587,40 @@ User.influencingThemes = {
 };
 
 User.ifluencingSlogans = {
+  ///////////////////////////////// US /////////////////////////////////////
+  republican: {
+    high: {
+      openness: ["Free to create a British future", "Unleash our true potential"],
+      conscientiousness: ["Greater control. Greater savings", "Your future, your right"],
+      extraversion: ["Play by your own rules", "Tell the EU, your voice matters"],
+      agreeableness: ["Love Europe Not the EU", "Better for family budgets"],
+      neuroticism: ["No more foreign criminals", "Tipping point"]
+    },
+    low: {
+      openness: ["British is best", "The EU is diluting our traditions"],
+      conscientiousness: ["No more sitting around", "Its time to act"],
+      extraversion: ["Rise like Lions", "Imagine a new tomorrow"],
+      agreeableness: ["Our borders. Our jobs", "Don't pay for their mistakes"],
+      neuroticism: ["No EU. No problem", "Relax. It's no big deal"]
+    }
+  },
+  democrat: {
+    high: {
+      openness: ["No country by itself", "For Solidarity"],
+      conscientiousness: ["Never trust a joker", "They're gambling with the future"],
+      extraversion: ["Don't be silenced", "Don't leave the conversation"],
+      agreeableness: ["A future for your family", "Cooperation leads the way"],
+      neuroticism: ["Au revoir stability.", "Imagine the uncertainty"],
+    },
+    low: {
+      openness: ["Don't make this a hassle", "Change is scary"],
+      conscientiousness: ["Seize the opportunity ", "I'll take my chances"],
+      extraversion: ["You don't need the crowd to have your say", "Contemplate your future"],
+      agreeableness: ["The fastest way to lose is to quit", "Control your destiny"],
+      neuroticism: ["Who needs the hassle?", "Who has time to worry?"],
+    }
+  },
+  ///////////////////////////////// UK /////////////////////////////////////
   leave: {
     high: {
       openness: ["Free to create a British future", "Unleash our true potential"],

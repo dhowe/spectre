@@ -13,9 +13,7 @@ UserSession.clientId = -1;
 UserSession.serverErrors = 0;
 UserSession.useBrowserStorage = true;
 UserSession.defaultUsers = DefaultUsers;
-UserSession.adIssues = ['remain', 'leave'];
-//UserSession.profileDir = (process.env.PUBLIC_URL || '') + '/profiles/';
-//UserSession.imageDir = (process.env.PUBLIC_URL || '') + '/imgs/';
+UserSession.adIssues = ['democrat', 'republican'];
 UserSession.publicUrl = 'https://spectreknows.me/'; // ?
 UserSession.serverDisabled = typeof auth === 'undefined';
 UserSession.epochDate = User.epochDate;

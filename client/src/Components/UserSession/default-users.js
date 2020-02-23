@@ -20,7 +20,7 @@ export default [
     "name": "Bernard",
     "gender": "male",
     "createdAt": new Date(1970, 1, 1),
-    "adIssue": "leave",
+    "adIssue": "republican",
     "virtue": "influence",
     "updatedAt": new Date(2019, 1, 1)
   },
@@ -45,7 +45,7 @@ export default [
     "name": "Tyler",
     "gender": "male",
     "createdAt": new Date(1970, 1, 1),
-    "adIssue": "remain",
+    "adIssue": "democrat",
     "virtue": "influence",
     "updatedAt": new Date(2019, 1, 1)
   },
@@ -70,7 +70,7 @@ export default [
     "name": "Fran",
     "gender": "female",
     "createdAt": new Date(1970, 1, 1),
-    "adIssue": "remain",
+    "adIssue": "democrat",
     "virtue": "influence",
     "updatedAt": new Date(2019, 1, 1)
   },

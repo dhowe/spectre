@@ -553,7 +553,7 @@ describe('REST API', () => {
       user.detectedAge = 50
       user.detectedGender = "female";
       user.detectedGenderProb = .4567
-      user.adIssue = 'remain';
+      user.adIssue = 'democrat';
       user.virtue = 'truth';
 
       chai.request(server)
