@@ -518,39 +518,41 @@ User.emptyTraits = () => {
 User.oceanTraits = ['openness', 'conscientiousness', 'extraversion', 'agreeableness', 'neuroticism'];
 
 User.influencingThemes = {
+
   ///////////////////////////////// US /////////////////////////////////////
   republican: {
     high: {
-      openness: ["expansive, open themes", "‘freedom’, ‘future’ or ‘potential’"],
-      conscientiousness: ["money or financial focus", "‘control’, ‘savings’ or ‘rights’"],
-      extraversion: ["successful, outspoken people", "‘your rules’ or ‘your rights’ "],
-      agreeableness: ["family scenes, or relaxing locations", "negativity toward institutions"],
-      neuroticism: ["negative imagery, fear of ‘others’", "messages of fear"]
+      openness: ["freedom, open skies, scenic vistas", "freedom, future or potential"],
+      conscientiousness: ["organization, synchronicity, finances", "control, fiscal responsibility, rights"],
+      extraversion: ["free expression, success, confidence", "your rules or your rights"],
+      agreeableness: ["family scenes, relaxing locations", "relaxation, friendship, loyalty"],
+      neuroticism: ["negative imagery, fear of the other", "crime, instability, fear"]
     },
     low: {
-      openness: ["British traditions and culture", "‘British’ or ‘traditions’"],
-      conscientiousness: ["action rather than tranquility", "‘no more’ or ‘time to act’"],
-      extraversion: ["strong characters and visions of the future", "ideas of a ‘new’ tomorrow"],
-      agreeableness: ["struggle or strife", "‘borders’, ‘jobs’ or ‘mistakes’"],
-      neuroticism: ["easy-going or relaxing themes ", "‘relax’ or ‘no big deal’"]
+      openness: ["traditional institutions and culture", "unity, tradition, values"],
+      conscientiousness: ["impulsive actions, gambling, risk taking", "aggression or action-taking"],
+      extraversion: ["strong characters, visions of the future", "rising up, ideas for a new tomorrow"],
+      agreeableness: ["competition, sports, winning", "borders, jobs or paying for others mistakes"],
+      neuroticism: ["carefree activities or relaxation", "hassle, stress, worry"]
     }
   },
   democrat: {
     high: {
-      openness: ["aspirational or inclusive themes", "‘solidarity’ or collective action "],
-      conscientiousness: ["gambling or risk-taking ", "‘gambling’ or ‘trust’"],
-      extraversion: ["successful, outspoken people", "outspoken or vocal themes"],
-      agreeableness: ["social or familial harmony", "familial or cooperative themes"],
-      neuroticism: ["fear and uncertainty", "‘stability’ or ‘uncertainty’"],
+      openness: ["aspirational or inclusive themes", "solidarity or collective action"],
+      conscientiousness: ["impulsive actions, gambling", "risk and trust"],
+      extraversion: ["silence or restriction ", "expression, or ones 'voice'"],
+      agreeableness: ["social cohesion and family harmony", "family, community, cooperation"],
+      neuroticism: ["anxiety, stress, or uncertainty", "instability or indecision"],
     },
     low: {
-      openness: ["conventional or traditional families", "change and fear"],
-      conscientiousness: ["impulsive, risky actions", "risk and danger"],
-      extraversion: ["solitary people or ‘loners’", "thoughts of the future"],
-      agreeableness: ["competition or contest", "losing’, ’quitting’ or ‘control’"],
-      neuroticism: ["scenes of relaxation", "‘hassle’ or ‘worry’"],
+      openness: ["traditional institutions and culture", "unity, tradition, values"],
+      conscientiousness: ["impulsive actions, gambling", "risk and danger"],
+      extraversion: ["solitary people or loners", "contemplation, solitude"],
+      agreeableness: ["competition, sports, winning", "losing, quitting or control"],
+      neuroticism: ["carefree activities, relaxation, fun", "hassle, stress, worry"],
     }
   },
+
   ///////////////////////////////// UK /////////////////////////////////////
   leave: {
     high: {
@@ -587,39 +589,41 @@ User.influencingThemes = {
 };
 
 User.ifluencingSlogans = {
+
   ///////////////////////////////// US /////////////////////////////////////
   republican: {
     high: {
-      openness: ["Free to create a British future", "Unleash our true potential"],
-      conscientiousness: ["Greater control. Greater savings", "Your future, your right"],
-      extraversion: ["Play by your own rules", "Tell the EU, your voice matters"],
-      agreeableness: ["Love Europe Not the EU", "Better for family budgets"],
-      neuroticism: ["No more foreign criminals", "Tipping point"]
+      openness: ["For a free America", "Unleash our true potential"],
+      conscientiousness: ["Greater control, greater savings", "Your future, your rights"],
+      extraversion: ["Play by your own rules", "Your voice matters"],
+      agreeableness: ["Family and friends first", "Keep it real, America"],
+      neuroticism: ["Make America great again", "Americans protect their own"]
     },
     low: {
-      openness: ["British is best", "The EU is diluting our traditions"],
-      conscientiousness: ["No more sitting around", "Its time to act"],
-      extraversion: ["Rise like Lions", "Imagine a new tomorrow"],
-      agreeableness: ["Our borders. Our jobs", "Don't pay for their mistakes"],
-      neuroticism: ["No EU. No problem", "Relax. It's no big deal"]
+      openness: ["The best of America", "Put America First"],
+      conscientiousness: ["Now's the time for action", "Time to act"],
+      extraversion: ["Imagine a new tomorrow", "Live the Pioneer Spirit"],
+      agreeableness: ["American jobs, American workers", "Good fences make good neighbors"],
+      neuroticism: ["Keep American winning", "Relax, winning is guaranteed"]
     }
   },
   democrat: {
     high: {
-      openness: ["No country by itself", "For Solidarity"],
-      conscientiousness: ["Never trust a joker", "They're gambling with the future"],
-      extraversion: ["Don't be silenced", "Don't leave the conversation"],
-      agreeableness: ["A future for your family", "Cooperation leads the way"],
-      neuroticism: ["Au revoir stability.", "Imagine the uncertainty"],
+      openness: ["All for one, one for all", "Together we can"],
+      conscientiousness: ["Don't gamble with our future", "Never trust a joker"],
+      extraversion: ["We will not be silenced", "Your voice matters"],
+      agreeableness: ["A future for your family", "Cooperate, together"],
+      neuroticism: ["No more uncertainty", "Say No to the New Normal"],
     },
     low: {
-      openness: ["Don't make this a hassle", "Change is scary"],
-      conscientiousness: ["Seize the opportunity ", "I'll take my chances"],
-      extraversion: ["You don't need the crowd to have your say", "Contemplate your future"],
-      agreeableness: ["The fastest way to lose is to quit", "Control your destiny"],
-      neuroticism: ["Who needs the hassle?", "Who has time to worry?"],
+      openness: ["Keeping families together", "Putting families first"],
+      conscientiousness: ["Seize the opportunity ", "Our chance is now"],
+      extraversion: ["Imagine a new tomorrow", "Contemplate your future"],
+      agreeableness: ["Quitters never win", "Control your destiny"],
+      neuroticism: ["Don't fret, just vote", "Less worry, more change"],
     }
   },
+
   ///////////////////////////////// UK /////////////////////////////////////
   leave: {
     high: {

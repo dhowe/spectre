@@ -119,7 +119,7 @@ describe('Client User', function() {
       User.computeInfluencesFor(user.target, issues);
 
       expect(user.target.influences[user.adIssue].themes).to.have.members
-        (["expansive, open themes", "‘freedom’, ‘future’ or ‘potential’"]);
+        (["freedom, open skies, scenic vistas", "freedom, future or potential"]);
 
       user = new User({
         adIssue: 'republican',
@@ -138,7 +138,7 @@ describe('Client User', function() {
       User.computeInfluencesFor(user.target, issues);
 
       expect(user.target.influences[user.adIssue].themes).to.have.members
-        (["struggle or strife", "‘borders’, ‘jobs’ or ‘mistakes’"]);
+        (["competition, sports, winning", "borders, jobs or paying for others mistakes"]);
 
       user = new User({
         adIssue: 'democrat',
@@ -175,7 +175,7 @@ describe('Client User', function() {
       User.computeInfluencesFor(user.target, issues);
 
       expect(user.target.influences[user.adIssue].themes).to.have.members
-        (["scenes of relaxation", "‘hassle’ or ‘worry’"]);
+        (["carefree activities, relaxation, fun", "hassle, stress, worry"]);
     });
 
     it('Should pick correct images for target category', function() {

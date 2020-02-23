@@ -67,12 +67,12 @@ class DarkAd extends React.Component {
       issue: '',
       images: ['', '', ''],
       slogans: ['', '', ''],
-      defaultImageSelected: true,
-      image: '/imgs/no_propaganda_bg.svg',
       pageDone: false,
       pageOne: { display: 'block' },
       pageTwo: { display: 'none' },
+      defaultImageSelected: true,
       target: UserSession.oceanData(),
+      image: '/imgs/no_propaganda_bg.svg',
     };
   }
 
