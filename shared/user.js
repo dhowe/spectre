@@ -614,7 +614,7 @@ User.ifluencingSlogans = {
       neuroticism: ["No more uncertainty", "Say No to the New Normal"],
     },
     low: {
-      openness: ["Keeping families together", "Putting families first"],
+      openness: ["Keep families together", "Putting family first"],
       conscientiousness: ["Seize the opportunity ", "Our chance is now"],
       extraversion: ["Imagine a new tomorrow", "Contemplate your future"],
       agreeableness: ["Quitters never win", "Control your destiny"],

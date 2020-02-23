@@ -54,11 +54,12 @@ class SocialLogin extends React.Component {
     super(props);
     this.state = stateObj;
     this.unShiftNeeded = false;
+    // TODO: remove binds
     this.onKeyPress = this.onKeyPress.bind(this);
     this.shiftCheck = this.shiftCheck.bind(this);
     this.handleShift = this.handleShift.bind(this);
     this.changeFocus = this.changeFocus.bind(this);
-    this.handleRadioChange = this.handleRadioChange.bind(this);
+    //this.handleRadioChange = this.handleRadioChange.bind(this);
     this.clearEmail = this.clearEmail.bind(this);
     this.handleNextPage = this.handleNextPage.bind(this);
     this.state = {
@@ -130,10 +131,10 @@ class SocialLogin extends React.Component {
     });
   }
 
-  handleRadioChange(event) {
-    this.context.gender = event.target.value; // user-prop
-    this.setState({ gender: event.target.value });
-  }
+  // handleRadioChange(event) {
+  //   this.context.gender = event.target.value; // user-prop
+  //   this.setState({ gender: event.target.value });
+  // }
 
   changeFocus(focus) {
     return () => this.setState({ focus });
@@ -221,7 +222,7 @@ class SocialLogin extends React.Component {
                 <RadioGroup
                   aria-label="Gender"
                   name="gender"
-                  onChange={this.handleRadioChange}
+                  //onChange={this.handleRadioChange}
                   className={classes.radioGroup}>
                   <FormControlLabel className="radio" checked={this.state.gender === 'female'} value="female" control={<Radio color="primary" />} label="Woman" />
                   <FormControlLabel className="radio" checked={this.state.gender === 'male'} value="male" control={<Radio color="primary" />} label="Man" />

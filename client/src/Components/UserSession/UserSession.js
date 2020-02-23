@@ -151,9 +151,9 @@ UserSession.ensure = async (user, props, opts) => {
     }
 
     // // if we need hasImage, we need to check the db
-    if (props.includes('hasImage')) {
+    if (props.includes('hasImage') && !user.hasImage) {
       props = arrayRemove(props, 'hasImage');
-      if (user._id !== -1) user = await UserSession.lookup(user._id);
+      if (user._id !== -1) user.hasImage = await UserSession.hasPhoto(user._id);
       console.log('[USER] ' + user._id + '.hasImage = ' + user.hasImage);
     }
 
@@ -509,9 +509,18 @@ UserSession.sendMail = async (uid, email) => { // unused for now
   return user;
 }
 
+UserSession.shuffle = (array) => { // in-place
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array; // returns same array
+}
+
 /* Randomizes set of celebrities */
 UserSession.randomCelebrities = () => {
-  return shuffle(shuffle(MaleCelebs).splice(0, 4).concat(FemaleCelebs));
+  return UserSession.shuffle(UserSession.shuffle(MaleCelebs)
+    .splice(0, 4).concat(FemaleCelebs));
 }
 
 UserSession.possPron = (t) => { // used for target in ocean profile
@@ -607,18 +616,18 @@ function irand() {
     Math.floor(randnum * (arguments[1] - arguments[0]) + arguments[0]);
 }
 
-function shuffle(arr) {
-  let newArray = arr.slice(),
-    len = newArray.length,
-    i = len;
-  while (i--) {
-    let p = parseInt(Math.random() * len),
-      t = newArray[i];
-    newArray[i] = newArray[p];
-    newArray[p] = t;
-  }
-  return newArray;
-}
+// function shuffle(arr) {
+//   let newArray = arr.slice(),
+//     len = newArray.length,
+//     i = len;
+//   while (i--) {
+//     let p = parseInt(Math.random() * len),
+//       t = newArray[i];
+//     newArray[i] = newArray[p];
+//     newArray[p] = t;
+//   }
+//   return newArray;
+// }
 
 async function safeFetch() {
   return fetch(...arguments)

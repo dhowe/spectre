@@ -57,7 +57,8 @@ function sketch(p) {
     p.imageMode(p.CENTER);
     brandSize = p.height / 10;
 
-    shuffle(Brand.names);
+    UserSession.shuffle(Brand.names);
+    
     Brand.instances = [];
     for (let i = 0; i < Brand.names.length; i++) {
       let bx = -i * (p.width / 6) + p.width / 3;
@@ -185,13 +186,6 @@ function sketch(p) {
     p.text('+ Love', p.width / 2, 20);
     p.text('- Hate', p.width / 2, p.height - 20)
   }
-
-  function shuffle(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-  }
 };
 
 class Brand {
@@ -283,7 +277,7 @@ class Game extends React.Component {
 
   async componentDidMount() {
     user = await UserSession.ensure
-      (this.context, ['login', 'gender', 'name']);
+      (this.context, ['login', 'name']);
   }
 
   async onCompletion(ratings) { // called from p5

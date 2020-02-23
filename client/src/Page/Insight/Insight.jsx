@@ -33,7 +33,7 @@ class Insight extends React.Component {
 
   async componentDidMount() {
     const user = await UserSession.ensure(this.context,
-      ['name', 'login', 'gender', 'virtue', 'target']);
+      ['name', 'login','virtue', 'target']);
     this.setState({
       targetName: user.target.name,
       targetImage: UserSession.profileDir + user.targetImage(),
@@ -57,7 +57,9 @@ class Insight extends React.Component {
           </div>
           <div className="link">
             <Link to={next}>
-              <IconButton enabled={this.state.buttonEnabled} className={ComponentsStyles.iconButtonStyle1} icon="next" text="Next" />
+              <IconButton enabled={this.state.buttonEnabled}
+                className={ComponentsStyles.iconButtonStyle1}
+                icon="next" text="Next" />
             </Link>
           </div>
         </div>

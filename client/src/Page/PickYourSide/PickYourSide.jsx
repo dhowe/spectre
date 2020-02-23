@@ -41,7 +41,7 @@ class PickYourSide extends React.Component {
 
             <Link to="/campaign">
               <div className="RepublicanLogo">
-                <img src="/imgs/vote-republican.svg" alt="republican"
+                <img src="/imgs/republican.svg" alt="republican"
                   onClick={() => { this.context.adIssue = 'republican' }} />
                 <h2><span>Republican</span></h2>
               </div>
@@ -49,7 +49,7 @@ class PickYourSide extends React.Component {
             </Link>
             <Link to="/campaign">
               <div className="DemocratLogo">
-                <img src='/imgs/vote-democrat.svg' alt="democrat"
+                <img src='/imgs/democrat.svg' alt="democrat"
                   onClick={() => { this.context.adIssue = 'democrat' }} />
                 <h2><span>Democrat</span></h2>
               </div>
