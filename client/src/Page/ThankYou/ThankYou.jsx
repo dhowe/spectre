@@ -21,7 +21,7 @@ class ThankYou extends React.Component {
   }
 
   render() {
-    const user = UserSession.validate(this.context, ['name', 'login', 'gender']);
+    const user = UserSession.validate(this.context, ['name', 'login']);
     const { classes } = this.props;
     return (
       <div className={classes.root}>

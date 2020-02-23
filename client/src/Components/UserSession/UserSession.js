@@ -154,7 +154,10 @@ UserSession.ensure = async (user, props, opts) => {
     // // if we need hasImage, we need to check the db
     if (props.includes('hasImage') && !user.hasImage) {
       props = arrayRemove(props, 'hasImage');
-      if (user._id !== -1) user.hasImage = await UserSession.hasPhoto(user._id);
+      if (user._id !== -1) {
+        let foundImage = await UserSession.hasPhoto(user._id);
+        if (foundImage) user.hasImage = true;
+      }
       console.log('[USER] ' + user._id + '.hasImage = ' + user.hasImage);
     }
 
@@ -287,7 +290,7 @@ UserSession.hasPhoto = async (uid) => {
 
   try {
     console.log('[GET] ' + mode + '.hasPhoto: ' + endpoint);
-    const [json, e] = await safeFetch(endpoint, {
+    const [bool, e] = await safeFetch(endpoint, {
       method: "get",
       headers: {
         "Content-Type": "application/json",
@@ -295,7 +298,7 @@ UserSession.hasPhoto = async (uid) => {
       },
     })
     if (e) return handleError(e, route, 'lookup[1]');
-    return json.data;
+    return bool;
   }
   catch (e) {
     handleError(e, endpoint, 'lookup[2]');

@@ -346,14 +346,14 @@ const hasPhoto = async (req, res) => {
     (res, 'No uid sent', 0, NO_USER_ID);
 
   let profFile = path.join(profDir) + '/' + req.params.uid + '.jpg';
-  console.log('[' + clfDate() + '] ::* EXISTS? '+profFile);
   fs.access(profFile, fs.F_OK, (err) => {
     let exists = true;
     if (err) {
       console.error(err);
       exists = false;
     }
-    console.log('[' + clfDate() + '] ::* EXISTS '+exists);
+    console.log('[' + clfDate() + '] ::* EXISTS ' + profFile
+      .replace(/.*\/profiles/, '/profiles') + ' ' + exists);
     sendResponse(res, exists);
   });
 }

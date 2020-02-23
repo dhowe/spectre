@@ -17,20 +17,25 @@ class SpectreHeader extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: 'Test',
+      name: '',
       image: undefined,
       updatedAt: UserSession.epochDate
     };
   }
 
-  async componentDidMount() { // tmp for testing webcam
+  componentDidMount() { // tmp for testing webcam
+
     if (/(data-is|personalised|game)$/.test(window.location.pathname)) {
-      let user = await UserSession.ensure(this.context, ['name', 'updatedAt', 'hasImage']);
-      if (user) this.setState({
-        name: user.name,
-        image: UserSession.profileDir + user._id + '.jpg',
-        updatedAt: user.updatedAt,
-      });
+      if (this.context && this.context._id && this.context.updatedAt) {
+        this.setState({
+          name: '',
+          image: UserSession.profileDir + this.context._id + '.jpg',
+          updatedAt: this.context.updatedAt,
+        });
+      }
+      else {
+        console.warn('No data for image', this.context);
+      }
     }
   }
 
