@@ -67,9 +67,13 @@ function OceanProfile(props) {
                   </div>
                   <hr />
                   <p>
-                    {target.name} is the type of person that is not afraid to tell people how it is.<br /><br />
-                    {target.perspron.ucf()} may appear argumentative, confrontational, insensitive, intimidating, and controlling.<br /><br />
+                    {target.name} is the type of placeholder-text that's not afraid to tell people how it is.
+                    <br /><br />
+                    {target.perspron.ucf()} may appear argumentative, confrontational, insensitive, intimidating, and controlling.
+                    <br /><br />
                     {target.perspron.ucf()} can overwhelm others with {target.posspron} energy, intelligence, and desire to order the world around {target.objpron}.
+                    <br /><br />
+                    {target.name}  can be influenced by images that contain impulsive actions or gambling and by slogans that contain risk or trust.
                   </p>
                 </div>
                 <div className="split-r">

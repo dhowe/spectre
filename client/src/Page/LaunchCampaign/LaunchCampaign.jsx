@@ -23,23 +23,24 @@ class LaunchCampaign extends React.Component {
   render() {
     const { classes } = this.props;
     const { adIssue } = this.state;
+    let header = adIssue === 'democrat' ? 'Keep America Great!' : 'Keep America Great Again!'
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" />
         <IdleChecker />
         <div className={`${classes.content} content`}>
           <h1 className="addSpacing"><span>Launch the campaign!</span></h1>
-          <h2>Keep America Great!</h2>
+          <h2>{header}</h2>
           <div className="link">
             <Link to="/campaign-results">
               <div className="pickLink">
                 <div className="RepublicanLogo">
                   <img
                     className={classes.image}
-                    src={`/imgs/vote-${adIssue}.svg`}
+                    src={`/imgs/${adIssue}.svg`}
                     alt="launch campaign"
                   />
-                  <h2><span>{adIssue.ufc()}</span></h2>
+                  <h2><span>{adIssue.toUpperCase()}</span></h2>
                 </div>
               </div>
 

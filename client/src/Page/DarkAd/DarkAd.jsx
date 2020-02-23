@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-//import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
+import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 import IconButton from '../../Components/IconButton/IconButton';
 import UserSession from '../../Components/UserSession/UserSession';
 import OceanProfile from '../../Components/OceanProfile/OceanProfile';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
+
 import ComponentsStyles from '../../App.module.css';
 import "./DarkAd.scss";
 
@@ -28,7 +28,7 @@ const styles = {
     overflow: 'hidden',
     padding: 0,
     textTransform: 'initial',
-    fontSize: '24px',
+    fontSize: '21px', // was 24px, 2 words
     '&:hover': {
       backgroundColor: '#21c0fc',
       color: '#ffffff',
@@ -78,10 +78,13 @@ class DarkAd extends React.Component {
 
   async componentDidMount() {
     const user = await UserSession.ensure(this.context, ['adIssue', 'target']);
+    let images = user.target.influences[user.adIssue].images
+      // TODO: remove next line when US images are selected ()
+      .map(i => i.replace(/republican/,'leave').replace(/democrat/,'remain'));
     this.setState({
+      images: images,
       issue: user.adIssue,
       target: UserSession.oceanData(user.target),
-      images: user.target.influences[user.adIssue].images,
       slogans: user.target.influences[user.adIssue].slogans
     });
   }
@@ -93,7 +96,7 @@ class DarkAd extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { issue, images, slogans, target } = this.state;
+    const { issue, images, slogans, target, defaultImg } = this.state;
     const redimg = UserSession.imageDir + 'darkadred.png';
     const cimage = UserSession.imageDir + issue + '.svg';
     const btnEnabledPg1 = (this.state.defaultImg !== true && this.state.slogan.length);
@@ -113,32 +116,33 @@ class DarkAd extends React.Component {
                   <p style={this.state.slogan ? { backgroundColor: 'red' } : { backgroundColor: 'none' }}
                     className={ComponentsStyles.adText}>{this.state.slogan}
                   </p>
-                  {!this.state.defaultImg ? <img className={classes.campaignImage} src={cimage} alt="campaign"></img> : ''}
+                  {!defaultImg ? <img className={classes.campaignImage} src={cimage} alt="campaign"></img> : ''}
                 </div>
               </div>
               <div className="split-right">
                 <div>
                   <p className="normal darkAdsubtitle">Select your image:</p>
-                  {images.map((image, i) => (
+                  {images.map((img, i) => (
                     <img className={ComponentsStyles.adImageSelection}
-                      src={image} alt={`ad-img${i+1}`} key={`img${i+1}`}
-                      onClick={() => this.setState({ image: image, defaultImg: false })}>
+                      src={img} alt={`adimg${i+1}`} key={`img${i+1}`}
+                      onClick={() => this.setState({ image: img, defaultImg: false })}>
                     </img>
                   ))}
                 </div>
                 <div>
                   <p className="normal darkAdsubtitle">Select your slogan:</p>
-                  {UserSession.shuffle(slogans).map((slogan, i) => (
+                  {slogans.map((slogan, i) => (
                     <Button
                       key={i}
                       className={classes.button}
                       variant="contained"
                       color="primary"
                       onClick={() => {
-                        if (this.state.defaultImg) this.setState({ image: redimg });
-                        this.setState({ slogan: slogan });
+                        let state = { slogan: slogan };
+                        if (defaultImg) state.image = redimg;
+                        this.setState(state);
                       }}>
-                      {slogan.split(' ').slice(0, 2).join(' ') + '...'}
+                      {slogan.split(' ').slice(0, 3).join(' ') + '...'}
                     </Button>
                   ))}
                 </div>
@@ -175,7 +179,6 @@ class DarkAd extends React.Component {
             </div>
           </div>
         </div>
-
         <FooterLogo />
       </div>
     );

@@ -84,10 +84,13 @@ class OCEANReveal extends React.Component {
           </Fade>
           <Fade in={true}
             style={{ transitionDelay: timing[1] + 'ms' }}>
-            <h2>We haven't known you for very long, <br />but already we know…</h2>
+            <h2>We only just met, but already we know…</h2>
           </Fade>
           {
             sentences.map((sent, i) => {
+              let idx = sent.lastIndexOf(' ');
+              sent = sent.substring(0, idx) // hack to avoid widows via &nbsp;
+                + String.fromCharCode(160) + sent.substring(idx + 1);
               return (
                 <p className="normal" key={i}>
                   {

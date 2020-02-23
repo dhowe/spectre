@@ -44,7 +44,7 @@ class Campaign extends React.Component {
         <IdleChecker />
         <div className={`${classes.content} content`}>
           <h1 className="addSpacing">
-            Create a targeted Facebook ad.
+            Create a targeted <img src='/imgs/facebook.png' style={{'margin-top': 10, position: 'relative', top:15}} alt="facebook"/> ad.
           </h1>
           <p className="normal-addSpacing">
             {tname}'s <span>OCEAN profile</span> shows that {target.perspron} can be influenced by:

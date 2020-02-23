@@ -592,7 +592,7 @@ User.ifluencingSlogans = {
   republican: {
     high: {
       openness: ["For a free America", "Unleash our true potential"],
-      conscientiousness: ["Greater control, greater savings", "Your future, your rights"],
+      conscientiousness: ["More control, more savings", "Your future, your rights"],
       extraversion: ["Play by your own rules", "Your voice matters"],
       agreeableness: ["Family and friends first", "Keep it real, America"],
       neuroticism: ["Make America great again", "Americans protect their own"]
@@ -659,7 +659,7 @@ User.ifluencingSlogans = {
 
 User.abbreviations = ["Adm.", "Capt.", "Cmdr.", "Col.", "Dr.", "Gen.", "Gov.", "Lt.", "Maj.", "Messrs.", "Mr.", "Mrs.", "Ms.", "Prof.", "Rep.", "Reps.", "Rev.", "Sen.", "Sens.", "Sgt.", "Sr.", "St.", "a.k.a.", "c.f.", "i.e.", "e.g.", "vs.", "v.", "Jan.", "Feb.", "Mar.", "Apr.", "Mar.", "Jun.", "Jul.", "Aug.", "Sept.", "Oct.", "Nov.", "Dec."];
 
-User.secondPersonTemplate = text2p;
+User.secondPersonTemplate = text2p; // TODO: use oceanDescTemplate instead for OceanReveal and OceanProfile
 
 User.oceanDescTemplate = {
   openness: {

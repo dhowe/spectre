@@ -85,6 +85,7 @@ UserSession.clear = (context) => {
 UserSession.oceanData = (target) => ({
   name: target ? target.name : '',
   traits: target ? target.traits : {},
+  gender: target ? target.detectedGender : 'other',
   perspron: target ? UserSession.persPron(target) : 'their',
   posspron: target ? UserSession.possPron(target) : 'they',
   objpron: target ? UserSession.objPron(target) : 'them',
