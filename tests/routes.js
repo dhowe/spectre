@@ -70,6 +70,31 @@ describe('REST API', () => {
         });
     });
 
+    it('should check a user image by id', done => {
+      let id = '888888888888888888888888'; // a good id
+      chai.request(server)
+        .get('/api/users/photo/' + id)
+        .auth(env.API_USER, env.API_SECRET)
+        .end((err, res) => {
+          expect(err).to.be.null;
+          expect(res).to.have.status(200);
+          expect(res.body.data).to.be.a('boolean');
+          expect(res.body.data).eq(true);
+
+          id = 'XXX8888888888888888888888'; // a bad id
+          chai.request(server)
+            .get('/api/users/photo/' + id)
+            .auth(env.API_USER, env.API_SECRET)
+            .end((err, res) => {
+              expect(err).to.be.null;
+              expect(res).to.have.status(200);
+              expect(res.body.data).to.be.a('boolean');
+              expect(res.body.data).eq(false);
+              done();
+            });
+        });
+    });
+
     it('should fetch a single user by login', done => {
       let id = '888888888888888888888888';
       let login = 'sally4983578918989@mail.com';

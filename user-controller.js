@@ -4,6 +4,7 @@ import Mailer from './mailer';
 import clfDate from 'clf-date';
 import multer from 'multer';
 import path from 'path';
+const fs = require('fs')
 import { profDir } from './config';
 
 //import childProcess from 'child_process';
@@ -325,6 +326,7 @@ const similars = async (req, res) => {
   });
 };
 
+// remove a user from db, return its uid on success
 const remove = async (req, res) => {
 
   if (UserModel.databaseDisabled) return noDbError(res);
@@ -335,7 +337,29 @@ const remove = async (req, res) => {
   });
 };
 
-const photo = async (req, res) => {
+// upload a user image for processing
+const hasPhoto = async (req, res) => {
+
+  if (UserModel.databaseDisabled) return noDbError(res);
+
+  if (!req.params.hasOwnProperty('uid')) return sendError
+    (res, 'No uid sent', 0, NO_USER_ID);
+
+  let profFile = path.join(profDir) + '/' + req.params.uid + '.jpg';
+  console.log('[' + clfDate() + '] ::* EXISTS? '+profFile);
+  fs.access(profFile, fs.F_OK, (err) => {
+    let exists = true;
+    if (err) {
+      console.error(err);
+      exists = false;
+    }
+    console.log('[' + clfDate() + '] ::* EXISTS '+exists);
+    sendResponse(res, exists);
+  });
+}
+
+// upload a user image for processing
+const postPhoto = async (req, res) => {
 
   if (UserModel.databaseDisabled) return noDbError(res);
 
@@ -362,7 +386,7 @@ const photo = async (req, res) => {
       if (!req.file) return sendError(res, 'photo.upload: null req. file');
       console.log('[' + clfDate() + '] ::* UPLOAD ' + req.file.path);
 
-      // just for sending back to the client, but should use profDir instead ?
+      // just for sending back to the client, but should use User.profDir instead ?
       req.file.url = req.file.path.replace(/.*\/profiles/, '/profiles');
       sendResponse(res, req.file);
     });
@@ -454,6 +478,6 @@ function generateEmail(id, email) {
 
 
 export default {
-  list, /*message,current*/targets, recents, create, fetch,
-  similars, update, remove, photo, photoset, createBatch, fetchByLogin
+  list, hasPhoto, postPhoto, targets, recents, create, fetch, /*message*/
+  similars, update, remove, photoset, createBatch, fetchByLogin
 };

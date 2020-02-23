@@ -92,7 +92,6 @@ UserSession.oceanData = (target) => ({
   image: UserSession.targetImage(target),
 });
 
-
 /*
  * Repairs a user using sessionStorage and db if needed (async)
  */
@@ -106,8 +105,8 @@ UserSession.ensure = async (user, props, opts) => {
     const sid = sessionStorage.getItem(UserSession.storageKey);
     if (!sid) {
       console.log('[STUB] No user._id, creating new user');
-      fillMissingProps(user, ['login', 'name', 'gender',
-        'virtue', 'adIssue', 'traits', 'celebrity', 'updatedAt']);
+      fillMissingProps(user, ['login', 'name', 'virtue',
+        'adIssue', 'traits', 'celebrity', 'updatedAt']);
 
       await UserSession.create(user); // save new user
       console.log('[STUB] Setting user._id: ' + user._id);
@@ -254,6 +253,7 @@ UserSession.lookup = async (uid) => {
 
   if (!uid) throw Error('Invalid uid:', uid);
 
+  // pass uid or login value (email-address)
   const endpoint = route + (/@/.test(uid) ? 'email/' : '') + uid;
 
   try {
@@ -267,6 +267,34 @@ UserSession.lookup = async (uid) => {
     })
     if (e) return handleError(e, route, 'lookup[1]');
     return User.create(json);
+  }
+  catch (e) {
+    handleError(e, endpoint, 'lookup[2]');
+  }
+}
+
+/*
+ * Loads a user's properties from database
+ */
+UserSession.hasPhoto = async (uid) => {
+
+  if (UserSession.serverDisabled) return;
+
+  if (!uid) throw Error('Invalid uid:', uid);
+
+  const endpoint = route + 'photo/' + uid;
+
+  try {
+    console.log('[GET] ' + mode + '.hasPhoto: ' + endpoint);
+    const [json, e] = await safeFetch(endpoint, {
+      method: "get",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": 'Basic ' + btoa(auth)
+      },
+    })
+    if (e) return handleError(e, route, 'lookup[1]');
+    return json.data;
   }
   catch (e) {
     handleError(e, endpoint, 'lookup[2]');
@@ -486,8 +514,8 @@ UserSession.randomCelebrities = () => {
   return shuffle(shuffle(MaleCelebs).splice(0, 4).concat(FemaleCelebs));
 }
 
-UserSession.possPron = (user) => { // not used
-  switch (user.gender) {
+UserSession.possPron = (t) => { // used for target in ocean profile
+  switch (t.gender) {
     case 'male':
       return 'his';
     case 'female':
@@ -497,8 +525,8 @@ UserSession.possPron = (user) => { // not used
   }
 }
 
-UserSession.objPron = (user) => {// not used
-  switch (user.gender) {
+UserSession.objPron = (t) => { // used for target in ocean profile
+  switch (t.gender) {
     case 'male':
       return 'him';
     case 'female':
@@ -509,8 +537,8 @@ UserSession.objPron = (user) => {// not used
   }
 }
 
-UserSession.persPron = (user) => {// not used
-  switch (user.gender) {
+UserSession.persPron = (t) => {// used for target in ocean profile
+  switch (t.gender) {
     case 'male':
       return 'he';
     case 'female':

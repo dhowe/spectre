@@ -25,8 +25,9 @@ router.route('/users/targets/:uid')
   .get(controller.targets)
 
 router.route('/users/photo/:uid')
-  .post(controller.photo)
-  
+  .get(controller.hasPhoto)
+  .post(controller.postPhoto)
+
 router.route('/users/email/:uid')
   .get(controller.fetchByLogin)
 

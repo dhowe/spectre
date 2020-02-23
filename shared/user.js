@@ -61,9 +61,6 @@ export default class User {
     if (u.detectedGender) s += ', ' + u.detectedGender;
     if (u.virtue) s += ', ' + u.virtue;
     if (u.target) s += ', target=' + u.target._id + '/' + u.target.name;
-    // if (u.descriptors && u.descriptors.length) {
-    //   s += ', ' + u.descriptors.length + ' descriptors';
-    // }
     if (u.similars && u.similars.length) {
       s += ', similars('+u.similars.length+')';
     }
@@ -85,7 +82,8 @@ export default class User {
       template = null;
     }
 
-    if (typeof this.gender === 'undefined') this.gender = 'female';
+    if (typeof this.detectedGender === 'undefined') this.detectedGender = 'other';
+    //if (typeof this.gender === 'undefined') this.gender = 'female';
 
     numSentences = numSentences || 3;
 
