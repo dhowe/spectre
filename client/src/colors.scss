@@ -3,6 +3,7 @@ $grey:#9B9DA0;
 $lightGrey:#C4C4C4;
 $blue:#42BAEB;
 $white:#FEFEFE;
+$black:#3C3C3B;
 $redGradient:linear-gradient(90deg, #DBB876 -1.51%, #FF2E00 100%);
 
 
@@ -14,4 +15,5 @@ $redGradient:linear-gradient(90deg, #DBB876 -1.51%, #FF2E00 100%);
   blue:$blue;
   white:$white;
   redGradient:$redGradient;
+  black:$black;
 }
