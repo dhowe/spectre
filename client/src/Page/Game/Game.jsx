@@ -13,13 +13,13 @@ const styles = {
 
   // configurable parameters
   allowedTimeMs: 35000,
-  sketchStrokeWeight: 6,
+  sketchStrokeWeight: 2,
   sketchStrokeMinWeight: 2,
 
   // can grab css from sass
   sketchBg: '#FFFFFF',
   sketchText: '#929392',
-  sketchStroke: '#929392',
+  sketchStroke: '#E0E0E0',
   sketchStrokeSel: '#21c0fc',
 };
 
@@ -35,19 +35,25 @@ let percent, totalDist, colors = {}, logos = {};
 
 function sketch(p) {
 
-  let done, brandSize, start, fps, numLines = 9, showFps = false,
-    linesY = [], instruct, instructions = true;
+  let done, brandSize, start, fps, numLines = 12, showFps = false,
+    linesY = [], instruct, instructions = true,
+    love, hate, loveArrow, hateArrow;
 
   p.preload = () => {
     instruct = p.loadImage('/imgs/game_instruct.png');
+    love = p.loadImage('/imgs/love.svg');
+    hate = p.loadImage('/imgs/hate.svg');
+    loveArrow = p.loadImage('/imgs/love_arrow.svg');
+    hateArrow = p.loadImage('/imgs/hate_arrow.svg');
     Brand.names.forEach((name) => {
       const img = name.replace(/ /g, '_') + '.png';
       logos[name] = p.loadImage(UserSession.imageDir + img);
     });
+    // TODO: load font
   }
 
   p.setup = () => {
-    p.createCanvas(1920, 660); // 1080, 900 for portrait
+    p.createCanvas(1920, 780); // 1080, 900 for portrait
     colors.sketchBg = p.color(styles.sketchBg);
     colors.sketchText = p.color(styles.sketchText);
     colors.sketchStroke = p.color(styles.sketchStroke);
@@ -58,7 +64,7 @@ function sketch(p) {
     brandSize = p.height / 10;
 
     UserSession.shuffle(Brand.names);
-    
+
     Brand.instances = [];
     for (let i = 0; i < Brand.names.length; i++) {
       let bx = -i * (p.width / 6) + p.width / 3;
@@ -74,14 +80,14 @@ function sketch(p) {
     p.stroke(colors.sketchStroke);
 
     let lineGap = p.height / numLines;
-    for (let i = 0; i < numLines; i++) {
-      p.strokeWeight(i % 2 === 0 ? styles.sketchStrokeWeight : 0);
-      let ypos = lineGap * (i + 1) - lineGap / 2;
+    for (let i = 1; i < numLines -1; i++) {
+      p.strokeWeight( i % 2 === 0 ? styles.sketchStrokeWeight : 0);
+      let ypos = lineGap * i ;
       p.line(0, ypos, p.width, ypos);
       if (p.frameCount === 1) linesY.push(ypos);
     }
 
-    drawInfo(p, colors.sketchText);
+    drawInfo(p, love, hate , loveArrow, hateArrow);
 
     if (instructions) {
       p.image(instruct, p.width / 2, p.height / 2);
@@ -146,7 +152,7 @@ function sketch(p) {
           lineIdx = i;
         }
       }
-      Brand.active.rating = p.map(lineIdx, 0, numLines - 1, 8, -8) / 10;
+      Brand.active.rating = p.map(lineIdx, 0, numLines, 8, -8) / 10;
       Brand.active.snapTo(linesY[lineIdx]);
       Brand.active = false;
     }
@@ -179,12 +185,15 @@ function sketch(p) {
     if (nodata) randomizeData();
   }
 
-  function drawInfo(p, c) {
+  function drawInfo(p,love, hate, loveArrow, hateArrow) {
+
     p.textSize(40);
-    p.fill(c);
     p.noStroke();
-    p.text('+ Love', p.width / 2, 20);
-    p.text('- Hate', p.width / 2, p.height - 20)
+    p.image(love, p.width / 2, 56);
+    p.image(hate, p.width / 2, p.height - 56);
+    p.image(loveArrow, p.width / 2, 240);
+    p.image(hateArrow, p.width / 2, p.height - 240);
+
   }
 };
 
