@@ -33,11 +33,9 @@ Button
   line-height: 32px;
 }
 
-.buttonWrapper button span:active,.buttonWrapper2 button span:active {
+.buttonWrapper button span:active, .buttonWrapper2 button span:active {
   color: white;
 }
-
-
 
 @media screen and (orientation:landscape) {
   .buttonWrapper {
@@ -52,7 +50,6 @@ Button
     width: 100%;
   }
 
-
   .buttonWrapper button {
     width: 180px;
     font-size: 25px;
@@ -65,16 +62,16 @@ Button
     left: 1366px;
     top: 800px;
   }
+
   .iconButtonStyle1 svg {
     width: 86px;
     height: 86px;
   }
 
-  .iconButtonStyle1 div{
+  .iconButtonStyle1 div {
     padding-top: 15px;
     font-size: 40px;
     text-align: right;
-
   }
 
   .iconButtonStyle2 {
@@ -100,13 +97,13 @@ Button
     left: 48%;
   }
 
-  .adImage{
+  .adImage {
     padding-top: 60px;
     width: 642px;
     height: 464px;
   }
 
-  .adImageSelection{
+  .adImageSelection {
     width: 160px;
     padding: 15px;
   }
@@ -125,25 +122,86 @@ Button
   .adTextPage2 {
     top: 46%;
   }
-
 }
 
-.webcamVideo{
+.webcamVideo {
   margin: 0 auto;
-  padding-top: 120px;
+  padding-top: 0;
 }
 
-.webcamVideo video{
-  height: 400px;
+
+
+.imgPreviewDiv{
+  position: relative;
+  margin: auto;
+  display: inline-block;
+}
+.imageCropper {
+    width: 400px;
+    height: 400px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
 }
 
-.imgPreview{
+.imgPreview {
+    display: inline;
+    margin-left: -177px;
+    height: 100%;
+    width: auto;
+}
+
+.webcamVideo {
+    position: relative;
+    width: 711px;
+    height: 400px;
+}
+
+
+.webcamVideo video {
+    position: relative;
+    width: 711px;
+    height: 400px;
+}
+
+.photoFrame {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.countDown {
   position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 1000;
-  height: 400px;
+  top: 40px;
+  right: 40px;
+  color: #FEFEFE;
+  display: block;
+  border: solid 5px #FEFEFE;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  padding-top:  5px;
+
+
 }
+.countDown p{
+  font-size: 48px;
+  line-height: 59px;
+  color: #FEFEFE;
+
+
+}
+
+
+
+
+
+
+
+
 
 @media screen and (orientation:portrait) {
   .buttonWrapper {
