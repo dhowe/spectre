@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
 import Modal from "@material-ui/core/Modal";
 import Button from "@material-ui/core/Button";
 import HeaderLogo from '../../Icons/headerlogo-colour.svg';
@@ -21,7 +20,6 @@ function getModalStyle() {
 const styles = theme => ({
   paper: {
     position: "absolute",
-    width: 400,
     backgroundColor: "white",
     boxShadow: theme.shadows[5],
     outline: "none",
@@ -43,17 +41,27 @@ function SimpleModal(props) {
 
   const { classes } = props;
 
-  const [summary,setSummary] = React.useState({
-    showSummary : true, contentHere: props.summary});
+  const [summary, setSummary] = React.useState({
+    showSummary: true, contentHere: props.summary
+  });
+
+  const [showPage, setShowPage] = React.useState({
+    pageOne: { display: 'block' }, pageTwo: { display: 'none' }
+  });
 
   function handleClick() {
-    if(summary.showSummary){
-      setSummary({showSummary: false, contentHere: props.content});
-    }else{
-      setSummary({showSummary: true,contentHere: props.summary});
+    if (summary.showSummary) {
+      setSummary({ showSummary: false, contentHere: props.content });
+                setShowPage({ pageOne: { display: 'none' }, pageTwo: { display: 'block' } });
+    } else {
+      setShowPage({ pageOne: { display: 'block' }, pageTwo: { display: 'none' } });
+      setSummary({ showSummary: true, contentHere: <p className="small">{props.summary} </p>});
     }
-    }
+
+  }
   //  console.log(summary.contentHere.length === 0? setSummary({contentHere: props.summary}): setSummary({contentHere: props.summary}))
+
+
   return (
     <Modal
       aria-labelledby="simple-modal-title"
@@ -62,19 +70,35 @@ function SimpleModal(props) {
       onClose={props.onClose}
     >
       <div style={modalStyle} className={classes.paper} id="tos-title-div">
-        <div className="tos-logo">
-          <img alt="logo" src={HeaderLogo} />
+        <div style={showPage.pageOne}>
+          <div className="tos-logo">
+            <img alt="logo" src={HeaderLogo} />
+          </div>
+          <h3 className="title">
+            {props.title}
+          </h3>
+          <div id="tos-content">
+            {summary.contentHere.length === 0 ? <p className="small">{props.summary}</p> : summary.contentHere}
+          </div>
+          <div className="tos-buttons">
+
+            <Link to="/">
+              <Button className={ComponentStyles.button} id="tos-modal-button">I do not accept</Button></Link>
+            <Button className={ComponentStyles.button} onClick={props.onClose} id="tos-modal-button">I accept</Button>
+            <div onClick={handleClick}><Link className='tos-link' to='#here'>link to long policy</Link></div>
+          </div>
         </div>
-        <Typography variant="h6" className={classes.title} id="modal-title">
-          {props.title}
-        </Typography>
-        <div id="tos-content">
-          {summary.contentHere.length === 0? props.summary: summary.contentHere}
-        </div>
-        <div className={ComponentStyles.buttonWrapper2}>
-          <Link to="/"><Button className={ComponentStyles.button} id="tos-modal-button">I DO NOT ACCEPT</Button></Link>
-          <Button className={ComponentStyles.button} onClick={props.onClose} id="tos-modal-button">I ACCEPT</Button>
-          <div onClick={handleClick}><Link className='tos' to='#here'>link to long policy</Link></div>
+        <div style={showPage.pageTwo}>
+          <h1 className="page2-title">
+            Terms of service
+          </h1>
+          <div id="page2-tos-content">
+            {summary.contentHere.length === 0 ? <p className="small">{props.summary}</p> : summary.contentHere}
+          </div>
+          <div id="page2-button">
+          <Button className={ComponentStyles.button}
+            onClick={e => handleClick(e)} id="help-modal-button">X</Button>
+          </div>
         </div>
       </div>
     </Modal>
