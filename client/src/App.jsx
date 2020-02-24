@@ -78,8 +78,6 @@ class App extends React.Component {
         <MuiThemeProvider theme={theme}>
           <div className="App">
             <header className="App-header">
-              <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" />
-              <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
               <Router>
                 <React.Fragment>
                   <Keyboardist bindings={{ Right: this.next }} />
