@@ -22,7 +22,10 @@ class TakeSelfie extends React.Component {
     super(props, '/personalised');
     this.state = {
       now: Date.now(),
-      captureNow: false
+      captureNow: false,
+      pageOne: { display: 'block' },
+      pageTwo: { display: 'none' },
+      pageThree: { display: 'none' },
     };
     this.webcam = React.createRef();
     this.countdowner = React.createRef();
@@ -31,7 +34,12 @@ class TakeSelfie extends React.Component {
   handleClick = (c) => {
     this.clicked = c;
     this.countdowner.start();
-    if (c === 'capture') this.setState({ captureNow: true });
+    if (c === 'capture') {
+      console.log("Capture!")
+      this.setState({ captureNow: true })
+      this.setState({ pageOne: { display: 'none' }, pageTwo: { display: 'block' }, pageThree: { display: 'none' } })
+    };
+
   }
 
   takeSelfie = () => {
@@ -40,10 +48,16 @@ class TakeSelfie extends React.Component {
       console.log('[WEBCAM] Taking selfie...');
       const data = this.webcam.getScreenshot();
       this.setState({ now: now, captureNow: false, imgData: data })
+      this.setState({ pageOne: { display: 'none' }, pageTwo: { display: 'none' }, pageThree: { display: 'block' } })
     }
     catch (e) {
       console.error('Webcam Error: ', e);
     }
+  }
+
+  handleNextPage = (e) => {
+    e.preventDefault();
+    this.setState({ pageOne: { display: 'none' }, pageTwo: { display: 'block' } })
   }
 
   processSelfie = () => {
@@ -58,53 +72,77 @@ class TakeSelfie extends React.Component {
     const { classes } = this.props;
 
     const imagePreview = this.state.imgData ?
-      (<div><img className={ComponentStyles.imgPreview}
+      (<div className={ComponentStyles.imageCropper}><img className={ComponentStyles.imgPreview}
         src={this.state.imgData} alt="img" /></div>) : null;
 
     return (
       <div className="TakeSelfie content">
         <SpectreHeader colour="white" />
         <IdleChecker />
-        {imagePreview}
-        <div className={ComponentStyles.webcamVideo}>
-          <Webcam
-            audio={false}
-            height={1280}
-            width={800}
-            ref={r => this.webcam = r}
-            screenshotQuality={1}
-            screenshotFormat="image/jpeg"
-            videoConstraints={{
-              width: 1280,
-              height: 720,
-              facingMode: 'user',
-            }} />
+
+        <div style={this.state.pageOne}>
+          <h1 className="addSpacing"><span>Personalise your experience</span></h1>
+          <div className={ComponentStyles.buttonWrapper2}>
+            <Button className={ComponentStyles.button} variant="outlined" color="primary"
+              onClick={() => this.handleClick('capture')}>
+              {this.state.imgData ? "Retake" : "Tale a selfie"}
+            </Button>
+          </div>
         </div>
-        <div className={ComponentStyles.buttonWrapper2}>
-          <p>Look up and smile for the camera!</p>
-          <Button className={ComponentStyles.button} variant="outlined" color="primary"
-            onClick={() => this.handleClick('capture')}>
-            {this.state.imgData ? "Retake" : "Capture"}
-          </Button>
+        <div style={this.state.pageTwo}>
+          <h1 className="addSpacing"><span>Look up and smile for the camera!</span></h1>
+          <div className={ComponentStyles.webcamVideo}>
+            <Webcam
+              audio={false}
+              height={1280}
+              width={800}
+              ref={r => this.webcam = r}
+              screenshotQuality={1}
+              screenshotFormat="image/jpeg"
+              videoConstraints={{
+                width: 1280,
+                height: 720,
+                facingMode: 'user',
+              }} />
+            <img className={ComponentStyles.photoFrame} alt="frame" src="./imgs/photoFrame.svg" />
+            <div className={ComponentStyles.countDown}>
+            <Countdown  autoStart={false}
+              date={this.state.now + 3000}
+              intervalDelay={1000}
+              precision={1000}
+              ref={r => this.countdowner = r}
+              renderer={props => <p className="countDownLabel">{this.state.captureNow ?
+                Math.round(props.total / 1000) : 'Ready?'}</p>}
+              onComplete={e => e ? this.takeSelfie() : null}
+            />
+            </div>
+          </div>
         </div>
-        <Countdown autoStart={false}
-          date={this.state.now + 3000}
-          intervalDelay={1000}
-          precision={1000}
-          ref={r => this.countdowner = r}
-          renderer={props => <div>{this.state.captureNow ?
-            Math.round(props.total / 1000) : 'Ready?'}</div>}
-          onComplete={e => e ? this.takeSelfie() : null}
-        />
-        <div className={classes.clickToContinue}>
-          <Link to="/personalised">
-            <IconButton
-              onClick={this.processSelfie}
-              enabled={typeof this.state.imgData !== 'undefined'}
-              className={ComponentStyles.iconButtonStyle1}
-              icon="next" text="Next" />
-          </Link>
+        <div style={this.state.pageThree}>
+          <h1 className="addSpacing"><span><br/><br/><br/>Happy with your look?</span></h1>
+          <div className={ComponentStyles.imgPreviewDiv}>
+          {imagePreview}
+          </div>
+          <div className={ComponentStyles.buttonWrapper2}>
+            <Button className={ComponentStyles.button} variant="outlined" color="primary"
+              onClick={() => this.handleClick('capture')}>
+              {this.state.imgData ? "Take again" : "Tale a selfie"}
+            </Button>
+          </div>
+          <div className={classes.clickToContinue}>
+            <Link to="/personalised">
+              <IconButton
+                onClick={this.processSelfie}
+                enabled={typeof this.state.imgData !== 'undefined'}
+                className={ComponentStyles.iconButtonStyle1}
+                icon="next" text="Next" />
+            </Link>
+          </div>
         </div>
+
+
+
+
         <FooterLogo />
       </div>
     );
