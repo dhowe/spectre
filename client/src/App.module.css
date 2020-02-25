@@ -21,20 +21,19 @@ Button
 
 .buttonWrapper button, .buttonWrapper2 button {
   display: inline-block;
-  height: 53px;
+  height: 64px;
   margin: 16px;
-  border: solid 3px #21c0fc;
-  border-radius: 28px;
-  background-color: #ffffff;
+  border: solid 4px;
+  border-radius: 100px;
   box-shadow: none;
-  color: #929391;
-  font-weight: 500;
   letter-spacing: 0;
   line-height: 32px;
 }
-
-.buttonWrapper button span:active, .buttonWrapper2 button span:active {
-  color: white;
+.buttonWrapper button:hover, .buttonWrapper2 button:hover{
+  border: solid 4px;
+}
+.buttonWrapper button span, .buttonWrapper2 button span {
+  font-weight: 500;
 }
 
 @media screen and (orientation:landscape) {
