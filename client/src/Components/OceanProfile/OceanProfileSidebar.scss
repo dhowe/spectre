@@ -177,6 +177,15 @@ SideNav-expanded {
   padding-top: 10px;
 }
 
+.profile-desc p {
+  margin: 0;
+  padding: 0;
+  font-size: 25px;
+  line-height: 33px;
+  color: $white;
+  padding-top: 15px;
+}
+
 .helpIcon {
   filter: brightness(0) invert(1);
   padding-left: 130px;
