@@ -23,7 +23,8 @@ class LaunchCampaign extends React.Component {
   render() {
     const { classes } = this.props;
     const { adIssue } = this.state;
-    let header = adIssue === 'democrat' ? 'Keep America Great!' : 'Keep America Great Again!'
+    let header = adIssue === 'democrat' ?
+      'A Fresh Start for America!' : 'Keep America Great Again!'
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" />

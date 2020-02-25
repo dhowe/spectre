@@ -84,7 +84,7 @@ class OCEANReveal extends React.Component {
           </Fade>
           <Fade in={true}
             style={{ transitionDelay: timing[1] + 'ms' }}>
-            <h2>We only just met, but already we know…</h2>
+            <h2>We've only just met, but already we know…</h2>
           </Fade>
           {
             sentences.map((sent, i) => {
