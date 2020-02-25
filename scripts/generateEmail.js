@@ -166,7 +166,7 @@ function createEmail(user) {
   return Promise.all([
     getFile('../build/Components/OceanProfile/OceanProfile.css'),
     getFile('../build/Components/AvatarComponent/AvatarComponent.css'),
-    getFile('../tmpl/email.html'),
+    getFile('../templates/email1.html'),
   ])
     .then(([style1, style2, template]) => {
       let sheet1 = new ServerStyleSheets();
