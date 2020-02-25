@@ -170,6 +170,7 @@ class SocialLogin extends React.Component {
         <div className={`${classes.content} socialLogin-content`}>
           <form noValidate>
             <div style={this.state.pageOne}>
+              <div className="box1 sb7" style={this.state.focus === 'email' ? {visibility:'visible'}:{visibility:'hidden'}}>Your email address will be used<br />to send you SPECTRE gift pack to.</div>
               {/* #267: SHIFT / CAPS, etc. dont work */}
               <FormControl className={classes.margin}>
                 <Input

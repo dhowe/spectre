@@ -1,3 +1,5 @@
+@import '../../colors.scss';
+
 input[type="text"] {
   position: static;
   width: 100%;
@@ -20,6 +22,59 @@ input[type="text"] {
 .MuiFormGroup-root {
   align-items:flex-start;
 }
+
+
+
+/* speech bubble 8 */
+.box1 {
+  width: 450px;
+  margin: 50px auto;
+  border: 1px solid $blue;
+  border-radius: 16px;
+  padding: 20px;
+  padding-right: 40px;
+  text-align: center;
+  background: $white;
+  color: $grey;
+  font-size: 18px;
+  line-height: 22px;
+  position: fixed;
+  z-index: 20;
+  left:900px;
+}
+
+
+/* speech bubble 7 */
+
+.sb7:before {
+  content: "";
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  border-left: 6px solid $blue;
+  border-right: 10px solid transparent;
+  border-top: 10px solid $blue;
+  border-bottom: 10px solid transparent;
+  left: 22px;
+  bottom: -22px;
+}
+
+.sb7:after {
+  content: "";
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  border-left: 10px solid #fff;
+  border-right: 10px solid transparent;
+  border-top: 10px solid #fff;
+  border-bottom: 10px solid transparent;
+  left: 24px;
+  bottom: -14px;
+}
+
+
+
+
 @media screen and (orientation:landscape) {
   .simple-keyboard {
     margin: 56px auto;
