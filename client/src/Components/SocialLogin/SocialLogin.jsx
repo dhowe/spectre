@@ -43,7 +43,7 @@ let stateObj = {
   email: '',
   name: '',
   //gender: '',
-  focus: 'name',
+  focus: '',
   layoutName: 'default'
   //clearEmail: this.clearEmail,
 };
@@ -66,7 +66,7 @@ class SocialLogin extends React.Component {
       emailValid: false,
       email: '',
       name: '',
-      focus: 'name',
+      focus: '',
       layoutName: 'shift',
       input: "",
       clearEmail: this.clearEmail,
@@ -89,6 +89,11 @@ class SocialLogin extends React.Component {
   }
 
   onKeyPress(button) {
+    if(this.state.focus === ''){
+      this.setState({focus:'name'});
+    }
+    console.log(button)
+
 
     if (button === '{shift}') {
       this.handleShift();
@@ -105,7 +110,16 @@ class SocialLogin extends React.Component {
         [focus]: (input.substr(0, input.length - 1))
       });
 
-    } else if (!(button.startsWith('{') || button.endsWith('}'))) {
+    } else if (button === '{space}') {
+      if(this.state.focus === 'email'){
+        //ignored
+      }else{
+        const { focus } = this.state;
+        const text = this.state[focus];
+        this.setState({ [focus]: text.concat(' ') });
+      }
+
+    }else if (!(button.startsWith('{') || button.endsWith('}'))) {
       const { focus } = this.state;
       const text = this.state[focus];
 
@@ -176,7 +190,7 @@ class SocialLogin extends React.Component {
                   name="name"
                   onClick={this.changeFocus('name')}
                   id="custom-css-standard-name"
-                  value={!this.state.name.length ? "Your name" : this.state.name}
+                  value={!this.state.name.length && this.state.focus !== 'name' ? "Your name" : this.state.name}
                   classes={{
                     root: classes.textField,
                     underline: classes.cssUnderline,
