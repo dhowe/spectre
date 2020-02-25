@@ -47,14 +47,14 @@ const styles = {
   },
   campaignPage2: {
     position: 'absolute',
-    bottom: '13px',
-    right: '0',
+    bottom: '23px',
+    right: '10px',
     width: '100px',
   },
   campaignImage: {
     position: 'absolute',
-    bottom: '106px',
-    right: '0',
+    bottom: '116px',
+    right: '10px',
     width: '100px',
   }
 };
