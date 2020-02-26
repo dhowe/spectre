@@ -26,20 +26,21 @@ class TakeSelfie extends React.Component {
       pageOne: { display: 'block' },
       pageTwo: { display: 'none' },
       pageThree: { display: 'none' },
+      keyNum: Math.random()
     };
     this.webcam = React.createRef();
     this.countdowner = React.createRef();
+
   }
 
   handleClick = (c) => {
     this.clicked = c;
     this.countdowner.start();
     if (c === 'capture') {
-      console.log("Capture!")
       this.setState({ captureNow: true })
       this.setState({ pageOne: { display: 'none' }, pageTwo: { display: 'block' }, pageThree: { display: 'none' } })
     };
-
+    this.setState({ keyNum: Math.random() });
   }
 
   takeSelfie = () => {
@@ -55,10 +56,7 @@ class TakeSelfie extends React.Component {
     }
   }
 
-  handleNextPage = (e) => {
-    e.preventDefault();
-    this.setState({ pageOne: { display: 'none' }, pageTwo: { display: 'block' } })
-  }
+
 
   processSelfie = () => {
     console.log('[WEBCAM] Uploading selfie...');
@@ -81,11 +79,23 @@ class TakeSelfie extends React.Component {
         <IdleChecker />
 
         <div style={this.state.pageOne}>
+          <Webcam  //to force the webcam ready
+            audio={false}
+            height={1280}
+            width={800}
+            ref={r => this.webcam = r}
+            screenshotQuality={1}
+            screenshotFormat="image/jpeg"
+            videoConstraints={{
+              width: 1280,
+              height: 720,
+              facingMode: 'user',
+            }} style={this.state.pageTwo} />
           <h1 className="addSpacing"><span>Personalise your experience</span></h1>
           <div className={ComponentStyles.buttonWrapper2}>
             <Button className={ComponentStyles.button} variant="outlined" color="primary"
               onClick={() => this.handleClick('capture')}>
-              {this.state.imgData ? "Retake" : "Tale a selfie"}
+              {this.state.imgData ? "Retake" : "Take a selfie"}
             </Button>
           </div>
         </div>
@@ -106,27 +116,27 @@ class TakeSelfie extends React.Component {
               }} />
             <img className={ComponentStyles.photoFrame} alt="frame" src="./imgs/photoFrame.svg" />
             <div className={ComponentStyles.countDown}>
-            <Countdown  autoStart={false}
-              date={this.state.now + 3000}
-              intervalDelay={1000}
-              precision={1000}
-              ref={r => this.countdowner = r}
-              renderer={props => <p className="countDownLabel">{this.state.captureNow ?
-                Math.round(props.total / 1000) : 'Ready?'}</p>}
-              onComplete={e => e ? this.takeSelfie() : null}
-            />
+              <Countdown autoStart={false}
+                date={Date.now() + 2400}
+                intervalDelay={1000}
+                precision={1000}
+                ref={r => this.countdowner = r}
+                renderer={props => <p className="countDownLabel">{this.state.captureNow ?
+                  (Math.floor(props.total / 1000) > 3 ? 3 : Math.floor(props.total / 1000)) : ''}</p>}
+                onComplete={e => e ? this.takeSelfie() : null}
+              />
             </div>
           </div>
         </div>
         <div style={this.state.pageThree}>
-          <h1 className="addSpacing"><span><br/><br/><br/>Happy with your look?</span></h1>
+          <h1 className="addSpacing"><span><br /><br /><br />Happy with your look?</span></h1>
           <div className={ComponentStyles.imgPreviewDiv}>
-          {imagePreview}
+            {imagePreview}
           </div>
           <div className={ComponentStyles.buttonWrapper2}>
             <Button className={ComponentStyles.button} variant="outlined" color="primary"
               onClick={() => this.handleClick('capture')}>
-              {this.state.imgData ? "Take again" : "Tale a selfie"}
+              {this.state.imgData ? "Take again" : "Take a selfie"}
             </Button>
           </div>
           <div className={classes.clickToContinue}>
