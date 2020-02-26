@@ -394,7 +394,6 @@ export default class User {
           pre + issue + '_' + -cat + '.1' + ext,
           pre + issue + '_' + -cat + '.2' + ext
         ];
-        console.log('actual-'+cat, images);
         themes = User.influencingThemes[issue][(cat > 0 ? 'high' : 'low')][User.oceanTraits[Math.abs(cat) - 1]];
         slogans = User.ifluencingSlogans[issue][(cat > 0 ? 'high' : 'low')][User.oceanTraits[Math.abs(cat) - 1]];
         slogans = slogans.concat(User.ifluencingSlogans[issue][(cat < 0 ? 'high' : 'low')][User.oceanTraits[Math.abs(cat) - 1]]);
