@@ -89,11 +89,9 @@ class SocialLogin extends React.Component {
   }
 
   onKeyPress(button) {
-    if(this.state.focus === ''){
-      this.setState({focus:'name'});
+    if (this.state.focus === '') {
+      this.setState({ focus: 'name' });
     }
-    console.log(button)
-
 
     if (button === '{shift}') {
       this.handleShift();
@@ -111,15 +109,15 @@ class SocialLogin extends React.Component {
       });
 
     } else if (button === '{space}') {
-      if(this.state.focus === 'email'){
+      if (this.state.focus === 'email') {
         //ignored
-      }else{
+      } else {
         const { focus } = this.state;
         const text = this.state[focus];
         this.setState({ [focus]: text.concat(' ') });
       }
 
-    }else if (!(button.startsWith('{') || button.endsWith('}'))) {
+    } else if (!(button.startsWith('{') || button.endsWith('}'))) {
       const { focus } = this.state;
       const text = this.state[focus];
 
@@ -188,8 +186,8 @@ class SocialLogin extends React.Component {
                 // DH: commenting the gift-pack bubble for now
               }
               <div className="box1 sb7" style={false && this.state.focus === 'email' ?
-                {visibility:'visible'}:{visibility:'hidden'}}>
-                Your email will be used to send <br/> you a SPECTRE gift pack!
+                { visibility: 'visible' } : { visibility: 'hidden' }}>
+                Your email will be used to send <br /> you a SPECTRE gift pack!
               </div>
               {/* #267: SHIFT / CAPS, etc. dont work */}
               <FormControl className={classes.margin}>
