@@ -160,9 +160,35 @@ margin-left: 65px;
 #page2-tos-content div *{
   font-size: 12px;
   line-height: 15px;
-
-
+  color: $black;
 }
+
+#page2-tos-content div{
+  padding-bottom: 15px;
+}
+
+#page2-tos-content p{
+  padding-left: 7px;
+  padding-bottom: 7px;
+}
+
+#page2-tos-content h1{
+}
+
+#page2-tos-content h2{
+  padding-left: 7px;
+  padding-bottom: 7px;
+  font-weight: bold;
+}
+
+#page2-tos-content h3{
+  padding-left: 7px;
+  padding-bottom: 0px;
+  font-weight: bold;
+}
+
+
+
 
 #page2-tos-content {
     overflow-y: scroll;
