@@ -72,7 +72,7 @@ class ProfileMaker {
             UserModel.findByIdAndUpdate(id,
               fieldsToUpdate, { new: true }, (err, u) => {
                 err && console.error('[ERROR] ProfileMaker.update: ', err, u);
-                console.log('[' + clfDate() + '] ::* UPDATE user('+id+').hasImage:', u.hasImage);
+                console.log('[' + clfDate() + '] ::* UPDATE user#'+id+'.hasImage:', u.hasImage);
               });
           });
       }
