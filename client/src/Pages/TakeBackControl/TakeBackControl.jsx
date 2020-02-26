@@ -6,13 +6,11 @@ import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
+
 import ComponentsStyles from '../../App.module.css';
-import colours from '../../colors.scss';
 import './TakeBackControl.scss';
 
-const styles = {
-
-};
+const styles = {};
 
 class TakeBackControl extends React.Component {
 
