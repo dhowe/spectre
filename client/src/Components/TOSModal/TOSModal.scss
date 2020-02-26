@@ -73,6 +73,22 @@ text-align: left;
   font-weight: 200;
   font-size: 34px;
 }
+#tos-modal-button-accept {
+  padding-left: 10px;
+  color: $white;
+  background-color: $blue;
+  font-weight: 200;
+  font-size: 34px;
+}
+
+#tos-modal-button-accept span{
+  color: $white;
+  font-size: 18px;
+}
+
+#tos-modal-button span{
+  font-size: 18px;
+}
 
 
 .tos-logo{

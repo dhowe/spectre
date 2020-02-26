@@ -83,9 +83,16 @@ function SimpleModal(props) {
           <div className="tos-buttons">
 
             <Link to="/">
+<<<<<<< Updated upstream
               <Button className={ComponentStyles.button} id="tos-modal-button">I do not accept</Button></Link>
             <Button className={ComponentStyles.button} onClick={props.onClose} id="tos-modal-button">I accept</Button>
             <div onClick={handleClick}><Link className='tos-link' to='#here'>link to long policy</Link></div>
+=======
+              <Button className={ComponentStyles.button} id="tos-modal-button">I do not accept</Button>
+            </Link>
+            <Button className={ComponentStyles.button} onClick={props.onClose} id="tos-modal-button-accept">I accept</Button>
+            <div onClick={handleClick}><Link className='tos-link' to='#here'>Read the full policy</Link></div>
+>>>>>>> Stashed changes
           </div>
         </div>
         <div style={showPage.pageTwo}>
