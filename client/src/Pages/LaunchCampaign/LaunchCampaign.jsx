@@ -41,7 +41,7 @@ class LaunchCampaign extends React.Component {
                     src={`/imgs/${adIssue}.svg`}
                     alt="launch campaign"
                   />
-                  <h2><span>{adIssue.toUpperCase()}</span></h2>
+                  <h2><span>{adIssue.charAt(0).toUpperCase() + adIssue.slice(1)}</span></h2>
                 </div>
               </div>
 
