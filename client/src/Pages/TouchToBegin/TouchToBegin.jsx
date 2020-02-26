@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import Logo from '../../Components/Logo/Logo';
 import UserSession from '../../Components/UserSession/UserSession';
 
-import BeginBackground from '../../Images/1_Standby_Screen_1080px_by_1620px.jpg';
+//import BeginBackground from '../../Images/1_Standby_Screen_1080px_by_1620px.jpg';
 import HeaderLogo from '../../Icons/headerlogo.svg';
 
 import './TouchToBegin.scss';
@@ -15,7 +15,7 @@ import ComponentsStyles from '../../App.module.css';
 const styles_portrait = {
   root: {
     width: '100%',
-    backgroundImage: `url(${BeginBackground})`,
+    //backgroundImage: `url(${BeginBackground})`,
     backgroundRepeat: 'no-repeat',
     backgroundPosition: '0 300px',
   },
