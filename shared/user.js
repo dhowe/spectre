@@ -323,8 +323,10 @@ export default class User {
       let flip = Math.random() < .5 ? 1 : 2;
       let mult = Math.random() < .5 ? 1 : -1;
       let cat = (Math.floor(Math.random() * ots.length) * mult);
-      let imgName = (pre + adIssue + '_' + cat + '.' + flip) + ext;
-      if (images.indexOf(imgName) < 0) images.push(imgName);
+      if (cat !== 0) {
+        let imgName = (pre + adIssue + '_' + cat + '.' + flip) + ext;
+        if (images.indexOf(imgName) < 0) images.push(imgName);
+      }
     }
     return images;
   }
