@@ -58,9 +58,11 @@ Button
     display: inline-flex;
     flex-direction: row-reverse;
     position: fixed;
-    left: 1366px;
+    right: 300px;
     top: 800px;
   }
+
+
 
   .iconButtonStyle1 svg {
     width: 86px;

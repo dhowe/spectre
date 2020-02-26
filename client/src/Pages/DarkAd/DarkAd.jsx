@@ -17,12 +17,12 @@ const styles = {
 
   button: {
     borderRadius: '28px',
-    margin: '30px',
-    border: 'solid 3px #929391',
+    margin: '20px',
+    border: 'solid 3px #21c0fc',
     backgroundColor: '#ffffff',
     boxShadow: 'none',
-    color: '#929391',
-    width: '280px',
+    color: '#21c0fc',
+    width: '320px',
     height: '54px',
     whiteSpace: 'nowrap',
     overflow: 'hidden',

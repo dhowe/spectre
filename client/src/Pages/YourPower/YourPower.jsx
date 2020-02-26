@@ -65,7 +65,7 @@ class YourPower extends React.Component {
           </Fade>
           <Fade in style={{ transitionDelay: '4000ms' }}>
             <div className={ComponentsStyles.buttonWrapper2} style={this.state.activateProfile ? { visibility: 'hidden' } : null}>
-              <Button className={ComponentsStyles.button} variant="contained" color="primary"
+              <Button className={ComponentsStyles.button} variant="outlined" color="primary"
                 onClick={() => this.handleActivateProfile()}>Activate OCEAN profile</Button>
             </div>
           </Fade>
