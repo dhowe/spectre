@@ -78,9 +78,7 @@ class DarkAd extends React.Component {
 
   async componentDidMount() {
     const user = await UserSession.ensure(this.context, ['adIssue', 'target']);
-    let images = user.target.influences[user.adIssue].images
-      // TODO: remove next line when US images are selected ()
-      .map(i => i.replace(/republican/,'leave').replace(/democrat/,'remain'));
+    let images = user.target.influences[user.adIssue].images;
     this.setState({
       images: images,
       issue: user.adIssue,
@@ -150,13 +148,13 @@ class DarkAd extends React.Component {
             </div>
           </div>
           <div style={this.state.pageTwo}>
-            <h1 className="noSpacing"><br />Your Targeted Facebook ad:</h1>
+            <h1 className="noSpacing"><br />Your Targeted  <img src='/imgs/facebook.png' style={{'marginTop': 10, position: 'relative', top:15}} alt="facebook"/> ad:</h1>
             <div className={classes.adPage2}>    { /* adIssue should never change after being selected '*/}
-              <img className={ComponentsStyles.adImage} src={this.state.image} alt="leave"></img>
+              <img className={ComponentsStyles.adImage} src={this.state.image} alt="republican"></img>
               <p style={this.state.slogan ? { backgroundColor: 'red' } : { backgroundColor: 'none' }}
                 className={ComponentsStyles.adTextPage2}>{this.state.slogan}
               </p>
-              {!this.state.defaultImg ? <img className={classes.campaignPage2} src={cimage} alt="leave"></img> : ''}
+              {!this.state.defaultImg ? <img className={classes.campaignPage2} src={cimage} alt="republican"></img> : ''}
             </div>
             <p> Share with <span>{target.name}</span></p>
           </div>

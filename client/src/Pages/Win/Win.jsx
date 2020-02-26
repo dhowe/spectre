@@ -41,7 +41,7 @@ class Win extends React.Component {
             <span>Believe in the {virtue} of Dataism!</span>
           </h2>
           <p className="normal-addSpacing">
-            You have sucessfully used computational propaganda<br/>to influence this election!</p>
+            You have successfully used computational propaganda<br/>to influence this election!</p>
           <p className="thankyou-icon">
             <Trophy />
           </p>
