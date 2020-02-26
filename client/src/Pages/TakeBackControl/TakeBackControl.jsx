@@ -7,16 +7,11 @@ import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 import ComponentsStyles from '../../App.module.css';
-
 import colours from '../../colors.scss';
 import './TakeBackControl.scss';
 
 const styles = {
-   highlightedButton:{
-     color: 'white',
-     borderColor: colours.blue,
-     width: '200px'
-   }
+
 };
 
 class TakeBackControl extends React.Component {

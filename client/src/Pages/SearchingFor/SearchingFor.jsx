@@ -6,7 +6,6 @@ import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 import { withStyles } from '@material-ui/core/styles';
-
 import ComponentsStyles from '../../App.module.css';
 import './SearchingFor.scss';
 
@@ -44,13 +43,13 @@ class SearchingFor extends React.Component {
           <h1 className="addSpacing"><span>{name}, </span>what are you<br />
             searching for today?</h1>
           <div className={ComponentsStyles.buttonWrapper}>
-            <Button className={ComponentsStyles.button} variant="contained" color="primary"
+            <Button className={ComponentsStyles.button} variant="outlined" color="primary"
               onClick={() => this.handleClick('power')}>Power</Button>
-            <Button className={ComponentsStyles.button} variant="contained" color="primary"
+            <Button className={ComponentsStyles.button} variant="outlined" color="primary"
               onClick={() => this.handleClick('truth')}>Truth</Button>
-            <Button className={ComponentsStyles.button} variant="contained" color="primary"
+            <Button className={ComponentsStyles.button} variant="outlined" color="primary"
               onClick={() => this.handleClick('influence')}>Influence</Button>
-            <Button className={ComponentsStyles.button} variant="contained" color="primary"
+            <Button className={ComponentsStyles.button} variant="outlined" color="primary"
               onClick={() => this.handleClick('wealth')}>Wealth</Button>
           </div>
         </div>

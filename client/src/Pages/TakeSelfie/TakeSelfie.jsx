@@ -26,7 +26,6 @@ class TakeSelfie extends React.Component {
       pageOne: { display: 'block' },
       pageTwo: { display: 'none' },
       pageThree: { display: 'none' },
-      keyNum: Math.random()
     };
     this.webcam = React.createRef();
     this.countdowner = React.createRef();
@@ -35,20 +34,24 @@ class TakeSelfie extends React.Component {
 
   handleClick = (c) => {
     this.clicked = c;
-    this.countdowner.start();
+
+
     if (c === 'capture') {
+
+      this.setState({ now: Math.floor(Date.now()/1000)*1000 })
+      console.log(this.state.now)
       this.setState({ captureNow: true })
       this.setState({ pageOne: { display: 'none' }, pageTwo: { display: 'block' }, pageThree: { display: 'none' } })
+    this.countdowner.start();
     };
-    this.setState({ keyNum: Math.random() });
   }
 
   takeSelfie = () => {
-    let now = Date.now();
+  //  let now = Date.now();
     try {
       console.log('[WEBCAM] Taking selfie...');
       const data = this.webcam.getScreenshot();
-      this.setState({ now: now, captureNow: false, imgData: data })
+      this.setState({captureNow: false, imgData: data })
       this.setState({ pageOne: { display: 'none' }, pageTwo: { display: 'none' }, pageThree: { display: 'block' } })
     }
     catch (e) {
@@ -116,8 +119,9 @@ class TakeSelfie extends React.Component {
               }} />
             <img className={ComponentStyles.photoFrame} alt="frame" src="./imgs/photoFrame.svg" />
             <div className={ComponentStyles.countDown}>
-              <Countdown autoStart={false}
-                date={Date.now() + 2400}
+              <Countdown
+              autoStart={false}
+                date={this.state.now + 2600}
                 intervalDelay={1000}
                 precision={1000}
                 ref={r => this.countdowner = r}
