@@ -178,9 +178,13 @@ strong {
   color: $blue;
 }
 
-span {
+span:not(.MuiButton-label) {
   color: $blue;
   font-weight: normal;
+}
+.MuiButton-containedPrimary {
+  color: #ffffff !important;
+  border-color:$blue !important;
 }
 .circle-section{
   margin-top: 20px;

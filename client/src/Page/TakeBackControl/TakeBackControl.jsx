@@ -11,11 +11,15 @@ import UserSession from '../../Components/UserSession/UserSession';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 import ComponentsStyles from '../../App.module.css';
 
-//import colours from '../../colors.scss';
+import colours from '../../colors.scss';
 import './TakeBackControl.scss';
 
 const styles = {
-
+   highlightedButton:{
+     color: 'white',
+     borderColor: colours.blue,
+     width: '200px'
+   }
 };
 
 class TakeBackControl extends React.Component {
@@ -42,11 +46,11 @@ class TakeBackControl extends React.Component {
         <IdleChecker />
         <div className={`${classes.content} content`}>
           <h1 className="addSpacing"><span>Take back control</span></h1>
-          <p className="normal-addSpacing">Delete your data from Spectre’s system?</p>
+          <h2 className="normal-addSpacing">Delete your data from Spectre’s system?</h2>
           <div className={ComponentsStyles.buttonWrapper}>
-              <Button className={ComponentsStyles.button} variant="contained" color="primary" onClick={() => this.handleClick(true)}>Keep</Button>
-              <Button className={ComponentsStyles.button} variant="contained" color="primary" onClick={() => this.handleClick(false)}>Delete</Button>
-          </div>
+              <Button  variant="outlined" color="secondary" onClick={() => this.handleClick(false)}>Delete</Button>
+              <Button  variant="contained" color="primary" onClick={() => this.handleClick(true)}>Keep</Button>
+            </div>
         </div>
         <FooterLogo />
       </div>

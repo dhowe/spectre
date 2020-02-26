@@ -191,8 +191,8 @@ function sketch(p) {
     p.noStroke();
     p.image(love, p.width / 2, 56);
     p.image(hate, p.width / 2, p.height - 56);
-    p.image(loveArrow, p.width / 2, 240);
-    p.image(hateArrow, p.width / 2, p.height - 240);
+    p.image(loveArrow, p.width / 2 - 1, 240);
+    p.image(hateArrow, p.width / 2 - 1, p.height - 240);
 
   }
 };

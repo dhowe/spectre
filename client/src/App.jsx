@@ -56,14 +56,19 @@ import Keyboardist from 'react-keyboardist';
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
-import blue from '@material-ui/core/colors/blue';
 import './App.scss';
+import colors from './colors.scss';
 
 const theme = createMuiTheme({
   // silence deprecation warns
   useNextVariants: true,
   palette: {
-    primary: blue,
+    primary: {
+      main: colors.blue
+    },
+    secondary: {
+      main: colors.grey
+    }
   },
   status: {
     danger: 'orange',

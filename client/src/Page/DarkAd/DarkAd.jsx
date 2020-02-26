@@ -135,7 +135,7 @@ class DarkAd extends React.Component {
                     <Button
                       key={i}
                       className={classes.button}
-                      variant="contained"
+                      variant="outlined"
                       color="primary"
                       onClick={() => {
                         let state = { slogan: slogan };
