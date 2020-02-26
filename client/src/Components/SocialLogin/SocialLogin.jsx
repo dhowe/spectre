@@ -184,7 +184,13 @@ class SocialLogin extends React.Component {
         <div className={`${classes.content} socialLogin-content`}>
           <form noValidate>
             <div style={this.state.pageOne}>
-              <div className="box1 sb7" style={this.state.focus === 'email' ? {visibility:'visible'}:{visibility:'hidden'}}>Your email address will be used<br />to send you SPECTRE gift pack to.</div>
+              {
+                // DH: commenting the gift-pack bubble for now
+              }
+              <div className="box1 sb7" style={false && this.state.focus === 'email' ?
+                {visibility:'visible'}:{visibility:'hidden'}}>
+                Your email will be used to send <br/> you a SPECTRE gift pack!
+              </div>
               {/* #267: SHIFT / CAPS, etc. dont work */}
               <FormControl className={classes.margin}>
                 <Input
