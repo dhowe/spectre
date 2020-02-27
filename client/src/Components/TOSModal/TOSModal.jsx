@@ -82,7 +82,7 @@ function SimpleModal(props) {
             <Link to="/">
               <Button className={ComponentStyles.button} id="tos-modal-button">I do not accept</Button>
             </Link>
-            <Button className={ComponentStyles.button} onClick={props.onClose} id="tos-modal-button">I accept</Button>
+            <Button className={ComponentStyles.button} onClick={props.onClose} id="tos-modal-button-accept">I accept</Button>
             <div onClick={handleClick}><Link className='tos-link' to='#here'>Read the full policy</Link></div>
           </div>
         </div>

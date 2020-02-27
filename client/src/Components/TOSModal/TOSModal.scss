@@ -67,6 +67,22 @@
   font-weight: 200;
   font-size: 34px;
 }
+#tos-modal-button-accept {
+  padding-left: 10px;
+  color: $white;
+  background-color: $blue;
+  font-weight: 200;
+  font-size: 34px;
+}
+
+#tos-modal-button-accept span{
+  color: $white;
+  font-size: 18px;
+}
+
+#tos-modal-button span{
+  font-size: 18px;
+}
 
 
 .tos-logo{
@@ -138,7 +154,37 @@ margin-left: 65px;
 #page2-tos-content div *{
   font-size: 12px;
   line-height: 15px;
+  color: $black;
 }
+
+#page2-tos-content div{
+  padding-bottom: 15px;
+}
+
+#page2-tos-content p{
+  padding-left: 7px;
+  padding-bottom: 7px;
+}
+
+#page2-tos-content h1{
+    padding-top: 14px;
+      font-size: 14px;
+}
+
+#page2-tos-content h2{
+  padding-left: 7px;
+  padding-top: 14px;
+  font-weight: bold;
+}
+
+#page2-tos-content h3{
+  padding-left: 7px;
+  padding-bottom: 0px;
+  font-weight: bold;
+}
+
+
+
 
 #page2-tos-content {
     overflow-y: scroll;
