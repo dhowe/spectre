@@ -24,8 +24,7 @@ class SpectreHeader extends React.Component {
   }
 
   componentDidMount() { // tmp for testing webcam
-
-    if (/(data-is|personalised|game)$/.test(window.location.pathname)) {
+    if (/(data-is|personalised)$/.test(window.location.pathname)) {
       if (this.context && this.context._id && this.context.updatedAt) {
         this.setState({
           name: '',
@@ -44,14 +43,14 @@ class SpectreHeader extends React.Component {
 
     // tmp for testing webcam
     const avatar = image ? <AvatarComponent target={this.state} /> : '';
-
+    const divider = this.props.noDivider ? '' : <Divider light />;
     return this.props.colour === "white" ?
       (
         <div className="SpectreHeader SpectreHeader-white">
           {avatar}
           <img height="150" alt='header' className='logo-img' src={HeaderLogoColour} />
           <Progress active={this.props.progressActive} progressNumber={this.props.progressNumber} />
-          <Divider light />
+          {divider}
         </div>
       ) : (
         <div className="SpectreHeader">

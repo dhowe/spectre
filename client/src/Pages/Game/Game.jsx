@@ -14,7 +14,7 @@ const styles = {
   // configurable parameters
   allowedTimeMs: 35000,
   sketchStrokeWeight: 2,
-  sketchStrokeMinWeight: 2,
+  sketchStrokeMinWeight: .2,
 
   // can grab css from sass
   sketchBg: '#FFFFFF',
@@ -35,9 +35,12 @@ let percent, totalDist, colors = {}, logos = {};
 
 function sketch(p) {
 
-  let done, brandSize, start, fps, numLines = 12, showFps = false,
-    linesY = [], instruct, instructions = true,
-    love, hate, loveArrow, hateArrow;
+  let numLines = 9;
+  let lineOffset = -50;
+  let showFps = false;
+  let instructions = true;
+  let done, brandSize, start, fps, linesY = [];
+  let love, hate, loveArrow, hateArrow, instruct;
 
   p.preload = () => {
     instruct = p.loadImage('/imgs/game_instruct.png');
@@ -49,11 +52,11 @@ function sketch(p) {
       const img = name.replace(/ /g, '_') + '.svg';
       logos[name] = p.loadImage(UserSession.imageDir + img);
     });
-    // TODO: load font
   }
 
   p.setup = () => {
     p.createCanvas(1920, 780); // 1080, 900 for portrait
+
     colors.sketchBg = p.color(styles.sketchBg);
     colors.sketchText = p.color(styles.sketchText);
     colors.sketchStroke = p.color(styles.sketchStroke);
@@ -65,10 +68,16 @@ function sketch(p) {
 
     UserSession.shuffle(Brand.names);
 
+    let lineGap = p.height / numLines;
+    for (let i = 0; i < numLines; i++) {
+      linesY.push((lineGap * (i+1)) + lineOffset);
+    }
+
     Brand.instances = [];
     for (let i = 0; i < Brand.names.length; i++) {
       let bx = -i * (p.width / 6) + p.width / 3;
-      Brand.instances.push(new Brand(p, bx, p.height / 2, brandSize, Brand.names[i]));
+      Brand.instances.push(new Brand
+        (p, bx, linesY[(numLines-1)/2], brandSize, Brand.names[i]));
     }
     totalDist = p.width - Brand.instances[Brand.instances.length - 1].x;
     start = p.millis();
@@ -79,13 +88,14 @@ function sketch(p) {
     p.background(colors.sketchBg);
     p.stroke(colors.sketchStroke);
 
-    let lineGap = p.height / numLines;
-    for (let i = 1; i < numLines -1; i++) {
-      p.strokeWeight( i % 2 === 0 ? styles.sketchStrokeWeight : 0);
-      let ypos = lineGap * i ;
+    for (let i = 0; i < linesY.length; i++) {
+      p.strokeWeight( i % 2 === 0 ? .5 : 0);
+      p.stroke(colors.sketchStrokeSel);
+      let ypos = linesY[i];
+      //p.text(i, p.width/2, ypos); // line nums
       p.line(0, ypos, p.width, ypos);
-      if (p.frameCount === 1) linesY.push(ypos);
     }
+    if (p.frameCount === 2)console.log(linesY);
 
     drawInfo(p, love, hate , loveArrow, hateArrow);
 
@@ -152,7 +162,8 @@ function sketch(p) {
           lineIdx = i;
         }
       }
-      Brand.active.rating = p.map(lineIdx, 0, numLines, 8, -8) / 10;
+      Brand.active.rating = p.map(lineIdx, 0, numLines-1, 8, -8) / 10; // -8 to 8
+//console.log('ON: '+lineIdx, Brand.active.rating);
       Brand.active.snapTo(linesY[lineIdx]);
       Brand.active = false;
     }
@@ -186,14 +197,12 @@ function sketch(p) {
   }
 
   function drawInfo(p,love, hate, loveArrow, hateArrow) {
-
     p.textSize(40);
     p.noStroke();
-    p.image(love, p.width / 2, 56);
+    p.image(love, p.width / 2, 42);
+    p.image(loveArrow, p.width / 2 - 1, 224);
     p.image(hate, p.width / 2, p.height - 56);
-    p.image(loveArrow, p.width / 2 - 1, 240);
     p.image(hateArrow, p.width / 2 - 1, p.height - 240);
-
   }
 };
 
@@ -210,21 +219,17 @@ class Brand {
     this.rating = 0;
     this.item = item;
     this.logo = logos[item];
-    this.strokeWeight = colors.sketchStrokeMinWeight;
   }
   draw() {
     if (this.x > -this.sz) this.render();
   }
   update() {
-
     this.x = this.ix + (percent * totalDist);
     if (this.sy !== this.ty) {
       let ft = this.bounceOut(this.t);
       this.y = this.p.map(ft, 0, 1, this.sy, this.ty);
       this.t += 0.1;
-      if (this.t > 1) {
-        this.sy = this.ty;
-      }
+      if (this.t > 1) this.sy = this.ty;
     }
   }
   snapTo(my) { // easing
@@ -236,7 +241,7 @@ class Brand {
     let p = this.p;
     p.fill(colors.sketchBg);
     p.stroke(this === Brand.active ? colors.sketchStrokeSel : colors.sketchStroke);
-    p.strokeWeight(this === Brand.active ? styles.sketchStrokeWeight : styles.sketchStrokeMinWeight);
+    p.strokeWeight(this === Brand.active ? styles.sketchStrokeWeight : styles.sketchStrokeWeight); // same
     p.ellipse(this.x, this.y, this.sz);
     p.image(this.logo, this.x, this.y, this.sz * .8, this.sz * .8);
     if (false) {
@@ -299,7 +304,7 @@ class Game extends React.Component {
   render() {
     return (
       <div className={this.props.classes.root} id='clickMe'>
-        <SpectreHeader colour="white" />
+        <SpectreHeader colour="white" noDivider/>
         <P5Wrapper sketch={sketch} className="wrapper" />
         <IdleChecker />
         <FooterLogo />
