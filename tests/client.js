@@ -198,10 +198,10 @@ describe('Client User', function() {
       User.computeInfluencesFor(user.target, issues);
 
       expect(user.target.influences[user.adIssue].images).to.have.members([
-        'imgs/republican_1.1.png',
-        'imgs/republican_1.2.png',
-        'imgs/republican_-1.1.png',
-        'imgs/republican_-1.2.png'
+        'imgs/republican_1.1.jpg',
+        'imgs/republican_1.2.jpg',
+        'imgs/republican_-1.1.jpg',
+        'imgs/republican_-1.2.jpg'
       ]);
 
       user = new User({
@@ -221,10 +221,10 @@ describe('Client User', function() {
       User.computeInfluencesFor(user.target, issues);
 
       expect(user.target.influences[user.adIssue].images).to.have.members([
-        'imgs/republican_4.1.png',
-        'imgs/republican_4.2.png',
-        'imgs/republican_-4.1.png',
-        'imgs/republican_-4.2.png'
+        'imgs/republican_4.1.jpg',
+        'imgs/republican_4.2.jpg',
+        'imgs/republican_-4.1.jpg',
+        'imgs/republican_-4.2.jpg'
       ]);
 
       user = new User({
@@ -266,10 +266,10 @@ describe('Client User', function() {
       User.computeInfluencesFor(user.target, issues);
 
       expect(user.target.influences[user.adIssue].images).to.have.members([
-        'imgs/democrat_5.1.png',
-        'imgs/democrat_5.2.png',
-        'imgs/democrat_-5.1.png',
-        'imgs/democrat_-5.2.png'
+        'imgs/democrat_5.1.jpg',
+        'imgs/democrat_5.2.jpg',
+        'imgs/democrat_-5.1.jpg',
+        'imgs/democrat_-5.2.jpg'
       ]);
     });
 

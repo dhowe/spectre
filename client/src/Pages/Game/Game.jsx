@@ -49,7 +49,6 @@ function sketch(p) {
       const img = name.replace(/ /g, '_') + '.png';
       logos[name] = p.loadImage(UserSession.imageDir + img);
     });
-    // TODO: load font
   }
 
   p.setup = () => {

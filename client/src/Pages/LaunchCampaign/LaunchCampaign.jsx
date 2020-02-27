@@ -30,7 +30,7 @@ class LaunchCampaign extends React.Component {
         <SpectreHeader colour="white" />
         <IdleChecker />
         <div className={`${classes.content} content`}>
-          <h1 className="addSpacing"><span>Launch the campaign!</span></h1>
+          <h1 className="addSpacing"><span>Launch the campaign</span></h1>
           <h2>{header}</h2>
           <div className="link">
             <Link to="/campaign-results">
