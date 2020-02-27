@@ -46,9 +46,10 @@ function sketch(p) {
     love = p.loadImage('/imgs/love.svg');
     hate = p.loadImage('/imgs/hate.svg');
     Brand.names.forEach((name) => {
-      const img = name.replace(/ /g, '_') + '.png';
+      const img = name.replace(/ /g, '_') + '.svg';
       logos[name] = p.loadImage(UserSession.imageDir + img);
     });
+    // TODO: load font
   }
 
   p.setup = () => {
@@ -268,11 +269,11 @@ class Brand {
 
 Brand.active = false;
 Brand.speed = styles.sketchSpeed;
-Brand.sheffield = ['disney', 'converse', 'xbox', 'red bull', 'hello kitty', 'h&m', 'ben & jerrys', 'old spice', 'adidas', 'marvel', 'nike', 'zara', 'vans', 'starbucks', 'lacoste', 'sony', 'new look', 'rayban', 'asos', 'chanel'];
-Brand.names = ['cocacola', 'disney', 'converse', 'xbox', 'red bull', 'hello kitty', 'ben & jerrys', 'old spice', 'burberry', 'adidas', 'marvel', 'nike', 'zara', 'vans', 'starbucks', 'lacoste', 'gap', 'sony', 'calvin klein', 'rayban', 'swarovski', 'chanel', 'lego'];
+Brand.sheffield = ['disney', 'converse', 'xbox', 'red bull', 'hello kitty', 'h&m', 'ben & jerrys', 'old spice', 'adidas', 'marvel', 'nike', 'vans', 'starbucks', 'lacoste', 'sony', 'new look', 'asos', 'chanel'];
+Brand.names = ['cocacola', 'disney', 'converse', 'xbox', 'red bull', 'hello kitty', 'ben & jerrys', 'old spice', 'burberry', 'adidas', 'marvel', 'nike', 'vans', 'starbucks', 'lacoste', 'gap', 'sony', 'calvin klein', 'swarovski', 'chanel', 'lego'];
 Brand.drawAll = () => { Brand.instances.forEach(b => b.draw()) };
 Brand.updateAll = () => { Brand.instances.forEach(b => b.update()) };
-Brand.all = ['cocacola', 'disney', 'converse', 'playstation', 'xbox', 'red bull', 'hello kitty', 'pepsi', 'h&m', 'ben & jerrys', 'old spice', 'burberry', 'adidas', 'marvel', 'nike', 'zara', 'vans', 'starbucks', 'topshop', 'lacoste', 'gap', 'sony', 'new look', 'calvin klein', 'rayban', 'next', 'swarovski', 'tommy hilfiger', 'asos', 'marks and spencer', 'vivienne westwood', 'chanel', 'nintendo64', 'lego'];
+Brand.all = ['cocacola', 'disney', 'converse', 'playstation', 'xbox', 'red bull', 'hello kitty', 'pepsi', 'h&m', 'ben & jerrys', 'old spice', 'burberry', 'adidas', 'marvel', 'nike', 'vans', 'starbucks', 'topshop', 'lacoste', 'gap', 'sony', 'new look', 'calvin klein', 'next', 'swarovski', 'tommy hilfiger', 'asos', 'marks and spencer', 'vivienne westwood', 'chanel', 'nintendo64', 'lego'];
 
 ///////////////////// End p5.js sketch ////////////////////////////
 
