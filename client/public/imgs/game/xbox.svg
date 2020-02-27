@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="100px" height="100px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
+<rect x="-0.004" y="-0.342" transform="matrix(-1 -0.0031 0.0031 -1 99.8407 99.7566)" width="100.001" height="100.288"/>
+<defs>
+	<filter id="Adobe_OpacityMaskFilter" filterUnits="userSpaceOnUse" x="26.379" y="20.024" width="47.416" height="42.624">
+		<feColorMatrix  type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0"/>
+	</filter>
+</defs>
+<mask maskUnits="userSpaceOnUse" x="26.379" y="20.024" width="47.416" height="42.624" id="SVGID_1_">
+	<g filter="url(#Adobe_OpacityMaskFilter)">
+		<polygon fill="#FFFFFF" points="29.035,25.563 77.828,66.084 103.085,38.572 43.879,4.458 		"/>
+	</g>
+</mask>
+<radialGradient id="SVGID_2_" cx="783.5039" cy="43.4761" r="25.3113" gradientTransform="matrix(0.8419 0.0026 -0.0029 0.9644 -609.417 -2.6089)" gradientUnits="userSpaceOnUse">
+	<stop  offset="0" style="stop-color:#FFFFFF"/>
+	<stop  offset="0.1458" style="stop-color:#CCCCCC"/>
+	<stop  offset="0.3693" style="stop-color:#858585"/>
+	<stop  offset="0.5704" style="stop-color:#4C4C4C"/>
+	<stop  offset="0.7415" style="stop-color:#222222"/>
+	<stop  offset="0.876" style="stop-color:#090909"/>
+	<stop  offset="0.9572" style="stop-color:#000000"/>
+</radialGradient>
+<path mask="url(#SVGID_1_)" fill="url(#SVGID_2_)" d="M73.795,41.408c-0.035,11.769-10.68,21.279-23.773,21.239
+	c-13.094-0.04-23.678-9.615-23.643-21.384c0.036-11.771,10.679-21.279,23.773-21.239C63.245,20.064,73.831,29.637,73.795,41.408z"/>
+<polygon fill="#75BB1D" points="81.312,66.685 78.287,66.676 73.46,70.562 68.663,66.646 65.64,66.637 71.943,71.831 65.608,76.985 
+	68.632,76.994 73.452,73.109 78.256,77.024 81.281,77.033 74.976,71.84 "/>
+<polygon fill="#75BB1D" points="33.733,66.539 30.709,66.53 25.883,70.416 21.086,66.501 18.061,66.491 24.366,71.686 18.03,76.84 
+	21.055,76.85 25.875,72.964 30.678,76.879 33.702,76.888 27.397,71.694 "/>
+<path fill="#75BB1D" d="M52.478,76.902v0.043h0.032l10.117,0.031h0.064c1.138-1.379,1.832-3.225,1.839-5.258
+	c0.006-1.944-0.837-3.839-1.846-5.091L52.58,66.597c-1.015,1.246-1.864,3.135-1.87,5.079C50.705,73.683,51.376,75.521,52.478,76.902
+	z M61.74,68.169c0.602,1.085,1.01,2.295,1.006,3.634c-0.004,1.224-0.36,2.375-0.923,3.389l-8.426-0.025
+	c-0.557-1.018-0.907-2.171-0.904-3.395c0.005-1.339,0.42-2.547,1.028-3.628L61.74,68.169z"/>
+<path fill="#75BB1D" d="M36.887,66.549h-0.064c-0.95,1.156-1.591,2.634-1.776,4.28l-1.944-0.018l-0.012,1.775l1.944,0.019
+	c0.181,1.656,0.923,3.216,1.796,4.292l9.989,0.03c0.872-1.07,1.629-2.626,1.821-4.28l-0.764-0.537l0.009-0.732l0.754-0.507
+	c-0.181-1.648-0.814-3.13-1.75-4.292h-0.071L36.887,66.549z M37.692,75.202c-0.422-0.794-0.742-1.657-0.861-2.583l10.015,0.03
+	c-0.131,0.926-0.449,1.787-0.876,2.578L37.692,75.202z M36.836,70.829c0.125-0.89,0.436-1.73,0.863-2.495l8.239,0.024
+	c0.422,0.769,0.729,1.611,0.849,2.501L36.836,70.829z"/>
+<g>
+	<defs>
+		<path id="SVGID_3_" d="M70.26,23.843C59.057,31.473,50,33.755,50,33.755l-0.016,5.169c0,0,12.073-6.756,17.246-11.756
+			C69.05,25.404,70.774,23.491,70.26,23.843z"/>
+	</defs>
+	<clipPath id="SVGID_4_">
+		<use xlink:href="#SVGID_3_"  overflow="visible"/>
+	</clipPath>
+	
+		<radialGradient id="SVGID_5_" cx="66.957" cy="0.394" r="11.4627" gradientTransform="matrix(1.41 0.0043 -0.0045 1.4875 -24.3184 22.9297)" gradientUnits="userSpaceOnUse">
+		<stop  offset="0" style="stop-color:#276438"/>
+		<stop  offset="0.99" style="stop-color:#1D1616"/>
+	</radialGradient>
+	<polygon clip-path="url(#SVGID_4_)" fill="url(#SVGID_5_)" points="90.224,35.213 49.888,35.089 49.958,12.394 90.293,12.518 	"/>
+</g>
+<g>
+	<defs>
+		<path id="SVGID_6_" d="M44.065,40.567l-0.025,8.134c0,0-19.763,14.719-15.55,11.216C32.702,56.422,44.065,40.567,44.065,40.567z"
+			/>
+	</defs>
+	<clipPath id="SVGID_7_">
+		<use xlink:href="#SVGID_6_"  overflow="visible"/>
+	</clipPath>
+</g>
+<g>
+	<defs>
+		<path id="SVGID_8_" d="M29.799,23.719C40.957,31.417,50,33.755,50,33.755l-0.016,5.169c0,0-12.031-6.83-17.174-11.861
+			C31,25.288,29.294,23.364,29.799,23.719z"/>
+	</defs>
+	<clipPath id="SVGID_9_">
+		<use xlink:href="#SVGID_8_"  overflow="visible"/>
+	</clipPath>
+	
+		<radialGradient id="SVGID_10_" cx="30.7104" cy="19.251" r="16.872" gradientTransform="matrix(1.0538 0.0032 -0.0034 1.1006 -2.8223 2.4512)" gradientUnits="userSpaceOnUse">
+		<stop  offset="0" style="stop-color:#527A53"/>
+		<stop  offset="0.99" style="stop-color:#140B0D"/>
+	</radialGradient>
+	<polygon clip-path="url(#SVGID_9_)" fill="url(#SVGID_10_)" points="49.984,38.924 8.874,38.799 8.966,8.55 50.077,8.676 	"/>
+</g>
+<path fill="none" d="M44.071,38.542l-0.031,10.16c0,0,5.543-4.493,5.93-5.094c-0.025-0.039-0.025-0.063,0-0.063l0.026-8.5
+	c0,0-5.475-1.12-17.896-8.547C32.1,26.497,41.307,36.191,44.071,38.542z"/>
+<g>
+	<defs>
+		<path id="SVGID_11_" d="M44.071,38.542l-0.031,10.16c0,0,5.543-4.493,5.93-5.094c-0.025-0.039-0.025-0.063,0-0.063l0.026-8.5
+			c0,0-5.475-1.12-17.896-8.547C32.1,26.497,41.307,36.191,44.071,38.542z"/>
+	</defs>
+	<clipPath id="SVGID_12_">
+		<use xlink:href="#SVGID_11_"  overflow="visible"/>
+	</clipPath>
+	
+		<radialGradient id="SVGID_13_" cx="71.0234" cy="-16.8076" r="8.4292" gradientTransform="matrix(2.3431 0.0072 -0.0048 1.5709 -116.5723 60.125)" gradientUnits="userSpaceOnUse">
+		<stop  offset="0" style="stop-color:#48B92D"/>
+		<stop  offset="0.4064" style="stop-color:#84C720"/>
+		<stop  offset="0.99" style="stop-color:#CCE002"/>
+	</radialGradient>
+	<polygon clip-path="url(#SVGID_12_)" fill="url(#SVGID_13_)" points="67.679,48.717 32.079,48.608 32.167,19.746 67.767,19.855 	
+		"/>
+</g>
+<g>
+	<defs>
+		<path id="SVGID_14_" d="M44.071,38.542c0,0-13.608,19.784-20.762,24.875l4.627-2.758l16.116-16.024L44.071,38.542z"/>
+	</defs>
+	<clipPath id="SVGID_15_">
+		<use xlink:href="#SVGID_14_"  overflow="visible"/>
+	</clipPath>
+	
+		<radialGradient id="SVGID_16_" cx="23.2158" cy="70.7773" r="23.5667" gradientTransform="matrix(1.0432 0.0032 -0.0028 0.9269 -0.7715 -2.4438)" gradientUnits="userSpaceOnUse">
+		<stop  offset="0" style="stop-color:#618A5D"/>
+		<stop  offset="0.99" style="stop-color:#555C55"/>
+	</radialGradient>
+	<polygon clip-path="url(#SVGID_15_)" fill="url(#SVGID_16_)" points="43.91,88.09 2.43,87.963 2.582,38.377 44.062,38.504 	"/>
+</g>
+<g>
+	<defs>
+		<path id="SVGID_17_" d="M44.065,40.567l-0.025,8.134c0,0-19.763,14.719-15.55,11.216C32.702,56.422,44.065,40.567,44.065,40.567z"
+			/>
+	</defs>
+	<clipPath id="SVGID_18_">
+		<use xlink:href="#SVGID_17_"  overflow="visible"/>
+	</clipPath>
+	
+		<radialGradient id="SVGID_19_" cx="35.2295" cy="4.0518" r="7.474" gradientTransform="matrix(2.2511 0.0069 -0.0079 2.5885 -35.1855 29.8086)" gradientUnits="userSpaceOnUse">
+		<stop  offset="0.0963" style="stop-color:#295B04"/>
+		<stop  offset="0.6043" style="stop-color:#86C61A"/>
+		<stop  offset="0.99" style="stop-color:#B0D71A"/>
+	</radialGradient>
+	<polygon clip-path="url(#SVGID_18_)" fill="url(#SVGID_19_)" points="60.268,60.58 27.784,60.481 27.906,20.496 60.391,20.595 	"/>
+</g>
+<g>
+	<defs>
+		<path id="SVGID_20_" d="M55.898,38.578c0,0,13.487,19.867,20.61,25.001l-4.61-2.785L55.88,44.671L55.898,38.578z"/>
+	</defs>
+	<clipPath id="SVGID_21_">
+		<use xlink:href="#SVGID_20_"  overflow="visible"/>
+	</clipPath>
+	
+		<radialGradient id="SVGID_22_" cx="74.5146" cy="62.5039" r="22.1732" gradientTransform="matrix(0.969 0.003 -0.0031 1 3.1548 -0.1436)" gradientUnits="userSpaceOnUse">
+		<stop  offset="0" style="stop-color:#3B7345"/>
+		<stop  offset="0.98" style="stop-color:#000001"/>
+	</radialGradient>
+	<polygon clip-path="url(#SVGID_21_)" fill="url(#SVGID_22_)" points="94.45,86.812 55.738,86.694 55.886,38.35 94.599,38.468 	"/>
+</g>
+<g>
+	<defs>
+		<path id="SVGID_23_" d="M55.87,40.604l-0.025,8.134c0,0,19.672,14.839,15.481,11.311C67.135,56.527,55.87,40.604,55.87,40.604z"/>
+	</defs>
+	<clipPath id="SVGID_24_">
+		<use xlink:href="#SVGID_23_"  overflow="visible"/>
+	</clipPath>
+	
+		<radialGradient id="SVGID_25_" cx="15.8838" cy="4.0513" r="7.4738" gradientTransform="matrix(-2.2511 -0.0069 -0.0079 2.5885 91.6367 30.1953)" gradientUnits="userSpaceOnUse">
+		<stop  offset="0.0963" style="stop-color:#295B04"/>
+		<stop  offset="0.6043" style="stop-color:#86C61A"/>
+		<stop  offset="0.99" style="stop-color:#B0D71A"/>
+	</radialGradient>
+	<polygon clip-path="url(#SVGID_24_)" fill="url(#SVGID_25_)" points="39.544,60.517 72.028,60.616 72.15,20.631 39.666,20.532 	"/>
+</g>
+<path fill="none" d="M55.898,38.578l-0.031,10.16c0,0-5.515-4.527-5.897-5.13c0.025-0.039,0.025-0.063,0-0.063l0.026-8.5
+	c0,0,5.48-1.086,17.945-8.438C67.941,26.606,58.677,36.244,55.898,38.578z"/>
+<path fill="none" d="M55.898,38.578l-0.031,10.16c0,0-5.515-4.527-5.897-5.13c0.025-0.039,0.025-0.063,0-0.063l0.026-8.5
+	c0,0,5.48-1.086,17.945-8.438C67.941,26.606,58.677,36.244,55.898,38.578z"/>
+<g>
+	<defs>
+		<path id="SVGID_26_" d="M55.898,38.578l-0.031,10.16c0,0-5.515-4.527-5.897-5.13c0.025-0.039,0.025-0.063,0-0.063l0.026-8.5
+			c0,0,5.48-1.086,17.945-8.438C67.941,26.606,58.677,36.244,55.898,38.578z"/>
+	</defs>
+	<clipPath id="SVGID_27_">
+		<use xlink:href="#SVGID_26_"  overflow="visible"/>
+	</clipPath>
+	
+		<radialGradient id="SVGID_28_" cx="41.5625" cy="33.6177" r="17.8462" gradientTransform="matrix(1.7118 -0.4462 0.267 1.0242 -30.0723 18.8198)" gradientUnits="userSpaceOnUse">
+		<stop  offset="0.0374" style="stop-color:#22680F"/>
+		<stop  offset="0.1551" style="stop-color:#4B9B22"/>
+		<stop  offset="0.2995" style="stop-color:#7EB51B"/>
+		<stop  offset="0.5455" style="stop-color:#BBDC05"/>
+	</radialGradient>
+	<polygon clip-path="url(#SVGID_27_)" fill="url(#SVGID_28_)" points="87.374,42.816 21.43,60.004 12.724,26.6 78.669,9.413 	"/>
+</g>
+<path fill="none" d="M55.898,38.578l-0.031,10.16c0,0-5.515-4.527-5.897-5.13c0.025-0.039,0.025-0.063,0-0.063l0.026-8.5
+	c0,0,5.48-1.086,17.945-8.438C67.941,26.606,58.677,36.244,55.898,38.578z"/>
+</svg>
