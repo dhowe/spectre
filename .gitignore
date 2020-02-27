@@ -1,4 +1,5 @@
 **/node_modules
+tmp.html
 build
 auto_generated*
 spectre.log

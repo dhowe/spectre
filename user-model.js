@@ -47,12 +47,17 @@ UserSchema.statics.findByDate = function(date1, date2, callback) { // cb=functio
   }, callback);
 }
 
-// find mix of recents and similars
+// find mix of recents and similars via OCEAN
 UserSchema.statics.findTargets = function(user, limit, callback) { // cb=function(err,users)
   aSync.parallel([
     (cb) => UserModel.findByRecent(user._id, Math.floor(limit / 2), cb),
-    (cb) => UserModel.findByOcean(user, Math.ceil(limit / 2), cb)],
-    (e, results) => callback(e, results[0].concat(results[1])));
+    (cb) => UserModel.findByOcean(user, limit, cb)],
+    (e, res) => {
+      // union of our two result arrays (no-dups) with max size of limit
+      let recentIds = res[0].map(t => t._id.toString());
+      let similars = res[1].filter(s => !recentIds.includes(s._id.toString()));
+      callback(e, res[0].concat(similars).splice(0, limit));
+    });
 };
 
 // find most recently updated users with traits and image

@@ -141,19 +141,22 @@ function sendEmail(message, cb) {
 const mockUser = {
   "_id": "888888888888888888888888",
   "name": "Sally",
-  "clientId": 'localhost', "hasImage": true, "targetId": "-1",
+  "clientId": 'localhost',
+  "hasImage": true,
+  "targetId": "-1",
   "descriptors": [
     "Sally is a perfectionist.",
     "She prefers to plan everything to the last detail, which has consequently led to her being very successful and extremely reliable.",
     "Sally is far more intellectually curious and sensitive to beauty than most."],
   "virtue": "power",
-  "adIssue": "leave",
+  "adIssue": "democrat",
   "traits": { "openness": 0.8253353111345854, "conscientiousness": 0.8656814140739604,
     "extraversion": 0.6890590896284885, "agreeableness": 0.6008941864440192, "neuroticism": 0.20154338443905195 },
   "login": "sally4983578918989@mail.com",
   "loginType": "email",
   "gender": "female",
-  "createdAt": "2019-06-03T00:12:07.599Z",
+  "createdAt": new Date("2019-06-03T00:12:07.599Z"),
+  "updatedAt": new Date("2019-06-03T00:12:07.599Z"),
 };
 
 /**
@@ -166,7 +169,7 @@ function createEmail(user) {
   return Promise.all([
     getFile('../build/Components/OceanProfile/OceanProfile.css'),
     getFile('../build/Components/AvatarComponent/AvatarComponent.css'),
-    getFile('../tmpl/email.html'),
+    getFile('../templates/email1.html'),
   ])
     .then(([style1, style2, template]) => {
       let sheet1 = new ServerStyleSheets();

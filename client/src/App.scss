@@ -178,9 +178,13 @@ strong {
   color: $blue;
 }
 
-span {
+span:not(.MuiButton-label) {
   color: $blue;
   font-weight: normal;
+}
+.MuiButton-containedPrimary {
+  color: #ffffff !important;
+  border-color:$blue !important;
 }
 .circle-section{
   margin-top: 20px;
@@ -220,6 +224,14 @@ span {
     font-size: 18px;
     line-height: 22px;
     color:#828282;
+  }
+
+  p.small-tos {
+    font-weight: 100;
+    font-size: 24px;
+    line-height: 32px;
+    color:#828282;
+    text-align: justify;
   }
 
   p.tiny {

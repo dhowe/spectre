@@ -60,21 +60,23 @@ function OceanProfile(props) {
               <div className="split-h">
                 <div className="split-l">
                   <div className="profile-info">
-                    <AvatarComponent target={ target } />
+                    <AvatarComponent target={target} />
                     <h2>{target.name}'s<br />OCEAN Profile</h2>
                     <img className="helpIcon" alt="help" src="/imgs/help.svg"
                       onClick={() => setHelpDialog({ isHelpOpened: sideBar.isSideBarActive })} />
                   </div>
                   <hr />
-                  <p>
-                    {target.name} is the type of placeholder-text that's not afraid to tell people how it is.
+                  <div className="profile-desc">
+                    <p>
+                      {target.name} is the type of placeholder-text that's not afraid to tell people how it is.
                     <br /><br />
-                    {target.perspron.ucf()} may appear argumentative, confrontational, insensitive, intimidating, and controlling.
+                      {target.perspron.ucf()} may appear argumentative, confrontational, insensitive, intimidating, and controlling.
                     <br /><br />
-                    {target.perspron.ucf()} can overwhelm others with {target.posspron} energy, intelligence, and desire to order the world around {target.objpron}.
+                      {target.perspron.ucf()} can overwhelm others with {target.posspron} energy, intelligence, and desire to order the world around {target.objpron}.
                     <br /><br />
-                    {target.name}  can be influenced by images that contain impulsive actions or gambling and by slogans that contain risk or trust.
+                      {target.name}  can be influenced by images that contain impulsive actions or gambling and by slogans that contain risk or trust.
                   </p>
+                  </div>
                 </div>
                 <div className="split-r">
                   <div className="OceanSliders">

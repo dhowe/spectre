@@ -4,8 +4,9 @@ import { withStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Button from "@material-ui/core/Button";
 import HeaderLogo from '../../Icons/headerlogo-colour.svg';
-import ComponentStyles from '../../App.module.css';
 import { Link } from 'react-router-dom';
+
+import ComponentStyles from '../../App.module.css';
 import "./TOSModal.scss";
 
 
@@ -31,36 +32,33 @@ const styles = theme => ({
   },
   content: {
     textAlign: "left"
-  },
-
+  }
 });
 
 function SimpleModal(props) {
-  // getModalStyle is not a pure function, we roll the style only on the first render
+
+  // getModalStyle is not a pure function,
+  // we roll the style only on the first render
+
   const [modalStyle] = React.useState(getModalStyle);
-
   const { classes } = props;
-
   const [summary, setSummary] = React.useState({
     showSummary: true, contentHere: props.summary
   });
-
   const [showPage, setShowPage] = React.useState({
-    pageOne: { display: 'block' }, pageTwo: { display: 'none' }
+    pageOne: { display: 'block' },
+    pageTwo: { display: 'none' }
   });
 
   function handleClick() {
     if (summary.showSummary) {
       setSummary({ showSummary: false, contentHere: props.content });
-                setShowPage({ pageOne: { display: 'none' }, pageTwo: { display: 'block' } });
+      setShowPage({ pageOne: { display: 'none' }, pageTwo: { display: 'block' } });
     } else {
       setShowPage({ pageOne: { display: 'block' }, pageTwo: { display: 'none' } });
-      setSummary({ showSummary: true, contentHere: <p className="small">{props.summary} </p>});
+      setSummary({ showSummary: true, contentHere: <p className="small">{props.summary} </p> });
     }
-
   }
-  //  console.log(summary.contentHere.length === 0? setSummary({contentHere: props.summary}): setSummary({contentHere: props.summary}))
-
 
   return (
     <Modal
@@ -78,7 +76,7 @@ function SimpleModal(props) {
             {props.title}
           </h3>
           <div id="tos-content">
-            {summary.contentHere.length === 0 ? <p className="small">{props.summary}</p> : summary.contentHere}
+            {summary.contentHere.length === 0 ? <p className="small-tos">{props.summary}</p> : summary.contentHere}
           </div>
           <div className="tos-buttons">
             <Link to="/">
@@ -90,14 +88,14 @@ function SimpleModal(props) {
         </div>
         <div style={showPage.pageTwo}>
           <h1 className="page2-title">
-            Terms of service
+            Terms of Service
           </h1>
           <div id="page2-tos-content">
             {summary.contentHere.length === 0 ? <p className="small">{props.summary}</p> : summary.contentHere}
           </div>
           <div id="page2-button">
-          <Button className={ComponentStyles.button}
-            onClick={e => handleClick(e)} id="help-modal-button">X</Button>
+            <Button className={ComponentStyles.button}
+              onClick={e => handleClick(e)} id="help-modal-button">X</Button>
           </div>
         </div>
       </div>

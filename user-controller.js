@@ -4,20 +4,9 @@ import Mailer from './mailer';
 import clfDate from 'clf-date';
 import multer from 'multer';
 import path from 'path';
-const fs = require('fs')
+import fs from 'fs';
+
 import { profDir } from './config';
-
-//import childProcess from 'child_process';
-//import fs from 'fs';
-//const fsp = fs.promises;
-//const fsp = require('fs').promises; // dont mix require and import
-
-/* all calls return a uniform object:
-{
-  "status": code,
-  "message": "a user-readable message",
-  "data": "<payload object>"
-}*/
 
 const NO_USER_ID = 490;
 const NO_USER_EMAIL = 489;
@@ -29,6 +18,13 @@ const NO_DATABASE = 495;
 const NO_CLIENT_ID = 496;
 
 const NUM_TARGETS = 6;
+
+/* all calls return a uniform object:
+{
+  "status": code,
+  "message": "a user-readable message",
+  "data": "<payload object>"
+}*/
 
 const create = async (req, res) => {
 
@@ -79,62 +75,6 @@ const list = async (req, res) => {
     sendResponse(res, users);
   });
 };
-
-/* NEED TO RETHINK
-const message = async (req, res) => {
-
-  // WORKING HERE
-  // console.log('CONTROLLER.MESSAGE: stub sending message', req);
-
-  const data = req.url.replace('/users/message/', '').split('&');
-  const userId = data[0];
-  const email = data[1]; //tmp
-
-  console.log("user-controller.js:: message", userId, email);
-
-  //await generateEmail(userId, email);
-
-
-  // const mailer = new Mailer({
-  //   host: process.env.SMTP_HOST,
-  //   port: process.env.SMTP_PORT,
-  //   auth: {
-  //     user: process.env.SMTP_USER,
-  //     pass: process.env.SMTP_PASS
-  //   }
-  // });
-  //
-  // await mailer.sendMessage({
-  //   from: 'spectre@spectreknows.me',
-  //   to: 'spectre-test@email.com',
-  //   subject: DEFAULT_SUBJ,
-  //   html: DEFAULT_HTML
-  // }, (err, info) => {
-  //   if (err) console.error('[MAILER] ', err);
-  //   sendResponse(res, err ? err : info);
-  // });
-
-  // await UserModel.getAll(function(err, users) {
-  //   if (err) return sendError(res, 'UserModel.getAll', err);
-  //   sendResponse(res, users);
-  // });
-};
-
-const current = async (req, res) => {
-
-  if (UserModel.databaseDisabled) return noDbError(res);
-
-  if (!req.params.hasOwnProperty('cid')) return sendError(res, 'No clientId sent');
-
-  await UserModel.findOne({ clientId: req.params.cid }, {}, {
-    sort: { 'createdAt': -1 }
-  }, (err, user) => {
-    if (err) return sendError(res, 'UserModel.findOne', err);
-    if (!user) return sendError(res, 'No current user found', USER_NOT_FOUND);
-    sendResponse(res, { id: user._id });
-  });
-};
-*/
 
 const createBatch = async (req, res) => {
 
@@ -196,34 +136,6 @@ const fetchByLogin = async (req, res) => { // accepts either _id or login
     sendResponse(res, user);
   });
 }
-//
-// const fetchX = async (req, res) => { // accepts either _id or login
-//
-//   if (UserModel.databaseDisabled) return noDbError(res);
-//
-//   console.log('fetch', req.params);
-//
-//   if (req.params.hasOwnProperty('uid')) {
-//     console.log('uid.fetch', req.params);
-//     await UserModel.findById(req.params.uid, (err, user) => {
-//       if (err) return sendError(res, 'Error (findById) for #' + req.params.uid, err);
-//       if (!user) return sendError(res, 'No user #' + req.params.uid, 0, USER_NOT_FOUND);
-//       sendResponse(res, user);
-//     });
-//     return;
-//   }
-//   else if (req.params.hasOwnProperty('login')) {
-//     console.log('login.fetch', req.params);
-//     await UserModel.findByLogin(req.params.login, (err, user) => {
-//       if (err) return sendError(res, 'Error (findByILogin) for #' + req.params.login, err);
-//       if (!user) return sendError(res, 'No user #' + req.params.login, 0, USER_NOT_FOUND);
-//       sendResponse(res, user);
-//     });
-//     return;
-//   }
-//
-//   return sendError(res, 'No uid/login sent', 0, NO_USER_ID);
-// };
 
 const update = async (req, res) => {
 
@@ -349,11 +261,13 @@ const hasPhoto = async (req, res) => {
   fs.access(profFile, fs.F_OK, (err) => {
     let exists = true;
     if (err) {
-      console.error(err);
+      //console.error(err);
       exists = false;
     }
-    console.log('[' + clfDate() + '] ::* EXISTS ' + profFile
-      .replace(/.*\/profiles/, '/profiles') + ' ' + exists);
+    if (process.env.NODE_ENV !== 'test') {
+      console.log('[' + clfDate() + '] ::* EXISTS ' + profFile
+        .replace(/.*\/profiles/, '/profiles') + ' ' + exists);
+    }
     sendResponse(res, exists);
   });
 }
@@ -444,6 +358,66 @@ function noDbError(res) {
     status: NO_DATABASE, data: null, message: 'Db unavailable'
   });
 }
+
+/* NEED TO RETHINK
+const message = async (req, res) => {
+
+  // WORKING HERE
+  // console.log('CONTROLLER.MESSAGE: stub sending message', req);
+
+  const data = req.url.replace('/users/message/', '').split('&');
+  const userId = data[0];
+  const email = data[1]; //tmp
+
+  console.log("user-controller.js:: message", userId, email);
+
+  //await generateEmail(userId, email);
+
+
+  // const mailer = new Mailer({
+  //   host: process.env.SMTP_HOST,
+  //   port: process.env.SMTP_PORT,
+  //   auth: {
+  //     user: process.env.SMTP_USER,
+  //     pass: process.env.SMTP_PASS
+  //   }
+  // });
+  //
+  // await mailer.sendMessage({
+  //   from: 'spectre@spectreknows.me',
+  //   to: 'spectre-test@email.com',
+  //   subject: DEFAULT_SUBJ,
+  //   html: DEFAULT_HTML
+  // }, (err, info) => {
+  //   if (err) console.error('[MAILER] ', err);
+  //   sendResponse(res, err ? err : info);
+  // });
+
+  // await UserModel.getAll(function(err, users) {
+  //   if (err) return sendError(res, 'UserModel.getAll', err);
+  //   sendResponse(res, users);
+  // });
+};
+
+const current = async (req, res) => {
+
+  if (UserModel.databaseDisabled) return noDbError(res);
+
+  if (!req.params.hasOwnProperty('cid')) return sendError(res, 'No clientId sent');
+
+  await UserModel.findOne({ clientId: req.params.cid }, {}, {
+    sort: { 'createdAt': -1 }
+  }, (err, user) => {
+    if (err) return sendError(res, 'UserModel.findOne', err);
+    if (!user) return sendError(res, 'No current user found', USER_NOT_FOUND);
+    sendResponse(res, { id: user._id });
+  });
+};
+*/
+//import childProcess from 'child_process';
+//import fs from 'fs';
+//const fsp = fs.promises;
+//const fsp = require('fs').promises; // dont mix require and import
 
 /*  NEED TO RETHINK THIS
 function runScript(scriptPath, args, callback) {

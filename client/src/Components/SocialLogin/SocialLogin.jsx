@@ -43,7 +43,7 @@ let stateObj = {
   email: '',
   name: '',
   //gender: '',
-  focus: 'name',
+  focus: '',
   layoutName: 'default'
   //clearEmail: this.clearEmail,
 };
@@ -66,7 +66,7 @@ class SocialLogin extends React.Component {
       emailValid: false,
       email: '',
       name: '',
-      focus: 'name',
+      focus: '',
       layoutName: 'shift',
       input: "",
       clearEmail: this.clearEmail,
@@ -89,6 +89,9 @@ class SocialLogin extends React.Component {
   }
 
   onKeyPress(button) {
+    if (this.state.focus === '') {
+      this.setState({ focus: 'name' });
+    }
 
     if (button === '{shift}') {
       this.handleShift();
@@ -104,6 +107,15 @@ class SocialLogin extends React.Component {
       this.setState({
         [focus]: (input.substr(0, input.length - 1))
       });
+
+    } else if (button === '{space}') {
+      if (this.state.focus === 'email') {
+        //ignored
+      } else {
+        const { focus } = this.state;
+        const text = this.state[focus];
+        this.setState({ [focus]: text.concat(' ') });
+      }
 
     } else if (!(button.startsWith('{') || button.endsWith('}'))) {
       const { focus } = this.state;
@@ -170,13 +182,20 @@ class SocialLogin extends React.Component {
         <div className={`${classes.content} socialLogin-content`}>
           <form noValidate>
             <div style={this.state.pageOne}>
+              {
+                // DH: commenting the gift-pack bubble for now
+              }
+              <div className="box1 sb7" style={false && this.state.focus === 'email' ?
+                { visibility: 'visible' } : { visibility: 'hidden' }}>
+                Your email will be used to send <br /> you a SPECTRE gift pack!
+              </div>
               {/* #267: SHIFT / CAPS, etc. dont work */}
               <FormControl className={classes.margin}>
                 <Input
                   name="name"
                   onClick={this.changeFocus('name')}
                   id="custom-css-standard-name"
-                  value={!this.state.name.length ? "Your name" : this.state.name}
+                  value={!this.state.name.length && this.state.focus !== 'name' ? "Your name" : this.state.name}
                   classes={{
                     root: classes.textField,
                     underline: classes.cssUnderline,

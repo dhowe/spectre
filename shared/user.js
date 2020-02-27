@@ -316,15 +316,17 @@ export default class User {
     return traitIdx * multiply;
   }
 
-  static randomInfluencingImages(adIssue, pre) {
+  static randomInfluencingImages(adIssue, pre, ext) {
     let images = [];
     let ots = User.oceanTraits;
     while (images.length < 4) {
       let flip = Math.random() < .5 ? 1 : 2;
       let mult = Math.random() < .5 ? 1 : -1;
       let cat = (Math.floor(Math.random() * ots.length) * mult);
-      let imgName = pre + adIssue + '_' + cat + '.' + flip + '.png';
-      if (images.indexOf(imgName) < 0) images.push(imgName);
+      if (cat !== 0) {
+        let imgName = (pre + adIssue + '_' + cat + '.' + flip) + ext;
+        if (images.indexOf(imgName) < 0) images.push(imgName);
+      }
     }
     return images;
   }
@@ -376,20 +378,21 @@ export default class User {
     if (!User.hasOceanTraits(target)) throw Error
       ('No traits for target in User.computeInfluencesFor()');
 
-    const pre = 'imgs/', cat = User.categorize(target);
+    const pre = 'imgs/', cat = User.categorize(target), ext = '.jpg';
     target.influences = {};
 
+
     issues.forEach(issue => {
-      let images = this.randomInfluencingImages(issue, pre);
+      let images = this.randomInfluencingImages(issue, pre, ext);
       let slogans = this.randomIfluencingSlogans(issue);
       let themes = this.randomInfluencingThemes(issue);
 
       if (cat !== 0) {
         images = [
-          pre + issue + '_' + cat + '.1.png',
-          pre + issue + '_' + cat + '.2.png',
-          pre + issue + '_' + -cat + '.1.png',
-          pre + issue + '_' + -cat + '.2.png'
+          pre + issue + '_' + cat + '.1' + ext,
+          pre + issue + '_' + cat + '.2' + ext,
+          pre + issue + '_' + -cat + '.1' + ext,
+          pre + issue + '_' + -cat + '.2' + ext
         ];
         themes = User.influencingThemes[issue][(cat > 0 ? 'high' : 'low')][User.oceanTraits[Math.abs(cat) - 1]];
         slogans = User.ifluencingSlogans[issue][(cat > 0 ? 'high' : 'low')][User.oceanTraits[Math.abs(cat) - 1]];
