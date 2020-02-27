@@ -132,7 +132,7 @@ class LoginPage extends React.Component {
   }
 
   termsOfService = () => {
-    this.tosModalTitle = 'We value your privacy';
+    this.tosModalTitle = 'We value your privacy.';
     this.tosModalSummary = TosSummary.text;
     this.tosModalContent = '';
     this.setState({ tosModalOpen: true });
