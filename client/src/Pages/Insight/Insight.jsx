@@ -52,7 +52,7 @@ class Insight extends React.Component {
         <div className={`${classes.content} content insightPage`}>
           <h1 className="addSpacing">{question(targetName)}</h1><br />
           <AvatarComponent target={{ name: targetName, image: targetImage, updatedAt: targetUpdate }} />
-          <div onTouchEnd={this.enableButton}>
+          <div onTouchEnd={this.enableButton} onMouseUp={this.enableButton}>
             <TextSliderText leftText={leftText} rightText={rightText} middleText={middleText} />
           </div>
           <div className="link">
