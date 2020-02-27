@@ -169,7 +169,7 @@ class DarkAd extends React.Component {
               <Link to="/success-ad" onClick={() => this.context.targetAd =
                 { image: this.state.image, slogan: this.state.slogan }}>
                 <div className={ComponentsStyles.buttonWrapper}>
-                  <Button className="shareButton" variant="contained" color="primary">
+                  <Button className="shareButton" variant="outlined" color="primary">
                     <img alt="shareIcon" src="./imgs/shareIcon.svg" /><strong>Share</strong>
                   </Button>
                 </div>
