@@ -53,6 +53,7 @@ import UserSession from './Components/UserSession/UserSession';
 import User from './Components/User/User';
 import Navigation from './Components/Navigation/Navigation';
 import Keyboardist from 'react-keyboardist';
+import PostExp from './PostExp/';
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
@@ -142,6 +143,7 @@ class App extends React.Component {
                   <Route exact path="/outro-video" component={OutroVideo} />
                   <Route exact path="/goodbye" component={Goodbye} />
                   <Route exact path="/image-test" component={ImageTest} /> {/* TMP */}
+                  <Route exact path="/post-experience" component={PostExp} /> {/* TMP */}
                 </React.Fragment>
 
               </Router>
