@@ -215,6 +215,8 @@ const targets = async (req, res) => {
 // most similar users
 const similars = async (req, res) => {
 
+  if (1) throw Error('Not used currently');
+
   if (UserModel.databaseDisabled) return noDbError(res);
 
   if (!req.params.hasOwnProperty('uid')) return sendError
