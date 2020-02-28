@@ -36,11 +36,9 @@ let percent, totalDist, colors = {}, logos = {};
 function sketch(p) {
 
   let numLines = 9;
-  let lineOffset = -50;
-  let showFps = false;
-  let instructions = true;
-  let done, brandSize, start, fps, linesY = [];
-  let love, hate, loveArrow, hateArrow, instruct;
+  let brandSize, showFps = false, padding = 5;
+  let love, hate, done, start, fps, linesY = [];
+  let loveArrow, hateArrow, instruct, instructions = true;
 
   p.preload = () => {
     instruct = p.loadImage('/imgs/game_instruct.png');
@@ -55,7 +53,7 @@ function sketch(p) {
   }
 
   p.setup = () => {
-    p.createCanvas(1920, 780); // 1080, 900 for portrait
+    p.createCanvas(1920, 784); // 1080, 900 for portrait
 
     colors.sketchBg = p.color(styles.sketchBg);
     colors.sketchText = p.color(styles.sketchText);
@@ -68,16 +66,18 @@ function sketch(p) {
 
     UserSession.shuffle(Brand.names);
 
-    let lineGap = p.height / numLines;
+    let lineGap = ((p.height-padding*2) / numLines) -3;
+    let lineOffset = p.ceil(brandSize/2) + padding + 6;
     for (let i = 0; i < numLines; i++) {
-      linesY.push((lineGap * (i+1)) + lineOffset);
+      linesY.push((lineGap * i) + lineOffset);
     }
 
     Brand.instances = [];
     for (let i = 0; i < Brand.names.length; i++) {
       let bx = -i * (p.width / 6) + p.width / 3;
       Brand.instances.push(new Brand
-        (p, bx, linesY[(numLines-1)/2], brandSize, Brand.names[i]));
+(p, bx, linesY[(numLines-1)/2], brandSize, Brand.names[i]));
+//(p, bx+1000, linesY[i%2===1?0:numLines-1], brandSize, Brand.names[i]));
     }
     totalDist = p.width - Brand.instances[Brand.instances.length - 1].x;
     start = p.millis();
@@ -86,16 +86,20 @@ function sketch(p) {
   p.draw = () => {
 
     p.background(colors.sketchBg);
+// p.stroke(0);
+// p.strokeWeight(1);
+// p.rect(0,0,p.width, p.height);
+
     p.stroke(colors.sketchStroke);
 
     for (let i = 0; i < linesY.length; i++) {
       p.strokeWeight( i % 2 === 0 ? .5 : 0);
       p.stroke(colors.sketchStrokeSel);
       let ypos = linesY[i];
-      //p.text(i, p.width/2, ypos); // line nums
+//p.text(i+':'+ypos, 200, ypos); // line nums
       p.line(0, ypos, p.width, ypos);
     }
-    if (p.frameCount === 2)console.log(linesY);
+//if (p.frameCount === 2) console.log(linesY);
 
     drawInfo(p, love, hate , loveArrow, hateArrow);
 
@@ -154,8 +158,8 @@ function sketch(p) {
       return;
     }
     if (Brand.active) {
-      let lineIdx = -1,
-        closestLine = 10000;
+      let lineIdx = -1;
+      let closestLine = 10000;
       for (var i = 0; i < linesY.length; i++) {
         if (p.abs(linesY[i] - p.mouseY) < closestLine) {
           closestLine = p.abs(linesY[i] - p.mouseY);
@@ -199,10 +203,10 @@ function sketch(p) {
   function drawInfo(p,love, hate, loveArrow, hateArrow) {
     p.textSize(40);
     p.noStroke();
-    p.image(love, p.width / 2, 42);
-    p.image(loveArrow, p.width / 2 - 1, 224);
-    p.image(hate, p.width / 2, p.height - 56);
-    p.image(hateArrow, p.width / 2 - 1, p.height - 240);
+    p.image(love, p.width / 2, 69);
+    p.image(loveArrow, p.width / 2 - 1, 253);
+    p.image(hate, p.width / 2, p.height - 64);
+    p.image(hateArrow, p.width / 2 - 1, p.height - 248);
   }
 };
 
@@ -228,8 +232,10 @@ class Brand {
     if (this.sy !== this.ty) {
       let ft = this.bounceOut(this.t);
       this.y = this.p.map(ft, 0, 1, this.sy, this.ty);
-      this.t += 0.1;
-      if (this.t > 1) this.sy = this.ty;
+      this.t += 0.05; // 20 frames of snap
+      if (this.t > 1) {
+        this.sy = this.ty;
+      }
     }
   }
   snapTo(my) { // easing
@@ -303,7 +309,7 @@ class Game extends React.Component {
   render() {
     return (
       <div className={this.props.classes.root} id='clickMe'>
-        <SpectreHeader colour="white" transparent/>
+        <SpectreHeader colour="white" noDivider/>
         <P5Wrapper sketch={sketch} className="wrapper" />
         <IdleChecker />
         <FooterLogo />
