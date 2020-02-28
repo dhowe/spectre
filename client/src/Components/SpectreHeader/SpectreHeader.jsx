@@ -43,7 +43,7 @@ class SpectreHeader extends React.Component {
 
     // tmp for testing webcam
     const avatar = image ? <AvatarComponent target={this.state} /> : '';
-    const divider = this.props.noDivider ? '' : <Divider light />;
+    const divider = this.props.transparent ? '' : <Divider light />;
     return this.props.colour === "white" ?
       (
         <div className="SpectreHeader SpectreHeader-white">

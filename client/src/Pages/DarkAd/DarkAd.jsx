@@ -122,7 +122,7 @@ class DarkAd extends React.Component {
                   <p className="normal darkAdsubtitle">Select your image:</p>
                   {images.map((img, i) => (
                     <img className={ComponentsStyles.adImageSelection}
-                      src={img} alt={`adimg${i+1}`} key={`img${i+1}`}
+                      src={img} alt={`adimg${i + 1}`} key={`img${i + 1}`}
                       onClick={() => this.setState({ image: img, defaultImg: false })}>
                     </img>
                   ))}
@@ -148,13 +148,15 @@ class DarkAd extends React.Component {
             </div>
           </div>
           <div style={this.state.pageTwo}>
-            <h1 className="noSpacing"><br />Your Targeted  <img src='/imgs/facebook.png' style={{'marginTop': 10, position: 'relative', top:15}} alt="facebook"/> ad:</h1>
-            <div className={classes.adPage2}>    { /* adIssue should never change after being selected '*/}
-              <img className={ComponentsStyles.adImage} src={this.state.image} alt="republican"></img>
+            <h1 className="noSpacing"><br />Your targeted  <img src='/imgs/facebook.png'
+              style={{ marginTop: 15, height: 100, position: 'relative', top: 30 }}
+              alt="facebook" /> ad:</h1>
+            <div className={classes.adPage2}>
+              <img className={ComponentsStyles.adImage} src={this.state.image} alt="bg"></img>
               <p style={this.state.slogan ? { backgroundColor: 'red' } : { backgroundColor: 'none' }}
                 className={ComponentsStyles.adTextPage2}>{this.state.slogan}
               </p>
-              {!this.state.defaultImg ? <img className={classes.campaignPage2} src={cimage} alt="republican"></img> : ''}
+              {!this.state.defaultImg ? <img className={classes.campaignPage2} src={cimage} alt="bg"></img> : ''}
             </div>
             <p> Share with <span>{target.name}</span></p>
           </div>
