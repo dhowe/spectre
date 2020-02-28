@@ -86,29 +86,28 @@ class OCEANReveal extends React.Component {
             style={{ transitionDelay: timing[1] + 'ms' }}>
             <h2>We've only just met, but already we know…</h2>
           </Fade>
+          <p className="normal">
           {
             sentences.map((sent, i) => {
               let idx = sent.lastIndexOf(' ');
               sent = sent.substring(0, idx) // hack to avoid widows via &nbsp;
-                + String.fromCharCode(160) + sent.substring(idx + 1);
+                + String.fromCharCode(160) + sent.substring(idx + 1) + " ";
               return (
-                <p className="normal" key={i}>
-                  {
-                    sent.split('').map((letter, j) => {
-                      let delay = timing[2] + ((++timer + (i * linePause)) * keyPause);
-                      return (
-                        <Fade key={j} in={true} style={{ transitionDelay: delay + 'ms' }}>
-                          <span key={`fade-${i}`} style={{ color: '#4F4F4F' }}>
-                            {letter}
-                          </span>
-                        </Fade>
-                      )
-                    })
-                  }
-                </p>
+                  sent.split('').map((letter, j) => {
+                    let delay = timing[2] + ((++timer + (i * linePause)) * keyPause);
+                    return (
+                      <Fade key={j} in={true} style={{ transitionDelay: delay + 'ms' }}>
+                        <span key={`fade-${i}`} style={{ color: '#4F4F4F' }}>
+                          {letter}
+                        </span>
+                      </Fade>
+                    )
+                  })
               );
-            })
+            }
+          )
           }
+          </p>
           <audio id="type" src="http://chenqianxun.com/download/key.wav" preload="auto">
           </audio>
         </div>
