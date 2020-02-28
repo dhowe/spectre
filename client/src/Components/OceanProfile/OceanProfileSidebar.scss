@@ -4,25 +4,25 @@ SideNav-expanded {
   background: $blue;
 }
 
-// .MuiSlider-track{
-//   animation-name:slide-track;
-//   animation-duration:2s;
-// }
-// .MuiSlider-thumb{
-//   animation-name:slide-thumb;
-//   animation-duration:2s;
-// }
-// @keyframes slide-track {
-//   from {
-//     width:0%;
-//   }
-//
-// }
-// @keyframes slide-thumb {
-//   from {
-//     left:0%;
-//   }
-// }
+.OceanSliders .MuiSlider-track{
+  animation-name:slide-track;
+  animation-duration:2s;
+}
+.OceanSliders .MuiSlider-thumb{
+  animation-name:slide-thumb;
+  animation-duration:2s;
+}
+@keyframes slide-track {
+  from {
+    width:0%;
+  }
+
+}
+@keyframes slide-thumb {
+  from {
+    left:0%;
+  }
+}
 .SideNav-main-collapsed,
 .SideNav-main-expanded {
   background: $blue;
