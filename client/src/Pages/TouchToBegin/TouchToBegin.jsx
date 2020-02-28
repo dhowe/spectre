@@ -5,12 +5,14 @@ import { withStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import Logo from '../../Components/Logo/Logo';
 import UserSession from '../../Components/UserSession/UserSession';
+import classes from '../../Components/Video/BgVideo.css';
 
 //import BeginBackground from '../../Images/1_Standby_Screen_1080px_by_1620px.jpg';
 import HeaderLogo from '../../Icons/headerlogo.svg';
 
 import './TouchToBegin.scss';
-import ComponentsStyles from '../../App.module.css';
+
+// TO REVERT TO IMAGE: use commit d22c24b43f43b
 
 const styles_portrait = {
   root: {
@@ -52,19 +54,21 @@ class TouchToBegin extends React.Component {
   render() {
     return (
       <div className={this.props.classes.root + ' touchToBegin'}>
+        <video autoPlay="autoplay" loop="loop" muted className={classes.Video} >
+          <source src={`${UserSession.publicUrl}video/BlueBokeh.mp4`} type="video/mp4" />
+        </video>
+
         <div className="touchToBegin-Header">
           <img alt="logo" src={HeaderLogo} />
         </div>
-        <div className={`${this.props.classes.content} content`}>
-          <Link className="touchToBegin-beginButton" to="/login">
-            <div className={ComponentsStyles.clickToContinue}>
-              <div className={ComponentsStyles.beginLogo}>
-                <Logo />
-              </div>
-              <p>Touch to Begin!</p>
-            </div>
-          </Link>
-        </div>
+
+        <Link className="touchToBegin-beginButton" to="/login">
+            <Logo />
+            <div style={{position:'absolute',color:'white', top:486,left:874}}>
+            <p>Touch to Begin!</p>
+          </div>
+        </Link>
+
         <Webcam
           audio={false}
           screenshotQuality={1}

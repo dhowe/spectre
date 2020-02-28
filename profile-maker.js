@@ -6,6 +6,9 @@ import observer from 'chokidar';
 import clfDate from 'clf-date';
 import UserModel from './user-model';
 
+// NOTE: to store image data in Mongo
+// https://stackoverflow.com/a/36845773
+
 const BRIGHTEN = 1.3;
 
 class ProfileMaker {
