@@ -119,7 +119,7 @@ function sketch(p) {
       p.textSize(40);
       p.text(Math.max(0, timer), p.width - 60, 20);
       if (p.frameCount % 10 === 1) fps = Math.round(p.frameRate());
-      if (showFps) p.text('fps: ' + fps, 50, 20); // tmp
+      if (showFps) p.text('fps: ' + fps, 70, 20); // tmp
     }
   };
 
@@ -274,7 +274,7 @@ class Brand {
 
 Brand.active = false;
 Brand.sheffield = ['disney', 'converse', 'xbox', 'red bull', 'hello kitty', 'h&m', 'ben & jerrys', 'old spice', 'adidas', 'marvel', 'nike', 'vans', 'starbucks', 'lacoste', 'sony', 'new look', 'asos', 'chanel'];
-Brand.names = ['cocacola', 'disney', 'converse', 'xbox', 'vans', 'red bull', 'hello kitty', 'ben & jerrys', 'old spice', 'burberry', 'adidas', 'marvel', 'nike', 'vans', 'starbucks', 'lacoste', 'gap', 'sony', 'calvin klein', 'swarovski', 'chanel', 'lego'];
+Brand.names = ['cocacola', 'disney', 'converse', 'xbox', 'vans', 'red bull', 'hello kitty', 'ben & jerrys', 'old spice', 'adidas', 'marvel', 'nike', 'vans', 'starbucks', 'lacoste', 'gap', 'sony', 'calvin klein', 'swarovski', 'chanel', 'lego'];
 Brand.drawAll = () => { Brand.instances.forEach(b => b.draw()) };
 Brand.updateAll = () => { Brand.instances.forEach(b => b.update()) };
 Brand.all = ['cocacola', 'disney', 'converse', 'playstation', 'xbox', 'red bull', 'hello kitty', 'pepsi', 'h&m', 'ben & jerrys', 'old spice', 'burberry', 'adidas', 'marvel', 'nike', 'vans', 'starbucks', 'topshop', 'lacoste', 'gap', 'sony', 'new look', 'calvin klein', 'next', 'swarovski', 'tommy hilfiger', 'asos', 'marks and spencer', 'vivienne westwood', 'chanel', 'nintendo64', 'lego'];
