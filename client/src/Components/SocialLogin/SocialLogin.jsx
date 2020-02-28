@@ -61,7 +61,6 @@ class SocialLogin extends React.Component {
     this.changeFocus = this.changeFocus.bind(this);
     //this.handleRadioChange = this.handleRadioChange.bind(this);
     this.clearEmail = this.clearEmail.bind(this);
-    this.handleNextPage = this.handleNextPage.bind(this);
     this.state = {
       emailValid: false,
       email: '',
@@ -70,9 +69,6 @@ class SocialLogin extends React.Component {
       layoutName: 'shift',
       input: "",
       clearEmail: this.clearEmail,
-      pageDone: false,
-      pageOne: { display: 'block' },
-      pageTwo: { display: 'none' },
     };
     this.unShiftNeeded = true;
     this.form = React.createRef();
@@ -156,17 +152,6 @@ class SocialLogin extends React.Component {
     this.setState({ email: '' });
   }
 
-  handleNextPage(e) {
-    e.preventDefault();
-
-    this.props.handleSubmit(e, this.state)
-
-    if (this.emailIsValid(this.state.email)) {
-      this.setState({ pageOne: { display: 'none' } })
-      this.setState({ pageTwo: { display: 'block' } })
-    }
-  }
-
   emailIsValid = (addr) => {
     return addr && /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(addr.toLowerCase());
   }
@@ -174,14 +159,13 @@ class SocialLogin extends React.Component {
   render() {
     const { classes } = this.props;
     const { email, name } = this.state;
-    const btnEnabledPg1 = email && email.length && name && name.length;
-    const btnEnabledPg2 = email && email.length && name && name.length;
+    const btnEnabledPg = email && email.length && name && name.length;
 
     return (
       <div className={`${classes.root} socialLogin`}>
         <div className={`${classes.content} socialLogin-content`}>
           <form noValidate>
-            <div style={this.state.pageOne}>
+            <div >
               {
                 // DH: commenting the gift-pack bubble for now
               }
@@ -235,25 +219,8 @@ class SocialLogin extends React.Component {
                 layoutName={this.state.layoutName}
               />
             </div>
-            <div style={this.state.pageTwo}>
-              <FormControl component="fieldset" className={classes.formControl}>
-                <p>Your gender:</p>
-                <RadioGroup
-                  aria-label="Gender"
-                  name="gender"
-                  //onChange={this.handleRadioChange}
-                  className={classes.radioGroup}>
-                  <FormControlLabel className="radio" checked={this.state.gender === 'female'} value="female" control={<Radio color="primary" />} label="Woman" />
-                  <FormControlLabel className="radio" checked={this.state.gender === 'male'} value="male" control={<Radio color="primary" />} label="Man" />
-                  <FormControlLabel className="radio" checked={this.state.gender === 'other'} value="other" control={<Radio color="primary" />} label="Other" />
-                </RadioGroup>
-              </FormControl>
-            </div>
-            <div style={this.state.pageOne}>
-              <IconButton enabled={btnEnabledPg1} onClick={e => this.handleNextPage(e)} className={ComponentsStyles.iconButtonStyle1} icon="next" text="Next" />
-            </div>
-            <div style={this.state.pageTwo}>
-              <IconButton enabled={btnEnabledPg2} onClick={e => this.props.handleSubmit(e, this.state)} className={ComponentsStyles.iconButtonStyle1} icon="next" text="Next" />
+            <div>
+              <IconButton enabled={btnEnabledPg} onClick={e => this.props.handleSubmit(e, this.state)} className={ComponentsStyles.iconButtonStyle1} icon="next" text="Next" />
             </div>
           </form>
         </div>
