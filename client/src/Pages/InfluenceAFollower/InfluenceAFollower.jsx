@@ -23,7 +23,6 @@ class InfluenceAFollower extends React.Component {
     const user = await UserSession.ensure(this.context,
       ['name', 'login', 'virtue', 'traits']);
     await UserSession.targets(user);
-    console.log('target-count:',user.similars.length);
     this.setState({ targets: user.similars });
   }
 
