@@ -224,7 +224,26 @@ div.kim {
 	-moz-box-shadow: none;
 	box-shadow: none;
 }
-
+.PostExp .image-1 .avatar-image {
+  zoom: 200%;
+}
+.PostExp .visible-xs .avatar-image {
+  zoom: 170%;
+}
+.PostExp .avatar-name{
+  font-size:48px !important;
+  text-align: center;
+  -webkit-margin-before: 16px !important;
+  margin-block-start: 16px !important;
+}
+.PostExp .user-profile {
+  height:320px;
+}
+@media screen and (orientation: portrait) {
+  .PostExp .visible-xs .avatar-image {
+    zoom: 140%;
+  }
+}
 @media (min-width:992px) {
 
 	.container img.image-1 {

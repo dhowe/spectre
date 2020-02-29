@@ -19,6 +19,8 @@ import FacebookImage from './images/facebook-ad.jpg';
 import StatsImage from './images/stats.jpg';
 import RumorsImage from './images/Rumors.jpg';
 import BreakoutImage from './images/breakout.png';
+import OceanProfileImage from './images/OCEAN-profile.jpg';
+import AvatarImage from './images/spectre-profile.png';
 
 import './style.css';
 import './bootstrap.min.css';
@@ -98,8 +100,9 @@ class PostExp extends React.Component {
               <div className="row bg-2">
                 <ContentCol>
                 <h1>Biometric data</h1>
-                      <div className="img-responsive user-profile no-shadow visible-xs visible-sm">
-                      <AvatarComponent target={target}/></div>
+                      <div className="img-responsive user-profile no-shadow visible-xs visible-sm"><AvatarComponent target={target}/></div>
+                      {//<img src={AvatarImage} alt="User profile picture" title="User profile picture" className="img-responsive user-profile no-shadow visible-xs visible-sm"/>
+                      }
                       <p>Selfies are a defining feature of the digital age, but we usually don’t think about the data that can be extracted from them. Beyond just the time, date, location and your appearance, there is a wider data-set that can be gained from selfies that you upload: this is called a faceprint. The distances between your eyes, the width of your nose, the depth of your eye sockets, the shape of your cheekbones, and the length of your jaw line are all nodes that create your unique faceprint.</p>
                       <p>Faceprints can be created from your selfies but also out of other photographs or video footage, such as videos posted online or CCTV recordings. Law enforcement, border control, and security agencies are interested in faceprint data for identification and verification. But so too are the advertising industry, political influencers, commercial businesses, and others.</p>
                       <p>What if relatively harmless applications of faceprints are also used to improve ways of monitoring your behavior, like where you go, when, and with whom? What if it can determine other characteristics about you, like what you think, your mood, IQ, and political or sexual orientations? Or what about when it’s used to fake a scene in an image or video that you were never part of?</p>
@@ -111,8 +114,9 @@ class PostExp extends React.Component {
                           </ul>
                   </ContentCol>
                   <div className="col-md-7 col-md-pull-5 image-col text-right hidden-xs hidden-sm">
-                  <div className="img-responsive user-profile no-shadow visible-xs visible-sm">
-                  <AvatarComponent/></div>
+                  <div className="img-responsive image-1 no-shadow user-profile"><AvatarComponent target={target}/></div>
+                  {//<img src={AvatarImage} alt="User profile picture" title="User profile picture" className="img-responsive image-1 no-shadow user-profile"/>
+                  }
                   <img src={FaceSearchImage} alt="Facial analysis data" title="Facial analysis data" className="img-responsive"/>
                   </div>
               </div>
@@ -234,7 +238,10 @@ class PostExp extends React.Component {
               <div className="row">
                   <div className="col-sm-12">
                       <div className="text-center">
-                      <OceanProfile target={target}/>
+                      {
+                      //<OceanProfile target={target} />
+                      }
+                      <img src={OceanProfileImage} alt="Ocean Profile" title="Ocean Profile" className="img-responsive full-wdith pull-right" />
                       </div>
                   </div>
               </div>
