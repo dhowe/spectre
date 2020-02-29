@@ -10,7 +10,7 @@ describe('OCEAN descriptions', function () {
     });
 
     it('Should describe a user based on OCEAN traits', function () {
-      let user = new User(); //User.Create();
+      let user = new User();
       user.name = "Jane";
       user.gender = "female";
       user.traits = {
@@ -40,8 +40,8 @@ describe('OCEAN descriptions', function () {
       expect(() => user.generateSummary()).to.throw();
     });
 
-    it('Should describe current user with with 5 sentences', function () {
-      let user = new User(); //User.Create();
+    it('Should describe current user in 2p with 5 sentences', function () {
+      let user = new User();
       user.name = "Jane";
       user.gender = "female";
       user.traits = User.randomTraits();
@@ -49,11 +49,29 @@ describe('OCEAN descriptions', function () {
         "A little data and a little tech goes a long way.",
         "We haven't known you for very long, but already we know that…"
       ];
-      let lines = head.concat(user.generateSummary());
+      let lines = head.concat(user.generateSummary('2p'));
 
       expect(lines).is.a('array');
       expect(lines.length).is.eq(5);
       if (0) {
+        console.log();
+        for (var i = 0; i < lines.length; i++) {
+          console.log(lines[i]);
+        }
+        console.log();
+      }
+    });
+
+    it('Should describe current target in 3p with 5 sentences', function () {
+      let user = new User();
+      user.name = "Jane";
+      user.gender = "female";
+      user.traits = User.randomTraits();
+      console.log(Object.keys(user));
+      let lines = user.generateSummary('3p');
+      expect(lines).is.a('array');
+      expect(lines.length).is.eq(3);
+      if (1) {
         console.log();
         for (var i = 0; i < lines.length; i++) {
           console.log(lines[i]);
@@ -70,7 +88,7 @@ describe('OCEAN descriptions', function () {
     });
 
     it('Should describe a user with in k sentences', function () {
-      let user = new User(); //User.Create();
+      let user = new User();
       user.name = "Jane";
       user.gender = "female";
       user.traits = User.randomTraits();

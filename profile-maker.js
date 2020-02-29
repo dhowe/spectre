@@ -64,9 +64,9 @@ class ProfileMaker {
             const fieldsToUpdate = { hasImage: res.status === 'ok' };
             if (this.detectAgeGender && res.status === 'ok') {
               Object.assign(fieldsToUpdate, {
-                detectedAge: res.data.age || -1,
-                detectedGender: res.data.gender || 'unknown',
-                detectedGenderProb: res.data.genderProbability || -1,
+                age: res.data.age || -1,
+                gender: res.data.gender || 'unknown',
+                genderProb: res.data.genderProbability || -1,
               });
             }
 

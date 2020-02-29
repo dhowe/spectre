@@ -8,17 +8,16 @@ export default [
       "neuroticism": 0.47905473249106567
     },
     "hasImage": true,
-
     "descriptors": [
       "Bernard is impulsive and whimsical, and ok with it.",
       "He would say that sometimes decisions need to be made quickly, and that he makes them quicker than most.",
       "He is someone people get along with easily."
     ],
-    "_id": "666666666666666666666666", "detectedAge": "36", "detectedGender": "male", "detectedGenderProb": ".9876",
+    "_id": "666666666666666666666666", "age": "36", "gender": "male", "genderProb": ".9876",
     "login": "bernard30987235489@mail.com",
     "loginType": "email",
     "name": "Bernard",
-    "gender": "male",
+
     "createdAt": new Date(1970, 1, 1),
     "adIssue": "republican",
     "virtue": "influence",
@@ -39,11 +38,11 @@ export default [
       "He is someone who doesn’t need lots of other people around to have fun, and sometimes finds people tiring.",
       "He is calm and emotionally stable."
     ],
-    "_id": "444444444444444444444444", "detectedAge": "34", "detectedGender": "male", "detectedGenderProb": ".9874",
+    "_id": "444444444444444444444444", "age": "34", "gender": "male", "genderProb": ".9874",
     "login": "tyler8927340597@mail.com",
     "loginType": "email",
     "name": "Tyler",
-    "gender": "male",
+
     "createdAt": new Date(1970, 1, 1),
     "adIssue": "democrat",
     "virtue": "influence",
@@ -64,11 +63,11 @@ export default [
       "She comes across as very calm and resilient.",
       "She is impulsive and whimsical, and fine with it!"
     ],
-    "_id": "555555555555555555555555", "detectedAge": "35", "detectedGender": "female", "detectedGenderProb": ".9875",
+    "_id": "555555555555555555555555", "age": "35", "gender": "female", "genderProb": ".9875",
     "login": "fran987302457@mail.com",
     "loginType": "email",
     "name": "Fran",
-    "gender": "female",
+
     "createdAt": new Date(1970, 1, 1),
     "adIssue": "democrat",
     "virtue": "influence",
@@ -89,11 +88,11 @@ export default [
       "She finds life easier if things don’t change unnecessarily.",
       "She is willing to make difficult decisions when necessary, and will point out when something is wrong no matter what other people might feel."
     ],
-    "_id": "333333333333333333333333", "detectedAge": "33", "detectedGender": "female", "detectedGenderProb": ".9873",
+    "_id": "333333333333333333333333", "age": "33", "gender": "female", "genderProb": ".9873",
     "login": "devin908417684@mail.com",
     "loginType": "email",
     "name": "Devin",
-    "gender": "female",
+
     "createdAt": new Date(1970, 1, 1),
     "adIssue": "leave",
     "virtue": "power",
@@ -114,11 +113,11 @@ export default [
       "He prefers to plan everything to the last detail, which has consequently led to his being very successful and extremely reliable.",
       "He is down-to-earth and prefers things to be simple and straightforward."
     ],
-    "_id": "111111111111111111111111", "detectedAge": "31", "detectedGender": "male", "detectedGenderProb": ".9871",
+    "_id": "111111111111111111111111", "age": "31", "gender": "male", "genderProb": ".9871",
     "login": "remy3458909234@mail.com",
     "loginType": "email",
     "name": "Remy",
-    "gender": "male",
+
     "createdAt": new Date(1970, 1, 1),
     "adIssue": "leave",
     "virtue": "power",
@@ -139,11 +138,11 @@ export default [
       "However he has an emotional depth that others may lack.",
       "He is down-to-earth and prefers things to be simple and straightforward."
     ],
-    "_id": "999999999999999999999999", "detectedAge": "39", "detectedGender": "male", "detectedGenderProb": ".9879",
+    "_id": "999999999999999999999999", "age": "39", "gender": "male", "genderProb": ".9879",
     "login": "dick9875789937849@mail.com",
     "loginType": "email",
     "name": "Dick",
-    "gender": "male",
+
     "createdAt": new Date(1970, 1, 1),
     "adIssue": "leave",
     "virtue": "power",
@@ -164,11 +163,11 @@ export default [
       "She prefers to plan everything to the last detail, which has consequently led to her being very successful and extremely reliable.",
       "Sally is far more intellectually curious and sensitive to beauty than most."
     ],
-    "_id": "888888888888888888888888", "detectedAge": "38", "detectedGender": "female", "detectedGenderProb": ".9878",
+    "_id": "888888888888888888888888", "age": "38", "gender": "female", "genderProb": ".9878",
     "login": "sally4983578918989@mail.com",
     "loginType": "email",
     "name": "Sally",
-    "gender": "female",
+
     "createdAt": new Date(1970, 1, 1),
     "adIssue": "leave",
     "virtue": "power",
@@ -189,11 +188,11 @@ export default [
       "He finds life easier if things don’t change unnecessarily.",
       "He is extremely difficult to upset or stress out, since he rarely, if ever, react with negative emotions, and even when he is anxious about something the feeling quickly passes."
     ],
-    "_id": "777777777777777777777777", "detectedAge": "37", "detectedGender": "male", "detectedGenderProb": ".9877",
+    "_id": "777777777777777777777777", "age": "37", "gender": "male", "genderProb": ".9877",
     "login": "sing987435029837@mail.com",
     "loginType": "email",
     "name": "Sing",
-    "gender": "male",
+
     "createdAt": new Date(1970, 1, 1),
     "adIssue": "leave",
     "virtue": "wealth",
@@ -214,11 +213,11 @@ export default [
       "He would say that sometimes decisions need to be made quickly, and that he makes them quicker than most.",
       "He is down-to-earth and prefers things to be simple and straightforward."
     ],
-    "_id": "222222222222222222222222", "detectedAge": "32", "detectedGender": "male", "detectedGenderProb": ".9872",
+    "_id": "222222222222222222222222", "age": "32", "gender": "male", "genderProb": ".9872",
     "login": "bailey987045982734@mail.com",
     "loginType": "email",
     "name": "Bailey",
-    "gender": "male",
+
     "createdAt": new Date(1970, 1, 1),
     "adIssue": "leave",
     "virtue": "power",

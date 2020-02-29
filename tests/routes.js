@@ -575,9 +575,9 @@ describe('REST API', () => {
       user.name = "Dave";
       user.login = "Dave@aol.com";
       user.gender = "male";
-      user.detectedAge = 50
-      user.detectedGender = "female";
-      user.detectedGenderProb = .4567
+      user.age = 50
+      user.gender = "female";
+      user.genderProb = .4567
       user.adIssue = 'democrat';
       user.virtue = 'truth';
 
@@ -590,9 +590,9 @@ describe('REST API', () => {
           expect(res).to.have.status(200);
           expect(res.body.data).to.be.a('object')
           //console.log(res.body.data);
-          expect(res.body.data.detectedAge).to.be.a('number');
-          expect(res.body.data.detectedGender).to.be.a('string');
-          expect(res.body.data.detectedGenderProb).to.be.a('number');
+          expect(res.body.data.age).to.be.a('number');
+          expect(res.body.data.gender).to.be.a('string');
+          expect(res.body.data.genderProb).to.be.a('number');
 
           expect(res.body.data._id).to.be.a('string');
           //expect(res.body.data.similars.length).eq(0);

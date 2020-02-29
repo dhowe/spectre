@@ -37,9 +37,9 @@ describe('Email.fillTemplate', () => {
     loadFile('../templates/email.html').then(tmpl => {
       let message = fillTemplate(tmpl, mockUser);
       expect(message.length).gt(0);
-      //done();
+      done();
       //expect(/[^0-9]%/.test(message)).eq(false);
-      saveEmail(message, 'templates/tmp.html').then(done);
+      //saveEmail(message, 'templates/tmp.html').then(done);
     });
   });
 });

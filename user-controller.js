@@ -206,7 +206,8 @@ const targets = async (req, res) => {
       (res, 'No traits for user #' + uid, 0, USER_WO_TRAITS);
 
     UserModel.findTargets(user, limit, (err, sims) => {
-      if (err) return sendError(res, 'Unable to findByOcean for #' + req.params.uid, err);
+      if (err) return sendError(res,
+        'Unable to findByOcean: ' + req.params.uid, err);
       sendResponse(res, sims);
     });
   });
@@ -215,7 +216,7 @@ const targets = async (req, res) => {
 // most similar users
 const similars = async (req, res) => {
 
-  if (1) throw Error('Not used currently');
+  if (process.env.NODE_ENV !== 'test') throw Error('Not used currently');
 
   if (UserModel.databaseDisabled) return noDbError(res);
 

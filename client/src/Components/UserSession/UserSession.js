@@ -72,25 +72,19 @@ UserSession.clear = (context) => {
   console.log('[USER] Session initialized');
 }
 
-// target: {
-//   name: '',
-//   traits: {},
-//   perspron: 'their',
-//   posspron: 'they',
-//   objpron: 'them',
-//   image: UserSession.imageDir + 'default.jpg',
-//   updatedAt: UserSession.epochDate
-// }
-
 UserSession.oceanData = (target) => ({
   name: target ? target.name : '',
   traits: target ? target.traits : {},
-  gender: target ? target.detectedGender : 'other',
+  image: UserSession.targetImage(target),
+  gender: target ? target.gender : 'other',
   perspron: target ? UserSession.persPron(target) : 'their',
   posspron: target ? UserSession.possPron(target) : 'they',
   objpron: target ? UserSession.objPron(target) : 'them',
   updatedAt: target ? target.updatedAt : UserSession.epochDate,
-  image: UserSession.targetImage(target),
+  adIssue: target ? target.adIssue : UserSession.adIssues
+    [Math.floor(Math.random() * UserSession.adIssues.length)],
+  influences: target ? UserSession.computeInfluencesFor(target)
+    : { slogans: ['',''], themes: ['',''] }
 });
 
 /*
