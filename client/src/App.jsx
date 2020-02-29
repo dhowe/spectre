@@ -143,7 +143,7 @@ class App extends React.Component {
                   <Route exact path="/outro-video" component={OutroVideo} />
                   <Route exact path="/goodbye" component={Goodbye} />
                   <Route exact path="/image-test" component={ImageTest} /> {/* TMP */}
-                  <Route exact path="/post-experience" component={PostExp} /> {/* TMP */}
+                  <Route exact path="/postexp" component={PostExp} /> {/* TMP */}
                 </React.Fragment>
 
               </Router>

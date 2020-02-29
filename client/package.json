@@ -11,7 +11,6 @@
     "dotenv-extended": "^2.4.0",
     "eslint": "6.8.0",
     "json-loader": "^0.5.7",
-    "node-opencv": "^0.0.2-security",
     "node-sass": "^4.12.0",
     "p5": "^0.10.2",
     "prop-types": "^15.7.2",

@@ -19,11 +19,11 @@ import FacebookImage from './images/facebook-ad.jpg';
 import StatsImage from './images/stats.jpg';
 import RumorsImage from './images/Rumors.jpg';
 import BreakoutImage from './images/breakout.png';
+
 import './style.css';
 import './bootstrap.min.css';
-const styles = {
 
-};
+const styles = {};
 
 class ContentCol extends React.Component {
   render() {
@@ -38,26 +38,23 @@ class PostExp extends React.Component {
   constructor(props) {
     super(props, '/post-experience');
     this.state = {
-      tname: '',
-      themes: ['', ''],
-      target: UserSession.oceanData(),
+      name: '', // themes are included in oceanData
+      target: UserSession.oceanData()
     };
   }
 
   async componentDidMount() {
-    const user = await UserSession.ensure(this.context,
-      ['name', 'adIssue', 'target']);
-    if (!user.target) throw Error('no target');
+    const user = await UserSession.ensure(this.context,['name', 'adIssue']);
     this.setState({
-      tname: user.target.name.ucf(),
-      themes: user.target.influences[user.adIssue].themes,
-      target: UserSession.oceanData(user.target),
+      // NOTE: we use the user here, not the target
+      name: user.name.ucf(),
+      target: UserSession.oceanData(user)
     });
   }
 
   render() {
     const { classes } = this.props;
-    let { themes, tname, target } = this.state;
+    let { name, target } = this.state;
     return (
       <div className="PostExp">
           <SpectreHeader colour="white" />
@@ -118,7 +115,7 @@ class PostExp extends React.Component {
           <section id="section-3">
               <div className="row bg-3">
                   <ContentCol>
-                  <h1>Algorythmic bias</h1>
+                  <h1>Algorithmic bias</h1>
                       <p>Did it feel uncomfortable to infer the characteristics of another follower? Perhaps someone you could see through the corner of your eye, worshipping at the altar of dataism at the same time as you? When did you realise someone else was probably judging you too at the same moment, at the same time? Did you feel ok with the biased choices Spectre made you take? </p>
                   </ContentCol>
               </div>
@@ -132,14 +129,15 @@ class PostExp extends React.Component {
                       <p>
                           Today, automated systems are making inferences about you and billions of people every second of every day with no human oversight or intervention.
                       </p>
-                      <p>Algorithmic bias here Algorithmic bias here Algorithmic bias here Algorithmic bias here Algorithmic bias here Algorithmic bias here Algorithmic bias here Algorithmic bias here Algorithmic bias here Algorithmic bias here Algorithmic bias here Algorithmic bias here Algorithmic bias here Algorithmic bias here Algorithmic bias here Algorithmic bias here Algorithmic bias here Algorithmic bias here Algorithmic bias here Algorithmic bias here </p>
+                      <p>When Google Photos was released in 2015, its image recognition system mislabeled black people as gorillas. In 2016, researchers discovered that LinkedIn searches recommended male names, so when users searched for someone named “Andrea”, they’d be ask if they meant “Andrew”, but not the other way around. PredPol, a popular predictive policing software used by over 50 police departments in the US, has been accused of perpetuating racist practices.</p>
+                      <p>How do the technologies around us end up this way ? Unfortunately, it’s not a matter of simply the fault of the software developer or data scientist; the problem is much deeper. In the case of the Google Photos fiasco, Google’s image-classification system worked by using a large volume of training data. This training data, for example, contained thousands of photos of dogs, helping the system understand what a dog looks like, so when a user uploads a photo of her dog, the image will recognize it as such. The problem was that the training data included plenty of white faces but excluded a sufficient number of black faces, causing the system to misclassify images of black people. In fact, researchers have discovered that several common facial recognition technologies work best on white men, then slightly less accurately for white women , even worse for black men, and worst of all on black women.</p>
+                      <p>Biased algorithms feed exclusionary and discriminatory practices, and they spread quickly and at scale. The result of biased algorithms can manifest themselves in any number of places in which algorithms are being used today: in determining eligibility for a loan, in determining the length of someone’s prison sentence, and in evaluating whether or not to hire someone for a job. How might algorithmic bias be affecting your life? Would you even know about it, when it’s baked so deeply into a particular system?</p>
                       <strong>Further Reading:</strong>
                      <ul>
-                      <li><a href="https://datadetoxkit.org/en/wellbeing/darkpatterns">Data detox - dark patterns</a></li>
-                      <li><a href="https://www.darkpatterns.org/">Dark patterns.org</a></li>
-                      <li><a href="https://twitter.com/darkpatterns">Twitter - dark patterns</a></li>
-                      <li><a href="https://techcrunch.com/2018/07/01/wtf-is-dark-pattern-design/">WTF is dark pattern design?</a></li>
-                      <li><a href="https://www.theguardian.com/us-news/2020/jan/28/donald-trump-facebook-ad-campaign-2020-election">Donald Trump Facebook ad campaign 2020 election</a></li>
+                      <li><a href="https://www.ted.com/talks/cathy_o_neil_the_era_of_blind_faith_in_big_data_must_end">The era of blind faith in big data must end</a></li>
+                      <li><a href="https://www.newscientist.com/article/2166207-discriminating-algorithms-5-times-ai-showed-prejudice/">Discriminating algorithms: 5 times AI showed prejudice</a></li>
+                      <li><a href="https://www.wired.com/story/the-real-reason-tech-struggles-with-algorithmic-bias/">The Real Reason Tech Struggles With Algorithmic Bias</a></li>
+                      <li><a href="https://www.technologyreview.com/s/608248/biased-algorithms-are-everywhere-and-no-one-seems-to-care/">Biased Algorithms Are Everywhere, and No One Seems to Care</a></li>
                   </ul>
 
                   </ContentCol>
