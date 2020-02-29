@@ -1,5 +1,5 @@
 import React from 'react';
-
+import YouTube from 'react-youtube';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
@@ -55,10 +55,15 @@ class PostExp extends React.Component {
   render() {
     const { classes } = this.props;
     let { name, target } = this.state;
+    const opts = {
+            width: '100%',
+            playerVars: {
+              autoplay: 1
+            }
+        };
     return (
       <div className="PostExp">
-          <SpectreHeader colour="white" />
-
+          <SpectreHeader colour="white"/>
           <div className="container">
           <main>
           <section id="section-1">
@@ -240,7 +245,13 @@ class PostExp extends React.Component {
                       <p>
                           Cambridge Analytica claimed to have profiled “the personality of every single adult in the United States of America,” as Alexander Nix, former CEO of the firm explained.
                       </p>
-                      <div className="youtube-player" data-id="n8Dd5aVXLCc"></div>
+                      <div className="youtube-player">
+                      <YouTube
+                        videoId="n8Dd5aVXLCc"
+                        opts={opts}
+                        onReady={this._onReady}
+                      /></div>
+
                       <p>While the company has since dissolved after journalists revealed it had improperly gained access to voters’ data, commercial and political actors still routinely use psychometric tools to market their products, whether run-of-the-mill goods and services or political candidates. </p>
                       <p>errors in OCEAN infernences- add short sentence here.</p>
                       <strong>Further Reading:</strong>
@@ -308,8 +319,12 @@ class PostExp extends React.Component {
               <div className="row">
                   <div className="col-sm-12">
                       <div className="text-center kim">
-                          <div className="youtube-player" data-id="6xVKyBdXUCM"></div>
-                      </div>
+                      <div className="youtube-player">
+                      <YouTube
+                        videoId="6xVKyBdXUCM"
+                        opts={opts}
+                        onReady={this._onReady}/>
+                      </div></div>
                   </div>
               </div>
               <div className="row">

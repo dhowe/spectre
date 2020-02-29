@@ -64,7 +64,6 @@ Overall
   -webkit-tap-highlight-color: rgba(0,0,0,0);
   -webkit-tap-highlight-color: transparent;
   font-family: 'Montserrat' !important;
-  cursor: none !important;
 }
 
 body,
@@ -77,6 +76,7 @@ p {
 
 .App {
   text-align: center;
+  cursor: none;
 }
 
 .App * {

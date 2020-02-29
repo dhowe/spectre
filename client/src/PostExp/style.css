@@ -1,42 +1,38 @@
-html {
-  scroll-behavior: smooth;
-  cursor:default !important;
+.PostExp {
+  cursor:default!important;
 }
 
-a:active,
-a:hover {
+.PostExp a:active,
+.PostExp a:hover {
 	color: #42BAEB;
 	outline: 0
 }
 
-q {
+.PostExp q {
   font-weight: 500;
 }
-.SpectreHeader {
+.PostExp .SpectreHeader {
   position:relative;
   margin-bottom:80px;
 }
-.container {
+.PostExp .container {
   text-align:left;
   font-size: 16px;
   line-height: 31px;
   font-weight:500;
 }
-.container ul {
+.PostExp .container ul {
   list-style-type: circle;
+  color:#4F4F4F;
 }
-.container ul:not(.noListStyle) li {
-	list-style-type: circle;
-  display: list-item;
-}
-.container ul.noListStyle {
+.PostExp .container ul.noListStyle {
   list-style-type:none;
   padding-left:0;
 }
-.container strong{
+.PostExp .container strong{
   color:#4F4F4F;
 }
-.container p, .recommend-box{
+.PostExp .container p, .recommend-box{
 	color: #4F4F4F;
 	font-family: "Montserrat", "Open Sans", Helvetica, Arial, sans-serif;
 	font-size: 16px;
@@ -45,7 +41,7 @@ q {
   margin-block-start: 1em;
   margin-block-end: 1em;
 }
-.container h1 {
+.PostExp .container h1 {
 	font-size: 48px;
 	line-height: 52px;
 	font-weight: normal;
@@ -54,18 +50,18 @@ q {
 	position: relative;
   font-weight: bold;
 }
-.container h2 {
+.PostExp .container h2 {
   font-weight:bold;
   color:#4F4F4F;
 }
-.container a {
+.PostExp .container a {
 	background-color: transparent;
 	color: #42BAEB;
 	text-decoration: underline;
   font-size:16px;
 
 }
-h1:after {
+.PostExp h1:after {
 	background-color: #42BAEB;
 	content: "";
 	display: block;
@@ -77,18 +73,18 @@ h1:after {
 
 }
 
-header {
+/* .PostExp header {
 	text-align: center;
 	padding: 16px 0 24px 0;
 	margin-bottom: 120px;
 	border-bottom: 1px solid #e0e0e0;
-}
+} */
 
-.full-width {
+.PostExp .full-width {
 	width: 100%;
 }
 
-section {
+.PostExp section {
 	margin-bottom: 80px;
 }
 
@@ -97,11 +93,10 @@ section {
 .youtube-player {
 	position: relative;
 	padding-bottom: 56.23%;
+  height:0;
 	/* Use 75% for 4:3 videos */
-	height: 0;
 	overflow: hidden;
 	max-width: 100%;
-	background: #000;
 	margin: 5px;
 }
 
@@ -216,7 +211,7 @@ div.kim {
 }
 
 
-.container img {
+.PostExp .container img {
 	margin: 40px 0;
 	-webkit-box-shadow: 30px 24px 90px 0px rgba(0, 0, 0, 0.24);
 	-moz-box-shadow: 30px 24px 90px 0px rgba(0, 0, 0, 0.24);
@@ -337,32 +332,32 @@ div.kim {
 	top: auto;
 }
 
-footer {padding-bottom: 80px;}
+.PostExp footer {padding-bottom: 80px;}
 
-footer .row {
+.PostExp footer .row {
 	border-top: 1px solid #BDBDBD;
 }
 
-footer .breakout {
+.PostExp footer .breakout {
 	transform: rotate(-92deg);
 	max-width: 370px;
 }
 
-footer h1 {
+.PostExp footer h1 {
 	margin-top: -60px;
 }
 
 @media (min-width:992px) {
-	footer .row {
+	.PostExp footer .row {
 		border-top: 1px solid #BDBDBD;
 		padding-top: 104px;
 	}
 
-	footer .breakout {
+	.PostExp footer .breakout {
 		transform: rotate(0);
 	}
 
-	footer h1 {
+	.PostExp footer h1 {
 		margin-top: 0px;
 	}
 }
