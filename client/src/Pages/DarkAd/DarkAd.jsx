@@ -110,7 +110,7 @@ class DarkAd extends React.Component {
             <h1>Create Your Campaign</h1>
             <div className="split-half">
               <div className="split-left">
-                <div className={classes.ad}>    { /* adIssue should never change after being selected '*/}
+                <div className={classes.ad}>
                   <img className={ComponentsStyles.adImage} src={this.state.image} alt="adbg"></img>
                   <p style={this.state.slogan ? {
                       backgroundColor: 'red',
@@ -120,7 +120,7 @@ class DarkAd extends React.Component {
                     }} className={ComponentsStyles.adText}>{this.state.slogan}
                   </p>
                   {!defaultImg ? <img className={classes.campaignImage} src={cimage} alt="campaign"
-                    style={{ bottom: (this.state.sloganY===370 ? 416: 105)  }}></img> : ''}
+                    style={{ bottom: (this.state.sloganY===370 ? 407: 107)  }}></img> : ''}
                 </div>
               </div>
               <div className="split-right">
@@ -135,7 +135,7 @@ class DarkAd extends React.Component {
                           defaultImg: false,
                           sloganY: bannerOffsets[img]
                         });
-                        console.log('sloganY', bannerOffsets, img, bannerOffsets[img] + 'px');
+                        //console.log('sloganY', bannerOffsets, img, bannerOffsets[img] + 'px');
                       }}>
                     </img>
                   ))}
@@ -166,10 +166,11 @@ class DarkAd extends React.Component {
               alt="facebook" /> ad:</h1>
             <div className={classes.adPage2}>
               <img className={ComponentsStyles.adImage} src={this.state.image} alt="bg"></img>
-              <p style={this.state.slogan ? { backgroundColor: 'red' } : { backgroundColor: 'none' }}
+              <p style={this.state.slogan ? { backgroundColor: 'red', top: this.state.sloganY } : { backgroundColor: 'none' }}
                 className={ComponentsStyles.adTextPage2}>{this.state.slogan}
               </p>
-              {!this.state.defaultImg ? <img className={classes.campaignPage2} src={cimage} alt="bg"></img> : ''}
+              {!this.state.defaultImg ? <img className={classes.campaignPage2} src={cimage} alt="bg"
+                style={{ bottom:(this.state.sloganY===370 ? 315:15)}}></img> : ''}
             </div>
             <p> Share with <span>{target.name}</span></p>
           </div>

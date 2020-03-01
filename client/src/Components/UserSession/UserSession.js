@@ -76,17 +76,23 @@ UserSession.clear = (context) => {
 UserSession.generateDescription = (target, tmpl) => {
   if (target) return target.generateDescription(tmpl);
   return {
-    opening:'',
-    description:'',
-    closing:'',
-    trait:''
+    opening: '',
+    description: '',
+    closing: '',
+    trait: ''
   }
+}
+
+UserSession.generateBasicDesc = (target) => {
+  if (!target) return ['','','',''];
+  let { opening, closing } = UserSession.generateDescription(target);
+  return [ opening.slice(0, 2).join(' '),
+    opening[2], opening[3], closing.join(' ') ];
 }
 
 UserSession.oceanData = (target) => {
   //let { description, opening, closing } = ;
-  let a = Object.assign(UserSession.generateDescription(target),
-  {
+  return {
     name: target ? target.name : '',
     traits: target ? target.traits : {},
     image: UserSession.targetImage(target),
@@ -95,11 +101,10 @@ UserSession.oceanData = (target) => {
     persPron: target ? target.persPron() : 'they',
     possPron: target ? target.possPron() : 'their',
     updatedAt: target ? target.updatedAt : new Date(),
-    adIssue: target ? target.adIssue : UserSession.adIssues
-      [Math.floor(Math.random() * UserSession.adIssues.length)],
-  });
-  console.log(a);
-  return a;
+    sentences: UserSession.generateBasicDesc(target),
+    adIssue: target ? target.adIssue : UserSession.adIssues[Math.floor
+      (Math.random() * UserSession.adIssues.length)],
+  };
 }
 
 /*
