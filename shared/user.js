@@ -132,8 +132,8 @@ export default class User {
     let { category, trait } = User.definingTrait(target);
     let text = parser.parse(is2p ? User.opening2p : User.opening3p) + ' ';
     text += (is2p ? 'Your' : target.possPron().ucf()) + ' defining OCEAN trait';
-    text += ' is ' + trait + ', on which ' + (is2p ? 'you' : target.persPron());
-    text += ' scores unusually ' + (category > 0 ? 'high. ' : 'low. ');
+    text += ' is ' + trait + ', on which ' + (is2p ? 'you score' : target.persPron() + ' scores');
+    text += ' unusually ' + (category > 0 ? 'high. ' : 'low. ');
     text += User.oceanDesc[trait].desc + ' ';
     text += tmpl[trait].meta[category < 0 ? 0 : 1];
     return text;
