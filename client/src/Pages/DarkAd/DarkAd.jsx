@@ -72,7 +72,7 @@ class DarkAd extends React.Component {
       pageTwo: { display: 'none' },
       target: UserSession.oceanData(),
       image: '/imgs/no_propaganda_bg.svg',
-      bannerOffset: 0
+      sloganY: 230 // offset for slogan on image
     };
   }
 
@@ -99,6 +99,7 @@ class DarkAd extends React.Component {
     const cimage = UserSession.imageDir + issue + '.svg';
     const btnEnabledPg1 = (this.state.defaultImg !== true && this.state.slogan.length);
 
+    console.log('SLOGANY: '+this.state.sloganY);
     return (
       <div className={classes.root + " darkAd"}>
         <SpectreHeader colour="white" progressActive progressNumber="one" />
@@ -111,10 +112,15 @@ class DarkAd extends React.Component {
               <div className="split-left">
                 <div className={classes.ad}>    { /* adIssue should never change after being selected '*/}
                   <img className={ComponentsStyles.adImage} src={this.state.image} alt="adbg"></img>
-                  <p style={this.state.slogan ? { backgroundColor: 'red' } : { backgroundColor: 'none' }}
-                    className={ComponentsStyles.adText}>{this.state.slogan}
+                  <p style={this.state.slogan ? {
+                      backgroundColor: 'red',
+                      top: this.state.sloganY
+                    } : {
+                      backgroundColor: 'none'
+                    }} className={ComponentsStyles.adText}>{this.state.slogan}
                   </p>
-                  {!defaultImg ? <img className={classes.campaignImage} src={cimage} alt="campaign"></img> : ''}
+                  {!defaultImg ? <img className={classes.campaignImage} src={cimage} alt="campaign"
+                    style={{ bottom: (this.state.sloganY===370 ? 416: 105)  }}></img> : ''}
                 </div>
               </div>
               <div className="split-right">
@@ -123,7 +129,14 @@ class DarkAd extends React.Component {
                   {images.map((img, i) => (
                     <img className={ComponentsStyles.adImageSelection}
                       src={img} alt={`adimg${i + 1}`} key={`img${i + 1}`}
-                      onClick={() => this.setState({ image: img, defaultImg: false })}>
+                      onClick={() => {
+                        this.setState({
+                          image: img,
+                          defaultImg: false,
+                          sloganY: bannerOffsets[img]
+                        });
+                        console.log('sloganY', bannerOffsets, img, bannerOffsets[img] + 'px');
+                      }}>
                     </img>
                   ))}
                 </div>
@@ -136,12 +149,9 @@ class DarkAd extends React.Component {
                       variant="outlined"
                       color="primary"
                       onClick={() => {
-                        let state = { slogan: slogan };
-                        if (defaultImg) {
-                          state.image = redimg;
-                          state.bannerOffset = 230;
-                        }
-                        this.setState(state);
+                        let nextState = { slogan };
+                        if (defaultImg) nextState.image = redimg;
+                        this.setState(nextState);
                       }}>
                       {slogan.split(' ').slice(0, 3).join(' ') + '...'}
                     </Button>
@@ -189,49 +199,49 @@ class DarkAd extends React.Component {
 }
 
 const bannerOffsets = {
-  'democrat_1.1.png': 230,
-  'democrat_1.2.png': 370,
-  'democrat_2.1.png': 230,
-  'democrat_2.2.png': 230,
-  'democrat_3.1.png': 370,
-  'democrat_3.2.png': 370,
-  'democrat_4.1.png': 230,
-  'democrat_4.2.png': 370,
-  'democrat_5.1.png': 370,
-  'democrat_5.2.png': 370,
+  'imgs/democrat_1.1.jpg': 230,
+  'imgs/democrat_1.2.jpg': 370,
+  'imgs/democrat_2.1.jpg': 230,
+  'imgs/democrat_2.2.jpg': 230,
+  'imgs/democrat_3.1.jpg': 370,
+  'imgs/democrat_3.2.jpg': 370,
+  'imgs/democrat_4.1.jpg': 230,
+  'imgs/democrat_4.2.jpg': 370,
+  'imgs/democrat_5.1.jpg': 370,
+  'imgs/democrat_5.2.jpg': 370,
 
-  'democrat_-1.1.png': 230,
-  'democrat_-1.2.png': 370,
-  'democrat_-2.1.png': 130,
-  'democrat_-2.2.png': 230,
-  'democrat_-3.1.png': 230,
-  'democrat_-3.2.png': 230,
-  'democrat_-4.1.png': 230,
-  'democrat_-4.2.png': 130,
-  'democrat_-5.1.png': 230,
-  'democrat_-5.2.png': 230,
+  'imgs/democrat_-1.1.jpg': 230,
+  'imgs/democrat_-1.2.jpg': 370,
+  'imgs/democrat_-2.1.jpg': 130,
+  'imgs/democrat_-2.2.jpg': 230,
+  'imgs/democrat_-3.1.jpg': 230,
+  'imgs/democrat_-3.2.jpg': 230,
+  'imgs/democrat_-4.1.jpg': 230,
+  'imgs/democrat_-4.2.jpg': 130,
+  'imgs/democrat_-5.1.jpg': 230,
+  'imgs/democrat_-5.2.jpg': 230,
 
-  'republican_1.1.png': 370,
-  'republican_1.2.png': 370,
-  'republican_2.1.png': 370,
-  'republican_2.2.png': 230,
-  'republican_3.1.png': 370,
-  'republican_3.2.png': 230,
-  'republican_4.1.png': 230,
-  'republican_4.2.png': 370,
-  'republican_5.1.png': 370,
-  'republican_5.2.png': 230,
+  'imgs/republican_1.1.jpg': 370,
+  'imgs/republican_1.2.jpg': 370,
+  'imgs/republican_2.1.jpg': 370,
+  'imgs/republican_2.2.jpg': 230,
+  'imgs/republican_3.1.jpg': 370,
+  'imgs/republican_3.2.jpg': 230,
+  'imgs/republican_4.1.jpg': 230,
+  'imgs/republican_4.2.jpg': 370,
+  'imgs/republican_5.1.jpg': 370,
+  'imgs/republican_5.2.jpg': 230,
 
-  'republican_-1.1.png': 370,
-  'republican_-1.2.png': 370,
-  'republican_-2.1.png': 230,
-  'republican_-2.2.png': 230,
-  'republican_-3.1.png': 230,
-  'republican_-3.2.png': 130,
-  'republican_-4.1.png': 230,
-  'republican_-4.2.png': 370,
-  'republican_-5.1.png': 230,
-  'republican_-5.2.png': 230
+  'imgs/republican_-1.1.jpg': 370,
+  'imgs/republican_-1.2.jpg': 370,
+  'imgs/republican_-2.1.jpg': 230,
+  'imgs/republican_-2.2.jpg': 230,
+  'imgs/republican_-3.1.jpg': 230,
+  'imgs/republican_-3.2.jpg': 130,
+  'imgs/republican_-4.1.jpg': 230,
+  'imgs/republican_-4.2.jpg': 370,
+  'imgs/republican_-5.1.jpg': 230,
+  'imgs/republican_-5.2.jpg': 230
 }
 
 DarkAd.propTypes = {
