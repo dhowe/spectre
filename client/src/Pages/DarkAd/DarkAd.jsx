@@ -14,7 +14,6 @@ import ComponentsStyles from '../../App.module.css';
 import "./DarkAd.scss";
 
 const styles = {
-
   button: {
     borderRadius: '28px',
     margin: '20px',
@@ -73,6 +72,7 @@ class DarkAd extends React.Component {
       pageTwo: { display: 'none' },
       target: UserSession.oceanData(),
       image: '/imgs/no_propaganda_bg.svg',
+      bannerOffset: 0
     };
   }
 
@@ -137,7 +137,10 @@ class DarkAd extends React.Component {
                       color="primary"
                       onClick={() => {
                         let state = { slogan: slogan };
-                        if (defaultImg) state.image = redimg;
+                        if (defaultImg) {
+                          state.image = redimg;
+                          state.bannerOffset = 230;
+                        }
                         this.setState(state);
                       }}>
                       {slogan.split(' ').slice(0, 3).join(' ') + '...'}
@@ -183,6 +186,52 @@ class DarkAd extends React.Component {
       </div>
     );
   }
+}
+
+const bannerOffsets = {
+  'democrat_1.1.png': 230,
+  'democrat_1.2.png': 370,
+  'democrat_2.1.png': 230,
+  'democrat_2.2.png': 230,
+  'democrat_3.1.png': 370,
+  'democrat_3.2.png': 370,
+  'democrat_4.1.png': 230,
+  'democrat_4.2.png': 370,
+  'democrat_5.1.png': 370,
+  'democrat_5.2.png': 370,
+
+  'democrat_-1.1.png': 230,
+  'democrat_-1.2.png': 370,
+  'democrat_-2.1.png': 130,
+  'democrat_-2.2.png': 230,
+  'democrat_-3.1.png': 230,
+  'democrat_-3.2.png': 230,
+  'democrat_-4.1.png': 230,
+  'democrat_-4.2.png': 130,
+  'democrat_-5.1.png': 230,
+  'democrat_-5.2.png': 230,
+
+  'republican_1.1.png': 370,
+  'republican_1.2.png': 370,
+  'republican_2.1.png': 370,
+  'republican_2.2.png': 230,
+  'republican_3.1.png': 370,
+  'republican_3.2.png': 230,
+  'republican_4.1.png': 230,
+  'republican_4.2.png': 370,
+  'republican_5.1.png': 370,
+  'republican_5.2.png': 230,
+
+  'republican_-1.1.png': 370,
+  'republican_-1.2.png': 370,
+  'republican_-2.1.png': 230,
+  'republican_-2.2.png': 230,
+  'republican_-3.1.png': 230,
+  'republican_-3.2.png': 130,
+  'republican_-4.1.png': 230,
+  'republican_-4.2.png': 370,
+  'republican_-5.1.png': 230,
+  'republican_-5.2.png': 230
 }
 
 DarkAd.propTypes = {
