@@ -55,9 +55,12 @@ import Navigation from './Components/Navigation/Navigation';
 import Keyboardist from 'react-keyboardist';
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-
 import './App.scss';
 import colors from './colors.scss';
+
+import packageJson from '../package.json';
+global.appVersion = packageJson.version;
+
 
 const theme = createMuiTheme({
   // silence deprecation warns

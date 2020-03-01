@@ -8,14 +8,15 @@ import routes from './routes';
 import mongoose from 'mongoose';
 import bodyparser from 'body-parser';
 import basicAuth from 'express-basic-auth';
+import packageJson from './package.json';
 
 import UserModel from './user-model';
-
 import { dbUrl, apiUser, profDir, clientDir, certs, prod } from './config';
 
 const base = '/api/';
 const port = process.env.PORT || 8083;
 const test = process.env.NODE_ENV === 'test';
+const appVersion = packageJson.version;
 
 if (!apiUser[process.env.API_USER]) {
   throw Error('Attempt to start server without ' +
@@ -75,9 +76,8 @@ const dbstr = prod ? dbUrl : dbUrl + '-dev';
 })();
 
 let server, logf = (dev) => {
-  console.log('\nSpectre API at ' + (dev ? 'http' : 'https:') + '//localhost:'
-    + port + base + ' [' + dbstr.substring(dbstr.lastIndexOf('/') + 1)
-    + '::' + profDir + ']');
+  console.log('\nSpectre API v'+appVersion+' at ' + (dev ? 'http' : 'https:') + '//localhost:'
+    + port + base + ' [' + dbstr.substring(dbstr.lastIndexOf('/') + 1)+']');
 }
 
 if (prod) { // load ssl certs for production
