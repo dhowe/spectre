@@ -6,7 +6,7 @@ import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
-import { ReactComponent as ThumbUp } from '../../Icons/insightthankyou.svg';
+//import { ReactComponent as ThumbUp } from '../../Icons/insightthankyou.svg';
 import Video from '../../Components/Video/Video';
 import './InsightComplete.scss';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
