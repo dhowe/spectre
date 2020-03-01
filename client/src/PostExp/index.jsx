@@ -68,6 +68,9 @@ class PostExp extends React.Component {
           <SpectreHeader colour="white"/>
           <div className="container">
           <main>
+          <div className="intro"> {/*added DCH: we need one paragraph at very top, design forthcoming*/}
+          As a reward for being a loyal follower, we can now reveal the secrets of Silicon Valley. In an age of misinformation and fake news enabled by large social media platforms, tech giants are using your personal data to influence your behaviors – both online and in the voting booth.
+          </div>
           <section id="section-1">
               <div className="row bg-1">
                   <ContentCol>
