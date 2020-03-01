@@ -33,12 +33,20 @@ class OCEANReveal extends React.Component {
   async componentDidMount() {
 
     const user = await UserSession.ensure(this.context,
-      ['name', 'login', 'gender', 'traits', 'celebrity']);
+      ['name', 'login', 'age', 'gender', 'adIssue', 'traits', 'celebrity']);
 
-    const sentences = user.generateSummary();
+    const { opening, closing } = user.generateDescription('2p');
+    const sentences = [
+      opening.slice(0, 2).join(' '),
+      opening[2],
+      opening[3],
+      closing.join(' '),
+    ];
+
+    //const sentences = user.generateSummary();
     const allChar = sentences.join("----");
     const waitingTime = (allChar.length * keyPause)
-      + timing.reduce((a, v) => a + v) + 1000;
+      + timing.reduce((a, v) => a + v) + 1000 /*TMP*/+10000000;
 
     this.setState({ sentences: sentences, celebrity: user.celebrity });
     this.timeout = setTimeout(() => this.setState
@@ -87,29 +95,25 @@ class OCEANReveal extends React.Component {
             <h2>We've only just met, but already we know…</h2>
           </Fade>
           <p className="normal">
-          {
-            sentences.map((sent, i) => {
-              let idx = sent.lastIndexOf(' ');
-              sent = sent.substring(0, idx) // hack to avoid widows via &nbsp;
-                + String.fromCharCode(160) + sent.substring(idx + 1) + " ";
-              return (
+
+            {
+              sentences.map((sent, i) => {
+                let idx = sent.lastIndexOf(' ');
+                sent = sent.substring(0, idx) // hack to avoid widows via &nbsp;
+                  + String.fromCharCode(160) + sent.substring(idx + 1) + " ";
+                return (
                   sent.split('').map((letter, j) => {
                     let delay = timing[2] + ((++timer + (i * linePause)) * keyPause);
                     return (
                       <Fade key={j} in={true} style={{ transitionDelay: delay + 'ms' }}>
-                        <span key={`fade-${i}`} style={{ color: '#4F4F4F' }}>
-                          {letter}
-                        </span>
+                        <span key={`fade-${i}`} style={{ color: '#4F4F4F' }}>{letter}</span>
                       </Fade>
                     )
-                  })
-              );
+                  }));
+              })
             }
-          )
-          }
           </p>
-          <audio id="type" src="http://chenqianxun.com/download/key.wav" preload="auto">
-          </audio>
+          <audio id="type" src="audio/key1.wav" preload="auto"></audio>
         </div>
         <Modal
           isOpen={modalOpen}

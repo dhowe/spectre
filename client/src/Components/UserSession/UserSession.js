@@ -78,13 +78,14 @@ UserSession.generateDescription = (target, tmpl) => {
   return {
     opening:'',
     description:'',
-    closing:''
+    closing:'',
+    trait:''
   }
 }
 
 UserSession.oceanData = (target) => {
   //let { description, opening, closing } = ;
-  return Object.assign(UserSession.generateDescription(target),
+  let a = Object.assign(UserSession.generateDescription(target),
   {
     name: target ? target.name : '',
     traits: target ? target.traits : {},
@@ -97,6 +98,8 @@ UserSession.oceanData = (target) => {
     adIssue: target ? target.adIssue : UserSession.adIssues
       [Math.floor(Math.random() * UserSession.adIssues.length)],
   });
+  console.log(a);
+  return a;
 }
 
 /*
@@ -209,6 +212,7 @@ function fillMissingProps(user, props) {
 
   let modified = false; // check known props, 1-by-1
   let propStubber = {
+    age: () => irand(20, 60),
     gender: () => rand(Genders),
     virtue: () => rand(Virtues),
     adIssue: () => rand(UserSession.adIssues),

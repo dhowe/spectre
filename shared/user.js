@@ -108,25 +108,34 @@ export default class User {
     };
   }
 
-  influencingSentences(is2p) {
+  influencingSentences(tmpl) {
+    let is2p = tmpl === User.oceanDesc2p;
     User.computeInfluencesFor(this);
     if (!Array.isArray(this.influences[this.adIssue].themes)
       || this.influences[this.adIssue].themes.length != 2) {
       throw Error('this.influences.adIssue.themes not an array[2]');
     }
-    return (is2p ? 'You are' : this.name.ucf() + ' is')
-      + ' likely to be influenced by images that contain '
+    return (is2p ? 'You' : this.name.ucf()) +' can'
+      + ' likely be influenced by images showing '
       + this.influences[this.adIssue].themes[0]
-      + ' and by slogans that contain '
+      + ' and by slogans containing '
       + this.influences[this.adIssue].themes[1] + '.';
   }
 
-  openingSentences(is2p) {
+  getAge() {
+    return Math.round(this.age).toString();
+  }
+
+  openingSentences(tmpl, parser) {
     let target = this;
+    let is2p = tmpl === User.oceanDesc2p;
     let { category, trait } = User.definingTrait(target);
-    let text = (is2p ? 'You are' : target.name.ucf() + ' is') + ' a ' + target.gender + ' follower, about ' + Math.round(target.age) + ' years old. ';
-    text += (is2p ? 'Your' : target.possPron().ucf()) + ' defining OCEAN trait is ' + trait + ', on which ' + (is2p ? 'you' : target.persPron()) + ' scores unusually ' + (category > 0 ? 'high. ' : 'low. ');
-    text += User.oceanDesc[trait].desc + ' ' + User.oceanDesc[trait].meta[category < 0 ? 0 : 1];
+    let text = parser.parse(is2p ? User.opening2p : User.opening3p) + ' ';
+    text += (is2p ? 'Your' : target.possPron().ucf()) + ' defining OCEAN trait';
+    text += ' is ' + trait + ', on which ' + (is2p ? 'you' : target.persPron());
+    text += ' scores unusually ' + (category > 0 ? 'high. ' : 'low. ');
+    text += User.oceanDesc[trait].desc + ' ';
+    text += tmpl[trait].meta[category < 0 ? 0 : 1];
     return text;
   }
 
@@ -137,11 +146,10 @@ export default class User {
     // validate args  && user state
     tmpl = tmpl === '2p' ? User.oceanDesc2p : User.oceanDesc3p;
     if (!User.hasOceanTraits(target)) throw Error('traits required');
-    ['adIssue', 'age', 'gender' ].forEach(req => {
-      if (typeof target[req] === 'undefined') throw Error(req+' required');
+    ['adIssue', 'age', 'gender'].forEach(req => {
+      if (typeof target[req] === 'undefined') throw Error(req + ' required');
     });
 
-    let is2p = tmpl === User.oceanDesc2p;
     let { trait, score } = User.definingTrait(target);
     let traitNames = User.oceanTraits;
     let idx = Math.min(traitNames.length - 1,
@@ -149,13 +157,13 @@ export default class User {
     let tmplText = tmpl[trait].text[idx];
 
     let parser = new Parser(target);
-    let opening = this.splitSentences(parser.parse(target.openingSentences(is2p)));
+    let opening = this.splitSentences(parser.parse(target.openingSentences(tmpl, parser)));
     let description = this.splitSentences(parser.parse(tmplText));
-    let closing = this.splitSentences(target.influencingSentences(is2p));
+    let closing = this.splitSentences(target.influencingSentences(tmpl));
 
     //console.log(target.traits, '\n', trait, score, category, '\n', text);
 
-    return { opening, description, closing };
+    return { opening, description, closing, trait };
   }
 
   generateSentences(template, numSentences) {
@@ -587,12 +595,12 @@ User.influencingThemes = {
       conscientiousness: ["organization, synchronicity or finances", "control, fiscal responsibility or rights"],
       extraversion: ["free expression, success or confidence", "your rules or your rights"],
       agreeableness: ["family scenes or relaxing locations", "relaxation, friendship or loyalty"],
-      neuroticism: ["negative imagery or fear of the other", "crime, instability or fear"]
+      neuroticism: ["negative imagery or fear of ‘the other‘", "crime, instability or fear"]
     },
     low: {
-      openness: ["traditional institutions and culture", "unity, tradition or values"],
+      openness: ["traditional institutions or culture", "unity, tradition or values"],
       conscientiousness: ["impulsive actions, gambling or risk-taking", "aggression or action-taking"],
-      extraversion: ["strong characters and visions of the future", "rising up, or ideas for a new tomorrow"],
+      extraversion: ["strong characters or ‘visions of the future‘", "rising up, or ‘ideas for a new tomorrow‘"],
       agreeableness: ["competition, sports or winning", "borders, jobs or paying for others mistakes"],
       neuroticism: ["carefree activities or relaxation", "hassle, stress or worry"]
     }
@@ -602,11 +610,11 @@ User.influencingThemes = {
       openness: ["aspirational or inclusive themes", "solidarity or collective action"],
       conscientiousness: ["impulsive actions or gambling", "risk and trust"],
       extraversion: ["silence or restriction ", "expression, or ones 'voice'"],
-      agreeableness: ["social cohesion and family harmony", "family, community or cooperation"],
+      agreeableness: ["social cohesion or family harmony", "family, community or cooperation"],
       neuroticism: ["anxiety, stress or uncertainty", "instability or indecision"],
     },
     low: {
-      openness: ["traditional institutions and culture", "unity, tradition or values"],
+      openness: ["traditional institutions or culture", "unity, tradition or values"],
       conscientiousness: ["impulsive actions or gambling", "risk and danger"],
       extraversion: ["solitary people or loners", "contemplation or solitude"],
       agreeableness: ["competition, sports or winning", "losing, quitting or control"],
@@ -626,7 +634,7 @@ User.influencingThemes = {
     low: {
       openness: ["British traditions and culture", "‘British’ or ‘traditions’"],
       conscientiousness: ["action rather than tranquility", "‘no more’ or ‘time to act’"],
-      extraversion: ["strong characters and visions of the future", "ideas of a ‘new’ tomorrow"],
+      extraversion: ["strong characters or visions of the future", "ideas of a ‘new’ tomorrow"],
       agreeableness: ["struggle or strife", "‘borders’, ‘jobs’ or ‘mistakes’"],
       neuroticism: ["easy-going or relaxing themes ", "‘relax’ or ‘no big deal’"]
     }
@@ -726,33 +734,27 @@ User.oceanDesc = {
   openness: {
     desc: 'Openness to experience relates to our imagination and the degree to which we are comfortable with unfamiliarity.',
     poles: ['Conservative and Traditional', 'Liberal and Artistic'],
-    meta: ['People like $user.name.ucf() who score low on this trait are generally traditional and prefer the familiar over the unusual.', 'People like $user.name.ucf() who score high on this trait are intellectually curious, sensitive to beauty, and unconventional.']
   },
   conscientiousness: {
     desc: 'Conscientiousness concerns the way in which we control, regulate, and direct our impulses.',
     poles: ['Impulsive and Spontaneous', 'Organized and Hard-working'],
-    meta: ['People like $user.name.ucf() who score low on this trait are generally characterized as spontaneous and impulsive.', 'People like $user.name.ucf() who score high on this trait can be described as organized, reliable, and efficient.']
   },
-
   extraversion: {
     desc: 'Extraversion refers to the extent to which people get their energy from the company of others, and whether they actively seek excitement and stimulation.',
     poles: ['Contemplative', 'Engaged with Outside World'],
-    meta: ['People like $user.name.ucf() who score low on this trait tend to be shy, reserved and most comfortable alone.', 'People like $user.name.ucf() who score high on this trait can be described as energetic, talkative and sociable.']
   },
-
   agreeableness: {
     desc: 'Agreeableness reflects individual differences concerning cooperation and social harmony.',
     poles: ['Competitive', 'Team-working and Trusting'],
-    meta: ['People like $user.name.ucf() who score low on this trait tend to be more driven, self-confident and competitive.','People like $user.name.ucf() who score high on this trait are generally considered soft-hearted, generous, and sympathetic.']
   },
-
   neuroticism: {
     desc: 'Neuroticism refers to the tendency to experience negative emotions.',
     poles: ['Laid-back and Relaxed', 'Easily Stressed and Emotional'],
-    meta: ['People like $user.name.ucf() who score low on this trait often show an unusual emotional depth.', 'People like $user.name.ucf() who score high on this trait generally worry more than most, and react poorly to stressful situations.']
   }
 };
 
+User.opening2p = 'You are a $user.gender of approximately $user.getAge() years of age.';
+User.opening3p = '$user.name.ucf() is a $user.getAge() year-old $user.gender follower.';
 
 User.oceanDesc2p = {
   openness: {
@@ -762,7 +764,8 @@ User.oceanDesc2p = {
       'You are very aware of your feelings -- but not as much your imagination. You both embrace change and resist simultanesouly. Have you forgotten that beauty was once so important to you?',
       'You are intellectually curious and adept at recognizing beauty, no matter the opinions of others. Your imagination is vivid but your creativity can lead you astray',
       'You\'re more intellectually curious than most, and recognize beauty in the world. But your beliefs are unconventional, and can tend even toward pessimism.'
-    ]
+    ],
+    meta: ['People like you, who score low on this trait, are generally traditional and prefer the familiar over the unusual.', 'People like you, who score high on this trait, are intellectually curious, sensitive to beauty, and unconventional.']
   },
 
   conscientiousness: {
@@ -772,7 +775,8 @@ User.oceanDesc2p = {
       'You are random and fun to be around but you can plan when life requires it. Depending on the situation, you can make quick decisions or deliberate for longer if necessary.',
       'You avoid trouble through planning and imagine that your persistence will get you where you want to go.',
       'You\'re a bit of a perfectionist, planning things to the most minute detail. You can appear somewhat self-satisified, especially when long-term plans come to fruition.'
-    ]
+    ],
+    meta: ['People like you, who score low on this trait, are generally characterized as spontaneous and impulsive.', 'People like you, who score high on this trait, can be described as organized, reliable, and efficient.']
   },
 
   extraversion: {
@@ -782,7 +786,8 @@ User.oceanDesc2p = {
       'You enjoy and actively seek out social occasions, but don\'t think them super important. You might say that sometimes its nice to take a step back and have a quiet night in.',
       'You think you\'re energetic and dynamic. But you\'re someone who seeks out social attention, especially in large groups.',
       'You think you\'re energetic, exuberant and active. You enjoy being the center of attention at social occasions, but like to think you\'re ready for something bigger.'
-    ]
+    ],
+    meta: ['People like you, who score low on this trait, tend to be shy, reserved and most comfortable alone.', 'People like you, who score high on this trait, can be described as energetic, talkative and sociable.']
   },
 
   agreeableness: {
@@ -792,7 +797,8 @@ User.oceanDesc2p = {
       'You get along with people, especially once they\'ve proved themselves trustworthy. You have a healthy scepticism about others’ motives, but that doesn’t stop you from considering them basically honest and decent.',
       'You\'re someone people think they can get along with easily. You generally expect others to be honest and decent, even when they\'re not',
       'You are easy to get along with (most of the time). You imagine yourself friendly and tolerant, but this doesn\'t always extend to those who are not as enlightened'
-    ]
+    ],
+    meta: ['People like you, who score low on this trait, tend to be more driven, self-confident and competitive.', 'People like you, who score high on this trait, are generally considered soft-hearted, generous, and sympathetic.']
   },
 
   neuroticism: {
@@ -802,7 +808,8 @@ User.oceanDesc2p = {
       'You are generally calm. Though you can feel emotional or stressed out by some experiences, your feelings tend to be warranted by the situation.',
       'You are more self-conscious than some, and can get caught up in stressful situations.  On the other hand you\'re quite \"in touch\" with your own feelings.',
       'You are likely to react poorly to stressful situations. On the other hand you demonstrate a somewhat unexpected emotional depth.'
-    ]
+    ],
+    meta: ['People like you, who score low on this trait, often show an unusual emotional depth.', 'People like you, who score high on this trait, generally worry more than most, and react poorly to stressful situations.']
   }
 };
 
@@ -815,6 +822,7 @@ User.oceanDesc3p = {
       '$user.name.ucf() $user.toBe() intellectually curious. $user.persPron().ucf() $user.toBe() appreciative of what $user.persPron() considers beautiful, no matter what others think. $user.possPron().ucf() imagination $user.toBe() vivid and makes $user.possPron() more creative than others.',
       '$user.name.ucf() $user.toBe() is highly intellectually curious. And $user.persPron() $user.toBe() more sensitive to beauty than most. $user.possPron().ucf() beliefs are individualistic and frequently drift towards the unconventional. $user.persPron().ucf() enjoys $user.possPron() imagination and the exciting places it takes $user.possPron().'
     ],
+    meta: ['People like $user.name.ucf(), who score low on this trait, are generally traditional and prefer the familiar over the unusual.', 'People like $user.name.ucf(), who score high on this trait, are intellectually curious, sensitive to beauty, and unconventional.']
   },
 
   conscientiousness: {
@@ -824,7 +832,8 @@ User.oceanDesc3p = {
       '$user.name.ucf() $user.toBe() random and fun to be around. But $user.persPron() can plan and persist when life requires it. Depending on the situation, $user.persPron() can make quick decisions or deliberate for longer if necessary.',
       '$user.name.ucf() avoids foreseeable trouble through planning. And $user.persPron() achieves success through persistence. $user.persPron().ucf() $user.toBe() reliable and prepared for life’s challenges.',
       '$user.name.ucf() $user.toBe() a perfectionist. $user.persPron().ucf() likes to plan everything down to the last detail. This has consequently led to $user.possPron() being very successful and extremely reliable. $user.persPron().ucf() particularly enjoys seeing $user.possPron() long-term plans come to fruition.'
-    ]
+    ],
+    meta: ['People like $user.name.ucf(), who score low on this trait, are generally characterized as spontaneous and impulsive.', 'People like $user.name.ucf(), who score high on this trait, can be described as organized, reliable, and efficient.']
   },
 
   extraversion: {
@@ -834,7 +843,8 @@ User.oceanDesc3p = {
       '$user.name.ucf() enjoys social occasions. But $user.persPron() doesn\'t depend on then for her enjoyment. $user.name.ucf() often likes to step back and have a quiet night in.',
       '$user.name.ucf() $user.toBe() energetic and active. $user.persPron().ucf() is someone who enjoys and actively seeks out social occasions, and especially enjoys talking with large groups of people.',
       '$user.name.ucf() $user.toBe() constantly exuberant and active. $user.persPron().ucf() is someone who aims to be the center of attention at social occasions. $user.persPron().ucf() takes charge in groups, and usually says "Yes" to challenges.'
-    ]
+    ],
+    meta: ['People like $user.name.ucf(), who score low on this trait, tend to be shy, reserved and most comfortable alone.', 'People like $user.name.ucf(), who score high on this trait, can be described as energetic, talkative and sociable.']
   },
 
   agreeableness: {
@@ -844,7 +854,8 @@ User.oceanDesc3p = {
       '$user.name.ucf() gets along with people well. This is especially true once they prove themselves trustworthy to $user.persPron(). $user.persPron().ucf() does have a healthy scepticism about others’ motives, but that doesn’t stop $user.persPron() from considering others to be basically honest and decent.',
       '$user.name.ucf() is someone people get along with. $user.persPron().ucf() $user.toBe() considerate and friendly, and expect others to be honest and decent.',
       '$user.name.ucf() $user.toBe() very easy to get along with. $user.persPron().ucf() $user.toBe() considerate, friendly, generous and helpful. And $user.persPron() considers others to be decent and trustworthy.'
-    ]
+    ],
+    meta: ['People like $user.name.ucf(), who score low on this trait, tend to be more driven, self-confident and competitive.', 'People like $user.name.ucf(), who score high on this trait, are generally considered soft-hearted, generous, and sympathetic.']
   },
 
   neuroticism: {
@@ -854,6 +865,7 @@ User.oceanDesc3p = {
       '$user.name.ucf() $user.toBe() generally calm. $user.persPron().ucf() can feel emotional or stressed out occasionally, but only when warranted by the situation.',
       '$user.name.ucf() is more self-conscious than most. $user.persPron().ucf() finds it hard to not get caught up in anxious or stressful situations. Yet $user.persPron().ucf() $user.toBe() in touch with $user.possPron() own feelings.',
       '$user.name.ucf() reacts poorly to stressful situations. Thus $user.persPron() worries about them more than most. However $user.persPron() has an emotional depth that others often lack.'
-    ]
+    ],
+    meta: ['People like $user.name.ucf(), who score low on this trait, often show an unusual emotional depth.', 'People like $user.name.ucf(), who score high on this trait, generally worry more than most, and react poorly to stressful situations.']
   }
 };

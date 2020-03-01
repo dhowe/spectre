@@ -42,11 +42,12 @@ function OceanProfile(props) {
     );
   });
 
-  let desc1 = target.opening[0] + ' ' + target.opening[1];
-  let desc2 = target.opening[2];
-  let desc3 = target.opening[3];
-  let desc4 = target.closing.join(' ');
-  //let descript = target.description.slice(0,2).join(' ');
+  const sentences = [
+    target.opening.slice(0, 2).join(' '),
+    target.opening[2],
+    target.opening[3],
+    target.closing.join(' '),
+  ].map((s,i) => (<p key={i}>{s}</p>));
 
   return (
     <div id="outer-container" className="OceanProfile" >
@@ -74,15 +75,7 @@ function OceanProfile(props) {
                   </div>
                   <hr />
                   <div className="profile-desc">
-                    <p>
-                      {desc1}
-                      <br /><br />
-                      {desc2}
-                      <br /><br />
-                      {desc3}
-                      <br /><br />
-                      {desc4}
-                    </p>
+                    {sentences}
                   </div>
                 </div>
                 <div className="split-r">

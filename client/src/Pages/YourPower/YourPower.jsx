@@ -44,7 +44,6 @@ class YourPower extends React.Component {
 
     const { classes } = this.props;
     const { virtue, target } = this.state;
-    if (target.name) console.log(target);
 
     return (
       <div className={classes.root}>
