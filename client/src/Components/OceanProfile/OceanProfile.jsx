@@ -13,7 +13,9 @@ import "./OceanProfileSidebar.scss";
 let prevActivateProfile = false;
 
 function OceanProfile(props) {
+
   const { target, activateProfile } = props;
+  console.log(target.name, target);
   const [sideBar, setSideBar] = React.useState({ isSideBarActive: false });
   const [helpDialog, setHelpDialog] = React.useState({ isHelpOpened: false });
 
@@ -22,7 +24,7 @@ function OceanProfile(props) {
     prevActivateProfile = props.activateProfile;
   }
 
-  const oceanSliders = Object.keys(UserSession.oceanDescTemplate).map(trait => {
+  const oceanSliders = UserSession.oceanTraits.map(trait => {
     return (
       <div className="textSlider" key={trait}>
         <div className="icon">
@@ -68,13 +70,11 @@ function OceanProfile(props) {
                   <hr />
                   <div className="profile-desc">
                     <p>
-                      {target.name} is the type of placeholder-text that's not afraid to tell people how it is.
+                      {target.opening}
                     <br /><br />
-                      {target.perspron.ucf()} may appear argumentative, confrontational, insensitive, intimidating, and controlling.
+                      {target.description}
                     <br /><br />
-                      {target.perspron.ucf()} can overwhelm others with {target.posspron} energy, intelligence, and desire to order the world around {target.objpron}.
-                    <br /><br />
-                      {target.name}  can be influenced by images that contain impulsive actions or gambling and by slogans that contain risk or trust.
+                      {target.closing}
                   </p>
                   </div>
                 </div>

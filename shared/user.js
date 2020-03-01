@@ -74,19 +74,6 @@ export default class User {
       ? User.oceanDesc2p : User.oceanDesc3p, numSentences);
   }
 
-  influencesSentence(is2p) {
-    User.computeInfluencesFor(this);
-    if (!Array.isArray(this.influences[this.adIssue].themes)
-      || this.influences[this.adIssue].themes.length != 2) {
-      throw Error('this.influences.adIssue.themes not an array[2]');
-    }
-    return (is2p ? 'You' : this.persPron().ucf())
-      + ' can be influenced by images that contain '
-      + this.influences[this.adIssue].themes[0]
-      + ' and by slogans that contain '
-      + this.influences[this.adIssue].themes[1] + '.';
-  }
-
   static definingTrait(target, excludes) {
     if (typeof target !== 'object') throw Error
       ('categorize requires object: got ' + typeof target);
@@ -121,33 +108,53 @@ export default class User {
     };
   }
 
+  influencesSentence(is2p) {
+    User.computeInfluencesFor(this);
+    if (!Array.isArray(this.influences[this.adIssue].themes)
+      || this.influences[this.adIssue].themes.length != 2) {
+      throw Error('this.influences.adIssue.themes not an array[2]');
+    }
+    return (is2p ? 'You' : this.persPron().ucf())
+      + ' can be influenced by images that contain '
+      + this.influences[this.adIssue].themes[0]
+      + ' and by slogans that contain '
+      + this.influences[this.adIssue].themes[1] + '.';
+  }
+
+  openingSentence(tmpl) {
+    let target = this;
+    tmpl = (tmpl && tmpl === '2p') ? User.oceanDesc2p : User.oceanDesc3p;
+    let is2p = (tmpl === User.oceanDesc2p);
+    let { category, trait, score } = User.definingTrait(target);
+    let text = (is2p ? 'You are' : target.name.ucf() + ' is') + ' a ' + target.gender + ' follower, approximately ' + Math.round(target.age) + ' years old. ';
+    text += (is2p ? 'Your' : target.possPron().ucf()) + ' strongest OCEAN trait is ' + trait + ', where ' + (is2p ? 'you' : target.persPron()) + ' scored unusually ' + (category > 0 ? 'high. ' : 'low. ');
+    text += tmpl[trait].desc + ' ' + tmpl[trait].meta;
+    return text;
+  }
+
   generateDescription(tmpl) {
     let target = this;
     tmpl = (tmpl && tmpl === '2p') ? User.oceanDesc2p : User.oceanDesc3p;
+
+    // validate user state
     if (!User.hasOceanTraits(target)) throw Error('traits required');
-    if (typeof target.adIssue === 'undefined') throw Error('adIssue required');
-    if (tmpl === User.oceanDesc3p) {
-      if (typeof target.gender === 'undefined') throw Error('gender required');
-    }
-    /*compute maximum-score (ignored for now)
-    let traitNames = User.oceanTraits;
-    let maxScoreTrait = '', maxScore = 0;
-    User.oceanTraits.forEach(t => {
-      if (target.traits[t] > maxScore) {
-        maxScore = target.traits[t];
-        maxScoreTrait = t;
-      }});*/
-    let {category, trait, score } = User.definingTrait(target);
+    ['adIssue', 'age', 'gender' ].forEach(req => {
+      if (typeof target[req] === 'undefined') throw Error(req+' required');
+    });
+
+    let { trait, score } = User.definingTrait(target);
     let traitNames = User.oceanTraits;
     let idx = Math.min(traitNames.length - 1,
-        Math.floor(score * traitNames.length));
+      Math.floor(score * traitNames.length));
     let tmplText = tmpl[trait].text[idx];
-    let text = new Parser(target).parse(tmplText);
-    text += ' ' + target.influencesSentence(tmpl === User.oceanDesc2p);
+
+    let description = new Parser(target).parse(tmplText);
+    let opening = target.openingSentence(tmpl);
+    let closing = target.influencesSentence(tmpl);
 
     //console.log(target.traits, '\n', trait, score, category, '\n', text);
 
-    return text;
+    return { opening, description, closing };
   }
 
   generateSentences(template, numSentences) {

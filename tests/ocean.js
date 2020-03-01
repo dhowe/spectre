@@ -9,10 +9,50 @@ describe('OCEAN descriptions', function () {
       expect(() => new User().generateDescription()).to.throw();
     });
 
+    it('Should fail for a user without adIssue', function () {
+      let user = new User();
+      user.name = "Jane";
+      user.age = 31.45;
+      user.adIssue = 'democrat';
+      user.traits = {
+        agreeableness: 0.3,
+        conscientiousness: Math.random(),
+        extraversion: Math.random(),
+        openness: Math.random(),
+        neuroticism: Math.random()
+      }
+      expect(() => new User().generateDescription()).to.throw();
+    });
+
+    it('Should generate an opening sentence for a user', function () {
+      let user = new User();
+      user.name = "Jane";
+      user.adIssue = 'democrat';
+      user.gender = "female";
+      user.age = 31.3453;
+      user.traits = {
+        agreeableness: 0.3,
+        conscientiousness: Math.random(),
+        extraversion: Math.random(),
+        openness: Math.random(),
+        neuroticism: Math.random()
+      }
+      let result = user.openingSentence();
+      console.log(result);
+      result = user.openingSentence('2p');
+      console.log(result);
+      //console.log(result);
+      // expect(result).is.a('string');
+      // expect(result.length).is.gt(0);
+      // expect(result.startsWith('Jane')).eq(true);
+      // expect(User.hasOceanTraits(user)).eq(true);
+    });
+
     it('Should describe a user based on OCEAN traits', function () {
       let user = new User();
       user.name = "Jane";
       user.adIssue = 'democrat';
+      user.age = 31.45;
       user.gender = "female";
       user.traits = {
         agreeableness: 0.3,
@@ -23,9 +63,9 @@ describe('OCEAN descriptions', function () {
       }
       let result = user.generateDescription();
       //console.log(result);
-      expect(result).is.a('string');
-      expect(result.length).is.gt(0);
-      expect(result.startsWith('Jane')).eq(true);
+      expect(result).is.a('object');
+      expect(result.opening.length).is.gt(0);
+      expect(result.opening.startsWith('Jane')).eq(true);
       expect(User.hasOceanTraits(user)).eq(true);
     });
   });
@@ -45,6 +85,7 @@ describe('OCEAN descriptions', function () {
       let user = new User();
       user.name = "Jane";
       user.gender = "female";
+      user.age = 31.45;
       user.traits = User.randomTraits();
       let head = [
         "A little data and a little tech goes a long way.",
@@ -68,6 +109,7 @@ describe('OCEAN descriptions', function () {
       let user = new User();
       user.name = "Jane";
       user.gender = "female";
+      user.age = 31.45;
       user.adIssue = "democrat";
       user.traits = trts;
       let lines = user.generateDescription('3p');
@@ -77,6 +119,7 @@ describe('OCEAN descriptions', function () {
       let user = new User();
       user.name = "Jane";
       user.gender = "female";
+      user.age = 31.45;
       user.adIssue = "democrat";
       user.traits = trts;
       let lines = user.generateDescription('2p');
@@ -87,6 +130,7 @@ describe('OCEAN descriptions', function () {
       user.name = "Jane";
       user.gender = "female";
       user.adIssue = "democrat";
+      user.age = 31.45;
       user.traits = User.randomTraits();
       let lines = user.generateSummary('3p');
       expect(lines).is.a('array');
@@ -111,6 +155,7 @@ describe('OCEAN descriptions', function () {
       let user = new User();
       user.name = "Jane";
       user.gender = "female";
+      user.age = 31.45;
       user.traits = User.randomTraits();
       let result = user.generateSentences(3);
       //console.log(result);

@@ -18,7 +18,8 @@ UserSession.serverDisabled = typeof auth === 'undefined';
 UserSession.adIssues = User.adIssues;
 UserSession.epochDate = User.epochDate;
 UserSession.oceanTraits = User.oceanTraits;
-UserSession.oceanDescTemplate = User.oceanDescTemplate;
+UserSession.oceanDesc3p = User.oceanDesc3p;
+UserSession.oceanDesc2p = User.oceanDesc2p;
 UserSession.storageKey = 'spectre-user';
 UserSession.profileDir = '/profiles/';
 UserSession.imageDir = '/imgs/';
@@ -72,20 +73,27 @@ UserSession.clear = (context) => {
   console.log('[USER] Session initialized');
 }
 
-UserSession.oceanData = (target) => ({
-  name: target ? target.name : '',
-  traits: target ? target.traits : {},
-  image: UserSession.targetImage(target),
-  gender: target ? target.gender : 'other',
-  perspron: target ? UserSession.persPron(target) : 'their',
-  posspron: target ? UserSession.possPron(target) : 'they',
-  objpron: target ? UserSession.objPron(target) : 'them',
-  updatedAt: target ? target.updatedAt : UserSession.epochDate,
-  adIssue: target ? target.adIssue : UserSession.adIssues
-    [Math.floor(Math.random() * UserSession.adIssues.length)],
-  influences: target ? UserSession.computeInfluencesFor(target)
-    : { slogans: ['',''], themes: ['',''] }
-});
+UserSession.generateDescription = (target, tmpl) => {
+  if (target) return target.generateDescription(tmpl);
+  return {
+    opening:'',
+    description:'',
+    closing:''
+  }
+}
+
+UserSession.oceanData = (target) => {
+  //let { description, opening, closing } = ;
+  return Object.assign(UserSession.generateDescription(target),
+  {
+    name: target ? target.name : '',
+    traits: target ? target.traits : {},
+    image: UserSession.targetImage(target),
+    gender: target ? target.gender : 'other',
+    adIssue: target ? target.adIssue : UserSession.adIssues
+      [Math.floor(Math.random() * UserSession.adIssues.length)],
+  });
+}
 
 /*
  * Repairs a user using sessionStorage and db if needed (async)

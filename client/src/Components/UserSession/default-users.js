@@ -94,7 +94,7 @@ export default [
     "name": "Devin",
 
     "createdAt": new Date(1970, 1, 1),
-    "adIssue": "leave",
+    "adIssue": "republican",
     "virtue": "power",
     "updatedAt": new Date(2019, 1, 1)
   },
@@ -119,7 +119,7 @@ export default [
     "name": "Remy",
 
     "createdAt": new Date(1970, 1, 1),
-    "adIssue": "leave",
+    "adIssue": "republican",
     "virtue": "power",
     "updatedAt": new Date(2019, 1, 1)
   },
@@ -144,7 +144,7 @@ export default [
     "name": "Dick",
 
     "createdAt": new Date(1970, 1, 1),
-    "adIssue": "leave",
+    "adIssue": "republican",
     "virtue": "power",
     "updatedAt": new Date(2019, 1, 1)
   },
@@ -169,7 +169,7 @@ export default [
     "name": "Sally",
 
     "createdAt": new Date(1970, 1, 1),
-    "adIssue": "leave",
+    "adIssue": "republican",
     "virtue": "power",
     "updatedAt": new Date(2019, 1, 1)
   },
@@ -194,7 +194,7 @@ export default [
     "name": "Sing",
 
     "createdAt": new Date(1970, 1, 1),
-    "adIssue": "leave",
+    "adIssue": "republican",
     "virtue": "wealth",
     "updatedAt": new Date(2019, 1, 1)
   },
@@ -219,7 +219,7 @@ export default [
     "name": "Bailey",
 
     "createdAt": new Date(1970, 1, 1),
-    "adIssue": "leave",
+    "adIssue": "republican",
     "virtue": "power",
     "updatedAt": new Date(2019, 1, 1)
   }

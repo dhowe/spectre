@@ -78,11 +78,12 @@ describe('Server User', function() {
       user.name = "Jane";
       user.adIssue = "democrat";
       user.gender = "female";
+      user.age = 31.45;
       user._randomizeTraits();
       let result = user.generateDescription();
-      expect(result).is.a('string');
-      expect(result.length).is.gt(0);
-      expect(result.startsWith('Jane')).eq(true);
+      expect(result.opening).is.a('string');
+      expect(result.opening.length).is.gt(0);
+      expect(result.opening.startsWith('Jane')).eq(true);
     });
   });
 });
