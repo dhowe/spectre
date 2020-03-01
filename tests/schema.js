@@ -81,9 +81,8 @@ describe('Server User', function() {
       user.age = 31.45;
       user._randomizeTraits();
       let result = user.generateDescription();
-      expect(result.opening).is.a('string');
-      expect(result.opening.length).is.gt(0);
-      expect(result.opening.startsWith('Jane')).eq(true);
+      expect(result).is.an('object');
+      expect(result.opening).is.an('array');
     });
   });
 });

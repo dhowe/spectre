@@ -127,6 +127,8 @@ export default class User {
   }
 
   openingSentences(tmpl, parser) {
+    parser = parser || new Parser(this);
+    tmpl = tmpl === '2p' ? User.oceanDesc2p : tmpl || User.oceanDesc3p;
     let target = this;
     let is2p = tmpl === User.oceanDesc2p;
     let { category, trait } = User.definingTrait(target);

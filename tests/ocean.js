@@ -37,10 +37,10 @@ describe('OCEAN descriptions', function () {
         openness: Math.random(),
         neuroticism: Math.random()
       }
-      let result = user.openingSentence();
-      console.log(result);
-      result = user.openingSentence('2p');
-      console.log(result);
+      let result = user.openingSentences();
+      //console.log(result);
+      result = user.openingSentences('2p');
+      //console.log(result);
       //console.log(result);
       // expect(result).is.a('string');
       // expect(result.length).is.gt(0);
@@ -65,7 +65,7 @@ describe('OCEAN descriptions', function () {
       //console.log(result);
       expect(result).is.a('object');
       expect(result.opening.length).is.gt(0);
-      expect(result.opening.startsWith('Jane')).eq(true);
+      expect(result.opening[0].startsWith('Jane')).eq(true);
       expect(User.hasOceanTraits(user)).eq(true);
     });
   });
