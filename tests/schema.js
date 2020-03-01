@@ -76,6 +76,7 @@ describe('Server User', function() {
     it('Should describe a user based on OCEAN traits', function() {
       let user = UserModel.CreateModel();
       user.name = "Jane";
+      user.adIssue = "democrat";
       user.gender = "female";
       user._randomizeTraits();
       let result = user.generateDescription();

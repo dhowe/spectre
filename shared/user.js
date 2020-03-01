@@ -69,9 +69,85 @@ export default class User {
   }
 
   generateSummary(person, numSentences) {
-    person = person || '2p'
+    person = person || '2p';
     return this.generateSentences(person === '2p'
-      ? User.oceanDesc2p: User.oceanDesc3p, numSentences);
+      ? User.oceanDesc2p : User.oceanDesc3p, numSentences);
+  }
+
+  influencesSentence(is2p) {
+    User.computeInfluencesFor(this);
+    if (!Array.isArray(this.influences[this.adIssue].themes)
+      || this.influences[this.adIssue].themes.length != 2) {
+      throw Error('this.influences.adIssue.themes not an array[2]');
+    }
+    return (is2p ? 'You' : this.persPron().ucf())
+      + ' can be influenced by images that contain '
+      + this.influences[this.adIssue].themes[0]
+      + ' and by slogans that contain '
+      + this.influences[this.adIssue].themes[1] + '.';
+  }
+
+  static definingTrait(target, excludes) {
+    if (typeof target !== 'object') throw Error
+      ('categorize requires object: got ' + typeof target);
+
+    let trait = null;
+    let maxDev = 0;
+    let traits = User.oceanTraits;
+
+    traits.forEach(t => {
+      if (excludes && excludes.includes(t)) return;
+      let val = target.traits[t];
+      let dev = Math.abs(val - .5);
+      if (dev > maxDev) {
+        maxDev = dev;
+        trait = t;
+      }
+    });
+
+    let traitIdx = 1 + traits.indexOf(trait);
+
+    let multiply = 0;
+    if (target.traits[trait] < .4) multiply = -1;
+    if (target.traits[trait] >= .6) multiply = 1;
+
+    //console.log('definingTrait: '+trait, target.traits[trait],
+    // traitIdx * multiply, 'cat='+(traitIdx * multiply));
+
+    return {
+      trait: trait,
+      score: target.traits[trait],
+      category: traitIdx * multiply
+    };
+  }
+
+  generateDescription(tmpl) {
+    let target = this;
+    tmpl = (tmpl && tmpl === '2p') ? User.oceanDesc2p : User.oceanDesc3p;
+    if (!User.hasOceanTraits(target)) throw Error('traits required');
+    if (typeof target.adIssue === 'undefined') throw Error('adIssue required');
+    if (tmpl === User.oceanDesc3p) {
+      if (typeof target.gender === 'undefined') throw Error('gender required');
+    }
+    /*compute maximum-score (ignored for now)
+    let traitNames = User.oceanTraits;
+    let maxScoreTrait = '', maxScore = 0;
+    User.oceanTraits.forEach(t => {
+      if (target.traits[t] > maxScore) {
+        maxScore = target.traits[t];
+        maxScoreTrait = t;
+      }});*/
+    let {category, trait, score } = User.definingTrait(target);
+    let traitNames = User.oceanTraits;
+    let idx = Math.min(traitNames.length - 1,
+        Math.floor(score * traitNames.length));
+    let tmplText = tmpl[trait].text[idx];
+    let text = new Parser(target).parse(tmplText);
+    text += ' ' + target.influencesSentence(tmpl === User.oceanDesc2p);
+
+    //console.log(target.traits, '\n', trait, score, category, '\n', text);
+
+    return text;
   }
 
   generateSentences(template, numSentences) {
@@ -92,6 +168,8 @@ export default class User {
     let maxPerTrait = 2;
     let parser = new Parser(this);
     let traitNames = User.oceanTraits;
+
+    // TODO: use category here
     let lines = this._descriptionLines(template);
 
     lines.forEach((l, i) => {
@@ -169,6 +247,8 @@ export default class User {
 
     tmpl = tmpl || User.oceanDesc3p;
 
+    // TODO: use category here
+
     let lines = [];
     let traitNames = User.oceanTraits;
     for (let i = 0; i < traitNames.length; i++) {
@@ -182,7 +262,7 @@ export default class User {
     return lines;
   }
 
-  generateDescription() {
+  /*generateDescription() { // not used
     if (!User.hasOceanTraits(this)) throw Error('traits required');
     let parser = new Parser(this);
     let lines = this._descriptionLines();
@@ -190,7 +270,7 @@ export default class User {
       lines[i] = parser.parse(lines[i]);
     }
     return lines.join(' ').trim();
-  }
+  }*/
 
   possPron() {
     switch (this.gender) {
@@ -289,7 +369,10 @@ export default class User {
    * 0 means the user is neutral and gets random assignments
    */
   static categorize(user) {
+    return User.definingTrait(user).category;
+  }
 
+  static categorizeOLD(user) {
     if (typeof user !== 'object') throw Error
       ('categorize requires object: got ' + typeof user);
 
@@ -336,9 +419,9 @@ export default class User {
     let idx1 = Math.floor(Math.random() * ots.length);
     let idx2 = Math.floor(Math.random() * ots.length)
     let set1 = User.ifluencingSlogans[adIssue]
-      [(Math.random() < .5 ? 'high' : 'low')][ots[idx1]];
+    [(Math.random() < .5 ? 'high' : 'low')][ots[idx1]];
     let set2 = User.ifluencingSlogans[adIssue]
-      [(Math.random() < .5 ? 'high' : 'low')][ots[idx2]];
+    [(Math.random() < .5 ? 'high' : 'low')][ots[idx2]];
     return set1.concat(set2);
   }
 
@@ -353,12 +436,13 @@ export default class User {
   // target is an object with traits
   static computeInfluencesFor(target, issues) {
     //console.log('computeInfluencesFor: '+target.name);
+
     if (typeof target === 'undefined') {
       throw Error('No target in User.computeInfluencesFor()');
     }
 
     if (typeof issues === 'undefined' || !issues.length) {
-      throw Error('No issues for User.computeInfluencesFor()', this);
+      issues = User.adIssues;
     }
 
     let needsWork = false;
@@ -405,7 +489,7 @@ export default class User {
       target.influences[issue].themes = themes;
       target.influences[issue].slogans = slogans;
 
-      return target;
+      return target; // ?
     });
   }
 }
@@ -511,6 +595,7 @@ User.emptyTraits = () => {
   return traits;
 }
 
+User.adIssues = ['democrat', 'republican'];
 User.oceanTraits = ['openness', 'conscientiousness', 'extraversion', 'agreeableness', 'neuroticism'];
 
 User.influencingThemes = {
@@ -518,34 +603,34 @@ User.influencingThemes = {
   ///////////////////////////////// US /////////////////////////////////////
   republican: {
     high: {
-      openness: ["freedom, open skies, scenic vistas", "freedom, future or potential"],
-      conscientiousness: ["organization, synchronicity, finances", "control, fiscal responsibility, rights"],
-      extraversion: ["free expression, success, confidence", "your rules or your rights"],
-      agreeableness: ["family scenes, relaxing locations", "relaxation, friendship, loyalty"],
-      neuroticism: ["negative imagery, fear of the other", "crime, instability, fear"]
+      openness: ["freedom, open skies or scenic vistas", "freedom, future or potential"],
+      conscientiousness: ["organization, synchronicity or finances", "control, fiscal responsibility or rights"],
+      extraversion: ["free expression, success or confidence", "your rules or your rights"],
+      agreeableness: ["family scenes or relaxing locations", "relaxation, friendship or loyalty"],
+      neuroticism: ["negative imagery or fear of the other", "crime, instability or fear"]
     },
     low: {
-      openness: ["traditional institutions and culture", "unity, tradition, values"],
-      conscientiousness: ["impulsive actions, gambling, risk taking", "aggression or action-taking"],
-      extraversion: ["strong characters, visions of the future", "rising up, ideas for a new tomorrow"],
-      agreeableness: ["competition, sports, winning", "borders, jobs or paying for others mistakes"],
-      neuroticism: ["carefree activities or relaxation", "hassle, stress, worry"]
+      openness: ["traditional institutions and culture", "unity, tradition or values"],
+      conscientiousness: ["impulsive actions, gambling or risk taking", "aggression or action-taking"],
+      extraversion: ["strong characters and visions of the future", "rising up, or ideas for a new tomorrow"],
+      agreeableness: ["competition, sports or winning", "borders, jobs or paying for others mistakes"],
+      neuroticism: ["carefree activities or relaxation", "hassle, stress or worry"]
     }
   },
   democrat: {
     high: {
       openness: ["aspirational or inclusive themes", "solidarity or collective action"],
-      conscientiousness: ["impulsive actions, gambling", "risk and trust"],
+      conscientiousness: ["impulsive actions or gambling", "risk and trust"],
       extraversion: ["silence or restriction ", "expression, or ones 'voice'"],
-      agreeableness: ["social cohesion and family harmony", "family, community, cooperation"],
-      neuroticism: ["anxiety, stress, or uncertainty", "instability or indecision"],
+      agreeableness: ["social cohesion and family harmony", "family, community or cooperation"],
+      neuroticism: ["anxiety, stress or uncertainty", "instability or indecision"],
     },
     low: {
-      openness: ["traditional institutions and culture", "unity, tradition, values"],
-      conscientiousness: ["impulsive actions, gambling", "risk and danger"],
-      extraversion: ["solitary people or loners", "contemplation, solitude"],
-      agreeableness: ["competition, sports, winning", "losing, quitting or control"],
-      neuroticism: ["carefree activities, relaxation, fun", "hassle, stress, worry"],
+      openness: ["traditional institutions and culture", "unity, tradition or values"],
+      conscientiousness: ["impulsive actions or gambling", "risk and danger"],
+      extraversion: ["solitary people or loners", "contemplation or solitude"],
+      agreeableness: ["competition, sports or winning", "losing, quitting or control"],
+      neuroticism: ["carefree activities, relaxation or fun", "hassle, stress or worry"],
     }
   },
 
@@ -657,13 +742,13 @@ User.ifluencingSlogans = {
 
 User.abbreviations = ["Adm.", "Capt.", "Cmdr.", "Col.", "Dr.", "Gen.", "Gov.", "Lt.", "Maj.", "Messrs.", "Mr.", "Mrs.", "Ms.", "Prof.", "Rep.", "Reps.", "Rev.", "Sen.", "Sens.", "Sgt.", "Sr.", "St.", "a.k.a.", "c.f.", "i.e.", "e.g.", "vs.", "v.", "Jan.", "Feb.", "Mar.", "Apr.", "Mar.", "Jun.", "Jul.", "Aug.", "Sept.", "Oct.", "Nov.", "Dec."];
 
-User.oceanDesc2p = { // Temp for Sheffield: remove
+User.oceanDesc2p = {
   openness: {
     desc: 'Openness to experience relates to our imagination and the degree to which we are comfortable with unfamiliarity',
     poles: ['Conservative and Traditional', 'Liberal and Artistic'],
     meta: 'People scoring high on this trait can be described as intellectually curious, sensitive to beauty, and unconventional, while people scoring low on this trait can be characterized as traditional and are more likely to prefer the familiar over the unusual.',
     text: [
-      'While you\'re down-to-earth, simple and straightforward, you can be rigid in your views. Obviously you find value in the arts, but tradition always wins you in the end',
+      'While you\'re down-to-earth, simple and straightforward, you can be rigid in your views. Obviously you find value in the arts, but tradition always wins for you in the end',
       'You dislike complexity, and prefer the familiar over the unusual. You\'re quite conservative and choose practical outcomes over creative or imaginative flights.',
       'You are very aware of your feelings -- but not as much your imagination. You both embrace change and resist simultanesouly. Have you forgotten that beauty was once so important to you?',
       'You are intellectually curious and adept at recognizing beauty, no matter the opinions of others. Your imagination is vivid but your creativity can lead you astray',
@@ -735,7 +820,7 @@ User.oceanDesc3p = {
       '$user.name.ucf() $user.toBe() aware of $user.possPron() feelings but doesn’t get carried away with $user.possPron() imagination. $user.persPron().ucf() embraces change when it $user.toBe() necessary while still resisting it when $user.persPron() thinks otherwise. Beauty $user.toBe() important to $user.possPron(), but it’s not everything.',
       '$user.name.ucf() $user.toBe() intellectually curious and appreciative of what $user.persPron() considers beautiful, no matter what others think. $user.possPron().ucf() imagination $user.toBe() vivid and makes $user.possPron() more creative than many others.',
       '$user.name.ucf() $user.toBe() far more intellectually curious and sensitive to beauty than most. $user.possPron().ucf() beliefs are individualistic and frequently drift towards the unconventional. $user.persPron().ucf() enjoys $user.possPron() imagination and the exciting places it takes $user.possPron().'
-    ]
+    ],
   },
 
   conscientiousness: {
@@ -773,7 +858,7 @@ User.oceanDesc3p = {
       '$user.name.ucf() often finds it difficult to get along with new people when they first meet, as $user.persPron() can be suspicious of their motives. Over time though people warm to $user.possPron(), and $user.persPron() to them, although that doesn’t stop $user.possPron() from telling them "how it $user.toBe()".',
       '$user.name.ucf() gets along with people well, especially once they have proved themselves trustworthy to $user.persPron(). $user.persPron().ucf() do have a healthy scepticism about others’ motives, but that doesn’t stop $user.persPron() from considering others to be basically honest and decent.',
       '$user.name.ucf() is someone people get along with easily. $user.persPron().ucf() $user.toBe() considerate and friendly, and expect others to be honest and decent.',
-      '$user.name.ucf() $user.toBe() extremely easy to get along with. $user.persPron().ucf() $user.toBe() considerate, friendly, generous and helpful and $user.persPron() considers most others to be decent and trustworthy.'
+      '$user.name.ucf() $user.toBe() very easy to get along with. $user.persPron().ucf() $user.toBe() considerate, friendly, generous and helpful and $user.persPron() considers most others to be decent and trustworthy.'
     ]
   },
 

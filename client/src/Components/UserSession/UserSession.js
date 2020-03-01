@@ -13,9 +13,9 @@ UserSession.clientId = -1;
 UserSession.serverErrors = 0;
 UserSession.useBrowserStorage = true;
 UserSession.defaultUsers = DefaultUsers;
-UserSession.adIssues = ['democrat', 'republican'];
 UserSession.publicUrl = 'https://spectreknows.me/'; // ?
 UserSession.serverDisabled = typeof auth === 'undefined';
+UserSession.adIssues = User.adIssues;
 UserSession.epochDate = User.epochDate;
 UserSession.oceanTraits = User.oceanTraits;
 UserSession.oceanDescTemplate = User.oceanDescTemplate;
@@ -52,8 +52,8 @@ UserSession.create = async (user) => {
   return user.assign(json);
 }
 
-UserSession.computeInfluencesFor = (target) =>
-  User.computeInfluencesFor(target, UserSession.adIssues);
+UserSession.computeInfluencesFor = (target, adIssues) =>
+  User.computeInfluencesFor(target, adIssues);
 
 UserSession.targetImage = (target) => {
   let fname = ((target && typeof target._id !== 'undefined'

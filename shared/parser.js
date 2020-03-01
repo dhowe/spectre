@@ -31,13 +31,18 @@ export default class Parser {
       resolved = this.user[parts[0]];
 
       if (typeof resolved === 'function') {
-        resolved = resolved.apply(this.user);
+        let tmp = resolved.apply(this.user);
+        if (typeof tmp !== 'string') {
+          throw Error('Expected ' + parts[0] + '() to return'
+          + ' a string, but found a '+(typeof tmp)+':\n' + tmp);
+        }
+        resolved = tmp;
       }
 
       if (typeof resolved !== 'string') {
         throw Error(this.user.hasOwnProperty(parts[0]) ?
-          'user.'+parts[0] + ' is '+this.user[parts[0]] :
-          'Parser: No User.' + parts[0] + ' property for '+this.user.name);
+          'user.' + parts[0] + ' is ' + this.user[parts[0]] :
+          'Parser: No User.' + parts[0] + ' property for ' + this.user.name);
       }
 
       for (var i = 1; i < parts.length; i++) {
@@ -77,10 +82,10 @@ export default class Parser {
 
 // //////////////////  TODO: remove  /////////////////////
 
-String.prototype.uc = function () {
+String.prototype.uc = function() {
   return this.toUpperCase();
 }
 
-String.prototype.ucf = function () {
+String.prototype.ucf = function() {
   return this[0].toUpperCase() + this.substring(1);
 }

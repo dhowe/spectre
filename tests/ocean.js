@@ -12,6 +12,7 @@ describe('OCEAN descriptions', function () {
     it('Should describe a user based on OCEAN traits', function () {
       let user = new User();
       user.name = "Jane";
+      user.adIssue = 'democrat';
       user.gender = "female";
       user.traits = {
         agreeableness: 0.3,
@@ -62,16 +63,35 @@ describe('OCEAN descriptions', function () {
       }
     });
 
+    let trts = User.randomTraits();
+    it('Should generate user description in 3p', function () {
+      let user = new User();
+      user.name = "Jane";
+      user.gender = "female";
+      user.adIssue = "democrat";
+      user.traits = trts;
+      let lines = user.generateDescription('3p');
+    });
+
+    it('Should generate user description in 2p', function () {
+      let user = new User();
+      user.name = "Jane";
+      user.gender = "female";
+      user.adIssue = "democrat";
+      user.traits = trts;
+      let lines = user.generateDescription('2p');
+    });
+
     it('Should describe current target in 3p with 5 sentences', function () {
       let user = new User();
       user.name = "Jane";
       user.gender = "female";
+      user.adIssue = "democrat";
       user.traits = User.randomTraits();
-      console.log(Object.keys(user));
       let lines = user.generateSummary('3p');
       expect(lines).is.a('array');
       expect(lines.length).is.eq(3);
-      if (1) {
+      if (0) {
         console.log();
         for (var i = 0; i < lines.length; i++) {
           console.log(lines[i]);

@@ -53,6 +53,9 @@ describe('Client User', function() {
       expect(user.traits.openness).to.equal(1);
       expect(User.hasOceanTraits(user)).eq(true);
       expect(User.categorize(user)).eq(1);
+
+      user.traits.openness = .1;
+      expect(User.categorize(user)).eq(-1);
     });
   });
 
@@ -119,7 +122,7 @@ describe('Client User', function() {
       User.computeInfluencesFor(user.target, issues);
 
       expect(user.target.influences[user.adIssue].themes).to.have.members
-        (["freedom, open skies, scenic vistas", "freedom, future or potential"]);
+        (["freedom, open skies or scenic vistas", "freedom, future or potential"]);
 
       user = new User({
         adIssue: 'republican',
@@ -138,7 +141,7 @@ describe('Client User', function() {
       User.computeInfluencesFor(user.target, issues);
 
       expect(user.target.influences[user.adIssue].themes).to.have.members
-        (["competition, sports, winning", "borders, jobs or paying for others mistakes"]);
+        (["competition, sports or winning", "borders, jobs or paying for others mistakes"]);
 
       user = new User({
         adIssue: 'democrat',
@@ -175,7 +178,7 @@ describe('Client User', function() {
       User.computeInfluencesFor(user.target, issues);
 
       expect(user.target.influences[user.adIssue].themes).to.have.members
-        (["carefree activities, relaxation, fun", "hassle, stress, worry"]);
+        (["carefree activities, relaxation or fun", "hassle, stress or worry"]);
     });
 
     it('Should pick correct images for target category', function() {
@@ -356,7 +359,7 @@ describe('Client User', function() {
           agreeableness: .3,
           conscientiousness: .4,
           extraversion: .5,
-          openness: 1,
+          openness: .72,
           neuroticism: .3
         }
       }))).eq(1);
