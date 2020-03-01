@@ -90,6 +90,9 @@ UserSession.oceanData = (target) => {
     traits: target ? target.traits : {},
     image: UserSession.targetImage(target),
     gender: target ? target.gender : 'other',
+    objPron: target ? target.objPron() : 'them',
+    persPron: target ? target.persPron() : 'they',
+    possPron: target ? target.possPron() : 'their',
     updatedAt: target ? target.updatedAt : new Date(),
     adIssue: target ? target.adIssue : UserSession.adIssues
       [Math.floor(Math.random() * UserSession.adIssues.length)],

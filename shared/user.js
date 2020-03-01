@@ -114,8 +114,8 @@ export default class User {
       || this.influences[this.adIssue].themes.length != 2) {
       throw Error('this.influences.adIssue.themes not an array[2]');
     }
-    return (is2p ? 'You' : this.persPron().ucf())
-      + ' can be influenced by images that contain '
+    return (is2p ? 'You are' : this.name.ucf() + ' is')
+      + ' likely to be influenced by images that contain '
       + this.influences[this.adIssue].themes[0]
       + ' and by slogans that contain '
       + this.influences[this.adIssue].themes[1] + '.';
@@ -125,7 +125,7 @@ export default class User {
     let target = this;
     let { category, trait } = User.definingTrait(target);
     let text = (is2p ? 'You are' : target.name.ucf() + ' is') + ' a ' + target.gender + ' follower, about ' + Math.round(target.age) + ' years old. ';
-    text += (is2p ? 'Your' : target.possPron().ucf()) + ' defining OCEAN trait is ' + trait + ', where ' + (is2p ? 'you' : target.persPron()) + ' scores unusually ' + (category > 0 ? 'high. ' : 'low. ');
+    text += (is2p ? 'Your' : target.possPron().ucf()) + ' defining OCEAN trait is ' + trait + ', on which ' + (is2p ? 'you' : target.persPron()) + ' scores unusually ' + (category > 0 ? 'high. ' : 'low. ');
     text += User.oceanDesc[trait].desc + ' ' + User.oceanDesc[trait].meta[category < 0 ? 0 : 1];
     return text;
   }
@@ -148,8 +148,9 @@ export default class User {
       Math.floor(score * traitNames.length));
     let tmplText = tmpl[trait].text[idx];
 
-    let opening = this.splitSentences(target.openingSentences(is2p));
-    let description = this.splitSentences(new Parser(target).parse(tmplText));
+    let parser = new Parser(target);
+    let opening = this.splitSentences(parser.parse(target.openingSentences(is2p)));
+    let description = this.splitSentences(parser.parse(tmplText));
     let closing = this.splitSentences(target.influencingSentences(is2p));
 
     //console.log(target.traits, '\n', trait, score, category, '\n', text);
@@ -269,25 +270,6 @@ export default class User {
     return lines;
   }
 
-  possPron() {
-    switch (this.gender) {
-      case 'male':
-        return 'his';
-      case 'other': //return 'their'; TODO:
-      case 'female':
-        return 'her';
-    }
-  }
-
-  /*predictInfluences() {
-    // TODO
-    this.influences = ['Images that contain X and Y', 'Slogans that contain X and Y'];
-  }*/
-
-  // predictDescriptors() {
-  //   this.descriptors = this.generateSentences(3);
-  // }
-
   virtueAsAdverb() {
     const adverbs = {
       power: 'powerful',
@@ -312,16 +294,7 @@ export default class User {
     return this;
   }
 
-  possPron() {
-    switch (this.gender) {
-      case 'male':
-        return 'his';
-      case 'other':
-        return 'their';
-      case 'female':
-        return 'her';
-    }
-  }
+
 
   objPron() {
     switch (this.gender) {
@@ -345,6 +318,16 @@ export default class User {
     }
   }
 
+  possPron() {
+    switch (this.gender) {
+      case 'male':
+        return 'his';
+      case 'other':
+        return 'their';
+      case 'female':
+        return 'her';
+    }
+  }
   // statics =================================================================
 
   static hasOceanTraits(obj) {
@@ -608,7 +591,7 @@ User.influencingThemes = {
     },
     low: {
       openness: ["traditional institutions and culture", "unity, tradition or values"],
-      conscientiousness: ["impulsive actions, gambling or risk taking", "aggression or action-taking"],
+      conscientiousness: ["impulsive actions, gambling or risk-taking", "aggression or action-taking"],
       extraversion: ["strong characters and visions of the future", "rising up, or ideas for a new tomorrow"],
       agreeableness: ["competition, sports or winning", "borders, jobs or paying for others mistakes"],
       neuroticism: ["carefree activities or relaxation", "hassle, stress or worry"]
@@ -741,32 +724,32 @@ User.abbreviations = ["Adm.", "Capt.", "Cmdr.", "Col.", "Dr.", "Gen.", "Gov.", "
 
 User.oceanDesc = {
   openness: {
-    desc: 'Openness to experience relates to our imagination and the degree to which we are comfortable with unfamiliarity',
+    desc: 'Openness to experience relates to our imagination and the degree to which we are comfortable with unfamiliarity.',
     poles: ['Conservative and Traditional', 'Liberal and Artistic'],
-    meta: ['People scoring low on this trait can be characterized as traditional and are more likely to prefer the familiar over the unusual.', 'People scoring high on this trait can be described as intellectually curious, sensitive to beauty, and unconventional.']
+    meta: ['People like $user.name.ucf() who score low on this trait are generally traditional and prefer the familiar over the unusual.', 'People like $user.name.ucf() who score high on this trait are intellectually curious, sensitive to beauty, and unconventional.']
   },
   conscientiousness: {
     desc: 'Conscientiousness concerns the way in which we control, regulate, and direct our impulses.',
     poles: ['Impulsive and Spontaneous', 'Organized and Hard-working'],
-    meta: ['People scoring low on this trait are generally characterized as spontaneous and impulsive.', 'People scoring high on this trait can be described as organized, reliable, and efficient.']
+    meta: ['People like $user.name.ucf() who score low on this trait are generally characterized as spontaneous and impulsive.', 'People like $user.name.ucf() who score high on this trait can be described as organized, reliable, and efficient.']
   },
 
   extraversion: {
-    desc: 'Extraversion refers to the extent to which people get their energy from the company of others, and whether they actively seek excitement and stimulation',
+    desc: 'Extraversion refers to the extent to which people get their energy from the company of others, and whether they actively seek excitement and stimulation.',
     poles: ['Contemplative', 'Engaged with Outside World'],
-    meta: ['People scoring low on this trait tend to be more shy, reserved and comfortable in their own company.', 'People scoring high on this trait can be described as energetic, talkative and sociable.']
+    meta: ['People like $user.name.ucf() who score low on this trait tend to be shy, reserved and most comfortable alone.', 'People like $user.name.ucf() who score high on this trait can be described as energetic, talkative and sociable.']
   },
 
   agreeableness: {
     desc: 'Agreeableness reflects individual differences concerning cooperation and social harmony.',
     poles: ['Competitive', 'Team-working and Trusting'],
-    meta: ['People scoring low on this trait tend to be more driven, self-confident and competitive.','People scoring high on this trait are generally considered soft-hearted, generous, and sympathetic.']
+    meta: ['People like $user.name.ucf() who score low on this trait tend to be more driven, self-confident and competitive.','People like $user.name.ucf() who score high on this trait are generally considered soft-hearted, generous, and sympathetic.']
   },
 
   neuroticism: {
     desc: 'Neuroticism refers to the tendency to experience negative emotions.',
     poles: ['Laid-back and Relaxed', 'Easily Stressed and Emotional'],
-    meta: ['People scoring low on this trait often show an unusual emotional depth.', 'People scoring high on this trait generally worry more than most, and react poorly to stressful situations.']
+    meta: ['People like $user.name.ucf() who score low on this trait often show an unusual emotional depth.', 'People like $user.name.ucf() who score high on this trait generally worry more than most, and react poorly to stressful situations.']
   }
 };
 

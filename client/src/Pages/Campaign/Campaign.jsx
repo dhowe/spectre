@@ -49,7 +49,7 @@ class Campaign extends React.Component {
             alt="facebook"/> ad.
           </h1>
           <p className="normal-addSpacing">
-            {tname}'s <span>OCEAN profile</span> shows that {target.perspron} can be influenced by:
+            {tname}'s <span>OCEAN profile</span> shows that {target.persPron} can be influenced by:
           </p>
           <p className="normal-addSpacing">
             <span>Images</span> that contain {themes[0]}
