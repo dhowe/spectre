@@ -1,0 +1,1 @@
+To minimize build times, all videos are now served from https://spectreknows.me/video 
