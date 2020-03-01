@@ -47,6 +47,7 @@ class Steps extends React.Component {
           <Fade in={true} style={{ transitionDelay: '4000ms' }}>
             <h2 className="noSpacing">Get the data. Get the {this.state.virtue}.</h2>
           </Fade>
+          <br/>
           <Fade in={true} style={{ transitionDelay: '5000ms' }}>
             <h2 className="noSpacing"><span>Ready?</span></h2>
           </Fade>
