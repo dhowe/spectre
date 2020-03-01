@@ -55,7 +55,8 @@ class YourPower extends React.Component {
             <h2>You now have the <span>{virtue}</span> to influence&nbsp;<span>{target.name}</span>.</h2>
           </Fade>
           <Fade in style={{ transitionDelay: '2000ms' }}>
-            <h2 className="noSpacing">View <span>{target.name}'s OCEAN profile</span> to understand {target.possPron} personality.</h2>
+            <h2 className="noSpacing">View <span>{target.name}'s OCEAN profile </span>
+            to understand how {target.possPron}<br/>personality traits can be used to influence {target.objPron}.</h2>
           </Fade>
           <Fade in={this.state.activateProfile} style={{ transitionDelay: '2000ms' }}>
             <Link to="/pick-your-side" style={this.state.activateProfile ? { visibility: 'visible' } : { visibility: 'hidden' }} >
