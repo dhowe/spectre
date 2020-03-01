@@ -54,8 +54,9 @@ class TouchToBegin extends React.Component {
   render() {
     return (
       <div className={this.props.classes.root + ' touchToBegin'}>
+
         <video autoPlay="autoplay" loop="loop" muted className={classes.Video} >
-          <source src={`${UserSession.publicUrl}video/TealBokeh.mp4`} type="video/mp4" />
+          <source src={`${UserSession.publicUrl}video/SpectreStandby.mp4`} type="video/mp4" />
         </video>
 
         <div className="touchToBegin-Header">
