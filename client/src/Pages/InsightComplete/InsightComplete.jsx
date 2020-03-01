@@ -38,14 +38,14 @@ class InsightComplete extends React.Component {
     return (
       <div className={classes.root}>
         <SpectreHeader colour="white" />
+        {/*<ThumbUp className="thankyou-icon" />*/}
         <IdleChecker forceTerminate={idleCheckerDone} />
         <div className={`${classes.content} content`}>
           <h1><span><strong>Step 1</strong> complete!</span></h1>
           <h2>You've unlocked <span>OCEAN Profiling</span></h2>
-          <ThumbUp className="thankyou-icon" />
           <IconButton enabled={true}
-            className={ComponentsStyles.iconButtonStyle1}
-            icon="play" text="WTF is OCEAN?"
+            className={ComponentsStyles.iconButtonStyle3}
+            icon="play" text="WTF is OCEAN?&nbsp;"
             onClick={this.showVideo} />
           <Video
             ref={e => { this.video = e; }}

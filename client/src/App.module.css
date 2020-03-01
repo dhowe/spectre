@@ -62,7 +62,24 @@ Button
     top: 800px;
   }
 
+  .iconButtonStyle3 svg {
+    width: 125px;
+    height: 125px;
+  }
 
+  .iconButtonStyle3 div {
+    padding-top: 30px;
+    font-size: 40px;
+    text-align: right;
+  }
+
+  .iconButtonStyle3 {
+    display: inline-flex;
+    flex-direction: row-reverse;
+    position: fixed;
+    right: 700px;
+    top: 650px;
+  }
 
   .iconButtonStyle1 svg {
     width: 86px;
