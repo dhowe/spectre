@@ -1,6 +1,6 @@
 {
   "name": "spectre-server",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Server component for the SPECTRE system",
   "main": "app.js",
   "scripts": {
