@@ -108,7 +108,7 @@ export default class User {
     };
   }
 
-  influencesSentence(is2p) {
+  influencingSentences(is2p) {
     User.computeInfluencesFor(this);
     if (!Array.isArray(this.influences[this.adIssue].themes)
       || this.influences[this.adIssue].themes.length != 2) {
@@ -121,36 +121,36 @@ export default class User {
       + this.influences[this.adIssue].themes[1] + '.';
   }
 
-  openingSentence(tmpl) {
+  openingSentences(is2p) {
     let target = this;
-    tmpl = (tmpl && tmpl === '2p') ? User.oceanDesc2p : User.oceanDesc3p;
-    let is2p = (tmpl === User.oceanDesc2p);
-    let { category, trait, score } = User.definingTrait(target);
-    let text = (is2p ? 'You are' : target.name.ucf() + ' is') + ' a ' + target.gender + ' follower, approximately ' + Math.round(target.age) + ' years old. ';
-    text += (is2p ? 'Your' : target.possPron().ucf()) + ' strongest OCEAN trait is ' + trait + ', where ' + (is2p ? 'you' : target.persPron()) + ' scored unusually ' + (category > 0 ? 'high. ' : 'low. ');
-    text += tmpl[trait].desc + ' ' + tmpl[trait].meta;
+    let { category, trait } = User.definingTrait(target);
+    let text = (is2p ? 'You are' : target.name.ucf() + ' is') + ' a ' + target.gender + ' follower, about ' + Math.round(target.age) + ' years old. ';
+    text += (is2p ? 'Your' : target.possPron().ucf()) + ' defining OCEAN trait is ' + trait + ', where ' + (is2p ? 'you' : target.persPron()) + ' scores unusually ' + (category > 0 ? 'high. ' : 'low. ');
+    text += User.oceanDesc[trait].desc + ' ' + User.oceanDesc[trait].meta[category < 0 ? 0 : 1];
     return text;
   }
 
   generateDescription(tmpl) {
-    let target = this;
-    tmpl = (tmpl && tmpl === '2p') ? User.oceanDesc2p : User.oceanDesc3p;
 
-    // validate user state
+    let target = this;
+
+    // validate args  && user state
+    tmpl = tmpl === '2p' ? User.oceanDesc2p : User.oceanDesc3p;
     if (!User.hasOceanTraits(target)) throw Error('traits required');
     ['adIssue', 'age', 'gender' ].forEach(req => {
       if (typeof target[req] === 'undefined') throw Error(req+' required');
     });
 
+    let is2p = tmpl === User.oceanDesc2p;
     let { trait, score } = User.definingTrait(target);
     let traitNames = User.oceanTraits;
     let idx = Math.min(traitNames.length - 1,
       Math.floor(score * traitNames.length));
     let tmplText = tmpl[trait].text[idx];
 
-    let description = new Parser(target).parse(tmplText);
-    let opening = target.openingSentence(tmpl);
-    let closing = target.influencesSentence(tmpl);
+    let opening = this.splitSentences(target.openingSentences(is2p));
+    let description = this.splitSentences(new Parser(target).parse(tmplText));
+    let closing = this.splitSentences(target.influencingSentences(is2p));
 
     //console.log(target.traits, '\n', trait, score, category, '\n', text);
 
@@ -268,16 +268,6 @@ export default class User {
     }
     return lines;
   }
-
-  /*generateDescription() { // not used
-    if (!User.hasOceanTraits(this)) throw Error('traits required');
-    let parser = new Parser(this);
-    let lines = this._descriptionLines();
-    for (let i = 0; i < lines.length; i++) {
-      lines[i] = parser.parse(lines[i]);
-    }
-    return lines.join(' ').trim();
-  }*/
 
   possPron() {
     switch (this.gender) {
@@ -749,11 +739,40 @@ User.ifluencingSlogans = {
 
 User.abbreviations = ["Adm.", "Capt.", "Cmdr.", "Col.", "Dr.", "Gen.", "Gov.", "Lt.", "Maj.", "Messrs.", "Mr.", "Mrs.", "Ms.", "Prof.", "Rep.", "Reps.", "Rev.", "Sen.", "Sens.", "Sgt.", "Sr.", "St.", "a.k.a.", "c.f.", "i.e.", "e.g.", "vs.", "v.", "Jan.", "Feb.", "Mar.", "Apr.", "Mar.", "Jun.", "Jul.", "Aug.", "Sept.", "Oct.", "Nov.", "Dec."];
 
-User.oceanDesc2p = {
+User.oceanDesc = {
   openness: {
     desc: 'Openness to experience relates to our imagination and the degree to which we are comfortable with unfamiliarity',
     poles: ['Conservative and Traditional', 'Liberal and Artistic'],
-    meta: 'People scoring high on this trait can be described as intellectually curious, sensitive to beauty, and unconventional, while people scoring low on this trait can be characterized as traditional and are more likely to prefer the familiar over the unusual.',
+    meta: ['People scoring low on this trait can be characterized as traditional and are more likely to prefer the familiar over the unusual.', 'People scoring high on this trait can be described as intellectually curious, sensitive to beauty, and unconventional.']
+  },
+  conscientiousness: {
+    desc: 'Conscientiousness concerns the way in which we control, regulate, and direct our impulses.',
+    poles: ['Impulsive and Spontaneous', 'Organized and Hard-working'],
+    meta: ['People scoring low on this trait are generally characterized as spontaneous and impulsive.', 'People scoring high on this trait can be described as organized, reliable, and efficient.']
+  },
+
+  extraversion: {
+    desc: 'Extraversion refers to the extent to which people get their energy from the company of others, and whether they actively seek excitement and stimulation',
+    poles: ['Contemplative', 'Engaged with Outside World'],
+    meta: ['People scoring low on this trait tend to be more shy, reserved and comfortable in their own company.', 'People scoring high on this trait can be described as energetic, talkative and sociable.']
+  },
+
+  agreeableness: {
+    desc: 'Agreeableness reflects individual differences concerning cooperation and social harmony.',
+    poles: ['Competitive', 'Team-working and Trusting'],
+    meta: ['People scoring low on this trait tend to be more driven, self-confident and competitive.','People scoring high on this trait are generally considered soft-hearted, generous, and sympathetic.']
+  },
+
+  neuroticism: {
+    desc: 'Neuroticism refers to the tendency to experience negative emotions.',
+    poles: ['Laid-back and Relaxed', 'Easily Stressed and Emotional'],
+    meta: ['People scoring low on this trait often show an unusual emotional depth.', 'People scoring high on this trait generally worry more than most, and react poorly to stressful situations.']
+  }
+};
+
+
+User.oceanDesc2p = {
+  openness: {
     text: [
       'While you\'re down-to-earth, simple and straightforward, you can be rigid in your views. Obviously you find value in the arts, but tradition always wins for you in the end',
       'You dislike complexity, and prefer the familiar over the unusual. You\'re quite conservative and choose practical outcomes over creative or imaginative flights.',
@@ -764,9 +783,6 @@ User.oceanDesc2p = {
   },
 
   conscientiousness: {
-    desc: 'Conscientiousness concerns the way in which we control, regulate, and direct our impulses.',
-    poles: ['Impulsive and Spontaneous', 'Organized and Hard-working'],
-    meta: 'People scoring high on this trait can be described as organized, reliable, and efficient, while people scoring low on this trait are generally characterized as spontaneous and impulsive.',
     text: [
       'You are impulsive, even whimsical... But you can act decisively. Friends might call you "fun" to be with, but you\'re no philosopher',
       'You\'re spontaneous and like to do unexpected things to try to keep life "interesting". You aren’t unreliable per se, but you\'ve been known to slip.',
@@ -777,9 +793,6 @@ User.oceanDesc2p = {
   },
 
   extraversion: {
-    desc: 'Extraversion refers to the extent to which people get their energy from the company of others, and whether they actively seek excitement and stimulation',
-    poles: ['Contemplative', 'Engaged with Outside World'],
-    meta: 'People scoring high on this trait can be described as energetic, talkative and sociable, while people scoring low on this trait tend to be more shy, reserved and comfortable in their own company.',
     text: [
       'You are quiet and a bit withdrawn, someone who doesn’t need people around to have \'fun\'. You even find people tiring at times.',
       'You prefer low-key social occasions with a few close friends. It’s not that you are afraid of large parties, they\'re just not that fun for you.',
@@ -790,9 +803,6 @@ User.oceanDesc2p = {
   },
 
   agreeableness: {
-    desc: 'Agreeableness reflects individual differences concerning cooperation and social harmony.',
-    poles: ['Competitive', 'Team-working and Trusting'],
-    meta: 'People scoring high on this trait are generally considered soft-hearted, generous, and sympathetic, while people scoring low on this trait tend to be more driven, self-confident and competitive.',
     text: [
       'You can make tough decisions when necessary, and are happy to point out when something\'s wrong. You are tough, but somewhat uncompromising.',
       'You often have a hard time with new people, as you can be suspicious of their motives. Over time, however, you make good connections. But it doesn’t stop your from telling them \'how it is\'.',
@@ -803,9 +813,6 @@ User.oceanDesc2p = {
   },
 
   neuroticism: {
-    desc: 'Neuroticism refers to the tendency to experience negative emotions.',
-    poles: ['Laid-back and Relaxed', 'Easily Stressed and Emotional'],
-    meta: 'People scoring high on this trait generally worry more than most, and react poorly to stressful situations. However, they often show an emotional depth that others lack.',
     text: [
       'You don\'t show negative emotions even when you feel anxious. You try to present yourself as calm and resilient.',
       'You\'re generally emotionally stable, but try too hard to act as if you\'re never bothered.',
@@ -818,193 +825,52 @@ User.oceanDesc2p = {
 
 User.oceanDesc3p = {
   openness: {
-    desc: 'Openness to experience relates to our imagination and the degree to which we are comfortable with unfamiliarity',
-    poles: ['Conservative and Traditional', 'Liberal and Artistic'],
-    meta: 'People scoring high on this trait can be described as intellectually curious, sensitive to beauty, and unconventional, while people scoring low on this trait can be characterized as traditional and are more likely to prefer the familiar over the unusual.',
     text: [
-      '$user.name.ucf() $user.toBe() down-to-earth and prefers things to be simple and straightforward. $user.persPron().ucf() finds life easier if things don’t change unnecessarily. The arts are of little practical use to $user.possPron() as tradition $user.toBe() generally more important.',
-      '$user.name.ucf() dislikes needless complexity, and prefers the familiar over the unusual. $user.persPron().ucf() is more conservative than many and values practical outcomes over flighty imagination.',
-      '$user.name.ucf() $user.toBe() aware of $user.possPron() feelings but doesn’t get carried away with $user.possPron() imagination. $user.persPron().ucf() embraces change when it $user.toBe() necessary while still resisting it when $user.persPron() thinks otherwise. Beauty $user.toBe() important to $user.possPron(), but it’s not everything.',
-      '$user.name.ucf() $user.toBe() intellectually curious and appreciative of what $user.persPron() considers beautiful, no matter what others think. $user.possPron().ucf() imagination $user.toBe() vivid and makes $user.possPron() more creative than many others.',
-      '$user.name.ucf() $user.toBe() far more intellectually curious and sensitive to beauty than most. $user.possPron().ucf() beliefs are individualistic and frequently drift towards the unconventional. $user.persPron().ucf() enjoys $user.possPron() imagination and the exciting places it takes $user.possPron().'
+      '$user.name.ucf() $user.toBe() down-to-earth and prefers things simple. $user.persPron().ucf() finds life easier if things don’t change unnecessarily. The arts are of little practical use to $user.possPron() as tradition $user.toBe() generally more important.',
+      '$user.name.ucf() dislikes needless complexity. $user.persPron().ucf() prefers the familiar over the unusual and is more conservative than many. $user.persPron().ucf() values practical outcomes over flighty imagination.',
+      '$user.name.ucf() $user.toBe() aware of $user.possPron() feelings. But $user.persPron() doesn’t get carried away with $user.possPron() imagination. $user.persPron().ucf() embraces change when it $user.toBe() necessary while still resisting it when $user.persPron() thinks otherwise. Beauty $user.toBe() important to $user.possPron(), but it’s not everything.',
+      '$user.name.ucf() $user.toBe() intellectually curious. $user.persPron().ucf() $user.toBe() appreciative of what $user.persPron() considers beautiful, no matter what others think. $user.possPron().ucf() imagination $user.toBe() vivid and makes $user.possPron() more creative than others.',
+      '$user.name.ucf() $user.toBe() is highly intellectually curious. And $user.persPron() $user.toBe() more sensitive to beauty than most. $user.possPron().ucf() beliefs are individualistic and frequently drift towards the unconventional. $user.persPron().ucf() enjoys $user.possPron() imagination and the exciting places it takes $user.possPron().'
     ],
   },
 
   conscientiousness: {
-    desc: 'Conscientiousness concerns the way in which we control, regulate, and direct our impulses.',
-    poles: ['Impulsive and Spontaneous', 'Organized and Hard-working'],
-    meta: 'People scoring high on this trait can be described as organized, reliable, and efficient, while people scoring low on this trait are generally characterized as spontaneous and impulsive.',
     text: [
-      '$user.name.ucf() $user.toBe() impulsive and whimsical, and fine with it. $user.persPron().ucf() would say that sometimes decisions need to be made quickly, and that $user.persPron() makes them quicker than most. $user.persPron().ucf() would say $user.persPron() $user.toBe() zany, colourful, and just generally great fun to be with... as long as someone isn’t relying on $user.persPron() to get some work done.',
+      '$user.name.ucf() $user.toBe() is impulsive and whimsical. $user.persPron().ucf() would say that sometimes decisions need to be made quickly, and that $user.persPron() makes them quicker than most. $user.persPron().ucf() would say $user.persPron() $user.toBe() zany, colourful, and just generally great fun to be with... as long as someone isn’t relying on $user.objPron() to get work done.',
       '$user.name.ucf() $user.toBe() spontaneous and fun. $user.persPron().ucf() likes to do unexpected things that make life that bit more interesting. $user.persPron().ucf() $user.toBe()n’t completely unreliable, but $user.persPron()’ve been known to slip up on occasion.',
-      '$user.name.ucf() $user.toBe() random and fun to be around but $user.persPron() can plan and persist when life requires it. Depending on the situation, $user.persPron() can make quick decisions or deliberate for longer if necessary.',
-      '$user.name.ucf() avoids foreseeable trouble through purposeful planning and achieves success through persistence. $user.persPron().ucf() $user.toBe() reliable and prepared for life’s challenges.',
-      '$user.name.ucf() $user.toBe() a perfectionist. $user.persPron().ucf() prefers to plan everything to the last detail, which has consequently led to $user.possPron() being very successful and extremely reliable. $user.persPron().ucf() enjoys seeing $user.possPron() long-term plans come to fruition.'
+      '$user.name.ucf() $user.toBe() random and fun to be around. But $user.persPron() can plan and persist when life requires it. Depending on the situation, $user.persPron() can make quick decisions or deliberate for longer if necessary.',
+      '$user.name.ucf() avoids foreseeable trouble through planning. And $user.persPron() achieves success through persistence. $user.persPron().ucf() $user.toBe() reliable and prepared for life’s challenges.',
+      '$user.name.ucf() $user.toBe() a perfectionist. $user.persPron().ucf() likes to plan everything down to the last detail. This has consequently led to $user.possPron() being very successful and extremely reliable. $user.persPron().ucf() particularly enjoys seeing $user.possPron() long-term plans come to fruition.'
     ]
   },
 
   extraversion: {
-    desc: 'Extraversion refers to the extent to which people get their energy from the company of others, and whether they actively seek excitement and stimulation',
-    poles: ['Contemplative', 'Engaged with Outside World'],
-    meta: 'People scoring high on this trait can be described as energetic, talkative and sociable, while people scoring low on this trait tend to be more shy, reserved and comfortable in their own company.',
     text: [
       '$user.name.ucf() $user.toBe() quiet and somewhat withdrawn. $user.persPron().ucf() is someone who doesn’t need lots of other people around to have fun, and sometimes finds people tiring.',
-      '$user.name.ucf() prefers low-key social occasions, with a few close friends. It’s not that $user.persPron() $user.toBe() afraid of large parties; they\'re just not that fun for $user.possPron().',
-      '$user.name.ucf() enjoys and actively seeks out social occasions, but would say that they’re not everything. $user.persPron().ucf() might say that sometimes it $user.toBe() nice to step back for a while and have a quiet night in.',
-      '$user.name.ucf() $user.toBe() energetic and active. $user.persPron().ucf() is someone who enjoys and actively seeks out social occasions, and especially enjoys talking with a big group of people.',
-      '$user.name.ucf() $user.toBe() constantly energetic, exuberant and active. $user.persPron().ucf() is someone who aims to be the centre of attention at social occasions, takes charge in groups, and usually says "Yes" to challenges.'
+      '$user.name.ucf() prefers low-key social occasions. It’s not that $user.persPron() $user.toBe() afraid of large parties, but $user.persPron() prefers those with just a few friends.',
+      '$user.name.ucf() enjoys social occasions. But $user.persPron() doesn\'t depend on then for her enjoyment. $user.name.ucf() often likes to step back and have a quiet night in.',
+      '$user.name.ucf() $user.toBe() energetic and active. $user.persPron().ucf() is someone who enjoys and actively seeks out social occasions, and especially enjoys talking with large groups of people.',
+      '$user.name.ucf() $user.toBe() constantly exuberant and active. $user.persPron().ucf() is someone who aims to be the center of attention at social occasions. $user.persPron().ucf() takes charge in groups, and usually says "Yes" to challenges.'
     ]
   },
 
   agreeableness: {
-    desc: 'Agreeableness reflects individual differences concerning cooperation and social harmony.',
-    poles: ['Competitive', 'Team-working and Trusting'],
-    meta: 'People scoring high on this trait are generally considered soft-hearted, generous, and sympathetic, while people scoring low on this trait tend to be more driven, self-confident and competitive.',
     text: [
-      '$user.name.ucf() $user.toBe() willing to make (tough|difficult) decisions when necessary, and will point out when something $user.toBe() wrong no matter what other people might feel. (One|You) might say that $user.persPron() is tough and uncompromising.',
-      '$user.name.ucf() often finds it difficult to get along with new people when they first meet, as $user.persPron() can be suspicious of their motives. Over time though people warm to $user.possPron(), and $user.persPron() to them, although that doesn’t stop $user.possPron() from telling them "how it $user.toBe()".',
-      '$user.name.ucf() gets along with people well, especially once they have proved themselves trustworthy to $user.persPron(). $user.persPron().ucf() do have a healthy scepticism about others’ motives, but that doesn’t stop $user.persPron() from considering others to be basically honest and decent.',
-      '$user.name.ucf() is someone people get along with easily. $user.persPron().ucf() $user.toBe() considerate and friendly, and expect others to be honest and decent.',
-      '$user.name.ucf() $user.toBe() very easy to get along with. $user.persPron().ucf() $user.toBe() considerate, friendly, generous and helpful and $user.persPron() considers most others to be decent and trustworthy.'
+      '$user.name.ucf() $user.toBe() willing to make (tough|difficult) decisions. $user.persPron().ucf() will point out when something $user.toBe() wrong, no matter what other people might feel. (One|You) might say that $user.persPron() is tough and uncompromising.',
+      '$user.name.ucf() can have trouble meeting new people. This is because $user.persPron() can be suspicious of their motives. Over time though, people warm to $user.possPron(), and $user.persPron() to them, although that doesn’t stop $user.possPron() from telling them "how it $user.toBe()".',
+      '$user.name.ucf() gets along with people well. This is especially true once they prove themselves trustworthy to $user.persPron(). $user.persPron().ucf() does have a healthy scepticism about others’ motives, but that doesn’t stop $user.persPron() from considering others to be basically honest and decent.',
+      '$user.name.ucf() is someone people get along with. $user.persPron().ucf() $user.toBe() considerate and friendly, and expect others to be honest and decent.',
+      '$user.name.ucf() $user.toBe() very easy to get along with. $user.persPron().ucf() $user.toBe() considerate, friendly, generous and helpful. And $user.persPron() considers others to be decent and trustworthy.'
     ]
   },
 
   neuroticism: {
-    desc: 'Neuroticism refers to the tendency to experience negative emotions.',
-    poles: ['Laid-back and Relaxed', 'Easily Stressed and Emotional'],
-    meta: 'People scoring high on this trait generally worry more than most, and react poorly to stressful situations. However, they often show an emotional depth that others lack.',
     text: [
-      '$user.name.ucf() $user.toBe() extremely (hard|difficult) to upset or stress out, since $user.persPron() rarely, if ever, react with negative emotions, and even when $user.persPron() $user.toBe() anxious about something the feeling quickly passes. $user.persPron().ucf() comes across as very calm and resilient.',
-      '$user.name.ucf() $user.toBe() calm and emotionally stable. $user.persPron().ucf() comes across as someone who $user.toBe() rarely bothered by things, and when they do get $user.persPron() down, the feeling does not persist for very long.',
-      '$user.name.ucf() $user.toBe() generally calm. $user.persPron().ucf() comes across as someone who can feel emotional or stressed out by some experiences, but $user.possPron() feelings tend to be warranted by the situation.',
-      '$user.name.ucf() tends to be more self-conscious than many. $user.persPron().ucf() comes across as someone who can find it hard to not get caught up by anxious or stressful situations. $user.persPron().ucf() $user.toBe() in touch with $user.possPron() own feelings.',
-      '$user.name.ucf() reacts poorly to stressful situations, and consequently worries about them more than most. However $user.persPron() has an emotional depth that others may lack.'
+      '$user.name.ucf() $user.toBe() extremely hard to upset. $user.persPron().ucf() will rarely, if ever, react with negative emotions. Even when $user.persPron() $user.toBe() anxious about something, the feeling quickly passes. Thus $user.name.ucf() comes across as calm and resilient.',
+      '$user.name.ucf() $user.toBe() calm and emotionally stable. $user.persPron().ucf() comes across as someone who $user.toBe() rarely bothered by things. When something does get $user.persPron() down, the feeling does not persist for long.',
+      '$user.name.ucf() $user.toBe() generally calm. $user.persPron().ucf() can feel emotional or stressed out occasionally, but only when warranted by the situation.',
+      '$user.name.ucf() is more self-conscious than most. $user.persPron().ucf() finds it hard to not get caught up in anxious or stressful situations. Yet $user.persPron().ucf() $user.toBe() in touch with $user.possPron() own feelings.',
+      '$user.name.ucf() reacts poorly to stressful situations. Thus $user.persPron() worries about them more than most. However $user.persPron() has an emotional depth that others often lack.'
     ]
   }
 };
-
-  // computeInfluences(target) { // requires adIssue & target with traits
-  //
-  //   if (typeof this.target === 'undefined') {
-  //     throw Error('No target for targetAdData', this);
-  //   }
-  //   if (typeof this.adIssue === 'undefined') {
-  //     throw Error('No adIssue for targetAdData', this);
-  //   }
-  //   if (!this.hasOceanTraits(this.target)) {
-  //     throw Error('No target.traits for targetAdData', this);
-  //   }
-  //
-  //   const pre = 'imgs/', cat = this.categorize(this.target);
-  //
-  //   let images = this.randomInfluencingImages(this.adIssue, pre);
-  //   let slogans = this.randomIfluencingSlogans(this.adIssue);
-  //   let themes = this.randomInfluencingThemes(this.adIssue);
-  //
-  //   if (cat !== 0) {
-  //     images = [
-  //       pre + this.adIssue + '_' + cat + '.1.png',
-  //       pre + this.adIssue + '_' + cat + '.2.png',
-  //       pre + this.adIssue + '_' + -cat + '.1.png',
-  //       pre + this.adIssue + '_' + -cat + '.2.png'
-  //     ];
-  //     themes = User.influencingThemes[this.adIssue][(cat > 0 ? 'high' : 'low')][User.oceanTraits[Math.abs(cat) - 1]];
-  //     slogans = User.ifluencingSlogans[this.adIssue][(cat > 0 ? 'high' : 'low')][User.oceanTraits[Math.abs(cat) - 1]];
-  //     slogans = slogans.concat(User.ifluencingSlogans[this.adIssue][(cat < 0 ? 'high' : 'low')][User.oceanTraits[Math.abs(cat) - 1]]);
-  //   }
-  //   else {
-  //     console.warn('[TARG] Using random target data: ',
-  //       cat, images, influences, slogans);
-  //   }
-  //   this.target.influencingImages = images;
-  //   this.target.influencingThemes = themes;
-  //   this.target.influencingSlogans = slogans;
-  //   //console.log('COMPUTED: ',this.targetImages, this.targetSlogans, this.targetInfluences);
-  // }
-
-  /*targetAdImages() {
-    let pre = 'imgs/';
-
-    if (typeof this.target === 'undefined') {
-      throw Error('No target for adImages!', this);
-    }
-
-    let images = this.randomInfluencingImages(pre);
-    if (typeof this.target !== 'undefined' &&
-      this.hasOceanTraits(this.target) &&
-      typeof this.adIssue !== 'undefined') {
-
-      let cat = this.categorize(this.target);
-      if (cat !== 0) {
-        //console.log('['+this.adIssue+']['+(cat > 0 ? 'high' : 'low')+']['+User.oceanTraits[Math.abs(cat)-1]+']');
-        images = [
-          pre + this.adIssue + '_' + cat + '.1.png',
-          pre + this.adIssue + '_' + cat + '.2.png',
-          pre + this.adIssue + '_' + -cat + '.1.png',
-          pre + this.adIssue + '_' + -cat + '.2.png'
-        ];
-      }
-    } else {
-      console.error("[WARN] no target/traits/issue: " +
-        "using random images, issue=" + this.adIssue, this.target.traits);
-    }
-
-    return images;
-  }*/
-
-  /*targetAdInfluences() {
-
-    if (typeof this.target === 'undefined') {
-      throw Error('No target for influencingThemes!', this);
-    }
-
-    let ots = User.oceanTraits;
-    let influences = this.randomInfluencingThemes();
-
-    //console.log("OT",this.hasOceanTraits(this.target), typeof this.target);
-
-    if (typeof this.target !== 'undefined'
-      && this.hasOceanTraits(this.target)
-      && typeof this.adIssue !== 'undefined') {
-
-      let cat = this.categorize(this.target);
-      if (cat !== 0) {
-        influences = User.influencingThemes[this.adIssue]
-        [(cat > 0 ? 'high' : 'low')][ots[Math.abs(cat) - 1]];
-      }
-    } else {
-      console.error("[WARN] no target/traits/issue: " +
-        "using random influences [issue=" + this.adIssue + "] target=", this.target);
-    }
-    return influences;
-  }*/
-
-  // TODO: combine these 3: targetAdItem(type) ?
-  /*targetAdSlogans() {
-
-    if (typeof this.target === 'undefined') { //TMP: remove
-      throw Error('No target for ifluencingSlogans!', this);
-    }
-
-    let ots = User.oceanTraits;
-    let slogans = this.randomIfluencingSlogans();
-    if (typeof this.target !== 'undefined' &&
-      this.hasOceanTraits(this.target) &&
-      typeof this.adIssue !== 'undefined') {
-
-      let cat = this.categorize(this.target);
-      if (cat !== 0) {
-        //console.log('['+this.adIssue+']['+(cat > 0 ? 'high' : 'low')+']['+ots[Math.abs(cat)-1]+']');
-        let good = User.ifluencingSlogans[this.adIssue]
-        [(cat > 0 ? 'high' : 'low')][ots[Math.abs(cat) - 1]];
-        let bad = User.ifluencingSlogans[this.adIssue]
-        [(cat < 0 ? 'high' : 'low')][ots[Math.abs(cat) - 1]];
-        slogans = good.concat(bad);
-      }
-    } else {
-      console.error("[WARN] no target/traits/issue: using random slogan, issue="
-        + this.adIssue, this.target.traits);
-    }
-
-    return slogans;
-  }*/

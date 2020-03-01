@@ -56,7 +56,8 @@ class AvatarComponent extends React.Component {
             onError={() => { this.src = defaultImg }}
             className={(active || className !== 'active') ? 'avatar-image' : null}
           />
-          <div className="active-div" style={(this.isActive(target) ? {display:'block'} : {display:'none'})}>
+          <div className="active-div" style={(this.isActive(target) ?
+            {display:'block'} : {display:'none'})}>
           <span className="activeDot"></span>
           <span className="activeDotText">LIVE</span>
           </div>

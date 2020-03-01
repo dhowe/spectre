@@ -15,7 +15,6 @@ let prevActivateProfile = false;
 function OceanProfile(props) {
 
   const { target, activateProfile } = props;
-  console.log(target.name, target);
   const [sideBar, setSideBar] = React.useState({ isSideBarActive: false });
   const [helpDialog, setHelpDialog] = React.useState({ isHelpOpened: false });
 
@@ -42,6 +41,11 @@ function OceanProfile(props) {
       </div>
     );
   });
+
+  let opening1 = target.opening[0] + ' ' + target.opening[1];
+  let opening2 = target.opening[2] + ' ' + target.opening[3];
+  let descript = target.description.join(' ');
+  let closing = target.closing.join(' ');
 
   return (
     <div id="outer-container" className="OceanProfile" >
@@ -70,12 +74,14 @@ function OceanProfile(props) {
                   <hr />
                   <div className="profile-desc">
                     <p>
-                      {target.opening}
-                    <br /><br />
-                      {target.description}
-                    <br /><br />
-                      {target.closing}
-                  </p>
+                      {opening1}
+                      <br /><br />
+                      {opening2}
+                      <br /><br />
+                      {descript}
+                      <br /><br />
+                      {closing}
+                    </p>
                   </div>
                 </div>
                 <div className="split-r">
