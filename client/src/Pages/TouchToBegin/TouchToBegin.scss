@@ -6,7 +6,7 @@
     overflow: hidden;
     height: 100vh;
     width: 100%;
-    background-color: $blue;
+    background-color: $white;
   }
 
   .touchToBegin-Header {
@@ -23,7 +23,7 @@
 }
 @media screen and (orientation:portrait) {
   .touchToBegin {
-    background-color: $blue;
+    background-color: $white;
   }
 
   .touchToBegin-beginButton {
