@@ -76,7 +76,7 @@ function sketch(p) {
     for (let i = 0; i < Brand.names.length; i++) {
       let bx = -i * (p.width / 6) + p.width / 3;
       Brand.instances.push(new Brand
-(p, bx, linesY[(numLines-1)/2], brandSize, Brand.names[i]));
+        (p, bx, linesY[(numLines-1)/2], brandSize, Brand.names[i]));
 //(p, bx+1000, linesY[i%2===1?0:numLines-1], brandSize, Brand.names[i]));
     }
     totalDist = p.width - Brand.instances[Brand.instances.length - 1].x;
