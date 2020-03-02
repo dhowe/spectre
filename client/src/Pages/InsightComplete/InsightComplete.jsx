@@ -6,7 +6,7 @@ import IconButton from '../../Components/IconButton/IconButton';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
-//import { ReactComponent as ThumbUp } from '../../Icons/insightthankyou.svg';
+import { ReactComponent as ThumbUp } from '../../Icons/insightthankyou.svg';
 import Video from '../../Components/Video/Video';
 import './InsightComplete.scss';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
@@ -41,10 +41,11 @@ class InsightComplete extends React.Component {
         {/*<ThumbUp className="thankyou-icon" />*/}
         <IdleChecker forceTerminate={idleCheckerDone} />
         <div className={`${classes.content} content`}>
+        <ThumbUp className="thankyou-icon" />
           <h1><span><strong>Step 1</strong> complete!</span></h1>
           <h2>You've unlocked <span>OCEAN Profiling</span></h2>
           <IconButton enabled={true}
-            className={ComponentsStyles.iconButtonStyle3}
+            className={ComponentsStyles.iconButtonStyle1}
             icon="play" text="WTF is OCEAN?&nbsp;"
             onClick={this.showVideo} />
           <Video
