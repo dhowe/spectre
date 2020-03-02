@@ -9,8 +9,20 @@
 }
 
 .PostExp q {
-  font-weight: 500;
+	display: block;
+	padding-left: 24px;
+	margin: 24px 0;
+	border-left: 1px solid #C4C4C4;
+	font-style: italic;
+  font-weight:400;
 }
+.PostExp q:before{
+  content:"";
+}
+.PostExp q:after{
+  content:"";
+}
+
 .PostExp .SpectreHeader {
   position:relative;
   margin-bottom:80px;
@@ -31,6 +43,20 @@
 }
 .PostExp .container strong{
   color:#4F4F4F;
+}
+.PostExp .OceanProfile p, .PostExp .OceanProfile h2{
+  color: white !important;
+  font-weight:400!important;
+}
+.PostExp .OceanProfile .sidenav---navitem---9uL5T{
+  background-color:#42BAEB;
+}
+.PostExp .SideNav-main-collapsed {
+  top:0;
+}
+.PostExp .OceanProfile .profile-desc-lg p{
+  font-size: 28px;
+  line-height: 37px;
 }
 .PostExp .container p, .recommend-box{
 	color: #4F4F4F;
@@ -72,7 +98,9 @@
 	width: 48px;
 
 }
-
+.PostExp .red{
+  color:red !important;
+}
 /* .PostExp header {
 	text-align: center;
 	padding: 16px 0 24px 0;
@@ -144,8 +172,37 @@
 	background: url("./images/play.png") no-repeat;
 	cursor: pointer;
 }
-
-div.kim {
+/* Ocean Profile CSS */
+.PostExp .OceanProfileWrapper{
+  max-height:620px;
+  max-width:1000px;
+  width:100vw;
+  height:60vw;
+  overflow:hidden;
+}
+.PostExp .OceanProfile{
+  position:relative;
+  width:100%;
+  zoom: 75%; /* temp */
+}
+.PostExp button {
+  display: none;
+}
+.PostExp .SideNav-item-collapsed {
+  display:block !important;
+}
+.PostExp .SideNav-main-collapsed {
+  width:100% !important;
+}
+.PostExp .split-h{
+  top:40px;
+}
+.PostExp .OceanProfile img {
+  margin:0px !important;
+  box-shadow: none !important;
+}
+/* End of Ocean Profile CSS */
+.PostExp div.kim {
 	margin: 40px 0;
 }
 
@@ -206,10 +263,9 @@ div.kim {
 	padding-top: 136px;
 }
 
-.image-col {
+.PostExp .image-col {
 	padding-top: 40px;
 }
-
 
 .PostExp .container img {
 	margin: 40px 0;
@@ -217,8 +273,9 @@ div.kim {
 	-moz-box-shadow: 30px 24px 90px 0px rgba(0, 0, 0, 0.24);
 	box-shadow: 30px 24px 90px 0px rgba(0, 0, 0, 0.24);
 }
+.PostExp .container img.partner { max-width: 200px; margin-right: 40px; }
 
-.container img.no-shadow {
+.PostExp .container img.no-shadow {
 	margin: 40px 0;
 	-webkit-box-shadow: none;
 	-moz-box-shadow: none;
@@ -380,9 +437,5 @@ div.kim {
 		margin-top: 0px;
 	}
 }
-
-
-
-
 
 /******/
