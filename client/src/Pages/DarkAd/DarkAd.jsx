@@ -99,7 +99,6 @@ class DarkAd extends React.Component {
     const cimage = UserSession.imageDir + issue + '.svg';
     const btnEnabledPg1 = (this.state.defaultImg !== true && this.state.slogan.length);
 
-    console.log('SLOGANY: '+this.state.sloganY);
     return (
       <div className={classes.root + " darkAd"}>
         <SpectreHeader colour="white" progressActive progressNumber="one" />

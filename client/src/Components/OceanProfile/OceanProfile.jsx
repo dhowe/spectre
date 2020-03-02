@@ -43,6 +43,7 @@ function OceanProfile(props) {
   });
 
   let sentences = target.sentences.map((s,i) => (<p key={i}>{s}</p>));
+  let sentClass = sentences.length < 4 ? 'profile-desc-lg' : 'profile-desc'
 
   return (
     <div id="outer-container" className="OceanProfile" >
@@ -69,7 +70,7 @@ function OceanProfile(props) {
                       onClick={() => setHelpDialog({ isHelpOpened: sideBar.isSideBarActive })} />
                   </div>
                   <hr />
-                  <div className="profile-desc">
+                  <div className={sentClass}>
                     {sentences}
                   </div>
                 </div>

@@ -108,18 +108,19 @@ export default class User {
     };
   }
 
-  influencingSentences(tmpl) {
+  influencingSentences(tmpl, adIssue) {
+    if (!adIssue) throw Error('No adIssue in User.influencingSentences()');
     let is2p = tmpl === User.oceanDesc2p;
     User.computeInfluencesFor(this);
-    if (!Array.isArray(this.influences[this.adIssue].themes)
-      || this.influences[this.adIssue].themes.length != 2) {
+    if (!Array.isArray(this.influences[adIssue].themes)
+      || this.influences[adIssue].themes.length != 2) {
       throw Error('this.influences.adIssue.themes not an array[2]');
     }
     return (is2p ? 'You' : this.name.ucf()) +' can'
       + ' likely be influenced by images showing '
-      + this.influences[this.adIssue].themes[0]
+      + this.influences[adIssue].themes[0]
       + ' and by slogans containing '
-      + this.influences[this.adIssue].themes[1] + '.';
+      + this.influences[adIssue].themes[1] + '.';
   }
 
   getAge() {
@@ -138,17 +139,18 @@ export default class User {
     text += ' unusually ' + (category > 0 ? 'high. ' : 'low. ');
     text += User.oceanDesc[trait].desc + ' ';
     text += tmpl[trait].meta[category < 0 ? 0 : 1];
+
     return text;
   }
 
-  generateDescription(tmpl) {
+  generateDescription(tmpl, adIssue) {
 
     let target = this;
 
     // validate args  && user state
     tmpl = tmpl === '2p' ? User.oceanDesc2p : User.oceanDesc3p;
     if (!User.hasOceanTraits(target)) throw Error('traits required');
-    ['adIssue', 'age', 'gender'].forEach(req => {
+    [ 'age', 'gender' ].forEach(req => {
       if (typeof target[req] === 'undefined') throw Error(req + ' required');
     });
 
@@ -161,11 +163,12 @@ export default class User {
     let parser = new Parser(target);
     let opening = this.splitSentences(parser.parse(target.openingSentences(tmpl, parser)));
     let description = this.splitSentences(parser.parse(tmplText));
-    let closing = this.splitSentences(target.influencingSentences(tmpl));
+    let closing = null;
+    if (adIssue) closing = this.splitSentences(target.influencingSentences(tmpl, adIssue));
 
-    //console.log(target.traits, '\n', trait, score, category, '\n', text);
+    //console.log(target.traits, '\n', trait, score,'\n', text);
 
-    return { opening, description, closing, trait };
+    return { trait, opening, description, closing };
   }
 
   generateSentences(template, numSentences) {
@@ -177,7 +180,7 @@ export default class User {
       template = null;
     }
 
-    if (typeof this.gender === 'undefined') this.gender = 'other';
+    if (typeof this.gender === 'undefined') this.gender = 'female';
 
     numSentences = numSentences || 3;
 

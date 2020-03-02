@@ -203,6 +203,19 @@ SideNav-expanded {
   line-height: 33px;
   color: $white;
   padding-top: 20px;
+  padding-right: 30px;
+  padding-left: 10px;
+}
+
+.profile-desc-lg p {
+  margin: 0;
+  padding: 0;
+  font-size: 28px;
+  line-height: 37px;
+  color: $white;
+  padding-top: 30px;
+  padding-left: 30px;
+  padding-right: 50px;
 }
 
 .helpIcon {

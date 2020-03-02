@@ -73,21 +73,21 @@ UserSession.clear = (context) => {
   console.log('[USER] Session initialized');
 }
 
-UserSession.generateDescription = (target, tmpl) => {
-  if (target) return target.generateDescription(tmpl);
+UserSession.generateDescription = (target, adIssue, tmpl) => {
+  if (target) return target.generateDescription(tmpl, adIssue);
   return {
-    opening: '',
+    //opening: '',
     description: '',
     closing: '',
     trait: ''
   }
 }
 
-UserSession.generateBasicDesc = (target) => {
+UserSession.generateBasicDesc = (target, adIssue) => {
   if (!target) return ['','','',''];
-  let { opening, closing } = UserSession.generateDescription(target);
-  return [ opening.slice(0, 2).join(' '),
-    opening[2], opening[3], closing.join(' ') ];
+  let { opening, closing } = UserSession.generateDescription(target, adIssue);
+  return !adIssue ? [ opening.slice(0, 2).join(' '), opening[2], opening[3]] :
+    [opening.slice(0, 2).join(' '), opening[2], opening[3], closing.join(' ')];
 }
 
 UserSession.oceanData = (target, adIssue) => {
@@ -96,14 +96,12 @@ UserSession.oceanData = (target, adIssue) => {
     name: target ? target.name : '',
     traits: target ? target.traits : {},
     image: UserSession.targetImage(target),
-    gender: target ? target.gender : 'other',
+    gender: target ? target.gender : 'female',
     objPron: target ? target.objPron() : 'them',
     persPron: target ? target.persPron() : 'they',
     possPron: target ? target.possPron() : 'their',
     updatedAt: target ? target.updatedAt : new Date(),
-    sentences: UserSession.generateBasicDesc(target),
-    adIssue: target ? adIssue : UserSession.adIssues[Math.floor
-      (Math.random() * UserSession.adIssues.length)],
+    sentences: UserSession.generateBasicDesc(target, adIssue)
   };
 }
 
@@ -580,7 +578,7 @@ UserSession.persPron = (t) => {// used for target in ocean profile
 
 const Cons = "bcdfghjklmnprstvxz".split('');
 const Vows = "aeiou".split('');
-const Genders = ['male', 'female', 'other'];
+const Genders = ['male', 'female' ];
 const Virtues = ['wealth', 'influence', 'truth', 'power'];
 const FemaleCelebs = ['Kardashian', 'Abramovic'];
 const MaleCelebs = ['Freeman', 'Duchamp', 'Mercury', 'Trump', 'Zuckerberg'];

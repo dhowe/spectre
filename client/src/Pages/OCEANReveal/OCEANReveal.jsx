@@ -35,7 +35,7 @@ class OCEANReveal extends React.Component {
     const user = await UserSession.ensure(this.context,
       ['name', 'login', 'age', 'gender', 'adIssue', 'traits', 'celebrity']);
 
-    const { opening, closing } = user.generateDescription('2p');
+    const { opening, closing } = user.generateDescription('2p', user.adIssue);
     const sentences = [
       opening.slice(0, 2).join(' '),
       opening[2],
