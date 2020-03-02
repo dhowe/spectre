@@ -56,7 +56,7 @@ UserSchema.statics.findTargets = function(user, limit, callback) { // cb=functio
       // union of our two result arrays (no-dups) with max size of limit
       let recentIds = res[0].map(t => t._id.toString());
       let similars = res[1].filter(s => !recentIds.includes(s._id.toString()));
-      callback(e, res[0].concat(similars).splice(0, limit));
+      callback(e, res[0].concat(similars).slice(0, limit));
     });
 };
 
