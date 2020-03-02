@@ -301,6 +301,7 @@ class Game extends React.Component {
   }
 
   async onCompletion(ratings) { // called from p5
+    //console.log('ratings', ratings);
     user.traitsFromBrands(ratings);
     await UserSession.update(user);
     user.goto(this.props, '/thank-you');

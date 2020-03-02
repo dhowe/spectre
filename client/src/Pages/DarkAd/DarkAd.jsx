@@ -82,7 +82,7 @@ class DarkAd extends React.Component {
     this.setState({
       images: images,
       issue: user.adIssue,
-      target: UserSession.oceanData(user.target),
+      target: UserSession.oceanData(user.target, user.adIssue),
       slogans: user.target.influences[user.adIssue].slogans
     });
   }

@@ -5,12 +5,13 @@ import { withStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import Logo from '../../Components/Logo/Logo';
 import UserSession from '../../Components/UserSession/UserSession';
+
 import classes from '../../Components/Video/BgVideo.css';
-
-//import BeginBackground from '../../Images/1_Standby_Screen_1080px_by_1620px.jpg';
 import HeaderLogo from '../../Icons/headerlogo.svg';
-
 import './TouchToBegin.scss';
+
+import packageJson from '../../../package.json';
+global.appVersion = packageJson.version;
 
 // TO REVERT TO IMAGE: use commit d22c24b43f43b
 
@@ -64,11 +65,15 @@ class TouchToBegin extends React.Component {
         </div>
 
         <Link className="touchToBegin-beginButton" to="/login">
-            <Logo />
-            <div style={{position:'absolute',color:'white', top:486,left:874}}>
+          <Logo />
+          <div style={{ position: 'absolute', color: 'white', top: 486, left: 874 }}>
             <p>Touch to Begin!</p>
           </div>
         </Link>
+
+        <div style={{ position: 'absolute', color: 'black', top: 10, left: 20 }}>
+          <p>{global.appVersion}</p>
+        </div>
 
         <Webcam
           audio={false}

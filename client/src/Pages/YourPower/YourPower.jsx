@@ -32,7 +32,7 @@ class YourPower extends React.Component {
       ['name', 'login', 'updatedAt', 'adIssue', 'virtue', 'target']);
     this.setState({
       virtue: user.virtue,
-      target: UserSession.oceanData(user.target)
+      target: UserSession.oceanData(user.target, user.adIssue)
     });
   }
 

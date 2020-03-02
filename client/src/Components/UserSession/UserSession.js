@@ -90,7 +90,7 @@ UserSession.generateBasicDesc = (target) => {
     opening[2], opening[3], closing.join(' ') ];
 }
 
-UserSession.oceanData = (target) => {
+UserSession.oceanData = (target, adIssue) => {
   //let { description, opening, closing } = ;
   return {
     name: target ? target.name : '',
@@ -102,7 +102,7 @@ UserSession.oceanData = (target) => {
     possPron: target ? target.possPron() : 'their',
     updatedAt: target ? target.updatedAt : new Date(),
     sentences: UserSession.generateBasicDesc(target),
-    adIssue: target ? target.adIssue : UserSession.adIssues[Math.floor
+    adIssue: target ? adIssue : UserSession.adIssues[Math.floor
       (Math.random() * UserSession.adIssues.length)],
   };
 }

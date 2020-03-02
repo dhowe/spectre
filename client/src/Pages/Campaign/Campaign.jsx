@@ -30,7 +30,7 @@ class Campaign extends React.Component {
     this.setState({
       tname: user.target.name.ucf(),
       themes: user.target.influences[user.adIssue].themes,
-      target: UserSession.oceanData(user.target),
+      target: UserSession.oceanData(user.target, user.adIssue),
     });
   }
 

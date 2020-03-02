@@ -668,7 +668,7 @@ User.ifluencingSlogans = {
       conscientiousness: ["More control, more savings", "Your future, your rights"],
       extraversion: ["Play by your own rules", "Your voice matters"],
       agreeableness: ["Family and friends first", "Keep it real, America"],
-      neuroticism: ["Make America great again", "Americans protect their own"]
+      neuroticism: ["No more foreign criminals", "Americans protect their own"]
     },
     low: {
       openness: ["The best of America", "Put America First"],
