@@ -24,7 +24,7 @@ class InfluenceAFollower extends React.Component {
       ['name', 'login', 'virtue', 'traits']);
     await UserSession.targets(user);
     if (!user.similars > 6) throw Error('Invalid similar count')
-    this.setState({ targets: user.similars });
+    this.setState({ targets: user.similars.slice(0,6) });
   }
 
   handleSelect = (target) => {
