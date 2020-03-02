@@ -72,7 +72,7 @@ class ConsumerData extends React.Component {
               <Grid item sm={1}><IconButtonToggle enabled={false} icon="social" text="Social Media" /></Grid>
               <Grid item sm={2}><IconButtonToggle enabled={false} icon="travel" text="Travel" /></Grid>
               <Grid item sm={1}><IconButtonToggle enabled={false} icon="location" text="Location" /></Grid>
-            </Grid><Grid item sm={4}>
+            <Grid item sm={4}></Grid>
             </Grid>
           </div>
           <div className="link">
