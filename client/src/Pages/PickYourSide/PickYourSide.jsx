@@ -19,7 +19,8 @@ class PickYourSide extends React.Component {
   }
 
   async componentDidMount() {
-    const user = await UserSession.ensure(this.context, [ 'name', 'target' ]);
+    const user = await UserSession.ensure(this.context,
+      [ 'age', 'gender', 'name', 'traits', 'target' ]);
     this.setState({ target: UserSession.oceanData(user.target) });
   }
 

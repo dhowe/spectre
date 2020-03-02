@@ -37,15 +37,15 @@ function SimpleModal(props) {
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = React.useState(getModalStyle);
 
-  const oceanData = UserSession.oceanDesc3p;
-  const oceanHelp = Object.keys(oceanData).map(trait => (
+  console.log('openness: '+UserSession.oceanDesc['openness'].desc);
+  const oceanHelp = UserSession.oceanTraits.map(trait => (
     <div className="help-item" key={trait}>
       <div className="icon">
         <img src={`/imgs/${trait}.svg`} alt={trait} />
         <h2 className="helper-title">{trait.ucf()}</h2>
       </div>
       <div className="help-paragraph">
-        <p>{oceanData[trait].desc}</p>
+        <p>{UserSession.oceanDesc[trait].desc}</p>
       </div>
     </div>
   ));

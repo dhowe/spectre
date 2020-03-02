@@ -18,6 +18,7 @@ UserSession.serverDisabled = typeof auth === 'undefined';
 UserSession.adIssues = User.adIssues;
 UserSession.epochDate = User.epochDate;
 UserSession.oceanTraits = User.oceanTraits;
+UserSession.oceanDesc = User.oceanDesc;
 UserSession.oceanDesc3p = User.oceanDesc3p;
 UserSession.oceanDesc2p = User.oceanDesc2p;
 UserSession.storageKey = 'spectre-user';
@@ -74,7 +75,10 @@ UserSession.clear = (context) => {
 }
 
 UserSession.generateDescription = (target, adIssue, tmpl) => {
-  if (target) return target.generateDescription(tmpl, adIssue);
+  if (target) {
+    console.log('target',target);
+    return target.generateDescription(tmpl, adIssue);
+  }
   return {
     //opening: '',
     description: '',
@@ -118,8 +122,8 @@ UserSession.ensure = async (user, props, opts) => {
     const sid = sessionStorage.getItem(UserSession.storageKey);
     if (!sid) {
       console.log('[STUB] No user._id, creating new user');
-      fillMissingProps(user, ['login', 'name', 'virtue',
-        'adIssue', 'traits', 'celebrity', 'updatedAt']);
+      fillMissingProps(user, [ 'name', 'login',
+        'virtue', 'traits', 'celebrity', 'updatedAt' ]);
 
       await UserSession.create(user); // save new user
       console.log('[STUB] Setting user._id: ' + user._id);
@@ -173,9 +177,15 @@ UserSession.ensure = async (user, props, opts) => {
       console.log('[USER] ' + user._id + '.hasImage = ' + user.hasImage);
     }
 
+    console.log('ENSURE1', user, props);
+
     // stub any other properties and update if needed
     modified = fillMissingProps(user, props) || modified;
+    console.log('ENSURE2', user, props);
     if (modified || forceUpdate) await UserSession.update(user);
+
+    console.log('ENSURE3', user, props);
+
   }
   catch (e) {
     handleError(e, 'no-route', 'ensure');
@@ -213,6 +223,7 @@ function fillMissingProps(user, props) {
 
   if (!missing || !missing.length) return false; // all props are ok
 
+  console.log('missing', missing);
   let modified = false; // check known props, 1-by-1
   let propStubber = {
     age: () => irand(20, 60),
@@ -227,7 +238,11 @@ function fillMissingProps(user, props) {
     target: () => {
       if (!user.similars || !user.similars.length) throw Error
         ('propStubber.target -> no similars')
-      return rand(user.similars);
+      let target = rand(user.similars);
+      if (!target.age) target.age = irand(20, 60);
+      if (!target.gender) target.gender = rand(Genders);
+      User.computeInfluencesFor(target);
+      return target;
     }
   };
 

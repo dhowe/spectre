@@ -77,7 +77,9 @@ class DarkAd extends React.Component {
   }
 
   async componentDidMount() {
-    const user = await UserSession.ensure(this.context, ['adIssue', 'target']);
+    const user = await UserSession.ensure(this.context, [ 'name', 'login',
+      'age', 'adIssue', 'gender', 'name', 'traits', 'virtue', 'target' ]);
+    if (!user.age) throw Error('No age: '+user);
     let images = user.target.influences[user.adIssue].images;
     this.setState({
       images: images,

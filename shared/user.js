@@ -58,6 +58,7 @@ export default class User {
     let s = u._id ? u._id + ', ' + u.name : u.name;
     if (u.login) s += ', ' + u.login;
     if (u.gender) s += ', ' + u.gender;
+    if (u.age) s += ', ' + u.age;
     if (u.virtue) s += ', ' + u.virtue;
     if (u.target) s += ', target=' + u.target._id + '/' + u.target.name;
     if (u.similars && u.similars.length) {
@@ -150,8 +151,18 @@ export default class User {
     // validate args  && user state
     tmpl = tmpl === '2p' ? User.oceanDesc2p : User.oceanDesc3p;
     if (!User.hasOceanTraits(target)) throw Error('traits required');
+
+
+
+
+
+
+    console.log(target);
+
     [ 'age', 'gender' ].forEach(req => {
-      if (typeof target[req] === 'undefined') throw Error(req + ' required');
+      if (typeof target[req] === 'undefined') {
+        throw Error(req + ' required, '+target);
+      }
     });
 
     let { trait, score } = User.definingTrait(target);
@@ -428,17 +439,15 @@ export default class User {
 
   // target is an object with traits
   static computeInfluencesFor(target, issues) {
-    //console.log('computeInfluencesFor: '+target.name);
+
+    console.log('computeInfluencesFor: '+target.name);
 
     if (typeof target === 'undefined') {
       throw Error('No target in User.computeInfluencesFor()');
     }
 
-    if (typeof issues === 'undefined' || !issues.length) {
-      issues = User.adIssues;
-    }
-
     let needsWork = false;
+    issues = issues || User.adIssues;
     issues.forEach(issue => {
       if (!target.influences
         || !target.influences[issue]
