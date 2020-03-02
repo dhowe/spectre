@@ -2,6 +2,7 @@ import fs from 'fs';
 import cors from 'cors';
 import http from 'http';
 import https from 'https';
+import nocache from 'nocache'
 import express from 'express';
 import logger from './logger';
 import routes from './routes';
@@ -32,7 +33,9 @@ const auth = basicAuth({
 ///////////////////////////// Express ///////////////////////////////
 
 const app = express();
+app.use(nocache());
 app.use('*', cors());
+app.set('etag', false);
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: true }));
 
