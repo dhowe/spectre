@@ -30,23 +30,19 @@
     margin-right: 50px;
   }
 
-
   .OceanSliders {
     margin-left: 50px;
     margin-right: auto;
     display: block;
 
-
-    .textSlider, .textSliderMaxVal {
+    .textSlider {
       color: $white;
-      width: 530px;
+      width: 600px;
       text-align: left;
       height: 100px;
       overflow: visible;
       display: flex;
       margin-bottom: 30px;
-
-
 
       p {
         color: $white;
@@ -80,7 +76,6 @@
       }
       .icon {
         padding-top: 10px;
-        padding-left: 8px;
         width: 95px;
         height: 95px;
       }
@@ -92,7 +87,6 @@
       }
 
       .sliderContainer {
-        background: $blue;
         width: auto;
         height: auto;
         display: block;
@@ -144,12 +138,6 @@
           box-shadow: none;
         }
       }
-    }
-    .textSliderMaxVal{
-      width: 530px;
-      background-color: rgba(0,0,255,0.1);
-      padding-bottom: 120px;
-      margin-bottom: 10px;
     }
   }
 }
