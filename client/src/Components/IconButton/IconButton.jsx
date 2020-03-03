@@ -19,7 +19,7 @@ const icons = {
   next: colour =>
   <svg
   	 width="50px" height="50px" viewBox="0 0 56 56" className="nextBtnFill">
-  <circle fill={colour}  stroke-width="2" cx="28" cy="28" r="27"/>
+  <circle fill={colour} cx="28" cy="28" r="27"/>
   <g>
   	<path fill="#FEFEFE" d="M26.324,18.546l1.11-1.11c0.47-0.47,1.23-0.47,1.695,0l9.719,9.714c0.47,0.47,0.47,1.23,0,1.695
   		l-9.719,9.719c-0.47,0.47-1.23,0.47-1.695,0l-1.11-1.11c-0.475-0.475-0.465-1.25,0.02-1.715L32.368,30H18
