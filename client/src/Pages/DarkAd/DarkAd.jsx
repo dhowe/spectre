@@ -72,7 +72,8 @@ class DarkAd extends React.Component {
       pageTwo: { display: 'none' },
       target: UserSession.oceanData(),
       image: '/imgs/no_propaganda_bg.svg',
-      sloganY: 230 // offset for slogan on image
+      sloganY: 230, // offset for slogan on image
+      imgLoaded: false,
     };
   }
 
@@ -87,6 +88,7 @@ class DarkAd extends React.Component {
       target: UserSession.oceanData(user.target, user.adIssue),
       slogans: user.target.influences[user.adIssue].slogans
     });
+    this.setImageLoaded()
   }
 
   handleNextPage(e) {
@@ -94,12 +96,17 @@ class DarkAd extends React.Component {
     this.setState({ pageOne: { display: 'none' }, pageTwo: { display: 'block' } })
   }
 
+  setImageLoaded(){
+      this.setState({ imgLoaded: true})
+  }
+
   render() {
     const { classes } = this.props;
-    const { issue, images, slogans, target, defaultImg } = this.state;
+    const { issue, images, slogans, target, defaultImg,imgLoaded } = this.state;
     const redimg = UserSession.imageDir + 'darkadred.png';
     const cimage = UserSession.imageDir + issue + '.svg';
     const btnEnabledPg1 = (this.state.defaultImg !== true && this.state.slogan.length);
+
 
     return (
       <div className={classes.root + " darkAd"}>
@@ -128,7 +135,7 @@ class DarkAd extends React.Component {
                 <div>
                   <p className="normal darkAdsubtitle">Select your image:</p>
                   {images.map((img, i) => (
-                    <img className={ComponentsStyles.adImageSelection}
+                    <img className={ComponentsStyles.adImageSelection} style={this.state.imgLoaded? {visibility:'visible'}:{visibility:'hidden'}}
                       src={img} alt={`adimg${i + 1}`} key={`img${i + 1}`}
                       onClick={() => {
                         this.setState({
@@ -137,9 +144,11 @@ class DarkAd extends React.Component {
                           sloganY: bannerOffsets[img]
                         });
                         //console.log('sloganY', bannerOffsets, img, bannerOffsets[img] + 'px');
-                      }}>
-                    </img>
+
+                      }}
+                      />
                   ))}
+
                 </div>
                 <div>
                   <p className="normal darkAdsubtitle">Select your slogan:</p>
