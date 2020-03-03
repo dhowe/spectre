@@ -23,17 +23,14 @@ function OceanProfile(props) {
     prevActivateProfile = props.activateProfile;
   }
 
-  //     p = p.toString().replace(property.trim(), '<span class="redSpan">' + property + '</span>')
-  //     p = p.toString().replace(property.ucf().trim(), '<span class="redSpan">' + property.ucf() + '</span>')
-
-  const isDominant = t =>  !t ? <div></div> :
+  const isDominantTrait = t => (!t) ? <div></div> :
     (<img className='dominant' alt='dom' src='imgs/dominant.svg' />);
 
   const oceanSliders = UserSession.oceanTraits.map(trait => {
     let isDom = trait === target.trait;
     return (
       <div className={isDom ? "textSliderMaxVal" : "textSlider"} key={trait}>
-        {isDominant(isDom)}
+        {isDominantTrait(isDom)}
         <div className="icon">
           <img src={`/imgs/${trait}.svg`} alt={trait} key={trait}/>
         </div>
@@ -50,8 +47,14 @@ function OceanProfile(props) {
     );
   });
 
-  let sentences = target.sentences.map((s, i) => <p key={i}>{s}</p>);  //(<p dangerouslySetInnerHTML={{ __html: highlight(s, i) }}></p>));
-  let sentClass = sentences.length < 4 ? 'profile-desc-lg' : 'profile-desc'
+  let sentences = target.sentences.map((sent,i) => {
+    let words = sent.split(' ');
+    let weight = words[0].toLowerCase() === target.trait ? 'bold' : 'normal';
+    return (<p key={i}><span style={{fontWeight: weight, color:'#fff'}}>{words[0]}
+      </span>&nbsp;<span style={{color:'#fff'}}>{words.slice(1).join(' ')}</span></p>)
+  });
+
+  let sentClass = sentences.length < 4 ? 'profile-desc-lg' : 'profile-desc';
 
   return (
     <div id="outer-container" className="OceanProfile" >
