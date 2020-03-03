@@ -5,6 +5,7 @@ import SideNav, { NavItem, NavText } from '@trendmicro/react-sidenav';
 import UserSession from '../../Components/UserSession/UserSession';
 import AvatarComponent from '../../Components/AvatarComponent/AvatarComponent';
 import OceanProfileHelp from '../OceanProfileHelp/OceanProfileHelp';
+import { Fragment } from 'react'
 
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 import "./OceanProfile.scss";
@@ -38,10 +39,26 @@ function OceanProfile(props) {
       }
   }
 
+  function highlight(p,i){
 
+    for (var property in target.traits) {
+      p = p.toString().replace(property.trim(),'<span class="redSpan">'+ property +'</span>')
+      p = p.toString().replace(property.ucf().trim(),'<span class="redSpan">'+ property.ucf()+'</span>')
+    }
+    return p;
+  }
+
+  function isDominant(t){
+if(t){
+    return (<img className="dominant" src="imgs/DOMINANT.svg" />);
+}
+  return (<div></div>);
+  }
+let dom = '<img src="imgs/DOMINANT.svg" />'
   const oceanSliders = UserSession.oceanTraits.map(trait => {
     return (
       <div className={maxKey === trait ? "textSliderMaxVal":"textSlider"} key={trait}>
+                  {isDominant(maxKey === trait)}
         <div className="icon">
           <img src={`/imgs/${trait}.svg`} alt={trait} />
         </div>
@@ -50,6 +67,7 @@ function OceanProfile(props) {
             <Slider value={target.traits[trait] * 100} aria-labelledby="label" />
           </div>
           <div className="sliderText">
+
             <p className="slider-title">{trait.ucf()}</p>
             <p className="slider-percentage">{Math.round(target.traits[trait] * 100)}%</p>
           </div>
@@ -58,9 +76,7 @@ function OceanProfile(props) {
     );
   });
 
-  let sentences = target.sentences.map((s,i) => (<p key={i}>{s}</p>));
-  sentences.toString().split(maxKey).join('<span>'+ maxKey+'</span>');
-
+  let sentences = target.sentences.map((s,i) => (<p dangerouslySetInnerHTML={{__html:highlight(s,i)}}></p>));
   let sentClass = sentences.length < 4 ? 'profile-desc-lg' : 'profile-desc'
 
   return (
@@ -89,7 +105,7 @@ function OceanProfile(props) {
                   </div>
                   <hr />
                   <div className={sentClass}>
-                    {sentences}
+                  {sentences}
                   </div>
                 </div>
                 <div className="split-r">
