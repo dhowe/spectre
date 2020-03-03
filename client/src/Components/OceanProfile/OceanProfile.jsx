@@ -23,9 +23,25 @@ function OceanProfile(props) {
     prevActivateProfile = props.activateProfile;
   }
 
+  var isMax = false;
+  var max = 0;
+  var maxKey = "";
+
+  for (var property in target.traits) {
+    //max = (max < parseFloat(target.traits[property])) ? parseFloat(target.traits[property]) : max;
+
+      isMax = (max < parseFloat(target.traits[property])) ? true : false;
+      if(isMax){
+      //  console.log(property);
+        max = parseFloat(target.traits[property]);
+        maxKey = property;
+      }
+  }
+
+
   const oceanSliders = UserSession.oceanTraits.map(trait => {
     return (
-      <div className="textSlider" key={trait}>
+      <div className={maxKey === trait ? "textSliderMaxVal":"textSlider"} key={trait}>
         <div className="icon">
           <img src={`/imgs/${trait}.svg`} alt={trait} />
         </div>
@@ -43,6 +59,8 @@ function OceanProfile(props) {
   });
 
   let sentences = target.sentences.map((s,i) => (<p key={i}>{s}</p>));
+  sentences.toString().split(maxKey).join('<span>'+ maxKey+'</span>');
+
   let sentClass = sentences.length < 4 ? 'profile-desc-lg' : 'profile-desc'
 
   return (
