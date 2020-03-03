@@ -73,40 +73,38 @@ class DarkAd extends React.Component {
       target: UserSession.oceanData(),
       image: '/imgs/no_propaganda_bg.svg',
       sloganY: 230, // offset for slogan on image
-      imgLoaded: false,
+      imgLoaded: false
     };
   }
 
   async componentDidMount() {
-    const user = await UserSession.ensure(this.context, [ 'name', 'login',
-      'age', 'adIssue', 'gender', 'name', 'traits', 'virtue', 'target' ]);
-    if (!user.age) throw Error('No age: '+user);
+    const user = await UserSession.ensure(this.context, ['name', 'login',
+      'age', 'adIssue', 'gender', 'name', 'traits', 'virtue', 'target']);
     let images = user.target.influences[user.adIssue].images;
     this.setState({
       images: images,
       issue: user.adIssue,
       target: UserSession.oceanData(user.target, user.adIssue),
-      slogans: user.target.influences[user.adIssue].slogans
+      slogans: user.target.influences[user.adIssue].slogans,
+      imgLoaded: true
     });
-    this.setImageLoaded()
   }
 
-  handleNextPage(e) {
+  handleNextPage = (e) => {
     e.preventDefault();
-    this.setState({ pageOne: { display: 'none' }, pageTwo: { display: 'block' } })
-  }
-
-  setImageLoaded(){
-      this.setState({ imgLoaded: true})
+    this.setState({
+      pageOne: { display: 'none' },
+      pageTwo: { display: 'block' }
+    });
   }
 
   render() {
     const { classes } = this.props;
-    const { issue, images, slogans, target, defaultImg,imgLoaded } = this.state;
+    const { slogan, slogans, sloganY, pageOne, pageTwo  } = this.state;
+    const { target, issue, image, images, defaultImg, imgLoaded  } = this.state;
+    const btnEnabledPg1 = (!defaultImg && slogan.length);
     const redimg = UserSession.imageDir + 'darkadred.png';
     const cimage = UserSession.imageDir + issue + '.svg';
-    const btnEnabledPg1 = (this.state.defaultImg !== true && this.state.slogan.length);
-
 
     return (
       <div className={classes.root + " darkAd"}>
@@ -114,39 +112,39 @@ class DarkAd extends React.Component {
         <OceanProfile target={target} />
         <IdleChecker />
         <div className={`${classes.content} content`}>
-          <div style={this.state.pageOne}>
+          <div style={pageOne}>
             <h1>Create Your Campaign</h1>
             <div className="split-half">
               <div className="split-left">
                 <div className={classes.ad}>
-                  <img className={ComponentsStyles.adImage} src={this.state.image} alt="adbg"></img>
-                  <p style={this.state.slogan ? {
-                      backgroundColor: 'red',
-                      top: this.state.sloganY
+                  <img className={ComponentsStyles.adImage} src={image} alt="adbg"></img>
+                  <p style={slogan ? {
+                    backgroundColor: 'red',
+                    top: sloganY
                     } : {
                       backgroundColor: 'none'
-                    }} className={ComponentsStyles.adText}>{this.state.slogan}
+                    }}
+                    className={ComponentsStyles.adText}>{slogan}
                   </p>
                   {!defaultImg ? <img className={classes.campaignImage} src={cimage} alt="campaign"
-                    style={{ bottom: (this.state.sloganY===370 ? 407: 107)  }}></img> : ''}
+                    style={{ bottom: (sloganY === 370 ? 407 : 107) }}></img> : ''}
                 </div>
               </div>
               <div className="split-right">
                 <div>
                   <p className="normal darkAdsubtitle">Select your image:</p>
                   {images.map((img, i) => (
-                    <img className={ComponentsStyles.adImageSelection} style={this.state.imgLoaded? {visibility:'visible'}:{visibility:'hidden'}}
-                      src={img} alt={`adimg${i + 1}`} key={`img${i + 1}`}
+                    <img className={ComponentsStyles.adImageSelection}
+                      style={{ visibility: (imgLoaded ? 'visible' : 'hidden')}}
+                      src={img} alt={`adimg${i}`} key={`img${i}`}
                       onClick={() => {
                         this.setState({
                           image: img,
                           defaultImg: false,
                           sloganY: bannerOffsets[img]
                         });
-                        //console.log('sloganY', bannerOffsets, img, bannerOffsets[img] + 'px');
-
                       }}
-                      />
+                    />
                   ))}
 
                 </div>
@@ -170,30 +168,30 @@ class DarkAd extends React.Component {
               </div>
             </div>
           </div>
-          <div style={this.state.pageTwo}>
+          <div style={pageTwo}>
             <h1 className="noSpacing"><br />Your targeted  <img src='/imgs/facebook.png'
               style={{ marginTop: 15, height: 100, position: 'relative', top: 30 }}
               alt="facebook" /> ad:</h1>
             <div className={classes.adPage2}>
-              <img className={ComponentsStyles.adImage} src={this.state.image} alt="bg"></img>
-              <p style={this.state.slogan ? { backgroundColor: 'red', top: this.state.sloganY } : { backgroundColor: 'none' }}
-                className={ComponentsStyles.adTextPage2}>{this.state.slogan}
+              <img className={ComponentsStyles.adImage} src={image} alt="bg"></img>
+              <p style={slogan ? { backgroundColor: 'red', top: sloganY } : { backgroundColor: 'none' }}
+                className={ComponentsStyles.adTextPage2}>{slogan}
               </p>
-              {!this.state.defaultImg ? <img className={classes.campaignPage2} src={cimage} alt="bg"
-                style={{ bottom:(this.state.sloganY===370 ? 315:15)}}></img> : ''}
+              {!defaultImg ? <img className={classes.campaignPage2} src={cimage} alt="bg"
+                style={{ bottom: (sloganY === 370 ? 315 : 15) }}></img> : ''}
             </div>
             <p> Share with <span>{target.name}</span></p>
           </div>
           <div className="link">
-            <div style={this.state.pageOne}>
+            <div style={pageOne}>
               <IconButton enabled={btnEnabledPg1}
-                onClick={e => this.handleNextPage(e)}
+                onClick={this.handleNextPage}
                 className={ComponentsStyles.iconButtonStyle1}
                 icon="next" text="Next" />
             </div>
-            <div style={this.state.pageTwo}>
+            <div style={pageTwo}>
               <Link to="/success-ad" onClick={() => this.context.targetAd =
-                { image: this.state.image, slogan: this.state.slogan }}>
+                { image: image, slogan: slogan }}>
                 <div className={ComponentsStyles.buttonWrapper}>
                   <Button className="shareButton" variant="outlined" color="primary">
                     <img alt="shareIcon" src="./imgs/shareIcon.svg" /><strong>Share</strong>

@@ -76,13 +76,12 @@ export default class User {
   }
 
   static definingTrait(target, excludes) {
+
     if (typeof target !== 'object') throw Error
-      ('categorize requires object: got ' + typeof target);
+      ('definingTrait requires object: got ' + typeof target);
 
-    let trait = null;
-    let maxDev = 0;
     let traits = User.oceanTraits;
-
+    let trait, maxDev = 0;
     traits.forEach(t => {
       if (excludes && excludes.includes(t)) return;
       let val = target.traits[t];

@@ -13,7 +13,7 @@ UserSession.clientId = -1;
 UserSession.serverErrors = 0;
 UserSession.useBrowserStorage = true;
 UserSession.defaultUsers = DefaultUsers;
-UserSession.publicUrl = 'https://spectreknows.me/'; // ?
+UserSession.publicUrl = 'https://spectreknows.me/';
 UserSession.serverDisabled = typeof auth === 'undefined';
 UserSession.adIssues = User.adIssues;
 UserSession.epochDate = User.epochDate;
@@ -92,8 +92,11 @@ UserSession.generateBasicDesc = (target, adIssue) => {
 }
 
 UserSession.oceanData = (target, adIssue) => {
-  //let { description, opening, closing } = ;
+  let df = { trait: '', category: 0 };
+  if (target) df = User.definingTrait(target);
   return {
+    trait: df.trait,
+    category: df.category,
     name: target ? target.name : '',
     traits: target ? target.traits : {},
     image: UserSession.targetImage(target),

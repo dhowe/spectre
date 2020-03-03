@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 import UserSession from '../../Components/UserSession/UserSession';
 import OceanProfile from '../../Components/OceanProfile/OceanProfile';
 import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 import IconButton from '../../Components/IconButton/IconButton';
-import { Link } from 'react-router-dom';
 import IdleChecker from '../../Components/IdleChecker/IdleChecker';
-
 import ComponentsStyles from '../../App.module.css';
 
 const styles = {};
