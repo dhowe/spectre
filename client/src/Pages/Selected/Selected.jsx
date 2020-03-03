@@ -52,7 +52,7 @@ class Selected extends React.Component {
             <Link to="/insight-gender">
               <IconButton enabled={true}
                 className={ComponentsStyles.iconButtonStyle1}
-                icon="tick" text="Dive in" />
+                icon="next" text="Dive in" />
             </Link>
           </div>
         </div>

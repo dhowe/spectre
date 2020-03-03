@@ -41,6 +41,16 @@ class SpectreHeader extends React.Component {
   //   }
   // }
 
+  resize = () => window.location.reload();
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.resize);
+  }
+
+
+  async componentDidMount() {
+    window.addEventListener('resize', this.resize);
+  }
+
   render() {
     //const { image } = this.state;
 
