@@ -151,11 +151,15 @@ export default class User {
     tmpl = tmpl === '2p' ? User.oceanDesc2p : User.oceanDesc3p;
     if (!User.hasOceanTraits(target)) throw Error('traits required');
 
-    [ 'age', 'gender' ].forEach(req => {
-      if (typeof target[req] === 'undefined') {
-        throw Error(req + ' required, '+target);
-      }
-    });
+    if (typeof target.age === 'undefined') {
+      console.error('User.generateDescription: no age found!');
+      target.age = 25;
+    }
+    
+    if (typeof target.gender === 'undefined') {
+      console.error('User.generateDescription: no gender found!');
+      target.gender = 'female';
+    }
 
     let { trait, score } = User.definingTrait(target);
     let traitNames = User.oceanTraits;

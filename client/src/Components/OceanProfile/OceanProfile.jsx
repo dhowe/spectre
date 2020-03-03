@@ -47,13 +47,15 @@ function OceanProfile(props) {
     );
   });
 
-  let sentences = target.sentences.map((sent,i) => {
+  /////////////////////////// bold dominant trait /////////////////////////////
+  /*let sentences = target.sentences.map((sent,i) => {
     let words = sent.split(' ');
     let weight = words[0].toLowerCase() === target.trait ? 'bold' : 'normal';
     return (<p key={i}><span style={{fontWeight: weight, color:'#fff'}}>{words[0]}
       </span>&nbsp;<span style={{color:'#fff'}}>{words.slice(1).join(' ')}</span></p>)
-  });
+  });*/
 
+  let sentences = target.sentences.map((s,i) => <p key={i}>{s}</p>);
   let sentClass = sentences.length < 4 ? 'profile-desc-lg' : 'profile-desc';
 
   return (
