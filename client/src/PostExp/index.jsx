@@ -46,28 +46,14 @@ class PostExp extends React.Component {
   constructor(props) {
     super(props, '/post-experience');
     this.state = {
-      width:0,
-      height:0,
       name: '', // themes are included in oceanData
       target: UserSession.oceanData()
     };
-    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
   }
 
   async componentDidMount() {
-    this.updateWindowDimensions();
-    window.addEventListener('resize', this.updateWindowDimensions);
     const user = await UserSession.ensure(this.context, [ 'name', 'target' ]);
     this.setState({ target: UserSession.oceanData(user.target) });
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.updateWindowDimensions);
-  }
-
-  updateWindowDimensions() {
-    this.setState({ width: window.innerWidth, height: window.innerHeight });
-    // TODO: dynamic profile size
   }
 
   render() {
@@ -79,9 +65,7 @@ class PostExp extends React.Component {
               autoplay: 1
             }
         };
-    let oceanProfileStyle = {
-      zoom: this.width < 1000 ? (this.width/1000)*75 + "%" : "75%"
-    }
+
     return (
       <div className="PostExp">
           <SpectreHeader colour="white"/>
@@ -283,7 +267,7 @@ class PostExp extends React.Component {
                       <div className="text-center">
                       {
                         <div className="full-wdith pull-right OceanProfileWrapper">
-                          <OceanProfile target={target} style={oceanProfileStyle}/>
+                          <OceanProfile target={target} />
                         </div>
                       //<img src={OceanProfileImage} alt="Ocean Profile" title="Ocean Profile" className="img-responsive full-wdith pull-right" />
                       }

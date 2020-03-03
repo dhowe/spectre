@@ -175,15 +175,14 @@
 /* Ocean Profile CSS */
 .PostExp .OceanProfileWrapper{
   max-height:620px;
-  max-width:1000px;
-  width:100vw;
+  width:100%;
   height:60vw;
   overflow:hidden;
 }
 .PostExp .OceanProfile{
   position:relative;
-  width:100%;
-  zoom: 75%; /* temp */
+  zoom: 75%;
+  width:initial;
 }
 .PostExp button {
   display: none;
@@ -438,4 +437,22 @@
 	}
 }
 
+@media (max-width:1000px) {
+  .PostExp .OceanProfile{
+    zoom: 50%;
+  }
+}
+@media (max-width:680px) {
+  .PostExp .OceanProfile{
+    zoom: 40%;
+  }
+}
+@media (max-width:550px) {
+  .PostExp .OceanProfile{
+    zoom: 30%;
+  }
+  .PostExp .split-h{
+    top:20px;
+  }
+}
 /******/
