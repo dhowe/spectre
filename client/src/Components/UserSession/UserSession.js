@@ -46,8 +46,8 @@ UserSession.create = async (user, cb) => {
     body: toNetworkString(user)
   });
 
-  if (e) return e.startsWith('491') ? 'EmailInUse'
-      : handleError(e, route, 'create');
+  if (e) return (typeof e === 'string' && e.startsWith('491'))
+      ? 'EmailInUse' : handleError(e, route, 'create');
 
   UserSession.useBrowserStorage && sessionStorage.setItem
     (UserSession.storageKey, JSON.stringify(json._id));
