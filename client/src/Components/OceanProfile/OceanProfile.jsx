@@ -24,27 +24,21 @@ function OceanProfile(props) {
     prevActivateProfile = props.activateProfile;
   }
 
-
   let dk = "";
 
   function findHighlight(p, i) {
 
     for (let property in target.traits) {
-
-  //    console.log("prop" + property)
       let isDom = p.indexOf(property.trim());
-  //    console.log(p.indexOf(property.trim()))
       if (isDom !== -1) {
-        //    dominantKey = property.trim();
         dk = property.trim();
-
       }
       p = p.toString().replace(property.trim(), '<span class="redSpan">' + property + '</span>')
       p = p.toString().replace(property.ucf().trim(), '<span class="redSpan">' + property.ucf() + '</span>')
     }
 
-  //  setDomKey({ dominantKey: dk });
-  //  console.log("dominant key " + domKey.dominantKey)
+    //  setDomKey({ dominantKey: dk });
+    //  console.log("dominant key " + domKey.dominantKey)
     return p;
   }
 
@@ -56,8 +50,8 @@ function OceanProfile(props) {
   }
 
 
-    let sentences = target.sentences.map((s, i) => (<p dangerouslySetInnerHTML={{ __html: findHighlight(s, i) }}></p>));
-    let sentClass = sentences.length < 4 ? 'profile-desc-lg' : 'profile-desc'
+  let sentences = target.sentences.map((s, i) => (<p dangerouslySetInnerHTML={{ __html: findHighlight(s, i) }}></p>));
+  let sentClass = sentences.length < 4 ? 'profile-desc-lg' : 'profile-desc'
 
   const oceanSliders = UserSession.oceanTraits.map(trait => {
     return (
