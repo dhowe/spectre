@@ -40,6 +40,7 @@ class LoginPage extends React.Component {
     this.tosModalTitle = '';
   }
 
+
   componentDidMount() {
     UserSession.clear(this.context);
     this.setState({ height: window.innerHeight + 'px' });
@@ -93,7 +94,7 @@ class LoginPage extends React.Component {
 
         // HANDLE #465 HERE (use the modal to alert user they
         // are being taken to their previous location)
-        
+
         /*
           // find the last page of the user
           user = await UserSession.lookup(this.context.login);

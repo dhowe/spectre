@@ -48,7 +48,14 @@ class TouchToBegin extends React.Component {
     super(props, '/login');
   }
 
+  resize = () => window.location.reload();
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.resize);
+  }
+
+
   async componentDidMount() {
+            window.addEventListener('resize', this.resize);
     UserSession.clear(this.context);
   }
 
