@@ -21,7 +21,7 @@ const styles = {
 };
 
 const defaultImg = UserSession.imageDir + 'default.jpg';
-const liveUserInterval = 5 * (1000 * 60); // 5 minutes
+const liveUserInterval = 1 * (1000 * 60); // 1 minutes
 
 class AvatarComponent extends React.Component {
 
