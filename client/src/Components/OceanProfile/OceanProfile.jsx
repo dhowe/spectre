@@ -24,41 +24,45 @@ function OceanProfile(props) {
     prevActivateProfile = props.activateProfile;
   }
 
-  var isMax = false;
-  var max = 0;
-  var maxKey = "";
 
-  for (var property in target.traits) {
-    //max = (max < parseFloat(target.traits[property])) ? parseFloat(target.traits[property]) : max;
+  let dk = "";
 
-      isMax = (max < parseFloat(target.traits[property])) ? true : false;
-      if(isMax){
-      //  console.log(property);
-        max = parseFloat(target.traits[property]);
-        maxKey = property;
+  function findHighlight(p, i) {
+
+    for (let property in target.traits) {
+
+  //    console.log("prop" + property)
+      let isDom = p.indexOf(property.trim());
+  //    console.log(p.indexOf(property.trim()))
+      if (isDom !== -1) {
+        //    dominantKey = property.trim();
+        dk = property.trim();
+
       }
-  }
-
-  function highlight(p,i){
-
-    for (var property in target.traits) {
-      p = p.toString().replace(property.trim(),'<span class="redSpan">'+ property +'</span>')
-      p = p.toString().replace(property.ucf().trim(),'<span class="redSpan">'+ property.ucf()+'</span>')
+      p = p.toString().replace(property.trim(), '<span class="redSpan">' + property + '</span>')
+      p = p.toString().replace(property.ucf().trim(), '<span class="redSpan">' + property.ucf() + '</span>')
     }
+
+  //  setDomKey({ dominantKey: dk });
+  //  console.log("dominant key " + domKey.dominantKey)
     return p;
   }
 
-  function isDominant(t){
-if(t){
-    return (<img className="dominant" src="imgs/DOMINANT.svg" />);
-}
-  return (<div></div>);
+  function isDominant(t) {
+    if (t) {
+      return (<img className="dominant" src="imgs/DOMINANT.svg" />);
+    }
+    return (<div></div>);
   }
-let dom = '<img src="imgs/DOMINANT.svg" />'
+
+
+    let sentences = target.sentences.map((s, i) => (<p dangerouslySetInnerHTML={{ __html: findHighlight(s, i) }}></p>));
+    let sentClass = sentences.length < 4 ? 'profile-desc-lg' : 'profile-desc'
+
   const oceanSliders = UserSession.oceanTraits.map(trait => {
     return (
-      <div className={maxKey === trait ? "textSliderMaxVal":"textSlider"} key={trait}>
-                  {isDominant(maxKey === trait)}
+      <div className={dk === trait.trim() ? "textSliderMaxVal" : "textSlider"} key={trait}>
+        {isDominant(dk === trait.trim())}
         <div className="icon">
           <img src={`/imgs/${trait}.svg`} alt={trait} />
         </div>
@@ -67,7 +71,6 @@ let dom = '<img src="imgs/DOMINANT.svg" />'
             <Slider value={target.traits[trait] * 100} aria-labelledby="label" />
           </div>
           <div className="sliderText">
-
             <p className="slider-title">{trait.ucf()}</p>
             <p className="slider-percentage">{Math.round(target.traits[trait] * 100)}%</p>
           </div>
@@ -75,9 +78,6 @@ let dom = '<img src="imgs/DOMINANT.svg" />'
       </div>
     );
   });
-
-  let sentences = target.sentences.map((s,i) => (<p dangerouslySetInnerHTML={{__html:highlight(s,i)}}></p>));
-  let sentClass = sentences.length < 4 ? 'profile-desc-lg' : 'profile-desc'
 
   return (
     <div id="outer-container" className="OceanProfile" >
@@ -105,7 +105,7 @@ let dom = '<img src="imgs/DOMINANT.svg" />'
                   </div>
                   <hr />
                   <div className={sentClass}>
-                  {sentences}
+                    {sentences}
                   </div>
                 </div>
                 <div className="split-r">
