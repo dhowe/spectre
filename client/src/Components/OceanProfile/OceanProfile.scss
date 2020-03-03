@@ -1,7 +1,15 @@
 @import '../../colors.scss';
 
 .OceanProfile {
+  .dominant {
+    position: absolute;
+    right: 22px;
+    width: 160px;
+  }
 
+  .redSpan {
+    color: $red;
+  }
   color: $white;
   width: 100vw;
   position: fixed;
@@ -35,11 +43,12 @@
     margin-right: auto;
     display: block;
 
-    .textSlider {
+    .textSlider,
+    .textSliderMaxVal {
       color: $white;
       width: 600px;
       text-align: left;
-      height: 100px;
+      height: 110px;
       overflow: visible;
       display: flex;
       margin-bottom: 30px;
@@ -60,27 +69,29 @@
 
       .slider-title {
         width: 200px;
-        left:50px;
+        left: 50px;
         font-size: 28px;
         line-height: 46px;
         padding-top: 20px;
         text-align: left;
       }
+
       .slider-percentage {
         width: 200px;
         font-size: 18px;
         line-height: 25px;
         text-align: right;
         padding-top: 30px;
-
       }
+
       .icon {
         padding-top: 10px;
+        padding-left: 8px;
         width: 95px;
         height: 95px;
       }
 
-      .icon img{
+      .icon img {
         filter: brightness(0) invert(1);
         width: 95px;
         height: 95px;
@@ -90,21 +101,23 @@
         width: auto;
         height: auto;
         display: block;
+        background: $blue;
       }
-
 
       .slider {
-      //  transform: rotate(270deg);
+        //  transform: rotate(270deg);
         height: 10px;
         width: 380px;
-        padding-top:0px;
+        padding-top: 0;
         margin: 20px;
       }
-      .slider  *{
+
+      .slider * {
         color: white;
       }
-      .MuiSlider-root{
-        padding: 0 0;
+
+      .MuiSlider-root {
+        padding: 0;
       }
 
       div[class*="MuiSlider-track"] {
@@ -138,6 +151,16 @@
           box-shadow: none;
         }
       }
+    }
+
+    .textSliderMaxVal {
+      width: 530px;
+      background-color: rgba(254, 254, 254, 0.16);
+      padding-bottom: 120px;
+      margin-bottom: 10px;
+      border: 2px dashed #FEFEFE;
+      box-sizing: border-box;
+      border-radius: 14px;
     }
   }
 }
