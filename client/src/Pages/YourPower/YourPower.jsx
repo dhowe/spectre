@@ -30,7 +30,6 @@ class YourPower extends React.Component {
   async componentDidMount() {
     const user = await UserSession.ensure(this.context, ['name',
       'login', 'age', 'gender', 'traits', 'virtue','updatedAt', 'target' ]);
-    console.log('componentDidMount', user);
     this.setState({
       virtue: user.virtue,
       target: UserSession.oceanData(user.target)

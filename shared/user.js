@@ -152,13 +152,6 @@ export default class User {
     tmpl = tmpl === '2p' ? User.oceanDesc2p : User.oceanDesc3p;
     if (!User.hasOceanTraits(target)) throw Error('traits required');
 
-
-
-
-
-
-    console.log(target);
-
     [ 'age', 'gender' ].forEach(req => {
       if (typeof target[req] === 'undefined') {
         throw Error(req + ' required, '+target);
@@ -439,8 +432,6 @@ export default class User {
 
   // target is an object with traits
   static computeInfluencesFor(target, issues) {
-
-    console.log('computeInfluencesFor: '+target.name);
 
     if (typeof target === 'undefined') {
       throw Error('No target in User.computeInfluencesFor()');

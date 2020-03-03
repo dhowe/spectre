@@ -46,7 +46,12 @@ class LoginPage extends React.Component {
   }
 
   goto = (page) => {
-    this.context.goto(this.props, page);
+    if (this.context) {
+      this.context.goto(this.props, page);
+    }
+    else {
+      this.props.history.push(page);
+    }
   }
 
   handleSubmit = (e, { name, email }) => {
@@ -54,7 +59,7 @@ class LoginPage extends React.Component {
     if (e) e.preventDefault();
     const user = this.context;
     if (!e) { // right-arrow key
-      UserSession.validate(this.context, ['name', 'login' ], { allowNoId: true });
+      UserSession.validate(this.context, ['name', 'login'], { allowNoId: true });
       name = user.name;
       email = user.login;
       console.log("[STUB]", name, email);
@@ -83,32 +88,47 @@ class LoginPage extends React.Component {
   saveUser = async (user) => {
     user.logVisit();
     try {
-      UserSession.create(user);
-      console.log('[LOGIN] ' + user.toString());
-    }
-    catch (e) {
-      if (e.error === 'EmailInUse') {
-        this.modalTitle = 'Invalid email';
-        this.modalContent = 'Email has already been used';
+      let result = await UserSession.create(user);
+      if (result === 'EmailInUse') { // re-used email
 
-        // HANDLE #465 HERE (can also use the modal here to alert
-        // user they are being taken to their previous location)
-        user = await UserSession.lookup(this.context.login);
-        let pages = user.lastPage.split(',');
-        let next = pages.pop();
-        console.log('[LOGIN] Returning user: '+user.toString(), next);
+        // HANDLE #465 HERE (use the modal to alert user they
+        // are being taken to their previous location)
+        
         /*
-         * Looks like you've visited before, want to continue?
-         * [no thanks] [[sure!]]
-         * to-login    to-'next'
-         */
-        //this.setState({ modalOpen: true });
+          // find the last page of the user
+          user = await UserSession.lookup(this.context.login);
+          if (!user.lastPage) this.goto('/login');
+          let pages = user.lastPage.split(',');
+          let next = pages.pop();
+          console.log('[LOGIN] Returning user: ' + user.toString(), next);
+        */
 
-      } else {
-        console.error('UserSession.create: ', e);
+        /*
+         * DIALOG:
+         * Looks like you've visited before, want to continue?
+         *  [no thanks]        [[sure!]]
+         *  goto '/login'      goto 'next'
+         */
+
+        // too many errors, back to start page
+        if (this.state.emailErrorCount > 2) this.goto('/');
+
+        // alert user that email was used
+        this.modalTitle = 'Email in use';
+        this.modalContent = 'Sorry, this email was already registered';
+        this.setState({ modalOpen: true, emailErrorCount: this.state.emailErrorCount+1 });
+      }
+      else if (typeof result === 'string') {
+        throw Error(result); // unknown error
+      }
+      else {
+        this.showVideo(); // save was ok, show video
       }
     }
-    this.showVideo();
+    catch (e) {
+      console.error('[LOGIN] Unexpected error: ', e, 'for', user);
+      this.goto('/');
+    }
   }
 
   closeModal = () => {

@@ -1,9 +1,12 @@
 {
   "name": "spectre-server",
-  "version": "1.0.29",
+  "version": "1.0.31",
   "description": "Server component for the SPECTRE system",
   "main": "app.js",
   "scripts": {
+    "bump": "yarn bump-server && yarn bump-client && head -n3 package.json client/package.json",
+    "bump-server": "yarn version --no-git-tag-version --patch",
+    "bump-client": "yarn --cwd client version --patch --no-git-tag-version",
     "test": "NODE_ENV=test mocha ./tests --recursive --exit -r esm",
     "test-g": "NODE_ENV=test mocha ./tests --recursive --exit -r esm -g",
     "test-routes": "NODE_ENV=test mocha ./tests/routes --exit -r esm",

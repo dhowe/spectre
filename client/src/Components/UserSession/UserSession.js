@@ -30,7 +30,7 @@ localIPs(ip => (UserSession.clientId = ip), '192.');
 /*
  * Creates a new database record: /login only
  */
-UserSession.create = async (user) => {
+UserSession.create = async (user, cb) => {
 
   if (UserSession.serverDisabled) return;
 
@@ -46,7 +46,8 @@ UserSession.create = async (user) => {
     body: toNetworkString(user)
   });
 
-  if (e) return handleError(e, route, 'create');
+  if (e) return e.startsWith('491') ? 'EmailInUse'
+      : handleError(e, route, 'create');
 
   UserSession.useBrowserStorage && sessionStorage.setItem
     (UserSession.storageKey, JSON.stringify(json._id));
@@ -75,11 +76,7 @@ UserSession.clear = (context) => {
 }
 
 UserSession.generateDescription = (target, adIssue, tmpl) => {
-  if (target) {
-    console.log('target',target);
-    return target.generateDescription(tmpl, adIssue);
-  }
-  return {
+  return target ? target.generateDescription(tmpl, adIssue) : {
     //opening: '',
     description: '',
     closing: '',
@@ -177,15 +174,9 @@ UserSession.ensure = async (user, props, opts) => {
       console.log('[USER] ' + user._id + '.hasImage = ' + user.hasImage);
     }
 
-    console.log('ENSURE1', user, props);
-
     // stub any other properties and update if needed
     modified = fillMissingProps(user, props) || modified;
-    console.log('ENSURE2', user, props);
     if (modified || forceUpdate) await UserSession.update(user);
-
-    console.log('ENSURE3', user, props);
-
   }
   catch (e) {
     handleError(e, 'no-route', 'ensure');
@@ -223,7 +214,8 @@ function fillMissingProps(user, props) {
 
   if (!missing || !missing.length) return false; // all props are ok
 
-  console.log('missing', missing);
+  //console.log('missing', missing);
+
   let modified = false; // check known props, 1-by-1
   let propStubber = {
     age: () => irand(20, 60),
@@ -694,7 +686,7 @@ function handleError(e, route, func) {
       + UserSession.serverErrors + '] errors');
     UserSession.serverDisabled = true;
   }
-  //if (process.env.NODE_ENV !== 'production') throw e;
+  return undefined;
 }
 
 function doConfig() {
