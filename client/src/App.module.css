@@ -123,8 +123,10 @@ Button
 
   .adImageSelection {
     width: 160px;
+    height: 124px;
     padding: 15px;
   }
+
 
   .adText, .adTextPage2 {
     position: absolute;
