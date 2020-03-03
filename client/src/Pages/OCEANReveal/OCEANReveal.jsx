@@ -37,16 +37,13 @@ class OCEANReveal extends React.Component {
 
     const { opening, closing } = user.generateDescription('2p', user.adIssue);
     const sentences = [
-      opening.slice(0, 2).join(' '),
-      opening[2],
-      opening[3],
-      closing.join(' '),
+      opening.slice(0, 2).join(' '), opening[2], opening[3], closing.join(' ')
     ];
 
     //const sentences = user.generateSummary();
     const allChar = sentences.join("----");
     const waitingTime = (allChar.length * keyPause)
-      + timing.reduce((a, v) => a + v) + 1000;
+      + timing.reduce((a, v) => a + v) + 4000;
 
     this.setState({ sentences: sentences, celebrity: user.celebrity });
     this.timeout = setTimeout(() => this.setState
