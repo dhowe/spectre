@@ -69,7 +69,7 @@ const icons = {
     </svg>,
   play: colour =>
     <svg
-    	 width="56px" height="56px" viewBox="0 0 56 56" enable-background="new 0 0 56 56" >
+    	 width="56px" height="56px" viewBox="0 0 56 56" enableBackground="new 0 0 56 56" >
     <circle fill={colour} cx="28" cy="28" r="27"/>
     <g>
     	<path fill="#FEFEFE" d="M23.112,38.508V17.492c0-1.455,1.759-2.184,2.788-1.155l10.508,10.508c0.638,0.638,0.638,1.672,0,2.31
