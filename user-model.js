@@ -62,23 +62,19 @@ UserSchema.statics.findTargets = function(user, limit, callback) { // cb=functio
 
 // find most recently updated users with traits and image
 UserSchema.statics.findByRecent = function(userId, limit, callback) { // cb=function(err,users)
-  UserModel.aggregate([
-    {
-      $match: {
-        'traits.openness': { $gte: 0 },
-        _id: { $ne: new mongoose.Types.ObjectId(userId) },
-        hasImage: true
-      }
-    },
-    { $sort: { updatedAt: -1 } },
-    { $limit: limit },
-    { $project: { similars: 0 } }
+  UserModel.aggregate([{
+    $match: {
+      'traits.openness': { $gte: 0 },
+      _id: { $ne: new mongoose.Types.ObjectId(userId) },
+      age: { $exists: true },
+      gender: { $exists: true },
+      hasImage: true
+    }
+  },
+  { $sort: { updatedAt: -1 } },
+  { $limit: limit },
+  { $project: { similars: 0 } }
   ], callback);
-};
-
-UserSchema.statics.findByLogin = function(login, callback) { // cb=function(err,users)
-  // find all users with traits and image
-  UserModel.findOne({ login: login, loginType: 'email' }, callback);
 };
 
 // find most similar users according to ocean traits
@@ -86,14 +82,23 @@ UserSchema.statics.findByLogin = function(login, callback) { // cb=function(err,
 UserSchema.statics.findByOcean = function(user, limit, callback) { // cb=function(err,users)
   limit = limit || Number.MAX_SAFE_INTEGER;
   // find all users with traits and image
-  UserModel.find({ 'traits.openness': { $gte: 0 }, "_id": { $ne: user._id }, 'hasImage': true },
-    (e, similars) => {
-      if (e) throw e;
-      // then sort by ocean, then limit
-      let sorted = oceanSort(user, similars);
-      if (limit) sorted = sorted.slice(0, limit);
-      callback(e, sorted); // ADDED: DCH
-    });
+  UserModel.find({
+    hasImage: true,
+    _id: { $ne: user._id },
+    age: { $exists: true },
+    gender: { $exists: true },
+    'traits.openness': { $gte: 0 }
+  }, (e, similars) => {
+    if (e) throw e;
+    // then sort by ocean, then limit
+    let sorted = oceanSort(user, similars);
+    if (limit) sorted = sorted.slice(0, limit);
+    callback(e, sorted); // ADDED: DCH
+  });
+};
+
+UserSchema.statics.findByLogin = function(login, callback) { // cb=function(err,users)
+  UserModel.findOne({ login: login, loginType: 'email' }, callback);
 };
 
 // find most recent user on each with traits and image (not-used)
