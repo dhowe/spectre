@@ -228,6 +228,7 @@ describe('REST API', () => {
           user.traits = User.randomTraits();
           user.updatedAt = new Date();
           user.hasImage = true;
+          user.age = 30;
 
           // update Dave
           chai.request(server)
@@ -264,6 +265,7 @@ describe('REST API', () => {
                   user.traits = User.randomTraits();
                   user.updatedAt = new Date();
                   user.hasImage = true;
+                  user.age = 39;
 
                   // update Dave2
                   chai.request(server)
@@ -337,6 +339,7 @@ describe('REST API', () => {
           user.traits = User.randomTraits();
           user.updatedAt = new Date();
           user.hasImage = true;
+          user.age = 29;
 
           // update Dave
           chai.request(server)
@@ -372,6 +375,7 @@ describe('REST API', () => {
                   user.traits = User.randomTraits();
                   user.updatedAt = new Date();
                   user.hasImage = true;
+                  user.age = 29;
 
                   // update Dave2
                   chai.request(server)
@@ -440,6 +444,7 @@ describe('REST API', () => {
           user.traits = User.randomTraits();
           user.updatedAt = new Date();
           user.hasImage = true;
+          user.age = 28;
 
           chai.request(server)
             .put('/api/users/' + user._id)
