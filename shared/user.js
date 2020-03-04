@@ -155,7 +155,7 @@ export default class User {
       console.error('User.generateDescription: no age found!');
       target.age = 25;
     }
-    
+
     if (typeof target.gender === 'undefined') {
       console.error('User.generateDescription: no gender found!');
       target.gender = 'female';
@@ -240,6 +240,7 @@ export default class User {
     let traits = {};
     predict(brandRatings).forEach(b => traits[b.trait] = b.score);
     this.traits = traits;
+    console.log(brandRatings, traits);
   }
 
   splitSentences(text) {
@@ -566,6 +567,7 @@ User.schema = () => {
     },
     age: {
       type: 'number'
+      //default: 0,
     },
     genderProb: {
       type: 'number'
@@ -740,23 +742,23 @@ User.abbreviations = ["Adm.", "Capt.", "Cmdr.", "Col.", "Dr.", "Gen.", "Gov.", "
 
 User.oceanDesc = {
   openness: {
-    desc: 'Openness to experience relates to our imagination and the degree to which we are comfortable with unfamiliarity.',
-    poles: ['Conservative and Traditional', 'Liberal and Artistic'],
+    desc: 'Openness to experience relates to imagination and creativity, and to the degree that one is comfortable with unfamiliarity.',
+    poles: ['Conservative and Traditional', 'Liberal and Artistic'], // [low, high] unused as yet
   },
   conscientiousness: {
-    desc: 'Conscientiousness concerns the way in which we control, regulate, and direct our impulses.',
+    desc: 'Conscientiousness concerns thoughtfulness and the way in which one controls, regulates, and directs impulses.',
     poles: ['Impulsive and Spontaneous', 'Organized and Hard-working'],
   },
   extraversion: {
-    desc: 'Extraversion refers to the extent to which people get their energy from the company of others, and whether they actively seek excitement and stimulation.',
+    desc: 'Extraversion refers to the extent to one derives energy from the company of others, and whether they actively seek excitement and stimulation.',
     poles: ['Contemplative', 'Engaged with Outside World'],
   },
   agreeableness: {
-    desc: 'Agreeableness reflects individual differences concerning cooperation and social harmony.',
+    desc: 'Agreeableness refers to attributes such as trust, altruism, kindness, affection, and other pro-social behaviors.',
     poles: ['Competitive', 'Team-working and Trusting'],
   },
   neuroticism: {
-    desc: 'Neuroticism refers to the tendency to experience negative emotions.',
+    desc: 'Neuroticism refers to the degree that one experiences negative emotions such as anxiety, irritability, and sadness.',
     poles: ['Laid-back and Relaxed', 'Easily Stressed and Emotional'],
   }
 };
