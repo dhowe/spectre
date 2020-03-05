@@ -9,16 +9,12 @@ import { expect } from 'chai';
 const mockUser = {
   "_id": "888888888888888888888888",
   "name": "Sally",
-  "detectGender": "female",
-  "detectGenderProb": .9123,
-  "detectAge": "28",
+  "gender": "female",
+  "genderProb": .9123,
+  "age": "28",
   "clientId": 'localhost',
   "hasImage": true,
   "targetId": "-1",
-  // "descriptors": [
-  //   "Sally is a perfectionist.",
-  //   "She prefers to plan everything to the last detail, which has consequently led to her being very successful and extremely reliable.",
-  //   "Sally is far more intellectually curious and sensitive to beauty than most."],
   "virtue": "power",
   "adIssue": "democrat",
   "traits": {
@@ -33,13 +29,24 @@ const mockUser = {
 };
 
 describe('Email.fillTemplate', () => {
+
   it('Should fill in a template for a test user', (done) => {
     loadFile('../templates/email.html').then(tmpl => {
       let message = fillTemplate(tmpl, mockUser);
       expect(message.length).gt(0);
-      done();
+      //done();
       //expect(/[^0-9]%/.test(message)).eq(false);
-      //saveEmail(message, 'templates/tmp.html').then(done);
+      saveEmail(message, 'templates/tmp.html').then(done);
+    });
+  });
+
+  it('Should fill in a template for a db user', (done) => {
+    loadFile('../templates/email.html').then(tmpl => {
+      let message = fillTemplate(tmpl, mockUser);
+      expect(message.length).gt(0);
+      //done();
+      //expect(/[^0-9]%/.test(message)).eq(false);
+      saveEmail(message, 'templates/tmp.html').then(done);
     });
   });
 });
@@ -58,7 +65,7 @@ function saveEmail(email, fpath = 'output.html') {
   return new Promise((resolve, reject) => {
     fs.writeFile(fpath, email, (err) => {
       if (err) return reject(err);
-      console.log('WROTE: ' + process.cwd() + '/' + fpath);
+      console.log('  WROTE: ' + process.cwd() + '/' + fpath);
       return resolve();
     });
   });

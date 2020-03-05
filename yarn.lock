@@ -3706,6 +3706,13 @@ chai-http@^4.3.0:
     qs "^6.5.1"
     superagent "^3.7.0"
 
+chai-roughly@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/chai-roughly/-/chai-roughly-1.0.0.tgz#1fea8e03ab7c76b428a2bc97a7d844d82e6ee176"
+  integrity sha1-H+qOA6t8drQooryXp9hE2C5u4XY=
+  dependencies:
+    deep-eql "git+https://github.com/Turbo87/deep-eql.git#9bad4db"
+
 chai-string@^1.5.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/chai-string/-/chai-string-1.5.0.tgz#0bdb2d8a5f1dbe90bc78ec493c1c1c180dd4d3d2"
@@ -4718,6 +4725,12 @@ deep-eql@^3.0.1:
   integrity sha512-+QeIQyN5ZuO+3Uk5DYh6/1eKO0m0YmJFGNmFHGACpf1ClL1nmlV/p4gNgbl2pJGxgXb4faqo6UE+M5ACEMyVcw==
   dependencies:
     type-detect "^4.0.0"
+
+"deep-eql@git+https://github.com/Turbo87/deep-eql.git#9bad4db":
+  version "0.1.3"
+  resolved "git+https://github.com/Turbo87/deep-eql.git#9bad4db6794aa0ce74a1118ad6e38df5c70992f3"
+  dependencies:
+    type-detect "^1.0.0"
 
 deep-equal@^1.0.1:
   version "1.1.1"
@@ -12921,6 +12934,11 @@ type-check@~0.3.2:
   integrity sha1-WITKtRLPHTVeP7eE8wgEsrUg23I=
   dependencies:
     prelude-ls "~1.1.2"
+
+type-detect@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/type-detect/-/type-detect-1.0.0.tgz#762217cc06db258ec48908a1298e8b95121e8ea2"
+  integrity sha1-diIXzAbbJY7EiQihKY6LlRIejqI=
 
 type-detect@^4.0.0, type-detect@^4.0.5:
   version "4.0.8"

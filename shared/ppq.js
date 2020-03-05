@@ -7,6 +7,7 @@
 export function predict(responses) {
 
   if (Array.isArray(responses) && responses.length > 0) {
+    validateItemRatings(responses);
     const itemRatings = getItemRatings(responses);
     const sumRatings = getSumRatings(itemRatings);
     if (sumRatings > 0) {
@@ -17,7 +18,7 @@ export function predict(responses) {
   throw Error('Unexpected input', responses);
 }
 
-const predictions = [
+const metadata = [
   { trait: 'openness', abbrev: 'ope', boost: true, correction: true },
   { trait: 'conscientiousness', abbrev: 'con', boost: true, correction: true },
   { trait: 'extraversion', abbrev: 'ext', boost: true, correction: true },
@@ -28,17 +29,32 @@ const predictions = [
   { trait: 'gender', abbrev: 'gender', boost: false, correction: false }
 ];
 
+export function abbreviate(traitName) {
+  let match = metadata.filter(t => t.trait === traitName);
+  if (match.length !== 1) throw Error('bad trait name: '+traitName);
+  return match[0].abbrev;
+}
+
+// allow only numbers in: [-.9, -.8, -.7, ... .7, .8, .9]
+function validateItemRatings(responses) {
+  responses.forEach(r => {
+    let iscore = r.rating * 10;
+    if (!Number.isInteger(iscore) || Math.abs(iscore) > 9) {
+      throw Error('Invalid brand score: '+r.item+'/'+r.score);
+    }
+  });
+}
+
 function getPredictions(itemRatings, sumRatings) {
-  return predictions
-    .map(prediction => ({
-      trait: prediction.trait,
-      score: getScoreForTrait(
-        itemRatings,
-        sumRatings,
-        prediction.abbrev + '_perc',
-        prediction.boost,
-        prediction.correction)
-    }));
+  return metadata.map(prediction => ({
+    trait: prediction.trait,
+    score: getScoreForTrait(
+      itemRatings,
+      sumRatings,
+      prediction.abbrev + '_perc',
+      prediction.boost,
+      prediction.correction)
+  }));
 }
 
 function getItemRatings(responses) {
@@ -786,5 +802,4 @@ export const items = [
   }
 ];
 
-// if (typeof exports !== 'undefined') exports.predict = predict;
-// if (typeof window !== 'undefined') window.predict = predict;
+export default { predict, abbreviate };

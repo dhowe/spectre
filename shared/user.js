@@ -238,7 +238,8 @@ export default class User {
 
   traitsFromBrands(brandRatings) {
     let traits = {};
-    predict(brandRatings).forEach(b => traits[b.trait] = b.score);
+    let ratings = predict(brandRatings);
+    ratings.forEach(r => traits[r.trait] = r.score);
     this.traits = traits;
     console.log(brandRatings, traits);
   }

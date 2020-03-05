@@ -86,20 +86,16 @@ function sketch(p) {
   p.draw = () => {
 
     p.background(colors.sketchBg);
-// p.stroke(0);
-// p.strokeWeight(1);
-// p.rect(0,0,p.width, p.height);
-
     p.stroke(colors.sketchStroke);
 
     for (let i = 0; i < linesY.length; i++) {
       p.strokeWeight( i % 2 === 0 ? .5 : 0);
       p.stroke(colors.sketchStrokeSel);
       let ypos = linesY[i];
-//p.text(i+':'+ypos, 200, ypos); // line nums
+      //p.text(i+':'+ypos, 200, ypos); // line nums
       p.line(0, ypos, p.width, ypos);
     }
-//if (p.frameCount === 2) console.log(linesY);
+    //if (p.frameCount === 2) console.log(linesY);
 
     drawInfo(p, love, hate , loveArrow, hateArrow);
 
@@ -167,7 +163,7 @@ function sketch(p) {
         }
       }
       Brand.active.rating = p.map(lineIdx, 0, numLines-1, 8, -8) / 10; // -8 to 8
-//console.log('ON: '+lineIdx, Brand.active.rating);
+      //console.log('ON: '+lineIdx, Brand.active.rating);
       Brand.active.snapTo(linesY[lineIdx]);
       Brand.active = false;
     }
@@ -301,7 +297,6 @@ class Game extends React.Component {
   }
 
   async onCompletion(ratings) { // called from p5
-    //console.log('ratings', ratings);
     user.traitsFromBrands(ratings);
     await UserSession.update(user);
     user.goto(this.props, '/thank-you');

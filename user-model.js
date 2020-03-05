@@ -6,7 +6,7 @@ import { oceanSort } from './metrics';
 import ClientUser from './shared/user';
 
 const clientUser = new ClientUser(ClientUser.schema());
-const { schema, functions } = toMongoose(clientUser); // hack
+const { schema, functions } = toMongoose(clientUser);
 
 // create the user schema with unique index
 const UserSchema = mongoose.Schema(schema);
@@ -129,7 +129,7 @@ UserSchema.statics.findByLastPerMono = function(userId, callback) { // cb=functi
 
 ///////////////////////// Helpers ///////////////////////////
 
-function toMongoose(obj) {
+function toMongoose(obj) { // this is hack to share data btwn client/server
 
   function toMongooseType(t) {
     let type;
