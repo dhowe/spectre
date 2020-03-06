@@ -1,6 +1,6 @@
 {
   "name": "spectre",
-  "version": "1.0.60",
+  "version": "1.0.61",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.8.1",
