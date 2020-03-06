@@ -26,6 +26,14 @@ const NUM_TARGETS = 6;
   "data": "<payload object>"
 }*/
 
+const postal = async (req, res) => {
+  UserModel.findById(uid, (err, user) => {
+    if (err) throw Error(err);
+    //let message = fillTemplate(tmpl, user);
+    sendResponse(res, {});
+  });
+};
+
 const create = async (req, res) => {
 
   if (UserModel.databaseDisabled) return noDbError(res);
@@ -456,5 +464,5 @@ function generateEmail(id, email) {
 
 export default {
   list, hasPhoto, postPhoto, targets, recents, create, fetch, /*message*/
-  similars, update, remove, photoset, createBatch, fetchByLogin
+  similars, update, remove, photoset, createBatch, fetchByLogin, postal
 };

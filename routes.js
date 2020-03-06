@@ -34,8 +34,8 @@ router.route('/users/email/:uid')
 // router.route('/users/current/:cid')
 //   .get(controller.current)
 
-// router.route('/users/message/:uid')
-//   .get(controller.message) // unused
+router.route('/users/postal/:uid')
+  .get(controller.postal)
 
 // router.route('/users/photoset/:uid')
 //   .post(controller.photoset) // unused
