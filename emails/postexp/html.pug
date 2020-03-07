@@ -154,7 +154,7 @@ table(width='100%' border='0' cellspacing='0' cellpadding='0' bgcolor='#f4f4f4')
                         table(width='100%' border='0' cellspacing='0' cellpadding='0')
                           tr
                             td(style="color:#777777; font-family:'Montserrat', Arial,sans-serif; font-size:16px; line-height:30px; text-align:right;")
-                              a.link(href='mail:your@email.com' target='_blank' style='color:#777777; text-decoration:none; margin-right: 16px') #{name}
+                              a.link(href=`https://spectreknows.me/postexp?token=${token}` target='_blank' style='color:#777777; text-decoration:none; margin-right: 16px') #{name}
                             td.img(width='50' style='font-size:0pt; line-height:0pt; text-align:right;')                         
                               img.profile-pic(width='64' height='64' border='0' alt='' src=`https://spectreknows.me/profiles/${_id}`)
                   // END Header
@@ -192,7 +192,7 @@ table(width='100%' border='0' cellspacing='0' cellpadding='0' bgcolor='#f4f4f4')
                                     table.center(border='0' cellspacing='0' cellpadding='0' style='text-align:center;')
                                       tr
                                         td.text-button(style='background:#00a2ff; color:#ffffff; font-family:Arial ,sans-serif; font-size:14px; line-height:18px; padding:12px 20px; text-align:center; text-transform:uppercase;  border-radius:22px;')
-                                          a.link-white(target='_blank' style='color:#ffffff; text-decoration:none;' href=`https://spectreknows.me/postexp/${token}`)
+                                          a.link-white(target='_blank' style='color:#ffffff; text-decoration:none;' href=`https://spectreknows.me/postexp?token=${token}`)
                                             span.link-white(style='color:#ffffff; text-decoration:none;') Reveal the secrets
                                 // END Button
                   // END Intro
@@ -323,7 +323,7 @@ table(width='100%' border='0' cellspacing='0' cellpadding='0' bgcolor='#f4f4f4')
                                           table(border='0' cellspacing='0' cellpadding='0')
                                             tr
                                               td.text-button.white-button(style='font-family:Arial ,sans-serif; font-size:14px; line-height:18px; padding:12px 20px; text-align:center; text-transform:uppercase;  border-radius:22px; background:#ffffff; color:#b7e5ff;')
-                                                a.link-blue(href='#' target='_blank' style='color:#00a2ff; text-decoration:none;')
+                                                a.link-blue(href=`https://spectreknows.me/postexp?token=${token}` target='_blank' style='color:#00a2ff; text-decoration:none;')
                                                   span.link-blue(style='color:#00a2ff; text-decoration:none;') Learn More
                                       // END Button
       // END Services
@@ -335,28 +335,28 @@ table(width='100%' border='0' cellspacing='0' cellpadding='0' bgcolor='#f4f4f4')
               tr
                 td.td(style='width:650px; min-width:650px; font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal;')
                   table(width='100%' border='0' cellspacing='0' cellpadding='0')
-                    tr
-                      td.h3.center.pb15(style="color:#00a2ff; font-family:'Montserrat', Arial ,sans-serif; font-size:24px; line-height:32px;  text-align:center; padding-bottom:15px;") Share your profile
-                    tr
-                      td.text-center.pb30(style="color:#777777; font-family:'Montserrat', Arial,sans-serif; font-size:17px; line-height:30px; text-align:center; padding-bottom:30px;") Share your psychological profile with your friends on Facebook.
-                    tr
-                      td(align='center' style='padding-bottom: 50px;')
-                        table(border='0' cellspacing='0' cellpadding='0')
-                          tr
-                            th.column-top(style='font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; vertical-align:top;')
-                              table.center(border='0' cellspacing='0' cellpadding='0' style='text-align:center;')
-                                tr
-                                  td.img(width='50' style='font-size:0pt; line-height:0pt; text-align:left;')
-                                    img(src='https://spectreknows.me/imgs/fb-share.png' width='34' height='34' border='0' alt='facebook')
-                                  td.text-button(style='background:#00a2ff; color:#ffffff; font-family:Arial ,sans-serif; font-size:14px; line-height:18px; padding:12px 20px; text-align:center; text-transform:uppercase;  border-radius:22px;')
-                                    a.link-white(href='#' target='_blank' style='color:#ffffff; text-decoration:none;')
-                                      span.link-white(style='color:#ffffff; text-decoration:none;') Share your profile
+                    //- tr
+                    //-   td.h3.center.pb15(style="color:#00a2ff; font-family:'Montserrat', Arial ,sans-serif; font-size:24px; line-height:32px;  text-align:center; padding-bottom:15px;") Share your profile
+                    //- tr
+                    //-   td.text-center.pb30(style="color:#777777; font-family:'Montserrat', Arial,sans-serif; font-size:17px; line-height:30px; text-align:center; padding-bottom:30px;") Share your psychological profile with your friends on Facebook.
+                    //- tr
+                    //-   td(align='center' style='padding-bottom: 50px;')
+                    //-     table(border='0' cellspacing='0' cellpadding='0')
+                    //-       tr
+                    //-         th.column-top(style='font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; vertical-align:top;')
+                    //-           table.center(border='0' cellspacing='0' cellpadding='0' style='text-align:center;')
+                    //-             tr
+                    //-               td.img(width='50' style='font-size:0pt; line-height:0pt; text-align:left;')
+                    //-                 img(src='https://spectreknows.me/imgs/fb-share.png' width='34' height='34' border='0' alt='facebook')
+                    //-               td.text-button(style='background:#00a2ff; color:#ffffff; font-family:Arial ,sans-serif; font-size:14px; line-height:18px; padding:12px 20px; text-align:center; text-transform:uppercase;  border-radius:22px;')
+                    //-                 a.link-white(href='#' target='_blank' style='color:#ffffff; text-decoration:none;')
+                    //-                   span.link-white(style='color:#ffffff; text-decoration:none;') Share your profile
                     tr
                       td.h3.center.pb15(style="color:#EF3050; font-family:'Montserrat', Arial ,sans-serif; font-size:24px; line-height:32px;  text-align:center; padding-bottom:15px;") Are you concerned?
                     tr
                       td.text-center.pb30(style="color:#777777; font-family:'Montserrat', Arial,sans-serif; font-size:17px; line-height:30px; text-align:center; padding-bottom:30px;")
                         | If you feel unsure about making this private information public, you are right to be concerned. 
-                        a.link-u(href='#' target='_blank' style='color:#00a2ff; text-decoration:underline;')
+                        a.link-u(href=`https://spectreknows.me/postexp?token=${token}` target='_blank' style='color:#00a2ff; text-decoration:underline;')
                           span.link-u(style='color:#00a2ff; text-decoration:underline;') Reveal the secrets of the digital influence industry.
                     tr
                       td(align='center' style='padding-bottom: 50px;')
@@ -366,7 +366,7 @@ table(width='100%' border='0' cellspacing='0' cellpadding='0' bgcolor='#f4f4f4')
                               table.center(border='0' cellspacing='0' cellpadding='0' style='text-align:center;')
                                 tr
                                   td.text-button(style='background:#EF3050; color:#ffffff; font-family:Arial ,sans-serif; font-size:14px; line-height:18px; padding:12px 20px; text-align:center; text-transform:uppercase;  border-radius:22px;')
-                                    a.link-white(href='#' target='_blank' style='color:#ffffff; text-decoration:none;')
+                                    a.link-white(href=`https://spectreknows.me/postexp?token=${token}` target='_blank' style='color:#ffffff; text-decoration:none;')
                                       span.link-white(style='color:#ffffff; text-decoration:none;') Why does privacy matter?
       // END Article Image On The Right
       // Footer
@@ -379,9 +379,9 @@ table(width='100%' border='0' cellspacing='0' cellpadding='0' bgcolor='#f4f4f4')
                   table(width='100%' border='0' cellspacing='0' cellpadding='0')
                     tr
                       td.text-footer1.pb10(style="color:#999999; font-family:'Montserrat', Arial,sans-serif; font-size:14px; line-height:20px; text-align:center; padding-bottom:10px;") SPECTRE - Absolute Certainty &copy;2020
-                    tr
-                      td.text-footer2(style="color:#999999; font-family:'Montserrat', Arial,sans-serif; font-size:12px; line-height:26px; text-align:center;")
-                        a.link-grey-u(href='#' target='_blank' style='color:#999999; text-decoration:underline;')
-                          span.link-grey-u(style='color:#999999; text-decoration:underline;') Unsubscribe
-                        |  from this mailing list.
+                    //- tr
+                    //-   td.text-footer2(style="color:#999999; font-family:'Montserrat', Arial,sans-serif; font-size:12px; line-height:26px; text-align:center;")
+                    //-     a.link-grey-u(href='#' target='_blank' style='color:#999999; text-decoration:underline;')
+                    //-       span.link-grey-u(style='color:#999999; text-decoration:underline;') Unsubscribe
+                    //-     |  from this mailing list.
       // END Footer
