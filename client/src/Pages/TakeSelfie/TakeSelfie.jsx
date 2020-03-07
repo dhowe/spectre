@@ -34,20 +34,16 @@ class TakeSelfie extends React.Component {
 
   handleClick = (c) => {
     this.clicked = c;
-
-
     if (c === 'capture') {
 
       this.setState({ now: Math.floor(Date.now()/1000)*1000 })
-      console.log(this.state.now)
       this.setState({ captureNow: true })
       this.setState({ pageOne: { display: 'none' }, pageTwo: { display: 'block' }, pageThree: { display: 'none' } })
-    this.countdowner.start();
+      this.countdowner.start();
     };
   }
 
   takeSelfie = () => {
-  //  let now = Date.now();
     try {
       console.log('[WEBCAM] Taking selfie...');
       const data = this.webcam.getScreenshot();
@@ -102,6 +98,7 @@ class TakeSelfie extends React.Component {
             </Button>
           </div>
         </div>
+        
         <div style={this.state.pageTwo}>
           <h1 className="addSpacing"><span>Look up and smile for the camera!</span></h1>
           <div className={ComponentStyles.webcamVideo}>
@@ -132,6 +129,7 @@ class TakeSelfie extends React.Component {
             </div>
           </div>
         </div>
+
         <div style={this.state.pageThree}>
           <h1 className="addSpacing"><span><br /><br /><br />Happy with your look?</span></h1>
           <div className={ComponentStyles.imgPreviewDiv}>
@@ -153,9 +151,6 @@ class TakeSelfie extends React.Component {
             </Link>
           </div>
         </div>
-
-
-
 
         <FooterLogo />
       </div>
