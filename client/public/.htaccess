@@ -7,6 +7,17 @@ RewriteCond %{REQUEST_FILENAME} !-l
 RewriteRule . /index.html [L]
 
 AuthType Basic
-AuthName "Restricted Content"
+AuthName "Spectre Restricted Content"
 AuthUserFile /etc/apache2/.htpasswd
-Require valid-user
+
+SetEnvIf Request_URI /favicon.ico  noauth=1
+SetEnvIf Request_URI /postexp  noauth=1
+SetEnvIf Request_URI /imgs  noauth=1
+SetEnvIf Request_URI /static  noauth=1
+SetEnvIf Request_URI /profiles  noauth=1
+
+<RequireAny>
+  Require env noauth
+  Require env REDIRECT_noauth
+  Require valid-user
+</RequireAny>
