@@ -1,3 +1,4 @@
+import Path from 'path';
 import React from 'react';
 import DotEnv from 'dotenv';
 import User from '../User/User';
@@ -13,7 +14,7 @@ UserSession.clientId = -1;
 UserSession.serverErrors = 0;
 UserSession.useBrowserStorage = true;
 UserSession.defaultUsers = DefaultUsers;
-UserSession.publicUrl = 'https://spectreknows.me/';
+UserSession.publicUrl = User.publicUrl;
 UserSession.serverDisabled = typeof auth === 'undefined';
 UserSession.adIssues = User.adIssues;
 UserSession.epochDate = User.epochDate;
@@ -694,7 +695,8 @@ function handleError(e, route, func) {
 
 function doConfig() {
 
-  DotEnv.config(); // get auth from .env
+  console.log("UserSession.doConfig2", Path.resolve(process.cwd(),'..'));
+  DotEnv.config(); // not needed in react
 
   const port = 8083;
   const env = process.env;

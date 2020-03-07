@@ -6,6 +6,7 @@ import nocache from 'nocache'
 import express from 'express';
 import logger from './logger';
 import routes from './routes';
+//import jwt from 'express-jwt';
 import mongoose from 'mongoose';
 import bodyparser from 'body-parser';
 import basicAuth from 'express-basic-auth';
@@ -30,6 +31,17 @@ const auth = basicAuth({
   realm: 'API User/Secret required'
 });
 
+
+// const authenticated = jwt({
+//   secret: config.jwt.secret,
+//   credentialsRequired: false,
+//   getToken: (req) => {
+//     if (req.query) return req.query.token;
+//     return null;
+//   },
+// });
+
+
 ///////////////////////////// Express ///////////////////////////////
 
 const app = express();
@@ -46,6 +58,9 @@ app.all('*', logger('[:date[clf]] :remote-addr :method :url :status', {
 
 // static react files (no-auth)
 if (!prod) app.use(express.static(clientDir + '/build'));
+
+//app.get(base+'users/postexp', express.Router().route('/users/postauth:token').get(controller.postExpAuth));
+//app.use(base+'users/postexp', routes);
 
 // for other api routes (w-auth)
 app.use(base, auth, routes);

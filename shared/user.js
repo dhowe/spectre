@@ -1,5 +1,6 @@
 import Parser from './parser.js';
 import { predict } from './ppq.js';
+import jwt from 'jsonwebtoken';
 import DotEnv from 'dotenv';
 
 DotEnv.config();
@@ -21,6 +22,22 @@ export default class User {
 
   static create(json) {
     return new User().assign(json);
+  }
+
+  static generateToken(user) {
+    if (!process.env.JWT_SECRET || !process.env.JWT_SECRET.length) {
+      throw Error('JWT_SECRET appears to be missing in your .env');
+    }
+    return jwt.sign(
+      { email: user.login },
+      process.env.JWT_SECRET,
+      { expiresIn: '1w' }
+    );
+  }
+
+  static assignToken(user) {
+    user.token = User.generateToken(user);
+    return user;
   }
 
   assign(json) {
@@ -116,7 +133,7 @@ export default class User {
       || this.influences[adIssue].themes.length != 2) {
       throw Error('this.influences.adIssue.themes not an array[2]');
     }
-    return (is2p ? 'You' : this.name.ucf()) +' can'
+    return (is2p ? 'You' : this.name.ucf()) + ' can'
       + ' likely be influenced by images showing '
       + this.influences[adIssue].themes[0]
       + ' and by slogans containing '
@@ -580,6 +597,7 @@ User.schema = () => {
   }
 }
 
+User.publicUrl = 'https://spectreknows.me/';
 User.epochDate = new Date(1970, 1, 1);
 
 User.randomTraits = () => {

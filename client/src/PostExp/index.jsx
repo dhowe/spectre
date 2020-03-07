@@ -44,15 +44,6 @@ import './bootstrap.min.css';
 
 const styles = {};
 
-class ContentCol extends React.Component {
-  render() {
-    return (
-      <div className="col-xs-10 col-xs-push-1 col-sm-8 col-sm-push-2 col-md-5 col-md-push-7">
-        {this.props.children}
-      </div>)
-  }
-}
-
 class PostExp extends React.Component {
   constructor(props) {
     super(props, '/post-experience');
@@ -449,6 +440,15 @@ class PostExp extends React.Component {
   _onReady(event) {
     // access to player in all event handlers via event.target
     event.target.pauseVideo();
+  }
+}
+
+class ContentCol extends React.Component {
+  render() {
+    return (
+      <div className="col-xs-10 col-xs-push-1 col-sm-8 col-sm-push-2 col-md-5 col-md-push-7">
+        {this.props.children}
+      </div>)
   }
 }
 

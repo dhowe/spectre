@@ -1,6 +1,6 @@
 {
   "name": "spectre",
-  "version": "1.0.61",
+  "version": "1.0.62",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.8.1",
@@ -24,6 +24,7 @@
     "react-scripts": "3.3.0",
     "react-simple-keyboard": "^2.1.107",
     "react-webcam": "^4.1.1",
+    "react-youtube": "^7.9.0",
     "styled-components": "^4.4.1",
     "typescript": "^3.7.4",
     "words-to-numbers": "^1.5.1"

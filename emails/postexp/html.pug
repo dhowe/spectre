@@ -154,11 +154,11 @@ table(width='100%' border='0' cellspacing='0' cellpadding='0' bgcolor='#f4f4f4')
                         table(width='100%' border='0' cellspacing='0' cellpadding='0')
                           tr
                             td(style="color:#777777; font-family:'Montserrat', Arial,sans-serif; font-size:16px; line-height:30px; text-align:right;")
-                              a.link(href='mail:your@email.com' target='_blank' style='color:#777777; text-decoration:none; margin-right: 16px') %%USER.Name%%
-                            td.img(width='50' style='font-size:0pt; line-height:0pt; text-align:right;')
-                              img.profile-pic(src='https://spectreknows.me/profiles/%%USER.Id%%.jpg' width='64' height='64' border='0' alt='')
+                              a.link(href='mail:your@email.com' target='_blank' style='color:#777777; text-decoration:none; margin-right: 16px') #{name}
+                            td.img(width='50' style='font-size:0pt; line-height:0pt; text-align:right;')                         
+                              img.profile-pic(width='64' height='64' border='0' alt='' src=`https://spectreknows.me/profiles/${_id}`)
                   // END Header
-      // END Header
+                  
       // Intro
       table(width='100%' border='0' cellspacing='0' cellpadding='0' bgcolor='#f4f4f4')
         tr
@@ -180,7 +180,7 @@ table(width='100%' border='0' cellspacing='0' cellpadding='0' bgcolor='#f4f4f4')
                                   td.h3.center.pb25(style="color:#00a2ff; font-family:'Montserrat', Arial ,sans-serif; font-size:40px; line-height:32px; text-align:center; padding-bottom:25px;") Spectre knows you.
                                 tr
                                   td.text-center.pb25(style="color:#777777; font-family:'Montserrat', Arial,sans-serif; font-size:17px; line-height:30px; text-align:center; padding-bottom:25px;")
-                                    | Welcome %%USER.Name%%! Spectre is always excited to welcome new followers...
+                                    | Welcome #{name}! Spectre is always excited to welcome new followers...
                                     // especially those that are:
                                 tr
                                   td.text-center.pb25(style="color:#777777; font-family:'Montserrat', Arial,sans-serif; font-size:17px; line-height:30px; text-align:center; padding-bottom:25px;")
@@ -192,7 +192,7 @@ table(width='100%' border='0' cellspacing='0' cellpadding='0' bgcolor='#f4f4f4')
                                     table.center(border='0' cellspacing='0' cellpadding='0' style='text-align:center;')
                                       tr
                                         td.text-button(style='background:#00a2ff; color:#ffffff; font-family:Arial ,sans-serif; font-size:14px; line-height:18px; padding:12px 20px; text-align:center; text-transform:uppercase;  border-radius:22px;')
-                                          a.link-white(href='https://spectreknows.me/postexp/%%USER.Id%%' target='_blank' style='color:#ffffff; text-decoration:none;')
+                                          a.link-white(target='_blank' style='color:#ffffff; text-decoration:none;' href=`https://spectreknows.me/postexp/${token}`)
                                             span.link-white(style='color:#ffffff; text-decoration:none;') Reveal the secrets
                                 // END Button
                   // END Intro
@@ -226,7 +226,8 @@ table(width='100%' border='0' cellspacing='0' cellpadding='0' bgcolor='#f4f4f4')
                                         td.h4.white.center.pb20(style="font-family:'Montserrat', Arial ,sans-serif; font-size:20px; line-height:28px;  color:#ffffff; text-align:center; padding-bottom:20px;")
                                           | Openness
                                           br
-                                          strong %%USER.O%%%
+                                          - let openness = Math.round(traits.openness * 100) + '%';
+                                          strong #{openness}
                                       tr
                                         td.text-center3.pb25(style="color:#b7e5ff; font-family:'Montserrat', Arial,sans-serif; font-size:14px; line-height:24px; text-align:center; padding-bottom:25px;")
                                           | Openness distinguishes imaginative, creative people from down-to-earth, conventional people.
@@ -241,9 +242,10 @@ table(width='100%' border='0' cellspacing='0' cellpadding='0' bgcolor='#f4f4f4')
                                           img(src='https://spectreknows.me/imgs/2.png' width='136' height='136' border='0' alt='')
                                       tr
                                         td.h4.white.center.pb20(style="font-family:'Montserrat', Arial ,sans-serif; font-size:20px; line-height:28px;  color:#ffffff; text-align:center; padding-bottom:20px;")
-                                          | Conscientousness
+                                          | Conscientiousness
                                           br
-                                          strong %%USER.C%%%
+                                          - let conscientiousness = Math.round(traits.conscientiousness * 100) + '%';
+                                          strong #{conscientiousness}
                                       tr
                                         td.text-center3.pb25(style="color:#b7e5ff; font-family:'Montserrat', Arial,sans-serif; font-size:14px; line-height:24px; text-align:center; padding-bottom:25px;")
                                           | Conscientiousness concerns the way in which we control, regulate, and direct our impulses.
@@ -260,7 +262,8 @@ table(width='100%' border='0' cellspacing='0' cellpadding='0' bgcolor='#f4f4f4')
                                         td.h4.white.center.pb20(style="font-family:'Montserrat', Arial ,sans-serif; font-size:20px; line-height:28px;  color:#ffffff; text-align:center; padding-bottom:20px;")
                                           | Extraversion
                                           br
-                                          strong %%USER.E%%%
+                                          - let extraversion = Math.round(traits.extraversion * 100) + '%';
+                                          strong #{extraversion}
                                       tr
                                         td.text-center3.pb25(style="color:#b7e5ff; font-family:'Montserrat', Arial,sans-serif; font-size:14px; line-height:24px; text-align:center; padding-bottom:25px;")
                                           | Extraversion is marked by engagement with the external world, versus being comfortable with your own company.
@@ -280,7 +283,8 @@ table(width='100%' border='0' cellspacing='0' cellpadding='0' bgcolor='#f4f4f4')
                                         td.h4.white.center.pb20(style="font-family:'Montserrat', Arial ,sans-serif; font-size:20px; line-height:28px;  color:#ffffff; text-align:center; padding-bottom:20px;")
                                           | Agreeableness
                                           br
-                                          strong %%USER.A%%%
+                                          - let agreeableness = Math.round(traits.agreeableness * 100) + '%';
+                                          strong #{agreeableness}
                                       tr
                                         td.text-center3.pb25(style="color:#b7e5ff; font-family:'Montserrat', Arial,sans-serif; font-size:14px; line-height:24px; text-align:center; padding-bottom:25px;") Differences in concern with cooperation and social harmony.
                             th.column-empty(width='1' style='font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; vertical-align:top;')
@@ -296,7 +300,8 @@ table(width='100%' border='0' cellspacing='0' cellpadding='0' bgcolor='#f4f4f4')
                                         td.h4.white.center.pb20(style="font-family:'Montserrat', Arial ,sans-serif; font-size:20px; line-height:28px;  color:#ffffff; text-align:center; padding-bottom:20px;")
                                           | Neuroticism
                                           br
-                                          strong %%USER.N%%%
+                                          - let neuroticism = Math.round(traits.neuroticism * 100) + '%';
+                                          strong #{neuroticism}
                                       tr
                                         td.text-center3.pb25(style="color:#b7e5ff; font-family:'Montserrat', Arial,sans-serif; font-size:14px; line-height:24px; text-align:center; padding-bottom:25px;") Neuroticism refers to the tendency to experience negative emotions.
                             th.column-empty(width='1' style='font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; vertical-align:top;')
@@ -350,7 +355,7 @@ table(width='100%' border='0' cellspacing='0' cellpadding='0' bgcolor='#f4f4f4')
                       td.h3.center.pb15(style="color:#EF3050; font-family:'Montserrat', Arial ,sans-serif; font-size:24px; line-height:32px;  text-align:center; padding-bottom:15px;") Are you concerned?
                     tr
                       td.text-center.pb30(style="color:#777777; font-family:'Montserrat', Arial,sans-serif; font-size:17px; line-height:30px; text-align:center; padding-bottom:30px;")
-                        | If you feel unsure about making this private information public, you are right to be concerned.
+                        | If you feel unsure about making this private information public, you are right to be concerned. 
                         a.link-u(href='#' target='_blank' style='color:#00a2ff; text-decoration:underline;')
                           span.link-u(style='color:#00a2ff; text-decoration:underline;') Reveal the secrets of the digital influence industry.
                     tr

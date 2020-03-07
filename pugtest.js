@@ -1,38 +1,10 @@
-import Mailer from './mailer';
 import dotEnv from 'dotenv';
+import nodemailer from 'nodemailer';
+import sgtransport from 'nodemailer-sendgrid-transport';
+import Email from 'email-templates';
+import User from './shared/user';
 
 dotEnv.config();
-
-Mailer.create({
-  host: process.env.SMTP_HOST,
-  port: process.env.SMTP_PORT,
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS
-  }
-});
-
-// const mockUser2 = {
-//   "_id": "888888888888888888888888",
-//   "name": "Sally",
-//   "gender": "female",
-//   "genderProb": .9123,
-//   "age": "28",
-//   "clientId": 'localhost',
-//   "hasImage": true,
-//   "targetId": "-1",
-//   "virtue": "power",
-//   "adIssue": "democrat",
-//   "traits": {
-//     "openness": 0.8253353111345854, "conscientiousness": 0.8656814140739604,
-//     "extraversion": 0.6890590896284885, "agreeableness": 0.6008941864440192, "neuroticism": 0.20154338443905195
-//   },
-//   "login": "sally4983578918989@mail.com",
-//   "loginType": "email",
-//   "gender": "female",
-//   "createdAt": new Date("2019-06-03T00:12:07.599Z"),
-//   "updatedAt": new Date("2019-06-03T00:12:07.599Z")
-// };
 
 const mockUser = {
   "_id": "5e56a91bcfb40cd44632e445",
@@ -50,7 +22,7 @@ const mockUser = {
   "hasImage": false,
   "keepData": false,
   "name": "Barney",
-  "login": "daniel@rednoise.org",
+  "login": "barney.francis@gmail.com",
   "createdAt": "2020-02-26T17:20:08.591Z",
   "updatedAt": "2020-02-26T17:29:24.388Z",
   "loginType": "email",
@@ -73,7 +45,37 @@ const mockUser = {
   "gender": "male"
 };
 
-(async () => {
-  await Mailer.addTemplate('postexp', './emails/postexp/message.html');
-  Mailer.send({ template: 'postexp', data: mockUser });
-})();
+const SENDGRID = true;
+
+const transport = nodemailer.createTransport(SENDGRID ? sgtransport({
+  auth: {
+    api_key: process.env.SMTP_APIKEY
+  }
+}) : {
+    host: process.env.SMTP_HOST,
+    port: process.env.SMTP_PORT,
+    auth: {
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASS
+    }
+  });
+
+const email = new Email({
+  message: {
+    from: 'no-reply@spectreknows.me'
+  },
+  // uncomment below to send emails in development/test env:
+  //send: true,
+  //transport: transport
+  transport: { jsonTransport: true }
+});
+
+email.send({
+  template: 'postexp',
+  message: {
+    to: mockUser.login
+  },
+  locals: User.assignToken(mockUser)
+})
+  .then((o) => console.log(Object.keys(o)))
+  .catch(console.error);
