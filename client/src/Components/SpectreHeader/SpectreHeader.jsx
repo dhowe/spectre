@@ -60,9 +60,9 @@ class SpectreHeader extends React.Component {
     return this.props.colour === "white" ?
       (
         <div className="SpectreHeader SpectreHeader-white">
-        <div style={{ position: 'absolute', color: 'black', top: 10, left: 20 }}>
-          <p>{global.appVersion}</p>
-        </div>
+          {/*<div style={{ position: 'absolute', color: 'black', top: 10, left: 20 }}>
+            <p>{global.appVersion}</p>
+          </div>*/}
           {/*{avatar}*/}
           <img height="150" alt='header' className='logo-img' src={HeaderLogoColour} />
           <Progress active={this.props.progressActive} progressNumber={this.props.progressNumber} />
@@ -70,13 +70,13 @@ class SpectreHeader extends React.Component {
         </div>
       ) : (
         <div className="SpectreHeader">
-        <div style={{ position: 'absolute', color: 'black', top: 10, left: 20 }}>
-          <p>{global.appVersion}</p>
-        </div>
+          {/*<div style={{ position: 'absolute', color: 'black', top: 10, left: 20 }}>
+            <p>{global.appVersion}</p>
+          </div>*/}
           <img height="150" alt='logo' className='logo-img' src={HeaderLogo} />
         </div>
-      );
-  }
+      )
+  };
 }
 
 SpectreHeader.propTypes = {

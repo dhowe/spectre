@@ -55,7 +55,7 @@ class TouchToBegin extends React.Component {
 
 
   async componentDidMount() {
-            window.addEventListener('resize', this.resize);
+    window.addEventListener('resize', this.resize);
     UserSession.clear(this.context);
   }
 
@@ -78,8 +78,8 @@ class TouchToBegin extends React.Component {
           </div>
         </Link>
 
-        <div style={{ position: 'absolute', color: 'black', top: 10, left: 20 }}>
-          <p>{global.appVersion}</p>
+        <div style={{ position: 'absolute', color: 'black', top: 2, left: 15 }}>
+          <p style={{ fontSize: 14, color: 'white' }}>{global.appVersion}</p>
         </div>
 
         <Webcam
