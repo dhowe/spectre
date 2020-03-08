@@ -115,15 +115,15 @@ describe('OCEAN Metrics', function () {
     });
 
     it('Should handle undef or empty candidate array', function () {
-      expect(() => oceanSort(UserModel.CreateModel(), undefined)).to.throw();
-      expect(oceanSort(UserModel.CreateModel(), [])).to.eql([]);
+      expect(() => oceanSort(UserModel.createModel(), undefined)).to.throw();
+      expect(oceanSort(UserModel.createModel(), [])).to.eql([]);
     });
 
     it('Should sort candidates by distance to target', function () {
-      let userA = UserModel.CreateModel();
-      let userB = UserModel.CreateModel();
-      let userC = UserModel.CreateModel();
-      let userD = UserModel.CreateModel();
+      let userA = UserModel.createModel();
+      let userB = UserModel.createModel();
+      let userC = UserModel.createModel();
+      let userD = UserModel.createModel();
 
       userA.traits = {
         agreeableness: 0,
@@ -162,19 +162,19 @@ describe('OCEAN Metrics', function () {
   describe('OCEAN Sorting with limit', function () {
 
     it('Should error if 3rd arg is not a number', function () {
-      expect(() => oceanSort(UserModel.CreateModel(), [], "ok")).to.throw();
+      expect(() => oceanSort(UserModel.createModel(), [], "ok")).to.throw();
     });
 
     it('Should error if 3rd arg is less than zero a number', function () {
-      expect(() => oceanSort(UserModel.CreateModel(), [], -1)).to.throw();
+      expect(() => oceanSort(UserModel.createModel(), [], -1)).to.throw();
     });
 
     it('Should return <limit> candidates, sorted by distance', function () {
 
       let limit = 1;
-      let userA = UserModel.CreateModel();
-      let userB = UserModel.CreateModel();
-      let userC = UserModel.CreateModel();
+      let userA = UserModel.createModel();
+      let userB = UserModel.createModel();
+      let userC = UserModel.createModel();
 
       userA.traits = {
         agreeableness: 0,
@@ -208,29 +208,29 @@ describe('OCEAN Metrics', function () {
     });
   })
 
-  describe('OCEAN distance', function () {
+  describe('OCEAN Distance', function () {
 
     it('Should error if two users are not provided', function () {
       expect(() => oceanDist(undefined, new UserModel())).to.throw();
     });
 
     it('Should return 0 if user traits are the same', function () {
-      let user = UserModel.CreateModel();
+      let user = UserModel.createModel();
       user._randomizeTraits();
       expect(oceanDist(user, user)).to.eq(0);
     });
 
     it('Should return a positive distance for random users', function () {
-      let userA = UserModel.CreateModel()
+      let userA = UserModel.createModel()
       userA._randomizeTraits();
-      let userB = UserModel.CreateModel()
+      let userB = UserModel.createModel()
       userB._randomizeTraits();
       expect(oceanDist(userA, userB)).gt(0);
     });
 
     it('Should return the correct distance for two users', function () {
-      let userA = UserModel.CreateModel();
-      let userB = UserModel.CreateModel();
+      let userA = UserModel.createModel();
+      let userB = UserModel.createModel();
       userA.traits = {
         agreeableness: 0,
         conscientiousness: 0,

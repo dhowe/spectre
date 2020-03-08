@@ -20,7 +20,6 @@ const styles = {
   }
 };
 
-const defaultImg = UserSession.imageDir + 'default.jpg';
 const liveUserInterval = 1 * (1000 * 60); // 1 minutes
 
 class AvatarComponent extends React.Component {
@@ -53,13 +52,12 @@ class AvatarComponent extends React.Component {
           <Avatar
             alt={target.name}
             src={target.image}
-            onError={() => { this.src = defaultImg }}
             className={(active || className !== 'active') ? 'avatar-image' : null}
           />
           <div className="active-div" style={(this.isActive(target) ?
-            {display:'block'} : {display:'none'})}>
-          <span className="activeDot"></span>
-          <span className="activeDotText">LIVE</span>
+            { display: 'block' } : { display: 'none' })}>
+            <span className="activeDot"></span>
+            <span className="activeDotText">LIVE</span>
           </div>
         </Grid>
         <p className="avatar-name" style={className === 'targeted' ?
@@ -74,7 +72,7 @@ AvatarComponent.defaultProps = {
   className: null,
   target: {
     name: '',
-    image: defaultImg,
+    image: '',
     updatedAt: UserSession.epochDate
   },
   handleClick: () => { },

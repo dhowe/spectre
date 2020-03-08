@@ -1,14 +1,9 @@
 import { expect } from 'chai';
 import UserModel from '../user-model';
 
-describe('Server User', function() {
+describe('User Schema', function() {
 
-  // describe('UserModel.findByUpdateTime()', function () {
-  //   const id = "666666666666666666666666";
-  //   let users = UserModel.mostRecent(limit)
-  // });
-
-  describe('UserModel.FindBy', () => {
+  describe('UserModel.findBy', () => {
 
     it('Should correctly find similars via ocean', (done) => {
 
@@ -44,10 +39,10 @@ describe('Server User', function() {
 
   });
 
-  describe('UserModel.CreateModel', function() {
+  describe('UserModel.createModel', function() {
 
     it('Should correctly complete a test user', function() {
-      let user = UserModel.CreateModel();
+      let user = UserModel.createModel();
       expect(user.name.length).gt(0);
       expect(user.login.length).gt(0);
       expect(user.loginType.length).gt(0);
@@ -55,7 +50,7 @@ describe('Server User', function() {
     });
 
     it('Should correctly complete a templated user', function() {
-      let user = UserModel.CreateModel({
+      let user = UserModel.createModel({
         name: "dave",
         login: "dave@abc.com",
         loginType: "twitter"
@@ -67,14 +62,14 @@ describe('Server User', function() {
     });
   })
 
-  describe('UserModel.Generate', function() {
+  describe('UserModel.textgen', function() {
 
     it('Should fail for a user without traits', function() {
       expect(() => new UserModel().generateDescription()).to.throw();
     });
 
     it('Should describe a user based on OCEAN traits', function() {
-      let user = UserModel.CreateModel();
+      let user = UserModel.createModel();
       user.name = "Jane";
       user.adIssue = "democrat";
       user.gender = "female";

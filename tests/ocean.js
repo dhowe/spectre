@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import User from '../shared/user';
 
-describe('OCEAN descriptions', function () {
+describe('OCEAN Descriptions', function () {
 
   describe('User.generateDescription', function () {
 
@@ -70,7 +70,7 @@ describe('OCEAN descriptions', function () {
     });
   });
 
-  describe('User.generateSummary()', function () {
+  describe('User.generateSummary', function () {
 
     it('Should fail for a user without traits', function () {
       expect(() => new User().generateSummary()).to.throw();
@@ -145,7 +145,7 @@ describe('OCEAN descriptions', function () {
     });
   });
 
-  describe('User.generateSentences()', function () {
+  describe('User.generateSentences', function () {
 
     it('Should fail for a user without traits', function () {
       expect(() => new User().generateDescription()).to.throw();

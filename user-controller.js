@@ -1,15 +1,18 @@
 import UserModel from './user-model';
 import User from './shared/user';
-import Mailer from './mailer';
+//import Mailer from './mailer';
+
+import jwt from 'jsonwebtoken';
 import clfDate from 'clf-date';
-import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
 
-import { profDir } from './config';
+import { profDir, secret } from './config';
 
 const NO_USER_ID = 490;
 const NO_USER_EMAIL = 489;
+const INVALID_TOKEN = 487;
+const EXPIRED_TOKEN = 488;
 const UNIQUE_USER_VIOLATION = 491;
 const USER_NOT_FOUND = 492;
 const USER_WO_TRAITS = 493;
@@ -25,14 +28,6 @@ const NUM_TARGETS = 6;
   "message": "a user-readable message",
   "data": "<payload object>"
 }*/
-
-const postal = async (req, res) => {
-  UserModel.findById(uid, (err, user) => {
-    if (err) throw Error(err);
-    //let message = fillTemplate(tmpl, user);
-    sendResponse(res, {});
-  });
-};
 
 const create = async (req, res) => {
 
@@ -73,6 +68,39 @@ const create = async (req, res) => {
     return sendError(res, 'Unable to find user: ' + JSON.stringify(body), e);
   }
 };
+
+const fromToken = async (req, res) => {
+
+  if (UserModel.databaseDisabled) return noDbError(res);
+
+  if (!req.params.hasOwnProperty('token')) return sendError
+    (res, 'Invalid token: null', 0, INVALID_TOKEN);
+
+  let uid, token = req.params.token;
+  try {
+
+    uid = jwt.verify(token, secret).uid;
+    if (!uid) throw Error('Invalid state: no uid in '+token);
+  }
+  catch(e) {
+    return sendError(res, 'Invalid token: '+token, 0,
+      e.message === 'jwt expired' ? EXPIRED_TOKEN : INVALID_TOKEN);
+  }
+
+  await UserModel.lookup(uid, (err, user) => {
+    if (err) return sendError(res, 'Error (fromToken) for #' + uid, err);
+    if (!user) return sendError(res, 'No user #' + uid, 0, USER_NOT_FOUND);
+    sendResponse(res, user);
+  });
+};
+
+// const postal = async (req, res) => {
+//   UserModel.lookup(uid, (err, user) => {
+//     if (err) throw Error(err);
+//     //let message = fillTemplate(tmpl, user);
+//     sendResponse(res, {});
+//   });
+// };
 
 const list = async (req, res) => {
 
@@ -122,14 +150,14 @@ const fetch = async (req, res) => { // accepts either _id or login
   if (!req.params.hasOwnProperty('uid')) return sendError
     (res, 'No uid sent', 0, NO_USER_ID);
 
-  await UserModel.findById(req.params.uid, (err, user) => {
-    if (err) return sendError(res, 'Error (findById) for #' + req.params.uid, err);
+  await UserModel.lookup(req.params.uid, (err, user) => {
+    if (err) return sendError(res, 'Error (lookup) for #' + req.params.uid, err);
     if (!user) return sendError(res, 'No user #' + req.params.uid, 0, USER_NOT_FOUND);
     sendResponse(res, user);
   });
 }
 
-const fetchByLogin = async (req, res) => { // accepts either _id or login
+const fromLogin = async (req, res) => { // accepts either _id or login
 
   if (UserModel.databaseDisabled) return noDbError(res);
 
@@ -206,7 +234,7 @@ const targets = async (req, res) => {
   if (req.query.hasOwnProperty('limit')) limit = parseInt(req.query.limit);
 
   let uid = req.params.uid;
-  await UserModel.findById(uid, (err, user) => {
+  await UserModel.lookup(uid, (err, user) => {
 
     if (err) return sendError(res, 'Unable to find user #' + uid, err);
     if (!user) return sendError(res, 'No user #' + uid, 0, USER_NOT_FOUND);
@@ -235,7 +263,7 @@ const similars = async (req, res) => {
   if (req.query.hasOwnProperty('limit')) limit = parseInt(req.query.limit);
 
   let uid = req.params.uid;
-  await UserModel.findById(uid, (err, user) => {
+  await UserModel.lookup(uid, (err, user) => {
 
     if (err) return sendError(res, 'Unable to find user #' + uid, err);
     if (!user) return sendError(res, 'No user #' + uid, 0, USER_NOT_FOUND);
@@ -360,7 +388,8 @@ function sendResponse(res, data) {
 function sendError(res, msg, e, code) {
   code = code || 499;
   msg = msg + (e ? ' [' + e + ']' : '');
-  console.log('[' + clfDate() + '] ::* ERROR', msg, code, 'on:');
+  if (process.env.NODE_ENV !== 'test') console.log
+    ('[' + clfDate() + '] ::* ERROR', msg, code, 'on:');
   res.status(code).send({ status: code, data: null, message: msg });
 }
 
@@ -463,6 +492,6 @@ function generateEmail(id, email) {
 
 
 export default {
-  list, hasPhoto, postPhoto, targets, recents, create, fetch, /*message*/
-  similars, update, remove, photoset, createBatch, fetchByLogin, postal
+  list, hasPhoto, postPhoto, targets, recents, create, fetch, fromToken,
+  similars, update, remove, photoset, createBatch, fromLogin// postal
 };

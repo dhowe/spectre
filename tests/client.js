@@ -1,9 +1,9 @@
 import { expect } from 'chai';
 import User from '../shared/user';
 
-describe('Client User', function() {
+describe('Shared User', function() {
 
-  describe('Create User()', function() {
+  describe('Create User', function() {
 
     it('Should correctly construct an empty user', function() {
       let user = new User();
@@ -98,7 +98,7 @@ describe('Client User', function() {
     });
   */
 
-  describe('User.personalization()', function() {
+  describe('User Personalization', function() {
 
     let issues = ['republican', 'democrat'];
 

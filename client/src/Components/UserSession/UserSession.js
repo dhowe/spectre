@@ -1,4 +1,3 @@
-import Path from 'path';
 import React from 'react';
 import DotEnv from 'dotenv';
 import User from '../User/User';
@@ -23,6 +22,7 @@ UserSession.oceanDesc = User.oceanDesc;
 UserSession.oceanDesc3p = User.oceanDesc3p;
 UserSession.oceanDesc2p = User.oceanDesc2p;
 UserSession.storageKey = 'spectre-user';
+UserSession.postexpKey = 'spectre-post';
 UserSession.profileDir = '/profiles/';
 UserSession.imageDir = '/imgs/';
 
@@ -31,7 +31,7 @@ localIPs(ip => (UserSession.clientId = ip), '192.');
 /*
  * Creates a new database record: /login only
  */
-UserSession.create = async (user, cb) => {
+UserSession.create = async (user) => {
 
   if (UserSession.serverDisabled) return;
 
@@ -56,8 +56,44 @@ UserSession.create = async (user, cb) => {
   return user.assign(json);
 }
 
-UserSession.computeInfluencesFor = (target, adIssues) =>
-  User.computeInfluencesFor(target, adIssues);
+UserSession.fromToken = async (token) => {
+
+  //console.log('UserSession.fromToken', token);
+
+  if (!token) {
+    console.log('[UserSession] no auth token found');
+    return Promise.resolve(false);
+  }
+
+  token = token.startsWith('#') ? token.substring(1) : token;
+
+  if (UserSession.serverDisabled) return;
+
+  // pass uid or login value (email-address)
+  const endpoint = route + 'auth/' + token;
+
+  try {
+    console.log('[GET] ' + mode + '.fromToken: ' + endpoint);
+    const [json, e] = await safeFetch(endpoint, {
+      method: "get",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": 'Basic ' + btoa(auth)
+      },
+    })
+    if (e) return Promise.resolve(false); // invalid token
+
+    UserSession.useBrowserStorage && sessionStorage.setItem
+      (UserSession.postexpKey, JSON.stringify(json._id));
+
+    return User.create(json);
+  }
+  catch (e) {
+    handleError(e, endpoint, 'fromToken[2]');
+  }
+}
+
+UserSession.computeInfluencesFor = User.computeInfluencesFor;
 
 UserSession.targetImage = (target) => {
   let fname = ((target && typeof target._id !== 'undefined'
@@ -109,6 +145,8 @@ UserSession.oceanData = (target, adIssue) => {
     sentences: UserSession.generateBasicDesc(target, adIssue)
   };
 }
+
+UserSession.postUser = () => User.create(UserSession.defaultUsers[0]);
 
 /*
  * Repairs a user using sessionStorage and db if needed (async)
@@ -187,81 +225,6 @@ UserSession.ensure = async (user, props, opts) => {
   }
 
   return user;
-}
-
-/*
- * Attempts to stub any undefined properties specified in props
- * Returns true if the user is modified, else false
- */
-function fillMissingProps(user, props) {
-
-  const onUpdateProperty = (p) => {
-    modified = true;
-    missing = arrayRemove(missing, p);
-    if (typeof user[p] === 'undefined') throw Error
-      ('Could not stub user.' + p, user);
-    let val = user[p];
-    if (Array.isArray(val)) val = '[' + val.length + ']';
-    if (typeof val === 'object') val = JSON.stringify(val).substring(0, 60);
-    console.log('[STUB] Setting user.' + p + ': ' + val);
-  };
-
-  if (typeof props === 'undefined') return true;
-  if (typeof user === 'undefined') throw Error('Null user');
-
-  if (!Array.isArray(props)) props = [props];
-
-  // a property is missing if its undefined or an empty array or string
-  let missing = props.filter(p => typeof user[p] === 'undefined'
-    || ((typeof user[p] === 'string' || Array.isArray(user[p]))
-      && !user[p].length) || (p === 'traits' && user[p].openness < 0));
-
-  if (!missing || !missing.length) return false; // all props are ok
-
-  //console.log('missing', missing);
-
-  let modified = false; // check known props, 1-by-1
-  let propStubber = {
-    age: () => irand(20, 60),
-    gender: () => rand(Genders),
-    virtue: () => rand(Virtues),
-    adIssue: () => rand(UserSession.adIssues),
-    traits: () => User.randomTraits(),
-    name: () => (rand(Cons) + rand(Vows) + rand(Cons)).ucf(),
-    login: () => user.name + Date.now() + '@test.com',
-    celebrity: () => rand(Celebrities),
-    updatedAt: () => new Date(),
-    target: () => {
-      if (!user.similars || !user.similars.length) throw Error
-        ('propStubber.target -> no similars')
-      let target = rand(user.similars);
-      if (!target.age) target.age = irand(20, 60);
-      if (!target.gender) target.gender = rand(Genders);
-      User.computeInfluencesFor(target);
-      return target;
-    }
-  };
-
-  //console.log(missing);
-
-  Object.keys(propStubber).forEach(p => {
-    if (missing.includes(p)) {
-      user[p] = propStubber[p]();
-      if (p === 'target') {
-        user.targetId = user.target._id;
-        User.computeInfluencesFor(user.target, UserSession.adIssues);
-        //console.log('  target: '+user.targetId+"/"+JSON.stringify(user.target));
-      }
-      onUpdateProperty(p);
-    }
-  });
-
-  //missing = checkTargetInfluences(missing);
-
-  if (missing.length) throw Error
-    ('Unable to stub user properties: ' + missing);
-
-  return modified;
 }
 
 /*
@@ -695,7 +658,6 @@ function handleError(e, route, func) {
 
 function doConfig() {
 
-  console.log("UserSession.doConfig2", Path.resolve(process.cwd(),'..'));
   DotEnv.config(); // not needed in react
 
   const port = 8083;
@@ -757,6 +719,78 @@ function localIPs(cb, prefix) {
       || !ice.candidate.candidate.match(ipRegex)) return;
     ice.candidate.candidate.match(ipRegex).forEach(iterateIP);
   };
+}
+
+function stubMissingProps(user, props) {
+
+  let modified = false; // check known props, 1-by-1
+
+  function onUpdateProperty(p) {
+    modified = true;
+    props = arrayRemove(props, p);
+    if (typeof user[p] === 'undefined') throw Error
+      ('Could not stub user.' + p, user);
+    let val = user[p];
+    if (Array.isArray(val)) val = '[' + val.length + ']';
+    if (typeof val === 'object') val = JSON.stringify(val).substring(0, 60);
+    console.log('[STUB] Setting user.' + p + ': ' + val);
+  };
+
+  //console.log(missing);
+  const propStubber = {
+    age: () => irand(20, 60),
+    gender: () => rand(Genders),
+    virtue: () => rand(Virtues),
+    adIssue: () => rand(UserSession.adIssues),
+    traits: () => User.randomTraits(),
+    name: () => (rand(Cons) + rand(Vows) + rand(Cons)).ucf(),
+    login: () => user.name + Date.now() + '@test.com',
+    celebrity: () => rand(Celebrities),
+    updatedAt: () => new Date(),
+    target: () => {
+      if (!user.similars || !user.similars.length) throw Error
+        ('propStubber.target -> no similars')
+      let target = rand(user.similars);
+      if (!target.age) target.age = irand(20, 60);
+      if (!target.gender) target.gender = rand(Genders);
+      User.computeInfluencesFor(target);
+      return target;
+    }
+  };
+
+  Object.keys(propStubber).forEach(p => {
+    if (props.includes(p)) {
+      user[p] = propStubber[p]();
+      if (p === 'target') {
+        user.targetId = user.target._id;
+        User.computeInfluencesFor(user.target, UserSession.adIssues);
+        //console.log('  target: '+user.targetId+"/"+JSON.stringify(user.target));
+      }
+      onUpdateProperty(p);
+    }
+  });
+
+  return modified;
+}
+
+/*
+ * Attempts to stub any undefined properties specified in props
+ * Returns true if the user is provided and modified, else false
+ */
+function fillMissingProps(user, props) {
+
+  console.log('stubMissingProps.missing', user, props);
+
+  if (typeof props === 'undefined') return true;
+
+  if (!Array.isArray(props)) props = [props];
+
+  // a property is missing if its undefined or an empty array or string
+  let missing = props.filter(p => typeof user[p] === 'undefined'
+    || ((typeof user[p] === 'string' || Array.isArray(user[p]))
+      && !user[p].length) || (p === 'traits' && user[p].openness < 0));
+
+  return missing.length ? stubMissingProps(user, missing) : false;
 }
 
 export default UserSession;

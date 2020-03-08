@@ -1,9 +1,6 @@
 @import '../../colors.scss';
 
 div.avatar-image {
-  background-image: url("default.jpg"); // duplicated - pls remove
-  background-repeat: no-repeat;
-  background-position: center bottom;
   background-size: 95px 95px;
   font-size: 0px;
 }

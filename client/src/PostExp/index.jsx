@@ -1,5 +1,5 @@
 import React from 'react';
-import YouTube from 'react-youtube';
+//import YouTube from 'react-youtube';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
@@ -9,12 +9,6 @@ import AvatarComponent from '../Components/AvatarComponent/AvatarComponent';
 import OceanProfile from '../Components/OceanProfile/OceanProfile';
 
 import PrivacyImage from './images/spectre-privacy.png';
-
-// import QuantImage from './images/quant-privacy.png';
-// import FaceSearchImage from './images/face-search.png';
-// import GamingImage from './images/Gaming.jpg';
-// import AIImage from './images/artificial-intelligence.jpg';
-
 import BiasImage from './images/Spectre-biases.png';
 import PersonalizationImage from './images/Spectre-personalization.png';
 import GamificationImage from './images/Spectre-gamification.png';
@@ -23,8 +17,6 @@ import FacebookImage from './images/facebook-ad.jpg';
 import StatsImage from './images/stats.jpg';
 import RumorsImage from './images/Rumors.jpg';
 import BreakoutImage from './images/breakout.png';
-//import OceanProfileImage from './images/OCEAN-profile.jpg';
-//import AvatarImage from './images/spectre-profile.png';
 import SpectreVideo from './images/spectre-video.jpg';
 
 import Funding1 from './images/arts-council-art-culture.png';
@@ -47,24 +39,19 @@ const styles = {};
 class PostExp extends React.Component {
   constructor(props) {
     super(props, '/post-experience');
-    this.state = { target: UserSession.oceanData() };
+    this.state = { target: UserSession.oceanData(), authd: false };
   }
 
   async componentDidMount() {
-    const user = await UserSession.ensure(this.context,
-      ['name', 'target', 'traits']);
-    this.setState({ target: UserSession.oceanData(user) });
+    let user = await UserSession.fromToken(this.props.location.hash);
+    this.setState({
+      target: UserSession.oceanData
+        (user || UserSession.postUser()), authd: !!user
+    });
   }
 
   render() {
-    const { target } = this.state;
-
-    const opts = {
-      width: '100%',
-      playerVars: {
-        autoplay: 1
-      }
-    };
+    const { target, authd } = this.state;
 
     return (
       <div className="PostExp">
@@ -73,15 +60,12 @@ class PostExp extends React.Component {
           <div className="container">
             <div className="row">
               <div className="col-xs-10 col-xs-push-1 col-md-6">
-                <h1>Welcome to the Altar of dataism. </h1>
-                <p>As a reward for being a loyal follower, {target.name}, we can now reveal to you the secrets of Silicon Valley.</p>
-                <p>In an age of misinformation and fake news enabled by large social media platforms, tech giants are using your personal data to predict and influence your behaviors--both online and in the voting booth. </p>
+                <h1>Welcome to the Altar of Dataism. </h1>
+                <p>As a reward for being a loyal follower{authd ? ', '+target.name + ',' : ''} we can now reveal to you the secrets of Silicon Valley.</p>
+                <p>In an age of misinformation and fake news enabled by large social media platforms, tech giants are using your personal data to influence your behaviors--both online and in the voting booth. </p>
               </div>
               <div className="col-xs-10 col-xs-push-1 col-md-5">
-                {/*<div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/395969657?title=0&byline=0&portrait=0" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>*/
-                //
-                // CHANGE TO VIDEO
-                }
+                {/* TODO: CHANGE TO VIMEO VIDEO */}
                 <img src={SpectreVideo} alt="Spectre dark pattern" title="Spectre dark pattern" className="img-responsive full-width" />
               </div>
             </div>
@@ -121,7 +105,9 @@ class PostExp extends React.Component {
                 <ContentCol>
                   <h1>Biometric data</h1>
                   {
-                    <div className="img-responsive user-profile no-shadow visible-xs visible-sm"><AvatarComponent target={target} /></div>
+                    <div className="img-responsive user-profile no-shadow visible-xs visible-sm">
+                      {authd ? <AvatarComponent target={target} /> : ''};
+                    </div>
                     //<img src={AvatarImage} alt="User profile picture" title="User profile picture" className="img-responsive user-profile no-shadow visible-xs visible-sm"/>
                   }
                   <p>Selfies are a defining feature of the digital age, but we usually don’t think about the data that can be extracted from them. Beyond just the time, date, location and your appearance, there is a wider data-set that can be gained from selfies that you upload: this is called a faceprint. The distances between your eyes, the width of your nose, the depth of your eye sockets, the shape of your cheekbones, and the length of your jaw line are all nodes that create your unique faceprint.</p>
@@ -136,7 +122,9 @@ class PostExp extends React.Component {
                 </ContentCol>
                 <div className="col-md-7 col-md-pull-5 image-col text-right hidden-xs hidden-sm">
                   {
-                    <div className="img-responsive image-1 no-shadow user-profile"><AvatarComponent target={target} /></div>
+                    <div className="img-responsive image-1 no-shadow user-profile">
+                      {authd ? <AvatarComponent target={target} /> : ''};
+                    </div>
                     //<img src={AvatarImage} alt="User profile picture" title="User profile picture" className="img-responsive image-1 no-shadow user-profile"/>
                   }
                   <img src={Cat2} alt="Facial analysis data" title="Facial analysis data" className="img-responsive" />
@@ -156,7 +144,7 @@ class PostExp extends React.Component {
               </div>
               <div className="row">
                 <div className="col-sm-12">
-                  <div className="text-center"><img src={BiasImage} alt="Algrythmic biases" title="Algrythmic biases" className="img-responsive full-width pull-right" /></div>
+                  <div className="text-center"><img src={BiasImage} alt="Algorithmic biases" title="Algorithmic biases" className="img-responsive full-width pull-right" /></div>
                 </div>
               </div>
               <div className="row bg-m">
@@ -211,7 +199,7 @@ class PostExp extends React.Component {
                     <li><a href="https://theprivacyissue.com/data-tracking/big-business-ad-tech">Ad tech is big business</a></li>
                   </ul>
                 </ContentCol>
-                  {/*<div className="col-md-7 col-md-pull-5 image-col">
+                {/*<div className="col-md-7 col-md-pull-5 image-col">
                     <div className="recommend-box">
                     <h2>Recommendations</h2>
                     <p><strong>Cookie Self-Defense</strong></p>
@@ -222,11 +210,11 @@ class PostExp extends React.Component {
                     </ul>
                   </div></div>
                   */}
-                  <div className="col-md-7 col-md-pull-5  image-col hidden-xs hidden-sm">
-                    <a href="https://www.forbes.com/sites/kashmirhill/2012/02/16/how-target-figured-out-a-teen-girl-was-pregnant-before-her-father-did">
-                      <img src={Cat4} alt="Gamification" title="Gamification" className="img-responsive image-2" />
-                    </a>
-                  </div>
+                <div className="col-md-7 col-md-pull-5  image-col hidden-xs hidden-sm">
+                  <a href="https://www.forbes.com/sites/kashmirhill/2012/02/16/how-target-figured-out-a-teen-girl-was-pregnant-before-her-father-did">
+                    <img src={Cat4} alt="Gamification" title="Gamification" className="img-responsive image-2" />
+                  </a>
+                </div>
               </div>
             </section>
 
@@ -284,19 +272,23 @@ class PostExp extends React.Component {
               <div className="row">
                 <ContentCol>
                   <div className="pull-quote"><q>This is 1984 meets the 21st century.</q></div>
-                  <p>'OCEAN' stands for the set of traits (Openness, Contentiousness, Extroversion, Agreeableness, and Neuroticism) used by researchers to ‘measure' human personality, a process known as psychometric profiling. Insights into your personality can help marketers and political strategists promote their products or agendas. For example, individuals high in contentiousness tend to be efficient, organized, obedient, and disciplined, so advertisements that appeal to their sense of organization, competence, and respect for authority are believed to be effective on them. By appealing to these underlying traits, psychometrically-informed ads are thought to have the potential to be more persuasive than standard ads. </p>
+                  <p>'OCEAN' stands for the set of traits (Openness, Contentiousness, Extroversion, Agreeableness, and Neuroticism) used by researchers to ‘measure' human personality, a process known as psychometric profiling. Insights into your personality can help marketers and political strategists promote their products or agendas. For example, individuals high in contentiousness tend to be efficient, organized, obedient, and disciplined, so advertisements that appeal to their sense of organization, competence, and respect for authority are believed to be effective on them. By appealing to these underlying traits, psychometrically-informed ads are thought to have the potential to be more persuasive than standard ads.
+                  </p>
                   <p>
-                    Cambridge Analytica claimed to have profiled “the personality of every single adult in the United States of America,” as Alexander Nix, former CEO of the firm explained.
-                        </p>
-                  <div className="youtube-player">
-                    <YouTube
+                    Cambridge Analytica claimed to have profiled “the personality of every single adult in the United States of America,” as Alexander Nix, former CEO of the firm bragged.
+                    <br />&nbsp;<br />[VIDEO]
+                  </p>
+                  <div className="vimeo-player">
+                    {/* TODO: replace with vimeo
+                      <YouTube
                       videoId="n8Dd5aVXLCc"
                       opts={opts}
                       onReady={this._onReady}
-                    /></div>
+                    />*/}
+                  </div>
 
                   <p>While the company has since dissolved after journalists revealed it had improperly gained access to voters’ data, commercial and political actors still routinely use psychometric tools to market their products, whether run-of-the-mill goods and services or political candidates. </p>
-                  <p className="red">errors in OCEAN infernences- add short sentence here.</p>
+                  <p className="red">errors in OCEAN inferences- add short sentence here.</p>
                   <strong>Further Reading:</strong>
                   <ul>
                     <li><a href="https://ourdataourselves.tacticaltech.org/posts/psychometric-profiling">Psychometric profiling</a></li>
@@ -356,18 +348,22 @@ class PostExp extends React.Component {
                   <h1>Synthesized video</h1>
                   <p>Spectre is the world’s first installation to embed synthesized ‘deep fake’ content into narrative story telling. If you listen carefully to Spectre’s famous followers, there is truth in the deep fake…</p>
                   <p>
-                    Synthesized video means video and moving image clips in which elements of its content are purposely manipulated, sometimes using AI and machine learning. The most widely referenced category of synthesized video is the “deepfake”, in which a person in a video, usually their face or their voice, is replaced with that of another. </p>
+                    Synthesized video means video and moving image clips in which elements of its content are purposely manipulated, sometimes using AI and machine learning. The most widely referenced category of synthesized video is the “deepfake”, in which a person in a video, usually their face or their voice, is replaced with that of another.
+                    <br />&nbsp;<br />[VIDEO]
+                  </p>
                 </ContentCol>
               </div>
               <div className="row">
                 <div className="col-sm-12">
                   <div className="text-center kim">
-                    <div className="youtube-player">
-                      <YouTube
+                    <div className="vimeo-player">
+                      {/* TODO: replace with vimeo
+                        <YouTube
                         videoId="6xVKyBdXUCM"
                         opts={opts}
-                        onReady={this._onReady} />
-                    </div></div>
+                        onReady={this._onReady} />*/}
+                    </div>
+                  </div>
                 </div>
               </div>
               <div className="row">
@@ -387,7 +383,7 @@ class PostExp extends React.Component {
                   <ul>
                     <li><a href="https://lab.witness.org/projects/synthetic-media-and-deep-fakes/">Synthetic Media and Deepfakes</a></li>
                     <li><a href="https://www.technologyreview.com/s/613033/this-ai-lets-you-deepfake-your-voice-to-speak-like-barack-obama/">Deepfake your voice to speak like Barack Obama</a></li>
-                    <li><a href="https://www.nytimes.com/2018/05/22/opinion/india-journalists-slut-shaming-rape.html">In India, Journalists Face Slut-Shaming and Rape Threats</a></li>
+                    <li><a href="https://www.nytimes.com/2018/05/22/opinion/india-journalists-slut-shaming-rape.html">In India Journalists Face Slut-Shaming and Rape&nbsp;Threats</a></li>
                     <li><a href="https://www.buzzfeednews.com/article/pranavdixit/whatsapp-destroyed-village-lynchings-rainpada-india">How WhatsApp Destroyed A Village</a></li>
                   </ul>
 
@@ -405,12 +401,11 @@ class PostExp extends React.Component {
                 </div>
                 <div className="col-md-8 col-md-pull-4">
                   <h1>Tactical tech resources</h1>
-
                   <ul className="noListStyle">
                     <li><strong>Overall gateway to Data & Politics project :</strong></li>
-                    <li><a href="https://tacticaltech.org/#/projects/data-politics">https://tacticaltech.org/#/projects/data-politics</a></li>
+                    <li><a href="https://tacticaltech.org/#/projects/data-politics">https://tacticaltech.org/data-politics</a></li>
                     <li><strong>Data & Politics guide/report on digital political campaign tools:</strong></li>
-                    <li><a href="http://cdn.ttc.io/s/tacticaltech.org/influence-industry.pdf">s/tacticaltech.org/influence-industry.pdf</a></li>
+                    <li><a href="http://cdn.ttc.io/s/tacticaltech.org/influence-industry.pdf">http://tacticaltech.org/influence-industry.pdf</a></li>
                     <li><strong>Visual Gallery of companies in the Influence Industry:</strong></li>
                     <li><a href="https://vimeo.com/tacticaltech/influence-industry">https://vimeo.com/tacticaltech/influence-industry</a></li>
                     <li><strong>Easy read Voter Guide to how voter data is used by digital campaigns:</strong></li>

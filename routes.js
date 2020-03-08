@@ -29,13 +29,16 @@ router.route('/users/photo/:uid')
   .post(controller.postPhoto)
 
 router.route('/users/email/:uid')
-  .get(controller.fetchByLogin)
+  .get(controller.fromLogin)
 
 // router.route('/users/current/:cid')
 //   .get(controller.current)
 
-router.route('/users/postal/:uid')
-  .get(controller.postal)
+// router.route('/users/postal/:uid')
+//   .get(controller.postal)
+
+router.route('/users/auth/:token')
+  .get(controller.fromToken)
 
 // router.route('/users/photoset/:uid')
 //   .post(controller.photoset) // unused

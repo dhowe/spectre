@@ -1,4 +1,5 @@
 import chai_http from 'chai-http';
+import jwt from 'jsonwebtoken';
 import server from '../server';
 import dotEnv from 'dotenv';
 import chai from 'chai';
@@ -40,12 +41,176 @@ describe('REST API', () => {
         });
     });
   }
+  //
+  // //it('should prepare db', refreshDb);
+  //
+  // describe('User Routes', () => {
 
-  //it('should prepare db', refreshDb);
+  beforeEach(refreshDb);
 
   describe('User Routes', () => {
 
-    beforeEach(refreshDb);
+    it('should list all users', done => {
+      chai.request(server)
+        .get('/api/users/')
+        .auth(env.API_USER, env.API_SECRET)
+        .end((err, res) => {
+          expect(err).to.be.null;
+          expect(res).to.have.status(200);
+          expect(res.body.data).to.be.an('array');
+          done();
+        });
+    });
+
+    it('should fetch users from model', done => {
+      UserModel.getAll((err, users) => {
+        expect(err).to.be.null;
+        expect(users.length).eq(9);
+        done();
+      });
+    });
+
+    it('should insert a new user, then fetch it', done => {
+      let user = new User();
+      user.clientId = clientId;
+      user.name = "Dave";
+      user.login = "Dave@aol.com";
+      user.gender = "male";
+      chai.request(server)
+        .post('/api/users/')
+        .auth(env.API_USER, env.API_SECRET)
+        .send(user)
+        .end((err, res) => {
+          expect(err).to.be.null;
+          expect(res).to.have.status(200);
+          expect(res.body.data).to.be.a('object')
+          expect(res.body.data._id).to.be.a('string');
+          user.assign(res.body.data);
+
+          expect(user._id).to.be.a('string');
+          chai.request(server)
+            .get('/api/users/' + user._id)
+            .auth(env.API_USER, env.API_SECRET)
+            .end((err, res) => {
+              expect(err).to.be.null;
+              expect(res).to.have.status(200);
+              expect(res.body.data).to.be.a('object');
+              expect(res.body.data._id).eq(user._id);
+              //expect(res.body.data.similars).to.be.an('array');
+              done();
+            });
+        });
+    });
+
+    it('should insert, then update a user', done => {
+      let user = new User();
+      user.clientId = clientId;
+      user.name = "Dave";
+      user.login = "Dave@aol.com";
+      user.gender = "male";
+
+      chai.request(server)
+        .post('/api/users/')
+        .auth(env.API_USER, env.API_SECRET)
+        .send(user)
+        .end((err, res) => {
+          expect(err).to.be.null;
+          expect(res).to.have.status(200);
+          expect(res.body.data).to.be.a('object')
+          expect(res.body.data._id).to.be.a('string');
+          //expect(res.body.data.similars.length).eq(0);
+          user.assign(res.body.data);
+
+          expect(user._id).to.be.a('string');
+          expect(user.traits).to.be.an('object');
+          expect(user.traits.openness).eq(-1);
+
+          chai.request(server)
+            .put('/api/users/' + user._id)
+            .auth(env.API_USER, env.API_SECRET)
+            .send(user)
+            .end((err, res) => {
+              expect(err).to.be.null;
+              expect(res).to.have.status(200);
+              expect(res.body.data).to.be.a('object')
+              expect(res.body.data._id).to.be.a('string');
+              //expect(res.body.data.similars).to.be.an('array');
+              //expect(res.body.data.similars.length).eq(0);
+              done();
+            });
+        });
+    });
+
+    it('should insert, then update a user with traits', done => {
+      let user = new User();
+      user.clientId = clientId;
+      user.name = "Dave";
+      user.login = "Dave@aol.com";
+      user.gender = "male";
+      user.age = 50
+      user.gender = "female";
+      user.genderProb = .4567
+      user.adIssue = 'democrat';
+      user.virtue = 'truth';
+
+      chai.request(server)
+        .post('/api/users/')
+        .auth(env.API_USER, env.API_SECRET)
+        .send(user)
+        .end((err, res) => {
+          expect(err).to.be.null;
+          expect(res).to.have.status(200);
+          expect(res.body.data).to.be.a('object')
+          //console.log(res.body.data);
+          expect(res.body.data.age).to.be.a('number');
+          expect(res.body.data.gender).to.be.a('string');
+          expect(res.body.data.genderProb).to.be.a('number');
+
+          expect(res.body.data._id).to.be.a('string');
+          //expect(res.body.data.similars.length).eq(0);
+
+          user.assign(res.body.data);
+
+          //console.log(user);
+          expect(user._id).to.be.a('string');
+          user.traits = User.randomTraits();
+          expect(user.traits).to.be.a('object');
+          expect(user.traits.openness).to.be.gte(0);
+
+          chai.request(server)
+            .put('/api/users/' + user._id)
+            .auth(env.API_USER, env.API_SECRET)
+            .send(user)
+            .end((err, res) => {
+              expect(err).to.be.null;
+              expect(res).to.have.status(200);
+              expect(res.body.data).to.be.a('object')
+              expect(res.body.data._id).to.be.a('string');
+              expect(res.body.data.similars).to.be.an('array');
+              expect(res.body.data.similars.length).eq(6);
+              expect(res.body.data.similars[0]).to.be.an('object');
+              expect(res.body.data.similars[0]._id).to.be.an('string');
+              expect(res.body.data.similars[0].similars).to.be.undefined;
+              //expect(res.body.data.similars[0].similars.length).eq(0);
+              done();
+            });
+        });
+    });
+
+    it('should fail for an invalid user id', done => {
+      let id = 'XXX';
+      chai.request(server)
+        .get('/api/users/' + id)
+        .auth(env.API_USER, env.API_SECRET)
+        .end((err, res) => {
+          expect(err).to.be.null;
+          expect(res.body.data).to.be.null;
+          expect(res).to.have.status(499);
+          expect(res.body.status).eq(499);
+          expect(res.body.message).to.contain('Invalid uid');
+          done();
+        });
+    });
 
     it('should fetch a single user by id', done => {
       let id = '888888888888888888888888';
@@ -134,6 +299,9 @@ describe('REST API', () => {
     //       done();
     //     });
     // }).timeout(5000);
+  });
+
+  describe('User Targets', () => {
 
     it('should find similars for a user', done => {
       let id = '888888888888888888888888';
@@ -482,154 +650,62 @@ describe('REST API', () => {
             });
         });
     });
+  });
 
-    it('should list all users', done => {
+  describe('User Auth', () => {
+
+    it('should lookup a user by token', done => {
+
+      let token = jwt.sign({ uid: dUser._id },
+        process.env.JWT_SECRET, { expiresIn: '1w' });
       chai.request(server)
-        .get('/api/users/')
+        .get('/api/users/auth/' + token)
         .auth(env.API_USER, env.API_SECRET)
         .end((err, res) => {
           expect(err).to.be.null;
           expect(res).to.have.status(200);
-          expect(res.body.data).to.be.an('array');
+          expect(res.body.data).to.be.a('object');
+          expect(res.body.data._id).eq(dUser._id);
+          expect(res.body.data.login).eq(dUser.login);
+          expect(res.body.data.gender).eq(dUser.gender);
           done();
         });
     });
 
-    it('should fetch users from model', done => {
-      UserModel.getAll((err, users) => {
-        expect(err).to.be.null;
-        expect(users.length).eq(9);
-        done();
-      });
-    });
-
-    it('should insert a new user, then fetch it', done => {
-      let user = new User();
-      user.clientId = clientId;
-      user.name = "Dave";
-      user.login = "Dave@aol.com";
-      user.gender = "male";
+    it('should fail for an invalid token', done => {
+      let id = 'XXX';
       chai.request(server)
-        .post('/api/users/')
+        .get('/api/users/auth/' + id)
         .auth(env.API_USER, env.API_SECRET)
-        .send(user)
         .end((err, res) => {
           expect(err).to.be.null;
-          expect(res).to.have.status(200);
-          expect(res.body.data).to.be.a('object')
-          expect(res.body.data._id).to.be.a('string');
-          user.assign(res.body.data);
-
-          expect(user._id).to.be.a('string');
-          chai.request(server)
-            .get('/api/users/' + user._id)
-            .auth(env.API_USER, env.API_SECRET)
-            .end((err, res) => {
-              expect(err).to.be.null;
-              expect(res).to.have.status(200);
-              expect(res.body.data).to.be.a('object');
-              expect(res.body.data._id).eq(user._id);
-              //expect(res.body.data.similars).to.be.an('array');
-              done();
-            });
+          expect(res.body.data).to.be.null;
+          expect(res).to.have.status(487);
+          expect(res.body.status).eq(487);
+          expect(res.body.message).to.contain('Invalid token');
+          done();
         });
     });
 
-    it('should insert, then update a user', done => {
-      let user = new User();
-      user.clientId = clientId;
-      user.name = "Dave";
-      user.login = "Dave@aol.com";
-      user.gender = "male";
-
+    it('should fail for an expired token', done => {
+      let token = jwt.sign({
+        uid: dUser._id,
+        iat: Math.floor(Date.now() / 1000) - 30
+      }, process.env.JWT_SECRET, { expiresIn: '20s' });
       chai.request(server)
-        .post('/api/users/')
+        .get('/api/users/auth/' + token)
         .auth(env.API_USER, env.API_SECRET)
-        .send(user)
         .end((err, res) => {
           expect(err).to.be.null;
-          expect(res).to.have.status(200);
-          expect(res.body.data).to.be.a('object')
-          expect(res.body.data._id).to.be.a('string');
-          //expect(res.body.data.similars.length).eq(0);
-          user.assign(res.body.data);
-
-          expect(user._id).to.be.a('string');
-          expect(user.traits).to.be.an('object');
-          expect(user.traits.openness).eq(-1);
-
-          chai.request(server)
-            .put('/api/users/' + user._id)
-            .auth(env.API_USER, env.API_SECRET)
-            .send(user)
-            .end((err, res) => {
-              expect(err).to.be.null;
-              expect(res).to.have.status(200);
-              expect(res.body.data).to.be.a('object')
-              expect(res.body.data._id).to.be.a('string');
-              //expect(res.body.data.similars).to.be.an('array');
-              //expect(res.body.data.similars.length).eq(0);
-              done();
-            });
+          expect(res.body.data).to.be.null;
+          expect(res).to.have.status(488);
+          expect(res.body.status).eq(488);
+          expect(res.body.message).to.contain('Invalid token');
+          done();
         });
     });
-
-    it('should insert, then update a user with traits', done => {
-      let user = new User();
-      user.clientId = clientId;
-      user.name = "Dave";
-      user.login = "Dave@aol.com";
-      user.gender = "male";
-      user.age = 50
-      user.gender = "female";
-      user.genderProb = .4567
-      user.adIssue = 'democrat';
-      user.virtue = 'truth';
-
-      chai.request(server)
-        .post('/api/users/')
-        .auth(env.API_USER, env.API_SECRET)
-        .send(user)
-        .end((err, res) => {
-          expect(err).to.be.null;
-          expect(res).to.have.status(200);
-          expect(res.body.data).to.be.a('object')
-          //console.log(res.body.data);
-          expect(res.body.data.age).to.be.a('number');
-          expect(res.body.data.gender).to.be.a('string');
-          expect(res.body.data.genderProb).to.be.a('number');
-
-          expect(res.body.data._id).to.be.a('string');
-          //expect(res.body.data.similars.length).eq(0);
-
-          user.assign(res.body.data);
-
-          //console.log(user);
-          expect(user._id).to.be.a('string');
-          user.traits = User.randomTraits();
-          expect(user.traits).to.be.a('object');
-          expect(user.traits.openness).to.be.gte(0);
-
-          chai.request(server)
-            .put('/api/users/' + user._id)
-            .auth(env.API_USER, env.API_SECRET)
-            .send(user)
-            .end((err, res) => {
-              expect(err).to.be.null;
-              expect(res).to.have.status(200);
-              expect(res.body.data).to.be.a('object')
-              expect(res.body.data._id).to.be.a('string');
-              expect(res.body.data.similars).to.be.an('array');
-              expect(res.body.data.similars.length).eq(6);
-              expect(res.body.data.similars[0]).to.be.an('object');
-              expect(res.body.data.similars[0]._id).to.be.an('string');
-              expect(res.body.data.similars[0].similars).to.be.undefined;
-              //expect(res.body.data.similars[0].similars.length).eq(0);
-              done();
-            });
-        });
-    });
-
-    after(refreshDb);
   });
+
+  after(refreshDb);
 });
+//});

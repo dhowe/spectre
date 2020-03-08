@@ -21,8 +21,15 @@ UserSchema.statics.getAll = function(callback, limit) {
   UserModel.find(callback).limit(limit);
 }
 
+// find a user by id and return it
+UserSchema.statics.lookup = function(uid, callback) {
+  mongoose.Types.ObjectId.isValid(uid) ?
+    UserModel.findById(uid, callback) :
+    callback('Invalid uid: '+uid, null);
+}
+
 // create a randomised or templated user
-UserSchema.statics.CreateModel = function(tmpl) {
+UserSchema.statics.createModel = function(tmpl) {
 
   let randName = () => Math.random().toString(36)
     .replace(/[^a-z]+/g, '').substring(0, 5);
@@ -99,7 +106,7 @@ UserSchema.statics.findByOcean = function(user, limit, callback) { // cb=functio
 
 UserSchema.statics.findByLogin = function(login, callback) { // cb=function(err,users)
   UserModel.findOne({ login: login, loginType: 'email' }, callback);
-};
+}; // add name check?
 
 // find most recent user on each with traits and image (not-used)
 UserSchema.statics.findByLastPerMono = function(userId, callback) { // cb=function(err,users)

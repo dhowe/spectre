@@ -3,6 +3,7 @@ import nodemailer from 'nodemailer';
 import sgtransport from 'nodemailer-sendgrid-transport';
 import Email from 'email-templates';
 import User from './shared/user';
+import jwt from 'jsonwebtoken';
 
 dotEnv.config();
 
@@ -60,6 +61,22 @@ const transport = nodemailer.createTransport(SENDGRID ? sgtransport({
     }
   });
 
+function generateToken(user) {
+  if (!process.env.JWT_SECRET || !process.env.JWT_SECRET.length) {
+    throw Error('JWT_SECRET appears to be missing in your .env');
+  }
+  return jwt.sign(
+    { uid: user._id },
+    process.env.JWT_SECRET,
+    { expiresIn: '1w' }
+  );
+}
+
+function assignToken(user) {
+  user.token = generateToken(user);
+  return user;
+}
+
 const email = new Email({
   message: {
     from: 'no-reply@spectreknows.me'
@@ -70,12 +87,17 @@ const email = new Email({
   transport: { jsonTransport: true }
 });
 
+// console.log(jwt.sign(
+//   { uid: '444444444444444444444444' },
+//   process.env.JWT_SECRET,
+//   { expiresIn: '1w' }));
+
 email.send({
   template: 'postexp',
   message: {
     to: mockUser.login
   },
-  locals: User.assignToken(mockUser)
+  locals: assignToken(mockUser)
 })
   .then((o) => console.log(Object.keys(o)))
   .catch(console.error);

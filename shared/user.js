@@ -1,6 +1,5 @@
 import Parser from './parser.js';
 import { predict } from './ppq.js';
-import jwt from 'jsonwebtoken';
 import DotEnv from 'dotenv';
 
 DotEnv.config();
@@ -22,22 +21,6 @@ export default class User {
 
   static create(json) {
     return new User().assign(json);
-  }
-
-  static generateToken(user) {
-    if (!process.env.JWT_SECRET || !process.env.JWT_SECRET.length) {
-      throw Error('JWT_SECRET appears to be missing in your .env');
-    }
-    return jwt.sign(
-      { email: user.login },
-      process.env.JWT_SECRET,
-      { expiresIn: '1w' }
-    );
-  }
-
-  static assignToken(user) {
-    user.token = User.generateToken(user);
-    return user;
   }
 
   assign(json) {
@@ -96,6 +79,12 @@ export default class User {
 
     if (typeof target !== 'object') throw Error
       ('definingTrait requires object: got ' + typeof target);
+
+    if (typeof target.traits !== 'object') throw Error
+      ('definingTrait requires object.traits, got: ' + target);
+
+    if (typeof target.traits.openness !== 'number') throw Error
+      ('definingTrait requires valid traits, got: ' + target);
 
     let traits = User.oceanTraits;
     let trait, maxDev = 0;
