@@ -56,7 +56,7 @@ class SocialLogin extends React.Component {
     this.unShiftNeeded = false;
     // TODO: remove binds
     this.onKeyPress = this.onKeyPress.bind(this);
-    this.shiftCheck = this.shiftCheck.bind(this);
+    this.characterCheck = this.characterCheck.bind(this);
     this.handleShift = this.handleShift.bind(this);
     this.changeFocus = this.changeFocus.bind(this);
     //this.handleRadioChange = this.handleRadioChange.bind(this);
@@ -76,11 +76,11 @@ class SocialLogin extends React.Component {
 
   componentDidMount() {
     document.addEventListener("keyup", this.stubbedSubmit, false);
-    document.addEventListener('click', this.shiftCheck);
+    document.addEventListener('click', this.characterCheck);
   }
 
   componentWillUnmount() {
-    document.removeEventListener('click', this.shiftCheck);
+    document.removeEventListener('click', this.characterCheck);
     document.removeEventListener("keyup", this.stubbedSubmit, false);
   }
 
@@ -126,11 +126,12 @@ class SocialLogin extends React.Component {
     }
   }
 
-  shiftCheck() {
+  characterCheck() {
     if (this.state.focus === "name" && !this.state.name.length) {
       this.setState({ layoutName: 'shift' });
       this.unShiftNeeded = true;
     }
+    this.setState({name: this.state.name.substring(0,10)});
   }
 
   handleShift() {
