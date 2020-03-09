@@ -2,6 +2,33 @@
   cursor:default!important;
 }
 
+
+.PostExp #menu-list{
+  position: absolute;
+  display: inline-flex;
+  list-style-type: none;
+  width: 100%;
+  top: -100px;
+}
+
+.PostExp #menu-list li{
+  display: inline-flex;
+  list-style-type: none;
+  width: 100%;
+  padding: 10px;
+
+}
+
+.PostExp #menu-list a{
+text-decoration: none;
+color: #9B9DA0;
+}
+
+.PostExp #menu-list a:hover, .PostExp #menu-list a:active{
+text-decoration: underline;
+color: #42BAEB;
+}
+
 .PostExp a:active,
 .PostExp a:hover {
 	color: #42BAEB;
@@ -307,12 +334,30 @@
   height:320px;
 }
 @media screen and (orientation: portrait) {
+  .PostExp .intro{
+    margin-top: 400px;
+  }
+  .PostExp #menu-list{
+
+    display: block;
+  }
+
+  .PostExp #menu-list li{
+
+  }
   .PostExp .visible-xs .avatar-image {
     zoom: 140%;
   }
 }
-@media (min-width:992px) {
 
+@media (min-width:992px) {
+  .PostExp .intro{
+
+  }
+  .PostExp #menu-list{
+
+    display: inline-flex;
+  }
 	.container img.image-1 {
 		margin-bottom: 160px;
 	}
@@ -326,6 +371,7 @@
 }
 
 @media (min-width:1200px) {
+
 	.container img.image-2 {
 		position: relative;
 		right: -72px;
@@ -434,6 +480,8 @@
 }
 
 @media (min-width:992px) {
+
+
 	.PostExp footer .row {
 		border-top: 1px solid #BDBDBD;
 		padding-top: 104px;
@@ -449,16 +497,31 @@
 }
 
 @media (max-width:1000px) {
+  .PostExp .intro{
+    margin-top: 400px;
+  }
+  .PostExp #menu-list{
+
+    display: block;
+  }
   .PostExp .OceanProfile{
     zoom: 50%;
   }
 }
 @media (max-width:680px) {
+  .PostExp #menu-list{
+
+    display: block;
+  }
   .PostExp .OceanProfile{
     zoom: 40%;
   }
 }
 @media (max-width:550px) {
+  .PostExp #menu-list{
+
+    display: block;
+  }
   .PostExp .OceanProfile{
     zoom: 30%;
   }

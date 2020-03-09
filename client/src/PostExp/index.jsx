@@ -18,6 +18,8 @@ import StatsImage from './images/stats.jpg';
 import RumorsImage from './images/Rumors.jpg';
 import BreakoutImage from './images/breakout.png';
 import SpectreVideo from './images/spectre-video.jpg';
+import * as Scroll from 'react-scroll';
+import { Link, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 
 import Funding1 from './images/arts-council-art-culture.png';
 import Funding2 from './images/doc-fest.png';
@@ -48,6 +50,25 @@ class PostExp extends React.Component {
       target: UserSession.oceanData
         (user || UserSession.postUser()), authd: !!user
     });
+
+    Events.scrollEvent.register('begin', function(to, element) {
+      console.log("begin", arguments);
+    });
+
+    Events.scrollEvent.register('end', function(to, element) {
+      console.log("end", arguments);
+    });
+
+    scrollSpy.update();
+  }
+
+  componentWillUnmount() {
+    Events.scrollEvent.remove('begin');
+    Events.scrollEvent.remove('end');
+  }
+
+  scrollTo = () => {
+    scroll.scrollTo(100);
   }
 
   render() {
@@ -56,12 +77,30 @@ class PostExp extends React.Component {
     return (
       <div className="PostExp">
         <SpectreHeader colour="white" />
+        <section className="menu">
+          <div className="container">
+            <div className="row">
+              <div className="col-xs-10 col-xs-push-1 col-md-10">
+                <ul id="menu-list">
+                  <Link to="Terms" spy={true} smooth={true} duration={500} offset={-50}><li>1. Terms</li></Link>
+                  <Link to="Biometric" spy={true} smooth={true} duration={500} offset={-50}><li>2. Biometric</li></Link>
+                  <Link to="Biases" spy={true} smooth={true} duration={500} offset={-50}><li>3. Biases</li></Link>
+                  <Link to="Personalization" spy={true} smooth={true} duration={500} offset={-50}><li>4. Personalization</li></Link>
+                  <Link to="Gamification" spy={true} smooth={true} duration={800} offset={-50}><li>5. Gamification</li></Link>
+                  <Link to="OCEAN" spy={true} smooth={true} duration={800} offset={-50}><li>6. OCEAN</li></Link>
+                  <Link to="Targeting" spy={true} smooth={true} duration={800} offset={-50}><li>7. Targeting</li></Link>
+                  <Link to="Video" spy={true} smooth={true} duration={800} offset={-50}><li>8. Video</li></Link>
+                </ul>
+                </div>
+            </div>
+          </div>
+        </section>
         <section className="intro">
           <div className="container">
             <div className="row">
               <div className="col-xs-10 col-xs-push-1 col-md-6">
                 <h1>Welcome to the Altar of Dataism. </h1>
-                <p>As a reward for being a loyal follower{authd ? ', '+target.name + ',' : ''} we can now reveal to you the secrets of Silicon Valley.</p>
+                <p>As a reward for being a loyal follower{authd ? ', ' + target.name + ',' : ''} we can now reveal to you the secrets of Silicon Valley.</p>
                 <p>In an age of misinformation and fake news enabled by large social media platforms, tech giants are using your personal data to influence your behaviors--both online and in the voting booth. </p>
               </div>
               <div className="col-xs-10 col-xs-push-1 col-md-5">
@@ -73,7 +112,7 @@ class PostExp extends React.Component {
         </section>
         <div className="container">
           <main>
-            <section id="section-1">
+            <section id="section-1"  name="Terms">
               <div className="row bg-1">
                 <ContentCol>
                   <h1>Terms of service</h1>
@@ -100,7 +139,7 @@ class PostExp extends React.Component {
               </div>
 
             </section>
-            <section id="section-2">
+            <section id="section-2" name="Biometric">
               <div className="row bg-2">
                 <ContentCol>
                   <h1>Biometric data</h1>
@@ -131,7 +170,7 @@ class PostExp extends React.Component {
                 </div>
               </div>
             </section>
-            <section id="section-3">
+            <section id="section-3" name="Biases">
               <div className="row bg-3">
                 <ContentCol>
                   <h1>Algorithmic bias</h1>
@@ -171,7 +210,7 @@ class PostExp extends React.Component {
               </div>
             </section>
 
-            <section id="section-4">
+            <section id="section-4" name="Personalization">
               <div className="row bg-4">
                 <ContentCol>
                   <h1>Personalization</h1>
@@ -218,7 +257,7 @@ class PostExp extends React.Component {
               </div>
             </section>
 
-            <section id="section-5">
+            <section id="section-5" name="Gamification">
               <div className="row bg-5">
                 <ContentCol>
                   <h1>Gamification</h1>
@@ -250,7 +289,7 @@ class PostExp extends React.Component {
               </div>
             </section>
 
-            <section id="section-6">
+            <section id="section-6" name="OCEAN">
               <div className="row bg-6">
                 <ContentCol>
                   <h1>OCEAN Profiling</h1>
@@ -300,7 +339,7 @@ class PostExp extends React.Component {
               </div>
             </section>
 
-            <section id="section-7">
+            <section id="section-7" name="Targeting">
               <div className="row bg-7">
                 <ContentCol>
                   <h1>Micro targeting</h1>
@@ -342,7 +381,7 @@ class PostExp extends React.Component {
 
             </section>
 
-            <section id="section-8">
+            <section id="section-8" name="Video">
               <div className="row bg-8">
                 <ContentCol>
                   <h1>Synthesized video</h1>
