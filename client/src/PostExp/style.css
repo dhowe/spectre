@@ -207,10 +207,16 @@ color: #42BAEB;
   width:100%;
   height:60vw;
   overflow:hidden;
+  background-color: #42baeb;
+  /* position:relative; */
 }
 .PostExp .OceanProfile{
   position:relative;
+  /* top: 0;
+  left: 0; */
   zoom: 75%;
+  -moz-transform: scale(0.75);
+  transform-origin: 50% 50%;
   width:initial;
 }
 .PostExp button {
@@ -320,9 +326,11 @@ color: #42BAEB;
 }
 .PostExp .image-1 .avatar-image {
   zoom: 200%;
+  -moz-transform: scale(2);
 }
 .PostExp .visible-xs .avatar-image {
   zoom: 170%;
+  -moz-transform: scale(1.7);
 }
 .PostExp .avatar-name{
   font-size:48px !important;
@@ -347,6 +355,7 @@ color: #42BAEB;
   }
   .PostExp .visible-xs .avatar-image {
     zoom: 140%;
+    -moz-transform: scale(1.4);
   }
 }
 
@@ -479,6 +488,14 @@ color: #42BAEB;
 	margin-top: -60px;
 }
 
+@-moz-document url-prefix(){
+  .PostExp .OceanProfileWrapper {
+    position:relative;
+  }
+  .PostExp .OceanProfile {
+    position:absolute !important;
+  }
+}
 @media (min-width:992px) {
 
 
@@ -506,6 +523,7 @@ color: #42BAEB;
   }
   .PostExp .OceanProfile{
     zoom: 50%;
+    -moz-transform: scale(0.50);
   }
 }
 @media (max-width:680px) {
@@ -515,6 +533,7 @@ color: #42BAEB;
   }
   .PostExp .OceanProfile{
     zoom: 40%;
+    -moz-transform: scale(0.40);
   }
 }
 @media (max-width:550px) {
@@ -524,6 +543,7 @@ color: #42BAEB;
   }
   .PostExp .OceanProfile{
     zoom: 30%;
+    -moz-transform: scale(0.30);
   }
   .PostExp .split-h{
     top:20px;
