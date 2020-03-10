@@ -33,6 +33,9 @@ import Cat4 from './images/cat4.jpg';
 import Cat5 from './images/cat5.jpg';
 import Cat7 from './images/cat7.jpg';
 
+import IconButton from '../Components/IconButton/IconButton';
+import Button from '@material-ui/core/Button';
+
 import './style.css';
 import './bootstrap.min.css';
 
@@ -41,7 +44,10 @@ const styles = {};
 class PostExp extends React.Component {
   constructor(props) {
     super(props, '/post-experience');
+    this.state = { width: 0, height: 0 };
+    this.state = {  showMobileMenu:false};
     this.state = { target: UserSession.oceanData(), authd: false };
+
   }
 
   async componentDidMount() {
@@ -60,15 +66,33 @@ class PostExp extends React.Component {
     });
 
     scrollSpy.update();
+
+    this.updateWindowDimensions();
+    window.addEventListener('resize', this.updateWindowDimensions);
   }
+
 
   componentWillUnmount() {
     Events.scrollEvent.remove('begin');
     Events.scrollEvent.remove('end');
+    window.removeEventListener('resize', this.updateWindowDimensions);
+  }
+
+  updateWindowDimensions = () => {
+    this.setState({ width: window.innerWidth, height: window.innerHeight });
   }
 
   scrollTo = () => {
     scroll.scrollTo(100);
+
+  }
+
+  handleMenu = () => {
+    if (!this.state.showMobileMenu) {
+      this.setState({ showMobileMenu: true });
+    } else {
+      this.setState({ showMobileMenu: false });
+    }
   }
 
   render() {
@@ -80,8 +104,8 @@ class PostExp extends React.Component {
         <section className="menu">
           <div className="container">
             <div className="row">
-              <div className="col-xs-10 col-xs-push-1 col-md-10">
-                <ul id="menu-list">
+              <div className="col-xs-10 col-md-10" >
+                <ul id="menu-list" style={this.state.width > 1000 ? { display: 'flex' } : { display: 'none' }}>
                   <Link to="Terms" spy={true} smooth={true} duration={500} offset={-50}><li>1. Terms</li></Link>
                   <Link to="Biometric" spy={true} smooth={true} duration={500} offset={-50}><li>2. Biometric</li></Link>
                   <Link to="Biases" spy={true} smooth={true} duration={500} offset={-50}><li>3. Biases</li></Link>
@@ -91,7 +115,33 @@ class PostExp extends React.Component {
                   <Link to="Targeting" spy={true} smooth={true} duration={800} offset={-50}><li>7. Targeting</li></Link>
                   <Link to="Video" spy={true} smooth={true} duration={800} offset={-50}><li>8. Video</li></Link>
                 </ul>
+
+                <div className="mobile-menu" style={this.state.width < 1000 ? { display: 'block' } : { display: 'none' }}>
+                {/*                  <button id="mobile-menu-btn" onClick={this.showMenu} >
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                  </button>*/}
+
+                  <Button id="mobile-menu-btn" variant="outlined" color="primary"
+                    onClick={this.handleMenu}>
+                    <div className="menu-btn-div"></div>
+                    <div className="menu-btn-div"></div>
+                    <div className="menu-btn-div" ></div>
+                  </Button>
+                  <ul id="menu-list-mobile" className={this.state.showMobileMenu ? "mobile-menu-visible" : "mobile-menu-hidden"}>
+                    <Link to="Terms" onClick={this.handleMenu} spy={true} smooth={true} duration={500} offset={-50}><li>1. Terms</li></Link>
+                    <Link to="Biometric" onClick={this.handleMenu} spy={true} smooth={true} duration={500} offset={-50}><li>2. Biometric</li></Link>
+                    <Link to="Biases" onClick={this.handleMenu} spy={true} smooth={true} duration={500} offset={-50}><li>3. Biases</li></Link>
+                    <Link to="Personalization" onClick={this.handleMenu} spy={true} smooth={true} duration={500} offset={-50}><li>4. Personalization</li></Link>
+                    <Link to="Gamification" onClick={this.handleMenu} spy={true} smooth={true} duration={800} offset={-50}><li>5. Gamification</li></Link>
+                    <Link to="OCEAN" onClick={this.handleMenu} spy={true} smooth={true} duration={800} offset={-50}><li>6. OCEAN</li></Link>
+                    <Link to="Targeting" onClick={this.handleMenu} spy={true} smooth={true} duration={800} offset={-50}><li>7. Targeting</li></Link>
+                    <Link to="Video" onClick={this.handleMenu} spy={true} smooth={true} duration={800} offset={-50}><li>8. Video</li></Link>
+                  </ul>
                 </div>
+              </div>
+
             </div>
           </div>
         </section>
@@ -112,7 +162,7 @@ class PostExp extends React.Component {
         </section>
         <div className="container">
           <main>
-            <section id="section-1"  name="Terms">
+            <section id="section-1" name="Terms">
               <div className="row bg-1">
                 <ContentCol>
                   <h1>Terms of service</h1>
@@ -298,9 +348,9 @@ class PostExp extends React.Component {
               </div>
               <div className="row">
                 <div className="col-sm-12">
-                  <div className="text-center">
+                  <div>
                     {
-                      <div className="full-width pull-right OceanProfileWrapper">
+                      <div className="OceanProfileWrapper" style={this.state.width > 1100 ? { width: '100%', zoom: (1100 / 1500) } : { width: '100%', zoom: (this.state.width / 1500) }}>
                         <OceanProfile target={target} />
                       </div>
                       //<img src={OceanProfileImage} alt="Ocean Profile" title="Ocean Profile" className="img-responsive full-width pull-right" />
