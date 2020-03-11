@@ -87,10 +87,10 @@ const email = new Email({
   transport: { jsonTransport: true }
 });
 
-// console.log(jwt.sign(
-//   { uid: '444444444444444444444444' },
-//   process.env.JWT_SECRET,
-//   { expiresIn: '1w' }));
+console.log(jwt.sign(
+  { uid: '444444444444444444444444' },
+  process.env.JWT_SECRET,
+  { expiresIn: '1y' }));
 
 email.send({
   template: 'postexp',
