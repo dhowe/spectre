@@ -1,74 +1,35 @@
+
+/*****************
+General setup
+*****************/
+
 .PostExp {
   cursor: default !important;
-}
-
-.PostExp #mobile-menu-btn {
-  width: 35px;
-  height: 55px;
-  position: fixed;
-  left: 20px;
-  top: 50px;
-  z-index: 1000000;
-  border: none;
-}
-
-.PostExp #mobile-menu-btn span{
-  display: block;
-}
-
-.PostExp .menu-btn-div {
-  width: 35px;
-  height: 5px;
-  background-color: #475F7B;
-  margin: 6px 0;
-  border-radius: 20px;
-}
-
-.PostExp .mobile-menu-visible{
-  background-color: rgba(255,255,255,0.0);
-  position: fixed;
-
-  height: 100vh;
-
-left: -500px;
 
 }
 
-.PostExp .mobile-menu-hidden{
-  background-color: rgba(255,255,255,0.8);
-  position: fixed;
-  z-index: 1000000;
-  height: 100vh;
-  top:150px;
-  left: 0px;
-
-}
-
-.PostExp #menu-list {
-  position: absolute;
-  list-style-type: none;
-  width: 100%;
-  top: -100px;
-  white-space: nowrap;
-  flex-flow: wrap;
-}
-
-.PostExp #menu-list li,.PostExp #menu-list-mobile li{
-  display: inline-flex;
-  list-style-type: none;
-  width: 100%;
-  padding: 10px;
-}
-
-.PostExp #menu-list a,.PostExp #menu-list-mobile a{
-  text-decoration: none;
-  color: #9B9DA0;
-}
-
-.PostExp #menu-list a:hover, .PostExp #menu-list a:active,.PostExp #menu-list-mobile a:hover, .PostExp #menu-list-mobile a:active{
-  text-decoration: underline;
+.PostExp .container h1 {
+  font-size: 48px;
+  line-height: 52px;
+  font-weight: normal;
   color: #42BAEB;
+  margin-bottom: 64px;
+  position: relative;
+  font-weight: normal;
 }
+
+.PostExp .container h2 {
+  font-weight: bold;
+  color: #4F4F4F;
+}
+
+.PostExp .container a {
+  background-color: transparent;
+  color: #42BAEB;
+  text-decoration: underline;
+  font-size: 16px;
+}
+
 
 .PostExp a:active,
 .PostExp a:hover {
@@ -93,10 +54,101 @@ left: -500px;
   content: "";
 }
 
-.PostExp .SpectreHeader {
+
+/*****************
+MenuBar
+*****************/
+
+.PostExp #mobile-menu-btn {
+  width: 35px;
+  height: 55px;
+  position: fixed;
+  left: 50px;
+  top: 50px;
+  z-index: 1000000;
+  border: none;
+}
+
+.PostExp #mobile-menu-btn span {
+  display: block;
+}
+
+.PostExp .menu-btn-div {
+  width: 35px;
+  height: 5px;
+  background-color: #475F7B;
+  margin: 6px 0;
+  border-radius: 20px;
+}
+
+.PostExp #menu-list {
+  position: absolute;
+  list-style-type: none;
+  width: 100%;
+  top: -100px;
+  white-space: nowrap;
+  flex-flow: wrap;
+}
+
+.PostExp #menu-list li, .PostExp .ml--active li {
+  display: inline-flex;
+  list-style-type: none;
+  width: 100%;
+  padding: 10px;
+}
+
+.PostExp #menu-list a, .PostExp .ml--active a {
+  text-decoration: none;
+  color: #9B9DA0;
+}
+
+.PostExp #menu-list a:hover, .PostExp #menu-list a:active, .PostExp .ml--active a:hover, .PostExp .ml--active a:active {
+  text-decoration: underline;
+  color: #42BAEB;
+}
+
+.PostExp .mobile-menu ul.ml * {
+  background-color: rgba(255, 255, 255, 0.0);
+  position: fixed;
+  height: 0;
+  padding-top: 150px;
+  width: 100%;
+  opacity: 0;
+  z-index: -10;
+  transition: all 0.3s;
+
+}
+
+
+
+.PostExp .mobile-menu ul.ml--active {
+  background-color: rgba(255, 255, 255, 0.9);
+  position: fixed;
+  z-index: 10000;
+  height: 100vh;
+  max-height: calc(100%);
+   overflow-y: scroll;
+   -webkit-overflow-scrolling: touch;
+  padding-top: 150px;
+  opacity: 1;
+  transition: all 0.3s;
+    padding-bottom: 20px;
+
+}
+
+
+/*****************
+Header
+*****************/
+
+
+
+.PostExp .SpectreHeader{
   position: relative;
   margin-bottom: 80px;
 }
+
+
 
 .PostExp .container {
   text-align: left;
@@ -105,7 +157,12 @@ left: -500px;
   font-weight: 500;
 }
 
-.PostExp .container ul {
+
+/*****************
+Contents
+*****************/
+
+.PostExp .container ul.link-list {
   list-style-type: circle;
   color: #4F4F4F;
 }
@@ -149,27 +206,7 @@ left: -500px;
   margin-block-end: 1em;
 }
 
-.PostExp .container h1 {
-  font-size: 48px;
-  line-height: 52px;
-  font-weight: normal;
-  color: #42BAEB;
-  margin-bottom: 64px;
-  position: relative;
-  font-weight: normal;
-}
 
-.PostExp .container h2 {
-  font-weight: bold;
-  color: #4F4F4F;
-}
-
-.PostExp .container a {
-  background-color: transparent;
-  color: #42BAEB;
-  text-decoration: underline;
-  font-size: 16px;
-}
 
 .PostExp h1:after {
   background-color: #42BAEB;
@@ -255,7 +292,11 @@ left: -500px;
   cursor: pointer;
 }
 
-/* Ocean Profile CSS */
+
+/*****************
+ Ocean Profile
+*****************/
+
 .PostExp .OceanProfileWrapper {
   max-width: 1300px;
   max-height: 800px;
@@ -264,9 +305,10 @@ left: -500px;
   /* position:relative; */
 }
 
-.PostExp .OceanProfileWrapper button{
+.PostExp .OceanProfileWrapper button {
   display: none;
 }
+
 .PostExp .OceanProfile {
   position: relative;
   /* top: 0;
@@ -297,6 +339,8 @@ left: -500px;
 }
 
 /* End of Ocean Profile CSS */
+
+
 .PostExp div.kim {
   margin: 40px 0;
 }
@@ -413,19 +457,43 @@ left: -500px;
   max-width: 499px;
 }
 
-@media screen and (orientation: portrait) {
+
+/*****************
+Mobile / Portrait
+*****************/
+
+
+@media screen and (max-width:1000px) {
   .PostExp {
     width: 100%;
   }
 
-  .PostExp .SpectreHeader {
+
+  .PostExp .SpectreHeaderWrapper-mobile .SpectreHeader{
+    position: fixed;
     width: 100%;
     text-align: center;
     padding-top: 0px;
+    height: auto;
+    max-height: 150px;
+    z-index: 100000;
+    transition: all 0.3s;
+    background: white;
+  }
+
+
+  .PostExp .SpectreHeaderWrapper .SpectreHeader{
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    padding-top: 0px;
+    height: 150px;
+    z-index: 10000;
   }
 
   .PostExp .SpectreHeader img {
-    width: 250px;
+    width: 40%;
+    max-width: 250px;
   }
 
   .PostExp .intro {
