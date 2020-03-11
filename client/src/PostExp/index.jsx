@@ -120,7 +120,9 @@ class PostExp extends React.Component {
     const { target, authd } = this.state;
 
     return (
+
       <div className="PostExp">
+
         <div className="SpectreHeaderWrapper-mobile"  style={this.state.visible  || this.state.showMobileMenu ? {opacity: '1'}:{opacity: '0'}}>
         <SpectreHeader colour="white" />
         </div>
@@ -378,7 +380,7 @@ class PostExp extends React.Component {
                 <div className="col-sm-12">
                   <div>
                     {
-                      <div className="OceanProfileWrapper" style={this.state.width > 1100 ? { width: '100%', zoom: (1100 / 1500) } : { width: '100%', zoom: this.state.width ? (this.state.width / 1500) : 1}}>
+                      <div className="OceanProfileWrapper" style={this.state.width > 1100 ? { width: '110%', zoom:(1100 / 1500) ,MozTransform:'scale('+(1100 / 1500)+')'} : { width: '100%', zoom: this.state.width ? (this.state.width / 1500) : 1, MozTransform:this.state.width ? 'scale('+(this.state.width / 1500)+')':'scale(1)'}} >{/*this.state.width > 1100 ? 'scale(' +1100 / 1500 + ')'  : this.state.width ? 'scale(' + this.state.width / 1500 + ')' : 'scale(1)'*/}
                         <OceanProfile target={target} />
                       </div>
                       //<img src={OceanProfileImage} alt="Ocean Profile" title="Ocean Profile" className="img-responsive full-width pull-right" />
