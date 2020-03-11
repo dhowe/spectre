@@ -72,11 +72,14 @@ p {
   font-family: 'Montserrat' !important;
   margin: 0;
   padding: 0;
+  -webkit-text-size-adjust: auto;
 }
 
 .App {
   text-align: center;
   cursor: none;
+  width: auto;
+  overflow-x: auto;
 }
 
 .App * {

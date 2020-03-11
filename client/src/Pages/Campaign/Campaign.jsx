@@ -44,7 +44,7 @@ class Campaign extends React.Component {
         <div className={`${classes.content} content`}>
           <h1 className="addSpacing">
             Create a targeted <img src='/imgs/facebook.png'
-            style={{ marginTop: 15, height: 100, position: 'relative', top: 30 }}
+            style={{ marginTop: 0, height: 100, position: 'relative', top: 0 }}
             alt="facebook"/> ad.
           </h1>
           <p className="normal-addSpacing">

@@ -41,7 +41,7 @@ class SpectreHeader extends React.Component {
   //   }
   // }
 
-  resize = () => window.location.reload();
+  //resize = () => window.location.reload();
   componentWillUnmount() {
     window.removeEventListener('resize', this.resize);
   }

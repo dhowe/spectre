@@ -30,6 +30,7 @@
   "dependencies": {
     "@sendgrid/mail": "^6.5.2",
     "@tensorflow/tfjs-node": "^1.5.1",
+    "@trendmicro/react-sidenav": "^0.5.0",
     "async": "^3.1.1",
     "basic-auth": "~2.0.0",
     "body-parser": "^1.19.0",
@@ -66,6 +67,7 @@
     "on-finished": "~2.3.0",
     "on-headers": "~1.0.1",
     "pug": "^2.0.4",
+    "react-scroll": "^1.7.16",
     "seedrandom": "~2.4.3",
     "sharp": "^0.23.4",
     "smartcrop": "^2.0.3",
