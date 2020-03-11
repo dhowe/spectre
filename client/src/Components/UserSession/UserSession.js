@@ -779,7 +779,7 @@ function stubMissingProps(user, props) {
  */
 function fillMissingProps(user, props) {
 
-  console.log('stubMissingProps.missing', user, props);
+  //console.log('stubMissingProps.missing', user, props);
 
   if (typeof props === 'undefined') return true;
 

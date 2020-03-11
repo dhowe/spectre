@@ -29,7 +29,10 @@ class TakeSelfie extends React.Component {
     };
     this.webcam = React.createRef();
     this.countdowner = React.createRef();
+  }
 
+  async componentDidMount() {
+    await UserSession.ensure(this.context, ['name', 'login']);
   }
 
   handleClick = (c) => {
@@ -69,8 +72,10 @@ class TakeSelfie extends React.Component {
     const { classes } = this.props;
 
     const imagePreview = this.state.imgData ?
-      (<div className={ComponentStyles.imageCropper}><img className={ComponentStyles.imgPreview}
-        src={this.state.imgData} alt="img" /></div>) : null;
+      (<div className={ComponentStyles.imageCropper}>
+          <img className={ComponentStyles.imgPreview}
+            src={this.state.imgData} alt="img" />
+      </div>) : null;
 
     return (
       <div className="TakeSelfie content">
@@ -98,7 +103,7 @@ class TakeSelfie extends React.Component {
             </Button>
           </div>
         </div>
-        
+
         <div style={this.state.pageTwo}>
           <h1 className="addSpacing"><span>Look up and smile for the camera!</span></h1>
           <div className={ComponentStyles.webcamVideo}>
