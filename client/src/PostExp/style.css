@@ -144,7 +144,7 @@ Header
 
 
 .PostExp .SpectreHeader{
-  position: relative;
+  position: absolute;
   margin-bottom: 80px;
 }
 
@@ -340,6 +340,11 @@ Contents
 
 /* End of Ocean Profile CSS */
 
+.PostExp .intro{
+
+  margin-top: 200px;
+
+}
 
 .PostExp div.kim {
   margin: 40px 0;
@@ -496,11 +501,7 @@ Mobile / Portrait
     max-width: 250px;
   }
 
-  .PostExp .intro {
-    /*
-    margin-top: 400px;
-    */
-  }
+
 
   .PostExp #menu-list {
     display: block;
