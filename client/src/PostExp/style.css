@@ -176,9 +176,12 @@ Contents
   color: #4F4F4F;
 }
 
-.PostExp .OceanProfile p, .PostExp .OceanProfile h2 {
+.PostExp .OceanProfile p{
   color: white !important;
   font-weight: 400 !important;
+}
+.PostExp .OceanProfile h2 {
+  color: white !important;
 }
 
 .PostExp .OceanProfile .sidenav---navitem---9uL5T {

@@ -29,7 +29,7 @@ function OceanProfile(props) {
   const oceanSliders = UserSession.oceanTraits.map(trait => {
     let isDom = trait === target.trait;
     return (
-      <div className={isDom ? "textSliderMaxVal" : "textSlider"} key={trait}>
+      <div className={(isDom ? "textSliderMaxVal" : "textSlider") + " " + trait} key={trait}>
         {isDominantTrait(isDom)}
         <div className="icon">
           <img src={`/imgs/${trait}.svg`} alt={trait} key={trait}/>
