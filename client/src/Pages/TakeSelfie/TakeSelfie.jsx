@@ -55,8 +55,6 @@ class TakeSelfie extends React.Component {
     }
   }
 
-
-
   processSelfie = () => {
     console.log('[WEBCAM] Uploading selfie...');
     if (!UserSession.uploadImage(this.context, this.state.imgData)) {
@@ -98,7 +96,6 @@ class TakeSelfie extends React.Component {
             </Button>
           </div>
         </div>
-
         <div style={this.state.pageTwo}>
           <h1 className="addSpacing"><span>Look up and smile for the camera!</span></h1>
           <div className={ComponentStyles.webcamVideo}>
@@ -152,7 +149,6 @@ class TakeSelfie extends React.Component {
             </Link>
           </div>
         </div>
-
         <FooterLogo />
       </div>
     );
