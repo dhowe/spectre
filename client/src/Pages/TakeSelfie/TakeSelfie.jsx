@@ -29,7 +29,10 @@ class TakeSelfie extends React.Component {
     };
     this.webcam = React.createRef();
     this.countdowner = React.createRef();
+  }
 
+  async componentDidMount() {
+    await UserSession.ensure(this.context, ['name', 'login']);
   }
 
   handleClick = (c) => {
@@ -67,8 +70,10 @@ class TakeSelfie extends React.Component {
     const { classes } = this.props;
 
     const imagePreview = this.state.imgData ?
-      (<div className={ComponentStyles.imageCropper}><img className={ComponentStyles.imgPreview}
-        src={this.state.imgData} alt="img" /></div>) : null;
+      (<div className={ComponentStyles.imageCropper}>
+          <img className={ComponentStyles.imgPreview}
+            src={this.state.imgData} alt="img" />
+      </div>) : null;
 
     return (
       <div className="TakeSelfie content">
@@ -104,7 +109,6 @@ class TakeSelfie extends React.Component {
               height={1280}
               width={800}
               ref={r => this.webcam = r}
-              mirrored={true}
               screenshotQuality={1}
               screenshotFormat="image/jpeg"
               videoConstraints={{

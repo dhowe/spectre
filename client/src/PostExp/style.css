@@ -1,318 +1,565 @@
+
+/*****************
+General setup
+*****************/
+
 .PostExp {
-  cursor:default!important;
+  cursor: default !important;
+
 }
+
+.PostExp .container h1 {
+  font-size: 48px;
+  line-height: 52px;
+  font-weight: normal;
+  color: #42BAEB;
+  margin-bottom: 64px;
+  position: relative;
+  font-weight: normal;
+}
+
+.PostExp .container h2 {
+  font-weight: bold;
+  color: #4F4F4F;
+}
+
+.PostExp .container a {
+  background-color: transparent;
+  color: #42BAEB;
+  text-decoration: underline;
+  font-size: 16px;
+}
+
 
 .PostExp a:active,
 .PostExp a:hover {
-	color: #42BAEB;
-	outline: 0
+  color: #42BAEB;
+  outline: 0
 }
 
 .PostExp q {
-	display: block;
-	padding-left: 24px;
-	margin: 24px 0;
-	border-left: 1px solid #C4C4C4;
-	font-style: italic;
-  font-weight:400;
-}
-.PostExp q:before{
-  content:"";
-}
-.PostExp q:after{
-  content:"";
+  display: block;
+  padding-left: 24px;
+  margin: 24px 0;
+  border-left: 1px solid #C4C4C4;
+  font-style: italic;
+  font-weight: 400;
 }
 
-.PostExp .SpectreHeader {
-  position:relative;
-  margin-bottom:80px;
+.PostExp q:before {
+  content: "";
 }
+
+.PostExp q:after {
+  content: "";
+}
+
+
+/*****************
+MenuBar
+*****************/
+
+.PostExp #mobile-menu-btn {
+  width: 35px;
+  height: 55px;
+  position: fixed;
+  left: 50px;
+  top: 50px;
+  z-index: 1000000;
+  border: none;
+}
+
+.PostExp #mobile-menu-btn span {
+  display: block;
+}
+
+.PostExp .menu-btn-div {
+  width: 35px;
+  height: 5px;
+  background-color: #475F7B;
+  margin: 6px 0;
+  border-radius: 20px;
+}
+
+.PostExp #menu-list {
+  position: absolute;
+  list-style-type: none;
+  width: 100%;
+  top: -100px;
+  white-space: nowrap;
+  flex-flow: wrap;
+}
+
+.PostExp #menu-list li, .PostExp .ml--active li {
+  display: inline-flex;
+  list-style-type: none;
+  width: 100%;
+  padding: 10px;
+}
+
+.PostExp #menu-list a, .PostExp .ml--active a {
+  text-decoration: none;
+  color: #9B9DA0;
+}
+
+.PostExp #menu-list a:hover, .PostExp #menu-list a:active, .PostExp .ml--active a:hover, .PostExp .ml--active a:active {
+  text-decoration: underline;
+  color: #42BAEB;
+}
+
+.PostExp .mobile-menu ul.ml * {
+  background-color: rgba(255, 255, 255, 0.0);
+  position: fixed;
+  height: 0;
+  padding-top: 150px;
+  width: 100%;
+  opacity: 0;
+  z-index: -10;
+  transition: all 0.3s;
+
+}
+
+
+
+.PostExp .mobile-menu ul.ml--active {
+  background-color: rgba(255, 255, 255, 0.9);
+  position: fixed;
+  z-index: 10000;
+  height: 100vh;
+  max-height: calc(100%);
+   overflow-y: scroll;
+   -webkit-overflow-scrolling: touch;
+  padding-top: 150px;
+  opacity: 1;
+  transition: all 0.3s;
+    padding-bottom: 20px;
+
+}
+
+
+/*****************
+Header
+*****************/
+
+
+
+.PostExp .SpectreHeader{
+  position: absolute;
+  margin-bottom: 80px;
+}
+
+
+
 .PostExp .container {
-  text-align:left;
+  text-align: left;
   font-size: 16px;
   line-height: 31px;
-  font-weight:500;
+  font-weight: 500;
 }
-.PostExp .container ul {
+
+
+/*****************
+Contents
+*****************/
+
+.PostExp .container ul.link-list {
   list-style-type: circle;
-  color:#4F4F4F;
+  color: #4F4F4F;
 }
+
 .PostExp .container ul.noListStyle {
-  list-style-type:none;
-  padding-left:0;
+  list-style-type: none;
+  padding-left: 0;
 }
-.PostExp .container strong{
-  color:#4F4F4F;
+
+.PostExp .container strong {
+  color: #4F4F4F;
 }
-.PostExp .OceanProfile p, .PostExp .OceanProfile h2{
+
+.PostExp .OceanProfile p, .PostExp .OceanProfile h2 {
   color: white !important;
-  font-weight:400!important;
+  font-weight: 400 !important;
 }
-.PostExp .OceanProfile .sidenav---navitem---9uL5T{
-  background-color:#42BAEB;
+
+.PostExp .OceanProfile .sidenav---navitem---9uL5T {
+  background-color: #42BAEB;
 }
+
 .PostExp .SideNav-main-collapsed {
-  top:0;
+  top: 0;
 }
-.PostExp .OceanProfile .profile-desc-lg p{
+
+.PostExp .OceanProfile .profile-desc-lg p {
   font-size: 28px !important;
   line-height: 37px !important;
-  margin-block-start:0em !important;
+  margin-block-start: 0em !important;
   margin-block-end: 0em !important;
 }
-.PostExp .container p:not(.slider-title):not(.slider-percentage), .recommend-box{
-	color: #4F4F4F;
-	font-family: "Montserrat", "Open Sans", Helvetica, Arial, sans-serif;
-	font-size: 16px;
-	line-height: 31px;
-  font-weight:500;
+
+.PostExp .container p:not(.slider-title):not(.slider-percentage), .recommend-box {
+  color: #4F4F4F;
+  font-family: "Montserrat", "Open Sans", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 31px;
+  font-weight: 500;
   margin-block-start: 1em;
   margin-block-end: 1em;
 }
-.PostExp .container h1 {
-	font-size: 48px;
-	line-height: 52px;
-	font-weight: normal;
-	color: #42BAEB;
-	margin-bottom: 64px;
-	position: relative;
-  font-weight: bold;
-}
-.PostExp .container h2 {
-  font-weight:bold;
-  color:#4F4F4F;
-}
-.PostExp .container a {
-	background-color: transparent;
-	color: #42BAEB;
-	text-decoration: underline;
-  font-size:16px;
 
-}
+
+
 .PostExp h1:after {
-	background-color: #42BAEB;
-	content: "";
-	display: block;
-	height: 1px;
-	left: 0;
-	position: absolute;
-	bottom: -32px;
-	width: 48px;
+  background-color: #42BAEB;
+  content: "";
+  display: block;
+  height: 1px;
+  left: 0;
+  position: absolute;
+  bottom: -32px;
+  width: 48px;
+}
 
+.PostExp .red {
+  color: red !important;
 }
-.PostExp .red{
-  color:red !important;
-}
+
 /* .PostExp header {
 	text-align: center;
 	padding: 16px 0 24px 0;
 	margin-bottom: 120px;
 	border-bottom: 1px solid #e0e0e0;
 } */
-
 .PostExp .full-width {
-	width: 100%;
+  width: 100%;
 }
 
 .PostExp section {
-	margin-bottom: 80px;
+  margin-bottom: 80px;
 }
 
 /**** Youtube formatting ****/
-
 .youtube-player {
-	position: relative;
-	padding-bottom: 56.23%;
-  height:0;
-	/* Use 75% for 4:3 videos */
-	overflow: hidden;
-	max-width: 100%;
-	margin: 5px;
+  position: relative;
+  padding-bottom: 56.23%;
+  height: 0;
+  /* Use 75% for 4:3 videos */
+  overflow: hidden;
+  max-width: 100%;
+  margin: 5px;
 }
 
-
 .youtube-player iframe {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	z-index: 100;
-	background: transparent;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  background: transparent;
 }
 
 .youtube-player img {
-	bottom: 0;
-	display: block;
-	left: 0;
-	margin: auto;
-	max-width: 100%;
-	width: 100%;
-	position: absolute;
-	right: 0;
-	top: 0;
-	border: none;
-	height: auto;
-	cursor: pointer;
-	-webkit-transition: .4s all;
-	-moz-transition: .4s all;
-	transition: .4s all;
+  bottom: 0;
+  display: block;
+  left: 0;
+  margin: auto;
+  max-width: 100%;
+  width: 100%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  border: none;
+  height: auto;
+  cursor: pointer;
+  -webkit-transition: .4s all;
+  -moz-transition: .4s all;
+  transition: .4s all;
 }
 
 .youtube-player img:hover {
-	-webkit-filter: brightness(75%);
+  -webkit-filter: brightness(75%);
 }
 
 .youtube-player .play {
-	height: 50px;
-	width: 72px;
-	left: 50%;
-	top: 55%;
-	margin-left: -36px;
-	margin-top: -36px;
-	position: absolute;
-	background: url("./images/play.png") no-repeat;
-	cursor: pointer;
+  height: 50px;
+  width: 72px;
+  left: 50%;
+  top: 55%;
+  margin-left: -36px;
+  margin-top: -36px;
+  position: absolute;
+  background: url("./images/play.png") no-repeat;
+  cursor: pointer;
 }
-/* Ocean Profile CSS */
-.PostExp .OceanProfileWrapper{
-  max-height:620px;
-  width:100%;
-  height:60vw;
-  overflow:hidden;
+
+
+/*****************
+ Ocean Profile
+*****************/
+
+.PostExp .OceanProfileWrapper {
+  max-width: 1300px;
+  max-height: 800px;
+  background-color: #42baeb;
+  margin: auto;
+  /* position:relative; */
 }
-.PostExp .OceanProfile{
-  position:relative;
-  zoom: 75%;
-  width:initial;
+
+.PostExp .OceanProfileWrapper button {
+  display: none;
 }
+
+.PostExp .OceanProfile {
+  position: relative;
+  /* top: 0;
+  left: 0; */
+  width: initial;
+}
+
+/*
 .PostExp button {
   display: none;
 }
+*/
 .PostExp .SideNav-item-collapsed {
-  display:block !important;
+  display: block !important;
 }
+
 .PostExp .SideNav-main-collapsed {
-  width:100% !important;
+  width: 100% !important;
 }
-.PostExp .split-h{
-  top:40px;
+
+.PostExp .split-h {
+  top: 40px;
 }
+
 .PostExp .OceanProfile img {
-  margin:0px !important;
+  margin: 0px !important;
   box-shadow: none !important;
 }
+
 /* End of Ocean Profile CSS */
+
+.PostExp .intro{
+
+  margin-top: 200px;
+
+}
+
 .PostExp div.kim {
-	margin: 40px 0;
+  margin: 40px 0;
 }
 
 .kim .youtube-player .play {
-	height: 100%;
-	width: 100%;
-	left: 0%;
-	top: 0%;
-	margin: 0;
-	display: block;
-	position: absolute;
-	background: url(./images/Kim.jpg) no-repeat;
-	background-size: 101%;
-	cursor: pointer;
+  height: 100%;
+  width: 100%;
+  left: 0%;
+  top: 0%;
+  margin: 0;
+  display: block;
+  position: absolute;
+  background: url(./images/Kim.jpg) no-repeat;
+  background-size: 101%;
+  cursor: pointer;
 }
 
-
 /****** END Youtube ******/
-
-
 .bg-1 {
-	background: url(./images/1.png) no-repeat 40% 0;
-	padding-top: 136px;
+  background: url(./images/1.png) no-repeat 40% 0;
+  padding-top: 136px;
 }
 
 .bg-2 {
-	background: url(./images/2.png) no-repeat 31% 0;
-	padding-top: 136px;
+  background: url(./images/2.png) no-repeat 31% 0;
+  padding-top: 136px;
 }
 
 .bg-3 {
-	background: url(./images/3.png) no-repeat 31% 0;
-	padding-top: 136px;
+  background: url(./images/3.png) no-repeat 31% 0;
+  padding-top: 136px;
 }
 
 .bg-4 {
-	background: url(./images/4.png) no-repeat 31% 0;
-	padding-top: 136px;
+  background: url(./images/4.png) no-repeat 31% 0;
+  padding-top: 136px;
 }
 
 .bg-5 {
-	background: url(./images/5.png) no-repeat 31% 0;
-	padding-top: 136px;
+  background: url(./images/5.png) no-repeat 31% 0;
+  padding-top: 136px;
 }
 
 .bg-6 {
-	background: url(./images/6.png) no-repeat 31% 0;
-	padding-top: 136px;
+  background: url(./images/6.png) no-repeat 31% 0;
+  padding-top: 136px;
 }
 
 .bg-7 {
-	background: url(./images/7.png) no-repeat 31% 0;
-	padding-top: 136px;
+  background: url(./images/7.png) no-repeat 31% 0;
+  padding-top: 136px;
 }
 
 .bg-8 {
-	background: url(./images/8.png) no-repeat 31% 0;
-	padding-top: 136px;
+  background: url(./images/8.png) no-repeat 31% 0;
+  padding-top: 136px;
 }
 
 .PostExp .image-col {
-	padding-top: 40px;
+  padding-top: 40px;
 }
 
 .PostExp .container img {
-	margin: 40px 0;
-	-webkit-box-shadow: 30px 24px 90px 0px rgba(0, 0, 0, 0.24);
-	-moz-box-shadow: 30px 24px 90px 0px rgba(0, 0, 0, 0.24);
-	box-shadow: 30px 24px 90px 0px rgba(0, 0, 0, 0.24);
+  margin: 40px 0;
+  -webkit-box-shadow: 30px 24px 90px 0px rgba(0, 0, 0, 0.24);
+  -moz-box-shadow: 30px 24px 90px 0px rgba(0, 0, 0, 0.24);
+  box-shadow: 30px 24px 90px 0px rgba(0, 0, 0, 0.24);
 }
+
 .PostExp .container img.partner {
   max-width: 200px;
   margin-right: 40px !important;
 }
+
 .PostExp .funding {
-    padding-top: 80px;
-    margin-top: 80px;
+  padding-top: 80px;
+  margin-top: 80px;
 }
+
 .PostExp .funding h1 {
-    margin-top: 0;
+  margin-top: 0;
 }
+
 .PostExp .container img.no-shadow {
-	margin: 40px 0;
-	-webkit-box-shadow: none;
-	-moz-box-shadow: none;
-	box-shadow: none;
+  margin: 40px 0;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
 }
+
 .PostExp .image-1 .avatar-image {
   zoom: 200%;
+  -moz-transform: scale(2);
 }
+
 .PostExp .visible-xs .avatar-image {
   zoom: 170%;
+  -moz-transform: scale(1.7);
 }
-.PostExp .avatar-name{
-  font-size:48px !important;
+
+.PostExp .avatar-name {
+  font-size: 48px !important;
   text-align: center;
   -webkit-margin-before: 16px !important;
   margin-block-start: 16px !important;
 }
+
 .PostExp .user-profile {
-  height:320px;
+  height: 320px;
 }
-@media screen and (orientation: portrait) {
+
+.PostExp footer .breakout {
+  transform: rotate(0deg);
+  max-width: 499px;
+}
+
+
+/*****************
+Mobile / Portrait
+*****************/
+
+
+@media screen and (max-width:1000px) {
+  .PostExp {
+    width: 100%;
+  }
+
+
+  .PostExp .SpectreHeaderWrapper-mobile .SpectreHeader{
+    position: fixed;
+    width: 100%;
+    text-align: center;
+    padding-top: 0px;
+    height: auto;
+    max-height: 150px;
+    z-index: 100000;
+    transition: all 0.3s;
+    background: white;
+  }
+
+
+  .PostExp .SpectreHeaderWrapper .SpectreHeader{
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    padding-top: 0px;
+    height: 150px;
+    z-index: 10000;
+  }
+
+  .PostExp .SpectreHeader img {
+    width: 40%;
+    max-width: 250px;
+  }
+
+
+
+  .PostExp #menu-list {
+    display: block;
+  }
+
+  .PostExp #menu-list li {}
+
+  .PostExp .container h1 {
+    font-size: 32px;
+    line-height: 52px;
+  }
+
   .PostExp .visible-xs .avatar-image {
     zoom: 140%;
+    -moz-transform: scale(1.4);
+  }
+
+  /*
+  .PostExp .OceanProfileWrapper{
+
+    zoom: 0.4;
+    -moz-transform: scale(0.4);
+    position: relative;
+  }
+  */
+  .PostExp footer .breakout {
+    transform: rotate(-92deg);
+    max-width: 320px;
+    text-align: right;
+  }
+
+  .PostExp .container img.no-shadow {
+    margin: 0px -50px 0px 0px;
+  }
+
+  .PostExp .container img.partner {
+    margin: 0px 0px 40px 0px;
   }
 }
-@media (min-width:992px) {
 
+/*
+@media (min-width:375px) {
+
+  .PostExp .OceanProfileWrapper{
+    zoom: 0.3;
+    -moz-transform: scale(0.3);
+  }
+}
+*/
+/*
+@media (min-width:992px) {
+  .PostExp .intro{
+
+  }
+  .PostExp #menu-list{
+
+    display: inline-flex;
+  }
 	.container img.image-1 {
 		margin-bottom: 160px;
 	}
@@ -326,6 +573,7 @@
 }
 
 @media (min-width:1200px) {
+
 	.container img.image-2 {
 		position: relative;
 		right: -72px;
@@ -424,23 +672,26 @@
 	border-top: 1px solid #BDBDBD;
 }
 
-.PostExp footer .breakout {
-	transform: rotate(-92deg);
-	max-width: 370px;
-}
+
 
 .PostExp footer h1 {
 	margin-top: -60px;
 }
 
+@-moz-document url-prefix(){
+  .PostExp .OceanProfileWrapper {
+    position:relative;
+  }
+  .PostExp .OceanProfile {
+    position:absolute !important;
+  }
+}
 @media (min-width:992px) {
+
+
 	.PostExp footer .row {
 		border-top: 1px solid #BDBDBD;
 		padding-top: 104px;
-	}
-
-	.PostExp footer .breakout {
-		transform: rotate(0);
 	}
 
 	.PostExp footer h1 {
@@ -449,21 +700,41 @@
 }
 
 @media (max-width:1000px) {
+  .PostExp .intro{
+    margin-top: 400px;
+  }
+  .PostExp #menu-list{
+
+    display: block;
+  }
   .PostExp .OceanProfile{
     zoom: 50%;
+    -moz-transform: scale(0.50);
   }
 }
 @media (max-width:680px) {
+  .PostExp #menu-list{
+
+    display: block;
+  }
   .PostExp .OceanProfile{
     zoom: 40%;
+    -moz-transform: scale(0.40);
   }
 }
 @media (max-width:550px) {
+  .PostExp #menu-list{
+
+    display: block;
+  }
   .PostExp .OceanProfile{
     zoom: 30%;
+    -moz-transform: scale(0.30);
   }
   .PostExp .split-h{
     top:20px;
   }
 }
+
+*/
 /******/

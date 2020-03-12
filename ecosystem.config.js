@@ -5,7 +5,7 @@ module.exports = {
     script: 'server.js',
     node_args: '--require=esm',
     autorestart: true,
-    watch: true,
+    watch: false,
     max_memory_restart: '1G',
     env: {
       NODE_ENV: 'development'

@@ -18,6 +18,8 @@ import StatsImage from './images/stats.jpg';
 import RumorsImage from './images/Rumors.jpg';
 import BreakoutImage from './images/breakout.png';
 import SpectreVideo from './images/spectre-video.jpg';
+//import * as Scroll from 'react-scroll';
+import { Link, Events, animateScroll as scroll, scrollSpy } from 'react-scroll'
 
 import Funding1 from './images/arts-council-art-culture.png';
 import Funding2 from './images/doc-fest.png';
@@ -31,6 +33,9 @@ import Cat4 from './images/cat4.jpg';
 import Cat5 from './images/cat5.jpg';
 import Cat7 from './images/cat7.jpg';
 
+
+import Button from '@material-ui/core/Button';
+
 import './style.css';
 import './bootstrap.min.css';
 
@@ -39,7 +44,15 @@ const styles = {};
 class PostExp extends React.Component {
   constructor(props) {
     super(props, '/post-experience');
+    this.state = { width: 0, height: 0 };
+    this.state = { mobileWidth:1000};
+    this.state = { showMobileMenu:false};
+    this.state = {
+      prevScrollpos: "",
+      visible: true
+    };
     this.state = { target: UserSession.oceanData(), authd: false };
+
   }
 
   async componentDidMount() {
@@ -48,20 +61,126 @@ class PostExp extends React.Component {
       target: UserSession.oceanData
         (user || UserSession.postUser()), authd: !!user
     });
+
+    Events.scrollEvent.register('begin', function(to, element) {
+      console.log("begin", arguments);
+    });
+
+    Events.scrollEvent.register('end', function(to, element) {
+      console.log("end", arguments);
+    });
+
+    scrollSpy.update();
+
+    this.updateWindowDimensions();
+    window.addEventListener('resize', this.updateWindowDimensions);
+        window.addEventListener("scroll", this.handleScroll);
+    this.setState({  showMobileMenu:false});
+    this.setState({ mobileWidth:1000});
+  }
+
+
+  componentWillUnmount() {
+    Events.scrollEvent.remove('begin');
+    Events.scrollEvent.remove('end');
+    window.removeEventListener('resize', this.updateWindowDimensions);
+        window.removeEventListener("scroll", this.handleScroll);
+  }
+
+  updateWindowDimensions = () => {
+    this.setState({ width: window.innerWidth, height: window.innerHeight });
+  }
+
+  scrollTo = () => {
+    scroll.scrollTo(100);
+
+  }
+
+  handleScroll = () => {
+  const { prevScrollpos } = this.state;
+
+  const currentScrollPos = window.pageYOffset;
+  const visible = prevScrollpos > currentScrollPos;
+
+  this.setState({
+    prevScrollpos: currentScrollPos,visible
+  });
+};
+
+
+  handleMenu = () => {
+    if (!this.state.showMobileMenu) {
+      this.setState({ showMobileMenu: true });
+    } else {
+      this.setState({ showMobileMenu: false });
+    }
   }
 
   render() {
     const { target, authd } = this.state;
 
     return (
+
       <div className="PostExp">
+
+        <div className="SpectreHeaderWrapper-mobile"  style={this.state.visible  || this.state.showMobileMenu ? {opacity: '1'}:{opacity: '0'}}>
         <SpectreHeader colour="white" />
+        </div>
+
+        <div className="SpectreHeaderWrapper">
+        <SpectreHeader colour="white" />
+        </div>
+        <section className="menu">
+          <div className="container">
+            <div className="row">
+              <div className="ol-xs-10 col-xs-push-1 col-md-10" >
+                <ul id="menu-list" style={this.state.width > 1000 ? { display: 'flex' } : { display: 'none' }}>
+                  <Link to="Terms" spy={true} smooth={true} duration={500} offset={-50}><li>1. Terms</li></Link>
+                  <Link to="Biometric" spy={true} smooth={true} duration={500} offset={-50}><li>2. Biometric</li></Link>
+                  <Link to="Biases" spy={true} smooth={true} duration={500} offset={-50}><li>3. Biases</li></Link>
+                  <Link to="Personalization" spy={true} smooth={true} duration={500} offset={-50}><li>4. Personalization</li></Link>
+                  <Link to="Gamification" spy={true} smooth={true} duration={800} offset={-50}><li>5. Gamification</li></Link>
+                  <Link to="OCEAN" spy={true} smooth={true} duration={800} offset={-50}><li>6. OCEAN</li></Link>
+                  <Link to="Targeting" spy={true} smooth={true} duration={800} offset={-50}><li>7. Targeting</li></Link>
+                  <Link to="Video" spy={true} smooth={true} duration={800} offset={-50}><li>8. Video</li></Link>
+                </ul>
+
+                <div className="mobile-menu" style={this.state.width < 1000 ? { display: 'block' } : { display: 'none' }}>
+                {/*                  <button id="mobile-menu-btn" onClick={this.showMenu} >
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                  </button>*/}
+                  <Button id="mobile-menu-btn" variant="outlined" color="primary"
+                  style={this.state.visible  || this.state.showMobileMenu ? {opacity: '1'}:{opacity: '0'}}
+                    onClick={this.handleMenu}>
+                    <div className="menu-btn-div"></div>
+                    <div className="menu-btn-div"></div>
+                    <div className="menu-btn-div" ></div>
+                  </Button>
+
+                  <ul className={this.state.showMobileMenu ? "ml--active" : "ml"}>
+                    <Link to="Terms" onClick={this.handleMenu} spy={true} smooth={true} duration={500} offset={-50}><li>1. Terms</li></Link>
+                    <Link to="Biometric" onClick={this.handleMenu} spy={true} smooth={true} duration={500} offset={-50}><li>2. Biometric</li></Link>
+                    <Link to="Biases" onClick={this.handleMenu} spy={true} smooth={true} duration={500} offset={-50}><li>3. Biases</li></Link>
+                    <Link to="Personalization" onClick={this.handleMenu} spy={true} smooth={true} duration={500} offset={-50}><li>4. Personalization</li></Link>
+                    <Link to="Gamification" onClick={this.handleMenu} spy={true} smooth={true} duration={800} offset={-50}><li>5. Gamification</li></Link>
+                    <Link to="OCEAN" onClick={this.handleMenu} spy={true} smooth={true} duration={800} offset={-50}><li>6. OCEAN</li></Link>
+                    <Link to="Targeting" onClick={this.handleMenu} spy={true} smooth={true} duration={800} offset={-50}><li>7. Targeting</li></Link>
+                    <Link to="Video" onClick={this.handleMenu} spy={true} smooth={true} duration={800} offset={-50}><li>8. Video</li></Link>
+                  </ul>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
         <section className="intro">
           <div className="container">
             <div className="row">
               <div className="col-xs-10 col-xs-push-1 col-md-6">
                 <h1>Welcome to the Altar of Dataism. </h1>
-                <p>As a reward for being a loyal follower{authd ? ', '+target.name + ',' : ''} we can now reveal to you the secrets of Silicon Valley.</p>
+                <p>As a reward for being a loyal follower{authd ? ', ' + target.name + ',' : ''} we can now reveal to you the secrets of Silicon Valley.</p>
                 <p>In an age of misinformation and fake news enabled by large social media platforms, tech giants are using your personal data to influence your behaviors--both online and in the voting booth. </p>
               </div>
               <div className="col-xs-10 col-xs-push-1 col-md-5">
@@ -73,7 +192,7 @@ class PostExp extends React.Component {
         </section>
         <div className="container">
           <main>
-            <section id="section-1">
+            <section id="section-1" name="Terms">
               <div className="row bg-1">
                 <ContentCol>
                   <h1>Terms of service</h1>
@@ -85,7 +204,7 @@ class PostExp extends React.Component {
                   <img src={Cat1} alt="Privacy dark pattern" title="Privacy dark pattern" className="img-responsive image-2 visible-xs visible-sm" />
                   <p>Political campaigns are know for using the same methods: seemingly innocent voter surveys on political issues to collect names, email addresses, phone numbers and other contact details for their voter databases. These are only a few examples of how apparently benign design choices can knowingly manipulate users. </p>
                   <p><strong>Further Reading:</strong></p>
-                  <ul>
+                  <ul className="link-list">
                     <li><a href="https://datadetoxkit.org/en/wellbeing/darkpatterns">Data detox - dark patterns</a></li>
                     <li><a href="https://www.darkpatterns.org/">Dark patterns.org</a></li>
                     <li><a href="https://twitter.com/darkpatterns">Twitter - dark patterns</a></li>
@@ -100,7 +219,7 @@ class PostExp extends React.Component {
               </div>
 
             </section>
-            <section id="section-2">
+            <section id="section-2" name="Biometric">
               <div className="row bg-2">
                 <ContentCol>
                   <h1>Biometric data</h1>
@@ -114,7 +233,7 @@ class PostExp extends React.Component {
                   <p><strong>Faceprints can be created from your selfies</strong> but also out of other photographs or video footage, such as videos posted online or CCTV recordings. Law enforcement, border control, and security agencies are interested in faceprint data for identification and verification. But so too are the advertising industry, political influencers, commercial businesses, and others.</p>
                   <p>What if relatively harmless applications of faceprints are also used to improve ways of monitoring your behavior, like where you go, when, and with whom? What if it can determine other characteristics about you, like what you think, your mood, IQ, and political or sexual orientations? Or what about when it’s used to fake a scene in an image or video that you were never part of?</p>
                   <strong>Further Reading:</strong>
-                  <ul>
+                  <ul className="link-list">
                     <li><a href="https://theglassroom.org/object/adam_harvey-mega_pixels">Face Search</a></li>
                     <li><a href="https://megapixels.cc">The ethics of facial recognition</a></li>
                     <li><a href="https://www.reuters.com/article/us-china-health-surveillance-idUSKBN2011HO">China's surveillance state</a></li>
@@ -131,7 +250,7 @@ class PostExp extends React.Component {
                 </div>
               </div>
             </section>
-            <section id="section-3">
+            <section id="section-3" name="Biases">
               <div className="row bg-3">
                 <ContentCol>
                   <h1>Algorithmic bias</h1>
@@ -158,7 +277,7 @@ class PostExp extends React.Component {
                     <strong>Biased algorithms</strong> feed exclusionary and discriminatory practices, and they spread quickly and at scale. The result of biased algorithms can manifest themselves in any number of places in which algorithms are being used today: in determining eligibility for a loan, in determining the length of someone’s prison sentence, and in evaluating whether or not to hire someone for a job. How might algorithmic bias be affecting your life? Would you even know about it, when it’s baked so deeply into a particular system?
                         </p>
                   <strong>Further Reading:</strong>
-                  <ul>
+                  <ul className="link-list">
                     <li><a href=" https://www.ted.com/talks/cathy_o_neil_the_era_of_blind_faith_in_big_data_must_end">Blind faith in big data</a></li>
                     <li><a href="https://www.newscientist.com/article/2166207-discriminating-algorithms-5-times-ai-showed-prejudice/">Discriminating algorithms</a></li>
                     <li><a href="https://www.wired.com/story/the-real-reason-tech-struggles-with-algorithmic-bias/">Algorithmic bias</a></li>
@@ -171,7 +290,7 @@ class PostExp extends React.Component {
               </div>
             </section>
 
-            <section id="section-4">
+            <section id="section-4" name="Personalization">
               <div className="row bg-4">
                 <ContentCol>
                   <h1>Personalization</h1>
@@ -192,7 +311,7 @@ class PostExp extends React.Component {
                   <p>
                     How do we feel about our behavior being profiled online so companies can maximize the time we spend clicking, browsing, or shopping?</p>
                   <strong>Further Reading:</strong>
-                  <ul>
+                  <ul className="link-list">
                     <li><a href="https://ourdataourselves.tacticaltech.org/posts/third-party-tracking">Third party tracking</a></li>
                     <li><a href="https://ourdataourselves.tacticaltech.org/posts/robocalls-texting">Robo calls and texting</a></li>
                     <li><a href="https://ourdataourselves.tacticaltech.org/posts/addressable-tv">Your TV viewing habits as political assets</a></li>
@@ -203,7 +322,7 @@ class PostExp extends React.Component {
                     <div className="recommend-box">
                     <h2>Recommendations</h2>
                     <p><strong>Cookie Self-Defense</strong></p>
-                    <ul>
+                    <ul className="link-list">
                       <li className="one">Force cookies to self-destruct after you close each tab with the <a href="https://github.com/Cookie-AutoDelete/Cookie-AutoDelete">Cookie-AutoDelete extension</a>.</li>
                       <li className="two">Install the EFF's <a href="https://www.eff.org/privacybadger">Privacy Badger</a>, a browser extension that blocks a variety of cookie tracking methods.</li>
                       <li className="three">Regularly delete cookies and <a href="https://www.lifewire.com/how-to-clear-cache-2617980">clear your browser cache.</a></li>
@@ -218,7 +337,7 @@ class PostExp extends React.Component {
               </div>
             </section>
 
-            <section id="section-5">
+            <section id="section-5" name="Gamification">
               <div className="row bg-5">
                 <ContentCol>
                   <h1>Gamification</h1>
@@ -238,7 +357,7 @@ class PostExp extends React.Component {
                   <div className="text-center"><img src={Cat5} alt="Gamification" title="Gamification" className="img-responsive full-width visible-xs visible-sm" /></div>
                   <p>How do you feel about the fact that campaign apps used to promote political agendas are engineered to be addictive and gamified? Do you really think you like Facebook just because it ‘connects you’?</p>
                   <strong>Further Reading:</strong>
-                  <ul>
+                  <ul className="link-list">
                     <li><a href="https://ourdataourselves.tacticaltech.org/posts/campaign-apps">Campaigning apps</a></li>
                     <li><a href=" https://www.fastcompany.com/90260703/the-dark-side-of-gamifying-work">The dark side of gamifiying work</a></li>
                   </ul>
@@ -250,7 +369,7 @@ class PostExp extends React.Component {
               </div>
             </section>
 
-            <section id="section-6">
+            <section id="section-6" name="OCEAN">
               <div className="row bg-6">
                 <ContentCol>
                   <h1>OCEAN Profiling</h1>
@@ -259,9 +378,9 @@ class PostExp extends React.Component {
               </div>
               <div className="row">
                 <div className="col-sm-12">
-                  <div className="text-center">
+                  <div>
                     {
-                      <div className="full-width pull-right OceanProfileWrapper">
+                      <div className="OceanProfileWrapper" style={this.state.width > 1100 ? { width: '110%', zoom:(1100 / 1500) ,MozTransform:'scale('+(1100 / 1500)+')'} : { width: '100%', zoom: this.state.width ? (this.state.width / 1500) : 1, MozTransform:this.state.width ? 'scale('+(this.state.width / 1500)+')':'scale(1)'}} >{/*this.state.width > 1100 ? 'scale(' +1100 / 1500 + ')'  : this.state.width ? 'scale(' + this.state.width / 1500 + ')' : 'scale(1)'*/}
                         <OceanProfile target={target} />
                       </div>
                       //<img src={OceanProfileImage} alt="Ocean Profile" title="Ocean Profile" className="img-responsive full-width pull-right" />
@@ -290,7 +409,7 @@ class PostExp extends React.Component {
                   <p>While the company has since dissolved after journalists revealed it had improperly gained access to voters’ data, commercial and political actors still routinely use psychometric tools to market their products, whether run-of-the-mill goods and services or political candidates. </p>
                   <p className="red">errors in OCEAN inferences- add short sentence here.</p>
                   <strong>Further Reading:</strong>
-                  <ul>
+                  <ul className="link-list">
                     <li><a href="https://ourdataourselves.tacticaltech.org/posts/psychometric-profiling">Psychometric profiling</a></li>
                     <li><a href="https://qz.com/1666776/data-firm-ideia-uses-cambridge-analytica-methods-to-target-voters/">How data firms target voters</a></li>
                     <li><a href="https://www.youtube.com/watch?v=NesTWiKfpD0">The end of privacy</a></li>
@@ -300,7 +419,7 @@ class PostExp extends React.Component {
               </div>
             </section>
 
-            <section id="section-7">
+            <section id="section-7" name="Targeting">
               <div className="row bg-7">
                 <ContentCol>
                   <h1>Micro targeting</h1>
@@ -327,7 +446,7 @@ class PostExp extends React.Component {
                     <strong>*Note:</strong> As of November 2019, many companies, including Facebook, Twitter, and Google, are revising (or reportedly considering revising) their policies toward political advertisements on their platforms.
                         </p>
                   <strong>Further Reading:</strong>
-                  <ul>
+                  <ul className="link-list">
                     <li><a href="https://ourdataourselves.tacticaltech.org/posts/consumer-data">Consumer Data</a></li>
                     <li><a href="https://ourdataourselves.tacticaltech.org/posts/digital-listening">Digital Listening</a></li>
                     <li><a href="https://ad.watch/">Ad Watch</a></li>
@@ -342,7 +461,7 @@ class PostExp extends React.Component {
 
             </section>
 
-            <section id="section-8">
+            <section id="section-8" name="Video">
               <div className="row bg-8">
                 <ContentCol>
                   <h1>Synthesized video</h1>
@@ -380,7 +499,7 @@ class PostExp extends React.Component {
                     <strong>*Note:</strong> As of November 2019, many companies, including Facebook, Twitter, and Google, are revising (or reportedly considering revising) their policies toward political advertisements on their platforms.
                         </p>
                   <strong>Further Reading:</strong>
-                  <ul>
+                  <ul className="link-list">
                     <li><a href="https://lab.witness.org/projects/synthetic-media-and-deep-fakes/">Synthetic Media and Deepfakes</a></li>
                     <li><a href="https://www.technologyreview.com/s/613033/this-ai-lets-you-deepfake-your-voice-to-speak-like-barack-obama/">Deepfake your voice to speak like Barack Obama</a></li>
                     <li><a href="https://www.nytimes.com/2018/05/22/opinion/india-journalists-slut-shaming-rape.html">In India Journalists Face Slut-Shaming and Rape&nbsp;Threats</a></li>
