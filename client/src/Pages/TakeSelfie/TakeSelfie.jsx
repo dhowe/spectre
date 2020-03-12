@@ -109,6 +109,7 @@ class TakeSelfie extends React.Component {
               height={1280}
               width={800}
               ref={r => this.webcam = r}
+              mirrored={true}
               screenshotQuality={1}
               screenshotFormat="image/jpeg"
               videoConstraints={{
