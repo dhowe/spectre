@@ -88,7 +88,7 @@ function OceanProfile(props) {
                   </div>
                 </div>
                 <div className="split-r">
-                  <div className="OceanSliders">
+                  <div className="OceanSliders MultiColor">
                     {oceanSliders}
                   </div>
                 </div>

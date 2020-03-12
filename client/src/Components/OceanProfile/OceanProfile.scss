@@ -42,11 +42,8 @@
     max-width: 500px;
     margin-right: 50px;
   }
-
-  .OceanSliders {
-    margin-left: 50px;
-    margin-right: auto;
-    display: block;
+// Multi Color Mode
+.OceanSliders.MultiColor {
     .openness{
       background-color:#f0ca43;
     }
@@ -62,6 +59,19 @@
     .neuroticism{
       background-color:#223b80;
     }
+    .slider-title {
+      font-weight:500!important;
+    }
+
+    .slider-percentage {
+      font-weight:500!important;
+    }
+  }
+
+  .OceanSliders {
+    margin-left: 50px;
+    margin-right: auto;
+    display: block;
 
     .textSlider,
     .textSliderMaxVal {
@@ -97,7 +107,6 @@
         line-height: 46px;
         padding-top: 20px;
         text-align: left;
-        font-weight:500!important;
       }
 
       .slider-percentage {
@@ -106,7 +115,6 @@
         line-height: 25px;
         text-align: right;
         padding-top: 30px;
-        font-weight:500!important;
       }
 
       .icon {
