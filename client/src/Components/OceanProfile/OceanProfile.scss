@@ -8,6 +8,9 @@
     right: 22px;
     width: 160px;
   }
+  .profile-info h2{
+    font-weight:500 !important;
+  }
 
   .redSpan {
     color: $red;
@@ -39,6 +42,31 @@
     max-width: 500px;
     margin-right: 50px;
   }
+// Multi Color Mode
+.OceanSliders.MultiColor {
+    .openness{
+      background-color:#f0ca43;
+    }
+    .conscientiousness{
+      background-color:#ba6cd2;
+    }
+    .extraversion{
+      background-color:#ce6274;
+    }
+    .agreeableness{
+      background-color:#80c652;
+    }
+    .neuroticism{
+      background-color:#223b80;
+    }
+    .slider-title {
+      font-weight:500!important;
+    }
+
+    .slider-percentage {
+      font-weight:500!important;
+    }
+  }
 
   .OceanSliders {
     margin-left: 50px;
@@ -48,12 +76,15 @@
     .textSlider,
     .textSliderMaxVal {
       color: $white;
-      width: 600px;
       text-align: left;
       height: 110px;
+      width: 530px;
       overflow: visible;
       display: flex;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
+      padding-bottom: 120px;
+      // box-sizing: border-box;
+      border-radius: 14px;
 
       p {
         color: $white;
@@ -156,13 +187,7 @@
     }
 
     .textSliderMaxVal {
-      width: 530px;
-      background-color: rgba(254, 254, 254, 0.16);
-      padding-bottom: 120px;
-      margin-bottom: 10px;
       border: 2px dashed #FEFEFE;
-      box-sizing: border-box;
-      border-radius: 14px;
     }
   }
 }
