@@ -129,12 +129,12 @@ UserSession.generateBasicDesc = (target, adIssue) => {
 }
 
 UserSession.oceanData = (target, adIssue) => {
-  let df = { trait: '', category: 0 };
+  let df = { trait: '', category: 0, targetAd: { image: '', slogan: '' } };
   if (target) {
     df = User.definingTrait(target);
-    df.targetAd = target.targetAd || {};
-    df.targetAd.image = target.targetAd.image || '';
-    df.targetAd.slogan = target.targetAd.slogan || '';
+    df.targetAd = target.targetAd;
+    df.targetAd.image = target.targetAd.image;
+    df.targetAd.slogan = target.targetAd.slogan;
   }
   return {
     trait: df.trait,
