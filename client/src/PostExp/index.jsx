@@ -45,8 +45,8 @@ class PostExp extends React.Component {
   constructor(props) {
     super(props, '/post-experience');
     this.state = { width: 0, height: 0 };
-    this.state = { mobileWidth:1000};
-    this.state = { showMobileMenu:false};
+    this.state = { mobileWidth: 1000 };
+    this.state = { showMobileMenu: false };
     this.state = {
       prevScrollpos: "",
       visible: true
@@ -74,9 +74,9 @@ class PostExp extends React.Component {
 
     this.updateWindowDimensions();
     window.addEventListener('resize', this.updateWindowDimensions);
-        window.addEventListener("scroll", this.handleScroll);
-    this.setState({  showMobileMenu:false});
-    this.setState({ mobileWidth:1000});
+    window.addEventListener("scroll", this.handleScroll);
+    this.setState({ showMobileMenu: false });
+    this.setState({ mobileWidth: 1000 });
   }
 
 
@@ -84,7 +84,7 @@ class PostExp extends React.Component {
     Events.scrollEvent.remove('begin');
     Events.scrollEvent.remove('end');
     window.removeEventListener('resize', this.updateWindowDimensions);
-        window.removeEventListener("scroll", this.handleScroll);
+    window.removeEventListener("scroll", this.handleScroll);
   }
 
   updateWindowDimensions = () => {
@@ -97,15 +97,15 @@ class PostExp extends React.Component {
   }
 
   handleScroll = () => {
-  const { prevScrollpos } = this.state;
+    const { prevScrollpos } = this.state;
 
-  const currentScrollPos = window.pageYOffset;
-  const visible = prevScrollpos > currentScrollPos;
+    const currentScrollPos = window.pageYOffset;
+    const visible = prevScrollpos > currentScrollPos;
 
-  this.setState({
-    prevScrollpos: currentScrollPos,visible
-  });
-};
+    this.setState({
+      prevScrollpos: currentScrollPos, visible
+    });
+  };
 
 
   handleMenu = () => {
@@ -123,12 +123,12 @@ class PostExp extends React.Component {
 
       <div className="PostExp">
 
-        <div className="SpectreHeaderWrapper-mobile"  style={this.state.visible  || this.state.showMobileMenu ? {opacity: '1'}:{opacity: '0'}}>
-        <SpectreHeader colour="white" />
+        <div className="SpectreHeaderWrapper-mobile" style={this.state.visible || this.state.showMobileMenu ? { opacity: '1' } : { opacity: '0' }}>
+          <SpectreHeader colour="white" />
         </div>
 
         <div className="SpectreHeaderWrapper">
-        <SpectreHeader colour="white" />
+          <SpectreHeader colour="white" />
         </div>
         <section className="menu">
           <div className="container">
@@ -146,13 +146,13 @@ class PostExp extends React.Component {
                 </ul>
 
                 <div className="mobile-menu" style={this.state.width < 1000 ? { display: 'block' } : { display: 'none' }}>
-                {/*                  <button id="mobile-menu-btn" onClick={this.showMenu} >
+                  {/*                  <button id="mobile-menu-btn" onClick={this.showMenu} >
                                     <div></div>
                                     <div></div>
                                     <div></div>
                                   </button>*/}
                   <Button id="mobile-menu-btn" variant="outlined" color="primary"
-                  style={this.state.visible  || this.state.showMobileMenu ? {opacity: '1'}:{opacity: '0'}}
+                    style={this.state.visible || this.state.showMobileMenu ? { opacity: '1' } : { opacity: '0' }}
                     onClick={this.handleMenu}>
                     <div className="menu-btn-div"></div>
                     <div className="menu-btn-div"></div>
@@ -380,7 +380,7 @@ class PostExp extends React.Component {
                 <div className="col-sm-12">
                   <div>
                     {
-                      <div className="OceanProfileWrapper" style={this.state.width > 1100 ? { width: '110%', zoom:(1100 / 1500) ,MozTransform:'scale('+(1100 / 1500)+')'} : { width: '100%', zoom: this.state.width ? (this.state.width / 1500) : 1, MozTransform:this.state.width ? 'scale('+(this.state.width / 1500)+')':'scale(1)'}} >{/*this.state.width > 1100 ? 'scale(' +1100 / 1500 + ')'  : this.state.width ? 'scale(' + this.state.width / 1500 + ')' : 'scale(1)'*/}
+                      <div className="OceanProfileWrapper" style={this.state.width > 1100 ? { width: '110%', zoom: (1100 / 1500), MozTransform: 'scale(' + (1100 / 1500) + ')' } : { width: '100%', zoom: this.state.width ? (this.state.width / 1500) : 1, MozTransform: this.state.width ? 'scale(' + (this.state.width / 1500) + ')' : 'scale(1)' }} >{/*this.state.width > 1100 ? 'scale(' +1100 / 1500 + ')'  : this.state.width ? 'scale(' + this.state.width / 1500 + ')' : 'scale(1)'*/}
                         <OceanProfile target={target} />
                       </div>
                       //<img src={OceanProfileImage} alt="Ocean Profile" title="Ocean Profile" className="img-responsive full-width pull-right" />
