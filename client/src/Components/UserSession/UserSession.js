@@ -48,7 +48,7 @@ UserSession.create = async (user) => {
   });
 
   if (e) return (typeof e === 'string' && e.startsWith('491'))
-      ? 'EmailInUse' : handleError(e, route, 'create');
+    ? 'EmailInUse' : handleError(e, route, 'create');
 
   UserSession.useBrowserStorage && sessionStorage.setItem
     (UserSession.storageKey, JSON.stringify(json._id));
@@ -122,25 +122,33 @@ UserSession.generateDescription = (target, adIssue, tmpl) => {
 }
 
 UserSession.generateBasicDesc = (target, adIssue) => {
-  if (!target) return ['','','',''];
+  if (!target) return ['', '', '', ''];
   let { opening, closing } = UserSession.generateDescription(target, adIssue);
-  return !adIssue ? [ opening.slice(0, 2).join(' '), opening[2], opening[3]] :
+  return !adIssue ? [opening.slice(0, 2).join(' '), opening[2], opening[3]] :
     [opening.slice(0, 2).join(' '), opening[2], opening[3], closing.join(' ')];
 }
 
 UserSession.oceanData = (target, adIssue) => {
   let df = { trait: '', category: 0 };
-  if (target) df = User.definingTrait(target);
+  if (target) {
+    df = User.definingTrait(target);
+    df.targetAd = target.targetAd || {};
+    df.targetAd.image = target.targetAd.image || '';
+    df.targetAd.slogan = target.targetAd.slogan || '';
+  }
   return {
-
     trait: df.trait,
     category: df.category,
-    name: target ? target.name : '',
-    traits: target ? target.traits : {},
-    image: UserSession.targetImage(target),
+    targetAd: {
+      image: df.targetAd.image,
+      slogan: df.targetAd.slogan
+    },
     age: target ? target.age : 25,
     gender: target ? target.gender : 'female',
     genderProb: target ? target.genderProb : .9,
+    name: target ? target.name : '',
+    traits: target ? target.traits : {},
+    image: UserSession.targetImage(target),
     objPron: target ? target.objPron() : 'them',
     persPron: target ? target.persPron() : 'they',
     possPron: target ? target.possPron() : 'their',
@@ -164,8 +172,8 @@ UserSession.ensure = async (user, props, opts) => {
     const sid = sessionStorage.getItem(UserSession.storageKey);
     if (!sid) {
       console.log('[STUB] No user._id, creating new user');
-      fillMissingProps(user, [ 'name', 'login',
-        'virtue', 'traits', 'celebrity', 'updatedAt' ]);
+      fillMissingProps(user, ['name', 'login',
+        'virtue', 'traits', 'celebrity', 'updatedAt']);
 
       await UserSession.create(user); // save new user
       console.log('[STUB] Setting user._id: ' + user._id);
@@ -555,7 +563,7 @@ UserSession.persPron = (t) => {// used for target in ocean profile
 
 const Cons = "bcdfghjklmnprstvxz".split('');
 const Vows = "aeiou".split('');
-const Genders = ['male', 'female' ];
+const Genders = ['male', 'female'];
 const Virtues = ['wealth', 'influence', 'truth', 'power'];
 const FemaleCelebs = ['Kardashian', 'Abramovic'];
 const MaleCelebs = ['Freeman', 'Duchamp', 'Mercury', 'Trump', 'Zuckerberg'];
