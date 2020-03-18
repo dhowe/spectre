@@ -2,6 +2,7 @@ import React from 'react';
 //import YouTube from 'react-youtube';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 
 import SpectreHeader from '../Components/SpectreHeader/SpectreHeader';
 import UserSession from '../Components/UserSession/UserSession';
@@ -18,7 +19,6 @@ import StatsImage from './images/stats.jpg';
 import RumorsImage from './images/Rumors.jpg';
 import BreakoutImage from './images/breakout.png';
 import SpectreVideo from './images/spectre-video.jpg';
-//import * as Scroll from 'react-scroll';
 import { Link, Events, animateScroll as scroll, scrollSpy } from 'react-scroll'
 
 import Funding1 from './images/arts-council-art-culture.png';
@@ -33,58 +33,55 @@ import Cat4 from './images/cat4.jpg';
 import Cat5 from './images/cat5.jpg';
 import Cat7 from './images/cat7.jpg';
 
-
-import Button from '@material-ui/core/Button';
-
 import './style.css';
 import './bootstrap.min.css';
 
 const styles = {};
 
 class PostExp extends React.Component {
+
   constructor(props) {
     super(props, '/post-experience');
-    this.state = { width: 0, height: 0 };
-    this.state = { mobileWidth:1000};
-    this.state = { showMobileMenu:false};
     this.state = {
+      width: 0,
+      height: 0,
+      visible: true,
+      mobileWidth: 1000,
       prevScrollpos: "",
-      visible: true
-    };
-    this.state = { target: UserSession.oceanData(), authd: false };
-
+      showMobileMenu: false,
+      target: UserSession.oceanData(),
+      authd: false
+    }
   }
 
   async componentDidMount() {
     let user = await UserSession.fromToken(this.props.location.hash);
+
     this.setState({
-      target: UserSession.oceanData
-        (user || UserSession.postUser()), authd: !!user
+      target: UserSession.oceanData(user || UserSession.postUser()),
+      showMobileMenu: false,
+      mobileWidth: 1000,
+      authd: !!user
     });
 
     Events.scrollEvent.register('begin', function(to, element) {
       console.log("begin", arguments);
     });
-
     Events.scrollEvent.register('end', function(to, element) {
       console.log("end", arguments);
     });
 
     scrollSpy.update();
-
     this.updateWindowDimensions();
     window.addEventListener('resize', this.updateWindowDimensions);
-        window.addEventListener("scroll", this.handleScroll);
-    this.setState({  showMobileMenu:false});
-    this.setState({ mobileWidth:1000});
+    window.addEventListener("scroll", this.handleScroll);
   }
-
 
   componentWillUnmount() {
     Events.scrollEvent.remove('begin');
     Events.scrollEvent.remove('end');
     window.removeEventListener('resize', this.updateWindowDimensions);
-        window.removeEventListener("scroll", this.handleScroll);
+    window.removeEventListener("scroll", this.handleScroll);
   }
 
   updateWindowDimensions = () => {
@@ -93,42 +90,30 @@ class PostExp extends React.Component {
 
   scrollTo = () => {
     scroll.scrollTo(100);
-
   }
 
   handleScroll = () => {
-  const { prevScrollpos } = this.state;
-
-  const currentScrollPos = window.pageYOffset;
-  const visible = prevScrollpos > currentScrollPos;
-
-  this.setState({
-    prevScrollpos: currentScrollPos,visible
-  });
-};
-
+    const { prevScrollpos } = this.state;
+    const currentScrollPos = window.pageYOffset;
+    const visible = prevScrollpos > currentScrollPos;
+    this.setState({ prevScrollpos: currentScrollPos, visible });
+  }
 
   handleMenu = () => {
-    if (!this.state.showMobileMenu) {
-      this.setState({ showMobileMenu: true });
-    } else {
-      this.setState({ showMobileMenu: false });
-    }
+    this.setState({ showMobileMenu: !this.state.showMobileMenu });
   }
 
   render() {
     const { target, authd } = this.state;
-
     return (
 
       <div className="PostExp">
-
-        <div className="SpectreHeaderWrapper-mobile"  style={this.state.visible  || this.state.showMobileMenu ? {opacity: '1'}:{opacity: '0'}}>
-        <SpectreHeader colour="white" />
+        <div className="SpectreHeaderWrapper-mobile" style={this.state.visible ||
+          this.state.showMobileMenu ? { opacity: '1' } : { opacity: '0' }}>
+          <SpectreHeader colour="white" />
         </div>
-
         <div className="SpectreHeaderWrapper">
-        <SpectreHeader colour="white" />
+          <SpectreHeader colour="white" />
         </div>
         <section className="menu">
           <div className="container">
@@ -146,13 +131,13 @@ class PostExp extends React.Component {
                 </ul>
 
                 <div className="mobile-menu" style={this.state.width < 1000 ? { display: 'block' } : { display: 'none' }}>
-                {/*                  <button id="mobile-menu-btn" onClick={this.showMenu} >
+                  {/*                  <button id="mobile-menu-btn" onClick={this.showMenu} >
                                     <div></div>
                                     <div></div>
                                     <div></div>
                                   </button>*/}
                   <Button id="mobile-menu-btn" variant="outlined" color="primary"
-                  style={this.state.visible  || this.state.showMobileMenu ? {opacity: '1'}:{opacity: '0'}}
+                    style={this.state.visible || this.state.showMobileMenu ? { opacity: '1' } : { opacity: '0' }}
                     onClick={this.handleMenu}>
                     <div className="menu-btn-div"></div>
                     <div className="menu-btn-div"></div>
@@ -380,7 +365,7 @@ class PostExp extends React.Component {
                 <div className="col-sm-12">
                   <div>
                     {
-                      <div className="OceanProfileWrapper" style={this.state.width > 1100 ? { width: '110%', zoom:(1100 / 1500) ,MozTransform:'scale('+(1100 / 1500)+')'} : { width: '100%', zoom: this.state.width ? (this.state.width / 1500) : 1, MozTransform:this.state.width ? 'scale('+(this.state.width / 1500)+')':'scale(1)'}} >{/*this.state.width > 1100 ? 'scale(' +1100 / 1500 + ')'  : this.state.width ? 'scale(' + this.state.width / 1500 + ')' : 'scale(1)'*/}
+                      <div className="OceanProfileWrapper" style={this.state.width > 1100 ? { width: '110%', zoom: (1100 / 1500), MozTransform: 'scale(' + (1100 / 1500) + ')' } : { width: '100%', zoom: this.state.width ? (this.state.width / 1500) : 1, MozTransform: this.state.width ? 'scale(' + (this.state.width / 1500) + ')' : 'scale(1)' }} >{/*this.state.width > 1100 ? 'scale(' +1100 / 1500 + ')'  : this.state.width ? 'scale(' + this.state.width / 1500 + ')' : 'scale(1)'*/}
                         <OceanProfile target={target} />
                       </div>
                       //<img src={OceanProfileImage} alt="Ocean Profile" title="Ocean Profile" className="img-responsive full-width pull-right" />

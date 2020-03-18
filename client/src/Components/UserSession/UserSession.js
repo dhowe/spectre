@@ -132,12 +132,15 @@ UserSession.oceanData = (target, adIssue) => {
   let df = { trait: '', category: 0 };
   if (target) df = User.definingTrait(target);
   return {
+
     trait: df.trait,
     category: df.category,
     name: target ? target.name : '',
     traits: target ? target.traits : {},
     image: UserSession.targetImage(target),
+    age: target ? target.age : 25,
     gender: target ? target.gender : 'female',
+    genderProb: target ? target.genderProb : .9,
     objPron: target ? target.objPron() : 'them',
     persPron: target ? target.persPron() : 'they',
     possPron: target ? target.possPron() : 'their',
