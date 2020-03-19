@@ -27,7 +27,7 @@ import Funding3 from './images/arts-council-england.png';
 import Funding4 from './images/british-council.png';
 
 import Cat1 from './images/cat1.jpg';
-import Cat2 from './images/cat2.jpg';
+//import Cat2 from './images/cat2.jpg';
 import Cat3 from './images/cat3.jpg';
 import Cat4 from './images/cat4.jpg';
 import Cat5 from './images/cat5.jpg';
@@ -219,11 +219,12 @@ class PostExp extends React.Component {
                     <li><a href="https://www.reuters.com/article/us-china-health-surveillance-idUSKBN2011HO">China's surveillance state</a></li>
                   </ul>
                 </ContentCol>
-                <div class="col-md-7 col-md-pull-5 image-col ">
+                <div className="col-md-7 col-md-pull-5 image-col ">
                   <div className="image-1 no-shadow biometric-profile-div">
                     <div className="biometric-profile-info">
+
                       <h2><strong>Age:</strong> {target.age}</h2>
-                      <h2><strong>Gender:</strong>  {target.gender}</h2>
+                      <h2><strong>Gender:</strong>  {target.gender.ucf()}</h2>
                       <h2><strong>Confidence:</strong>  {target.age}%</h2>
                     </div>
                     <div className="biometric-profile-pic">
