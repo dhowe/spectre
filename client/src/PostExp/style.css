@@ -316,6 +316,11 @@ Bias
 .PostExp .insightPage .textSliderText p *, p:not(.textSliderText){
   color: #42BAEB;
 }
+.PostExp .insightPage .avatar-name{
+  font-size: 30px;
+  font-weight: normal;
+}
+
 
 
 /*****************
@@ -472,7 +477,7 @@ Bias
 }
 
 .PostExp .avatar-name {
-  font-size: 48px !important;
+  font-size: 48px;
   text-align: center;
   -webkit-margin-before: 16px !important;
   margin-block-start: 16px !important;
