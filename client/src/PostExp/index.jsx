@@ -219,35 +219,24 @@ class PostExp extends React.Component {
                     <li><a href="https://www.reuters.com/article/us-china-health-surveillance-idUSKBN2011HO">China's surveillance state</a></li>
                   </ul>
                 </ContentCol>
-
-
-                     <div class="col-md-7 col-md-pull-5 image-col ">
-                     <div className="image-1 no-shadow biometric-profile-div">
-                       {/* authd ? <AvatarComponent target={target} /> : ''
-
-                     <img src={Cat2} alt="Facial analysis data" title="Facial analysis data" className="img-responsive" />
-                       */};
-
-                       <div className="biometric-profile-info">
-                         <h2><strong>Age:</strong> {target.age}</h2>
-                         <h2><strong>Gender:</strong>  {target.gender}</h2>
-                         <h2><strong>Confidence:</strong>  {target.age}%</h2>
-
-                       </div>
-                       <div className="biometric-profile-pic">
-                       {authd ? <AvatarComponent target={target} /> : <AvatarComponent target={target} />};
-                       </div>
-
-
-                   </div>
-                </div>
-                <div className="">
-
-                  {
-
-                    //<img src={AvatarImage} alt="User profile picture" title="User profile picture" className="img-responsive image-1 no-shadow user-profile"/>
-                  }
-
+                <div class="col-md-7 col-md-pull-5 image-col ">
+                  <div className="image-1 no-shadow biometric-profile-div">
+                    <div className="biometric-profile-info">
+                      <h2><strong>Age:</strong> {target.age}</h2>
+                      <h2><strong>Gender:</strong>  {target.gender}</h2>
+                      <h2><strong>Confidence:</strong>  {target.age}%</h2>
+                    </div>
+                    <div className="biometric-profile-pic">
+                    <AvatarComponent target={target} />
+                      {/* authd ? <AvatarComponent target={target} /> : ''
+                       <img src={Cat2} alt="Facial analysis data" title="Facial analysis data" className="img-responsive" />
+                         */
+                      };
+                      {
+                        //<img src={AvatarImage} alt="User profile picture" title="User profile picture" className="img-responsive image-1 no-shadow user-profile"/>
+                      }
+                    </div>
+                  </div>
                 </div>
               </div>
             </section>
