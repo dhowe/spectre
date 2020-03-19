@@ -226,6 +226,7 @@ Contents
   color: red !important;
 }
 
+/* biometric section */
 .PostExp .biometric-profile-div{
   display: flex;
   align-items: center;
@@ -234,6 +235,7 @@ Contents
   width: 100%;
   text-align: left;
   margin-top: 350px;
+  height: 400px;
 }
 
 .PostExp .biometric-profile-pic{
