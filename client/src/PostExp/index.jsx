@@ -222,10 +222,9 @@ class PostExp extends React.Component {
                 <div className="col-md-7 col-md-pull-5 image-col ">
                   <div className="image-1 no-shadow biometric-profile-div">
                     <div className="biometric-profile-info">
-
                       <h2><strong>Age:</strong> {target.age}</h2>
                       <h2><strong>Gender:</strong>  {target.gender.ucf()}</h2>
-                      <h2><strong>Confidence:</strong>  {target.age}%</h2>
+                      <h2><strong>Confidence:</strong>  {target.genderProb*100}%</h2>
                     </div>
                     <div className="biometric-profile-pic">
                     <AvatarComponent target={target} />
