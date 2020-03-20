@@ -8,7 +8,6 @@ import SpectreHeader from '../Components/SpectreHeader/SpectreHeader';
 import UserSession from '../Components/UserSession/UserSession';
 import AvatarComponent from '../Components/AvatarComponent/AvatarComponent';
 import OceanProfile from '../Components/OceanProfile/OceanProfile';
-import TextSliderText from '../Components/TextSliderText/TextSliderText';
 
 import PrivacyImage from './images/spectre-privacy.png';
 import BiasImage from './images/Spectre-biases.png';
@@ -26,8 +25,6 @@ import Funding1 from './images/arts-council-art-culture.png';
 import Funding2 from './images/doc-fest.png';
 import Funding3 from './images/arts-council-england.png';
 import Funding4 from './images/british-council.png';
-
-
 
 import Cat1 from './images/cat1.jpg';
 import Cat2 from './images/cat2.jpg';
@@ -251,17 +248,7 @@ class PostExp extends React.Component {
               </div>
               <div className="row">
                 <div className="col-sm-12">
-                  <div className="text-center">
-
-                  <div className="content insightPage">
-                    <h1 className="addSpacing">{`What’s ${target.name}’s gender?`}</h1><br />
-                    <AvatarComponent target={target} />
-                    <div>
-                      <TextSliderText leftText="Male" rightText="Female" middleText="Non-binary" />
-                    </div>
-                  </div>
-
-            {/* <img src={BiasImage} alt="Algorithmic biases" title="Algorithmic biases" className="img-responsive full-width pull-right" />*/}</div>
+                  <div className="text-center"><img src={BiasImage} alt="Algorithmic biases" title="Algorithmic biases" className="img-responsive full-width pull-right" /></div>
                 </div>
               </div>
               <div className="row bg-m">
@@ -270,13 +257,7 @@ class PostExp extends React.Component {
                     When Google Photos was released in 2015, its image recognition system <a href="https://www.wired.com/story/when-it-comes-to-gorillas-google-photos-remains-blind/"> labeled black people as gorillas</a>. In 2016, researchers discovered that LinkedIn searches recommended male names, so when users searched for someone named “Andrea”, they’d be ask if they meant “Andrew”, but not the other way around. PredPol, a popular predictive policing software used by over 50 police departments in the US, has been accused of perpetuating racist practices.</p>
                   <p>
                     <strong>How do the technologies around us end up this way?</strong> Unfortunately, it’s not a matter of simply the fault of the software developer or data scientist; the problem is much deeper. In the case of the Google Photos fiasco, Google’s image-classification system worked by using a large volume of training data. This training data, for example, contained thousands of photos of dogs, helping the system understand what a dog looks like, so when a user uploads a photo of her dog, the image will recognize it as such. The problem was that the training data included plenty of white faces but excluded a sufficient number of black faces, causing the system to mis-classify images of black people. In fact, researchers have discovered that several common facial recognition technologies work best on white men, then slightly less accurately for white women , even worse for black men, and worst of all on black women. </p>
-
-                  <div className="text-center">
-
-
-
-                    <img src={Cat3} alt="Spectre artificial intelligence" title="Spectre artificial intelligence" className="img-responsive full-width visible-xs visible-sm" />
-                  </div>
+                  <div className="text-center"><img src={Cat3} alt="Spectre artificial intelligence" title="Spectre artificial intelligence" className="img-responsive full-width visible-xs visible-sm" /></div>
                   <p>
                     <strong>Biased algorithms</strong> feed exclusionary and discriminatory practices, and they spread quickly and at scale. The result of biased algorithms can manifest themselves in any number of places in which algorithms are being used today: in determining eligibility for a loan, in determining the length of someone’s prison sentence, and in evaluating whether or not to hire someone for a job. How might algorithmic bias be affecting your life? Would you even know about it, when it’s baked so deeply into a particular system?
                         </p>
