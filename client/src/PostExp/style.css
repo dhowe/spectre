@@ -20,7 +20,7 @@ General setup
 
 .PostExp .container h2 {
   font-weight: bold;
-  color: #4F4F4F;
+
 }
 
 .PostExp .container a {
@@ -172,7 +172,7 @@ Contents
   padding-left: 0;
 }
 
-.PostExp .container strong {
+.PostExp .container p strong {
   color: #4F4F4F;
 }
 
@@ -199,7 +199,7 @@ Contents
   margin-block-end: 0em !important;
 }
 
-.PostExp .container p:not(.slider-title):not(.slider-percentage), .recommend-box {
+.PostExp .container p:not(.slider-title):not(.slider-percentage):not(.avatar-name), .recommend-box{
   color: #4F4F4F;
   font-family: "Montserrat", "Open Sans", Helvetica, Arial, sans-serif;
   font-size: 16px;
@@ -224,6 +224,99 @@ Contents
 
 .PostExp .red {
   color: red !important;
+}
+
+/* biometric section */
+.PostExp .biometric-profile-div{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  width: 100%;
+  text-align: left;
+  margin-top: 350px;
+  height: 400px;
+}
+
+.PostExp .biometric-profile-pic{
+    margin-top: 80px;
+    width: 50%;
+
+}
+
+.PostExp .visible-xs .avatar-image {
+  zoom: 140%;
+  -moz-transform: scale(1.4);
+}
+
+
+.PostExp .biometric-profile-pic .avatar-image {
+width: 100px;
+height: 100px;
+border: solid #9B9DA0 4px;
+}
+.PostExp .biometric-profile-pic .avatar-name{
+
+font-size: 20px;
+font-weight: bold;
+}
+.PostExp .image-1 .avatar-image {
+  /*zoom: 200%;
+  -moz-transform: scale(2);
+  */
+}
+
+.PostExp .visible-xs .avatar-image {
+  zoom: 170%;
+  -moz-transform: scale(1.7);
+}
+
+.PostExp .avatar-name {
+  /*
+  font-size: 48px !important;
+  */
+  color: #828282;
+  text-align: center;
+  -webkit-margin-before: 16px !important;
+  margin-block-start: 16px !important;
+}
+
+.PostExp .avatar-image {
+  font-size: 48px !important;
+  color: #828282;
+  text-align: center;
+  -webkit-margin-before: 16px !important;
+  margin-block-start: 16px !important;
+}
+
+.PostExp .biometric-profile-info{
+
+  border: solid 1px #42BAEB;
+  border-radius: 5px;
+  padding: 10px;
+  width: 50%;
+  background-color: #E0F4FC;
+  height: 120px;
+}
+
+.PostExp .biometric-profile-pic:before{
+  content:'';
+  width:200px;
+  border-bottom:1px solid #42BAEB;
+  position:absolute;
+  top:55%;
+  margin-top: 150px;
+
+}
+
+.PostExp .biometric-profile-info h2{
+  font-size: 22px;
+  line-height: 24px;
+  color: #42BAEB;
+  font-weight: normal;
+}
+.PostExp .biometric-profile-info strong{
+  color: #42BAEB;
 }
 
 /* .PostExp header {
@@ -439,22 +532,7 @@ Contents
   box-shadow: none;
 }
 
-.PostExp .image-1 .avatar-image {
-  zoom: 200%;
-  -moz-transform: scale(2);
-}
 
-.PostExp .visible-xs .avatar-image {
-  zoom: 170%;
-  -moz-transform: scale(1.7);
-}
-
-.PostExp .avatar-name {
-  font-size: 48px !important;
-  text-align: center;
-  -webkit-margin-before: 16px !important;
-  margin-block-start: 16px !important;
-}
 
 .PostExp .user-profile {
   height: 320px;
@@ -475,6 +553,48 @@ Mobile / Portrait
   .PostExp {
     width: 100%;
   }
+
+  .PostExp .biometric-profile-div{
+    height:400px;
+
+}
+
+.PostExp .biometric-profile-pic{
+  width: 50%;
+}
+
+.PostExp .biometric-profile-pic *{
+
+      z-index: 2;
+}
+
+
+.PostExp .biometric-profile-pic .avatar-name{
+  font-size: 18px;
+}
+
+.PostExp .biometric-profile-pic:before{
+  bottom:200px;
+  width: 25%;
+  left: 45%;
+  z-index: 1;
+
+}
+.PostExp .biometric-profile-info {
+margin: auto;
+max-width: 40%;
+z-index: 2;
+}
+
+.PostExp .biometric-profile-info h2{
+  font-size: 15px;
+  line-height: 17px;
+
+
+}
+
+
+
 
 
   .PostExp .SpectreHeaderWrapper-mobile .SpectreHeader{
@@ -517,10 +637,7 @@ Mobile / Portrait
     line-height: 52px;
   }
 
-  .PostExp .visible-xs .avatar-image {
-    zoom: 140%;
-    -moz-transform: scale(1.4);
-  }
+
 
   /*
   .PostExp .OceanProfileWrapper{
