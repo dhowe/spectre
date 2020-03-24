@@ -8,6 +8,7 @@ import SpectreHeader from '../Components/SpectreHeader/SpectreHeader';
 import UserSession from '../Components/UserSession/UserSession';
 import AvatarComponent from '../Components/AvatarComponent/AvatarComponent';
 import OceanProfile from '../Components/OceanProfile/OceanProfile';
+import TextSliderText from '../Components/TextSliderText/TextSliderText';
 
 import PrivacyImage from './images/spectre-privacy.png';
 import BiasImage from './images/Spectre-biases.png';
@@ -253,7 +254,19 @@ class PostExp extends React.Component {
               </div>
               <div className="row">
                 <div className="col-sm-12">
-                  <div className="text-center"><img src={BiasImage} alt="Algorithmic biases" title="Algorithmic biases" className="img-responsive full-width pull-right" /></div>
+                  <div className="text-center">
+
+
+                                    <div className="content insightPage">
+                                      <h1 className="addSpacing">{`What’s ${target.name}’s gender?`}</h1><br />
+                                      <AvatarComponent target={target} />
+                                      <div>
+                                        <TextSliderText leftText="Male" rightText="Female" middleText="Non-binary" presetValue={target.genderProb*100}/>
+                                      </div>
+                                    </div>
+
+                              {/* <img src={BiasImage} alt="Algorithmic biases" title="Algorithmic biases" className="img-responsive full-width pull-right" />*/}
+                  </div>
                 </div>
               </div>
               <div className="row bg-m">
