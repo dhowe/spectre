@@ -9,6 +9,7 @@ import UserSession from '../Components/UserSession/UserSession';
 import AvatarComponent from '../Components/AvatarComponent/AvatarComponent';
 import OceanProfile from '../Components/OceanProfile/OceanProfile';
 import TextSliderText from '../Components/TextSliderText/TextSliderText';
+import PostExpDarkAd from '../Components/PostExpDarkAd/PostExpDarkAd';
 
 import PrivacyImage from './images/spectre-privacy.png';
 //import BiasImage from './images/Spectre-biases.png';
@@ -106,8 +107,8 @@ class PostExp extends React.Component {
 
   render() {
     const { target, authd } = this.state;
+    console.log(UserSession)
     return (
-
       <div className="PostExp">
         <div className="SpectreHeaderWrapper-mobile" style={this.state.visible ||
           this.state.showMobileMenu ? { opacity: '1' } : { opacity: '0' }}>
@@ -433,7 +434,10 @@ class PostExp extends React.Component {
               </div>
               <div className="row">
                 <div className="col-sm-12">
-                  <div className="text-center"><img src={FacebookImage} alt="Facebook ad" title="Facebook ad" className="img-responsive full-width pull-right" /></div>
+                  <div className="text-center">
+                  <PostExpDarkAd userSession={UserSession}/>
+                  {/*}<img src={FacebookImage} alt="Facebook ad" title="Facebook ad" className="img-responsive full-width pull-right" />*/}
+                  </div>
                 </div>
               </div>
               <div className="row">
