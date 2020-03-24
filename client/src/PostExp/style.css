@@ -282,7 +282,7 @@ font-weight: bold;
 }
 
 .PostExp .avatar-image {
-  font-size: 48px !important;
+  font-size: 48px;
   color: #828282;
   text-align: center;
   -webkit-margin-before: 16px !important;
@@ -387,6 +387,34 @@ font-weight: bold;
   background: url("./images/play.png") no-repeat;
   cursor: pointer;
 }
+
+
+/*
+Bias
+*/
+
+.PostExp .insightPage {
+  position: relative;
+  margin: 10px 0 10px 0;
+  padding: 40px 0 40px 0;
+  -webkit-box-shadow: 30px 24px 90px 0px rgba(0, 0, 0, 0.24);
+  -moz-box-shadow: 30px 24px 90px 0px rgba(0, 0, 0, 0.24);
+  box-shadow: 30px 24px 90px 0px rgba(0, 0, 0, 0.24);
+  height: auto;
+}
+
+.PostExp .insightPage h1:after {
+  display: none;
+}
+.PostExp .insightPage .textSliderText p *, p:not(.textSliderText){
+  color: #42BAEB;
+}
+.PostExp .insightPage .avatar-name{
+  font-size: 30px;
+  font-weight: normal;
+}
+
+
 
 
 /*****************

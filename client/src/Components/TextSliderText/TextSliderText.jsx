@@ -8,7 +8,7 @@ class TextSliderText extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { value: 50 };
+    this.state = { value: this.props.presetValue? this.props.presetValue: 50 };
   }
 
   handleChange = (e, value) => { this.setState({ value }) };
