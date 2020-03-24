@@ -11,7 +11,7 @@ import OceanProfile from '../Components/OceanProfile/OceanProfile';
 import TextSliderText from '../Components/TextSliderText/TextSliderText';
 
 import PrivacyImage from './images/spectre-privacy.png';
-import BiasImage from './images/Spectre-biases.png';
+//import BiasImage from './images/Spectre-biases.png';
 import PersonalizationImage from './images/Spectre-personalization.png';
 import GamificationImage from './images/Spectre-gamification.png';
 
