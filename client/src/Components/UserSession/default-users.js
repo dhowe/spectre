@@ -1,3 +1,7 @@
+const defaultTargetAd = {
+  image: "imgs/republican_5.2.jpg",
+  slogan: "Americans protect their own"
+}
 export default [
   {
     "traits": {
@@ -8,6 +12,7 @@ export default [
       "neuroticism": 0.47905473249106567
     },
     "hasImage": true,
+    "targetAd": defaultTargetAd,
     "descriptors": [
       "Bernard is impulsive and whimsical, and ok with it.",
       "He would say that sometimes decisions need to be made quickly, and that he makes them quicker than most.",
@@ -17,11 +22,10 @@ export default [
     "login": "bernard30987235489@mail.com",
     "loginType": "email",
     "name": "Bernard",
-
     "createdAt": new Date(1970, 1, 1),
     "adIssue": "republican",
     "virtue": "influence",
-    "updatedAt": new Date(2019, 1, 1)
+    "updatedAt": new Date(2019, 1, 1),
   },
   {
     "traits": {
@@ -32,7 +36,7 @@ export default [
       "neuroticism": 0.27450635813796476
     },
     "hasImage": true,
-
+    "targetAd": defaultTargetAd,
     "descriptors": [
       "Tyler is quiet and somewhat withdrawn.",
       "He is someone who doesn’t need lots of other people around to have fun, and sometimes finds people tiring.",
@@ -42,7 +46,6 @@ export default [
     "login": "tyler8927340597@mail.com",
     "loginType": "email",
     "name": "Tyler",
-
     "createdAt": new Date(1970, 1, 1),
     "adIssue": "democrat",
     "virtue": "influence",
@@ -57,7 +60,7 @@ export default [
       "neuroticism": 0.05682854932637982
     },
     "hasImage": true,
-
+    "targetAd": defaultTargetAd,
     "descriptors": [
       "Fran is extremely difficult to upset or stress out, since she rarely, if ever, react with negative emotions, and even when she is anxious about something the feeling quickly passes.",
       "She comes across as very calm and resilient.",
@@ -82,7 +85,7 @@ export default [
       "neuroticism": 0.7439499291609459
     },
     "hasImage": true,
-
+    "targetAd": defaultTargetAd,
     "descriptors": [
       "Devin is down-to-earth and prefers things to be simple and straightforward.",
       "She finds life easier if things don’t change unnecessarily.",
@@ -107,7 +110,7 @@ export default [
       "neuroticism": 0.4770123042736807
     },
     "hasImage": true,
-
+    "targetAd": defaultTargetAd,
     "descriptors": [
       "Remy is a perfectionist.",
       "He prefers to plan everything to the last detail, which has consequently led to his being very successful and extremely reliable.",
@@ -132,7 +135,7 @@ export default [
       "neuroticism": 0.9546014222333083
     },
     "hasImage": true,
-
+    "targetAd": defaultTargetAd,
     "descriptors": [
       "Dick reacts poorly to stressful situations, and consequently worries about them more than most.",
       "However he has an emotional depth that others may lack.",
@@ -157,7 +160,7 @@ export default [
       "neuroticism": 0.20154338443905195
     },
     "hasImage": true,
-
+    "targetAd": defaultTargetAd,
     "descriptors": [
       "Sally is a perfectionist.",
       "She prefers to plan everything to the last detail, which has consequently led to her being very successful and extremely reliable.",
@@ -182,7 +185,7 @@ export default [
       "neuroticism": 0.16741349639932745
     },
     "hasImage": true,
-
+    "targetAd": defaultTargetAd,
     "descriptors": [
       "Sing is down-to-earth and prefers things to be simple and straightforward.",
       "He finds life easier if things don’t change unnecessarily.",
@@ -207,7 +210,7 @@ export default [
       "neuroticism": 0.7753808412826357
     },
     "hasImage": true,
-
+    "targetAd": defaultTargetAd,
     "descriptors": [
       "Bailey is impulsive and whimsical, and fine with it!",
       "He would say that sometimes decisions need to be made quickly, and that he makes them quicker than most.",

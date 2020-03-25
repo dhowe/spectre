@@ -139,16 +139,16 @@ UserSession.oceanData = (target, adIssue) => {
     category: df.category,
     targetAd: df.targetAd,
     age: target ? target.age : 25,
-    gender: target ? target.gender : 'female',
-    genderProb: target ? target.genderProb : .9,
     name: target ? target.name : '',
     traits: target ? target.traits : {},
     image: UserSession.targetImage(target),
+    gender: target ? target.gender : 'female',
     objPron: target ? target.objPron() : 'them',
     persPron: target ? target.persPron() : 'they',
     possPron: target ? target.possPron() : 'their',
     updatedAt: target ? target.updatedAt : new Date(),
-    sentences: UserSession.generateBasicDesc(target, adIssue)
+    sentences: UserSession.generateBasicDesc(target, adIssue),
+    genderProb: target ? (target.genderProb*100).toFixed(2) : 90
   };
 }
 
