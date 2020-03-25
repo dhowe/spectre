@@ -435,6 +435,7 @@ Bias
 
 .PostExp .OceanProfile {
   position: relative;
+  height:800px;
   /* top: 0;
   left: 0; */
   width: initial;
