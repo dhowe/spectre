@@ -406,7 +406,7 @@ Bias
 .PostExp .insightPage h1:after {
   display: none;
 }
-.PostExp .insightPage .textSliderText p *, p:not(.textSliderText){
+.PostExp .insightPage .textSliderText p *{
   color: #42BAEB;
 }
 .PostExp .insightPage .avatar-name{
