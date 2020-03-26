@@ -107,7 +107,7 @@ class PostExp extends React.Component {
 
   render() {
     const { target, authd } = this.state;
-    console.log(UserSession)
+    console.log(target)
     return (
       <div className="PostExp">
         <div className="SpectreHeaderWrapper-mobile" style={this.state.visible ||
@@ -434,7 +434,7 @@ class PostExp extends React.Component {
               <div className="row">
                 <div className="col-sm-12">
                   <div className="text-center">
-                  <PostExpDarkAd userSession={UserSession}/>
+                  <PostExpDarkAd target={target}/>
                   {/*}<img src={FacebookImage} alt="Facebook ad" title="Facebook ad" className="img-responsive full-width pull-right" />*/}
                   </div>
                 </div>

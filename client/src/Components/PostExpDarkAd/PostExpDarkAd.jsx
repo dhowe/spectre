@@ -62,16 +62,16 @@ class PostExpDarkAd extends React.Component {
   constructor(props) {
     super(props, '/target-ad');
     this.state = {
-      slogan: '',
+      slogan: 'Americans protect their own',
       issue: '',
       images: ['', '', ''],
       slogans: ['', '', ''],
       pageDone: false,
       defaultImg: true,
-      pageOne: { display: 'block' },
-      pageTwo: { display: 'none' },
-      target: this.props.userSession.oceanData(),
-      image: '/imgs/no_propaganda_bg.svg',
+      pageOne: { display: 'none' },
+      pageTwo: { display: 'block' },
+      target: this.props.target,
+      image: this.props.target.targetAd.image ? this.props.target.targetAd.image : 'imgs/republican_5.1.jpg',
       sloganY: 230, // offset for slogan on image
       imgLoaded: false
     };
@@ -91,6 +91,7 @@ class PostExpDarkAd extends React.Component {
     });
 
     */
+
   }
 
   handleNextPage = (e) => {
@@ -103,85 +104,88 @@ class PostExpDarkAd extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { slogan, slogans, sloganY, pageOne, pageTwo  } = this.state;
-    const { target, issue, image, images, defaultImg, imgLoaded  } = this.state;
+    const { slogan, slogans, sloganY, pageOne, pageTwo } = this.state;
+    const { target, issue, image, images, defaultImg, imgLoaded } = this.state;
     const btnEnabledPg1 = (!defaultImg && slogan.length);
-    const redimg = this.props.userSession.imageDir + 'darkadred.png';
-    const cimage = this.props.userSession.imageDir + issue + '.svg';
+    const redimg = /imgs/ + 'darkadred.png';
+    const cimage = /imgs/ + issue + '.svg';
 
     return (
-      <div className={classes.root + " PostExpDarkAd"}>
-        <div className={`${classes.content} content`}>
-          <div style={pageOne}>
-            <h1>Create Your Campaign</h1>
-            <div className="split-half">
-              <div className="split-left">
-                <div className={classes.ad}>
-                  <img className={ComponentsStyles.adImage} src={image} alt="adbg"></img>
-                  <p style={slogan ? {
-                    backgroundColor: 'red',
-                    top: sloganY
-                    } : {
-                      backgroundColor: 'none'
+      <div className={classes.root + " postExpDarkAd"}>
+      {/*
+        <div style={pageOne}>
+          <h1>Create Your Campaign</h1>
+          <div className="split-half">
+            <div className="split-left">
+              <div className={classes.ad}>
+                <img className={ComponentsStyles.adImage} src={image} alt="adbg"></img>
+                <p style={slogan ? {
+                  backgroundColor: 'red',
+                  top: sloganY
+                } : {
+                    backgroundColor: 'none'
+                  }}
+                  className={ComponentsStyles.adText}>{slogan}
+                </p>
+                {!defaultImg ? <img className={classes.campaignImage} src={cimage} alt="campaign"
+                  style={{ bottom: (sloganY === 370 ? 407 : 107) }}></img> : ''}
+              </div>
+            </div>
+            <div className="split-right">
+              <div>
+                <p className="normal darkAdsubtitle">Select your image:</p>
+                {images.map((img, i) => (
+                  <img className={ComponentsStyles.adImageSelection}
+                    style={{ visibility: (imgLoaded ? 'visible' : 'hidden') }}
+                    src={img} alt={`adimg${i}`} key={`img${i}`}
+                    onClick={() => {
+                      this.setState({
+                        image: img,
+                        defaultImg: false,
+                        sloganY: bannerOffsets[img]
+                      });
                     }}
-                    className={ComponentsStyles.adText}>{slogan}
-                  </p>
-                  {!defaultImg ? <img className={classes.campaignImage} src={cimage} alt="campaign"
-                    style={{ bottom: (sloganY === 370 ? 407 : 107) }}></img> : ''}
-                </div>
-              </div>
-              <div className="split-right">
-                <div>
-                  <p className="normal darkAdsubtitle">Select your image:</p>
-                  {images.map((img, i) => (
-                    <img className={ComponentsStyles.adImageSelection}
-                      style={{ visibility: (imgLoaded ? 'visible' : 'hidden')}}
-                      src={img} alt={`adimg${i}`} key={`img${i}`}
-                      onClick={() => {
-                        this.setState({
-                          image: img,
-                          defaultImg: false,
-                          sloganY: bannerOffsets[img]
-                        });
-                      }}
-                    />
-                  ))}
+                  />
+                ))}
 
-                </div>
-                <div>
-                  <p className="normal darkAdsubtitle">Select your slogan:</p>
-                  {slogans.map((slogan, i) => (
-                    <Button
-                      key={i}
-                      className={classes.button}
-                      variant="outlined"
-                      color="primary"
-                      onClick={() => {
-                        let nextState = { slogan };
-                        if (defaultImg) nextState.image = redimg;
-                        this.setState(nextState);
-                      }}>
-                      {slogan.split(' ').slice(0, 3).join(' ') + '...'}
-                    </Button>
-                  ))}
-                </div>
+              </div>
+              <div>
+                <p className="normal darkAdsubtitle">Select your slogan:</p>
+                {slogans.map((slogan, i) => (
+                  <Button
+                    key={i}
+                    className={classes.button}
+                    variant="outlined"
+                    color="primary"
+                    onClick={() => {
+                      let nextState = { slogan };
+                      if (defaultImg) nextState.image = redimg;
+                      this.setState(nextState);
+                    }}>
+                    {slogan.split(' ').slice(0, 3).join(' ') + '...'}
+                  </Button>
+                ))}
               </div>
             </div>
           </div>
-          <div style={pageTwo}>
-            <h1 className="noSpacing"><br />Your targeted  <img src='/imgs/facebook.png'
-              style={{ marginTop: 15, height: 100, position: 'relative', top: 30 }}
-              alt="facebook" /> ad:</h1>
-            <div className={classes.adPage2}>
-              <img className={ComponentsStyles.adImage} src={image} alt="bg"></img>
-              <p style={slogan ? { backgroundColor: 'red', top: sloganY } : { backgroundColor: 'none' }}
-                className={ComponentsStyles.adTextPage2}>{slogan}
-              </p>
-              {!defaultImg ? <img className={classes.campaignPage2} src={cimage} alt="bg"
-                style={{ bottom: (sloganY === 370 ? 315 : 15) }}></img> : ''}
-            </div>
-            <p> Share with <span>{target.name}</span></p>
+        </div>
+      */}
+        <div style={pageTwo}>
+          <h1 className="noSpacing"><br />Your targeted  <img src='/imgs/facebook.png'
+            style={{ marginTop: 15, height: 100, position: 'relative', top: 30 }}
+            alt="facebook" /> ad:</h1>
+          <div className={classes.adPage2}>
+            <img className='adImage' src={image} alt="bg"></img>
+            <p style={slogan ? { backgroundColor: 'red', top: sloganY } : { backgroundColor: 'none' }}
+              className={ComponentsStyles.adText}>{slogan}
+            </p>
+            {!defaultImg ? <img className={classes.campaignPage2} src={cimage} alt="bg"
+              style={{ bottom: (sloganY === 370 ? 315 : 15) }}></img> : ''}
           </div>
+          <p> Share with <span>{target.name}</span></p>
+
+        </div>{
+          /*
           <div className="link">
             <div style={pageOne}>
               <IconButton enabled={btnEnabledPg1}
@@ -200,7 +204,9 @@ class PostExpDarkAd extends React.Component {
               </Link>
             </div>
           </div>
-        </div>
+          */
+        }
+
       </div>
     );
   }
@@ -255,6 +261,6 @@ const bannerOffsets = {
 PostExpDarkAd.propTypes = {
   classes: PropTypes.object.isRequired,
 };
-//PostExpDarkAd.contextType = this.props.userSession;
+//PostExpDarkAd.contextType = this.props.target;
 
 export default withStyles(styles)(PostExpDarkAd);
