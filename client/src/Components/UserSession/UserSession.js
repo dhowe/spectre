@@ -129,31 +129,26 @@ UserSession.generateBasicDesc = (target, adIssue) => {
 }
 
 UserSession.oceanData = (target, adIssue) => {
-  let df = { trait: '', category: 0, targetAd: { image: '', slogan: '' } };
+  let df = { trait: '', category: 0, targetAd: { image: 'imgs/republican_5.2.jpg', slogan: 'Americans protect their own' }};
   if (target) {
     df = User.definingTrait(target);
     df.targetAd = target.targetAd;
-    df.targetAd.image = target.targetAd.image;
-    df.targetAd.slogan = target.targetAd.slogan;
   }
   return {
     trait: df.trait,
     category: df.category,
-    targetAd: {
-      image: df.targetAd.image,
-      slogan: df.targetAd.slogan
-    },
+    targetAd: df.targetAd,
     age: target ? target.age : 25,
-    gender: target ? target.gender : 'female',
-    genderProb: target ? target.genderProb : .9,
     name: target ? target.name : '',
     traits: target ? target.traits : {},
     image: UserSession.targetImage(target),
+    gender: target ? target.gender : 'female',
     objPron: target ? target.objPron() : 'them',
     persPron: target ? target.persPron() : 'they',
     possPron: target ? target.possPron() : 'their',
     updatedAt: target ? target.updatedAt : new Date(),
-    sentences: UserSession.generateBasicDesc(target, adIssue)
+    sentences: UserSession.generateBasicDesc(target, adIssue),
+    genderProb: target ? (target.genderProb*100).toFixed(2) : 90
   };
 }
 

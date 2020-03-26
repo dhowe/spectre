@@ -181,13 +181,27 @@ strong {
   color: $blue;
 }
 
-span:not(.MuiButton-label) {
+span{
   color: $blue;
   font-weight: normal;
 }
-.MuiButton-containedPrimary {
-  color: #ffffff !important;
-  border-color:$blue !important;
+
+.MuiButton-outlinedSecondary{
+  border-color:$blue  !important;
+}
+
+.MuiButton-outlinedSecondary .MuiButton-label{
+  color: $blue;
+  font-weight: normal;
+}
+
+.MuiButton-containedPrimary{
+
+  border-color:$blue  !important;
+}
+.MuiButton-containedPrimary .MuiButton-label{
+  color: #ffffff;
+
 }
 .circle-section{
   margin-top: 20px;
@@ -305,7 +319,8 @@ span:not(.MuiButton-label) {
 
     .iconButtonText {
       font-size: 18px;
-      margin-top: 3px;
+      line-height: 20px;
+      margin-top: 2px;
       margin-bottom: 0;
       padding: 0;
     }
@@ -365,6 +380,7 @@ span:not(.MuiButton-label) {
 
     .iconButtonText {
       font-size: 20px;
+      line-height: 22px;
       margin-top: 5px;
       margin-bottom: 0;
       padding: 0;

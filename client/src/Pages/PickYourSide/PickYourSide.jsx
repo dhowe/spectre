@@ -36,7 +36,7 @@ class PickYourSide extends React.Component {
           <h1>
             <br />
             Use <span>{target.name}'s OCEAN profile</span><br />
-            to persuade <span>{target.objpron}</span> to vote:
+            to persuade <span>{target.objPron}</span> to vote:
           </h1>
           <div className="pickLink">
 

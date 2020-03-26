@@ -1,7 +1,6 @@
 import UserModel from './user-model';
 import User from './shared/user';
-//import Mailer from './mailer';
-
+import multer from 'multer';
 import jwt from 'jsonwebtoken';
 import clfDate from 'clf-date';
 import path from 'path';

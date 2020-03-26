@@ -210,7 +210,6 @@ class PostExp extends React.Component {
               <div className="row bg-2">
                 <ContentCol>
                   <h1>Biometric data</h1>
-
                   <p>Selfies are a defining feature of the digital age, but we usually don’t think about the data that can be extracted from them. Beyond just the time, date, location and your appearance, there is a wider data-set that can be gained from selfies that you upload: this is called a faceprint. The distances between your eyes, the width of your nose, the depth of your eye sockets, the shape of your cheekbones, and the length of your jaw line are all nodes that create your unique faceprint.</p>
                   <p><strong>Faceprints can be created from your selfies</strong> but also out of other photographs or video footage, such as videos posted online or CCTV recordings. Law enforcement, border control, and security agencies are interested in faceprint data for identification and verification. But so too are the advertising industry, political influencers, commercial businesses, and others.</p>
                   <p>What if relatively harmless applications of faceprints are also used to improve ways of monitoring your behavior, like where you go, when, and with whom? What if it can determine other characteristics about you, like what you think, your mood, IQ, and political or sexual orientations? Or what about when it’s used to fake a scene in an image or video that you were never part of?</p>
@@ -226,7 +225,7 @@ class PostExp extends React.Component {
                     <div className="biometric-profile-info">
                       <h2><strong>Age:</strong> {target.age}</h2>
                       <h2><strong>Gender:</strong>  {target.gender.ucf()}</h2>
-                      <h2><strong>Confidence:</strong>  {target.genderProb*100}%</h2>
+                      <h2><strong>Confidence:</strong>  {target.genderProb}%</h2>
                     </div>
                     <div className="biometric-profile-pic">
                     <AvatarComponent target={target} />

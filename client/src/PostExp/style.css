@@ -406,7 +406,7 @@ Bias
 .PostExp .insightPage h1:after {
   display: none;
 }
-.PostExp .insightPage .textSliderText p *, p:not(.textSliderText){
+.PostExp .insightPage .textSliderText p *{
   color: #42BAEB;
 }
 .PostExp .insightPage .avatar-name{
@@ -435,6 +435,7 @@ Bias
 
 .PostExp .OceanProfile {
   position: relative;
+  height:800px;
   /* top: 0;
   left: 0; */
   width: initial;
