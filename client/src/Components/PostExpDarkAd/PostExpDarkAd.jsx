@@ -60,9 +60,9 @@ const styles = {
 
 class PostExpDarkAd extends React.Component {
   constructor(props) {
-    super(props, '/target-ad');
+    super(props);
     this.state = {
-      slogan: 'Americans protect their own',
+      slogan: this.props.target.targetAd.slogan ? this.props.target.targetAd.slogan : 'Americans protect their own',
       issue: '',
     //  images: ['', '', ''],
     //  slogans: ['', '', ''],
@@ -73,11 +73,15 @@ class PostExpDarkAd extends React.Component {
       target: this.props.target,
       image: this.props.target.targetAd.image ? this.props.target.targetAd.image : 'imgs/republican_5.1.jpg',
       sloganY: 230, // offset for slogan on image
-      imgLoaded: false
+      imgLoaded: false,
+      imgH: 464
     };
+    this.imageRef = React.createRef()
   }
 
-  async componentDidMount() {
+  componentDidMount() {
+  //
+
     /*
     const user = await this.props.userSession.ensure(this.context, ['name', 'login',
       'age', 'adIssue', 'gender', 'name', 'traits', 'virtue', 'target']);
@@ -92,15 +96,9 @@ class PostExpDarkAd extends React.Component {
 
     */
 
+
   }
 
-  handleNextPage = (e) => {
-    e.preventDefault();
-    this.setState({
-      pageOne: { display: 'none' },
-      pageTwo: { display: 'block' }
-    });
-  }
 
   render() {
     const { classes } = this.props;
@@ -109,6 +107,7 @@ class PostExpDarkAd extends React.Component {
   //  const btnEnabledPg1 = (!defaultImg && slogan.length);
 //    const redimg = /imgs/ + 'darkadred.png';
     const cimage = /imgs/ + issue + '.svg';
+const imgH =this.state.imgH;
 
     return (
       <div className={classes.root + " postExpDarkAd"}>
@@ -170,21 +169,20 @@ class PostExpDarkAd extends React.Component {
           </div>
         </div>
       */}
-        <div style={pageTwo}>
-          <h1 className="noSpacing"><br />Your targeted  <img src='/imgs/facebook.png'
-            style={{ marginTop: 15, height: 100, position: 'relative', top: 30 }}
-            alt="facebook" /> ad:</h1>
-          <div className={classes.adPage2}>
-            <img className='adImage' src={image} alt="bg"></img>
-            <p style={slogan ? { backgroundColor: 'red', top: sloganY } : { backgroundColor: 'none' }}
-              className={ComponentsStyles.adText}>{slogan}
-            </p>
+
+          <span className="noSpacing darkad-title"><br />Your targeted  <img className="fb-img" src='/imgs/facebook.png'
+
+            alt="facebook" /> ad:</span>
+
+          <div className="adPage">
+            <img className='adImage' src={image} alt="bg" ref={this.imageRef}></img>
+            <p style={slogan ? { backgroundColor: 'red', top:   (bannerOffsets[image]*100) + '%', color:'#ffffff' } : { backgroundColor: 'none' }} className='darkAdText'>{slogan}</p>
             {!defaultImg ? <img className={classes.campaignPage2} src={cimage} alt="bg"
               style={{ bottom: (sloganY === 370 ? 315 : 15) }}></img> : ''}
           </div>
-          <p> Share with <span>{target.name}</span></p>
-
-        </div>{
+          <p className='shareText'> Share with <span>{this.props.target.name}</span></p>
+          <div className="fakeBtn"><img alt="shareIcon" src="./imgs/shareIcon.svg" /><strong>Share</strong></div>
+{
           /*
           <div className="link">
             <div style={pageOne}>
@@ -211,53 +209,53 @@ class PostExpDarkAd extends React.Component {
     );
   }
 }
-/*
+
 const bannerOffsets = {
-  'imgs/democrat_1.1.jpg': 230,
-  'imgs/democrat_1.2.jpg': 370,
-  'imgs/democrat_2.1.jpg': 230,
-  'imgs/democrat_2.2.jpg': 230,
-  'imgs/democrat_3.1.jpg': 370,
-  'imgs/democrat_3.2.jpg': 370,
-  'imgs/democrat_4.1.jpg': 230,
-  'imgs/democrat_4.2.jpg': 370,
-  'imgs/democrat_5.1.jpg': 370,
-  'imgs/democrat_5.2.jpg': 370,
+  'imgs/democrat_1.1.jpg': 230/464,
+  'imgs/democrat_1.2.jpg': 370/464,
+  'imgs/democrat_2.1.jpg': 230/464,
+  'imgs/democrat_2.2.jpg': 230/464,
+  'imgs/democrat_3.1.jpg': 370/464,
+  'imgs/democrat_3.2.jpg': 370/464,
+  'imgs/democrat_4.1.jpg': 230/464,
+  'imgs/democrat_4.2.jpg': 370/464,
+  'imgs/democrat_5.1.jpg': 370/464,
+  'imgs/democrat_5.2.jpg': 370/464,
 
-  'imgs/democrat_-1.1.jpg': 230,
-  'imgs/democrat_-1.2.jpg': 370,
-  'imgs/democrat_-2.1.jpg': 130,
-  'imgs/democrat_-2.2.jpg': 230,
-  'imgs/democrat_-3.1.jpg': 230,
-  'imgs/democrat_-3.2.jpg': 230,
-  'imgs/democrat_-4.1.jpg': 230,
-  'imgs/democrat_-4.2.jpg': 130,
-  'imgs/democrat_-5.1.jpg': 230,
-  'imgs/democrat_-5.2.jpg': 230,
+  'imgs/democrat_-1.1.jpg': 230/464,
+  'imgs/democrat_-1.2.jpg': 370/464,
+  'imgs/democrat_-2.1.jpg': 130/464,
+  'imgs/democrat_-2.2.jpg': 230/464,
+  'imgs/democrat_-3.1.jpg': 230/464,
+  'imgs/democrat_-3.2.jpg': 230/464,
+  'imgs/democrat_-4.1.jpg': 230/464,
+  'imgs/democrat_-4.2.jpg': 130/464,
+  'imgs/democrat_-5.1.jpg': 230/464,
+  'imgs/democrat_-5.2.jpg': 230/464,
 
-  'imgs/republican_1.1.jpg': 370,
-  'imgs/republican_1.2.jpg': 370,
-  'imgs/republican_2.1.jpg': 370,
-  'imgs/republican_2.2.jpg': 230,
-  'imgs/republican_3.1.jpg': 370,
-  'imgs/republican_3.2.jpg': 230,
-  'imgs/republican_4.1.jpg': 230,
-  'imgs/republican_4.2.jpg': 370,
-  'imgs/republican_5.1.jpg': 370,
-  'imgs/republican_5.2.jpg': 230,
+  'imgs/republican_1.1.jpg': 370/464,
+  'imgs/republican_1.2.jpg': 370/464,
+  'imgs/republican_2.1.jpg': 370/464,
+  'imgs/republican_2.2.jpg': 230/464,
+  'imgs/republican_3.1.jpg': 370/464,
+  'imgs/republican_3.2.jpg': 230/464,
+  'imgs/republican_4.1.jpg': 230/464,
+  'imgs/republican_4.2.jpg': 370/464,
+  'imgs/republican_5.1.jpg': 370/464,
+  'imgs/republican_5.2.jpg': 230/464,
 
-  'imgs/republican_-1.1.jpg': 370,
-  'imgs/republican_-1.2.jpg': 370,
-  'imgs/republican_-2.1.jpg': 230,
-  'imgs/republican_-2.2.jpg': 230,
-  'imgs/republican_-3.1.jpg': 230,
-  'imgs/republican_-3.2.jpg': 130,
-  'imgs/republican_-4.1.jpg': 230,
-  'imgs/republican_-4.2.jpg': 370,
-  'imgs/republican_-5.1.jpg': 230,
-  'imgs/republican_-5.2.jpg': 230
+  'imgs/republican_-1.1.jpg': 370/464,
+  'imgs/republican_-1.2.jpg': 370/464,
+  'imgs/republican_-2.1.jpg': 230/464,
+  'imgs/republican_-2.2.jpg': 230/464,
+  'imgs/republican_-3.1.jpg': 230/464,
+  'imgs/republican_-3.2.jpg': 130/464,
+  'imgs/republican_-4.1.jpg': 230/464,
+  'imgs/republican_-4.2.jpg': 370/464,
+  'imgs/republican_-5.1.jpg': 230/464,
+  'imgs/republican_-5.2.jpg': 230/464
 }
-*/
+
 PostExpDarkAd.propTypes = {
   classes: PropTypes.object.isRequired,
 };
