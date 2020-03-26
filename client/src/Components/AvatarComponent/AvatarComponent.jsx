@@ -34,6 +34,7 @@ class AvatarComponent extends React.Component {
       || (!(target.updatedAt instanceof Date))) {
       console.error('[AVATAR] Expecting date, got ' + typeof target.updatedAt
         + ' /isDate:' + (target.updatedAt instanceof Date));
+      target.updatedAt = new Date(); // set a default value of now
       return false;
     }
     const inActiveMs = (Date.now() - target.updatedAt.getTime())

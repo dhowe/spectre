@@ -469,9 +469,9 @@ export default class User {
     target.influences = {};
 
     issues.forEach(issue => {
-      let images = this.randomInfluencingImages(issue, pre, ext);
-      let slogans = this.randomIfluencingSlogans(issue);
-      let themes = this.randomInfluencingThemes(issue);
+      let images = User.randomInfluencingImages(issue, pre, ext);
+      let slogans = User.randomIfluencingSlogans(issue);
+      let themes = User.randomInfluencingThemes(issue);
 
       if (cat !== 0) {
         images = [
