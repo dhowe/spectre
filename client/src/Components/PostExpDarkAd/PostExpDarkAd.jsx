@@ -10,7 +10,7 @@ import { withStyles } from '@material-ui/core/styles';
 //import FooterLogo from '../../Components/FooterLogo/FooterLogo';
 //import IdleChecker from '../../Components/IdleChecker/IdleChecker';
 
-import ComponentsStyles from '../../App.module.css';
+//import ComponentsStyles from '../../App.module.css';
 import "./PostExpDarkAd.scss";
 
 const styles = {
@@ -64,11 +64,11 @@ class PostExpDarkAd extends React.Component {
     this.state = {
       slogan: this.props.target.targetAd.slogan ? this.props.target.targetAd.slogan : 'Americans protect their own',
       issue: '',
-    //  images: ['', '', ''],
-    //  slogans: ['', '', ''],
+      //  images: ['', '', ''],
+      //  slogans: ['', '', ''],
       pageDone: false,
       defaultImg: true,
-    //  pageOne: { display: 'none' },
+      //  pageOne: { display: 'none' },
       pageTwo: { display: 'block' },
       target: this.props.target,
       image: this.props.target.targetAd.image ? this.props.target.targetAd.image : 'imgs/republican_5.1.jpg',
@@ -80,180 +80,79 @@ class PostExpDarkAd extends React.Component {
   }
 
   componentDidMount() {
-  //
-
-    /*
-    const user = await this.props.userSession.ensure(this.context, ['name', 'login',
-      'age', 'adIssue', 'gender', 'name', 'traits', 'virtue', 'target']);
-    let images = user.target.influences[user.adIssue].images;
-    this.setState({
-      images: images,
-      issue: user.adIssue,
-      target: this.props.userSession.oceanData(user.target, user.adIssue),
-      slogans: user.target.influences[user.adIssue].slogans,
-      imgLoaded: true
-    });
-
-    */
-
 
   }
 
 
   render() {
     const { classes } = this.props;
-    const { slogan, sloganY, pageTwo } = this.state;
-    const { target, issue, image, defaultImg } = this.state;
-  //  const btnEnabledPg1 = (!defaultImg && slogan.length);
-//    const redimg = /imgs/ + 'darkadred.png';
+    const { slogan, sloganY } = this.state;
+    const { issue, image, defaultImg } = this.state;
+    //  const btnEnabledPg1 = (!defaultImg && slogan.length);
+    //    const redimg = /imgs/ + 'darkadred.png';
     const cimage = /imgs/ + issue + '.svg';
-const imgH =this.state.imgH;
 
     return (
       <div className={classes.root + " postExpDarkAd"}>
-      {/*
-        <div style={pageOne}>
-          <h1>Create Your Campaign</h1>
-          <div className="split-half">
-            <div className="split-left">
-              <div className={classes.ad}>
-                <img className={ComponentsStyles.adImage} src={image} alt="adbg"></img>
-                <p style={slogan ? {
-                  backgroundColor: 'red',
-                  top: sloganY
-                } : {
-                    backgroundColor: 'none'
-                  }}
-                  className={ComponentsStyles.adText}>{slogan}
-                </p>
-                {!defaultImg ? <img className={classes.campaignImage} src={cimage} alt="campaign"
-                  style={{ bottom: (sloganY === 370 ? 407 : 107) }}></img> : ''}
-              </div>
-            </div>
-            <div className="split-right">
-              <div>
-                <p className="normal darkAdsubtitle">Select your image:</p>
-                {images.map((img, i) => (
-                  <img className={ComponentsStyles.adImageSelection}
-                    style={{ visibility: (imgLoaded ? 'visible' : 'hidden') }}
-                    src={img} alt={`adimg${i}`} key={`img${i}`}
-                    onClick={() => {
-                      this.setState({
-                        image: img,
-                        defaultImg: false,
-                        sloganY: bannerOffsets[img]
-                      });
-                    }}
-                  />
-                ))}
-
-              </div>
-              <div>
-                <p className="normal darkAdsubtitle">Select your slogan:</p>
-                {slogans.map((slogan, i) => (
-                  <Button
-                    key={i}
-                    className={classes.button}
-                    variant="outlined"
-                    color="primary"
-                    onClick={() => {
-                      let nextState = { slogan };
-                      if (defaultImg) nextState.image = redimg;
-                      this.setState(nextState);
-                    }}>
-                    {slogan.split(' ').slice(0, 3).join(' ') + '...'}
-                  </Button>
-                ))}
-              </div>
-            </div>
-          </div>
+        <span className="noSpacing darkad-title"><br />Your targeted  <img className="fb-img" src='/imgs/facebook.png'
+          alt="facebook" /> ad:</span>
+        <div className="adPage">
+          <img className='adImage' src={image} alt="bg" ref={this.imageRef}></img>
+          <p style={slogan ? { backgroundColor: 'red', top: (bannerOffsets[image] * 100) + '%', color: '#ffffff' } : { backgroundColor: 'none' }} className='darkAdText'>{slogan}</p>
+          {!defaultImg ? <img className={classes.campaignPage2} src={cimage} alt="bg"
+            style={{ bottom: (sloganY === 370 ? 315 : 15) }}></img> : ''}
         </div>
-      */}
-
-          <span className="noSpacing darkad-title"><br />Your targeted  <img className="fb-img" src='/imgs/facebook.png'
-
-            alt="facebook" /> ad:</span>
-
-          <div className="adPage">
-            <img className='adImage' src={image} alt="bg" ref={this.imageRef}></img>
-            <p style={slogan ? { backgroundColor: 'red', top:   (bannerOffsets[image]*100) + '%', color:'#ffffff' } : { backgroundColor: 'none' }} className='darkAdText'>{slogan}</p>
-            {!defaultImg ? <img className={classes.campaignPage2} src={cimage} alt="bg"
-              style={{ bottom: (sloganY === 370 ? 315 : 15) }}></img> : ''}
-          </div>
-          <p className='shareText'> Share with <span>{this.props.target.name}</span></p>
-          <div className="fakeBtn"><img alt="shareIcon" src="./imgs/shareIcon.svg" /><strong>Share</strong></div>
-{
-          /*
-          <div className="link">
-            <div style={pageOne}>
-              <IconButton enabled={btnEnabledPg1}
-                onClick={this.handleNextPage}
-                className={ComponentsStyles.iconButtonStyle1}
-                icon="next" text="Next" />
-            </div>
-            <div style={pageTwo}>
-              <Link to="/success-ad" onClick={() => this.context.targetAd =
-                { image: image, slogan: slogan }}>
-                <div className={ComponentsStyles.buttonWrapper}>
-                  <Button className="shareButton" variant="outlined" color="primary">
-                    <img alt="shareIcon" src="./imgs/shareIcon.svg" /><strong>Share</strong>
-                  </Button>
-                </div>
-              </Link>
-            </div>
-          </div>
-          */
-        }
-
+        <p className='shareText'> Share with <span>{this.props.target.name}</span></p>
+        <div className="fakeBtn"><img alt="shareIcon" src="./imgs/shareIcon.svg" /><strong>Share</strong></div>
       </div>
     );
   }
 }
 
 const bannerOffsets = {
-  'imgs/democrat_1.1.jpg': 230/464,
-  'imgs/democrat_1.2.jpg': 370/464,
-  'imgs/democrat_2.1.jpg': 230/464,
-  'imgs/democrat_2.2.jpg': 230/464,
-  'imgs/democrat_3.1.jpg': 370/464,
-  'imgs/democrat_3.2.jpg': 370/464,
-  'imgs/democrat_4.1.jpg': 230/464,
-  'imgs/democrat_4.2.jpg': 370/464,
-  'imgs/democrat_5.1.jpg': 370/464,
-  'imgs/democrat_5.2.jpg': 370/464,
+  'imgs/democrat_1.1.jpg': 230 / 464,
+  'imgs/democrat_1.2.jpg': 370 / 464,
+  'imgs/democrat_2.1.jpg': 230 / 464,
+  'imgs/democrat_2.2.jpg': 230 / 464,
+  'imgs/democrat_3.1.jpg': 370 / 464,
+  'imgs/democrat_3.2.jpg': 370 / 464,
+  'imgs/democrat_4.1.jpg': 230 / 464,
+  'imgs/democrat_4.2.jpg': 370 / 464,
+  'imgs/democrat_5.1.jpg': 370 / 464,
+  'imgs/democrat_5.2.jpg': 370 / 464,
 
-  'imgs/democrat_-1.1.jpg': 230/464,
-  'imgs/democrat_-1.2.jpg': 370/464,
-  'imgs/democrat_-2.1.jpg': 130/464,
-  'imgs/democrat_-2.2.jpg': 230/464,
-  'imgs/democrat_-3.1.jpg': 230/464,
-  'imgs/democrat_-3.2.jpg': 230/464,
-  'imgs/democrat_-4.1.jpg': 230/464,
-  'imgs/democrat_-4.2.jpg': 130/464,
-  'imgs/democrat_-5.1.jpg': 230/464,
-  'imgs/democrat_-5.2.jpg': 230/464,
+  'imgs/democrat_-1.1.jpg': 230 / 464,
+  'imgs/democrat_-1.2.jpg': 370 / 464,
+  'imgs/democrat_-2.1.jpg': 130 / 464,
+  'imgs/democrat_-2.2.jpg': 230 / 464,
+  'imgs/democrat_-3.1.jpg': 230 / 464,
+  'imgs/democrat_-3.2.jpg': 230 / 464,
+  'imgs/democrat_-4.1.jpg': 230 / 464,
+  'imgs/democrat_-4.2.jpg': 130 / 464,
+  'imgs/democrat_-5.1.jpg': 230 / 464,
+  'imgs/democrat_-5.2.jpg': 230 / 464,
 
-  'imgs/republican_1.1.jpg': 370/464,
-  'imgs/republican_1.2.jpg': 370/464,
-  'imgs/republican_2.1.jpg': 370/464,
-  'imgs/republican_2.2.jpg': 230/464,
-  'imgs/republican_3.1.jpg': 370/464,
-  'imgs/republican_3.2.jpg': 230/464,
-  'imgs/republican_4.1.jpg': 230/464,
-  'imgs/republican_4.2.jpg': 370/464,
-  'imgs/republican_5.1.jpg': 370/464,
-  'imgs/republican_5.2.jpg': 230/464,
+  'imgs/republican_1.1.jpg': 370 / 464,
+  'imgs/republican_1.2.jpg': 370 / 464,
+  'imgs/republican_2.1.jpg': 370 / 464,
+  'imgs/republican_2.2.jpg': 230 / 464,
+  'imgs/republican_3.1.jpg': 370 / 464,
+  'imgs/republican_3.2.jpg': 230 / 464,
+  'imgs/republican_4.1.jpg': 230 / 464,
+  'imgs/republican_4.2.jpg': 370 / 464,
+  'imgs/republican_5.1.jpg': 370 / 464,
+  'imgs/republican_5.2.jpg': 230 / 464,
 
-  'imgs/republican_-1.1.jpg': 370/464,
-  'imgs/republican_-1.2.jpg': 370/464,
-  'imgs/republican_-2.1.jpg': 230/464,
-  'imgs/republican_-2.2.jpg': 230/464,
-  'imgs/republican_-3.1.jpg': 230/464,
-  'imgs/republican_-3.2.jpg': 130/464,
-  'imgs/republican_-4.1.jpg': 230/464,
-  'imgs/republican_-4.2.jpg': 370/464,
-  'imgs/republican_-5.1.jpg': 230/464,
-  'imgs/republican_-5.2.jpg': 230/464
+  'imgs/republican_-1.1.jpg': 370 / 464,
+  'imgs/republican_-1.2.jpg': 370 / 464,
+  'imgs/republican_-2.1.jpg': 230 / 464,
+  'imgs/republican_-2.2.jpg': 230 / 464,
+  'imgs/republican_-3.1.jpg': 230 / 464,
+  'imgs/republican_-3.2.jpg': 130 / 464,
+  'imgs/republican_-4.1.jpg': 230 / 464,
+  'imgs/republican_-4.2.jpg': 370 / 464,
+  'imgs/republican_-5.1.jpg': 230 / 464,
+  'imgs/republican_-5.2.jpg': 230 / 464
 }
 
 PostExpDarkAd.propTypes = {

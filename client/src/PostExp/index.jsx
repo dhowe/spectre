@@ -107,7 +107,7 @@ class PostExp extends React.Component {
 
   render() {
     const { target, authd } = this.state;
-    console.log(target)
+
     return (
       <div className="PostExp">
         <div className="SpectreHeaderWrapper-mobile" style={this.state.visible ||
@@ -228,7 +228,7 @@ class PostExp extends React.Component {
                       <h2><strong>Confidence:</strong>  {target.genderProb}%</h2>
                     </div>
                     <div className="biometric-profile-pic">
-                    <AvatarComponent target={target} />
+                      <AvatarComponent target={target} />
                       {/* authd ? <AvatarComponent target={target} /> : ''
                        <img src={Cat2} alt="Facial analysis data" title="Facial analysis data" className="img-responsive" />
                          */
@@ -257,15 +257,15 @@ class PostExp extends React.Component {
                   <div className="text-center">
 
 
-                                    <div className="content insightPage">
-                                      <h1 className="addSpacing">{`What’s ${target.name}’s gender?`}</h1><br />
-                                      <AvatarComponent target={target} />
-                                      <div>
-                                        <TextSliderText leftText="Male" rightText="Female" middleText="Non-binary" presetValue={target.genderProb*100}/>
-                                      </div>
-                                    </div>
+                    <div className="content insightPage">
+                      <h1 className="addSpacing">{`What’s ${target.name}’s gender?`}</h1><br />
+                      <AvatarComponent target={target} />
+                      <div>
+                        <TextSliderText leftText="Male" rightText="Female" middleText="Non-binary" presetValue={target.genderProb * 100} />
+                      </div>
+                    </div>
 
-                              {/* <img src={BiasImage} alt="Algorithmic biases" title="Algorithmic biases" className="img-responsive full-width pull-right" />*/}
+                    {/* <img src={BiasImage} alt="Algorithmic biases" title="Algorithmic biases" className="img-responsive full-width pull-right" />*/}
                   </div>
                 </div>
               </div>
@@ -434,8 +434,8 @@ class PostExp extends React.Component {
               <div className="row">
                 <div className="col-sm-12">
                   <div className="text-center">
-                  <PostExpDarkAd target={target}/>
-                  {/*}<img className="generalImg" src={FacebookImage} alt="Facebook ad" title="Facebook ad" className="img-responsive full-width pull-right" />*/}
+                    <PostExpDarkAd target={target} />
+                    {/*}<img className="generalImg" src={FacebookImage} alt="Facebook ad" title="Facebook ad" className="img-responsive full-width pull-right" />*/}
                   </div>
                 </div>
               </div>
