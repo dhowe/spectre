@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import IconButton from '../../Components/IconButton/IconButton';
-import UserSession from '../../Components/UserSession/UserSession';
+//import Button from '@material-ui/core/Button';
+//import IconButton from '../../Components/IconButton/IconButton';
+//import UserSession from '../../Components/UserSession/UserSession';
 //import OceanProfile from '../../Components/OceanProfile/OceanProfile';
 //import SpectreHeader from '../../Components/SpectreHeader/SpectreHeader';
 //import FooterLogo from '../../Components/FooterLogo/FooterLogo';
@@ -64,11 +64,11 @@ class PostExpDarkAd extends React.Component {
     this.state = {
       slogan: 'Americans protect their own',
       issue: '',
-      images: ['', '', ''],
-      slogans: ['', '', ''],
+    //  images: ['', '', ''],
+    //  slogans: ['', '', ''],
       pageDone: false,
       defaultImg: true,
-      pageOne: { display: 'none' },
+    //  pageOne: { display: 'none' },
       pageTwo: { display: 'block' },
       target: this.props.target,
       image: this.props.target.targetAd.image ? this.props.target.targetAd.image : 'imgs/republican_5.1.jpg',
@@ -104,10 +104,10 @@ class PostExpDarkAd extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { slogan, slogans, sloganY, pageOne, pageTwo } = this.state;
-    const { target, issue, image, images, defaultImg, imgLoaded } = this.state;
-    const btnEnabledPg1 = (!defaultImg && slogan.length);
-    const redimg = /imgs/ + 'darkadred.png';
+    const { slogan, sloganY, pageTwo } = this.state;
+    const { target, issue, image, defaultImg } = this.state;
+  //  const btnEnabledPg1 = (!defaultImg && slogan.length);
+//    const redimg = /imgs/ + 'darkadred.png';
     const cimage = /imgs/ + issue + '.svg';
 
     return (
@@ -211,7 +211,7 @@ class PostExpDarkAd extends React.Component {
     );
   }
 }
-
+/*
 const bannerOffsets = {
   'imgs/democrat_1.1.jpg': 230,
   'imgs/democrat_1.2.jpg': 370,
@@ -257,7 +257,7 @@ const bannerOffsets = {
   'imgs/republican_-5.1.jpg': 230,
   'imgs/republican_-5.2.jpg': 230
 }
-
+*/
 PostExpDarkAd.propTypes = {
   classes: PropTypes.object.isRequired,
 };

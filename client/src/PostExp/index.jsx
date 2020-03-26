@@ -16,7 +16,7 @@ import PrivacyImage from './images/spectre-privacy.png';
 import PersonalizationImage from './images/Spectre-personalization.png';
 import GamificationImage from './images/Spectre-gamification.png';
 
-import FacebookImage from './images/facebook-ad.jpg';
+//import FacebookImage from './images/facebook-ad.jpg';
 import StatsImage from './images/stats.jpg';
 import RumorsImage from './images/Rumors.jpg';
 import BreakoutImage from './images/breakout.png';
