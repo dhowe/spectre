@@ -34,7 +34,7 @@ import Cat4 from './images/cat4.jpg';
 import Cat5 from './images/cat5.jpg';
 import Cat7 from './images/cat7.jpg';
 
-import './style.css';
+import './style.scss';
 import './bootstrap.min.css';
 
 const styles = {};
