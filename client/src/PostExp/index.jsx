@@ -9,13 +9,14 @@ import UserSession from '../Components/UserSession/UserSession';
 import AvatarComponent from '../Components/AvatarComponent/AvatarComponent';
 import OceanProfile from '../Components/OceanProfile/OceanProfile';
 import TextSliderText from '../Components/TextSliderText/TextSliderText';
+import PostExpDarkAd from '../Components/PostExpDarkAd/PostExpDarkAd';
 
 import PrivacyImage from './images/spectre-privacy.png';
 //import BiasImage from './images/Spectre-biases.png';
 import PersonalizationImage from './images/Spectre-personalization.png';
 import GamificationImage from './images/Spectre-gamification.png';
 
-import FacebookImage from './images/facebook-ad.jpg';
+//import FacebookImage from './images/facebook-ad.jpg';
 import StatsImage from './images/stats.jpg';
 import RumorsImage from './images/Rumors.jpg';
 import BreakoutImage from './images/breakout.png';
@@ -106,8 +107,8 @@ class PostExp extends React.Component {
 
   render() {
     const { target, authd } = this.state;
-    return (
 
+    return (
       <div className="PostExp">
         <div className="SpectreHeaderWrapper-mobile" style={this.state.visible ||
           this.state.showMobileMenu ? { opacity: '1' } : { opacity: '0' }}>
@@ -171,7 +172,7 @@ class PostExp extends React.Component {
               </div>
               <div className="col-xs-10 col-xs-push-1 col-md-5">
                 {/* TODO: CHANGE TO VIMEO VIDEO */}
-                <img src={SpectreVideo} alt="Spectre dark pattern" title="Spectre dark pattern" className="img-responsive full-width" />
+                <img src={SpectreVideo} alt="Spectre dark pattern" title="Spectre dark pattern" className="img-responsive full-width generalImg" />
               </div>
             </div>
           </div>
@@ -184,10 +185,10 @@ class PostExp extends React.Component {
                   <h1>Terms of service</h1>
                   <p>Be honest, did you really read the full Terms of Service agreement and privacy ‘policy’? Did you realize that you had granted Spectre the rights to take photos and videos of you and to use them without restriction? Don’t worry if not, you are in the majority. Spectre takes privacy seriously as it can be very bad for business. If it is easy and uncomplicated for you to setup strong privacy controls, we get less of your data. So we use ‘dark design’ to influence your choice when considering privacy settings and especially when signing up to Terms of Service agreements.</p>
                   <p><q>"Small design changes, like a few extra pixels of padding or the tint of a button, can have large and unexpected repercussions."</q></p>
-                  <img src={PrivacyImage} alt="Spectre dark patterns" title="Spectre Dark Patterns" className="img-responsive image-1 visible-xs visible-sm" />
+                  <img src={PrivacyImage} alt="Spectre dark patterns" title="Spectre Dark Patterns" className="img-responsive image-1 visible-xs visible-sm generalImg" />
                   <p>The design of the user experience of digital technologies can have significant effects on the way we share data or interact with platforms, websites, commercial advertisers and political campaigners. </p>
                   <p><strong>Dark Design Patterns or Dark UX (user experience)</strong>, these design tricks are based on human psychology that are used to provoke or manipulate people into signing up for something, buying something, or giving away more personal information than they thought or intended. You’ve probably seen the “in high demand” or “only X amount left at this price” notices when shopping for things online. Or think about how "accepting tracking cookies" is far easier than going through numerous menus and sub-menus to opt out. Social media sites and apps use the infinite scroll and auto-play functions to nudge you into continuous engagement. </p>
-                  <img src={Cat1} alt="Privacy dark pattern" title="Privacy dark pattern" className="img-responsive image-2 visible-xs visible-sm" />
+                  <img src={Cat1} alt="Privacy dark pattern" title="Privacy dark pattern" className="img-responsive image-2 visible-xs visible-sm generalImg" />
                   <p>Political campaigns are know for using the same methods: seemingly innocent voter surveys on political issues to collect names, email addresses, phone numbers and other contact details for their voter databases. These are only a few examples of how apparently benign design choices can knowingly manipulate users. </p>
                   <p><strong>Further Reading:</strong></p>
                   <ul className="link-list">
@@ -199,8 +200,8 @@ class PostExp extends React.Component {
                   </ul>
                 </ContentCol>
                 <div className="col-md-7 col-md-pull-5  image-col hidden-xs hidden-sm">
-                  <img src={PrivacyImage} alt="Spectre dark pattern" title="Spectre dark pattern" className="img-responsive image-1" />
-                  <img src={Cat1} alt="Privacy dark pattern" title="Privacy dark pattern" className="img-responsive image-2" />
+                  <img src={PrivacyImage} alt="Spectre dark pattern" title="Spectre dark pattern" className="img-responsive image-1 generalImg" />
+                  <img src={Cat1} alt="Privacy dark pattern" title="Privacy dark pattern" className="img-responsive image-2generalImg" />
                 </div>
               </div>
 
@@ -227,7 +228,7 @@ class PostExp extends React.Component {
                       <h2><strong>Confidence:</strong>  {target.genderProb}%</h2>
                     </div>
                     <div className="biometric-profile-pic">
-                    <AvatarComponent target={target} />
+                      <AvatarComponent target={target} />
                       {/* authd ? <AvatarComponent target={target} /> : ''
                        <img src={Cat2} alt="Facial analysis data" title="Facial analysis data" className="img-responsive" />
                          */
@@ -256,15 +257,15 @@ class PostExp extends React.Component {
                   <div className="text-center">
 
 
-                                    <div className="content insightPage">
-                                      <h1 className="addSpacing">{`What’s ${target.name}’s gender?`}</h1><br />
-                                      <AvatarComponent target={target} />
-                                      <div>
-                                        <TextSliderText leftText="Male" rightText="Female" middleText="Non-binary" presetValue={target.genderProb*100}/>
-                                      </div>
-                                    </div>
+                    <div className="content insightPage">
+                      <h1 className="addSpacing">{`What’s ${target.name}’s gender?`}</h1><br />
+                      <AvatarComponent target={target} />
+                      <div>
+                        <TextSliderText leftText="Male" rightText="Female" middleText="Non-binary" presetValue={target.genderProb * 100} />
+                      </div>
+                    </div>
 
-                              {/* <img src={BiasImage} alt="Algorithmic biases" title="Algorithmic biases" className="img-responsive full-width pull-right" />*/}
+                    {/* <img src={BiasImage} alt="Algorithmic biases" title="Algorithmic biases" className="img-responsive full-width pull-right" />*/}
                   </div>
                 </div>
               </div>
@@ -274,7 +275,7 @@ class PostExp extends React.Component {
                     When Google Photos was released in 2015, its image recognition system <a href="https://www.wired.com/story/when-it-comes-to-gorillas-google-photos-remains-blind/"> labeled black people as gorillas</a>. In 2016, researchers discovered that LinkedIn searches recommended male names, so when users searched for someone named “Andrea”, they’d be ask if they meant “Andrew”, but not the other way around. PredPol, a popular predictive policing software used by over 50 police departments in the US, has been accused of perpetuating racist practices.</p>
                   <p>
                     <strong>How do the technologies around us end up this way?</strong> Unfortunately, it’s not a matter of simply the fault of the software developer or data scientist; the problem is much deeper. In the case of the Google Photos fiasco, Google’s image-classification system worked by using a large volume of training data. This training data, for example, contained thousands of photos of dogs, helping the system understand what a dog looks like, so when a user uploads a photo of her dog, the image will recognize it as such. The problem was that the training data included plenty of white faces but excluded a sufficient number of black faces, causing the system to mis-classify images of black people. In fact, researchers have discovered that several common facial recognition technologies work best on white men, then slightly less accurately for white women , even worse for black men, and worst of all on black women. </p>
-                  <div className="text-center"><img src={Cat3} alt="Spectre artificial intelligence" title="Spectre artificial intelligence" className="img-responsive full-width visible-xs visible-sm" /></div>
+                  <div className="text-center"><img src={Cat3} alt="Spectre artificial intelligence" title="Spectre artificial intelligence" className="img-responsive full-width visible-xs visible-sm generalImg" /></div>
                   <p>
                     <strong>Biased algorithms</strong> feed exclusionary and discriminatory practices, and they spread quickly and at scale. The result of biased algorithms can manifest themselves in any number of places in which algorithms are being used today: in determining eligibility for a loan, in determining the length of someone’s prison sentence, and in evaluating whether or not to hire someone for a job. How might algorithmic bias be affecting your life? Would you even know about it, when it’s baked so deeply into a particular system?
                         </p>
@@ -287,7 +288,7 @@ class PostExp extends React.Component {
                   </ul>
                 </ContentCol>
                 <div className="col-md-7 col-md-pull-5 image-col hidden-xs hidden-sm">
-                  <img src={Cat3} alt="Spectre artificial intelligence" title="Spectre artificial intelligence" width="500px" className="img-responsive image-2" />
+                  <img src={Cat3} alt="Spectre artificial intelligence" title="Spectre artificial intelligence" width="500px" className="img-responsive image-2 generalImg" />
                 </div>
               </div>
             </section>
@@ -302,7 +303,7 @@ class PostExp extends React.Component {
               </div>
               <div className="row">
                 <div className="col-sm-12">
-                  <div className="text-center"><img src={PersonalizationImage} alt="Personalization" title="Personalization" className="img-responsive full-width pull-right" /></div>
+                  <div className="text-center"><img src={PersonalizationImage} alt="Personalization" title="Personalization" className="img-responsive full-width pull-right generalImg" /></div>
                 </div>
               </div>
               <div className="row">
@@ -333,7 +334,7 @@ class PostExp extends React.Component {
                   */}
                 <div className="col-md-7 col-md-pull-5  image-col hidden-xs hidden-sm">
                   <a href="https://www.forbes.com/sites/kashmirhill/2012/02/16/how-target-figured-out-a-teen-girl-was-pregnant-before-her-father-did">
-                    <img src={Cat4} alt="Gamification" title="Gamification" className="img-responsive image-2" />
+                    <img src={Cat4} alt="Gamification" title="Gamification" className="img-responsive image-2 generalImg" />
                   </a>
                 </div>
               </div>
@@ -349,14 +350,14 @@ class PostExp extends React.Component {
               </div>
               <div className="row">
                 <div className="col-sm-12">
-                  <div className="text-center"><img src={GamificationImage} alt="Gamification" title="Gamification" className="img-responsive full-width pull-right" /></div>
+                  <div className="text-center"><img src={GamificationImage} alt="Gamification" title="Gamification" className="img-responsive full-width pull-right generalImg" /></div>
                 </div>
               </div>
               <div className="row">
                 <ContentCol>
                   <p>In the political world, many prominent political campaigns (including the official Brexit app and Donald Trump’s 2016 campaign apps) used gamification to encourage users to spend more time on the app and, in the process, collect more data. App creators have spoken openly about the rich, personal data their apps collect: names, email addresses, address book contacts, political views, and more.</p>
                   <p>Users are motivated to accumulate points within the app by completing actions suggested by the campaign – like completing surveys, checking into a rally, or calling their representative about an issue as instructed by the app. Users with enough points can unlock badges, which feed a system of popularity within the apps. One review of one such political gamified app stated, “I’ve officially hit leader status. Wow! Hooked. As bad as a game! #addictionisbad #helpme...”</p>
-                  <div className="text-center"><img src={Cat5} alt="Gamification" title="Gamification" className="img-responsive full-width visible-xs visible-sm" /></div>
+                  <div className="text-center"><img src={Cat5} alt="Gamification" title="Gamification" className="img-responsive full-width visible-xs visible-sm generalImg" /></div>
                   <p>How do you feel about the fact that campaign apps used to promote political agendas are engineered to be addictive and gamified? Do you really think you like Facebook just because it ‘connects you’?</p>
                   <strong>Further Reading:</strong>
                   <ul className="link-list">
@@ -366,7 +367,7 @@ class PostExp extends React.Component {
 
                 </ContentCol>
                 <div className="col-md-7 col-md-pull-5  image-col hidden-xs hidden-sm">
-                  <img src={Cat5} alt="Gamification" title="Gamification" className="img-responsive image-2" />
+                  <img src={Cat5} alt="Gamification" title="Gamification" className="img-responsive image-2 generalImg" />
                 </div>
               </div>
             </section>
@@ -432,7 +433,10 @@ class PostExp extends React.Component {
               </div>
               <div className="row">
                 <div className="col-sm-12">
-                  <div className="text-center"><img src={FacebookImage} alt="Facebook ad" title="Facebook ad" className="img-responsive full-width pull-right" /></div>
+                  <div className="text-center">
+                    <PostExpDarkAd target={target} />
+                    {/*}<img className="generalImg" src={FacebookImage} alt="Facebook ad" title="Facebook ad" className="img-responsive full-width pull-right" />*/}
+                  </div>
                 </div>
               </div>
               <div className="row">
@@ -441,7 +445,7 @@ class PostExp extends React.Component {
                     Social media platforms have access to all kinds of potentially useful data about voters, and this makes them great places for political campaigns to advertise. Political campaigns can use Facebook, Instagram, YouTube, Google Search, and Snapchat to target you with specific ads based on categories like your age, location, and gender. But they can also use very specific information such as what kind of content you engage with on their platforms, including what you ‘Like’ or comment on.* As the important details of micro-targeting are the business secrets of the individual platforms, we simply do not know enough about all of the factors that go into how users are selected for such finely segmented groups and then micro-targeted with ads.</p>
                   <p>
                     What we do know is that social media platforms offer special services specifically for political campaigns. Both Facebook and Google allow political campaigns to upload their voter contact lists to the platforms so they can send targeted ads just to the people on those lists. On top of that, it is also possible to target people with “similar profiles” to the voters on their lists. In politics alone, many thousands of ads are being delivered to an unknowable amount of segmented, micro-targeted lists, making it almost impossible to gain a full picture of how far microtargeting extends.</p>
-                  <div className="text-center"><a href="https://www.anotheracronym.org/newsletter/fwiw-outside-influence/"><img src={StatsImage} alt="social media political spend" title="social media political spend" className="img-responsive full-width visible-xs visible-sm" /></a></div>
+                  <div className="text-center"><a href="https://www.anotheracronym.org/newsletter/fwiw-outside-influence/"><img src={StatsImage} alt="social media political spend" title="social media political spend" className="img-responsive full-width visible-xs visible-sm generalImg" /></a></div>
                   <p>
                     At the time of writing, the remaining eight candidates for the Democratic Party nomination as well as incumbent President Trump have spent over $190M on Facebook and Google alone, with the Trump campaign running over 480,000 different ads during the campaign until now.</p>
                   <p>
@@ -457,7 +461,7 @@ class PostExp extends React.Component {
 
                 </ContentCol>
                 <div className="col-md-7 col-md-pull-5  image-col hidden-xs hidden-sm">
-                  <a href="https://www.anotheracronym.org/newsletter/fwiw-outside-influence/"><img src={Cat7} alt="social media political spend" title="social media political spend" className="img-responsive image-2" /></a>
+                  <a href="https://www.anotheracronym.org/newsletter/fwiw-outside-influence/"><img src={Cat7} alt="social media political spend" title="social media political spend" className="img-responsive image-2 generalImg" /></a>
                 </div>
               </div>
 
@@ -494,7 +498,7 @@ class PostExp extends React.Component {
                   <p>
                     While there is legitimate concern that deepfakes could be used in adversarial politics –such as making a politician say and do things on video that are purposely faked – a more immediate concern remains relatively “low-grade” but effective shallow fakes or cheapfakes. Here, the deception is not based on a sophisticated AI and machine learning approach but is instead replaced with basic false attribution of a video’s source, context or data and time. There are already examples of violence and misinformation having spread from relabeled, re-uploaded, or marginally altered video content.
                      </p>
-                  <div className="text-center"><img src={RumorsImage} alt="Rumours and provocation" title="Rumours and provocation" className="img-responsive full-width visible-xs visible-sm" /></div>
+                  <div className="text-center"><img src={RumorsImage} alt="Rumours and provocation" title="Rumours and provocation" className="img-responsive full-width visible-xs visible-sm generalImg" /></div>
                   <p>
                     At the time of writing, the remaining eight candidates for the Democratic Party nomination as well as incumbent President Trump have spent over $190M on Facebook and Google alone, with the Trump campaign running over 480,000 different ads during the campaign until now.</p>
                   <p>
@@ -510,7 +514,7 @@ class PostExp extends React.Component {
 
                 </ContentCol>
                 <div className="col-md-7 col-md-pull-5  image-col hidden-xs hidden-sm">
-                  <img src={RumorsImage} alt="Rumours and provocation" title="Rumours and provocation" className="img-responsive image-2" />
+                  <img src={RumorsImage} alt="Rumours and provocation" title="Rumours and provocation" className="img-responsive image-2 generalImg" />
                 </div>
               </div>
             </section>
@@ -518,7 +522,7 @@ class PostExp extends React.Component {
             <footer>
               <div className="row">
                 <div className="col-md-4 col-md-push-8 text-right">
-                  <img src={BreakoutImage} alt="" className="breakout no-shadow" />
+                  <img src={BreakoutImage} alt="" className="breakout no-shadow generalImg" />
                 </div>
                 <div className="col-md-8 col-md-pull-4">
                   <h1>Tactical tech resources</h1>
@@ -539,10 +543,10 @@ class PostExp extends React.Component {
               <div className="row funding">
                 <div className="col-sm-12 col-md-12">
                   <h1>Funding partners</h1>
-                  <p className="text-center"> <img src={Funding1} alt="arts council arts and cultre" className="partner no-shadow" />
-                    <img src={Funding2} alt="sheffield doc fest" className="partner no-shadow" />
-                    <img src={Funding3} alt="arts council" className="partner no-shadow" />
-                    <img src={Funding4} alt="British Council" className="partner no-shadow" /></p>
+                  <p className="text-center"> <img src={Funding1} alt="arts council arts and cultre" className="partner no-shadow generalImg" />
+                    <img src={Funding2} alt="sheffield doc fest" className="partner no-shadow generalImg" />
+                    <img src={Funding3} alt="arts council" className="partner no-shadow generalImg" />
+                    <img src={Funding4} alt="British Council" className="partner no-shadow generalImg" /></p>
                 </div>
               </div>
             </footer>

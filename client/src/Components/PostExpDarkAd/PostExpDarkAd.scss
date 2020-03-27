@@ -1,0 +1,154 @@
+.postExpDarkAd {
+  position: relative;
+  display: block;
+  margin: 40px 0;
+  padding: 40px 0 80px;
+  -webkit-box-shadow: 30px 24px 90px 0 rgba(0, 0, 0, 0.24);
+  -moz-box-shadow: 30px 24px 90px 0 rgba(0, 0, 0, 0.24);
+  box-shadow: 30px 24px 90px 0 rgba(0, 0, 0, 0.24);
+}
+
+.postExpDarkAd .darkAdsubtitle {
+  text-align: left;
+  margin: 0 50px;
+}
+
+.postExpDarkAd .fakeBtn strong {
+  font-size: 28px;
+  line-height: 30px;
+  color: #fff;
+}
+.postExpDarkAd .fakeBtn {
+  border: 1px #21c0fc solid;
+  border-radius: 30px;
+  background-color: #21c0fc;
+  color: #fff;
+  width: 200px;
+  text-align: center;
+  margin: auto;
+}
+
+.postExpDarkAd .fakeBtn img {
+  width: 32px;
+  margin-right: 15px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  filter: brightness(0) invert(1);
+}
+
+.postExpDarkAd .shareText {
+  font-size: 28px;
+  line-height: 46px;
+  color: #4F4F4F;
+}
+
+.postExpDarkAd br {}
+
+
+
+.postExpDarkAd .darkad-title {
+  font-size: 48px;
+  line-height: 55px;
+  height: 230px;
+
+  bottom: 40px;
+  position: relative;
+}
+
+.postExpDarkAd .adImage {
+  padding-top: 0;
+  margin-top: 30px;
+    margin-bottom: 30px;
+  width: 642px;
+  height: 464px;
+}
+.postExpDarkAd .adPage{
+  position: relative;
+}
+
+.postExpDarkAd .darkAdText {
+  position: absolute;
+  left: calc(50% - 321px);
+  font-size: 36px;
+  color: #fff;
+  font-weight: 800;
+  text-align: center;
+  width: 642px;
+  background-color: red;
+}
+
+.postExpDarkAd .fb-img {
+  margin-top: 0;
+  height: 100px;
+  position: relative;
+  top: 0;
+}
+@media screen and (max-width:1000px) {
+
+  .postExpDarkAd {
+
+    margin: 40px 0;
+    padding: 40px 0 40px;
+
+  }
+  .postExpDarkAd .darkad-title {
+    font-size: 20px;
+    line-height: 25px;
+  }
+
+  .postExpDarkAd .adImage {
+    width: 100%;
+    height: auto;
+  }
+
+  .postExpDarkAd .fb-img {
+    height: 35px;
+    width: auto;
+  }
+
+  .postExpDarkAd .darkAdText {
+    position: absolute;
+    left: 0;
+    font-size: 36px;
+    color: #fff;
+    font-weight: 800;
+    text-align: center;
+    width: 100%;
+    background-color: red;
+
+  }
+
+
+
+  .postExpDarkAd .fakeBtn strong {
+    font-size: 20px;
+    line-height: 22px;
+  }
+  .postExpDarkAd .fakeBtn {
+    border: 1px #21c0fc solid;
+    border-radius: 30px;
+    background-color: #21c0fc;
+    color: #fff;
+    width: 200px;
+    text-align: center;
+    margin: auto;
+  }
+
+  .postExpDarkAd .fakeBtn img {
+    width: 28px;
+    margin-right: 15px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+  }
+
+  .postExpDarkAd .adImage {
+
+    margin-top: 0px;
+      margin-bottom: 5px;
+
+  }
+
+
+
+}
