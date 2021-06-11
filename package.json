@@ -55,7 +55,7 @@
     "html-formatter": "^0.1.9",
     "json-loader": "^0.5.7",
     "jsonwebtoken": "^8.5.1",
-    "lodash": "^4.17.13",
+    "lodash": "^4.17.21",
     "minimist": "^1.2.2",
     "mongodb": "^3.4.1",
     "mongoose": "^5.8.3",
