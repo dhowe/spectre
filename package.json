@@ -31,7 +31,7 @@
     "@sendgrid/mail": "^6.5.2",
     "@tensorflow/tfjs-node": "^1.5.1",
     "@trendmicro/react-sidenav": "^0.5.0",
-    "async": "^3.1.1",
+    "async": "^3.2.2",
     "basic-auth": "~2.0.0",
     "body-parser": "^1.19.0",
     "btoa": "^1.2.1",
